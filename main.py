@@ -9,8 +9,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
     "http://localhost:3000",
-    "https://regcheck1.netlify.app"
-],
+    "https://regcheck-frontend.vercel.app"
+],  
     allow_methods=["*"],
     allow_headers=["*"],
 )
