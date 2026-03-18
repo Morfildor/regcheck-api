@@ -7,7 +7,10 @@ app = FastAPI(title="RegCheck API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://regcheck-eu.netlify.app"
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
