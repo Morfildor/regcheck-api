@@ -9,7 +9,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://regcheck-eu.netlify.app"
+        "https://regcheck1.netlify.app/"
     ],
     allow_methods=["*"],
     allow_headers=["*"],
