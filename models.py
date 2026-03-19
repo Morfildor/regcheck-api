@@ -5,6 +5,8 @@ from pydantic import BaseModel, Field
 
 Status = Literal["PASS", "WARN", "FAIL", "INFO"]
 RiskLevel = Literal["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+LegislationBucket = Literal["ce", "non_ce", "framework", "future", "informational"]
+TimingStatus = Literal["current", "future", "legacy", "informational"]
 
 
 class ProductInput(BaseModel):
@@ -40,10 +42,15 @@ class LegislationItem(BaseModel):
     priority: Literal["core", "product_specific", "conditional", "informational"] = "conditional"
     applicability: Literal["applicable", "conditional", "not_applicable"] = "conditional"
     directive_key: str = "OTHER"
+    bucket: LegislationBucket = "non_ce"
+    timing_status: TimingStatus = "current"
     reason: str | None = None
     triggers: list[str] = Field(default_factory=list)
     doc_impacts: list[str] = Field(default_factory=list)
     notes: str | None = None
+    applicable_from: str | None = None
+    applicable_until: str | None = None
+    replaced_by: str | None = None
 
 
 class StandardItem(BaseModel):
@@ -58,6 +65,8 @@ class StandardItem(BaseModel):
     score: int = 0
     reason: str | None = None
     notes: str | None = None
+    regime_bucket: LegislationBucket | None = None
+    timing_status: TimingStatus = "current"
 
 
 class AnalysisResult(BaseModel):
@@ -76,6 +85,12 @@ class AnalysisResult(BaseModel):
 
     directives: list[str] = Field(default_factory=list)
     legislations: list[LegislationItem] = Field(default_factory=list)
+    ce_legislations: list[LegislationItem] = Field(default_factory=list)
+    non_ce_obligations: list[LegislationItem] = Field(default_factory=list)
+    framework_regimes: list[LegislationItem] = Field(default_factory=list)
+    future_regimes: list[LegislationItem] = Field(default_factory=list)
+    informational_items: list[LegislationItem] = Field(default_factory=list)
+
     standards: list[StandardItem] = Field(default_factory=list)
     review_items: list[StandardItem] = Field(default_factory=list)
     missing_information: list[str] = Field(default_factory=list)

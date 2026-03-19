@@ -5,6 +5,7 @@ legislations:
   legal_form: Directive
   priority: core
   directive_key: LVD
+  bucket: ce
   applicability: applicable
   reason: Electrical equipment within LVD-type voltage domain is indicated.
   triggers:
@@ -20,14 +21,16 @@ legislations:
   any_of_traits:
   - mains_powered
   - mains_power_likely
+
 - code: 2014/30/EU
   title: EMC Directive
   family: Electromagnetic compatibility
   legal_form: Directive
   priority: core
   directive_key: EMC
+  bucket: ce
   applicability: applicable
-  reason: Electrical/electronic product likely generates or is affected by electromagnetic disturbance.
+  reason: Electrical or electronic product likely generates or is affected by electromagnetic disturbance.
   triggers:
   - electrical or electronic product
   doc_impacts:
@@ -38,17 +41,19 @@ legislations:
   any_of_traits:
   - electrical
   - electronic
+
 - code: 2014/53/EU
   title: Radio Equipment Directive
   family: Radio
   legal_form: Directive
   priority: core
   directive_key: RED
+  bucket: ce
   applicability: applicable
   reason: Radio functionality is present.
   triggers:
   - radio
-  - wifi/bluetooth/zigbee/thread/matter/nfc/cellular
+  - Wi-Fi / Bluetooth / Zigbee / Thread / Matter / NFC / cellular
   doc_impacts:
   - EU DoC
   - radio test evidence
@@ -56,22 +61,25 @@ legislations:
   - RF exposure assessment
   all_of_traits:
   - radio
+
 - code: (EU) 2022/30 as amended by (EU) 2023/2444
   title: RED Delegated Act on cybersecurity, privacy and fraud protection
   family: Cybersecurity for radio equipment
   legal_form: Delegated Regulation
   priority: product_specific
   directive_key: RED_CYBER
+  bucket: ce
   applicability: applicable
-  reason: Connected radio features indicate RED cybersecurity/privacy/fraud scoping.
+  applicable_from: '2025-08-01'
+  reason: Connected radio features indicate RED cybersecurity, privacy or fraud-protection scoping.
   triggers:
-  - radio plus connected/privacy/payment-like features
+  - radio plus connected, privacy, or authentication-related features
   doc_impacts:
   - EU DoC
   - cybersecurity evidence
   - EN 18031 mapping
   - technical documentation
-  notes: Use as RED delegated act logic; not CRA.
+  notes: Use as RED delegated act logic; do not merge with CRA.
   all_of_traits:
   - radio
   any_of_traits:
@@ -87,20 +95,24 @@ legislations:
   - child_targeted
   - health_related
   - personal_data_likely
-- code: 2009/125/EC
-  title: Ecodesign Framework Directive
+
+- code: Regulation (EU) 2024/1781
+  title: Ecodesign for Sustainable Products Regulation framework
   family: Energy / ecodesign
-  legal_form: Framework
+  legal_form: Regulation
   priority: conditional
-  directive_key: ECO
+  directive_key: ESPR
+  bucket: framework
   applicability: conditional
-  reason: Product appears to be an energy-related product family potentially covered by product-specific ecodesign measures.
+  applicable_from: '2024-07-18'
+  replaced_by: Directive 2009/125/EC
+  reason: Product appears to be an energy-related or otherwise in-scope product family for future or delegated ecodesign requirements.
   triggers:
   - energy-related appliance family
   doc_impacts:
-  - product fiche review
+  - delegated-act scoping review
+  - product parameter review
   - technical file inputs
-  - energy data evidence
   all_of_traits:
   - electrical
   any_of_functional_classes:
@@ -110,34 +122,38 @@ legislations:
   - laundry_appliance
   - kitchen_appliance
   - hvac_appliance
+
 - code: (EU) 2023/826
-  title: Off mode / standby / networked standby ecodesign regulation
+  title: Off mode, standby and networked standby ecodesign regulation
   family: Energy / ecodesign
   legal_form: Regulation
   priority: conditional
   directive_key: ECO
+  bucket: framework
   applicability: conditional
-  reason: Electronic household/office style equipment may need standby/off-mode review.
+  reason: Electronic household or office style equipment may need standby or off-mode review.
   triggers:
   - electrical
   - electronic or radio
   doc_impacts:
   - power mode measurements
   - technical documentation
-  - product info review
+  - product information review
   all_of_traits:
   - electrical
   any_of_traits:
   - electronic
   - radio
+
 - code: 2011/65/EU
   title: RoHS Directive
   family: Substances
   legal_form: Directive
   priority: core
   directive_key: ROHS
+  bucket: ce
   applicability: applicable
-  reason: Electrical/electronic equipment is generally within RoHS scoping unless a specific exclusion applies.
+  reason: Electrical or electronic equipment is generally within RoHS scope unless a specific exclusion applies.
   triggers:
   - electrical or electronic product
   doc_impacts:
@@ -147,12 +163,14 @@ legislations:
   any_of_traits:
   - electrical
   - electronic
+
 - code: Regulation (EC) No 1907/2006
   title: REACH Regulation
   family: Substances
   legal_form: Regulation
   priority: core
   directive_key: REACH
+  bucket: non_ce
   applicability: applicable
   reason: Article compliance and SVHC communication should be assessed for placed-on-market products.
   triggers:
@@ -161,14 +179,36 @@ legislations:
   - SVHC review
   - Article 33 communication
   - substance compliance records
+
+- code: Regulation (EU) 2023/1542
+  title: Batteries Regulation
+  family: Batteries
+  legal_form: Regulation
+  priority: conditional
+  directive_key: BATTERY
+  bucket: non_ce
+  applicability: conditional
+  reason: Battery-related obligations should be assessed where the product contains or is supplied with batteries.
+  triggers:
+  - battery powered product
+  doc_impacts:
+  - battery due diligence review
+  - battery labelling review
+  - removable battery and documentation checks
+  any_of_traits:
+  - battery_powered
+
 - code: 2006/42/EC
   title: Machinery Directive
   family: Machinery safety
   legal_form: Directive
   priority: product_specific
   directive_key: MD
+  bucket: ce
   applicability: conditional
-  reason: Moving parts / drive system / machinery-style function indicates Machinery Directive review may be needed.
+  applicable_until: '2027-01-13'
+  replaced_by: Regulation (EU) 2023/1230
+  reason: Moving parts or machinery-style function indicates Machinery Directive review may be needed where the product is not excluded by LVD or RED.
   triggers:
   - motorized drive or machinery-style mechanism
   doc_impacts:
@@ -185,51 +225,148 @@ legislations:
   - building_automation
   - garden_tool
   - industrial_equipment
+
+- code: Regulation (EU) 2023/1230
+  title: Machinery Regulation
+  family: Machinery safety
+  legal_form: Regulation
+  priority: product_specific
+  directive_key: MACH_REG
+  bucket: future
+  applicability: conditional
+  applicable_from: '2027-01-14'
+  reason: Machinery Regulation replaces the Machinery Directive from 14 January 2027.
+  triggers:
+  - motorized drive or machinery-style mechanism
+  doc_impacts:
+  - machinery conformity assessment update
+  - revised instructions and technical file review
+  any_of_traits:
+  - motorized
+  - safety_function
+  - security_or_barrier
+  - pressure
+  any_of_functional_classes:
+  - building_automation
+  - garden_tool
+  - industrial_equipment
+
 - code: Regulation (EC) No 1935/2004
   title: Framework Regulation on food contact materials
   family: Food contact
   legal_form: Regulation
   priority: product_specific
   directive_key: FCM
+  bucket: non_ce
   applicability: applicable
   reason: Food or beverage contact is indicated.
   triggers:
   - food_contact
   doc_impacts:
-  - food contact declaration/supporting docs
+  - food contact declaration or supporting documents
   - material compliance evidence
   - supplier compliance records
   all_of_traits:
   - food_contact
+
 - code: (EU) No 10/2011
   title: Plastic food contact materials regulation
   family: Food contact
   legal_form: Regulation
   priority: conditional
-  directive_key: FCM
+  directive_key: FCM_PLASTIC
+  bucket: non_ce
   applicability: conditional
-  reason: If plastic parts contact food, plastic FCM rules should be reviewed.
+  reason: If plastic parts contact food, the plastic food-contact route should be reviewed.
   triggers:
   - food_contact
   - plastic parts in food path if applicable
   doc_impacts:
   - migration testing route review
-  - DoC/supporting docs from plastic suppliers
+  - supplier declarations for plastic food-contact materials
   all_of_traits:
   - food_contact
+
+- code: Regulation (EU) 2024/2847
+  title: Cyber Resilience Act
+  family: Cybersecurity for products with digital elements
+  legal_form: Regulation
+  priority: product_specific
+  directive_key: CRA
+  bucket: future
+  applicability: conditional
+  applicable_from: '2027-12-11'
+  reason: Products with digital elements may fall under CRA, but it should be tracked separately from current CE routes.
+  triggers:
+  - electronic or connected product with software
+  doc_impacts:
+  - cybersecurity lifecycle process review
+  - vulnerability handling process review
+  - software bill-of-materials and technical documentation review
+  any_of_traits:
+  - electronic
+  - app_control
+  - cloud
+  - internet
+  - ota
+  - data_storage
+
+- code: Regulation (EU) 2016/679
+  title: General Data Protection Regulation
+  family: Data protection
+  legal_form: Regulation
+  priority: conditional
+  directive_key: GDPR
+  bucket: non_ce
+  applicability: conditional
+  reason: Privacy and personal-data processing obligations should be reviewed separately from product CE routes.
+  triggers:
+  - personal data processing
+  doc_impacts:
+  - lawful basis review
+  - transparency and privacy notice review
+  - data processing records
+  any_of_traits:
+  - account
+  - authentication
+  - camera
+  - microphone
+  - location
+  - personal_data_likely
+  - health_related
+
+- code: Regulation (EU) 2024/1689
+  title: Artificial Intelligence Act
+  family: AI regulation
+  legal_form: Regulation
+  priority: conditional
+  directive_key: AI_Act
+  bucket: future
+  applicability: conditional
+  applicable_from: '2026-08-02'
+  reason: AI functionality should be assessed under the AI Act separately from product CE routes.
+  triggers:
+  - AI or machine-learning functionality
+  doc_impacts:
+  - AI system classification review
+  - transparency and risk-management review
+  any_of_traits:
+  - ai_related
+
 - code: 2017/1357
   title: Implementing Decision restricting EN 60335-2-9 reference publication
   family: Harmonised standards restriction
   legal_form: Implementing Decision
   priority: informational
   directive_key: LVD
+  bucket: informational
   applicability: conditional
-  reason: Relevant only where the product relies on EN 60335-2-9 route for grills/toasters/similar portable cooking appliances.
+  reason: Relevant only where the product relies on EN 60335-2-9 for grills, toasters, or similar portable cooking appliances.
   triggers:
-  - toaster / grill style product
+  - toaster or grill style product
   doc_impacts:
   - harmonised-standard presumption review
-  notes: Treat as a standards-publication caveat, not as a standalone CE sector legislation.
+  notes: Treat as a standards-publication caveat, not as a standalone sector legislation.
   any_of_product_types:
   - toaster
   - portable_grill

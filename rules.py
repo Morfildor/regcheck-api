@@ -1,249 +1,189 @@
 from __future__ import annotations
 
+from datetime import date
 from typing import Any
 
 from classifier import extract_traits
 from knowledge_base import load_legislations
-from models import (
-    AnalysisResult,
-    Finding,
-    LegislationItem,
-    ProductCandidate,
-    RiskLevel,
-    StandardItem,
-)
+from models import AnalysisResult, Finding, LegislationItem, StandardItem
 from standards_engine import find_applicable_items
 
-APP_VERSION = "3.2.0"
+TODAY = date.today()
 
 
-def _matches_legislation(row: dict[str, Any], traits_info: dict[str, Any]) -> bool:
-    traits = set(traits_info.get("all_traits", []))
-    functional_classes = set(traits_info.get("functional_classes", []))
-    product_type = traits_info.get("product_type")
+def _parse_date(value: str | None) -> date | None:
+    if not value:
+        return None
+    try:
+        return date.fromisoformat(value)
+    except ValueError:
+        return None
 
-    all_of_traits = set(row.get("all_of_traits", []))
-    any_of_traits = set(row.get("any_of_traits", []))
-    none_of_traits = set(row.get("none_of_traits", []))
 
-    all_of_fc = set(row.get("all_of_functional_classes", []))
-    any_of_fc = set(row.get("any_of_functional_classes", []))
-    none_of_fc = set(row.get("none_of_functional_classes", []))
+def _matches_conditions(row: dict[str, Any], all_traits: set[str], functional_classes: set[str], product_type: str | None) -> bool:
+    def _all(values: list[str], haystack: set[str]) -> bool:
+        return not values or set(values).issubset(haystack)
 
-    any_of_product_types = set(row.get("any_of_product_types", []))
-    exclude_product_types = set(row.get("exclude_product_types", []))
+    def _any(values: list[str], haystack: set[str]) -> bool:
+        return not values or bool(set(values) & haystack)
 
-    if all_of_traits and not all_of_traits.issubset(traits):
+    def _none(values: list[str], haystack: set[str]) -> bool:
+        return not bool(set(values) & haystack)
+
+    if not _all(row.get("all_of_traits", []), all_traits):
         return False
-    if any_of_traits and not (any_of_traits & traits):
+    if not _any(row.get("any_of_traits", []), all_traits):
         return False
-    if none_of_traits and (none_of_traits & traits):
-        return False
-
-    if all_of_fc and not all_of_fc.issubset(functional_classes):
-        return False
-    if any_of_fc and not (any_of_fc & functional_classes):
-        return False
-    if none_of_fc and (none_of_fc & functional_classes):
+    if not _none(row.get("none_of_traits", []), all_traits):
         return False
 
-    if any_of_product_types and product_type not in any_of_product_types:
+    if not _all(row.get("all_of_functional_classes", []), functional_classes):
         return False
-    if exclude_product_types and product_type in exclude_product_types:
+    if not _any(row.get("any_of_functional_classes", []), functional_classes):
+        return False
+    if not _none(row.get("none_of_functional_classes", []), functional_classes):
+        return False
+
+    any_products = row.get("any_of_product_types", [])
+    if any_products and product_type not in any_products:
+        return False
+    if product_type and product_type in set(row.get("exclude_product_types", [])):
         return False
 
     return True
 
 
-def _filter_legislations_by_directives(
-    legislations: list[LegislationItem],
-    directives: list[str],
-) -> list[LegislationItem]:
-    if not directives:
-        return legislations
-    directive_set = set(directives)
-    return [row for row in legislations if row.directive_key in directive_set]
+def _timing_status(row: dict[str, Any], today: date) -> str:
+    applicable_from = _parse_date(row.get("applicable_from"))
+    applicable_until = _parse_date(row.get("applicable_until"))
+    bucket = row.get("bucket", "non_ce")
+
+    if bucket == "informational":
+        return "informational"
+    if applicable_from and today < applicable_from:
+        return "future"
+    if applicable_until and today > applicable_until:
+        return "legacy"
+    return "current"
 
 
-def _build_legislation_items(traits_info: dict[str, Any]) -> list[LegislationItem]:
-    items: list[LegislationItem] = []
+def _build_legislation_reason(row: dict[str, Any], timing_status: str) -> str:
+    base = row.get("reason") or "Potentially relevant based on detected traits and product class."
+    if timing_status == "future" and row.get("applicable_from"):
+        base += f" Applies from {row['applicable_from']}."
+    if timing_status == "legacy" and row.get("applicable_until"):
+        base += f" Legacy route only up to {row['applicable_until']}."
+    if row.get("replaced_by"):
+        base += f" Superseded or complemented by {row['replaced_by']}."
+    return base
+
+
+def _pick_legislations(all_traits: set[str], functional_classes: set[str], product_type: str | None) -> list[dict[str, Any]]:
+    picked: list[dict[str, Any]] = []
     for row in load_legislations():
-        if not _matches_legislation(row, traits_info):
+        if not _matches_conditions(row, all_traits, functional_classes, product_type):
             continue
-        items.append(
-            LegislationItem(
-                code=row["code"],
-                title=row["title"],
-                family=row["family"],
-                legal_form=row.get("legal_form", "Other"),
-                priority=row.get("priority", "conditional"),
-                applicability=row.get("applicability", "conditional"),
-                directive_key=row.get("directive_key", "OTHER"),
-                reason=row.get("reason"),
-                triggers=row.get("triggers", []),
-                doc_impacts=row.get("doc_impacts", []),
-                notes=row.get("notes"),
-            )
+        enriched = dict(row)
+        enriched["timing_status"] = _timing_status(row, TODAY)
+        enriched["reason"] = _build_legislation_reason(row, enriched["timing_status"])
+        picked.append(enriched)
+
+    picked.sort(
+        key=lambda x: (
+            {"ce": 0, "framework": 1, "non_ce": 2, "future": 3, "informational": 4}.get(x.get("bucket", "non_ce"), 9),
+            {"core": 0, "product_specific": 1, "conditional": 2, "informational": 3}.get(x.get("priority", "conditional"), 9),
+            x.get("code", ""),
         )
-
-    priority_order = {"core": 0, "product_specific": 1, "conditional": 2, "informational": 3}
-    items.sort(key=lambda x: (priority_order.get(x.priority, 9), x.family, x.code))
-    return items
-
-
-def _derive_directives(legislations: list[LegislationItem], standards: list[dict[str, Any]]) -> list[str]:
-    found: set[str] = set()
-    for item in legislations:
-        if item.directive_key and item.directive_key != "OTHER":
-            found.add(item.directive_key)
-    for row in standards:
-        if row.get("legislation_key") and row["legislation_key"] != "OTHER":
-            found.add(row["legislation_key"])
-        for directive in row.get("directives", []):
-            if directive != "OTHER":
-                found.add(directive)
-    return sorted(found)
-
-
-def _convert_standard(row: dict[str, Any]) -> StandardItem:
-    directive = row.get("legislation_key") or (row.get("directives", ["OTHER"])[0] if row.get("directives") else "OTHER")
-    return StandardItem(
-        code=row["code"],
-        title=row["title"],
-        directive=directive,
-        legislation_key=row.get("legislation_key"),
-        category=row.get("category", "other"),
-        confidence=row.get("confidence", "medium"),
-        item_type=row.get("item_type", "standard"),
-        match_basis=row.get("match_basis", "traits"),
-        score=row.get("score", 0),
-        reason=row.get("reason"),
-        notes=row.get("notes"),
     )
+    return picked
 
 
-def _build_missing_information(traits_info: dict[str, Any], legislations: list[LegislationItem]) -> list[str]:
-    traits = set(traits_info.get("all_traits", []))
-    directive_keys = {x.directive_key for x in legislations}
+def _directive_keys_for_matching(legislations: list[dict[str, Any]], forced: list[str]) -> list[str]:
+    keys = {row["directive_key"] for row in legislations if row.get("directive_key")}
+    keys.update(forced or [])
+    return sorted(keys)
+
+
+def _annotate_standard_items(rows: list[dict[str, Any]], legislation_index: dict[str, dict[str, Any]]) -> list[StandardItem]:
+    out: list[StandardItem] = []
+    for row in rows:
+        lookup_key = row.get("legislation_key") or row.get("directive")
+        leg = legislation_index.get(lookup_key) if isinstance(lookup_key, str) and lookup_key else None
+        enriched = dict(row)
+        if leg:
+            enriched["regime_bucket"] = leg.get("bucket")
+            enriched["timing_status"] = leg.get("timing_status", "current")
+        out.append(StandardItem(
+            code=enriched["code"],
+            title=enriched["title"],
+            directive=(enriched.get("directives") or [enriched.get("legislation_key") or "OTHER"])[0],
+            legislation_key=enriched.get("legislation_key"),
+            category=enriched["category"],
+            confidence=enriched.get("confidence", "medium"),
+            item_type=enriched.get("item_type", "standard"),
+            match_basis=enriched.get("match_basis", "traits"),
+            score=enriched.get("score", 0),
+            reason=enriched.get("reason"),
+            notes=enriched.get("notes"),
+            regime_bucket=enriched.get("regime_bucket"),
+            timing_status=enriched.get("timing_status", "current"),
+        ))
+    return out
+
+
+def _missing_information(all_traits: set[str], product_type: str | None, contradictions: list[str]) -> list[str]:
     missing: list[str] = []
-
-    if not traits_info.get("product_type"):
-        missing.append("Exact product type is unclear; identify the closest product family before relying on specific standards.")
-
-    if "electrical" in traits and not ({"mains_powered", "mains_power_likely", "battery_powered", "usb_powered"} & traits):
-        missing.append("Power architecture is unclear: mains, battery, USB, detachable PSU, or charger-dependent.")
-
-    if "RED" in directive_keys and not ({"wifi", "bluetooth", "zigbee", "thread", "matter", "nfc", "cellular"} & traits):
-        missing.append("Radio technology is unclear; specify Wi-Fi, Bluetooth, Thread, Zigbee, NFC, cellular, or other radio path.")
-
-    if "RED_CYBER" in directive_keys:
-        missing.append("Cybersecurity scope needs confirmation: authentication, update path, local/cloud architecture, interfaces, and handled personal data.")
-
-    if "FCM" in directive_keys:
-        missing.append("Food-contact materials are not fully described; confirm food path materials, plastics, coatings, elastomers, and supplier declarations.")
-
-    if "ECO" in directive_keys:
-        missing.append("Ecodesign scope needs confirmation: off mode, standby, networked standby, display/network functionality, and relevant implementing measure.")
-
-    if "MD" in directive_keys:
-        missing.append("Machinery boundary needs confirmation: moving parts, actuation, guards, intended use, and whether the product is machinery or outside scope.")
-
-    seen: set[str] = set()
-    deduped: list[str] = []
-    for item in missing:
-        if item not in seen:
-            deduped.append(item)
-            seen.add(item)
-    return deduped
-
-
-def _priority_risk(
-    traits_info: dict[str, Any],
-    review_items: list[StandardItem],
-    contradictions: list[str],
-    missing_information: list[str],
-) -> RiskLevel:
-    risk = 0
-
+    if not product_type:
+        missing.append("Exact product type is unclear; provide the commercial product description or product family.")
+    if "electrical" in all_traits and not ({"mains_powered", "battery_powered", "usb_powered", "mains_power_likely"} & all_traits):
+        missing.append("Power source is unclear; specify mains, battery, USB, or external PSU.")
+    if "radio" in all_traits and not ({"wifi", "bluetooth", "zigbee", "thread", "matter", "nfc", "cellular"} & all_traits):
+        missing.append("Radio technology is unclear; specify Wi-Fi, Bluetooth, Thread, Zigbee, NFC, or cellular.")
+    if "food_contact" in all_traits:
+        missing.append("Confirm whether food-contact parts include plastic, coating, rubber, silicone, paper, or metal materials.")
     if contradictions:
-        risk += 2
-    if len(missing_information) >= 4:
-        risk += 2
-    elif missing_information:
-        risk += 1
-    if any(x.legislation_key == "RED_CYBER" or x.directive == "RED_CYBER" for x in review_items):
-        risk += 2
-    if traits_info.get("product_match_confidence") == "low":
-        risk += 1
-
-    if risk >= 5:
-        return "CRITICAL"
-    if risk >= 3:
-        return "HIGH"
-    if risk >= 2:
-        return "MEDIUM"
-    return "LOW"
+        missing.append("Resolve contradictory product signals before relying on the output for compliance decisions.")
+    return missing
 
 
-def _build_findings(
-    legislations: list[LegislationItem],
-    standards: list[StandardItem],
-    review_items: list[StandardItem],
-    missing_information: list[str],
-    contradictions: list[str],
-) -> list[Finding]:
+def _findings(legislations: list[dict[str, Any]], review_items: list[StandardItem], missing_information: list[str]) -> list[Finding]:
     findings: list[Finding] = []
 
-    for leg in legislations:
+    for row in legislations:
+        status = "INFO"
+        if row["bucket"] == "future":
+            status = "WARN"
+        elif row["bucket"] in {"ce", "non_ce", "framework"}:
+            status = "PASS" if row["timing_status"] == "current" else "WARN"
+
         findings.append(
             Finding(
-                directive=leg.directive_key or "OTHER",
-                article=leg.code,
-                status="PASS" if leg.applicability == "applicable" else "INFO",
-                finding=leg.title if not leg.reason else f"{leg.title}. {leg.reason}",
-                action="; ".join(leg.doc_impacts[:3]) if leg.doc_impacts else None,
+                directive=row["directive_key"],
+                article="Scope",
+                status=status,
+                finding=row["title"],
+                action=row.get("reason"),
             )
         )
 
-    for item in standards:
+    for item in review_items[:8]:
         findings.append(
             Finding(
-                directive=item.legislation_key or item.directive or "OTHER",
-                article=item.code,
-                status="PASS",
-                finding=item.reason or item.title,
-                action=item.notes,
-            )
-        )
-
-    for item in review_items:
-        findings.append(
-            Finding(
-                directive=item.legislation_key or item.directive or "OTHER",
-                article=item.code,
+                directive=item.directive,
+                article="Review",
                 status="WARN",
-                finding=item.reason or item.title,
-                action=item.notes,
+                finding=item.title,
+                action=item.reason or item.notes,
             )
         )
 
-    for text in missing_information:
+    for note in missing_information:
         findings.append(
             Finding(
-                directive="SYSTEM",
+                directive="INPUT",
                 article="Missing information",
                 status="WARN",
-                finding=text,
-            )
-        )
-
-    for text in contradictions:
-        findings.append(
-            Finding(
-                directive="SYSTEM",
-                article="Contradiction",
-                status="FAIL",
-                finding=text,
+                finding=note,
             )
         )
 
@@ -251,73 +191,77 @@ def _build_findings(
 
 
 def analyze(description: str, category: str = "", directives: list[str] | None = None, depth: str = "standard") -> AnalysisResult:
-    directives = directives or []
+    classification = extract_traits(description=description, category=category)
+    all_traits = set(classification["all_traits"])
+    functional_classes = set(classification["functional_classes"])
+    product_type = classification["product_type"]
 
-    traits_info = extract_traits(description=description, category=category)
-
-    legislations = _build_legislation_items(traits_info)
-    legislations = _filter_legislations_by_directives(legislations, directives)
-
-    legislation_keys = [x.directive_key for x in legislations if x.directive_key]
-    directive_scope = directives or legislation_keys
-
-    item_rows = find_applicable_items(
-        traits=set(traits_info.get("all_traits", [])),
-        directives=directive_scope,
-        product_type=traits_info.get("product_type"),
-        matched_products=traits_info.get("matched_products", []),
+    picked_legislations = _pick_legislations(
+        all_traits=all_traits,
+        functional_classes=functional_classes,
+        product_type=product_type,
     )
 
-    standards = [_convert_standard(x) for x in item_rows["standards"]]
-    review_items = [_convert_standard(x) for x in item_rows["review_items"]]
+    directive_keys = _directive_keys_for_matching(picked_legislations, directives or [])
+    applicable_items = find_applicable_items(
+        traits=all_traits,
+        directives=directive_keys,
+        product_type=product_type,
+        matched_products=classification.get("matched_products", []),
+    )
 
-    if depth == "quick":
-        standards = standards[:18]
-        review_items = review_items[:8]
-    elif depth == "standard":
-        standards = standards[:35]
-        review_items = review_items[:12]
+    legislation_index = {row["directive_key"]: row for row in picked_legislations}
+    standards = _annotate_standard_items(applicable_items["standards"], legislation_index)
+    review_items = _annotate_standard_items(applicable_items["review_items"], legislation_index)
 
-    derived_directives = _derive_directives(legislations, item_rows["standards"] + item_rows["review_items"])
-    missing_information = _build_missing_information(traits_info, legislations)
-    contradictions = traits_info.get("contradictions", [])
-    overall_risk = _priority_risk(traits_info, review_items, contradictions, missing_information)
-    findings = _build_findings(legislations, standards, review_items, missing_information, contradictions)
+    ce_legislations = [LegislationItem(**row) for row in picked_legislations if row["bucket"] == "ce"]
+    non_ce_obligations = [LegislationItem(**row) for row in picked_legislations if row["bucket"] == "non_ce"]
+    framework_regimes = [LegislationItem(**row) for row in picked_legislations if row["bucket"] == "framework"]
+    future_regimes = [LegislationItem(**row) for row in picked_legislations if row["bucket"] == "future"]
+    informational_items = [LegislationItem(**row) for row in picked_legislations if row["bucket"] == "informational"]
 
-    summary_parts: list[str] = []
-    if traits_info.get("product_type"):
-        summary_parts.append(f"Detected product type: {traits_info['product_type'].replace('_', ' ')}")
-    if legislations:
-        summary_parts.append(f"Applicable legislation: {len(legislations)} item(s)")
-    if standards or review_items:
-        summary_parts.append(f"Matched {len(standards)} standards and {len(review_items)} review items")
-    if not summary_parts:
-        summary_parts.append("Compliance scoping completed.")
+    missing_information = _missing_information(all_traits, product_type, classification["contradictions"])
 
-    diagnostics = [
-        f"engine_version={APP_VERSION}",
-        f"depth={depth}",
-        f"product_match_confidence={traits_info.get('product_match_confidence', 'low')}",
-        f"selected_directives={','.join(directives) if directives else 'auto'}",
-    ]
+    overall_risk = "LOW"
+    if classification["contradictions"] or missing_information:
+        overall_risk = "MEDIUM"
+    if future_regimes or any(item.item_type == "review" for item in review_items):
+        overall_risk = "HIGH" if missing_information else "MEDIUM"
+
+    summary_parts = []
+    if product_type:
+        summary_parts.append(f"Detected product type: {product_type.replace('_', ' ')}.")
+    if ce_legislations:
+        summary_parts.append("Current CE harmonisation acts are separated from non-CE obligations.")
+    if non_ce_obligations:
+        summary_parts.append("Parallel non-CE obligations were identified separately.")
+    if framework_regimes:
+        summary_parts.append("Framework or product-family regimes need a separate product-specific check.")
+    if future_regimes:
+        summary_parts.append("Future regimes are flagged separately and not merged into current obligations.")
 
     return AnalysisResult(
-        product_summary=description.strip(),
+        product_summary=description.strip() or category.strip() or "Product analysis",
         overall_risk=overall_risk,
-        summary=". ".join(summary_parts),
-        product_type=traits_info.get("product_type"),
-        product_match_confidence=traits_info.get("product_match_confidence", "low"),
-        product_candidates=[ProductCandidate(**row) for row in traits_info.get("product_candidates", [])],
-        functional_classes=traits_info.get("functional_classes", []),
-        explicit_traits=traits_info.get("explicit_traits", []),
-        inferred_traits=traits_info.get("inferred_traits", []),
-        all_traits=traits_info.get("all_traits", []),
-        directives=derived_directives,
-        legislations=legislations,
+        summary=" ".join(summary_parts) or "Regulatory scoping completed.",
+        product_type=product_type,
+        product_match_confidence=classification["product_match_confidence"],
+        product_candidates=classification["product_candidates"],
+        functional_classes=classification["functional_classes"],
+        explicit_traits=classification["explicit_traits"],
+        inferred_traits=classification["inferred_traits"],
+        all_traits=classification["all_traits"],
+        directives=directive_keys,
+        legislations=[LegislationItem(**row) for row in picked_legislations],
+        ce_legislations=ce_legislations,
+        non_ce_obligations=non_ce_obligations,
+        framework_regimes=framework_regimes,
+        future_regimes=future_regimes,
+        informational_items=informational_items,
         standards=standards,
         review_items=review_items,
         missing_information=missing_information,
-        contradictions=contradictions,
-        diagnostics=diagnostics,
-        findings=findings,
+        contradictions=classification["contradictions"],
+        diagnostics=[f"analysis_date={TODAY.isoformat()}", f"depth={depth}"],
+        findings=_findings(picked_legislations, review_items, missing_information),
     )
