@@ -45,9 +45,14 @@ def _require_list(parent: dict, key: str, filename: str) -> list:
     return value
 
 
+def _normalize_text(value: str) -> str:
+    return " ".join(value.strip().lower().split())
+
+
 def _validate_traits(data: dict) -> list[dict]:
     traits = _require_list(data, "traits", "traits.yaml")
     seen: set[str] = set()
+
     for idx, row in enumerate(traits, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"traits.yaml trait #{idx} must be a mapping.")
@@ -57,6 +62,7 @@ def _validate_traits(data: dict) -> list[dict]:
         if row["id"] in seen:
             raise KnowledgeBaseError(f"Duplicate trait id in traits.yaml: {row['id']}")
         seen.add(row["id"])
+
     return traits
 
 
@@ -68,12 +74,16 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
     for idx, row in enumerate(products, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"products.yaml product #{idx} must be a mapping.")
+
         for field in ("id", "label"):
             if not isinstance(row.get(field), str) or not row[field].strip():
                 raise KnowledgeBaseError(f"products.yaml product #{idx} is missing a valid '{field}'.")
+
         for field in ("aliases", "implied_traits", "functional_classes"):
             if not isinstance(row.get(field), list):
-                raise KnowledgeBaseError(f"products.yaml product '{row.get('id', idx)}' must contain list field '{field}'.")
+                raise KnowledgeBaseError(
+                    f"products.yaml product '{row.get('id', idx)}' must contain list field '{field}'."
+                )
 
         pid = row["id"]
         if pid in seen:
@@ -85,7 +95,9 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
                 raise KnowledgeBaseError(f"Unknown trait '{trait}' referenced by product '{pid}'.")
 
         for alias in row.get("aliases", []):
-            alias_norm = alias.strip().lower()
+            if not isinstance(alias, str) or not alias.strip():
+                raise KnowledgeBaseError(f"Product '{pid}' contains an empty or invalid alias.")
+            alias_norm = _normalize_text(alias)
             previous = alias_to_id.get(alias_norm)
             if previous and previous != pid:
                 raise KnowledgeBaseError(
@@ -93,13 +105,34 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
                 )
             alias_to_id[alias_norm] = pid
 
-        if "likely_standards" in row and not isinstance(row["likely_standards"], list):
+        likely_standards = row.get("likely_standards", [])
+        if not isinstance(likely_standards, list):
             raise KnowledgeBaseError(f"Product '{pid}' has non-list likely_standards.")
+        for code in likely_standards:
+            if not isinstance(code, str) or not code.strip():
+                raise KnowledgeBaseError(f"Product '{pid}' contains invalid likely_standards entries.")
+
+        for fc in row.get("functional_classes", []):
+            if not isinstance(fc, str) or not fc.strip():
+                raise KnowledgeBaseError(f"Product '{pid}' contains invalid functional_classes entries.")
 
     return products
 
 
-def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str]) -> list[dict]:
+def _collect_functional_classes(products: list[dict]) -> set[str]:
+    classes: set[str] = set()
+    for row in products:
+        for fc in row.get("functional_classes", []):
+            classes.add(fc)
+    return classes
+
+
+def _validate_legislations(
+    data: dict,
+    product_ids: set[str],
+    trait_ids: set[str],
+    functional_classes: set[str],
+) -> list[dict]:
     legislations = _require_list(data, "legislations", "legislation_catalog.yaml")
     seen: set[str] = set()
 
@@ -117,6 +150,7 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
     for idx, row in enumerate(legislations, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"legislation_catalog.yaml legislation #{idx} must be a mapping.")
+
         for field in ("code", "title", "family", "reason", "directive_key"):
             if not isinstance(row.get(field), str) or not row[field].strip():
                 raise KnowledgeBaseError(f"legislation_catalog.yaml entry #{idx} is missing a valid '{field}'.")
@@ -154,6 +188,17 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
                 if trait not in trait_ids:
                     raise KnowledgeBaseError(f"Legislation '{code}' references unknown trait '{trait}'.")
 
+        for fc_field in (
+            "all_of_functional_classes",
+            "any_of_functional_classes",
+            "none_of_functional_classes",
+        ):
+            for fc in row.get(fc_field, []):
+                if fc not in functional_classes:
+                    raise KnowledgeBaseError(
+                        f"Legislation '{code}' references unknown functional class '{fc}'."
+                    )
+
         for product_field in ("any_of_product_types", "exclude_product_types"):
             for pid in row.get(product_field, []):
                 if pid not in product_ids:
@@ -162,13 +207,19 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
     return legislations
 
 
-def _validate_standards(data: dict, product_ids: set[str], trait_ids: set[str], legislation_keys: set[str]) -> list[dict]:
+def _validate_standards(
+    data: dict,
+    product_ids: set[str],
+    trait_ids: set[str],
+    legislation_keys: set[str],
+) -> list[dict]:
     standards = _require_list(data, "standards", "standards.yaml")
     seen: set[str] = set()
 
     for idx, row in enumerate(standards, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"standards.yaml standard #{idx} must be a mapping.")
+
         for field in ("code", "title", "category"):
             if not isinstance(row.get(field), str) or not row[field].strip():
                 raise KnowledgeBaseError(f"standards.yaml entry #{idx} is missing a valid '{field}'.")
@@ -181,6 +232,9 @@ def _validate_standards(data: dict, product_ids: set[str], trait_ids: set[str], 
         directives = row.get("directives", [])
         if not isinstance(directives, list):
             raise KnowledgeBaseError(f"Standard '{code}' must have a directives list.")
+        for directive in directives:
+            if not isinstance(directive, str) or not directive.strip():
+                raise KnowledgeBaseError(f"Standard '{code}' contains invalid directive values.")
 
         legislation_key = row.get("legislation_key")
         if legislation_key is not None:
@@ -211,6 +265,17 @@ def _validate_standards(data: dict, product_ids: set[str], trait_ids: set[str], 
     return standards
 
 
+def _validate_cross_references(products: list[dict], standards: list[dict]) -> None:
+    standard_codes = {row["code"] for row in standards}
+    for row in products:
+        pid = row["id"]
+        for code in row.get("likely_standards", []):
+            if code not in standard_codes:
+                raise KnowledgeBaseError(
+                    f"Product '{pid}' references unknown likely standard '{code}'."
+                )
+
+
 @lru_cache(maxsize=1)
 def load_all() -> dict:
     traits_data = _load_yaml_raw("traits.yaml")
@@ -220,13 +285,21 @@ def load_all() -> dict:
     products_data = _load_yaml_raw("products.yaml")
     products = _validate_products(products_data, trait_ids)
     product_ids = {row["id"] for row in products}
+    functional_classes = _collect_functional_classes(products)
 
     legislations_data = _load_yaml_raw("legislation_catalog.yaml")
-    legislations = _validate_legislations(legislations_data, product_ids, trait_ids)
+    legislations = _validate_legislations(
+        legislations_data,
+        product_ids,
+        trait_ids,
+        functional_classes,
+    )
     legislation_keys = {row["directive_key"] for row in legislations} | {"CRA", "GDPR", "AI_Act", "ESPR", "OTHER"}
 
     standards_data = _load_yaml_raw("standards.yaml")
     standards = _validate_standards(standards_data, product_ids, trait_ids, legislation_keys)
+
+    _validate_cross_references(products, standards)
 
     return {
         "traits": traits,
