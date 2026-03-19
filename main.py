@@ -7,7 +7,7 @@ from knowledge_base import KnowledgeBaseError, warmup_knowledge_base
 from models import AnalysisResult, ProductInput
 from rules import analyze
 
-APP_VERSION = "2.2.0"
+APP_VERSION = "3.1.0"
 
 app = FastAPI(title="RegCheck API", version=APP_VERSION)
 

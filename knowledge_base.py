@@ -9,12 +9,22 @@ BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 
 
+def _resolve_data_path(filename: str) -> Path:
+    preferred = DATA_DIR / filename
+    if preferred.exists():
+        return preferred
+    fallback = BASE_DIR / filename
+    if fallback.exists():
+        return fallback
+    return preferred
+
+
 class KnowledgeBaseError(RuntimeError):
     pass
 
 
 def _load_yaml_raw(filename: str) -> dict:
-    path = DATA_DIR / filename
+    path = _resolve_data_path(filename)
     if not path.exists():
         raise KnowledgeBaseError(f"Missing required data file: {path}")
     try:
@@ -89,7 +99,70 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
     return products
 
 
-def _validate_standards(data: dict, product_ids: set[str], trait_ids: set[str]) -> list[dict]:
+def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str]) -> list[dict]:
+    legislations = _require_list(data, "legislations", "legislation_catalog.yaml")
+    seen: set[str] = set()
+
+    allowed_legal_forms = {
+        "Directive",
+        "Regulation",
+        "Delegated Regulation",
+        "Implementing Decision",
+        "Framework",
+        "Other",
+    }
+    allowed_priorities = {"core", "product_specific", "conditional", "informational"}
+    allowed_applicability = {"applicable", "conditional", "not_applicable"}
+
+    for idx, row in enumerate(legislations, start=1):
+        if not isinstance(row, dict):
+            raise KnowledgeBaseError(f"legislation_catalog.yaml legislation #{idx} must be a mapping.")
+        for field in ("code", "title", "family", "reason", "directive_key"):
+            if not isinstance(row.get(field), str) or not row[field].strip():
+                raise KnowledgeBaseError(f"legislation_catalog.yaml entry #{idx} is missing a valid '{field}'.")
+
+        code = row["code"]
+        if code in seen:
+            raise KnowledgeBaseError(f"Duplicate legislation code in legislation_catalog.yaml: {code}")
+        seen.add(code)
+
+        if row.get("legal_form", "Other") not in allowed_legal_forms:
+            raise KnowledgeBaseError(f"Legislation '{code}' has invalid legal_form '{row.get('legal_form')}'.")
+        if row.get("priority", "conditional") not in allowed_priorities:
+            raise KnowledgeBaseError(f"Legislation '{code}' has invalid priority '{row.get('priority')}'.")
+        if row.get("applicability", "conditional") not in allowed_applicability:
+            raise KnowledgeBaseError(f"Legislation '{code}' has invalid applicability '{row.get('applicability')}'.")
+
+        for field in (
+            "triggers",
+            "doc_impacts",
+            "all_of_traits",
+            "any_of_traits",
+            "none_of_traits",
+            "all_of_functional_classes",
+            "any_of_functional_classes",
+            "none_of_functional_classes",
+            "any_of_product_types",
+            "exclude_product_types",
+        ):
+            value = row.get(field, [])
+            if not isinstance(value, list):
+                raise KnowledgeBaseError(f"Legislation '{code}' field '{field}' must be a list.")
+
+        for trait_field in ("all_of_traits", "any_of_traits", "none_of_traits"):
+            for trait in row.get(trait_field, []):
+                if trait not in trait_ids:
+                    raise KnowledgeBaseError(f"Legislation '{code}' references unknown trait '{trait}'.")
+
+        for product_field in ("any_of_product_types", "exclude_product_types"):
+            for pid in row.get(product_field, []):
+                if pid not in product_ids:
+                    raise KnowledgeBaseError(f"Legislation '{code}' references unknown product id '{pid}'.")
+
+    return legislations
+
+
+def _validate_standards(data: dict, product_ids: set[str], trait_ids: set[str], legislation_keys: set[str]) -> list[dict]:
     standards = _require_list(data, "standards", "standards.yaml")
     seen: set[str] = set()
 
@@ -108,6 +181,15 @@ def _validate_standards(data: dict, product_ids: set[str], trait_ids: set[str]) 
         directives = row.get("directives", [])
         if not isinstance(directives, list):
             raise KnowledgeBaseError(f"Standard '{code}' must have a directives list.")
+
+        legislation_key = row.get("legislation_key")
+        if legislation_key is not None:
+            if not isinstance(legislation_key, str) or not legislation_key.strip():
+                raise KnowledgeBaseError(f"Standard '{code}' has invalid legislation_key.")
+            if legislation_key not in legislation_keys:
+                raise KnowledgeBaseError(
+                    f"Standard '{code}' references unknown legislation_key '{legislation_key}'."
+                )
 
         for field in ("applies_if_all", "applies_if_any", "exclude_if", "applies_if_products", "exclude_if_products"):
             value = row.get(field, [])
@@ -139,16 +221,22 @@ def load_all() -> dict:
     products = _validate_products(products_data, trait_ids)
     product_ids = {row["id"] for row in products}
 
+    legislations_data = _load_yaml_raw("legislation_catalog.yaml")
+    legislations = _validate_legislations(legislations_data, product_ids, trait_ids)
+    legislation_keys = {row["directive_key"] for row in legislations} | {"CRA", "GDPR", "AI_Act", "ESPR", "OTHER"}
+
     standards_data = _load_yaml_raw("standards.yaml")
-    standards = _validate_standards(standards_data, product_ids, trait_ids)
+    standards = _validate_standards(standards_data, product_ids, trait_ids, legislation_keys)
 
     return {
         "traits": traits,
         "products": products,
+        "legislations": legislations,
         "standards": standards,
         "counts": {
             "traits": len(traits),
             "products": len(products),
+            "legislations": len(legislations),
             "standards": len(standards),
         },
     }
@@ -160,6 +248,10 @@ def load_traits() -> list[dict]:
 
 def load_products() -> list[dict]:
     return load_all()["products"]
+
+
+def load_legislations() -> list[dict]:
+    return load_all()["legislations"]
 
 
 def load_standards() -> list[dict]:

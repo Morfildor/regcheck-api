@@ -32,10 +32,25 @@ class ProductCandidate(BaseModel):
     likely_standards: list[str] = Field(default_factory=list)
 
 
+class LegislationItem(BaseModel):
+    code: str
+    title: str
+    family: str
+    legal_form: str = "Other"
+    priority: Literal["core", "product_specific", "conditional", "informational"] = "conditional"
+    applicability: Literal["applicable", "conditional", "not_applicable"] = "conditional"
+    directive_key: str = "OTHER"
+    reason: str | None = None
+    triggers: list[str] = Field(default_factory=list)
+    doc_impacts: list[str] = Field(default_factory=list)
+    notes: str | None = None
+
+
 class StandardItem(BaseModel):
     code: str
     title: str
     directive: str
+    legislation_key: str | None = None
     category: str
     confidence: Literal["low", "medium", "high"] = "medium"
     item_type: Literal["standard", "review"] = "standard"
@@ -60,6 +75,7 @@ class AnalysisResult(BaseModel):
     all_traits: list[str] = Field(default_factory=list)
 
     directives: list[str] = Field(default_factory=list)
+    legislations: list[LegislationItem] = Field(default_factory=list)
     standards: list[StandardItem] = Field(default_factory=list)
     review_items: list[StandardItem] = Field(default_factory=list)
     missing_information: list[str] = Field(default_factory=list)

@@ -1,294 +1,282 @@
 from __future__ import annotations
 
-from models import AnalysisResult, Finding, ProductCandidate, RiskLevel, StandardItem, Status
+from typing import Any
+
 from classifier import extract_traits
+from knowledge_base import load_legislations
+from models import (
+    AnalysisResult,
+    Finding,
+    LegislationItem,
+    ProductCandidate,
+    RiskLevel,
+    StandardItem,
+)
 from standards_engine import find_applicable_items
 
+APP_VERSION = "3.1.0"
 
-def add_finding(
-    findings: list[Finding],
-    directive: str,
-    article: str,
-    status: Status,
-    finding: str,
-    action: str | None = None,
-) -> None:
-    findings.append(
-        Finding(
-            directive=directive,
-            article=article,
-            status=status,
-            finding=finding,
-            action=action,
+
+def _matches_legislation(row: dict[str, Any], traits_info: dict[str, Any]) -> bool:
+    traits = set(traits_info.get("all_traits", []))
+    functional_classes = set(traits_info.get("functional_classes", []))
+    product_type = traits_info.get("product_type")
+
+    all_of_traits = set(row.get("all_of_traits", []))
+    any_of_traits = set(row.get("any_of_traits", []))
+    none_of_traits = set(row.get("none_of_traits", []))
+
+    all_of_fc = set(row.get("all_of_functional_classes", []))
+    any_of_fc = set(row.get("any_of_functional_classes", []))
+    none_of_fc = set(row.get("none_of_functional_classes", []))
+
+    any_of_product_types = set(row.get("any_of_product_types", []))
+    exclude_product_types = set(row.get("exclude_product_types", []))
+
+    if all_of_traits and not all_of_traits.issubset(traits):
+        return False
+    if any_of_traits and not (any_of_traits & traits):
+        return False
+    if none_of_traits and (none_of_traits & traits):
+        return False
+
+    if all_of_fc and not all_of_fc.issubset(functional_classes):
+        return False
+    if any_of_fc and not (any_of_fc & functional_classes):
+        return False
+    if none_of_fc and (none_of_fc & functional_classes):
+        return False
+
+    if any_of_product_types and product_type not in any_of_product_types:
+        return False
+    if exclude_product_types and product_type in exclude_product_types:
+        return False
+
+    return True
+
+
+def _build_legislation_items(traits_info: dict[str, Any]) -> list[LegislationItem]:
+    items: list[LegislationItem] = []
+    for row in load_legislations():
+        if not _matches_legislation(row, traits_info):
+            continue
+        items.append(
+            LegislationItem(
+                code=row["code"],
+                title=row["title"],
+                family=row["family"],
+                legal_form=row.get("legal_form", "Other"),
+                priority=row.get("priority", "conditional"),
+                applicability=row.get("applicability", "conditional"),
+                directive_key=row.get("directive_key", "OTHER"),
+                reason=row.get("reason"),
+                triggers=row.get("triggers", []),
+                doc_impacts=row.get("doc_impacts", []),
+                notes=row.get("notes"),
+            )
         )
+
+    priority_order = {"core": 0, "product_specific": 1, "conditional": 2, "informational": 3}
+    items.sort(key=lambda x: (priority_order.get(x.priority, 9), x.family, x.code))
+    return items
+
+
+def _derive_directives(legislations: list[LegislationItem], standards: list[dict[str, Any]]) -> list[str]:
+    found: set[str] = set()
+    for item in legislations:
+        if item.directive_key:
+            found.add(item.directive_key)
+    for row in standards:
+        if row.get("legislation_key"):
+            found.add(row["legislation_key"])
+        for directive in row.get("directives", []):
+            found.add(directive)
+    return sorted(found)
+
+
+def _convert_standard(row: dict[str, Any]) -> StandardItem:
+    directive = row.get("legislation_key") or (row.get("directives", ["OTHER"])[0] if row.get("directives") else "OTHER")
+    return StandardItem(
+        code=row["code"],
+        title=row["title"],
+        directive=directive,
+        legislation_key=row.get("legislation_key"),
+        category=row.get("category", "other"),
+        confidence=row.get("confidence", "medium"),
+        item_type=row.get("item_type", "standard"),
+        match_basis=row.get("match_basis", "traits"),
+        score=row.get("score", 0),
+        reason=row.get("reason"),
+        notes=row.get("notes"),
     )
 
 
-def infer_directives(traits: set[str], requested_directives: list[str]) -> list[str]:
-    directives = set(requested_directives or [])
+def _build_missing_information(traits_info: dict[str, Any], legislations: list[LegislationItem]) -> list[str]:
+    traits = set(traits_info.get("all_traits", []))
+    directive_keys = {x.directive_key for x in legislations}
+    missing: list[str] = []
 
-    if "radio" in traits:
-        directives.add("RED")
+    if not traits_info.get("product_type"):
+        missing.append("Exact product type is unclear; identify the closest product family before relying on specific standards.")
+    if "electrical" in traits and not ({"mains_powered", "mains_power_likely", "battery_powered", "usb_powered"} & traits):
+        missing.append("Power architecture is unclear: mains, battery, USB, detachable PSU, or charger-dependent.")
+    if "RED" in directive_keys and not ({"wifi", "bluetooth", "zigbee", "thread", "matter", "nfc", "cellular"} & traits):
+        missing.append("Radio technology is unclear; specify Wi-Fi, Bluetooth, Thread, Zigbee, NFC, cellular, or other radio path.")
+    if "RED_CYBER" in directive_keys:
+        missing.append("Cybersecurity scope needs confirmation: authentication, update path, local/cloud architecture, interfaces, and handled personal data.")
+    if "FCM" in directive_keys:
+        missing.append("Food-contact materials are not fully described; confirm food path materials, plastics, coatings, elastomers, and supplier declarations.")
+    if "ECO" in directive_keys:
+        missing.append("Ecodesign scope needs confirmation: off mode, standby, networked standby, display/network functionality, and relevant implementing measure.")
+    if "MD" in directive_keys:
+        missing.append("Machinery boundary needs confirmation: moving parts, actuation, guards, intended use, and whether the product is machinery or outside scope.")
 
-    if {
-        "electronic", "radio", "app_control", "cloud", "internet", "ota",
-        "authentication", "account", "data_storage",
-    } & traits:
-        directives.add("CRA")
-
-    if {
-        "personal_data_likely", "camera", "microphone", "location",
-        "health_related", "child_targeted", "account",
-    } & traits:
-        directives.add("GDPR")
-
-    if "ai_related" in traits:
-        directives.add("AI_Act")
-
-    if {"electrical", "electronic", "radio"} & traits:
-        directives.add("EMC")
-
-    if {"electrical", "mains_powered", "mains_power_likely", "heating"} & traits:
-        directives.add("LVD")
-
-    return sorted(directives)
+    seen: set[str] = set()
+    deduped: list[str] = []
+    for item in missing:
+        if item not in seen:
+            deduped.append(item)
+            seen.add(item)
+    return deduped
 
 
-def derive_overall_risk(findings: list[Finding], contradictions: list[str], missing_information: list[str]) -> RiskLevel:
-    fail_count = sum(1 for f in findings if f.status == "FAIL")
-    warn_count = sum(1 for f in findings if f.status == "WARN")
+def _priority_risk(
+    traits_info: dict[str, Any],
+    review_items: list[StandardItem],
+    contradictions: list[str],
+    missing_information: list[str],
+) -> RiskLevel:
+    risk = 0
+    if contradictions:
+        risk += 2
+    if len(missing_information) >= 4:
+        risk += 2
+    elif missing_information:
+        risk += 1
+    if any(x.legislation_key == "RED_CYBER" or x.directive == "RED_CYBER" for x in review_items):
+        risk += 2
+    if traits_info.get("product_match_confidence") == "low":
+        risk += 1
 
-    if fail_count >= 3:
+    if risk >= 5:
         return "CRITICAL"
-    if fail_count >= 1 or len(contradictions) >= 2:
+    if risk >= 3:
         return "HIGH"
-    if warn_count >= 3 or len(contradictions) == 1 or len(missing_information) >= 3:
+    if risk >= 2:
         return "MEDIUM"
     return "LOW"
 
 
-def build_summary(
-    product_type: str | None,
-    directives: list[str],
+def _build_findings(
+    legislations: list[LegislationItem],
     standards: list[StandardItem],
     review_items: list[StandardItem],
     missing_information: list[str],
     contradictions: list[str],
-) -> str:
-    product_text = product_type.replace("_", " ") if product_type else "product"
-    parts = [
-        f"Compliance screening completed for {product_text}.",
-        f"{len(directives)} likely directive(s) inferred.",
-        f"{len(standards)} likely standard(s) identified.",
+) -> list[Finding]:
+    findings: list[Finding] = []
+
+    for leg in legislations:
+        findings.append(
+            Finding(
+                directive=leg.directive_key or "OTHER",
+                article=leg.code,
+                status="PASS" if leg.applicability == "applicable" else "INFO",
+                finding=leg.title if not leg.reason else f"{leg.title}. {leg.reason}",
+                action="; ".join(leg.doc_impacts[:3]) if leg.doc_impacts else None,
+            )
+        )
+
+    for item in standards:
+        findings.append(
+            Finding(
+                directive=item.legislation_key or item.directive or "OTHER",
+                article=item.code,
+                status="PASS",
+                finding=item.reason or item.title,
+                action=item.notes,
+            )
+        )
+
+    for item in review_items:
+        findings.append(
+            Finding(
+                directive=item.legislation_key or item.directive or "OTHER",
+                article=item.code,
+                status="WARN",
+                finding=item.reason or item.title,
+                action=item.notes,
+            )
+        )
+
+    for text in missing_information:
+        findings.append(Finding(directive="SYSTEM", article="Missing information", status="WARN", finding=text))
+    for text in contradictions:
+        findings.append(Finding(directive="SYSTEM", article="Contradiction", status="FAIL", finding=text))
+
+    return findings
+
+
+def analyze(description: str, category: str = "", directives: list[str] | None = None, depth: str = "standard") -> AnalysisResult:
+    directives = directives or []
+    traits_info = extract_traits(description=description, category=category)
+    legislations = _build_legislation_items(traits_info)
+
+    legislation_keys = [x.directive_key for x in legislations if x.directive_key]
+    directive_scope = directives or legislation_keys
+
+    item_rows = find_applicable_items(
+        traits=set(traits_info.get("all_traits", [])),
+        directives=directive_scope,
+        product_type=traits_info.get("product_type"),
+        matched_products=traits_info.get("matched_products", []),
+    )
+
+    standards = [_convert_standard(x) for x in item_rows["standards"]]
+    review_items = [_convert_standard(x) for x in item_rows["review_items"]]
+
+    if depth == "quick":
+        standards = standards[:18]
+        review_items = review_items[:8]
+    elif depth == "standard":
+        standards = standards[:35]
+        review_items = review_items[:12]
+
+    derived_directives = _derive_directives(legislations, item_rows["standards"] + item_rows["review_items"])
+    missing_information = _build_missing_information(traits_info, legislations)
+    contradictions = traits_info.get("contradictions", [])
+    overall_risk = _priority_risk(traits_info, review_items, contradictions, missing_information)
+    findings = _build_findings(legislations, standards, review_items, missing_information, contradictions)
+
+    summary_parts: list[str] = []
+    if traits_info.get("product_type"):
+        summary_parts.append(f"Detected product type: {traits_info['product_type'].replace('_', ' ')}")
+    if legislations:
+        summary_parts.append("Applicable legislation: " + ", ".join(x.code for x in legislations[:6]))
+    if standards or review_items:
+        summary_parts.append(f"Matched {len(standards)} standards and {len(review_items)} review items")
+    if not summary_parts:
+        summary_parts.append("Compliance scoping completed.")
+
+    diagnostics = [
+        f"engine_version={APP_VERSION}",
+        f"depth={depth}",
+        f"product_match_confidence={traits_info.get('product_match_confidence', 'low')}",
     ]
 
-    if review_items:
-        parts.append(f"{len(review_items)} review item(s) still need manual route selection.")
-
-    if missing_information:
-        parts.append(f"{len(missing_information)} key information gap(s) still affect the result.")
-
-    if contradictions:
-        parts.append("Some contradictory signals were found and should be clarified.")
-
-    return " ".join(parts)
-
-
-def analyze(description: str, category: str, directives: list[str], depth: str) -> dict:
-    findings: list[Finding] = []
-    diagnostics: list[str] = []
-
-    classification = extract_traits(description, category)
-    product_type = classification["product_type"]
-    product_candidates_raw = classification.get("product_candidates", [])
-    matched_products = classification.get("matched_products", [])
-    product_match_confidence = classification.get("product_match_confidence", "low")
-    functional_classes = classification["functional_classes"]
-    explicit_traits = classification["explicit_traits"]
-    inferred_traits = classification["inferred_traits"]
-    all_traits = classification["all_traits"]
-    contradictions = classification["contradictions"]
-
-    traits_set = set(all_traits)
-    inferred_directives = infer_directives(traits_set, directives)
-
-    add_finding(
-        findings,
-        "SYSTEM",
-        "Product interpretation",
-        "INFO",
-        f"Detected product type: {product_type.replace('_', ' ') if product_type else 'not confidently identified'}.",
-        f"Match confidence: {product_match_confidence}. Add more concrete product detail if the classification looks wrong.",
-    )
-
-    if product_candidates_raw:
-        top = product_candidates_raw[0]
-        diagnostics.append(
-            f"Top product candidate '{top['id']}' matched alias '{top.get('matched_alias')}' with score {top['score']}."
-        )
-
-    if len(product_candidates_raw) > 1:
-        alt_text = ", ".join(
-            f"{x['id'].replace('_', ' ')} ({x['confidence']})" for x in product_candidates_raw[1:4]
-        )
-        add_finding(
-            findings,
-            "SYSTEM",
-            "Alternative product candidates",
-            "INFO",
-            f"Other possible product matches: {alt_text}.",
-            "Tighten the description if the top product match looks wrong.",
-        )
-
-    if explicit_traits:
-        add_finding(
-            findings,
-            "SYSTEM",
-            "Explicit signals",
-            "INFO",
-            f"Explicitly detected traits: {', '.join(explicit_traits)}.",
-            None,
-        )
-
-    if inferred_traits:
-        add_finding(
-            findings,
-            "SYSTEM",
-            "Inferred signals",
-            "INFO",
-            f"Inferred traits from product type or context: {', '.join(inferred_traits)}.",
-            "Confirm inferred assumptions if they affect compliance scope.",
-        )
-
-    for contradiction in contradictions:
-        add_finding(
-            findings,
-            "SYSTEM",
-            "Contradiction check",
-            "WARN",
-            contradiction,
-            "Clarify the product description to improve standards matching.",
-        )
-
-    matched = find_applicable_items(
-        traits=traits_set,
-        directives=inferred_directives,
-        product_type=product_type,
-        matched_products=matched_products,
-    )
-
-    standards: list[StandardItem] = []
-    review_items: list[StandardItem] = []
-
-    for bucket_name, rows in (("standard", matched["standards"]), ("review", matched["review_items"])):
-        for row in rows:
-            primary_directive = row.get("directives", ["SYSTEM"])[0] if row.get("directives") else "SYSTEM"
-            item = StandardItem(
-                code=row.get("code", "Unknown item"),
-                title=row.get("title", ""),
-                directive=primary_directive,
-                category=row.get("category", "general"),
-                confidence=row.get("confidence", "medium"),
-                item_type=row.get("item_type", bucket_name),
-                match_basis=row.get("match_basis", "traits"),
-                score=row.get("score", 0),
-                reason=row.get("reason"),
-                notes=row.get("notes"),
-            )
-            if bucket_name == "standard":
-                standards.append(item)
-            else:
-                review_items.append(item)
-
-            add_finding(
-                findings,
-                ", ".join(row.get("directives", [])) or "SYSTEM",
-                row.get("code", "Item"),
-                "INFO",
-                f"{row.get('code')}: {row.get('title')}",
-                row.get("reason") or row.get("notes"),
-            )
-
-    missing_information: list[str] = []
-
-    if product_match_confidence == "low":
-        missing_information.append("Product family is not confidently identified from the current description.")
-
-    if not product_type:
-        missing_information.append("Product type is not clear enough to apply product-specific standards reliably.")
-
-    if "mains_power_likely" in traits_set and "mains_powered" not in traits_set and "battery_powered" not in traits_set:
-        missing_information.append("Power architecture was not explicitly stated.")
-        add_finding(
-            findings,
-            "LVD",
-            "Missing power architecture detail",
-            "WARN",
-            "Power architecture looks relevant, but mains/battery supply was not explicitly stated.",
-            "Confirm rated voltage, supply method, and charger/adapter architecture.",
-        )
-
-    if "radio" in traits_set and not any(x in traits_set for x in ["wifi", "bluetooth", "cellular", "zigbee", "thread", "nfc"]):
-        missing_information.append("Radio technology was not clearly identified.")
-        add_finding(
-            findings,
-            "RED",
-            "Missing radio detail",
-            "WARN",
-            "Radio functionality appears relevant, but the radio technology was not clearly identified.",
-            "Specify whether the product uses Wi-Fi, Bluetooth, Zigbee, Thread, NFC, cellular, or another radio technology.",
-        )
-
-    if (
-        "personal_data_likely" in traits_set
-        and "account" not in traits_set
-        and "cloud" not in traits_set
-        and "local_only" not in traits_set
-    ):
-        missing_information.append("Data storage, transfer, and access architecture are not clear.")
-        add_finding(
-            findings,
-            "GDPR",
-            "Missing privacy architecture detail",
-            "WARN",
-            "Personal-data relevance is likely, but storage, transfer, and access architecture are not clear from the description.",
-            "Clarify what personal data is collected, where it is stored, who can access it, and whether cloud services are involved.",
-        )
-
-    if not standards and review_items:
-        diagnostics.append("Only review items matched; no concrete standard route was strong enough.")
-    if not standards and not review_items:
-        add_finding(
-            findings,
-            "SYSTEM",
-            "No items matched",
-            "WARN",
-            "No likely standards or review items were matched from the current traits, product match, and directives.",
-            "Expand the product description or tighten the YAML catalogue and standards coverage.",
-        )
-
-    overall_risk = derive_overall_risk(findings, contradictions, missing_information)
-    summary = build_summary(
-        product_type=product_type,
-        directives=inferred_directives,
-        standards=standards,
-        review_items=review_items,
-        missing_information=missing_information,
-        contradictions=contradictions,
-    )
-
-    result = AnalysisResult(
-        product_summary=description[:90] + "..." if len(description) > 90 else description,
+    return AnalysisResult(
+        product_summary=description.strip(),
         overall_risk=overall_risk,
-        summary=summary,
-        product_type=product_type,
-        product_match_confidence=product_match_confidence,
-        product_candidates=[ProductCandidate(**row) for row in product_candidates_raw],
-        functional_classes=functional_classes,
-        explicit_traits=explicit_traits,
-        inferred_traits=inferred_traits,
-        all_traits=all_traits,
-        directives=inferred_directives,
+        summary=". ".join(summary_parts),
+        product_type=traits_info.get("product_type"),
+        product_match_confidence=traits_info.get("product_match_confidence", "low"),
+        product_candidates=[ProductCandidate(**row) for row in traits_info.get("product_candidates", [])],
+        functional_classes=traits_info.get("functional_classes", []),
+        explicit_traits=traits_info.get("explicit_traits", []),
+        inferred_traits=traits_info.get("inferred_traits", []),
+        all_traits=traits_info.get("all_traits", []),
+        directives=derived_directives,
+        legislations=legislations,
         standards=standards,
         review_items=review_items,
         missing_information=missing_information,
@@ -296,5 +284,3 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
         diagnostics=diagnostics,
         findings=findings,
     )
-
-    return result.model_dump()
