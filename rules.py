@@ -4,8 +4,7 @@ import re
 from dataclasses import dataclass
 from typing import Iterable
 
-from models import AnalysisResult, FactModel, FeatureEvidence, Finding
-
+from models import AnalysisResult, FactModel, FeatureEvidence, Finding, Status, RiskLevel
 
 @dataclass(frozen=True)
 class PatternSpec:
@@ -274,8 +273,23 @@ def infer_directives(facts: FactModel, requested: Iterable[str] | None = None) -
     return ordered
 
 
-def add_finding(findings: list[Finding], directive: str, article: str, status: str, finding: str, action: str | None = None) -> None:
-    findings.append(Finding(directive=directive, article=article, status=status, finding=finding, action=action))
+def add_finding(
+    findings: list[Finding],
+    directive: str,
+    article: str,
+    status: Status,
+    finding: str,
+    action: str | None = None,
+) -> None:
+    findings.append(
+        Finding(
+            directive=directive,
+            article=article,
+            status=status,
+            finding=finding,
+            action=action,
+        )
+    )
 
 
 # Directive analyzers
@@ -486,9 +500,10 @@ def summarize_product(facts: FactModel) -> str:
 
 
 
-def derive_overall_risk(findings: list[Finding], facts: FactModel) -> str:
+def derive_overall_risk(findings: list[Finding], facts: FactModel) -> RiskLevel:
     fail_count = sum(1 for f in findings if f.status == "FAIL")
     warn_count = sum(1 for f in findings if f.status == "WARN")
+
     if fail_count >= 3 or facts.prohibited_ai_signal:
         return "CRITICAL"
     if fail_count >= 1 or len(facts.sensitive_data) >= 1 or len(facts.contradictions) >= 2:
