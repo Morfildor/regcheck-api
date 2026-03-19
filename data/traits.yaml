@@ -1,228 +1,262 @@
 traits:
-- id: consumer
-  label: Consumer product
-  description: Intended mainly for consumer or end-user use
-- id: household
-  label: Household use
-  description: Intended for domestic or household environments
-- id: professional
-  label: Professional use
-  description: Intended for professional or commercial users
-- id: industrial
-  label: Industrial use
-  description: Intended for industrial environments or processes
+- id: account
+  label: User account
+  description: Requires or supports account registration or login
+- id: ai_related
+  label: AI related
+  description: Uses AI, ML, or AI-like automated inference capability
+- id: air_cleaning
+  label: Air cleaning
+  description: Filters or cleans air
+- id: air_treatment
+  label: Air treatment
+  description: Used to purify, humidify, dehumidify, condition, or otherwise treat
+    air
+- id: animal_use
+  label: Animal use
+  description: Intended for animals, aquariums, terrariums, or livestock environments
+- id: app_control
+  label: App control
+  description: Controlled or configured by a mobile or web app
+- id: authentication
+  label: Authentication
+  description: Uses login, password, PIN, tokens, or similar controls
+- id: battery_powered
+  label: Battery powered
+  description: Powered by primary or rechargeable batteries
+- id: beverage_preparation
+  label: Beverage preparation
+  description: Used to heat, dispense, brew, or otherwise prepare beverages
+- id: bluetooth
+  label: Bluetooth
+  description: Uses Bluetooth radio technology
+- id: body_worn_or_applied
+  label: Body worn or body applied
+  description: Worn on the body or directly applied to the body during use
+- id: built_in
+  label: Built-in appliance
+  description: Designed to be integrated into furniture, cabinetry, or built-in installations
+- id: camera
+  label: Camera
+  description: Captures still or video images
+- id: cellular
+  label: Cellular
+  description: Uses cellular radio technology
+- id: child_targeted
+  label: Child targeted
+  description: Intended for or marketed to children
+- id: cleaning
+  label: Cleaning appliance
+  description: Used to clean floors, surfaces, textiles, dishes, or people
+- id: cloud
+  label: Cloud connection
+  description: Connects to remote or cloud services
 - id: commercial_food_service
   label: Commercial food service
   description: Intended for catering, horeca, or food-service environments
-- id: medical_context
-  label: Medical context
-  description: Intended for healthcare, patient, or clinical use context
+- id: consumer
+  label: Consumer product
+  description: Intended mainly for consumer or end-user use
+- id: cooking
+  label: Cooking appliance
+  description: Used to cook, grill, bake, fry, toast, roast, or otherwise heat food
+- id: cooling
+  label: Cooling function
+  description: Generates cooling or refrigeration as part of intended function
+- id: data_storage
+  label: Data storage
+  description: Stores user, device, or event data
+- id: dehumidification
+  label: Dehumidification
+  description: Removes moisture from air
+- id: display
+  label: Display
+  description: Includes a visual display or screen
+- id: drying
+  label: Drying function
+  description: Used to dry textiles, hands, hair, air, or other items
 - id: electrical
   label: Electrical product
   description: Uses electrical power or electrical components
 - id: electronic
   label: Electronic product
   description: Contains electronic circuitry or digital electronics
-- id: mains_powered
-  label: Mains powered
-  description: Explicitly stated to run from mains power
-- id: mains_power_likely
-  label: Mains powered likely
-  description: Likely mains powered based on product type or context
-- id: battery_powered
-  label: Battery powered
-  description: Powered by primary or rechargeable batteries
-- id: usb_powered
-  label: USB powered
-  description: Powered through USB or USB-C
-- id: heating
-  label: Heating function
-  description: Generates heat as part of intended function
-- id: cooling
-  label: Cooling function
-  description: Generates cooling or refrigeration as part of intended function
-- id: motorized
-  label: Motorized
-  description: Contains a motor or driven moving parts
-- id: pumping
-  label: Pumping function
-  description: Contains a pump or fluid transfer function
-- id: water_contact
-  label: Water contact
-  description: Intended to contain, heat, pump, or contact water
+- id: extraction
+  label: Extraction
+  description: Extracts fumes, vapours, dust, or liquids
+- id: fixed_installation
+  label: Fixed installation
+  description: Intended to be fixed, built in, wall mounted, ceiling mounted, or permanently
+    installed
+- id: floor_standing
+  label: Floor-standing appliance
+  description: Normally positioned on the floor during use
 - id: food_contact
   label: Food contact
   description: Intended to contact food or beverages
-- id: wearable
-  label: Wearable
-  description: Intended to be worn on the body
-- id: radio
-  label: Radio functionality
-  description: Contains radio transmission or reception capability
-- id: wifi
-  label: Wi-Fi
-  description: Uses Wi-Fi radio technology
-- id: bluetooth
-  label: Bluetooth
-  description: Uses Bluetooth radio technology
-- id: zigbee
-  label: Zigbee
-  description: Uses Zigbee radio technology
-- id: thread
-  label: Thread
-  description: Uses Thread radio technology
-- id: matter
-  label: Matter
-  description: Uses or supports Matter interoperability
-- id: nfc
-  label: NFC
-  description: Uses near-field communication
-- id: cellular
-  label: Cellular
-  description: Uses cellular radio technology
+- id: food_preparation
+  label: Food preparation
+  description: Used to prepare, process, mix, blend, cut, or cook food
+- id: garden_use
+  label: Garden use
+  description: Used for lawn, garden, or outdoor property maintenance
 - id: gnss
   label: GNSS
   description: Uses GPS, GNSS, or satellite positioning
-- id: app_control
-  label: App control
-  description: Controlled or configured by a mobile or web app
-- id: cloud
-  label: Cloud connection
-  description: Connects to remote or cloud services
-- id: internet
-  label: Internet connected
-  description: Connects to the public internet
-- id: local_only
-  label: Local only
-  description: Operates locally without cloud or internet dependence
-- id: ota
-  label: OTA updates
-  description: Supports firmware or software updates over the air
-- id: account
-  label: User account
-  description: Requires or supports account registration or login
-- id: authentication
-  label: Authentication
-  description: Uses login, password, PIN, tokens, or similar controls
-- id: remote_control
-  label: Remote control
-  description: Supports remote control beyond local physical interaction
-- id: data_storage
-  label: Data storage
-  description: Stores user, device, or event data
-- id: camera
-  label: Camera
-  description: Captures still or video images
-- id: microphone
-  label: Microphone
-  description: Captures voice or sound
-- id: speaker
-  label: Speaker
-  description: Emits voice, music, alarms, or sounds
-- id: display
-  label: Display
-  description: Includes a visual display or screen
-- id: location
-  label: Location data
-  description: Uses or stores location-related data
+- id: hair_care
+  label: Hair care
+  description: Used to cut, dry, style, curl, or treat hair
+- id: handheld
+  label: Handheld appliance
+  description: Held in the hand during normal operation
 - id: health_related
   label: Health related
   description: Measures or handles physiological or health-related information
-- id: safety_function
-  label: Safety function
-  description: Performs a safety-critical or protective function
+- id: heating
+  label: Heating function
+  description: Generates heat as part of intended function
+- id: heating_personal_environment
+  label: Personal environment heating
+  description: Used to warm a person, bed, room zone, or local environment
+- id: household
+  label: Household use
+  description: Intended for domestic or household environments
+- id: humidification
+  label: Humidification
+  description: Adds moisture to air
+- id: ice_making
+  label: Ice making
+  description: Produces ice as a primary function
+- id: indoor_use
+  label: Indoor use
+  description: Intended mainly for indoor environments
+- id: industrial
+  label: Industrial use
+  description: Intended for industrial environments or processes
+- id: internet
+  label: Internet connected
+  description: Connects to the public internet
+- id: liquid_heating
+  label: Liquid heating
+  description: Heats liquids such as water, milk, oil, or similar substances
+- id: local_only
+  label: Local only
+  description: Operates locally without cloud or internet dependence
+- id: location
+  label: Location data
+  description: Uses or stores location-related data
+- id: mains_power_likely
+  label: Mains powered likely
+  description: Likely mains powered based on product type or context
+- id: mains_powered
+  label: Mains powered
+  description: Explicitly stated to run from mains power
+- id: matter
+  label: Matter
+  description: Uses or supports Matter interoperability
+- id: medical_context
+  label: Medical context
+  description: Intended for healthcare, patient, or clinical use context
+- id: microphone
+  label: Microphone
+  description: Captures voice or sound
+- id: motorized
+  label: Motorized
+  description: Contains a motor or driven moving parts
+- id: nfc
+  label: NFC
+  description: Uses near-field communication
+- id: oral_care
+  label: Oral care
+  description: Used for brushing, irrigating, or otherwise cleaning teeth and mouth
+- id: ota
+  label: OTA updates
+  description: Supports firmware or software updates over the air
+- id: outdoor_use
+  label: Outdoor use
+  description: Intended or suitable for outdoor environments
+- id: personal_care
+  label: Personal care
+  description: Used for personal grooming, hygiene, beauty, or body treatment
 - id: personal_data_likely
   label: Personal data likely
   description: Likely processes personal data based on function or features
-- id: child_targeted
-  label: Child targeted
-  description: Intended for or marketed to children
-- id: ai_related
-  label: AI related
-  description: Uses AI, ML, or AI-like automated inference capability
-- id: vacuum_cleaning
-  label: Vacuum cleaning
-  description: Intended to vacuum dust, debris, or liquids
-- id: floor_treatment
-  label: Floor treatment
-  description: Intended to clean, scrub, polish, or otherwise treat floors
-- id: washing_function
-  label: Laundry washing
-  description: Intended to wash textiles or fabrics
-- id: drying_function
-  label: Drying
-  description: Intended to dry textiles, hands, shoes, or similar items
-- id: dishwashing
-  label: Dishwashing
-  description: Intended to wash dishes, cutlery, or utensils
-- id: cooking
-  label: Cooking
-  description: Intended to cook, bake, roast, grill, fry, or otherwise prepare food
-    with heat
-- id: portable_cooking
-  label: Portable cooking appliance
-  description: Portable food-heating or cooking appliance
-- id: liquid_heating
-  label: Liquid heating
-  description: Intended mainly to heat liquids
+- id: portable
+  label: Portable appliance
+  description: Intended to be moved or repositioned during normal use
+- id: pressure
+  label: Pressure vessel or pressure process
+  description: Uses pressure, pressurised liquid, or pressurised steam in normal operation
+- id: professional
+  label: Professional use
+  description: Intended for professional or commercial users
+- id: pumping
+  label: Pumping function
+  description: Contains a pump or fluid transfer function
+- id: radio
+  label: Radio functionality
+  description: Contains radio transmission or reception capability
 - id: refrigeration
   label: Refrigeration
-  description: Intended to refrigerate, freeze, make ice, or make ice cream
-- id: room_heating
-  label: Room heating
-  description: Intended to heat occupied spaces or rooms
-- id: personal_care
-  label: Personal care appliance
-  description: Intended for hair care, shaving, grooming, massage, or similar body
-    care
-- id: flexible_heating
-  label: Flexible heating article
-  description: Blanket, pad, mattress, clothing, or similar flexible heated article
-- id: water_heater
-  label: Water heater
-  description: Intended to heat or store domestic water
-- id: battery_charging
-  label: Battery charging
-  description: Intended to charge batteries
-- id: air_treatment
-  label: Air treatment
-  description: Intended to move, clean, humidify, or dehumidify air
-- id: kitchen_machine
-  label: Kitchen machine
-  description: Motor-driven kitchen machine for food preparation
-- id: microwave_heating
-  label: Microwave heating
-  description: Uses microwave energy to heat food or beverages
-- id: storage_heater
-  label: Storage heater
-  description: Stores thermal energy for later room heating
-- id: sewing
-  label: Sewing or textile making
-  description: Intended to sew, embroider, knit, or otherwise make textiles
-- id: beauty_uv
-  label: UV or IR personal exposure
-  description: Intended for personal skin exposure to UV or IR radiation
-- id: hotplate_or_hob
-  label: Hotplate or hob
-  description: Surface cooking appliance such as hob or hotplate
-- id: oven_appliance
-  label: Oven appliance
-  description: Appliance with baking/roasting cavity
-- id: range_hood
-  label: Range hood
-  description: Appliance intended to extract cooking fumes
-- id: garment_care
-  label: Garment care
-  description: Intended to iron, press, or steam garments
-- id: humidifier
-  label: Humidifier
-  description: Intended mainly to increase air humidity
-- id: fan_appliance
-  label: Fan appliance
-  description: Intended mainly to move air using a fan
-- id: pump_appliance
-  label: Pump appliance
-  description: Standalone pump-like appliance in household context
-- id: massage
-  label: Massage appliance
-  description: Provides massage or vibration treatment
+  description: Used to refrigerate, freeze, chill, or preserve goods at low temperature
+- id: remote_control
+  label: Remote control
+  description: Supports remote control beyond local physical interaction
+- id: safety_function
+  label: Safety function
+  description: Performs a safety-critical or protective function
+- id: security_or_barrier
+  label: Security or barrier function
+  description: Used for barriers, shutters, gates, doors, or access control movement
+- id: skin_contact
+  label: Skin contact
+  description: Intended to contact skin during normal operation
+- id: speaker
+  label: Speaker
+  description: Emits voice, music, alarms, or sounds
+- id: steam
+  label: Steam generation or use
+  description: Generates or applies steam during operation
+- id: surface_cleaning
+  label: Surface cleaning
+  description: Used primarily to clean floors, carpets, windows, or hard surfaces
+- id: tabletop
+  label: Tabletop appliance
+  description: Normally placed on a table, counter, or worktop during use
+- id: textile_care
+  label: Textile care
+  description: Used to wash, dry, iron, steam, or otherwise care for garments and
+    textiles
+- id: thread
+  label: Thread
+  description: Uses Thread radio technology
+- id: usb_powered
+  label: USB powered
+  description: Powered through USB or USB-C
+- id: vehicle_supply
+  label: Vehicle supply
+  description: Supplies, charges, or services vehicles or vehicle equipment
+- id: ventilation
+  label: Ventilation or air moving
+  description: Used to move, circulate, extract, or ventilate air
+- id: washing
+  label: Washing function
+  description: Used to wash textiles, dishes, surfaces, or other items
+- id: water_contact
+  label: Water contact
+  description: Intended to contain, heat, pump, or contact water
+- id: water_heating
+  label: Water heating
+  description: Heats water or another liquid as a primary function
+- id: wearable
+  label: Wearable
+  description: Intended to be worn on the body
+- id: wet_environment
+  label: Wet environment
+  description: Intended for bathrooms, showers, outdoors, or other wet locations
+- id: wifi
+  label: Wi-Fi
+  description: Uses Wi-Fi radio technology
+- id: zigbee
+  label: Zigbee
+  description: Uses Zigbee radio technology
