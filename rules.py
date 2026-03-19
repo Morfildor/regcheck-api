@@ -1,703 +1,547 @@
-from models import Finding
+from __future__ import annotations
 
-# ── Helpers ────────────────────────────────────────────────────────────────
+import re
+from dataclasses import dataclass
+from typing import Iterable
 
-def detect(text: str, keywords: list) -> bool:
-    t = text.lower()
-    return any(k in t for k in keywords)
+from models import AnalysisResult, FactModel, FeatureEvidence, Finding
 
-def score(text: str, keywords: list) -> int:
-    """Count how many keywords match — used to gauge confidence."""
-    t = text.lower()
-    return sum(1 for k in keywords if k in t)
 
-# ── Main analysis engine ───────────────────────────────────────────────────
+@dataclass(frozen=True)
+class PatternSpec:
+    pattern: re.Pattern[str]
+    label: str
+    weight: float = 1.0
 
-def analyze(description: str, category: str, directives: list, depth: str) -> dict:
-    findings = []
-    t = description.lower()
 
-    # ── Feature detection ─────────────────────────────────────────────────
-    # Radio / connectivity
-    has_wifi         = detect(t, ["wifi", "wi-fi", "wlan", "802.11", "2.4ghz", "5ghz", "6ghz"])
-    has_bt           = detect(t, ["bluetooth", " bt ", "ble", "bt5", "bt4"])
-    has_zigbee       = detect(t, ["zigbee", "ieee 802.15", "z-wave", "thread", "matter"])
-    has_lora         = detect(t, ["lora", "lorawan", "868mhz", "915mhz", "lpwan"])
-    has_nfc          = detect(t, ["nfc", "near field"])
-    has_cellular     = detect(t, ["lte", "4g", "5g", "nb-iot", "cat-m", "cellular", "gsm", "3gpp"])
-    has_radio        = has_wifi or has_bt or has_zigbee or has_lora or has_nfc or has_cellular or detect(t, ["radio", "wireless", "rf module", "rf transmit"])
+@dataclass
+class MatchResult:
+    hit: bool
+    score: float
+    positive_hits: list[str]
+    negative_hits: list[str]
+    negated: bool
 
-    # Connectivity / services
-    has_cloud        = detect(t, ["cloud", "server", "remote server", "aws", "azure", "google cloud", "backend", "hosted", "saas", "api endpoint"])
-    has_app          = detect(t, ["mobile app", "smartphone app", "android app", "ios app", "web app", "web interface", "dashboard", "companion app"])
-    has_internet     = has_cloud or has_app or detect(t, ["internet", "online", "connected", "iot"])
-    has_local_only   = detect(t, ["local only", "no cloud", "offline", "no internet", "standalone", "no remote"])
 
-    # Updates & software
-    has_ota          = detect(t, ["ota", "over-the-air", "firmware update", "software update", "remote update", "automatic update", "fota"])
-    has_signed_fw    = detect(t, ["signed firmware", "firmware signature", "secure boot", "code signing", "cryptographic signature"])
-    has_rollback     = detect(t, ["rollback", "roll back", "downgrade protection", "anti-rollback"])
+STATUS_ORDER = {"FAIL": 4, "WARN": 3, "INFO": 2, "PASS": 1}
+RISK_ORDER = {"LOW": 1, "MEDIUM": 2, "HIGH": 3, "CRITICAL": 4}
 
-    # Authentication & access control
-    has_auth         = detect(t, ["login", "password", "authentication", "user account", "credentials", "passphrase", "pin code", "mfa", "2fa", "oauth", "pairing"])
-    has_default_pw   = detect(t, ["default password", "default credentials", "admin/admin", "admin password", "factory default password", "same password"])
-    has_unique_pw    = detect(t, ["unique password", "per-device", "device-specific", "unique credentials", "unique per device"])
-    has_mfa          = detect(t, ["mfa", "2fa", "two-factor", "multi-factor", "totp"])
-    has_lockout      = detect(t, ["lockout", "rate limit", "brute force", "account lock"])
 
-    # Data & privacy
-    has_personal     = detect(t, ["personal data", "user data", "usage data", "usage pattern", "user profile", "account data", "email", "name", "address"])
-    has_health       = detect(t, ["health", "heart rate", "blood", "spo2", "sleep data", "medical", "ecg", "stress level", "body temperature"])
-    has_location     = detect(t, ["location", "gps", "geolocation", "tracking", "latitude", "longitude", "position"])
-    has_biometric    = detect(t, ["biometric", "fingerprint", "face id", "facial recognition", "iris scan", "voice recognition", "retina"])
-    has_sensitive    = has_health or has_location or has_biometric
-    has_behavioral   = detect(t, ["behavior", "behavioural", "usage pattern", "activity", "consumption data", "habits"])
-    has_energy_data  = detect(t, ["energy data", "consumption", "power usage", "electricity usage", "smart meter"])
-    has_encrypt      = detect(t, ["encrypt", "tls", "https", "ssl", "aes", "e2e", "end-to-end", "at rest", "in transit"])
-    has_tls          = detect(t, ["tls", "https", "ssl", "tls 1.2", "tls 1.3"])
-    has_retention    = detect(t, ["store data", "stores data", "data retention", "log", "history", "archive", "record"])
-    has_data_sharing = detect(t, ["share data", "third party", "analytics provider", "advertising", "monetis", "sell data", "data broker"])
-    has_cross_border = detect(t, ["us server", "us cloud", "aws", "azure", "google cloud", "non-eu", "outside eu", "us-based server", "transfer to"])
-    has_anon         = detect(t, ["anonymi", "pseudonym", "aggregated", "de-identified"])
+def rx(pattern: str, label: str, weight: float = 1.0) -> PatternSpec:
+    return PatternSpec(re.compile(pattern, re.IGNORECASE), label, weight)
 
-    # AI / ML
-    has_ai           = detect(t, ["artificial intelligence", " ai ", "machine learning", " ml ", "neural network", "deep learning", "inference", "model", "llm", "computer vision", "nlp", "recommendation engine", "predictive"])
-    has_camera       = detect(t, ["camera", "video stream", "image capture", "snapshot", "cctv", "surveillance"])
-    has_face_recog   = detect(t, ["face recognition", "facial recognition", "face detection", "face id"])
-    has_voice_ai     = detect(t, ["voice assistant", "wake word", "always listening", "speech recognition", "voice command", "alexa", "google assistant"])
-    has_emotion      = detect(t, ["emotion recognition", "emotion detection", "sentiment", "mood detection"])
-    has_decision     = detect(t, ["automated decision", "autonomous decision", "scoring", "ranking users", "user scoring"])
-    has_child_ai     = detect(t, ["educational ai", "children's ai", "ai for kids", "adaptive learning"])
-    is_high_risk_ai  = has_face_recog or has_emotion or has_decision or has_child_ai or detect(t, ["critical infrastructure ai", "biometric ai", "law enforcement ai", "credit scoring ai", "recruitment ai"])
-    has_prohibited_ai = detect(t, ["social scoring", "real-time biometric surveillance", "subliminal manipulation", "exploit vulnerability ai"])
 
-    # Power / hardware
-    has_mains        = detect(t, ["mains", "230v", "110v", "120v", "ac power", "power supply", "wall plug", "hardwired", "mains-powered", "grid"])
-    has_battery      = detect(t, ["battery", "rechargeable", "li-ion", "lithium ion", "lipo", "li-po", "alkaline battery", "aa battery", "coin cell"])
-    has_usb_power    = detect(t, ["usb power", "usb-c power", "usb powered", "5v usb"])
-    has_poe          = detect(t, ["poe", "power over ethernet"])
-    has_high_voltage = detect(t, ["high voltage", "400v", "hv", "motor drive", "inverter"])
+FEATURES: dict[str, dict[str, list[PatternSpec]]] = {
+    "wifi": {
+        "pos": [rx(r"\bwifi\b", "wifi", 2.0), rx(r"\bwi[ -]?fi\b", "wi-fi", 2.0), rx(r"\bwlan\b", "wlan", 1.5), rx(r"\b802\.11[a-z0-9.-]*\b", "802.11", 2.0)],
+        "neg": [rx(r"\bno wifi\b", "no wifi", 3.0), rx(r"\bwithout wifi\b", "without wifi", 3.0)],
+    },
+    "bluetooth": {
+        "pos": [rx(r"\bbluetooth\b", "bluetooth", 2.0), rx(r"\bble\b", "ble", 2.0), rx(r"\bbt ?[45](\.\d+)?\b", "bt version", 1.5)],
+        "neg": [rx(r"\bno bluetooth\b", "no bluetooth", 3.0)],
+    },
+    "mesh_radio": {
+        "pos": [rx(r"\bzigbee\b", "zigbee", 2.0), rx(r"\bthread\b", "thread", 2.0), rx(r"\bmatter\b", "matter", 2.0), rx(r"\bz-wave\b", "z-wave", 2.0)],
+        "neg": [],
+    },
+    "cellular": {
+        "pos": [rx(r"\blte\b", "lte", 2.0), rx(r"\b4g\b", "4g", 2.0), rx(r"\b5g\b", "5g", 2.0), rx(r"\bnb-?iot\b", "nb-iot", 2.0), rx(r"\bcat-?m\b", "cat-m", 2.0), rx(r"\bcellular\b", "cellular", 1.5), rx(r"\bgsm\b", "gsm", 1.5)],
+        "neg": [],
+    },
+    "nfc": {"pos": [rx(r"\bnfc\b", "nfc", 2.0), rx(r"\bnear field\b", "near field", 1.5), rx(r"\brfid\b", "rfid", 1.2)], "neg": []},
+    "cloud": {
+        "pos": [rx(r"\bcloud\b", "cloud", 1.6), rx(r"\baws\b", "aws", 2.0), rx(r"\bazure\b", "azure", 2.0), rx(r"\bgoogle cloud\b", "google cloud", 2.0), rx(r"\bbackend\b", "backend", 1.4), rx(r"\bremote server\b", "remote server", 1.6), rx(r"\bapi\b", "api", 1.0), rx(r"\bsaas\b", "saas", 1.6), rx(r"\bhosted\b", "hosted", 1.0)],
+        "neg": [rx(r"\bno cloud\b", "no cloud", 3.0), rx(r"\boffline only\b", "offline only", 3.0), rx(r"\bfully offline\b", "fully offline", 3.0)],
+    },
+    "internet": {
+        "pos": [rx(r"\binternet\b", "internet", 1.8), rx(r"\bonline\b", "online", 1.4), rx(r"\bconnected\b", "connected", 1.0), rx(r"\biot\b", "iot", 1.6), rx(r"\bremote access\b", "remote access", 1.8)],
+        "neg": [rx(r"\bno internet\b", "no internet", 3.0), rx(r"\bstandalone\b", "standalone", 2.0), rx(r"\bair-?gapped\b", "air-gapped", 3.0)],
+    },
+    "local_only": {
+        "pos": [rx(r"\blocal only\b", "local only", 2.5), rx(r"\boffline\b", "offline", 2.0), rx(r"\bstandalone\b", "standalone", 1.8), rx(r"\bon-device only\b", "on-device only", 2.2), rx(r"\bno remote\b", "no remote", 2.2)],
+        "neg": [],
+    },
+    "app": {
+        "pos": [rx(r"\bmobile app\b", "mobile app", 2.0), rx(r"\bcompanion app\b", "companion app", 2.0), rx(r"\bandroid app\b", "android app", 1.8), rx(r"\bios app\b", "ios app", 1.8), rx(r"\bweb app\b", "web app", 1.8), rx(r"\bdashboard\b", "dashboard", 1.0)],
+        "neg": [rx(r"\bno app\b", "no app", 2.5)],
+    },
+    "software": {
+        "pos": [rx(r"\bsoftware\b", "software", 1.4), rx(r"\bfirmware\b", "firmware", 1.8), rx(r"\bembedded\b", "embedded", 1.2), rx(r"\bmicrocontroller\b", "microcontroller", 1.4), rx(r"\bprocessor\b", "processor", 1.0), rx(r"\brtos\b", "rtos", 1.5), rx(r"\blinux\b", "linux", 1.5)],
+        "neg": [rx(r"\bno software\b", "no software", 3.0), rx(r"\bpurely mechanical\b", "purely mechanical", 3.0)],
+    },
+    "ota": {
+        "pos": [rx(r"\bota\b", "ota", 2.0), rx(r"\bover-the-air\b", "over-the-air", 2.0), rx(r"\bfirmware update\b", "firmware update", 1.8), rx(r"\bsoftware update\b", "software update", 1.6), rx(r"\bremote update\b", "remote update", 1.8), rx(r"\bfota\b", "fota", 2.0)],
+        "neg": [rx(r"\bno update\b", "no update", 1.5)],
+    },
+    "signed_updates": {"pos": [rx(r"\bsigned firmware\b", "signed firmware", 2.0), rx(r"\bcode signing\b", "code signing", 2.0), rx(r"\bsecure boot\b", "secure boot", 1.6), rx(r"\bsignature verification\b", "signature verification", 1.8)], "neg": []},
+    "rollback": {"pos": [rx(r"\brollback\b", "rollback", 1.5), rx(r"\bdowngrade protection\b", "downgrade protection", 2.0), rx(r"\banti-rollback\b", "anti-rollback", 2.0)], "neg": []},
+    "auth": {
+        "pos": [rx(r"\blogin\b", "login", 1.5), rx(r"\bpassword\b", "password", 1.5), rx(r"\bauthentication\b", "authentication", 1.6), rx(r"\buser account\b", "user account", 1.6), rx(r"\bcredentials\b", "credentials", 1.4), rx(r"\bpin\b", "pin", 1.0), rx(r"\bpairing\b", "pairing", 1.0), rx(r"\boauth\b", "oauth", 2.0)],
+        "neg": [rx(r"\bno login\b", "no login", 2.8), rx(r"\bno authentication\b", "no authentication", 2.8)],
+    },
+    "default_password": {"pos": [rx(r"\bdefault password\b", "default password", 3.0), rx(r"\bdefault credentials\b", "default credentials", 3.0), rx(r"\badmin/admin\b", "admin/admin", 3.0), rx(r"\bsame password\b", "same password", 2.5)], "neg": []},
+    "unique_credentials": {"pos": [rx(r"\bunique password\b", "unique password", 2.5), rx(r"\bper-device\b", "per-device", 2.0), rx(r"\bdevice-specific\b", "device-specific", 2.0), rx(r"\bunique credentials\b", "unique credentials", 2.5)], "neg": []},
+    "mfa": {"pos": [rx(r"\bmfa\b", "mfa", 2.2), rx(r"\b2fa\b", "2fa", 2.2), rx(r"\btwo-factor\b", "two-factor", 2.2), rx(r"\bmulti-factor\b", "multi-factor", 2.2)], "neg": []},
+    "brute_force": {"pos": [rx(r"\brate limit\b", "rate limit", 1.8), rx(r"\bbrute force\b", "brute force", 1.8), rx(r"\blockout\b", "lockout", 1.5)], "neg": []},
+    "personal_data": {
+        "pos": [rx(r"\bpersonal data\b", "personal data", 2.2), rx(r"\buser data\b", "user data", 1.6), rx(r"\bemail\b", "email", 1.4), rx(r"\bname\b", "name", 0.8), rx(r"\baddress\b", "address", 1.0), rx(r"\baccount\b", "account", 1.0), rx(r"\bprofile\b", "profile", 1.0)],
+        "neg": [rx(r"\bno personal data\b", "no personal data", 3.0), rx(r"\bno user data\b", "no user data", 3.0)],
+    },
+    "health_data": {"pos": [rx(r"\bhealth\b", "health", 1.8), rx(r"\bheart rate\b", "heart rate", 2.2), rx(r"\bspo2\b", "spo2", 2.2), rx(r"\becg\b", "ecg", 2.2), rx(r"\bsleep data\b", "sleep data", 2.0), rx(r"\bbody temperature\b", "body temperature", 2.0)], "neg": []},
+    "location_data": {"pos": [rx(r"\blocation\b", "location", 1.8), rx(r"\bgps\b", "gps", 2.2), rx(r"\bgeolocation\b", "geolocation", 2.2), rx(r"\btracking\b", "tracking", 1.4), rx(r"\blatitude\b", "latitude", 1.8), rx(r"\blongitude\b", "longitude", 1.8)], "neg": []},
+    "biometric_data": {"pos": [rx(r"\bbiometric\b", "biometric", 2.2), rx(r"\bfingerprint\b", "fingerprint", 2.2), rx(r"\bface id\b", "face id", 2.0), rx(r"\bvoice recognition\b", "voice recognition", 2.0), rx(r"\biris\b", "iris", 2.0)], "neg": []},
+    "telemetry": {"pos": [rx(r"\btelemetry\b", "telemetry", 1.8), rx(r"\banalytics\b", "analytics", 1.5), rx(r"\busage data\b", "usage data", 1.5), rx(r"\blogs?\b", "logs", 0.8), rx(r"\bevent history\b", "event history", 1.2)], "neg": []},
+    "retention": {"pos": [rx(r"\bstore[s]? data\b", "stores data", 1.5), rx(r"\bdata retention\b", "data retention", 2.0), rx(r"\bhistory\b", "history", 1.0), rx(r"\barchive\b", "archive", 1.0), rx(r"\brecords?\b", "records", 0.8)], "neg": []},
+    "sharing": {"pos": [rx(r"\bthird party\b", "third party", 1.8), rx(r"\bshare data\b", "share data", 2.0), rx(r"\badvertising\b", "advertising", 1.5), rx(r"\bdata broker\b", "data broker", 2.2), rx(r"\banalytics provider\b", "analytics provider", 1.8)], "neg": []},
+    "encryption": {"pos": [rx(r"\bencrypt\w*\b", "encrypt", 1.8), rx(r"\baes\b", "aes", 1.5), rx(r"\bend-to-end\b", "end-to-end", 2.0), rx(r"\bat rest\b", "at rest", 1.0), rx(r"\bin transit\b", "in transit", 1.0)], "neg": []},
+    "tls": {"pos": [rx(r"\btls\b", "tls", 2.0), rx(r"\bhttps\b", "https", 2.0), rx(r"\bssl\b", "ssl", 1.0)], "neg": []},
+    "anonymisation": {"pos": [rx(r"\banonymi\w*\b", "anonymised", 1.8), rx(r"\bpseudonym\w*\b", "pseudonymised", 1.8), rx(r"\baggregated\b", "aggregated", 1.2), rx(r"\bde-identified\b", "de-identified", 1.8)], "neg": []},
+    "cross_border": {"pos": [rx(r"\bus server\b", "us server", 2.2), rx(r"\bnon-eu\b", "non-eu", 1.8), rx(r"\boutside eu\b", "outside eu", 1.8), rx(r"\btransfer to\b", "transfer to", 1.0)], "neg": []},
+    "ai": {
+        "pos": [rx(r"\bartificial intelligence\b", "artificial intelligence", 2.5), rx(r"\bmachine learning\b", "machine learning", 2.5), rx(r"\bdeep learning\b", "deep learning", 2.5), rx(r"\bllm\b", "llm", 2.2), rx(r"\bcomputer vision\b", "computer vision", 2.2), rx(r"\brecommendation engine\b", "recommendation engine", 2.0), rx(r"\bpredictive\b", "predictive", 1.5), rx(r"\binference\b", "inference", 1.5), rx(r"\bai-powered\b", "ai-powered", 2.2)],
+        "neg": [rx(r"\bno ai\b", "no ai", 3.0), rx(r"\bno ml\b", "no ml", 3.0), rx(r"\bno ai features\b", "no ai features", 3.0)],
+    },
+    "camera": {"pos": [rx(r"\bcamera\b", "camera", 2.0), rx(r"\bvideo stream\b", "video stream", 2.0), rx(r"\bcctv\b", "cctv", 2.0), rx(r"\bsurveillance\b", "surveillance", 2.0), rx(r"\bimage capture\b", "image capture", 1.8)], "neg": []},
+    "face_recognition": {"pos": [rx(r"\bface recognition\b", "face recognition", 3.0), rx(r"\bfacial recognition\b", "facial recognition", 3.0), rx(r"\bface detection\b", "face detection", 2.0)], "neg": []},
+    "voice_ai": {"pos": [rx(r"\bvoice assistant\b", "voice assistant", 2.4), rx(r"\bwake word\b", "wake word", 2.2), rx(r"\bspeech recognition\b", "speech recognition", 2.2), rx(r"\bvoice command\b", "voice command", 1.8), rx(r"\balexa\b", "alexa", 1.8), rx(r"\bgoogle assistant\b", "google assistant", 1.8)], "neg": []},
+    "emotion_ai": {"pos": [rx(r"\bemotion recognition\b", "emotion recognition", 3.0), rx(r"\bemotion detection\b", "emotion detection", 3.0), rx(r"\bmood detection\b", "mood detection", 2.6)], "neg": []},
+    "automated_decision": {"pos": [rx(r"\bautomated decision\b", "automated decision", 2.6), rx(r"\bautonomous decision\b", "autonomous decision", 2.6), rx(r"\bscoring\b", "scoring", 1.5), rx(r"\branking users\b", "ranking users", 2.6)], "neg": []},
+    "prohibited_ai": {"pos": [rx(r"\bsocial scoring\b", "social scoring", 4.0), rx(r"\breal-time biometric surveillance\b", "real-time biometric surveillance", 4.0), rx(r"\bsubliminal manipulation\b", "subliminal manipulation", 4.0), rx(r"\bexploit vulnerability ai\b", "exploit vulnerability ai", 4.0)], "neg": []},
+    "mains": {"pos": [rx(r"\bmains\b", "mains", 2.0), rx(r"\b230v\b", "230v", 2.0), rx(r"\b220v\b", "220v", 2.0), rx(r"\b110v\b", "110v", 2.0), rx(r"\b120v\b", "120v", 2.0), rx(r"\bac power\b", "ac power", 2.0), rx(r"\bwall plug\b", "wall plug", 1.6), rx(r"\bhardwired\b", "hardwired", 1.8)], "neg": []},
+    "battery": {"pos": [rx(r"\bbattery\b", "battery", 1.4), rx(r"\brechargeable\b", "rechargeable", 1.4), rx(r"\bli-?ion\b", "li-ion", 2.0), rx(r"\blithium ion\b", "lithium ion", 2.0), rx(r"\baa batter(y|ies)\b", "aa battery", 1.8), rx(r"\bcoin cell\b", "coin cell", 1.8)], "neg": []},
+    "usb_power": {"pos": [rx(r"\busb[- ]?c power\b", "usb-c power", 2.0), rx(r"\busb powered\b", "usb powered", 2.0), rx(r"\b5v usb\b", "5v usb", 2.0)], "neg": []},
+    "poe": {"pos": [rx(r"\bpoe\b", "poe", 2.0), rx(r"\bpower over ethernet\b", "power over ethernet", 2.0)], "neg": []},
+    "high_voltage": {"pos": [rx(r"\bhigh voltage\b", "high voltage", 2.2), rx(r"\b400v\b", "400v", 2.0), rx(r"\binverter\b", "inverter", 1.5), rx(r"\bmotor drive\b", "motor drive", 1.5)], "neg": []},
+    "consumer": {"pos": [rx(r"\bconsumer\b", "consumer", 2.0), rx(r"\bhousehold\b", "household", 1.8), rx(r"\bhome use\b", "home use", 1.8), rx(r"\bresidential\b", "residential", 1.8), rx(r"\bretail\b", "retail", 1.2)], "neg": []},
+    "industrial": {"pos": [rx(r"\bindustrial\b", "industrial", 2.2), rx(r"\bb2b\b", "b2b", 1.5), rx(r"\bfactory\b", "factory", 2.0), rx(r"\bwarehouse\b", "warehouse", 1.8), rx(r"\bscada\b", "scada", 2.4), rx(r"\bplc\b", "plc", 2.4)], "neg": []},
+    "medical": {"pos": [rx(r"\bmedical\b", "medical", 2.4), rx(r"\bpatient\b", "patient", 2.0), rx(r"\bclinical\b", "clinical", 2.0), rx(r"\bdiagnostic\b", "diagnostic", 2.2), rx(r"\bhospital\b", "hospital", 2.0)], "neg": []},
+    "child": {"pos": [rx(r"\bchild\b", "child", 2.0), rx(r"\bchildren\b", "children", 2.0), rx(r"\bkids\b", "kids", 2.0), rx(r"\btoy\b", "toy", 1.8), rx(r"\bminors\b", "minors", 2.2)], "neg": []},
+    "safety_function": {"pos": [rx(r"\bsafety function\b", "safety function", 2.4), rx(r"\bemergency\b", "emergency", 1.6), rx(r"\balarm\b", "alarm", 1.4), rx(r"\bfire\b", "fire", 1.4), rx(r"\bsmoke\b", "smoke", 1.6), rx(r"\bco detector\b", "co detector", 2.0), rx(r"\bfail safe\b", "fail safe", 2.0)], "neg": []},
+    "vuln_disclosure": {"pos": [rx(r"\bvulnerability disclosure\b", "vulnerability disclosure", 2.5), rx(r"\bbug bounty\b", "bug bounty", 2.0), rx(r"\bresponsible disclosure\b", "responsible disclosure", 2.5), rx(r"\bcvd policy\b", "cvd policy", 2.5), rx(r"\bsecurity advisory\b", "security advisory", 1.8)], "neg": []},
+    "sbom": {"pos": [rx(r"\bsbom\b", "sbom", 2.5), rx(r"\bsoftware bill of materials\b", "software bill of materials", 2.5), rx(r"\bcyclonedx\b", "cyclonedx", 2.0), rx(r"\bspdx\b", "spdx", 2.0)], "neg": []},
+    "pentest": {"pos": [rx(r"\bpenetration test\b", "penetration test", 2.2), rx(r"\bpentest\b", "pentest", 2.2), rx(r"\bsecurity audit\b", "security audit", 1.8), rx(r"\bred team\b", "red team", 1.8)], "neg": []},
+    "network_seg": {"pos": [rx(r"\bnetwork segmentation\b", "network segmentation", 2.0), rx(r"\bvlan\b", "vlan", 1.5), rx(r"\bdmz\b", "dmz", 1.5), rx(r"\bfirewall\b", "firewall", 1.5), rx(r"\bisolated network\b", "isolated network", 2.0)], "neg": []},
+    "repairability": {"pos": [rx(r"\brepair\w*\b", "repair", 1.6), rx(r"\breplaceable\b", "replaceable", 1.6), rx(r"\bspare part\b", "spare part", 1.6), rx(r"\bright to repair\b", "right to repair", 2.0), rx(r"\buser replaceable\b", "user replaceable", 1.8)], "neg": []},
+    "recycled": {"pos": [rx(r"\brecycled\b", "recycled", 1.4), rx(r"\brecycling\b", "recycling", 1.4), rx(r"\bcircular\b", "circular", 1.4), rx(r"\bend of life\b", "end of life", 1.4)], "neg": []},
+    "energy_label": {"pos": [rx(r"\benergy label\b", "energy label", 2.0), rx(r"\benergy class\b", "energy class", 2.0), rx(r"\benergy rating\b", "energy rating", 2.0), rx(r"\ba\+\+\+\b", "a+++", 1.4), rx(r"\berp\b", "erp", 1.2)], "neg": []},
+}
 
-    # Product type signals
-    is_consumer      = detect(t, ["consumer", "residential", "household", "home use", "personal use", "retail", "end user"])
-    is_industrial    = detect(t, ["industrial", "b2b", "factory", "warehouse", "professional use", "scada", "plc"])
-    is_medical       = detect(t, ["medical", "patient", "clinical", "diagnostic", "therapeutic", "hospital", "wellness device"])
-    has_child        = detect(t, ["child", "children", "kids", "toy", "school", "minors", "parental control", "age verification"])
-    has_safety_func  = detect(t, ["safety function", "emergency", "alarm", "fire", "co detector", "smoke", "critical safety", "fail safe"])
 
-    # Security posture signals
-    has_vuln_prog    = detect(t, ["vulnerability disclosure", "bug bounty", "responsible disclosure", "cvd policy", "security patch", "cve", "security advisory"])
-    has_sbom         = detect(t, ["sbom", "software bill of materials", "component inventory", "open source inventory"])
-    has_pentest      = detect(t, ["penetration test", "pentest", "security audit", "security assessment", "red team"])
-    has_iso27001     = detect(t, ["iso 27001", "iso27001", "isms", "information security management"])
-    has_network_seg  = detect(t, ["network segmentation", "vlan", "dmz", "firewall", "isolated network"])
+def normalize_text(description: str, category: str = "") -> str:
+    text = f"{category} {description}".strip().lower()
+    text = text.replace("wi-fi", "wifi")
+    text = text.replace("bluetooth low energy", "ble")
+    text = text.replace("over-the-air", "ota")
+    text = re.sub(r"[^a-z0-9.+#\-/\s]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
 
-    # Environmental / sustainability
-    has_repairability = detect(t, ["repair", "replaceable", "spare part", "ifixit", "right to repair", "user replaceable"])
-    has_recycled     = detect(t, ["recycled", "recycling", "circular", "eol", "end of life", "take back"])
-    has_energy_label = detect(t, ["energy label", "energy class", "energy rating", "a+++", "erp"])
 
-    # ── RED Art.3(3)(d-f) ─────────────────────────────────────────────────
-    if "RED" in directives:
-        if not has_radio:
-            findings.append(Finding(
-                directive="RED", article="Art.3(3)(d-f) — Applicability",
-                status="INFO",
-                finding="No radio interface detected in the description. Delegated Regulation (EU) 2022/30 applying Art.3(3)(d)(e)(f) applies exclusively to radio equipment as defined in Art.2(1) of RED. Without a radio interface, these cybersecurity articles do not apply.",
-                action="Confirm whether product intentionally emits or receives radio waves. If it does not, consider whether CRA applies instead."
-            ))
+def match_feature(text: str, feature_name: str) -> MatchResult:
+    cfg = FEATURES[feature_name]
+    pos_hits: list[str] = []
+    neg_hits: list[str] = []
+    score = 0.0
+
+    for spec in cfg.get("pos", []):
+        if spec.pattern.search(text):
+            pos_hits.append(spec.label)
+            score += spec.weight
+
+    for spec in cfg.get("neg", []):
+        if spec.pattern.search(text):
+            neg_hits.append(spec.label)
+            score -= spec.weight
+
+    negated = len(neg_hits) > 0
+    hit = score > 0.6 and len(pos_hits) > 0
+    if negated and score <= 0.6:
+        hit = False
+        score = max(score, 0.0)
+
+    return MatchResult(hit=hit, score=round(max(score, 0.0), 2), positive_hits=pos_hits, negative_hits=neg_hits, negated=negated)
+
+
+def _set_feature(facts: FactModel, field_name: str, match: MatchResult) -> None:
+    setattr(facts, field_name, match.hit)
+    facts.evidence[field_name] = FeatureEvidence(
+        score=match.score,
+        positive_hits=match.positive_hits,
+        negative_hits=match.negative_hits,
+        hit=match.hit,
+        negated=match.negated,
+    )
+
+
+def extract_facts(description: str, category: str = "") -> FactModel:
+    text = normalize_text(description, category)
+    facts = FactModel(raw_text=description, normalized_text=text)
+
+    for feature_name, target in [
+        ("cloud", "cloud"), ("internet", "internet"), ("local_only", "local_only"), ("app", "app"),
+        ("software", "software"), ("ota", "ota"), ("signed_updates", "signed_updates"), ("rollback", "rollback_protection"),
+        ("auth", "auth"), ("default_password", "default_password"), ("unique_credentials", "unique_credentials"), ("mfa", "mfa"),
+        ("brute_force", "brute_force_protection"), ("personal_data", "personal_data"), ("health_data", "health_data"),
+        ("location_data", "location_data"), ("biometric_data", "biometric_data"), ("telemetry", "telemetry"),
+        ("retention", "data_retention"), ("sharing", "data_sharing"), ("encryption", "encryption"), ("tls", "tls"),
+        ("anonymisation", "anonymisation"), ("cross_border", "cross_border_transfer"), ("ai", "ai"),
+        ("camera", "camera"), ("face_recognition", "face_recognition"), ("voice_ai", "voice_ai"),
+        ("emotion_ai", "emotion_ai"), ("automated_decision", "automated_decision"), ("prohibited_ai", "prohibited_ai_signal"),
+        ("mains", "mains_power"), ("battery", "battery_power"), ("usb_power", "usb_power"), ("poe", "poe_power"),
+        ("high_voltage", "high_voltage"), ("consumer", "consumer"), ("industrial", "industrial"), ("medical", "medical_context"),
+        ("child", "child_context"), ("safety_function", "safety_function"), ("vuln_disclosure", "vuln_disclosure"),
+        ("sbom", "sbom"), ("pentest", "pentest"), ("network_seg", "network_segmentation"), ("repairability", "repairability"),
+        ("recycled", "recycled"), ("energy_label", "energy_label"),
+    ]:
+        _set_feature(facts, target, match_feature(text, feature_name))
+
+    radio_map = {"wifi": "wifi", "bluetooth": "bluetooth", "mesh_radio": "mesh", "cellular": "cellular", "nfc": "nfc"}
+    for feature_name, radio_name in radio_map.items():
+        match = match_feature(text, feature_name)
+        if match.hit:
+            facts.radios.append(radio_name)
+        facts.evidence[feature_name] = FeatureEvidence(
+            score=match.score,
+            positive_hits=match.positive_hits,
+            negative_hits=match.negative_hits,
+            hit=match.hit,
+            negated=match.negated,
+        )
+
+    facts.radios = sorted(set(facts.radios))
+    facts.has_radio = bool(facts.radios)
+    facts.firmware = facts.software or facts.ota or bool(re.search(r"\bfirmware\b", text))
+
+    if facts.cloud:
+        facts.internet = True
+    if facts.local_only and not facts.cloud:
+        facts.internet = False if not facts.app else facts.internet
+    if facts.health_data:
+        facts.personal_data = True
+        if "health" not in facts.sensitive_data:
+            facts.sensitive_data.append("health")
+    if facts.location_data:
+        facts.personal_data = True
+        if "location" not in facts.sensitive_data:
+            facts.sensitive_data.append("location")
+    if facts.biometric_data:
+        facts.personal_data = True
+        if "biometric" not in facts.sensitive_data:
+            facts.sensitive_data.append("biometric")
+    if facts.face_recognition:
+        facts.ai = True if facts.ai is not False else facts.ai
+        facts.camera = True
+    if facts.voice_ai:
+        facts.ai = True if facts.ai is not False else facts.ai
+    if facts.app or facts.cloud or facts.internet or facts.ota:
+        facts.software = True
+    if facts.battery_power and facts.mains_power:
+        facts.contradictions.append("Description suggests both battery-powered and mains-powered operation. Confirm primary power architecture.")
+    if facts.local_only and facts.cloud:
+        facts.contradictions.append("Description mentions both local/offline operation and cloud/backend connectivity.")
+    if facts.personal_data is False and (facts.health_data or facts.location_data or facts.biometric_data):
+        facts.contradictions.append("Description says no personal data, but also mentions data types that are typically personal data.")
+    if facts.auth is False and (facts.mfa or facts.unique_credentials or facts.default_password):
+        facts.contradictions.append("Description says no login/authentication, but also contains authentication-related signals.")
+    if facts.ai is False and (facts.face_recognition or facts.voice_ai or facts.emotion_ai or facts.automated_decision):
+        facts.contradictions.append("Description says no AI, but also mentions AI-like functionality.")
+    if facts.high_voltage:
+        facts.mains_power = True
+
+    return facts
+
+
+def infer_directives(facts: FactModel, requested: Iterable[str] | None = None) -> list[str]:
+    directives = set(requested or [])
+
+    if facts.has_radio:
+        directives.add("RED")
+    if facts.software or facts.internet or facts.app or facts.ota or facts.cloud or facts.has_radio:
+        directives.add("CRA")
+    if facts.personal_data or facts.sensitive_data or facts.telemetry or facts.data_sharing:
+        directives.add("GDPR")
+    if facts.ai or facts.face_recognition or facts.voice_ai or facts.emotion_ai or facts.automated_decision:
+        directives.add("AI_Act")
+    if facts.mains_power or facts.high_voltage:
+        directives.add("LVD")
+    if facts.software or facts.mains_power or facts.battery_power or facts.has_radio or facts.usb_power or facts.poe_power:
+        directives.add("EMC")
+    if facts.repairability or facts.recycled or facts.energy_label:
+        directives.add("ESPR")
+
+    ordered = [d for d in ["RED", "CRA", "GDPR", "AI_Act", "LVD", "EMC", "ESPR"] if d in directives]
+    facts.inferred_directives = ordered
+    return ordered
+
+
+def add_finding(findings: list[Finding], directive: str, article: str, status: str, finding: str, action: str | None = None) -> None:
+    findings.append(Finding(directive=directive, article=article, status=status, finding=finding, action=action))
+
+
+# Directive analyzers
+
+def analyze_red(facts: FactModel, depth: str) -> list[Finding]:
+    findings: list[Finding] = []
+    if not facts.has_radio:
+        add_finding(findings, "RED", "Art.2(1) / Art.3(3)(d-f) — Applicability", "INFO", "No radio interface was inferred. RED cybersecurity delegated requirements normally apply only to radio equipment.", "Confirm whether the product intentionally emits or receives radio waves.")
+        return findings
+
+    radio_list = ", ".join(facts.radios)
+    add_finding(findings, "RED", "Art.3(3)(d-f) — Scope trigger", "WARN" if facts.internet or facts.app else "INFO", f"Radio interface detected ({radio_list}). RED cybersecurity scope is likely triggered.", "Map applicable RED essential requirements and identify harmonised standard strategy, especially EN 18031 series where relevant.")
+
+    if facts.default_password:
+        add_finding(findings, "RED", "Art.3(3)(d) — Network protection", "FAIL", "Default or common credentials were inferred. That is a strong non-conformity risk for RED cybersecurity compliance.", "Remove default credentials and use unique per-device onboarding or forced credential setup.")
+    elif facts.unique_credentials:
+        add_finding(findings, "RED", "Art.3(3)(d) — Network protection", "PASS", "Unique credentials or per-device credentialing was inferred.")
+    else:
+        add_finding(findings, "RED", "Art.3(3)(d) — Network protection", "WARN", "Authentication posture is unclear from the description.", "Clarify user authentication, pairing, credential uniqueness, and brute-force protections.")
+
+    if facts.ota and not facts.signed_updates:
+        add_finding(findings, "RED", "Art.3(3)(d) — Secure updates", "FAIL", "OTA or remote updates were inferred, but no signed update or secure boot controls were detected.", "Implement signed firmware, integrity verification, and rollback protection.")
+    elif facts.ota and facts.signed_updates:
+        add_finding(findings, "RED", "Art.3(3)(d) — Secure updates", "PASS", "OTA capability with signed-update signals was inferred.")
+
+    if facts.personal_data:
+        if facts.encryption or facts.tls:
+            add_finding(findings, "RED", "Art.3(3)(e) — Personal data protection", "PASS", "Personal data processing was inferred together with transport/storage security signals.")
         else:
-            # Identify which radio technologies are present
-            radio_types = []
-            if has_wifi:    radio_types.append("WiFi")
-            if has_bt:      radio_types.append("Bluetooth")
-            if has_zigbee:  radio_types.append("Zigbee/Thread/Matter")
-            if has_lora:    radio_types.append("LoRa/LPWAN")
-            if has_nfc:     radio_types.append("NFC")
-            if has_cellular: radio_types.append("Cellular (LTE/5G)")
-            radio_str = ", ".join(radio_types) if radio_types else "radio"
+            add_finding(findings, "RED", "Art.3(3)(e) — Personal data protection", "WARN", "Personal data processing was inferred, but encryption or secure transport was not clearly stated.", "Clarify encryption in transit and at rest, plus access control and minimisation measures.")
 
-            # Art.3(3)(d) — Network protection
-            if has_default_pw:
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(d) — Network protection [ETSI EN 303 645 cl.5.1 / EN 18031-1]",
-                    status="FAIL",
-                    finding=f"Default credentials detected on a {radio_str} device. This is a direct non-conformity under Art.3(3)(d) and Del. Reg. (EU) 2022/30. Universal default passwords are explicitly prohibited — they allow trivial mass compromise of the network.",
-                    action="Replace all default credentials with unique, per-device credentials generated at manufacture. No shared or universal passwords permitted. Implement at factory level before market placement."
-                ))
-            elif has_internet and not has_local_only:
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(d) — Network protection [ETSI EN 303 645 cl.5.3 / EN 18031-1]",
-                    status="WARN",
-                    finding=f"This {radio_str} product connects to external services. Art.3(3)(d) requires it does not harm the network, disrupt network services, or misuse network resources. Network-level attack surface must be assessed and minimised.",
-                    action="Document all network interfaces, ports, and protocols used. Disable unused services. Apply principle of least privilege to network access. Reference ETSI EN 303 645 clause 5.3."
-                ))
-            else:
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(d) — Network protection [EN 18031-1]",
-                    status="PASS",
-                    finding=f"No cloud or internet connectivity detected for this {radio_str} device. Network harm risk appears low for local-only operation.",
-                    action=None
-                ))
+    if facts.child_context or facts.location_data or facts.telemetry:
+        add_finding(findings, "RED", "Art.3(3)(f) — Fraud / abuse exposure", "WARN", "Usage context suggests fraud, misuse, or abuse considerations may be relevant.", "Assess misuse scenarios such as spoofing, fraudulent enrolment, false alerts, or abuse against children/consumers.")
 
-            # Art.3(3)(e) — User protection
-            if has_sensitive:
-                sensitive_types = []
-                if has_health:    sensitive_types.append("health data")
-                if has_location:  sensitive_types.append("location data")
-                if has_biometric: sensitive_types.append("biometric data")
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(e) — User protection [ETSI EN 303 645 cl.5.8 / EN 18031-3]",
-                    status="FAIL",
-                    finding=f"Sensitive personal data ({', '.join(sensitive_types)}) processed on a radio device. Art.3(3)(e) requires robust safeguards protecting users against harm from unauthorised access to or misuse of personal data. Sensitive categories demand strongest protections.",
-                    action="Implement encryption at rest (AES-256 minimum) and in transit (TLS 1.3). Apply strict data minimisation. Conduct DPIA. Reference ETSI EN 303 645 clause 5.8 and EN 18031-3."
-                ))
-            elif has_personal or has_energy_data:
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(e) — User protection [ETSI EN 303 645 cl.5.8 / EN 18031-3]",
-                    status="WARN",
-                    finding="Personal or usage data is processed by this radio device. Art.3(3)(e) requires measures protecting the privacy and personal data of users and third parties.",
-                    action="Implement access controls and encryption for all personal data. Apply data minimisation at device level. Cross-reference GDPR obligations. See EN 18031-3."
-                ))
-            else:
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(e) — User protection [EN 18031-3]",
-                    status="PASS",
-                    finding="No personal data processing detected on this radio device. Art.3(3)(e) obligations appear minimal.",
-                    action=None
-                ))
+    if depth == "deep":
+        add_finding(findings, "RED", "Conformity route", "INFO", "Prepare RED technical documentation, risk assessment, cybersecurity rationale, and standards mapping. For gaps against harmonised standards, a notified body route may need consideration.")
+    return findings
 
-            # Art.3(3)(f) — Fraud protection
-            if has_default_pw and not has_unique_pw:
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(f) — Fraud protection [ETSI EN 303 645 cl.5.1]",
-                    status="FAIL",
-                    finding="Default credentials make fraudulent access trivial. Art.3(3)(f) prohibits design choices that facilitate fraudulent use of the device or associated services.",
-                    action="Unique per-device credentials mandatory. Implement during manufacturing. See ETSI EN 303 645 clause 5.1 — this is the most-cited non-conformity in market surveillance."
-                ))
-            elif has_auth:
-                auth_notes = []
-                if has_mfa:     auth_notes.append("MFA present — positive")
-                if has_lockout: auth_notes.append("brute-force protection present — positive")
-                if not has_mfa:     auth_notes.append("no MFA detected")
-                if not has_lockout: auth_notes.append("no brute-force lockout mentioned")
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(f) — Fraud protection [ETSI EN 303 645 cl.5.1 / cl.5.4]",
-                    status="PASS" if (has_mfa and has_lockout) else "WARN",
-                    finding=f"Authentication mechanism detected. Fraud protection assessment: {'; '.join(auth_notes)}.",
-                    action=None if (has_mfa and has_lockout) else "Add MFA for high-value operations. Implement account lockout after failed attempts. Document auth scheme in technical file."
-                ))
-            else:
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(f) — Fraud protection [ETSI EN 303 645 cl.5.1]",
-                    status="INFO",
-                    finding="No authentication mechanism mentioned. If this device has any remote access, pairing, or account linkage, Art.3(3)(f) applies.",
-                    action="Confirm whether pairing, remote access, or user accounts exist. If yes, document authentication approach in technical file."
-                ))
 
-            # OTA update security
-            if has_ota:
-                ota_status = "PASS" if has_signed_fw else "WARN"
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(d-f) — OTA security [ETSI EN 303 645 cl.5.5]",
-                    status=ota_status,
-                    finding="OTA firmware updates detected. " + (
-                        "Signed firmware mentioned — positive. Ensure update integrity and authenticity are verified before installation." if has_signed_fw
-                        else "No cryptographic signature verification mentioned for OTA updates. Unsigned OTA is a critical attack vector — arbitrary firmware installation by an attacker."
-                    ),
-                    action=None if has_signed_fw else "Implement cryptographic signature verification (RSA-2048 or ECDSA-P256 minimum) for all firmware packages. Verify signature before installation, reject unsigned updates. Consider rollback protection."
-                ))
+def analyze_cra(facts: FactModel, depth: str) -> list[Finding]:
+    findings: list[Finding] = []
+    if not (facts.software or facts.internet or facts.app or facts.cloud or facts.ota or facts.has_radio):
+        add_finding(findings, "CRA", "Art.2 / product with digital elements — Applicability", "INFO", "No strong software or digital-element signal was inferred. CRA may be out of scope if the product is purely mechanical.", "Confirm whether firmware, software, or update capability exists.")
+        return findings
 
-            # Supply chain / third party
-            if detect(t, ["third party", "third-party", "sdk", "open source component", "supplier module", "vendor module"]):
-                findings.append(Finding(
-                    directive="RED", article="Art.3(3)(d-f) — Supply chain [ETSI EN 303 645 cl.5.6]",
-                    status="WARN",
-                    finding="Third-party components or SDKs detected. Vulnerabilities in supplier components are the manufacturer's regulatory responsibility — the CE mark certifies the whole product, not just your code.",
-                    action="Maintain SBOM for all software components. Monitor CVEs for all third-party libraries. Assess supplier security posture. Reference ETSI EN 303 645 clause 5.6."
-                ))
+    is_critical = bool(facts.safety_function and facts.industrial)
+    is_important_ii = bool(facts.medical_context or (facts.safety_function and facts.internet))
+    is_important_i = bool(facts.has_radio or facts.auth or facts.ota or facts.cloud)
 
-            # Delegated Regulation timeline note
-            if depth != "quick":
-                findings.append(Finding(
-                    directive="RED", article="Del. Reg. (EU) 2022/30 — Compliance status [OJEU 2022]",
-                    status="INFO",
-                    finding="Delegated Regulation (EU) 2022/30 making Art.3(3)(d)(e)(f) mandatory is in force. Harmonised standards EN 18031-1/-2/-3 are available but not yet listed in the OJEU — ETSI EN 303 645 and ETSI EN 305 645 currently serve as best-practice references.",
-                    action="Monitor OJEU for EN 18031 series listing. Consider early adoption of EN 18031 to future-proof technical file. Ensure DoC explicitly references Del. Reg. (EU) 2022/30."
-                ))
+    if is_critical:
+        add_finding(findings, "CRA", "Annex III / classification", "FAIL", "Product signals suggest a critical or very high assurance context.", "Validate CRA classification and third-party conformity assessment need before market access.")
+    elif is_important_ii:
+        add_finding(findings, "CRA", "Annex II / classification", "FAIL", "Product signals suggest Important Class II characteristics.", "Document classification rationale and plan conformity assessment route early.")
+    elif is_important_i:
+        add_finding(findings, "CRA", "Annex II / classification", "WARN", "Product signals suggest Important Class I characteristics.", "Confirm final classification and whether harmonised standards can fully support self-assessment.")
+    else:
+        add_finding(findings, "CRA", "Default classification", "INFO", "Product appears closer to default CRA classification based on current signals.")
 
-            if depth == "deep":
-                findings.append(Finding(
-                    directive="RED", article="Technical File — Cybersecurity [RED Annex V / Del. Reg. Art.4]",
-                    status="INFO",
-                    finding="RED cybersecurity technical file must include: (1) threat and risk analysis, (2) security architecture description, (3) SBOM, (4) vulnerability disclosure policy, (5) test reports against ETSI EN 303 645 or EN 18031 series, (6) Declaration of Conformity explicitly referencing Del. Reg. (EU) 2022/30.",
-                    action="Prepare dedicated cybersecurity section in technical file. Retain for 10 years post market placement. DoC must list Del. Reg. (EU) 2022/30 as legal basis."
-                ))
+    if facts.default_password:
+        add_finding(findings, "CRA", "Annex I §1 — No known exploitable vulnerabilities", "FAIL", "Default credentials were inferred, which is a major CRA non-conformity risk.", "Remove default credentials and use unique onboarding or mandatory first-use credential setup.")
+    if facts.ota and not facts.signed_updates:
+        add_finding(findings, "CRA", "Annex I §2(4) — Secure updates", "FAIL", "Update capability was inferred without clear signed-update controls.", "Implement signed updates, integrity checks, rollback protection, and version control.")
+    elif facts.ota and facts.signed_updates:
+        add_finding(findings, "CRA", "Annex I §2(4) — Secure updates", "PASS", "Update capability with secure-signing signals was inferred.")
+    if not facts.vuln_disclosure:
+        add_finding(findings, "CRA", "Art.14 — Vulnerability handling/reporting", "WARN", "No coordinated vulnerability disclosure signal was found.", "Set up a public security contact and vulnerability handling process.")
+    if not facts.sbom:
+        add_finding(findings, "CRA", "Annex I §2 — Component inventory / SBOM", "WARN", "No SBOM or component inventory signal was found.", "Generate and maintain an SBOM for software and third-party components.")
+    if facts.unique_credentials and not facts.default_password:
+        add_finding(findings, "CRA", "Annex I §1 / secure by default", "PASS", "Unique credentials were inferred, supporting secure-by-default posture.")
+    elif facts.auth is False:
+        add_finding(findings, "CRA", "Annex I §1 / secure by default", "INFO", "No user authentication was inferred. That can be acceptable only if the attack surface is otherwise tightly constrained.", "Confirm local-only architecture, hardening, and absence of privileged remote interfaces.")
 
-    # ── CRA — Cyber Resilience Act ────────────────────────────────────────
-    if "CRA" in directives:
-        has_digital_elements = has_radio or has_internet or has_app or has_ota or detect(t, ["software", "firmware", "digital", "processor", "microcontroller", "embedded"])
+    if depth in {"standard", "deep"}:
+        add_finding(findings, "CRA", "Art.13 — Security support period", "WARN", "No explicit security support/update period was inferred.", "Define and publish a minimum vulnerability handling and security update support window.")
+    if depth == "deep":
+        add_finding(findings, "CRA", "Annex VII / technical documentation", "INFO", "Prepare architecture, risk assessment, update strategy, SBOM, test evidence, and conformity documentation in one coherent technical file.")
+    return findings
 
-        if not has_digital_elements:
-            findings.append(Finding(
-                directive="CRA", article="Art.2 — Scope [Regulation (EU) 2024/2847]",
-                status="INFO",
-                finding="No digital elements detected. CRA applies to products with digital elements — hardware with software components, network connectivity, or data processing capability.",
-                action="Confirm whether product contains any software, firmware, or connectivity. Pure mechanical products without software are out of scope."
-            ))
-        else:
-            # Classification
-            is_important_class1 = has_radio or has_auth or has_ota or detect(t, ["vpn", "password manager", "firewall", "ids", "ips"])
-            is_important_class2 = has_safety_func or is_medical or detect(t, ["industrial control", "scada", "plc", "operating system", "hypervisor", "microprocessor security"])
-            is_critical         = detect(t, ["critical infrastructure", "power grid", "water treatment", "transport system", "health infrastructure"])
 
-            if is_critical:
-                classification = "CRITICAL"
-                class_color = "FAIL"
-                class_note = "Critical product — Annex III. Mandatory EU type-examination by Notified Body."
-            elif is_important_class2:
-                classification = "Important Class II"
-                class_color = "FAIL"
-                class_note = "Important Class II — Annex II. Third-party conformity assessment or EU type-examination required."
-            elif is_important_class1:
-                classification = "Important Class I"
-                class_color = "WARN"
-                class_note = "Important Class I — Annex II. Self-declaration allowed only if harmonised standards applied in full; otherwise third-party assessment."
-            else:
-                classification = "Default"
-                class_color = "INFO"
-                class_note = "Default category. Self-declaration of conformity permitted."
 
-            findings.append(Finding(
-                directive="CRA", article=f"Art.7 — Classification: {classification} [CRA Annex I/II/III]",
-                status=class_color,
-                finding=f"Product classified as: {classification}. {class_note}",
-                action="Document classification rationale in technical file. If Important Class I/II, engage Notified Body or apply harmonised standards in full."
-            ))
+def analyze_gdpr(facts: FactModel, depth: str) -> list[Finding]:
+    findings: list[Finding] = []
+    if not (facts.personal_data or facts.sensitive_data or facts.telemetry or facts.data_sharing):
+        add_finding(findings, "GDPR", "Art.4 — Personal data trigger", "INFO", "No clear personal-data processing signal was inferred.", "Confirm that no identifiers, accounts, telemetry linked to users, or special category data are processed.")
+        return findings
 
-            # Essential cybersecurity requirements
-            if has_default_pw:
-                findings.append(Finding(
-                    directive="CRA", article="Annex I §1 — No known exploitable vulnerabilities [ETSI EN 303 645 cl.5.1]",
-                    status="FAIL",
-                    finding="Default credentials constitute a known exploitable vulnerability under CRA Annex I. Products must be placed on market with no known exploitable vulnerabilities.",
-                    action="Eliminate default credentials. Implement unique per-device passwords at manufacture. This is a blocking non-conformity under CRA."
-                ))
+    if facts.sensitive_data:
+        add_finding(findings, "GDPR", "Art.9 — Special category / sensitive data", "FAIL", f"Sensitive data signals were inferred: {', '.join(facts.sensitive_data)}.", "Identify lawful basis, explicit condition where needed, minimisation, retention, transparency, and DPIA need.")
+    else:
+        add_finding(findings, "GDPR", "Art.5 — Data minimisation and purpose limitation", "WARN", "Personal data processing is likely, but legal basis and minimisation controls are not clear.", "Define purpose, lawful basis, retention, and access controls in product documentation.")
 
-            if not has_vuln_prog:
-                findings.append(Finding(
-                    directive="CRA", article="Art.14 — Vulnerability reporting [ENISA / Art.14(1)]",
-                    status="FAIL",
-                    finding="No vulnerability disclosure programme detected. CRA Art.14 requires manufacturers to report actively exploited vulnerabilities to ENISA within 24 hours of becoming aware, and notify affected users.",
-                    action="Establish Coordinated Vulnerability Disclosure (CVD) policy. Set up dedicated security contact (e.g. security@yourdomain.com). Register with ENISA notification portal. Publish CVD policy publicly."
-                ))
+    if facts.encryption or facts.tls:
+        add_finding(findings, "GDPR", "Art.32 — Security of processing", "PASS", "Encryption or secure transport signals were inferred.")
+    else:
+        add_finding(findings, "GDPR", "Art.32 — Security of processing", "WARN", "No clear encryption or secure-transport signal was found.", "Clarify TLS/HTTPS, storage encryption, key management, and access control.")
 
-            if not has_sbom:
-                findings.append(Finding(
-                    directive="CRA", article="Annex I §2(1) — Software Bill of Materials [SPDX / CycloneDX]",
-                    status="WARN",
-                    finding="No SBOM mentioned. CRA Annex I requires manufacturers to identify and document all software components including open-source and third-party to enable vulnerability tracking throughout the product lifecycle.",
-                    action="Generate machine-readable SBOM in SPDX or CycloneDX format. Include all software components with version numbers. Update on every firmware release. Include in technical documentation."
-                ))
+    if facts.data_retention:
+        add_finding(findings, "GDPR", "Art.5(1)(e) — Storage limitation", "WARN", "Data storage/history/retention was inferred, but retention boundaries are unclear.", "Define retention periods, deletion logic, and user-facing data lifecycle statements.")
+    if facts.data_sharing:
+        add_finding(findings, "GDPR", "Art.28 / Art.13-14 — Third-party data sharing", "WARN", "Third-party sharing or analytics-provider use was inferred.", "Map processors/controllers, contracts, notices, and transfer mechanisms.")
+    if facts.cross_border_transfer:
+        add_finding(findings, "GDPR", "Chapter V — International transfers", "WARN", "Possible non-EU or cross-border transfer signal detected.", "Validate transfer mechanism, hosting location, and supplementary measures where applicable.")
+    if depth == "deep":
+        add_finding(findings, "GDPR", "Accountability package", "INFO", "Prepare RoPA entry, privacy notice mapping, processor list, retention schedule, and DPIA screen where risk is elevated.")
+    return findings
 
-            if has_ota and not has_signed_fw:
-                findings.append(Finding(
-                    directive="CRA", article="Annex I §2(4) — Secure updates [IEC 62443-4-2]",
-                    status="FAIL",
-                    finding="OTA updates present but no secure update mechanism mentioned. CRA Annex I requires updates to be distributed securely, integrity-verified, and deployed without adding vulnerabilities.",
-                    action="Implement cryptographically signed firmware updates. Verify signature before installation. Prevent downgrade to vulnerable versions. Apply rollback protection."
-                ))
 
-            if depth != "quick":
-                update_years = "5 years minimum (or product's expected lifetime if longer)"
-                findings.append(Finding(
-                    directive="CRA", article="Art.13(8) — Security update period [CRA Art.13]",
-                    status="WARN",
-                    finding=f"CRA requires manufacturers to provide security updates for {update_years}. No software support commitment detected in the description.",
-                    action="Define and publicly commit to a minimum security update support period. Document in product information sheet and on product webpage. Update period starts from date of market placement."
-                ))
 
-                findings.append(Finding(
-                    directive="CRA", article="Annex I §1(2) — Secure by default [ETSI EN 303 645 cl.5.2]",
-                    status="PASS" if (has_unique_pw and not has_default_pw) else "WARN",
-                    finding="CRA requires products to be shipped in a secure-by-default configuration — minimal attack surface, unnecessary features disabled, least-privilege principle applied." if not (has_unique_pw and not has_default_pw) else "Unique credentials detected — secure-by-default posture partially confirmed.",
-                    action=None if (has_unique_pw and not has_default_pw) else "Audit default configuration. Disable all unused interfaces, ports, and services. Ensure product operates securely out of the box without requiring user configuration."
-                ))
+def analyze_ai_act(facts: FactModel, depth: str) -> list[Finding]:
+    findings: list[Finding] = []
+    if not (facts.ai or facts.face_recognition or facts.voice_ai or facts.emotion_ai or facts.automated_decision):
+        add_finding(findings, "AI_Act", "Art.3 — AI system definition", "INFO", "No strong AI-system signal was inferred.")
+        return findings
 
-            if depth == "deep":
-                findings.append(Finding(
-                    directive="CRA", article="Technical Documentation — Annex VII [CRA Art.31]",
-                    status="INFO",
-                    finding="CRA Annex VII technical documentation must include: (1) product description and intended use, (2) design and development documentation including architecture diagrams, (3) risk assessment (CRA Annex I compliance), (4) SBOM, (5) conformity assessment procedure applied, (6) EU Declaration of Conformity.",
-                    action="Prepare CRA technical file. Significant overlap with RED technical file — consolidate into unified document where possible. Retain for 10 years."
-                ))
+    if facts.prohibited_ai_signal:
+        add_finding(findings, "AI_Act", "Art.5 — Prohibited AI practices", "FAIL", "Signals potentially associated with prohibited AI practices were detected.", "Immediate legal review required. These use cases may be unavailable for EU placement.")
+        return findings
 
-    # ── EU AI Act ─────────────────────────────────────────────────────────
-    if "AI_Act" in directives:
-        if not has_ai:
-            findings.append(Finding(
-                directive="AI Act", article="Art.3(1) — AI system definition [Regulation 2024/1689]",
-                status="INFO",
-                finding="No AI system detected. EU AI Act applies only to AI systems as defined in Art.3(1): machine-based systems that infer outputs such as predictions, content, recommendations, or decisions from inputs.",
-                action="Confirm no ML inference, recommendation engine, or automated decision-making runs on-device or in associated cloud services."
-            ))
-        else:
-            # Prohibited practices
-            if has_prohibited_ai:
-                findings.append(Finding(
-                    directive="AI Act", article="Art.5 — PROHIBITED practice [AI Act Art.5]",
-                    status="FAIL",
-                    finding="The AI functionality described may constitute a prohibited practice under Art.5: real-time biometric surveillance in public spaces, social scoring systems, or subliminal manipulation. These are unconditionally banned in the EU — no conformity assessment can authorise them.",
-                    action="IMMEDIATE LEGAL REVIEW REQUIRED. Prohibited AI systems cannot be placed on EU market under any circumstances. Redesign or eliminate the prohibited functionality before any market placement."
-                ))
+    high_risk = bool(facts.face_recognition or facts.emotion_ai or facts.automated_decision or (facts.child_context and facts.ai))
+    if high_risk:
+        add_finding(findings, "AI_Act", "High-risk classification screen", "FAIL", "The described AI functionality may fall into a high-risk or highly sensitive area.", "Run a formal AI Act classification assessment before productisation.")
+    else:
+        add_finding(findings, "AI_Act", "Limited-risk / transparency screen", "WARN", "AI functionality was inferred, but the final risk tier is unclear.", "Confirm intended purpose, outputs, human oversight, and transparency obligations.")
 
-            # Risk classification
-            elif is_high_risk_ai:
-                risk_reasons = []
-                if has_face_recog:  risk_reasons.append("facial recognition (Annex III §1)")
-                if has_emotion:     risk_reasons.append("emotion recognition (Annex III §1)")
-                if has_decision:    risk_reasons.append("automated individual decision-making")
-                if has_child_ai:    risk_reasons.append("AI in education/children context (Annex III §3)")
-                findings.append(Finding(
-                    directive="AI Act", article=f"Art.6 — HIGH-RISK classification [Annex III: {', '.join(risk_reasons)}]",
-                    status="FAIL",
-                    finding=f"AI system classified as HIGH-RISK under Annex III based on: {', '.join(risk_reasons)}. Mandatory conformity assessment required before market placement. Cannot self-declare — Notified Body involvement required.",
-                    action="Conduct mandatory conformity assessment (Art.43). Register in EU AI public database (Art.71) before placing on market. Appoint EU Authorised Representative if manufacturer is outside EU. Implement all Chapter III obligations."
-                ))
-            else:
-                ai_type = []
-                if has_voice_ai: ai_type.append("voice/conversational AI")
-                if has_camera:   ai_type.append("computer vision")
-                if has_ai:       ai_type.append("ML inference")
-                findings.append(Finding(
-                    directive="AI Act", article="Art.6 — Risk classification [AI Act Annex I/III]",
-                    status="WARN",
-                    finding=f"AI functionality detected ({', '.join(ai_type) if ai_type else 'general ML'}). Appears to be Limited or Minimal Risk based on description, but classification must be formally documented and justified.",
-                    action="Document classification decision with legal rationale. If Limited Risk (chatbot, emotion recognition), transparency obligations under Art.50 apply. If Minimal Risk, no mandatory obligations but voluntary codes of conduct recommended."
-                ))
+    if facts.face_recognition or facts.voice_ai or facts.camera:
+        add_finding(findings, "AI_Act", "Transparency / biometric-adjacent controls", "WARN", "Biometric or perception-related AI signals were found.", "Confirm whether biometric identification, categorisation, or recognition functions exist and whether they are on-device or cloud-based.")
+    if depth == "deep":
+        add_finding(findings, "AI_Act", "Governance package", "INFO", "Prepare AI use-case description, data governance notes, performance metrics, human oversight concept, and post-market monitoring rationale.")
+    return findings
 
-            # Transparency (Art.50)
-            if has_voice_ai or detect(t, ["chatbot", "conversational", "virtual assistant"]):
-                findings.append(Finding(
-                    directive="AI Act", article="Art.50 — Transparency obligations [AI Act Art.50]",
-                    status="WARN",
-                    finding="Voice assistant or conversational AI detected. Art.50 requires users to be clearly informed they are interacting with an AI system, unless this is obvious from context.",
-                    action="Add unambiguous AI disclosure at start of interaction. Cannot be buried in T&Cs. Must be in clear, plain language in all relevant EU languages."
-                ))
 
-            if depth != "quick":
-                findings.append(Finding(
-                    directive="AI Act", article="Art.9 — Risk management system [ISO/IEC 42001 / ISO/IEC 23894]",
-                    status="WARN",
-                    finding="All AI systems must have an established, implemented, documented, and maintained risk management system (Art.9). This is a continuous obligation throughout the lifecycle, not a one-time assessment.",
-                    action="Implement risk management system aligned with ISO/IEC 42001 or NIST AI RMF. Document risk identification, evaluation, and mitigation measures. Establish post-market monitoring."
-                ))
 
-                findings.append(Finding(
-                    directive="AI Act", article="Art.10 — Training data governance [ISO/IEC 25059]",
-                    status="INFO",
-                    finding="Training, validation and test datasets must meet quality criteria for high-risk AI: relevance, representativeness, freedom from errors, completeness. Data governance and lineage must be documented.",
-                    action="Document data sources, collection methodology, preprocessing steps, and bias assessment. Retain dataset documentation. Address known biases explicitly."
-                ))
+def analyze_lvd(facts: FactModel, depth: str) -> list[Finding]:
+    findings: list[Finding] = []
+    if not (facts.mains_power or facts.high_voltage):
+        add_finding(findings, "LVD", "Applicability screen", "INFO", "No mains or high-voltage signal was inferred. LVD may be out of scope depending on final rated voltage.")
+        return findings
 
-            if depth == "deep":
-                findings.append(Finding(
-                    directive="AI Act", article="Technical Documentation — Annex IV [AI Act Art.11]",
-                    status="INFO",
-                    finding="AI technical documentation (Annex IV) must include: (1) general description and intended purpose, (2) system architecture and design choices, (3) training data description, (4) validation and testing methodology, (5) performance metrics including accuracy, robustness, cybersecurity, (6) risk management records, (7) post-market monitoring plan, (8) instructions for use.",
-                    action="Prepare full Annex IV technical documentation. If product also falls under RED, LVD or MDR, integrate into unified technical file to minimise duplication."
-                ))
+    add_finding(findings, "LVD", "Applicability screen", "WARN", "Mains-powered or higher-voltage architecture was inferred.", "Confirm rated voltage range and applicable safety standard family.")
+    if facts.safety_function:
+        add_finding(findings, "LVD", "Safety-related functionality", "WARN", "Safety-related functionality was inferred.", "Ensure foreseeable misuse, fault conditions, and safety integrity are fully addressed in design validation.")
+    if facts.battery_power:
+        add_finding(findings, "LVD", "Power architecture clarity", "INFO", "Both battery and mains signals are present; verify final safety architecture and charging path.")
+    return findings
 
-    # ── GDPR ──────────────────────────────────────────────────────────────
-    if "GDPR" in directives:
-        if not has_personal and not has_cloud and not has_health and not has_location:
-            findings.append(Finding(
-                directive="GDPR", article="Art.4(1) — Personal data scope [Regulation 2016/679]",
-                status="PASS",
-                finding="No personal data processing, cloud connectivity, or sensitive data detected. GDPR obligations appear minimal for this product as described.",
-                action=None
-            ))
-        else:
-            # Lawful basis
-            findings.append(Finding(
-                directive="GDPR", article="Art.6 — Lawful basis [EDPB Guidelines 2/2019]",
-                status="WARN",
-                finding="Personal data processing detected. Every processing activity requires a documented lawful basis under Art.6. For consumer IoT, the most common bases are consent (Art.6(1)(a)) or contract performance (Art.6(1)(b)). Legitimate interest (Art.6(1)(f)) is harder to justify for sensitive data.",
-                action="Identify and document lawful basis for each processing activity. Granular consent required for non-essential processing. Include in Records of Processing Activities (RoPA)."
-            ))
 
-            # Privacy by design
-            findings.append(Finding(
-                directive="GDPR", article="Art.25 — Privacy by design & default [ISO/IEC 27701]",
-                status="PASS" if has_tls else "WARN",
-                finding="Privacy by design (Art.25) requires data protection to be integrated into product architecture from design stage — not added as an afterthought." + (" TLS encryption detected — positive signal." if has_tls else " No encryption mentioned — significant gap."),
-                action=None if has_tls else "Implement TLS 1.2+ minimum (TLS 1.3 recommended) for all data in transit. Encrypt personal data at rest using AES-256. Apply data minimisation at device firmware level."
-            ))
 
-            # DPIA trigger assessment
-            dpia_triggers = []
-            if has_sensitive:    dpia_triggers.append("special category data (Art.35(3)(b))")
-            if has_behavioral:   dpia_triggers.append("systematic behavioural monitoring (Art.35(3)(c))")
-            if has_location:     dpia_triggers.append("location tracking")
-            if has_child:        dpia_triggers.append("data concerning children")
-            if is_medical:       dpia_triggers.append("health/medical context")
-            if has_face_recog:   dpia_triggers.append("biometric processing (Art.35(3)(b))")
+def analyze_emc(facts: FactModel, depth: str) -> list[Finding]:
+    findings: list[Finding] = []
+    add_finding(findings, "EMC", "Applicability screen", "INFO" if not (facts.software or facts.has_radio or facts.mains_power or facts.battery_power or facts.usb_power or facts.poe_power) else "WARN", "Electronic/electrical architecture appears likely, so EMC should normally be screened.", "Confirm final power and electronics architecture and map the EMC test plan accordingly.")
+    if facts.has_radio:
+        add_finding(findings, "EMC", "Radio/electronics interaction", "WARN", "Radio functionality was inferred, so EMC and radio coexistence planning should be aligned.")
+    return findings
 
-            if dpia_triggers:
-                findings.append(Finding(
-                    directive="GDPR", article=f"Art.35 — DPIA mandatory [ISO/IEC 29134 / EDPB Guidelines]",
-                    status="FAIL",
-                    finding=f"Data Protection Impact Assessment (DPIA) is MANDATORY due to: {', '.join(dpia_triggers)}. Processing cannot begin until DPIA is completed and, if high residual risk remains, supervisory authority consulted (Art.36).",
-                    action="Conduct DPIA before product launch. Follow EDPB guidelines and ISO/IEC 29134. Document risks, mitigations, and residual risk. Consult DPA if high residual risk cannot be mitigated."
-                ))
-            else:
-                findings.append(Finding(
-                    directive="GDPR", article="Art.35 — DPIA assessment [EDPB Guidelines 9/2022]",
-                    status="WARN",
-                    finding="DPIA may be required depending on processing volume and context. Conduct DPIA screening assessment to determine obligation.",
-                    action="Complete DPIA screening checklist per EDPB Guidelines 9/2022. Document outcome regardless of whether full DPIA is required."
-                ))
 
-            # Special category data
-            if has_sensitive:
-                sensitive_list = []
-                if has_health:    sensitive_list.append("health data (Art.9(1))")
-                if has_biometric: sensitive_list.append("biometric data for identification (Art.9(1))")
-                if has_location and is_medical: sensitive_list.append("location in medical context")
-                findings.append(Finding(
-                    directive="GDPR", article=f"Art.9 — Special category data [{', '.join(sensitive_list)}]",
-                    status="FAIL",
-                    finding=f"Special category data detected: {', '.join(sensitive_list)}. Art.9 imposes strict processing conditions — explicit consent or one of the Art.9(2) exceptions required. Standard consent (Art.6) is insufficient.",
-                    action="Obtain explicit, granular, withdrawable consent per Art.7+9. Alternatively, identify applicable Art.9(2) exception and document it. Implement additional technical safeguards. DPIA mandatory."
-                ))
 
-            # Children
-            if has_child:
-                findings.append(Finding(
-                    directive="GDPR", article="Art.8 — Children's consent [EDPB Guidelines 5/2022]",
-                    status="FAIL",
-                    finding="Product targets or is likely used by children (under 16, or lower per national law). Art.8 requires verifiable parental consent for digital service processing. Standard consent mechanisms insufficient for minors.",
-                    action="Implement robust age verification mechanism. Obtain verifiable parental consent. Review national implementations (NL: 16, DE: 16, UK AADC: 13). Apply Children's Code (UK) if UK market."
-                ))
+def analyze_espr(facts: FactModel, depth: str) -> list[Finding]:
+    findings: list[Finding] = []
+    if not (facts.repairability or facts.recycled or facts.energy_label):
+        add_finding(findings, "ESPR", "Sustainability screen", "INFO", "No strong sustainability or ecodesign-specific signal was inferred from the short description.")
+        return findings
 
-            # Cross-border transfer
-            if has_cross_border:
-                findings.append(Finding(
-                    directive="GDPR", article="Art.46 — International data transfers [EDPB Recommendations 01/2020]",
-                    status="FAIL",
-                    finding="Data transfer to servers outside the EU/EEA detected (e.g. US cloud provider). Transfer of personal data to third countries requires an appropriate safeguard mechanism under Chapter V.",
-                    action="Implement Standard Contractual Clauses (SCCs — Commission Decision 2021/914). Conduct Transfer Impact Assessment (TIA). Consider EU-hosted data infrastructure. Inform users of transfer destination and safeguard mechanism in privacy notice."
-                ))
+    add_finding(findings, "ESPR", "Sustainability screen", "WARN", "Repairability, recyclability, or energy-labelling signals were inferred.", "Confirm whether product-specific ESPR/ecodesign delegated requirements apply for the category.")
+    return findings
 
-            # Data sharing / third party
-            if has_data_sharing:
-                findings.append(Finding(
-                    directive="GDPR", article="Art.28 — Data processor agreements [GDPR Art.28(3)]",
-                    status="WARN",
-                    finding="Data sharing with third parties (analytics, advertising, SDK providers) detected. Every processor receiving personal data requires a Data Processing Agreement (DPA) meeting Art.28(3) requirements.",
-                    action="Identify all processors. Execute Art.28-compliant DPAs. List processors in privacy notice with processing purpose. Review sub-processor chains."
-                ))
 
-            # Retention
-            if has_retention:
-                findings.append(Finding(
-                    directive="GDPR", article="Art.5(1)(e) — Storage limitation [EDPB Guidelines]",
-                    status="WARN",
-                    finding="Data storage or logging detected. Personal data must not be retained longer than necessary for the purpose for which it was collected.",
-                    action="Define retention periods for each data category. Implement automated deletion. Document retention schedule in RoPA. Inform users of retention periods in privacy notice."
-                ))
+ANALYZERS = {
+    "RED": analyze_red,
+    "CRA": analyze_cra,
+    "GDPR": analyze_gdpr,
+    "AI_Act": analyze_ai_act,
+    "LVD": analyze_lvd,
+    "EMC": analyze_emc,
+    "ESPR": analyze_espr,
+}
 
-    # ── EMC ───────────────────────────────────────────────────────────────
-    if "EMC" in directives:
-        findings.append(Finding(
-            directive="EMC", article="Art.6 — Essential requirements [Directive 2014/30/EU Annex I]",
-            status="INFO",
-            finding="EMC Directive 2014/30/EU applies. Two essential requirements: (1) equipment must not generate electromagnetic disturbance exceeding levels preventing normal use of radio, telecoms, or other equipment; (2) equipment must have adequate immunity to electromagnetic disturbance.",
-            action=None
-        ))
 
-        if has_radio:
-            radio_standards = []
-            if has_wifi or has_bt: radio_standards.append("EN 301 489-17 (WiFi/BT)")
-            if has_zigbee:         radio_standards.append("EN 301 489-3 (SRDs)")
-            if has_lora:           radio_standards.append("EN 301 489-3 (SRDs <1GHz)")
-            if has_cellular:       radio_standards.append("EN 301 489-52 (LTE/5G)")
-            if has_nfc:            radio_standards.append("EN 301 489-3 (NFC)")
+def summarize_product(facts: FactModel) -> str:
+    parts: list[str] = []
+    if facts.has_radio:
+        parts.append(f"radio-enabled ({', '.join(facts.radios)})")
+    if facts.local_only:
+        parts.append("local/offline use signalled")
+    elif facts.cloud or facts.internet:
+        parts.append("network/cloud-connected")
+    if facts.ota:
+        parts.append("software-update capability inferred")
+    if facts.personal_data:
+        parts.append("personal-data processing likely")
+    if facts.sensitive_data:
+        parts.append(f"sensitive data likely ({', '.join(facts.sensitive_data)})")
+    if facts.ai:
+        parts.append("AI/ML functionality likely")
+    if facts.mains_power:
+        parts.append("mains-powered")
+    elif facts.battery_power:
+        parts.append("battery-powered")
+    if facts.consumer:
+        parts.append("consumer/household context")
+    if facts.industrial:
+        parts.append("industrial context")
+    if facts.medical_context:
+        parts.append("medical or patient context")
+    if not parts:
+        parts.append("limited signals extracted from sparse description")
+    return "; ".join(parts)
 
-            findings.append(Finding(
-                directive="EMC", article=f"ETSI EN 301 489-1 + product-specific [{', '.join(radio_standards) if radio_standards else 'EN 301 489 series'}]",
-                status="WARN",
-                finding=f"Radio product requires EMC testing per EN 301 489-1 (generic EMC for radio) combined with the relevant product-specific standard ({', '.join(radio_standards) if radio_standards else 'EN 301 489-x'}). Both must be tested and documented.",
-                action="Commission accredited test laboratory (ILAC/MRA member). Test both emissions and immunity. Include test reports in technical file with exact standard versions used."
-            ))
-        else:
-            emission_std = "EN 55032 Class B" if is_consumer else "EN 55032 Class A"
-            findings.append(Finding(
-                directive="EMC", article=f"EN 55032 (emissions) + EN 55035 (immunity) [{emission_std}]",
-                status="WARN",
-                finding=f"Non-radio electrical product. Apply EN 55032 ({emission_std} for {'residential' if is_consumer else 'industrial'} environment) for emissions and EN 55035 for immunity. Additional EN 61000-4-x immunity tests required.",
-                action="Identify applicable class (A or B) based on intended environment. Commission accredited lab. Document standard versions applied."
-            ))
 
-        if has_mains:
-            findings.append(Finding(
-                directive="EMC", article="EN 55032 — Conducted emissions, mains port [CISPR 32]",
-                status="WARN",
-                finding="Mains-connected product must be tested for conducted emissions on the mains port (EN 55032, 150kHz–30MHz). This is separate from radiated emissions testing.",
-                action="Include mains port conducted emissions in test scope. Ensure power supply design minimises conducted noise. Consider EMC filter on mains input."
-            ))
 
-        if depth == "deep":
-            findings.append(Finding(
-                directive="EMC", article="Technical File — EMC [Directive 2014/30/EU Art.15]",
-                status="INFO",
-                finding="EMC technical file must include: (1) general description of equipment, (2) design and manufacturing drawings, (3) list of harmonised standards applied (with version dates), (4) test reports from accredited laboratory, (5) EU Declaration of Conformity.",
-                action="Retain technical file for 10 years. DoC must list exact standard versions. Lab must be ILAC/MRA accredited (check BELAC, DAkkS, UKAS, RvA, etc.)."
-            ))
-
-    # ── LVD ───────────────────────────────────────────────────────────────
-    if "LVD" in directives:
-        if not has_mains and not has_battery and not has_usb_power and not has_poe:
-            findings.append(Finding(
-                directive="LVD", article="Art.3 — Scope [Directive 2014/35/EU]",
-                status="INFO",
-                finding="No electrical power supply detected. LVD applies to electrical equipment designed for use with a voltage rating of 50–1000V AC or 75–1500V DC. Confirm power supply voltage range.",
-                action="Confirm supply voltage. If battery-only below 75V DC, LVD likely does not apply. If mains-powered, LVD is mandatory."
-            ))
-        else:
-            if has_mains:
-                lvd_std = "EN 60335-1 + EN 60335-2-x" if is_consumer else "EN 62368-1"
-                findings.append(Finding(
-                    directive="LVD", article=f"Annex I — Safety objectives, mains [{lvd_std}]",
-                    status="WARN",
-                    finding=f"Mains-connected product. LVD essential safety requirements apply: protection against electric shock (basic insulation, double insulation, protective earth), fire hazard, mechanical hazard, and radiation. Apply {lvd_std}.",
-                    action=f"Apply {lvd_std}. Conduct insulation coordination analysis (EN 60664-1). Perform dielectric strength test. Ensure correct fusing. Include in technical file."
-                ))
-
-                if has_high_voltage:
-                    findings.append(Finding(
-                        directive="LVD", article="Annex I — High voltage safety [EN 60664-1]",
-                        status="WARN",
-                        finding="High voltage or motor drive detected. Additional safety measures required: creepage and clearance distances, reinforced insulation, protective guarding.",
-                        action="Apply EN 60664-1 for insulation coordination. Calculate minimum creepage and clearance for working voltage and pollution degree. Document in technical file."
-                    ))
-
-            if has_battery:
-                battery_std = "IEC 62133-2" if detect(t, ["li-ion", "lipo", "lithium"]) else "IEC 60086 series"
-                findings.append(Finding(
-                    directive="LVD", article=f"Annex I — Battery safety [{battery_std} / EN 62368-1 §5.4]",
-                    status="WARN",
-                    finding=f"Rechargeable battery detected. Li-ion/LiPo cells carry thermal runaway risk if overcharged, over-discharged, or short-circuited. Battery management system (BMS) design is safety-critical.",
-                    action=f"Apply {battery_std}. Document cell specifications (manufacturer, model, capacity, max charge/discharge current). Design and test BMS: overcharge protection, over-discharge protection, short-circuit protection, thermal monitoring. Include in technical file."
-                ))
-
-            if has_usb_power:
-                findings.append(Finding(
-                    directive="LVD", article="USB Power Delivery safety [EN 62368-1 / IEC 63002]",
-                    status="INFO",
-                    finding="USB-powered product. If powered from external USB adapter, the adapter is a separate product under LVD. Product itself (≤5V DC) is likely outside LVD scope but must be compatible with safe USB power sources.",
-                    action="Confirm power source. If product includes USB charger/adapter, that adapter requires LVD compliance separately. Document power supply requirements in user manual."
-                ))
-
-            if depth == "deep":
-                findings.append(Finding(
-                    directive="LVD", article="Technical File — Safety [Directive 2014/35/EU Art.15]",
-                    status="INFO",
-                    finding="LVD technical file must include: (1) general description, (2) conceptual design, circuit diagrams, component descriptions, (3) risk assessment, (4) list of harmonised standards applied, (5) copies of test reports, (6) copy of EU Declaration of Conformity.",
-                    action="All safety testing must be performed by accredited laboratory. DoC must reference specific harmonised standards with version dates. Retain for 10 years."
-                ))
-
-    # ── ESPR ──────────────────────────────────────────────────────────────
-    if "ESPR" in directives:
-        findings.append(Finding(
-            directive="ESPR", article="Regulation (EU) 2024/1781 — Scope & timeline",
-            status="INFO",
-            finding="ESPR replaces the Ecodesign Directive (2009/125/EC) with broader scope covering sustainability, repairability, recyclability, and software longevity. Product-specific Delegated Acts are being developed per the ESPR Working Plan 2022–2024. General framework applies from July 2024.",
-            action="Monitor EU ESPR working plan for your product category. Begin sustainability data collection now. Identify likely Delegated Act timeline for your category."
-        ))
-
-        # Software support
-        if has_ota:
-            findings.append(Finding(
-                directive="ESPR", article="Software longevity — OTA capability [IEC 63074]",
-                status="PASS",
-                finding="OTA update capability confirmed — strong compliance signal for ESPR software supportability requirements. Ensures security and functionality updates can be delivered throughout product lifetime.",
-                action="Define and publicly commit to minimum software support period (years from market placement). Publish support end date. Document update policy in product information sheet."
-            ))
-        else:
-            findings.append(Finding(
-                directive="ESPR", article="Software longevity — OTA capability [IEC 63074]",
-                status="WARN",
-                finding="No OTA update capability detected. ESPR Delegated Acts are expected to require minimum software update availability matching the product's expected use lifetime. Products unable to receive security updates will face market barriers.",
-                action="Evaluate feasibility of adding OTA update capability. If OTA not feasible, document rationale and define alternative security maintenance strategy."
-            ))
-
-        # Repairability
-        if has_repairability:
-            findings.append(Finding(
-                directive="ESPR", article="Repairability — Spare parts & manuals [EN 45554]",
-                status="PASS",
-                finding="Repairability features mentioned — positive signal for ESPR compliance. Spare parts availability and repair documentation are key ESPR requirements.",
-                action="Formalise repairability index per EN 45554. Commit to minimum spare parts availability period (typically 7–10 years post last sale). Publish repair manual."
-            ))
-        else:
-            findings.append(Finding(
-                directive="ESPR", article="Repairability — Spare parts & manuals [EN 45554]",
-                status="WARN",
-                finding="No repairability features mentioned. ESPR Delegated Acts will likely mandate minimum spare parts availability and repair documentation for most product categories.",
-                action="Identify critical spare parts for your product. Plan minimum availability commitment. Prepare repair and disassembly documentation. Calculate repairability index per EN 45554."
-            ))
-
-        if depth != "quick":
-            findings.append(Finding(
-                directive="ESPR", article="Digital Product Passport (DPP) [ESPR Art.9 / CIRPASS]",
-                status="INFO",
-                finding="ESPR introduces Digital Product Passports (DPP) accessible via QR code or RFID, containing sustainability and circularity data. DPP requirements are being phased in from 2026 per product category.",
-                action="Monitor DPP Delegated Act for your product category. Begin building product data infrastructure: materials declaration, component list, recyclability scores, repair scores, carbon footprint. Align with CIRPASS data model."
-            ))
-
-            if has_energy_data or detect(t, ["energy consumption", "standby", "watts", "power consumption"]):
-                findings.append(Finding(
-                    directive="ESPR", article="Energy performance [ErP Regulation / Energy Labelling Reg. 2017/1369]",
-                    status="WARN",
-                    finding="Energy consumption data detected. ESPR and linked Energy Labelling Regulation may require energy efficiency class labelling and minimum performance standards.",
-                    action="Measure standby, networked standby, and operational power consumption. Check if Energy Label applies to your product category. Apply Ecodesign Regulation requirements if product category covered."
-                ))
-
-        if depth == "deep":
-            findings.append(Finding(
-                directive="ESPR", article="Product Information Requirements [ESPR Art.7]",
-                status="INFO",
-                finding="ESPR Art.7 requires specific product information to be available: durability, reparability, presence of hazardous substances, recycled content, spare parts and repair manual availability, and software update availability.",
-                action="Prepare product information sheet meeting Art.7 requirements. Include in packaging and product webpage. Ensure information is accessible digitally (QR code or URL). Translate into all relevant EU languages."
-            ))
-
-    # ── Overall risk calculation ───────────────────────────────────────────
+def derive_overall_risk(findings: list[Finding], facts: FactModel) -> str:
     fail_count = sum(1 for f in findings if f.status == "FAIL")
     warn_count = sum(1 for f in findings if f.status == "WARN")
-    pass_count = sum(1 for f in findings if f.status == "PASS")
+    if fail_count >= 3 or facts.prohibited_ai_signal:
+        return "CRITICAL"
+    if fail_count >= 1 or len(facts.sensitive_data) >= 1 or len(facts.contradictions) >= 2:
+        return "HIGH"
+    if warn_count >= 3 or len(facts.contradictions) == 1:
+        return "MEDIUM"
+    return "LOW"
 
-    if fail_count >= 3:
-        risk = "CRITICAL"
-    elif fail_count >= 1:
-        risk = "HIGH"
-    elif warn_count >= 4:
-        risk = "MEDIUM"
-    elif warn_count >= 1:
-        risk = "MEDIUM"
-    else:
-        risk = "LOW"
 
-    if fail_count > 0:
-        summary_text = f"{fail_count} blocking non-conformity(ies) and {warn_count} warning(s) identified across {len(directives)} directive(s). Product cannot be CE-marked or placed on EU market in current state. Address all FAIL items before conformity assessment."
-    elif warn_count > 0:
-        summary_text = f"No blocking non-conformities found. {warn_count} warning(s) require attention before CE marking. Address all WARN items and verify with accredited testing."
-    else:
-        summary_text = f"Product appears broadly compliant across {len(directives)} directive(s) based on the description provided. Verify compliance with accredited laboratory testing before CE marking. Keep technical file updated."
 
-    return {
-        "product_summary": description[:90] + "..." if len(description) > 90 else description,
-        "overall_risk": risk,
-        "findings": [f.dict() for f in findings],
-        "summary": summary_text
-    }
+def build_summary(findings: list[Finding], facts: FactModel, directives: list[str]) -> str:
+    fail_count = sum(1 for f in findings if f.status == "FAIL")
+    warn_count = sum(1 for f in findings if f.status == "WARN")
+    contradiction_text = ""
+    if facts.contradictions:
+        contradiction_text = f" Conflicting description signals detected: {len(facts.contradictions)}."
+    return f"{len(directives)} directive(s) screened. {fail_count} FAIL, {warn_count} WARN finding(s). Product profile: {summarize_product(facts)}.{contradiction_text}"
+
+
+
+def dedupe_findings(findings: list[Finding]) -> list[Finding]:
+    seen: set[tuple[str, str, str, str]] = set()
+    out: list[Finding] = []
+    for f in findings:
+        key = (f.directive, f.article, f.status, f.finding)
+        if key not in seen:
+            out.append(f)
+            seen.add(key)
+    return out
+
+
+
+def analyze(description: str, category: str, directives: list[str], depth: str) -> AnalysisResult:
+    facts = extract_facts(description=description, category=category)
+    final_directives = infer_directives(facts, requested=directives)
+
+    findings: list[Finding] = []
+
+    for contradiction in facts.contradictions:
+        add_finding(findings, "CRA", "Inference quality / contradiction check", "WARN", contradiction, "Clarify the product description to improve triage quality and legal confidence.")
+
+    for directive in final_directives:
+        analyzer = ANALYZERS.get(directive)
+        if analyzer:
+            findings.extend(analyzer(facts, depth))
+
+    findings = dedupe_findings(findings)
+    findings.sort(key=lambda f: (final_directives.index(f.directive) if f.directive in final_directives else 999, -STATUS_ORDER[f.status], f.article))
+
+    result = AnalysisResult(
+        product_summary=summarize_product(facts),
+        overall_risk=derive_overall_risk(findings, facts),
+        findings=findings,
+        summary=build_summary(findings, facts, final_directives),
+    )
+    return result

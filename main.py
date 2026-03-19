@@ -1,31 +1,33 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from models import ProductInput
+
+from models import AnalysisResult, ProductInput
 from rules import analyze
 
-app = FastAPI(title="RegCheck API")
+app = FastAPI(title="RegCheck API", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    "http://localhost:3000",
-    "https://rulegrid.net",
-    "https://www.rulegrid.net"
-],  
+        "http://localhost:3000",
+        "https://rulegrid.net",
+        "https://www.rulegrid.net",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def root():
-    return {"status": "RegCheck API is running"}
+    return {"status": "RegCheck API is running", "version": "2.0.0"}
 
-@app.post("/analyze")
+
+@app.post("/analyze", response_model=AnalysisResult)
 def run_analysis(product: ProductInput):
-    result = analyze(
+    return analyze(
         description=product.description,
         category=product.category,
         directives=product.directives,
-        depth=product.depth
+        depth=product.depth,
     )
-    return result
