@@ -1,7 +1,7 @@
 traits:
   - id: consumer
     label: Consumer product
-    description: Intended mainly for consumer/end-user use
+    description: Intended mainly for consumer or end-user use
 
   - id: household
     label: Household use
@@ -9,11 +9,19 @@ traits:
 
   - id: professional
     label: Professional use
-    description: Intended for professional/commercial users
+    description: Intended for professional or commercial users
 
   - id: industrial
     label: Industrial use
     description: Intended for industrial environments or processes
+
+  - id: commercial_food_service
+    label: Commercial food service
+    description: Intended for catering, horeca, or food-service environments
+
+  - id: medical_context
+    label: Medical context
+    description: Intended for healthcare, patient, or clinical use context
 
   - id: electrical
     label: Electrical product
@@ -35,17 +43,37 @@ traits:
     label: Battery powered
     description: Powered by primary or rechargeable batteries
 
+  - id: usb_powered
+    label: USB powered
+    description: Powered through USB or USB-C
+
   - id: heating
     label: Heating function
     description: Generates heat as part of intended function
+
+  - id: cooling
+    label: Cooling function
+    description: Generates cooling or refrigeration as part of intended function
 
   - id: motorized
     label: Motorized
     description: Contains a motor or driven moving parts
 
+  - id: pumping
+    label: Pumping function
+    description: Contains a pump or fluid transfer function
+
   - id: water_contact
     label: Water contact
     description: Intended to contain, heat, pump, or contact water
+
+  - id: food_contact
+    label: Food contact
+    description: Intended to contact food or beverages
+
+  - id: wearable
+    label: Wearable
+    description: Intended to be worn on the body
 
   - id: radio
     label: Radio functionality
@@ -59,9 +87,29 @@ traits:
     label: Bluetooth
     description: Uses Bluetooth radio technology
 
+  - id: zigbee
+    label: Zigbee
+    description: Uses Zigbee radio technology
+
+  - id: thread
+    label: Thread
+    description: Uses Thread radio technology
+
+  - id: matter
+    label: Matter
+    description: Uses or supports Matter interoperability
+
+  - id: nfc
+    label: NFC
+    description: Uses near-field communication
+
   - id: cellular
     label: Cellular
     description: Uses cellular radio technology
+
+  - id: gnss
+    label: GNSS
+    description: Uses GPS, GNSS, or satellite positioning
 
   - id: app_control
     label: App control
@@ -69,7 +117,7 @@ traits:
 
   - id: cloud
     label: Cloud connection
-    description: Connects to remote/cloud services
+    description: Connects to remote or cloud services
 
   - id: internet
     label: Internet connected
@@ -77,19 +125,27 @@ traits:
 
   - id: local_only
     label: Local only
-    description: Operates locally without cloud/internet dependence
+    description: Operates locally without cloud or internet dependence
 
   - id: ota
     label: OTA updates
-    description: Supports firmware/software updates over the air
+    description: Supports firmware or software updates over the air
 
   - id: account
     label: User account
-    description: Requires or supports account registration/login
+    description: Requires or supports account registration or login
 
   - id: authentication
     label: Authentication
     description: Uses login, password, PIN, tokens, or similar controls
+
+  - id: remote_control
+    label: Remote control
+    description: Supports remote control beyond local physical interaction
+
+  - id: data_storage
+    label: Data storage
+    description: Stores user, device, or event data
 
   - id: camera
     label: Camera
@@ -99,6 +155,14 @@ traits:
     label: Microphone
     description: Captures voice or sound
 
+  - id: speaker
+    label: Speaker
+    description: Emits voice, music, alarms, or sounds
+
+  - id: display
+    label: Display
+    description: Includes a visual display or screen
+
   - id: location
     label: Location data
     description: Uses or stores location-related data
@@ -107,9 +171,13 @@ traits:
     label: Health related
     description: Measures or handles physiological or health-related information
 
+  - id: safety_function
+    label: Safety function
+    description: Performs a safety-critical or protective function
+
   - id: personal_data_likely
     label: Personal data likely
-    description: Likely processes personal data based on function/features
+    description: Likely processes personal data based on function or features
 
   - id: child_targeted
     label: Child targeted
@@ -117,4 +185,4 @@ traits:
 
   - id: ai_related
     label: AI related
-    description: Uses AI/ML or AI-like automated inference capability
+    description: Uses AI, ML, or AI-like automated inference capability

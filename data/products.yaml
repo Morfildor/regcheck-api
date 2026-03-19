@@ -14,6 +14,7 @@ products:
       - electrical
       - heating
       - water_contact
+      - food_contact
       - mains_power_likely
     functional_classes:
       - beverage_preparation
@@ -25,8 +26,10 @@ products:
       - coffee machine
       - espresso machine
       - coffee maker
-      - smart coffee machine
       - bean to cup machine
+      - pod machine
+      - capsule machine
+      - smart coffee machine
     implied_traits:
       - consumer
       - household
@@ -34,9 +37,26 @@ products:
       - electronic
       - heating
       - water_contact
+      - food_contact
       - mains_power_likely
     functional_classes:
       - beverage_preparation
+      - small_domestic_appliance
+
+  - id: toaster
+    label: Toaster
+    aliases:
+      - toaster
+      - smart toaster
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - heating
+      - food_contact
+      - mains_power_likely
+    functional_classes:
+      - cooking_appliance
       - small_domestic_appliance
 
   - id: air_fryer
@@ -51,9 +71,48 @@ products:
       - electrical
       - electronic
       - heating
+      - food_contact
       - mains_power_likely
     functional_classes:
       - cooking_appliance
+      - small_domestic_appliance
+
+  - id: rice_cooker
+    label: Rice cooker
+    aliases:
+      - rice cooker
+      - smart rice cooker
+      - multicooker
+      - multi cooker
+      - pressure cooker
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - heating
+      - food_contact
+      - mains_power_likely
+    functional_classes:
+      - cooking_appliance
+      - small_domestic_appliance
+
+  - id: blender
+    label: Blender
+    aliases:
+      - blender
+      - hand blender
+      - stick blender
+      - mixer
+      - food processor
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - motorized
+      - food_contact
+    functional_classes:
+      - food_preparation
       - small_domestic_appliance
 
   - id: vacuum_cleaner
@@ -62,8 +121,10 @@ products:
       - vacuum
       - vacuum cleaner
       - cordless vacuum
+      - stick vacuum
       - robot vacuum
       - robotic vacuum
+      - canister vacuum
     implied_traits:
       - consumer
       - household
@@ -74,6 +135,24 @@ products:
       - floor_care
       - cleaning_appliance
 
+  - id: steam_iron
+    label: Steam iron
+    aliases:
+      - iron
+      - steam iron
+      - garment steamer
+      - clothes steamer
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - heating
+      - water_contact
+      - mains_power_likely
+    functional_classes:
+      - garment_care
+      - small_domestic_appliance
+
   - id: fan
     label: Fan
     aliases:
@@ -81,6 +160,8 @@ products:
       - desk fan
       - smart fan
       - tower fan
+      - ceiling fan
+      - circulator fan
     implied_traits:
       - consumer
       - household
@@ -88,6 +169,25 @@ products:
       - motorized
       - mains_power_likely
     functional_classes:
+      - comfort_appliance
+
+  - id: air_purifier
+    label: Air purifier
+    aliases:
+      - air purifier
+      - purifier
+      - humidifier
+      - dehumidifier
+      - air cleaner
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - motorized
+      - mains_power_likely
+    functional_classes:
+      - air_treatment
       - comfort_appliance
 
   - id: camera_device
@@ -99,6 +199,9 @@ products:
       - wifi camera
       - connected camera
       - baby monitor
+      - doorbell camera
+      - dash cam
+      - webcam
     implied_traits:
       - consumer
       - household
@@ -106,6 +209,7 @@ products:
       - electronic
       - camera
       - personal_data_likely
+      - data_storage
     functional_classes:
       - imaging_device
       - connected_sensor
@@ -117,14 +221,18 @@ products:
       - smartwatch
       - smart watch
       - fitness band
+      - fitness tracker
       - activity tracker
       - heart rate monitor
+      - smart ring
     implied_traits:
       - consumer
+      - wearable
       - electrical
       - electronic
       - battery_powered
       - personal_data_likely
+      - data_storage
     functional_classes:
       - wearable_device
 
@@ -136,15 +244,36 @@ products:
       - digital lock
       - bluetooth lock
       - wifi lock
+      - door lock
     implied_traits:
       - consumer
       - household
       - electrical
       - electronic
       - authentication
+      - remote_control
     functional_classes:
       - access_control
       - connected_actuator
+
+  - id: speaker
+    label: Smart speaker
+    aliases:
+      - smart speaker
+      - speaker
+      - voice assistant
+      - smart display
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - speaker
+      - microphone
+      - personal_data_likely
+    functional_classes:
+      - media_device
+      - connected_device
 
   - id: toy
     label: Toy
@@ -154,6 +283,7 @@ products:
       - connected toy
       - children's toy
       - kids toy
+      - educational toy
     implied_traits:
       - consumer
       - child_targeted
@@ -168,6 +298,8 @@ products:
       - bridge
       - smart home hub
       - controller hub
+      - router
+      - gateway device
     implied_traits:
       - consumer
       - household
@@ -175,5 +307,43 @@ products:
       - electronic
       - internet
       - cloud
+      - data_storage
     functional_classes:
       - connected_gateway
+
+  - id: sensor
+    label: Connected sensor
+    aliases:
+      - sensor
+      - leak detector
+      - water leak detector
+      - smoke detector
+      - co detector
+      - occupancy sensor
+      - door sensor
+      - motion sensor
+      - temperature sensor
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - data_storage
+    functional_classes:
+      - connected_sensor
+
+  - id: charger
+    label: Charger / power adapter
+    aliases:
+      - charger
+      - battery charger
+      - usb charger
+      - power adapter
+      - adapter
+      - charging dock
+    implied_traits:
+      - consumer
+      - electrical
+      - mains_power_likely
+    functional_classes:
+      - power_supply

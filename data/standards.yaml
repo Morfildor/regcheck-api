@@ -18,7 +18,26 @@ standards:
     exclude_if:
       - industrial
     confidence: high
-    notes: General baseline safety standard often relevant to household electrical appliances.
+    notes: General baseline safety standard family often relevant to household electrical appliances.
+
+  - code: EN 62233
+    title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human exposure
+    region: EU
+    category: emf
+    directives:
+      - LVD
+    applies_if_all:
+      - consumer
+      - household
+      - electrical
+    applies_if_any:
+      - heating
+      - motorized
+      - mains_powered
+      - mains_power_likely
+    exclude_if: []
+    confidence: medium
+    notes: Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation.
 
   - code: EN 55014-1
     title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Emission
@@ -35,7 +54,7 @@ standards:
       - consumer
     exclude_if: []
     confidence: high
-    notes: Emission side EMC standard family commonly relevant to many household appliances.
+    notes: Emission-side EMC standard family commonly relevant to many household appliances.
 
   - code: EN 55014-2
     title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Immunity
@@ -52,7 +71,7 @@ standards:
       - consumer
     exclude_if: []
     confidence: high
-    notes: Immunity side EMC standard family commonly relevant to many household appliances.
+    notes: Immunity-side EMC standard family commonly relevant to many household appliances.
 
   - code: EN IEC 61000-3-2
     title: Electromagnetic compatibility - Limits for harmonic current emissions
@@ -65,13 +84,31 @@ standards:
     applies_if_any:
       - household
       - consumer
+      - electrical
     exclude_if:
       - battery_powered
     confidence: medium
     notes: Typically considered for mains-powered equipment depending on product characteristics and scope.
 
+  - code: EN 61000-3-3
+    title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations and flicker
+    region: EU
+    category: emc
+    directives:
+      - EMC
+    applies_if_all:
+      - mains_powered
+    applies_if_any:
+      - household
+      - consumer
+      - electrical
+    exclude_if:
+      - battery_powered
+    confidence: medium
+    notes: Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects.
+
   - code: EN 300 328
-    title: Wideband transmission systems
+    title: Wideband transmission systems; Data transmission equipment operating in the 2.4 GHz band
     region: EU
     category: radio
     directives:
@@ -81,6 +118,8 @@ standards:
     applies_if_any:
       - wifi
       - bluetooth
+      - matter
+      - thread
     exclude_if: []
     confidence: high
     notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth.
@@ -98,6 +137,8 @@ standards:
       - wifi
       - bluetooth
       - cellular
+      - zigbee
+      - thread
     exclude_if: []
     confidence: high
     notes: Common EMC framework standard for radio equipment.
@@ -113,9 +154,73 @@ standards:
     applies_if_any:
       - wifi
       - bluetooth
+      - zigbee
+      - thread
     exclude_if: []
     confidence: medium
-    notes: Often relevant alongside EN 301 489-1 depending on radio technology used.
+    notes: Often relevant alongside EN 301 489-1 depending on the short-range radio technology used.
+
+  - code: EN 301 489-52
+    title: EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
+    region: EU
+    category: radio_emc
+    directives:
+      - RED
+    applies_if_all:
+      - radio
+      - cellular
+    applies_if_any:
+      - internet
+      - remote_control
+    exclude_if: []
+    confidence: medium
+    notes: Commonly considered when cellular connectivity is present.
+
+  - code: EN 301 511
+    title: Harmonised standard for mobile stations in GSM networks
+    region: EU
+    category: radio
+    directives:
+      - RED
+    applies_if_all:
+      - radio
+      - cellular
+    applies_if_any: []
+    exclude_if: []
+    confidence: low
+    notes: Legacy cellular route that may be relevant for certain GSM-capable devices; verify actual radio technology.
+
+  - code: EN 301 908 series review
+    title: Cellular radio standard family review required
+    region: EU
+    category: radio
+    directives:
+      - RED
+    applies_if_all:
+      - radio
+      - cellular
+    applies_if_any:
+      - internet
+      - remote_control
+    exclude_if: []
+    confidence: medium
+    notes: For cellular products, the specific EN 301 908 route depends on the implemented access technology and module design.
+
+  - code: EN 300 220 series review
+    title: Short range device radio standard family review required
+    region: EU
+    category: radio
+    directives:
+      - RED
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - zigbee
+      - thread
+      - nfc
+    exclude_if: []
+    confidence: low
+    notes: Placeholder review bucket where the precise short-range radio route depends on frequency band and implementation.
 
   - code: EN 62479
     title: Assessment of the compliance of low power electronic and electrical equipment with the basic restrictions related to human exposure to electromagnetic fields
@@ -129,9 +234,26 @@ standards:
       - wifi
       - bluetooth
       - cellular
+      - zigbee
+      - thread
     exclude_if: []
     confidence: medium
     notes: Common EMF assessment route for certain low-power radio products.
+
+  - code: EN 50663 / EN 62311 review
+    title: EMF assessment route review required
+    region: EU
+    category: emf
+    directives:
+      - RED
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - cellular
+      - wearable
+    exclude_if: []
+    confidence: low
+    notes: The applicable RF exposure assessment route may depend on power level, use scenario, and placement on the body.
 
   - code: EN 18031-1
     title: Common cybersecurity requirements for radio equipment - Part 1
@@ -147,9 +269,10 @@ standards:
       - app_control
       - cloud
       - ota
+      - remote_control
     exclude_if: []
     confidence: medium
-    notes: May become relevant for connected radio products depending on the regulatory path and product design.
+    notes: Often relevant for connected radio products with networked or software-controlled functionality.
 
   - code: EN 18031-2
     title: Common cybersecurity requirements for radio equipment - Part 2
@@ -167,7 +290,7 @@ standards:
       - cloud
     exclude_if: []
     confidence: medium
-    notes: Often relevant where network-connected radio equipment processes or protects access/data.
+    notes: Often relevant where network-connected radio equipment processes or protects access, credentials, or service integrity.
 
   - code: EN 18031-3
     title: Common cybersecurity requirements for radio equipment - Part 3
@@ -184,9 +307,28 @@ standards:
       - microphone
       - location
       - child_targeted
+      - health_related
     exclude_if: []
     confidence: medium
     notes: Often relevant where privacy, personal data, or child-related concerns arise.
+
+  - code: CRA review
+    title: Cyber Resilience Act assessment required
+    region: EU
+    category: cybersecurity
+    directives:
+      - CRA
+    applies_if_all: []
+    applies_if_any:
+      - electronic
+      - app_control
+      - cloud
+      - internet
+      - ota
+      - data_storage
+    exclude_if: []
+    confidence: medium
+    notes: Placeholder review bucket for wider CRA essential requirement assessment beyond radio-specific routes.
 
   - code: GDPR review
     title: GDPR assessment required
@@ -203,9 +345,10 @@ standards:
       - health_related
       - account
       - child_targeted
+      - data_storage
     exclude_if: []
     confidence: medium
-    notes: Placeholder compliance bucket for privacy/data protection review rather than a harmonized standard.
+    notes: Placeholder compliance bucket for privacy and data protection review rather than a harmonized standard.
 
   - code: AI Act review
     title: AI Act assessment required
@@ -219,3 +362,37 @@ standards:
     exclude_if: []
     confidence: medium
     notes: Placeholder assessment bucket for AI-related regulatory review.
+
+  - code: Battery safety review
+    title: Battery safety and transport review required
+    region: EU
+    category: battery
+    directives:
+      - LVD
+      - CRA
+    applies_if_all:
+      - battery_powered
+    applies_if_any:
+      - wearable
+      - consumer
+      - household
+    exclude_if: []
+    confidence: low
+    notes: Placeholder review bucket where battery chemistry, charger architecture, and transport obligations need separate evaluation.
+
+  - code: Charger / external PSU review
+    title: External power supply and charger route review required
+    region: EU
+    category: power
+    directives:
+      - LVD
+      - EMC
+    applies_if_all:
+      - electrical
+    applies_if_any:
+      - mains_powered
+      - mains_power_likely
+      - usb_powered
+    exclude_if: []
+    confidence: low
+    notes: Review whether the product relies on an external PSU, charger, or adapter that brings additional compliance dependencies.
