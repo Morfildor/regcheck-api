@@ -1,0 +1,179 @@
+products:
+  - id: kettle
+    label: Electric kettle
+    aliases:
+      - kettle
+      - electric kettle
+      - smart kettle
+      - connected kettle
+      - wifi kettle
+      - bluetooth kettle
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - heating
+      - water_contact
+      - mains_power_likely
+    functional_classes:
+      - beverage_preparation
+      - small_domestic_appliance
+
+  - id: coffee_machine
+    label: Coffee machine
+    aliases:
+      - coffee machine
+      - espresso machine
+      - coffee maker
+      - smart coffee machine
+      - bean to cup machine
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - heating
+      - water_contact
+      - mains_power_likely
+    functional_classes:
+      - beverage_preparation
+      - small_domestic_appliance
+
+  - id: air_fryer
+    label: Air fryer
+    aliases:
+      - air fryer
+      - smart air fryer
+      - connected air fryer
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - heating
+      - mains_power_likely
+    functional_classes:
+      - cooking_appliance
+      - small_domestic_appliance
+
+  - id: vacuum_cleaner
+    label: Vacuum cleaner
+    aliases:
+      - vacuum
+      - vacuum cleaner
+      - cordless vacuum
+      - robot vacuum
+      - robotic vacuum
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - motorized
+    functional_classes:
+      - floor_care
+      - cleaning_appliance
+
+  - id: fan
+    label: Fan
+    aliases:
+      - fan
+      - desk fan
+      - smart fan
+      - tower fan
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - motorized
+      - mains_power_likely
+    functional_classes:
+      - comfort_appliance
+
+  - id: camera_device
+    label: Camera device
+    aliases:
+      - camera
+      - security camera
+      - smart camera
+      - wifi camera
+      - connected camera
+      - baby monitor
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - camera
+      - personal_data_likely
+    functional_classes:
+      - imaging_device
+      - connected_sensor
+
+  - id: wearable
+    label: Wearable device
+    aliases:
+      - wearable
+      - smartwatch
+      - smart watch
+      - fitness band
+      - activity tracker
+      - heart rate monitor
+    implied_traits:
+      - consumer
+      - electrical
+      - electronic
+      - battery_powered
+      - personal_data_likely
+    functional_classes:
+      - wearable_device
+
+  - id: smart_lock
+    label: Smart lock
+    aliases:
+      - smart lock
+      - connected lock
+      - digital lock
+      - bluetooth lock
+      - wifi lock
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - authentication
+    functional_classes:
+      - access_control
+      - connected_actuator
+
+  - id: toy
+    label: Toy
+    aliases:
+      - toy
+      - smart toy
+      - connected toy
+      - children's toy
+      - kids toy
+    implied_traits:
+      - consumer
+      - child_targeted
+    functional_classes:
+      - toy_product
+
+  - id: gateway
+    label: Gateway / hub
+    aliases:
+      - gateway
+      - hub
+      - bridge
+      - smart home hub
+      - controller hub
+    implied_traits:
+      - consumer
+      - household
+      - electrical
+      - electronic
+      - internet
+      - cloud
+    functional_classes:
+      - connected_gateway

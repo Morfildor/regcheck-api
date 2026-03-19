@@ -1,4 +1,7 @@
 from __future__ import annotations
+from classifier import extract_traits
+from standards_engine import find_applicable_standards
+
 
 import re
 from dataclasses import dataclass
@@ -296,6 +299,8 @@ def add_finding(
 
 def analyze_red(facts: FactModel, depth: str) -> list[Finding]:
     findings: list[Finding] = []
+
+    
     if not facts.has_radio:
         add_finding(findings, "RED", "Art.2(1) / Art.3(3)(d-f) — Applicability", "INFO", "No radio interface was inferred. RED cybersecurity delegated requirements normally apply only to radio equipment.", "Confirm whether the product intentionally emits or receives radio waves.")
         return findings
@@ -542,6 +547,8 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
 
     findings: list[Finding] = []
 
+    classification = extract_traits(description, category)
+    traits = set(classification["all_traits"])
     for contradiction in facts.contradictions:
         add_finding(findings, "CRA", "Inference quality / contradiction check", "WARN", contradiction, "Clarify the product description to improve triage quality and legal confidence.")
 
@@ -552,6 +559,16 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
 
     findings = dedupe_findings(findings)
     findings.sort(key=lambda f: (final_directives.index(f.directive) if f.directive in final_directives else 999, -STATUS_ORDER[f.status], f.article))
+    applicable_standards = find_applicable_standards(traits, directives)
+
+    for std in applicable_standards:
+        findings.append(Finding(
+            directive=", ".join(std.get("directives", [])),
+            article=std.get("code", "Standard"),
+            status="INFO",
+            finding=f"{std.get('code')}: {std.get('title')}",
+            action=std.get("notes")
+        ))
 
     result = AnalysisResult(
         product_summary=summarize_product(facts),

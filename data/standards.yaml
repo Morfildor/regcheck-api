@@ -1,0 +1,221 @@
+standards:
+  - code: EN 60335-1
+    title: Household and similar electrical appliances - Safety - General requirements
+    region: EU
+    category: safety
+    directives:
+      - LVD
+    applies_if_all:
+      - consumer
+      - household
+      - electrical
+    applies_if_any:
+      - heating
+      - motorized
+      - water_contact
+      - mains_powered
+      - mains_power_likely
+    exclude_if:
+      - industrial
+    confidence: high
+    notes: General baseline safety standard often relevant to household electrical appliances.
+
+  - code: EN 55014-1
+    title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Emission
+    region: EU
+    category: emc
+    directives:
+      - EMC
+    applies_if_all:
+      - electrical
+    applies_if_any:
+      - household
+      - motorized
+      - heating
+      - consumer
+    exclude_if: []
+    confidence: high
+    notes: Emission side EMC standard family commonly relevant to many household appliances.
+
+  - code: EN 55014-2
+    title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Immunity
+    region: EU
+    category: emc
+    directives:
+      - EMC
+    applies_if_all:
+      - electrical
+    applies_if_any:
+      - household
+      - motorized
+      - heating
+      - consumer
+    exclude_if: []
+    confidence: high
+    notes: Immunity side EMC standard family commonly relevant to many household appliances.
+
+  - code: EN IEC 61000-3-2
+    title: Electromagnetic compatibility - Limits for harmonic current emissions
+    region: EU
+    category: emc
+    directives:
+      - EMC
+    applies_if_all:
+      - mains_powered
+    applies_if_any:
+      - household
+      - consumer
+    exclude_if:
+      - battery_powered
+    confidence: medium
+    notes: Typically considered for mains-powered equipment depending on product characteristics and scope.
+
+  - code: EN 300 328
+    title: Wideband transmission systems
+    region: EU
+    category: radio
+    directives:
+      - RED
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - wifi
+      - bluetooth
+    exclude_if: []
+    confidence: high
+    notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth.
+
+  - code: EN 301 489-1
+    title: EMC standard for radio equipment and services - Common technical requirements
+    region: EU
+    category: radio_emc
+    directives:
+      - RED
+      - EMC
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - wifi
+      - bluetooth
+      - cellular
+    exclude_if: []
+    confidence: high
+    notes: Common EMC framework standard for radio equipment.
+
+  - code: EN 301 489-17
+    title: EMC standard for radio equipment and services - Specific conditions for broadband data transmission systems
+    region: EU
+    category: radio_emc
+    directives:
+      - RED
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - wifi
+      - bluetooth
+    exclude_if: []
+    confidence: medium
+    notes: Often relevant alongside EN 301 489-1 depending on radio technology used.
+
+  - code: EN 62479
+    title: Assessment of the compliance of low power electronic and electrical equipment with the basic restrictions related to human exposure to electromagnetic fields
+    region: EU
+    category: emf
+    directives:
+      - RED
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - wifi
+      - bluetooth
+      - cellular
+    exclude_if: []
+    confidence: medium
+    notes: Common EMF assessment route for certain low-power radio products.
+
+  - code: EN 18031-1
+    title: Common cybersecurity requirements for radio equipment - Part 1
+    region: EU
+    category: cybersecurity
+    directives:
+      - RED
+      - CRA
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - internet
+      - app_control
+      - cloud
+      - ota
+    exclude_if: []
+    confidence: medium
+    notes: May become relevant for connected radio products depending on the regulatory path and product design.
+
+  - code: EN 18031-2
+    title: Common cybersecurity requirements for radio equipment - Part 2
+    region: EU
+    category: cybersecurity
+    directives:
+      - RED
+      - CRA
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - account
+      - authentication
+      - internet
+      - cloud
+    exclude_if: []
+    confidence: medium
+    notes: Often relevant where network-connected radio equipment processes or protects access/data.
+
+  - code: EN 18031-3
+    title: Common cybersecurity requirements for radio equipment - Part 3
+    region: EU
+    category: cybersecurity
+    directives:
+      - RED
+      - CRA
+    applies_if_all:
+      - radio
+    applies_if_any:
+      - personal_data_likely
+      - camera
+      - microphone
+      - location
+      - child_targeted
+    exclude_if: []
+    confidence: medium
+    notes: Often relevant where privacy, personal data, or child-related concerns arise.
+
+  - code: GDPR review
+    title: GDPR assessment required
+    region: EU
+    category: privacy
+    directives:
+      - GDPR
+    applies_if_all: []
+    applies_if_any:
+      - personal_data_likely
+      - camera
+      - microphone
+      - location
+      - health_related
+      - account
+      - child_targeted
+    exclude_if: []
+    confidence: medium
+    notes: Placeholder compliance bucket for privacy/data protection review rather than a harmonized standard.
+
+  - code: AI Act review
+    title: AI Act assessment required
+    region: EU
+    category: ai
+    directives:
+      - AI_Act
+    applies_if_all:
+      - ai_related
+    applies_if_any: []
+    exclude_if: []
+    confidence: medium
+    notes: Placeholder assessment bucket for AI-related regulatory review.

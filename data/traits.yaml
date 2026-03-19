@@ -1,0 +1,120 @@
+traits:
+  - id: consumer
+    label: Consumer product
+    description: Intended mainly for consumer/end-user use
+
+  - id: household
+    label: Household use
+    description: Intended for domestic or household environments
+
+  - id: professional
+    label: Professional use
+    description: Intended for professional/commercial users
+
+  - id: industrial
+    label: Industrial use
+    description: Intended for industrial environments or processes
+
+  - id: electrical
+    label: Electrical product
+    description: Uses electrical power or electrical components
+
+  - id: electronic
+    label: Electronic product
+    description: Contains electronic circuitry or digital electronics
+
+  - id: mains_powered
+    label: Mains powered
+    description: Explicitly stated to run from mains power
+
+  - id: mains_power_likely
+    label: Mains powered likely
+    description: Likely mains powered based on product type or context
+
+  - id: battery_powered
+    label: Battery powered
+    description: Powered by primary or rechargeable batteries
+
+  - id: heating
+    label: Heating function
+    description: Generates heat as part of intended function
+
+  - id: motorized
+    label: Motorized
+    description: Contains a motor or driven moving parts
+
+  - id: water_contact
+    label: Water contact
+    description: Intended to contain, heat, pump, or contact water
+
+  - id: radio
+    label: Radio functionality
+    description: Contains radio transmission or reception capability
+
+  - id: wifi
+    label: Wi-Fi
+    description: Uses Wi-Fi radio technology
+
+  - id: bluetooth
+    label: Bluetooth
+    description: Uses Bluetooth radio technology
+
+  - id: cellular
+    label: Cellular
+    description: Uses cellular radio technology
+
+  - id: app_control
+    label: App control
+    description: Controlled or configured by a mobile or web app
+
+  - id: cloud
+    label: Cloud connection
+    description: Connects to remote/cloud services
+
+  - id: internet
+    label: Internet connected
+    description: Connects to the public internet
+
+  - id: local_only
+    label: Local only
+    description: Operates locally without cloud/internet dependence
+
+  - id: ota
+    label: OTA updates
+    description: Supports firmware/software updates over the air
+
+  - id: account
+    label: User account
+    description: Requires or supports account registration/login
+
+  - id: authentication
+    label: Authentication
+    description: Uses login, password, PIN, tokens, or similar controls
+
+  - id: camera
+    label: Camera
+    description: Captures still or video images
+
+  - id: microphone
+    label: Microphone
+    description: Captures voice or sound
+
+  - id: location
+    label: Location data
+    description: Uses or stores location-related data
+
+  - id: health_related
+    label: Health related
+    description: Measures or handles physiological or health-related information
+
+  - id: personal_data_likely
+    label: Personal data likely
+    description: Likely processes personal data based on function/features
+
+  - id: child_targeted
+    label: Child targeted
+    description: Intended for or marketed to children
+
+  - id: ai_related
+    label: AI related
+    description: Uses AI/ML or AI-like automated inference capability
