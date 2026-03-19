@@ -2,27 +2,78 @@ from __future__ import annotations
 
 from functools import lru_cache
 from pathlib import Path
-import yaml
+import os
 
-BASE_DIR = Path(__file__).resolve().parent
+import yaml
 
 
 class KnowledgeBaseError(RuntimeError):
     pass
 
 
+BASE_DIR = Path(__file__).resolve().parent
+
+
+def _candidate_dirs() -> list[Path]:
+    dirs: list[Path] = []
+
+    env_dir = os.getenv("REGCHECK_DATA_DIR")
+    if env_dir:
+        dirs.append(Path(env_dir).resolve())
+
+    cwd = Path.cwd().resolve()
+
+    dirs.extend(
+        [
+            BASE_DIR,
+            BASE_DIR / "data",
+            BASE_DIR.parent,
+            BASE_DIR.parent / "data",
+            cwd,
+            cwd / "data",
+            cwd / "app",
+            cwd / "app" / "data",
+            cwd / "backend",
+            cwd / "backend" / "data",
+        ]
+    )
+
+    unique: list[Path] = []
+    seen: set[str] = set()
+    for d in dirs:
+        key = str(d)
+        if key not in seen:
+            seen.add(key)
+            unique.append(d)
+
+    return unique
+
+
+def _resolve_data_path(filename: str) -> Path:
+    for directory in _candidate_dirs():
+        candidate = directory / filename
+        if candidate.exists() and candidate.is_file():
+            return candidate
+
+    tried = "\n".join(str(directory / filename) for directory in _candidate_dirs())
+    raise KnowledgeBaseError(
+        f"Missing knowledge-base file: {filename}. Tried:\n{tried}"
+    )
+
+
 def _load_yaml_raw(filename: str) -> dict:
-    path = BASE_DIR / filename
-    if not path.exists():
-        raise KnowledgeBaseError(f"Missing knowledge-base file: {filename}")
+    path = _resolve_data_path(filename)
+
     try:
-        with path.open("r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
     except yaml.YAMLError as exc:
-        raise KnowledgeBaseError(f"Invalid YAML in {filename}: {exc}") from exc
+        raise KnowledgeBaseError(f"Invalid YAML in {path.name}: {exc}") from exc
+    except OSError as exc:
+        raise KnowledgeBaseError(f"Could not read knowledge-base file: {path}") from exc
 
     if not isinstance(data, dict):
-        raise KnowledgeBaseError(f"{filename} must contain a top-level mapping.")
+        raise KnowledgeBaseError(f"{path.name} must contain a top-level mapping.")
     return data
 
 
@@ -36,15 +87,21 @@ def _require_list(parent: dict, key: str, filename: str) -> list:
 def _validate_traits(data: dict) -> list[dict]:
     traits = _require_list(data, "traits", "traits.yaml")
     seen: set[str] = set()
+
     for idx, row in enumerate(traits, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"traits.yaml trait #{idx} must be a mapping.")
+
         for field in ("id", "label", "description"):
-            if not isinstance(row.get(field), str) or not row[field].strip():
+            value = row.get(field)
+            if not isinstance(value, str) or not value.strip():
                 raise KnowledgeBaseError(f"traits.yaml trait #{idx} is missing a valid '{field}'.")
-        if row["id"] in seen:
-            raise KnowledgeBaseError(f"Duplicate trait id in traits.yaml: {row['id']}")
-        seen.add(row["id"])
+
+        trait_id = row["id"]
+        if trait_id in seen:
+            raise KnowledgeBaseError(f"Duplicate trait id in traits.yaml: {trait_id}")
+        seen.add(trait_id)
+
     return traits
 
 
@@ -56,12 +113,17 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
     for idx, row in enumerate(products, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"products.yaml product #{idx} must be a mapping.")
+
         for field in ("id", "label"):
-            if not isinstance(row.get(field), str) or not row[field].strip():
+            value = row.get(field)
+            if not isinstance(value, str) or not value.strip():
                 raise KnowledgeBaseError(f"products.yaml product #{idx} is missing a valid '{field}'.")
+
         for field in ("aliases", "implied_traits", "functional_classes"):
             if not isinstance(row.get(field), list):
-                raise KnowledgeBaseError(f"products.yaml product '{row.get('id', idx)}' must contain list field '{field}'.")
+                raise KnowledgeBaseError(
+                    f"products.yaml product '{row.get('id', idx)}' must contain list field '{field}'."
+                )
 
         pid = row["id"]
         if pid in seen:
@@ -73,6 +135,8 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
                 raise KnowledgeBaseError(f"Unknown trait '{trait}' referenced by product '{pid}'.")
 
         for alias in row.get("aliases", []):
+            if not isinstance(alias, str):
+                raise KnowledgeBaseError(f"Product '{pid}' contains a non-string alias.")
             alias_norm = alias.strip().lower()
             previous = alias_to_id.get(alias_norm)
             if previous and previous != pid:
@@ -101,14 +165,17 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
     }
     allowed_priorities = {"core", "product_specific", "conditional", "informational"}
     allowed_applicability = {"applicable", "conditional", "not_applicable"}
-    allowed_buckets = {"ce", "non_ce", "framework", "future", "informational"}
 
     for idx, row in enumerate(legislations, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"legislation_catalog.yaml legislation #{idx} must be a mapping.")
+
         for field in ("code", "title", "family", "reason", "directive_key"):
-            if not isinstance(row.get(field), str) or not row[field].strip():
-                raise KnowledgeBaseError(f"legislation_catalog.yaml entry #{idx} is missing a valid '{field}'.")
+            value = row.get(field)
+            if not isinstance(value, str) or not value.strip():
+                raise KnowledgeBaseError(
+                    f"legislation_catalog.yaml entry #{idx} is missing a valid '{field}'."
+                )
 
         code = row["code"]
         if code in seen:
@@ -120,9 +187,9 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
         if row.get("priority", "conditional") not in allowed_priorities:
             raise KnowledgeBaseError(f"Legislation '{code}' has invalid priority '{row.get('priority')}'.")
         if row.get("applicability", "conditional") not in allowed_applicability:
-            raise KnowledgeBaseError(f"Legislation '{code}' has invalid applicability '{row.get('applicability')}'.")
-        if row.get("bucket", "non_ce") not in allowed_buckets:
-            raise KnowledgeBaseError(f"Legislation '{code}' has invalid bucket '{row.get('bucket')}'.")
+            raise KnowledgeBaseError(
+                f"Legislation '{code}' has invalid applicability '{row.get('applicability')}'."
+            )
 
         for field in (
             "triggers",
@@ -153,15 +220,22 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
     return legislations
 
 
-def _validate_standards(data: dict, product_ids: set[str], trait_ids: set[str], legislation_keys: set[str]) -> list[dict]:
+def _validate_standards(
+    data: dict,
+    product_ids: set[str],
+    trait_ids: set[str],
+    legislation_keys: set[str],
+) -> list[dict]:
     standards = _require_list(data, "standards", "standards.yaml")
     seen: set[str] = set()
 
     for idx, row in enumerate(standards, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"standards.yaml standard #{idx} must be a mapping.")
+
         for field in ("code", "title", "category"):
-            if not isinstance(row.get(field), str) or not row[field].strip():
+            value = row.get(field)
+            if not isinstance(value, str) or not value.strip():
                 raise KnowledgeBaseError(f"standards.yaml entry #{idx} is missing a valid '{field}'.")
 
         code = row["code"]
@@ -186,6 +260,7 @@ def _validate_standards(data: dict, product_ids: set[str], trait_ids: set[str], 
             value = row.get(field, [])
             if not isinstance(value, list):
                 raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must be a list.")
+
             if field.endswith("_products"):
                 for pid in value:
                     if pid not in product_ids:
@@ -214,7 +289,7 @@ def load_all() -> dict:
 
     legislations_data = _load_yaml_raw("legislation_catalog.yaml")
     legislations = _validate_legislations(legislations_data, product_ids, trait_ids)
-    legislation_keys = {row["directive_key"] for row in legislations} | {"OTHER"}
+    legislation_keys = {row["directive_key"] for row in legislations} | {"CRA", "GDPR", "AI_Act", "ESPR", "OTHER"}
 
     standards_data = _load_yaml_raw("standards.yaml")
     standards = _validate_standards(standards_data, product_ids, trait_ids, legislation_keys)
@@ -250,5 +325,8 @@ def load_standards() -> list[dict]:
 
 
 def warmup_knowledge_base() -> dict:
-    load_all.cache_clear()
     return load_all()["counts"]
+
+
+def reset_cache() -> None:
+    load_all.cache_clear()
