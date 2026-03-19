@@ -3,8 +3,6 @@ products:
   label: Air cleaner / purifier
   aliases:
   - air cleaner
-  - air purifier
-  - purifier
   implied_traits:
   - consumer
   - household
@@ -15,11 +13,12 @@ products:
   functional_classes:
   - air_treatment
   - comfort_appliance
+  likely_standards:
+  - IEC 60335-2-65
 - id: air_purifier
   label: Air purifier
   aliases:
   - air purifier
-  - humidifier purifier combo
   - air purifier fan
   implied_traits:
   - consumer
@@ -31,20 +30,8 @@ products:
   functional_classes:
   - air_treatment
   - comfort_appliance
-- id: amusement_machine
-  label: Amusement machine
-  aliases:
-  - amusement machine
-  - arcade machine
-  - coin operated ride
-  - personal service machine
-  implied_traits:
-  - consumer
-  - electrical
-  - electronic
-  - mains_power_likely
-  functional_classes:
-  - entertainment_equipment
+  likely_standards:
+  - IEC 60335-2-65
 - id: aquarium_appliance
   label: Aquarium appliance
   aliases:
@@ -60,22 +47,8 @@ products:
   - mains_power_likely
   functional_classes:
   - pet_care_appliance
-- id: bain_marie
-  label: Bain marie
-  aliases:
-  - bain marie
-  - baine marie
-  - food warmer bain marie
-  implied_traits:
-  - professional
-  - commercial_food_service
-  - electrical
-  - heating
-  - food_contact
-  - water_contact
-  - mains_power_likely
-  functional_classes:
-  - commercial_cooking
+  likely_standards:
+  - IEC 60335-2-55
 - id: barbecue_grill
   label: Electric barbecue grill
   aliases:
@@ -91,11 +64,11 @@ products:
   - mains_powered
   functional_classes:
   - cooking_appliance
+  likely_standards: []
 - id: battery_charger
   label: Battery charger
   aliases:
   - battery charger
-  - charger
   - appliance charger
   implied_traits:
   - consumer
@@ -105,6 +78,8 @@ products:
   - mains_powered
   functional_classes:
   - power_supply
+  likely_standards:
+  - IEC 60335-2-29
 - id: battery_powered_oral_hygiene
   label: Battery-powered oral hygiene appliance
   aliases:
@@ -119,6 +94,8 @@ products:
   - water_contact
   functional_classes:
   - personal_care_appliance
+  likely_standards:
+  - IEC 60335-2-52
 - id: beauty_treatment_appliance
   label: Beauty treatment appliance
   aliases:
@@ -135,13 +112,15 @@ products:
   - mains_powered
   functional_classes:
   - personal_care_appliance
+  likely_standards:
+  - IEC 60335-2-23
+  - IEC 60335-2-82
 - id: blender
   label: Blender
   aliases:
   - blender
   - hand blender
   - stick blender
-  - food processor
   implied_traits:
   - consumer
   - household
@@ -152,6 +131,8 @@ products:
   functional_classes:
   - food_preparation
   - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-14
 - id: circulator
   label: Circulator
   aliases:
@@ -168,6 +149,8 @@ products:
   - mains_powered
   functional_classes:
   - pump
+  likely_standards:
+  - IEC 60335-2-51
 - id: clock
   label: Clock
   aliases:
@@ -182,23 +165,8 @@ products:
   - mains_power_likely
   functional_classes:
   - home_device
-- id: coffee_grinder
-  label: Coffee grinder
-  aliases:
-  - coffee grinder
-  - coffee mill
-  - coffee grinder appliance
-  - electric coffee grinder
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - motorized
-  - food_contact
-  - mains_power_likely
-  functional_classes:
-  - beverage_preparation
-  - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-26
 - id: coffee_machine
   label: Coffee machine
   aliases:
@@ -220,26 +188,13 @@ products:
   functional_classes:
   - beverage_preparation
   - small_domestic_appliance
-- id: commercial_boiling_pan
-  label: Commercial boiling pan
-  aliases:
-  - commercial boiling pan
-  - boiling pan
-  implied_traits:
-  - professional
-  - commercial_food_service
-  - electrical
-  - heating
-  - food_contact
-  - mains_power_likely
-  functional_classes:
-  - commercial_cooking
+  likely_standards:
+  - IEC 60335-2-15
 - id: commercial_cooking_appliance
   label: Commercial cooking appliance
   aliases:
-  - commercial oven
-  - commercial grill
   - commercial cooking appliance
+  - commercial grill
   implied_traits:
   - professional
   - electrical
@@ -249,6 +204,15 @@ products:
   functional_classes:
   - commercial_appliance
   - cooking_appliance
+  likely_standards:
+  - IEC 60335-2-36
+  - IEC 60335-2-38
+  - IEC 60335-2-39
+  - IEC 60335-2-42
+  - IEC 60335-2-46
+  - IEC 60335-2-47
+  - IEC 60335-2-48
+  - IEC 60335-2-64
 - id: commercial_dispensing_appliance
   label: Commercial dispensing appliance
   aliases:
@@ -265,6 +229,8 @@ products:
   - mains_powered
   functional_classes:
   - commercial_appliance
+  likely_standards:
+  - IEC 60335-2-75
 - id: commercial_fryer
   label: Commercial fryer
   aliases:
@@ -279,21 +245,8 @@ products:
   functional_classes:
   - commercial_appliance
   - cooking_appliance
-- id: commercial_griddle
-  label: Commercial griddle
-  aliases:
-  - commercial griddle
-  - griddle grill
-  - commercial griddle grill
-  implied_traits:
-  - professional
-  - commercial_food_service
-  - electrical
-  - heating
-  - food_contact
-  - mains_power_likely
-  functional_classes:
-  - commercial_cooking
+  likely_standards:
+  - IEC 60335-2-37
 - id: commercial_hood
   label: Commercial hood
   aliases:
@@ -307,6 +260,8 @@ products:
   functional_classes:
   - commercial_appliance
   - air_treatment
+  likely_standards:
+  - IEC 60335-2-99
 - id: commercial_microwave
   label: Commercial microwave oven
   aliases:
@@ -322,6 +277,8 @@ products:
   functional_classes:
   - commercial_appliance
   - cooking_appliance
+  likely_standards:
+  - IEC 60335-2-90
 - id: commercial_oven
   label: Commercial oven
   aliases:
@@ -337,6 +294,9 @@ products:
   functional_classes:
   - commercial_appliance
   - cooking_appliance
+  likely_standards:
+  - IEC 60335-2-36
+  - IEC 60335-2-42
 - id: commercial_refrigerator
   label: Commercial refrigerator
   aliases:
@@ -353,35 +313,9 @@ products:
   functional_classes:
   - commercial_appliance
   - cooling_appliance
-- id: commercial_rinsing_sink
-  label: Commercial rinsing sink
-  aliases:
-  - commercial rinsing sink
-  - electric rinsing sink
-  implied_traits:
-  - professional
-  - commercial_food_service
-  - electrical
-  - water_contact
-  - mains_power_likely
-  functional_classes:
-  - commercial_cleaning
-- id: commercial_steam_cooker
-  label: Commercial steam cooker
-  aliases:
-  - commercial steam cooker
-  - steam cooker
-  - steam convection oven
-  implied_traits:
-  - professional
-  - commercial_food_service
-  - electrical
-  - heating
-  - water_contact
-  - food_contact
-  - mains_power_likely
-  functional_classes:
-  - commercial_cooking
+  likely_standards:
+  - IEC 60335-2-24
+  - IEC 60335-2-89
 - id: commercial_washing_machine
   label: Commercial washing machine
   aliases:
@@ -399,6 +333,9 @@ products:
   functional_classes:
   - commercial_appliance
   - laundry_appliance
+  likely_standards:
+  - IEC 60335-2-58
+  - IEC 60335-2-62
 - id: cooking_range
   label: Cooking range
   aliases:
@@ -415,6 +352,25 @@ products:
   functional_classes:
   - cooking_appliance
   - major_appliance
+  likely_standards:
+  - IEC 60335-2-6
+- id: deep_fryer
+  label: Deep fryer
+  aliases:
+  - deep fryer
+  - fryer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-13
 - id: dishwasher
   label: Dishwasher
   aliases:
@@ -432,6 +388,8 @@ products:
   functional_classes:
   - cleaning_appliance
   - kitchen_appliance
+  likely_standards:
+  - IEC 60335-2-5
 - id: electric_blanket
   label: Electric blanket
   aliases:
@@ -446,6 +404,8 @@ products:
   - mains_power_likely
   functional_classes:
   - comfort_appliance
+  likely_standards:
+  - IEC 60335-2-17
 - id: electric_fish_stunner
   label: Electric fishing machine / fish stunner
   aliases:
@@ -458,14 +418,14 @@ products:
   - mains_powered
   functional_classes:
   - specialty_appliance
+  likely_standards:
+  - IEC 60335-2-86
+  - IEC 60335-2-87
 - id: electric_frying_pan
   label: Electric frying pan
   aliases:
   - electric frying pan
   - electric skillet
-  - deep fryer
-  - fryer
-  - air fryer
   implied_traits:
   - consumer
   - household
@@ -477,6 +437,8 @@ products:
   functional_classes:
   - cooking_appliance
   - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-13
 - id: electric_garden_tool
   label: Electric garden tool
   aliases:
@@ -491,6 +453,9 @@ products:
   functional_classes:
   - outdoor_appliance
   - garden_tool
+  likely_standards:
+  - IEC 60335-2-91
+  - IEC 60335-2-94
 - id: electric_iron
   label: Electric iron
   aliases:
@@ -508,6 +473,10 @@ products:
   functional_classes:
   - garment_care
   - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-3
+  - IEC 60335-2-45
+  - IEC 60335-2-85
 - id: electric_kettle
   label: Electric kettle
   aliases:
@@ -525,6 +494,8 @@ products:
   functional_classes:
   - beverage_preparation
   - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-15
 - id: electric_pump
   label: Electric pump
   aliases:
@@ -542,21 +513,9 @@ products:
   - mains_powered
   functional_classes:
   - pump
-- id: electric_toilet
-  label: Electric toilet
-  aliases:
-  - electric toilet
-  - smart toilet
-  - washlet
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - electronic
-  - water_contact
-  - mains_power_likely
-  functional_classes:
-  - bathroom_appliance
+  likely_standards:
+  - IEC 60335-2-41
+  - IEC 60335-2-70
 - id: electrolyser_washing_machine
   label: Detergent-free electrolyser washing machine
   aliases:
@@ -573,21 +532,8 @@ products:
   - mains_powered
   functional_classes:
   - laundry_appliance
-- id: fabric_steamer
-  label: Fabric steamer
-  aliases:
-  - fabric steamer
-  - garment steamer
-  - clothes steamer
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - heating
-  - water_contact
-  - mains_power_likely
-  functional_classes:
-  - textile_care
+  likely_standards:
+  - IEC 60335-2-108
 - id: fan
   label: Fan
   aliases:
@@ -604,6 +550,8 @@ products:
   - mains_powered
   functional_classes:
   - comfort_appliance
+  likely_standards:
+  - IEC 60335-2-80
 - id: fan_heater
   label: Fan heater
   aliases:
@@ -619,6 +567,8 @@ products:
   functional_classes:
   - heating_appliance
   - comfort_appliance
+  likely_standards:
+  - IEC 60335-2-30
 - id: fence_energizer
   label: Electric fence energizer
   aliases:
@@ -631,21 +581,8 @@ products:
   - mains_power_likely
   functional_classes:
   - agricultural_appliance
-- id: flexible_sheet_heater
-  label: Flexible sheet heater
-  aliases:
-  - flexible sheet heater
-  - heating foil
-  - underfloor heating mat
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - heating
-  - fixed_installation
-  - mains_power_likely
-  functional_classes:
-  - room_heating
+  likely_standards:
+  - IEC 60335-2-76
 - id: floor_treatment_machine
   label: Floor treatment machine
   aliases:
@@ -663,6 +600,27 @@ products:
   functional_classes:
   - floor_care
   - cleaning_appliance
+  likely_standards:
+  - IEC 60335-2-10
+  - IEC 60335-2-54
+  - IEC 60335-2-67
+  - IEC 60335-2-72
+- id: food_processor
+  label: Food processor
+  aliases:
+  - food processor
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - food_preparation
+  - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-14
 - id: food_waste_disposer
   label: Food waste disposer
   aliases:
@@ -678,6 +636,8 @@ products:
   - mains_powered
   functional_classes:
   - kitchen_appliance
+  likely_standards:
+  - IEC 60335-2-16
 - id: foot_warmer
   label: Foot warmer
   aliases:
@@ -691,6 +651,9 @@ products:
   - mains_powered
   functional_classes:
   - comfort_appliance
+  likely_standards:
+  - IEC 60335-2-17
+  - IEC 60335-2-81
 - id: fuel_burning_electrical_appliance
   label: Fuel-burning appliance with electrical connections
   aliases:
@@ -704,27 +667,12 @@ products:
   - mains_powered
   functional_classes:
   - heating_appliance
+  likely_standards:
+  - IEC 60335-2-102
 - id: garage_door_drive
   label: Garage door drive
   aliases:
   - garage door drive
-  - garage door opener
-  - residential garage door opener
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - motorized
-  - fixed_installation
-  - mains_power_likely
-  functional_classes:
-  - building_automation
-- id: gate_door_window_drive
-  label: Drive for gates, doors or windows
-  aliases:
-  - gate operator
-  - door drive
-  - window drive
   - garage door opener
   implied_traits:
   - consumer
@@ -736,21 +684,27 @@ products:
   - mains_powered
   functional_classes:
   - building_automation
-- id: grass_shears
-  label: Grass shears
+  likely_standards:
+  - IEC 60335-2-95
+- id: gate_door_window_drive
+  label: Drive for gates, doors or windows
   aliases:
-  - grass shears
-  - electric grass shears
-  - scissors type grass shears
+  - gate operator
+  - door drive
+  - window drive
   implied_traits:
   - consumer
   - household
   - electrical
+  - electronic
   - motorized
-  - outdoor_use
-  - battery_powered
+  - remote_control
+  - mains_powered
   functional_classes:
-  - garden_equipment
+  - building_automation
+  likely_standards:
+  - IEC 60335-2-103
+  - IEC 60335-2-95
 - id: hair_clipper
   label: Hair clipper
   aliases:
@@ -766,6 +720,8 @@ products:
   - battery_powered
   functional_classes:
   - personal_care_appliance
+  likely_standards:
+  - IEC 60335-2-8
 - id: heat_pump
   label: Heat pump / air conditioner
   aliases:
@@ -784,6 +740,9 @@ products:
   functional_classes:
   - comfort_appliance
   - hvac_appliance
+  likely_standards:
+  - IEC 60335-2-40
+  - IEC 60335-2-88
 - id: heated_carpet
   label: Heated carpet / underfloor heating mat
   aliases:
@@ -798,19 +757,11 @@ products:
   - mains_powered
   functional_classes:
   - heating_appliance
-- id: heated_gully
-  label: Heated gully
-  aliases:
-  - heated gully
-  - roof drainage heater
-  - gutter heater
-  implied_traits:
-  - electrical
-  - heating
-  - fixed_installation
-  - mains_power_likely
-  functional_classes:
-  - building_services
+  likely_standards:
+  - IEC 60335-2-106
+  - IEC 60335-2-81
+  - IEC 60335-2-83
+  - IEC 60335-2-96
 - id: heating_lamp
   label: Heating lamp
   aliases:
@@ -823,11 +774,12 @@ products:
   - mains_powered
   functional_classes:
   - heating_appliance
+  likely_standards:
+  - IEC 60335-2-56
 - id: heating_pad
   label: Heating pad / heating blanket
   aliases:
   - heating pad
-  - electric blanket
   - heated throw
   - heating blanket
   implied_traits:
@@ -839,6 +791,9 @@ products:
   functional_classes:
   - comfort_appliance
   - heating_appliance
+  likely_standards:
+  - IEC 60335-2-17
+  - IEC 60335-2-96
 - id: high_pressure_cleaner
   label: High-pressure cleaner
   aliases:
@@ -855,6 +810,8 @@ products:
   functional_classes:
   - cleaning_appliance
   - outdoor_appliance
+  likely_standards:
+  - IEC 60335-2-79
 - id: hob
   label: Hob / cooktop
   aliases:
@@ -873,6 +830,8 @@ products:
   functional_classes:
   - cooking_appliance
   - major_appliance
+  likely_standards:
+  - IEC 60335-2-6
 - id: hot_cupboard
   label: Hot cupboard
   aliases:
@@ -886,6 +845,9 @@ products:
   - mains_powered
   functional_classes:
   - commercial_appliance
+  likely_standards:
+  - IEC 60335-2-49
+  - IEC 60335-2-50
 - id: humidifier
   label: Humidifier
   aliases:
@@ -902,22 +864,9 @@ products:
   functional_classes:
   - air_treatment
   - comfort_appliance
-- id: hvac_humidifier
-  label: HVAC humidifier
-  aliases:
-  - hvac humidifier
-  - duct humidifier
-  - humidifier for hvac
-  implied_traits:
-  - professional
-  - electrical
-  - electronic
-  - water_contact
-  - fixed_installation
-  - mains_powered
-  functional_classes:
-  - air_treatment
-  - building_services
+  likely_standards:
+  - IEC 60335-2-88
+  - IEC 60335-2-98
 - id: immersion_heater
   label: Immersion heater
   aliases:
@@ -932,6 +881,9 @@ products:
   - mains_powered
   functional_classes:
   - water_heating_appliance
+  likely_standards:
+  - IEC 60335-2-35
+  - IEC 60335-2-73
 - id: incubator
   label: Incubator
   aliases:
@@ -944,6 +896,7 @@ products:
   - mains_powered
   functional_classes:
   - specialty_appliance
+  likely_standards: []
 - id: industrial_charger
   label: Industrial battery charger
   aliases:
@@ -958,6 +911,7 @@ products:
   functional_classes:
   - power_supply
   - industrial_equipment
+  likely_standards: []
 - id: insect_killer
   label: Insect killer
   aliases:
@@ -972,22 +926,8 @@ products:
   - mains_power_likely
   functional_classes:
   - home_device
-- id: instantaneous_water_heater
-  label: Instantaneous water heater
-  aliases:
-  - instantaneous water heater
-  - tankless water heater
-  - electric water heater
-  - instant water heater
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - heating
-  - water_contact
-  - mains_power_likely
-  functional_classes:
-  - water_heating
+  likely_standards:
+  - IEC 60335-2-59
 - id: ironer
   label: Ironer
   aliases:
@@ -1003,6 +943,8 @@ products:
   - mains_powered
   functional_classes:
   - garment_care
+  likely_standards:
+  - IEC 60335-2-44
 - id: kitchen_extractor_fan
   label: Kitchen extractor fan
   aliases:
@@ -1018,6 +960,8 @@ products:
   functional_classes:
   - air_treatment
   - kitchen_appliance
+  likely_standards:
+  - IEC 60335-2-31
 - id: kitchen_machine
   label: Kitchen machine
   aliases:
@@ -1035,6 +979,10 @@ products:
   functional_classes:
   - food_preparation
   - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-14
+  - IEC 60335-2-33
+  - IEC 60335-2-64
 - id: lawn_mower
   label: Electric lawn mower
   aliases:
@@ -1051,35 +999,9 @@ products:
   functional_classes:
   - garden_tool
   - outdoor_appliance
-- id: lawn_scarifier
-  label: Lawn scarifier
-  aliases:
-  - lawn scarifier
-  - aerator
-  - lawn aerator
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - motorized
-  - outdoor_use
-  functional_classes:
-  - garden_equipment
-- id: lawn_trimmer
-  label: Lawn trimmer
-  aliases:
-  - lawn trimmer
-  - grass trimmer
-  - edge trimmer
-  - lawn edge trimmer
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - motorized
-  - outdoor_use
-  functional_classes:
-  - garden_equipment
+  likely_standards:
+  - IEC 60335-2-77
+  - IEC 60335-2-92
 - id: liquid_heater
   label: Liquid heater
   aliases:
@@ -1096,6 +1018,8 @@ products:
   - mains_powered
   functional_classes:
   - beverage_preparation
+  likely_standards:
+  - IEC 60335-2-15
 - id: livestock_heater
   label: Livestock heating appliance
   aliases:
@@ -1109,6 +1033,8 @@ products:
   - mains_powered
   functional_classes:
   - agricultural_appliance
+  likely_standards:
+  - IEC 60335-2-71
 - id: massage_appliance
   label: Massage appliance
   aliases:
@@ -1125,6 +1051,8 @@ products:
   - mains_power_likely
   functional_classes:
   - personal_care_appliance
+  likely_standards:
+  - IEC 60335-2-32
 - id: microwave_oven
   label: Microwave oven
   aliases:
@@ -1142,19 +1070,8 @@ products:
   functional_classes:
   - cooking_appliance
   - major_appliance
-- id: milking_machine
-  label: Milking machine
-  aliases:
-  - milking machine
-  - milk extractor
-  implied_traits:
-  - professional
-  - electrical
-  - motorized
-  - pumping
-  - mains_power_likely
-  functional_classes:
-  - agricultural_equipment
+  likely_standards:
+  - IEC 60335-2-25
 - id: motor_compressor
   label: Motor-compressor
   aliases:
@@ -1166,6 +1083,8 @@ products:
   - mains_powered
   functional_classes:
   - component
+  likely_standards:
+  - IEC 60335-2-34
 - id: oral_hygiene_appliance
   label: Oral hygiene appliance
   aliases:
@@ -1182,6 +1101,8 @@ products:
   - battery_powered
   functional_classes:
   - personal_care_appliance
+  likely_standards:
+  - IEC 60335-2-52
 - id: outdoor_barbecue
   label: Outdoor electric barbecue
   aliases:
@@ -1196,6 +1117,8 @@ products:
   functional_classes:
   - outdoor_appliance
   - cooking_appliance
+  likely_standards:
+  - IEC 60335-2-78
 - id: oven
   label: Oven
   aliases:
@@ -1213,6 +1136,8 @@ products:
   functional_classes:
   - cooking_appliance
   - major_appliance
+  likely_standards:
+  - IEC 60335-2-6
 - id: patio_heater
   label: Patio heater
   aliases:
@@ -1227,6 +1152,8 @@ products:
   functional_classes:
   - heating_appliance
   - outdoor_appliance
+  likely_standards:
+  - IEC 60335-2-30
 - id: portable_grill
   label: Portable grill
   aliases:
@@ -1244,20 +1171,8 @@ products:
   functional_classes:
   - cooking_appliance
   - small_domestic_appliance
-- id: portable_heating_tool
-  label: Portable heating tool
-  aliases:
-  - portable heating tool
-  - heat gun
-  - hot air gun
-  - soldering gun
-  implied_traits:
-  - consumer
-  - electrical
-  - heating
-  - mains_power_likely
-  functional_classes:
-  - tooling
+  likely_standards:
+  - IEC 60335-2-9
 - id: portable_immersion_heater
   label: Portable immersion heater
   aliases:
@@ -1272,21 +1187,9 @@ products:
   - mains_powered
   functional_classes:
   - water_heating_appliance
-- id: projector
-  label: Projector
-  aliases:
-  - projector
-  - video projector
-  - home projector
-  - beamer
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - electronic
-  - mains_power_likely
-  functional_classes:
-  - display_device
+  likely_standards:
+  - IEC 60335-2-15
+  - IEC 60335-2-74
 - id: range_hood
   label: Range hood
   aliases:
@@ -1303,6 +1206,8 @@ products:
   functional_classes:
   - kitchen_appliance
   - air_treatment
+  likely_standards:
+  - IEC 60335-2-31
 - id: refrigerator_freezer
   label: Refrigerator / freezer
   aliases:
@@ -1322,12 +1227,13 @@ products:
   functional_classes:
   - cooling_appliance
   - major_appliance
+  likely_standards:
+  - IEC 60335-2-24
 - id: rice_cooker
   label: Rice cooker
   aliases:
   - rice cooker
   - multicooker
-  - pressure cooker
   implied_traits:
   - consumer
   - household
@@ -1340,6 +1246,7 @@ products:
   functional_classes:
   - cooking_appliance
   - small_domestic_appliance
+  likely_standards: []
 - id: robotic_lawn_mower
   label: Robotic lawn mower
   aliases:
@@ -1356,6 +1263,8 @@ products:
   functional_classes:
   - garden_tool
   - outdoor_appliance
+  likely_standards:
+  - IEC 60335-2-107
 - id: rolling_shutter_drive
   label: Drive for rolling shutters, awnings or blinds
   aliases:
@@ -1372,6 +1281,8 @@ products:
   - mains_powered
   functional_classes:
   - building_automation
+  likely_standards:
+  - IEC 60335-2-97
 - id: room_dehumidifier
   label: Dehumidifier
   aliases:
@@ -1388,6 +1299,8 @@ products:
   functional_classes:
   - air_treatment
   - comfort_appliance
+  likely_standards:
+  - IEC 60335-2-40
 - id: room_heater
   label: Room heater
   aliases:
@@ -1404,6 +1317,8 @@ products:
   functional_classes:
   - comfort_appliance
   - heating_appliance
+  likely_standards:
+  - IEC 60335-2-30
 - id: room_heating_appliance
   label: Room heating appliance
   aliases:
@@ -1420,6 +1335,8 @@ products:
   functional_classes:
   - comfort_appliance
   - heating_appliance
+  likely_standards:
+  - IEC 60335-2-61
 - id: sauna_heater
   label: Sauna heater
   aliases:
@@ -1433,6 +1350,8 @@ products:
   - mains_powered
   functional_classes:
   - heating_appliance
+  likely_standards:
+  - IEC 60335-2-53
 - id: sewing_machine
   label: Sewing machine
   aliases:
@@ -1447,6 +1366,8 @@ products:
   - mains_powered
   functional_classes:
   - home_device
+  likely_standards:
+  - IEC 60335-2-28
 - id: shaver
   label: Electric shaver
   aliases:
@@ -1462,6 +1383,8 @@ products:
   - battery_powered
   functional_classes:
   - personal_care_appliance
+  likely_standards:
+  - IEC 60335-2-8
 - id: shower_cabinet
   label: Multifunctional shower cabinet
   aliases:
@@ -1478,6 +1401,10 @@ products:
   - mains_powered
   functional_classes:
   - bathroom_appliance
+  likely_standards:
+  - IEC 60335-2-105
+  - IEC 60335-2-60
+  - IEC 60335-2-84
 - id: skin_hair_care_appliance
   label: Skin or hair care appliance
   aliases:
@@ -1496,6 +1423,9 @@ products:
   - mains_power_likely
   functional_classes:
   - personal_care_appliance
+  likely_standards:
+  - IEC 60335-2-23
+  - IEC 60335-2-45
 - id: spin_extractor
   label: Spin extractor
   aliases:
@@ -1511,6 +1441,8 @@ products:
   - mains_power_likely
   functional_classes:
   - laundry_appliance
+  likely_standards:
+  - IEC 60335-2-4
 - id: spray_extraction_machine
   label: Spray extraction machine
   aliases:
@@ -1528,6 +1460,9 @@ products:
   functional_classes:
   - cleaning_appliance
   - floor_care
+  likely_standards:
+  - IEC 60335-2-54
+  - IEC 60335-2-68
 - id: storage_water_heater
   label: Storage water heater
   aliases:
@@ -1543,6 +1478,8 @@ products:
   - mains_powered
   functional_classes:
   - water_heating_appliance
+  likely_standards:
+  - IEC 60335-2-21
 - id: toaster
   label: Toaster
   aliases:
@@ -1559,6 +1496,8 @@ products:
   functional_classes:
   - cooking_appliance
   - small_domestic_appliance
+  likely_standards:
+  - IEC 60335-2-9
 - id: tumble_dryer
   label: Tumble dryer
   aliases:
@@ -1576,6 +1515,9 @@ products:
   functional_classes:
   - laundry_appliance
   - major_appliance
+  likely_standards:
+  - IEC 60335-2-11
+  - IEC 60335-2-43
 - id: ultraviolet_appliance
   label: Ultraviolet appliance
   aliases:
@@ -1590,6 +1532,8 @@ products:
   - mains_powered
   functional_classes:
   - home_device
+  likely_standards:
+  - IEC 60335-2-27
 - id: vacuum_cleaner
   label: Vacuum cleaner
   aliases:
@@ -1608,6 +1552,9 @@ products:
   functional_classes:
   - floor_care
   - cleaning_appliance
+  likely_standards:
+  - IEC 60335-2-2
+  - IEC 60335-2-69
 - id: vaporizer
   label: Vaporizer
   aliases:
@@ -1622,6 +1569,8 @@ products:
   - mains_powered
   functional_classes:
   - comfort_appliance
+  likely_standards:
+  - IEC 60335-2-101
 - id: vending_machine
   label: Vending machine
   aliases:
@@ -1638,6 +1587,8 @@ products:
   - mains_powered
   functional_classes:
   - commercial_appliance
+  likely_standards:
+  - IEC 60335-2-75
 - id: warming_plate
   label: Warming plate
   aliases:
@@ -1653,6 +1604,8 @@ products:
   - mains_powered
   functional_classes:
   - kitchen_appliance
+  likely_standards:
+  - IEC 60335-2-12
 - id: washing_machine
   label: Washing machine
   aliases:
@@ -1672,6 +1625,8 @@ products:
   functional_classes:
   - laundry_appliance
   - major_appliance
+  likely_standards:
+  - IEC 60335-2-7
 - id: water_bed_heater
   label: Water-bed heater
   aliases:
@@ -1686,6 +1641,9 @@ products:
   - mains_powered
   functional_classes:
   - comfort_appliance
+  likely_standards:
+  - IEC 60335-2-17
+  - IEC 60335-2-66
 - id: water_suction_cleaner
   label: Water-suction cleaning appliance
   aliases:
@@ -1703,20 +1661,6 @@ products:
   functional_classes:
   - floor_care
   - cleaning_appliance
-- id: whirlpool_bath
-  label: Whirlpool bath
-  aliases:
-  - whirlpool bath
-  - whirlpool spa
-  - spa bath
-  - jetted tub
-  implied_traits:
-  - consumer
-  - household
-  - electrical
-  - motorized
-  - pumping
-  - water_contact
-  - mains_power_likely
-  functional_classes:
-  - bathroom_appliance
+  likely_standards:
+  - IEC 60335-2-2
+  - IEC 60335-2-69
