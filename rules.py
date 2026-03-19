@@ -14,7 +14,7 @@ from models import (
 )
 from standards_engine import find_applicable_items
 
-APP_VERSION = "3.1.0"
+APP_VERSION = "3.1.1"
 
 
 def _matches_legislation(row: dict[str, Any], traits_info: dict[str, Any]) -> bool:
@@ -217,6 +217,17 @@ def _build_findings(
     return findings
 
 
+def _apply_depth_limit(standards: list[StandardItem], review_items: list[StandardItem], depth: str) -> tuple[list[StandardItem], list[StandardItem]]:
+    # Standard mode should not silently drop common EMC/RED/RED_CYBER items such as
+    # EN IEC 61000-3-2, EN 61000-3-3 or EN 18031-1/-2/-3.
+    # Deep mode returns everything.
+    if depth == "quick":
+        return standards[:24], review_items[:10]
+    if depth == "standard":
+        return standards[:120], review_items[:40]
+    return standards, review_items
+
+
 def analyze(description: str, category: str = "", directives: list[str] | None = None, depth: str = "standard") -> AnalysisResult:
     directives = directives or []
     traits_info = extract_traits(description=description, category=category)
@@ -234,13 +245,7 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
 
     standards = [_convert_standard(x) for x in item_rows["standards"]]
     review_items = [_convert_standard(x) for x in item_rows["review_items"]]
-
-    if depth == "quick":
-        standards = standards[:18]
-        review_items = review_items[:8]
-    elif depth == "standard":
-        standards = standards[:35]
-        review_items = review_items[:12]
+    standards, review_items = _apply_depth_limit(standards, review_items, depth)
 
     derived_directives = _derive_directives(legislations, item_rows["standards"] + item_rows["review_items"])
     missing_information = _build_missing_information(traits_info, legislations)
@@ -252,7 +257,7 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
     if traits_info.get("product_type"):
         summary_parts.append(f"Detected product type: {traits_info['product_type'].replace('_', ' ')}")
     if legislations:
-        summary_parts.append("Applicable legislation: " + ", ".join(x.code for x in legislations[:6]))
+        summary_parts.append("Applicable legislation: " + ", ".join(x.code for x in legislations[:8]))
     if standards or review_items:
         summary_parts.append(f"Matched {len(standards)} standards and {len(review_items)} review items")
     if not summary_parts:
@@ -262,6 +267,8 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
         f"engine_version={APP_VERSION}",
         f"depth={depth}",
         f"product_match_confidence={traits_info.get('product_match_confidence', 'low')}",
+        f"returned_standards={len(standards)}",
+        f"returned_review_items={len(review_items)}",
     ]
 
     return AnalysisResult(
