@@ -12,6 +12,7 @@ app.add_middleware(
         "http://localhost:3000",
         "https://rulegrid.net",
         "https://www.rulegrid.net",
+        "https://regcheck-frontend-kutrb6fg3-morfildors-projects.vercel.app"
     ],
     allow_methods=["*"],
     allow_headers=["*"],

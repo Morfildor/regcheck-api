@@ -14,6 +14,8 @@ def extract_traits(description: str, category: str = "") -> dict:
     text = normalize(f"{category} {description}")
     explicit_traits = set()
     inferred_traits = set()
+    functional_classes = set()
+    contradictions = []
     product_type = None
 
     if re.search(r"\bbluetooth\b|\bble\b", text):
@@ -38,13 +40,16 @@ def extract_traits(description: str, category: str = "") -> dict:
             if re.search(pattern, text):
                 product_type = product["id"]
                 inferred_traits.update(product.get("implied_traits", []))
+                functional_classes.update(product.get("functional_classes", []))
                 break
         if product_type:
             break
 
     return {
         "product_type": product_type,
+        "functional_classes": sorted(functional_classes),
         "explicit_traits": sorted(explicit_traits),
         "inferred_traits": sorted(inferred_traits),
         "all_traits": sorted(explicit_traits | inferred_traits),
+        "contradictions": contradictions,
     }
