@@ -18,9 +18,11 @@ standards:
   exclude_if:
   - industrial
   confidence: high
-  notes: General baseline safety standard family often relevant to household electrical appliances.
+  notes: General baseline safety standard family often relevant to household electrical
+    appliances.
 - code: EN 62233
-  title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human exposure
+  title: Measurement methods for electromagnetic fields of household appliances and
+    similar apparatus with regard to human exposure
   region: EU
   category: emf
   directives:
@@ -36,9 +38,11 @@ standards:
   - mains_power_likely
   exclude_if: []
   confidence: medium
-  notes: Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation.
+  notes: Often relevant for household electrical appliances where EMF assessment is
+    part of the safety evaluation.
 - code: EN 55014-1
-  title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Emission
+  title: Electromagnetic compatibility requirements for household appliances, electric
+    tools and similar apparatus - Emission
   region: EU
   category: emc
   directives:
@@ -54,7 +58,8 @@ standards:
   confidence: high
   notes: Emission-side EMC standard family commonly relevant to many household appliances.
 - code: EN 55014-2
-  title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Immunity
+  title: Electromagnetic compatibility requirements for household appliances, electric
+    tools and similar apparatus - Immunity
   region: EU
   category: emc
   directives:
@@ -84,9 +89,11 @@ standards:
   exclude_if:
   - battery_powered
   confidence: medium
-  notes: Typically considered for mains-powered equipment depending on product characteristics and scope.
+  notes: Typically considered for mains-powered equipment depending on product characteristics
+    and scope.
 - code: EN 61000-3-3
-  title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations and flicker
+  title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations
+    and flicker
   region: EU
   category: emc
   directives:
@@ -100,9 +107,11 @@ standards:
   exclude_if:
   - battery_powered
   confidence: medium
-  notes: Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects.
+  notes: Commonly reviewed for mains-powered equipment that may create voltage fluctuation
+    or flicker effects.
 - code: EN 300 328
-  title: Wideband transmission systems; Data transmission equipment operating in the 2.4 GHz band
+  title: Wideband transmission systems; Data transmission equipment operating in the
+    2.4 GHz band
   region: EU
   category: radio
   directives:
@@ -116,7 +125,8 @@ standards:
   - thread
   exclude_if: []
   confidence: high
-  notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth.
+  notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi
+    or Bluetooth.
 - code: EN 301 489-1
   title: EMC standard for radio equipment and services - Common technical requirements
   region: EU
@@ -136,7 +146,8 @@ standards:
   confidence: high
   notes: Common EMC framework standard for radio equipment.
 - code: EN 301 489-17
-  title: EMC standard for radio equipment and services - Specific conditions for broadband data transmission systems
+  title: EMC standard for radio equipment and services - Specific conditions for broadband
+    data transmission systems
   region: EU
   category: radio_emc
   directives:
@@ -150,9 +161,11 @@ standards:
   - thread
   exclude_if: []
   confidence: medium
-  notes: Often relevant alongside EN 301 489-1 depending on the short-range radio technology used.
+  notes: Often relevant alongside EN 301 489-1 depending on the short-range radio
+    technology used.
 - code: EN 301 489-52
-  title: EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
+  title: EMC standard for radio equipment and services - Specific conditions for cellular
+    communications user equipment
   region: EU
   category: radio_emc
   directives:
@@ -178,7 +191,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: low
-  notes: Legacy cellular route that may be relevant for certain GSM-capable devices; verify actual radio technology.
+  notes: Legacy cellular route that may be relevant for certain GSM-capable devices;
+    verify actual radio technology.
 - code: EN 301 908 series review
   title: Cellular radio standard family review required
   region: EU
@@ -193,7 +207,8 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: For cellular products, the specific EN 301 908 route depends on the implemented access technology and module design.
+  notes: For cellular products, the specific EN 301 908 route depends on the implemented
+    access technology and module design.
 - code: EN 300 220 series review
   title: Short range device radio standard family review required
   region: EU
@@ -208,9 +223,11 @@ standards:
   - nfc
   exclude_if: []
   confidence: low
-  notes: Placeholder review bucket where the precise short-range radio route depends on frequency band and implementation.
+  notes: Placeholder review bucket where the precise short-range radio route depends
+    on frequency band and implementation.
 - code: EN 62479
-  title: Assessment of the compliance of low power electronic and electrical equipment with the basic restrictions related to human exposure to electromagnetic fields
+  title: Assessment of the compliance of low power electronic and electrical equipment
+    with the basic restrictions related to human exposure to electromagnetic fields
   region: EU
   category: emf
   directives:
@@ -239,7 +256,8 @@ standards:
   - wearable
   exclude_if: []
   confidence: low
-  notes: The applicable RF exposure assessment route may depend on power level, use scenario, and placement on the body.
+  notes: The applicable RF exposure assessment route may depend on power level, use
+    scenario, and placement on the body.
 - code: EN 18031-1
   title: Common cybersecurity requirements for radio equipment - Part 1
   region: EU
@@ -257,7 +275,8 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: Often relevant for connected radio products with networked or software-controlled functionality.
+  notes: Often relevant for connected radio products with networked or software-controlled
+    functionality.
 - code: EN 18031-2
   title: Common cybersecurity requirements for radio equipment - Part 2
   region: EU
@@ -274,7 +293,8 @@ standards:
   - cloud
   exclude_if: []
   confidence: medium
-  notes: Often relevant where network-connected radio equipment processes or protects access, credentials, or service integrity.
+  notes: Often relevant where network-connected radio equipment processes or protects
+    access, credentials, or service integrity.
 - code: EN 18031-3
   title: Common cybersecurity requirements for radio equipment - Part 3
   region: EU
@@ -310,7 +330,8 @@ standards:
   - data_storage
   exclude_if: []
   confidence: medium
-  notes: Placeholder review bucket for wider CRA essential requirement assessment beyond radio-specific routes.
+  notes: Placeholder review bucket for wider CRA essential requirement assessment
+    beyond radio-specific routes.
 - code: GDPR review
   title: GDPR assessment required
   region: EU
@@ -329,7 +350,8 @@ standards:
   - data_storage
   exclude_if: []
   confidence: medium
-  notes: Placeholder compliance bucket for privacy and data protection review rather than a harmonized standard.
+  notes: Placeholder compliance bucket for privacy and data protection review rather
+    than a harmonized standard.
 - code: AI Act review
   title: AI Act assessment required
   region: EU
@@ -357,7 +379,8 @@ standards:
   - household
   exclude_if: []
   confidence: low
-  notes: Placeholder review bucket where battery chemistry, charger architecture, and transport obligations need separate evaluation.
+  notes: Placeholder review bucket where battery chemistry, charger architecture,
+    and transport obligations need separate evaluation.
 - code: Charger / external PSU review
   title: External power supply and charger route review required
   region: EU
@@ -373,9 +396,11 @@ standards:
   - usb_powered
   exclude_if: []
   confidence: low
-  notes: Review whether the product relies on an external PSU, charger, or adapter that brings additional compliance dependencies.
+  notes: Review whether the product relies on an external PSU, charger, or adapter
+    that brings additional compliance dependencies.
 - code: IEC 60335-2-2
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vacuum cleaners and water-suction cleaning appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for vacuum cleaners and water-suction cleaning appliances'
   region: IEC
   category: safety
   directives:
@@ -384,12 +409,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - vacuum_cleaner
   - water_suction_cleaner
 - code: IEC 60335-2-3
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric irons'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electric irons'
   region: IEC
   category: safety
   directives:
@@ -398,11 +425,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - electric_iron
 - code: IEC 60335-2-4
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spin extractors'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for spin extractors'
   region: IEC
   category: safety
   directives:
@@ -411,11 +440,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - spin_extractor
 - code: IEC 60335-2-5
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for dishwashers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for dishwashers'
   region: IEC
   category: safety
   directives:
@@ -424,11 +455,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - dishwasher
 - code: IEC 60335-2-6
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary cooking ranges, hobs, ovens and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for stationary cooking ranges, hobs, ovens and similar appliances'
   region: IEC
   category: safety
   directives:
@@ -437,13 +470,15 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - cooking_range
   - hob
   - oven
 - code: IEC 60335-2-7
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for washing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for washing machines'
   region: IEC
   category: safety
   directives:
@@ -452,11 +487,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - washing_machine
 - code: IEC 60335-2-8
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for shavers, hair clippers and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for shavers, hair clippers and similar appliances'
   region: IEC
   category: safety
   directives:
@@ -465,12 +502,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - shaver
   - hair_clipper
 - code: IEC 60335-2-9
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for grills, toasters and similar portable cooking appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for grills, toasters and similar portable cooking appliances'
   region: IEC
   category: safety
   directives:
@@ -479,12 +518,15 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - toaster
   - portable_grill
+  - barbecue_grill
 - code: IEC 60335-2-10
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment machines and wet scrubbing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for floor treatment machines and wet scrubbing machines'
   region: IEC
   category: safety
   directives:
@@ -493,11 +535,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - floor_treatment_machine
 - code: IEC 60335-2-11
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for tumble dryers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for tumble dryers'
   region: IEC
   category: safety
   directives:
@@ -506,11 +550,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - tumble_dryer
 - code: IEC 60335-2-12
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for warming plates and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for warming plates and similar appliances'
   region: IEC
   category: safety
   directives:
@@ -519,11 +565,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - warming_plate
 - code: IEC 60335-2-13
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for deep fat fryers, frying pans and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for deep fat fryers, frying pans and similar appliances'
   region: IEC
   category: safety
   directives:
@@ -532,11 +580,15 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - electric_frying_pan
+  - air_fryer
+  - rice_cooker
 - code: IEC 60335-2-14
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for kitchen machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for kitchen machines'
   region: IEC
   category: safety
   directives:
@@ -545,12 +597,15 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - kitchen_machine
   - blender
+  - coffee_grinder
 - code: IEC 60335-2-15
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for heating liquids'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for appliances for heating liquids'
   region: IEC
   category: safety
   directives:
@@ -558,15 +613,17 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: medium
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - electric_kettle
   - coffee_machine
   - liquid_heater
   - portable_immersion_heater
 - code: IEC 60335-2-16
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for food waste disposers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for food waste disposers'
   region: IEC
   category: safety
   directives:
@@ -575,11 +632,249 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - food_waste_disposer
 - code: IEC 60335-2-17
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for blankets, pads and similar flexible heating appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for blankets, pads and similar flexible heating appliances'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - electric_blanket
+  - heating_pad
+  - foot_warmer
+- code: IEC 60335-2-21
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for storage water heaters'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - storage_water_heater
+- code: IEC 60335-2-23
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for appliances for skin or hair care'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - skin_hair_care_appliance
+  - beauty_treatment_appliance
+- code: IEC 60335-2-24
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for refrigerating appliances, ice-cream appliances and ice-makers'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - refrigerator_freezer
+  - commercial_refrigerator
+- code: IEC 60335-2-25
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for microwave ovens, including combination microwave ovens'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - microwave_oven
+- code: IEC 60335-2-26
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for clocks'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - clock
+- code: IEC 60335-2-27
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for appliances for skin exposure to ultraviolet and infrared radiation'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - ultraviolet_appliance
+  - heating_lamp
+- code: IEC 60335-2-28
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for sewing machines'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - sewing_machine
+- code: IEC 60335-2-29
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for battery chargers'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - battery_charger
+  - industrial_charger
+- code: IEC 60335-2-30
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for room heaters'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - room_heater
+  - fan_heater
+  - room_heating_appliance
+- code: IEC 60335-2-31
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for range hoods'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - range_hood
+  - kitchen_extractor_fan
+- code: IEC 60335-2-32
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for massage appliances'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - massage_appliance
+- code: IEC 60335-2-33
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for coffee mills and coffee grinders'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - coffee_grinder
+- code: IEC 60335-2-34
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for motor-compressors'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - motor_compressor
+- code: IEC 60335-2-35
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for instantaneous water heaters'
+  region: IEC
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
+  applies_if_products:
+  - instantaneous_water_heater
+  - liquid_heater
+  - immersion_heater
+- code: IEC 60335-2-36
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric cooking ranges, ovens, hobs and hob elements'
   region: IEC
   category: safety
   directives:
@@ -588,215 +883,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: medium
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_blanket
-  - heating_pad
-  - foot_warmer
-  - water_bed_heater
-- code: IEC 60335-2-21
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for storage water heaters'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - storage_water_heater
-- code: IEC 60335-2-23
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin or hair care'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - skin_hair_care_appliance
-  - beauty_treatment_appliance
-- code: IEC 60335-2-24
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for refrigerating appliances, ice-cream appliances and ice-makers'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - refrigerator_freezer
-  - commercial_refrigerator
-- code: IEC 60335-2-25
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for microwave ovens, including combination microwave ovens'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - microwave_oven
-- code: IEC 60335-2-26
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for clocks'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - clock
-- code: IEC 60335-2-27
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin exposure to ultraviolet and infrared radiation'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - ultraviolet_appliance
-- code: IEC 60335-2-28
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sewing machines'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - sewing_machine
-- code: IEC 60335-2-29
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for battery chargers'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - battery_charger
-- code: IEC 60335-2-30
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for room heaters'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - room_heater
-  - fan_heater
-  - patio_heater
-- code: IEC 60335-2-31
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for range hoods'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - range_hood
-  - kitchen_extractor_fan
-- code: IEC 60335-2-32
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for massage appliances'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - massage_appliance
-- code: IEC 60335-2-33
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for coffee mills and coffee grinders'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - kitchen_machine
-- code: IEC 60335-2-34
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for motor-compressors'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - motor_compressor
-- code: IEC 60335-2-35
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for instantaneous water heaters'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - immersion_heater
-- code: IEC 60335-2-36
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric cooking ranges, ovens, hobs and hob elements'
-  region: IEC
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_cooking_appliance
   - commercial_oven
 - code: IEC 60335-2-37
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric deep fat fryers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric deep fat fryers'
   region: IEC
   category: safety
   directives:
@@ -804,12 +898,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_fryer
 - code: IEC 60335-2-38
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric griddles and griddle grills'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric griddles and griddle grills'
   region: IEC
   category: safety
   directives:
@@ -817,12 +913,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - commercial_cooking_appliance
+  - commercial_griddle
 - code: IEC 60335-2-39
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric multi-purpose cooking pans'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric multi-purpose cooking pans'
   region: IEC
   category: safety
   directives:
@@ -830,12 +928,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_cooking_appliance
 - code: IEC 60335-2-40
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heat pumps, air-conditioners and dehumidifiers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electrical heat pumps, air-conditioners and dehumidifiers'
   region: IEC
   category: safety
   directives:
@@ -844,12 +944,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - heat_pump
   - room_dehumidifier
 - code: IEC 60335-2-41
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pumps'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for pumps'
   region: IEC
   category: safety
   directives:
@@ -858,11 +960,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - electric_pump
 - code: IEC 60335-2-42
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric forced convection ovens, steam cookers and steam-convection ovens'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric forced convection ovens, steam cookers and
+    steam-convection ovens'
   region: IEC
   category: safety
   directives:
@@ -870,13 +975,15 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_oven
-  - commercial_cooking_appliance
+  - commercial_steam_cooker
 - code: IEC 60335-2-43
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for clothes dryers and towel rails'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for appliances for clothes dryers and towel rails'
   region: IEC
   category: safety
   directives:
@@ -885,11 +992,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - tumble_dryer
 - code: IEC 60335-2-44
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for ironers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for ironers'
   region: IEC
   category: safety
   directives:
@@ -898,11 +1007,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - ironer
 - code: IEC 60335-2-45
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable heating tools and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for portable heating tools and similar appliances'
   region: IEC
   category: safety
   directives:
@@ -911,12 +1022,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - skin_hair_care_appliance
-  - electric_iron
+  - portable_heating_tool
 - code: IEC 60335-2-46
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric steam cookers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric steam cookers'
   region: IEC
   category: safety
   directives:
@@ -924,12 +1036,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - commercial_cooking_appliance
+  - commercial_steam_cooker
 - code: IEC 60335-2-47
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric boiling pans'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric boiling pans'
   region: IEC
   category: safety
   directives:
@@ -937,12 +1051,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - commercial_cooking_appliance
+  - commercial_boiling_pan
 - code: IEC 60335-2-48
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric grillers and toasters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric grillers and toasters'
   region: IEC
   category: safety
   directives:
@@ -950,12 +1066,15 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - commercial_cooking_appliance
+  - commercial_griddle
+  - toaster
 - code: IEC 60335-2-49
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hot cupboards'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric hot cupboards'
   region: IEC
   category: safety
   directives:
@@ -963,12 +1082,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - hot_cupboard
 - code: IEC 60335-2-50
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric bains-marie'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric bains-marie'
   region: IEC
   category: safety
   directives:
@@ -976,12 +1097,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - hot_cupboard
+  - bain_marie
 - code: IEC 60335-2-51
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary circulation pumps for heating and service water installations'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for stationary circulation pumps for heating and service water installations'
   region: IEC
   category: safety
   directives:
@@ -990,11 +1113,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - circulator
 - code: IEC 60335-2-52
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for oral hygiene appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for oral hygiene appliances'
   region: IEC
   category: safety
   directives:
@@ -1003,12 +1128,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - oral_hygiene_appliance
   - battery_powered_oral_hygiene
 - code: IEC 60335-2-53
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sauna heating appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for sauna heating appliances'
   region: IEC
   category: safety
   directives:
@@ -1017,11 +1144,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - sauna_heater
 - code: IEC 60335-2-54
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for surface-cleaning appliances for household use employing liquids or steam'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for surface-cleaning appliances for household use employing liquids
+    or steam'
   region: IEC
   category: safety
   directives:
@@ -1030,12 +1160,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - floor_treatment_machine
   - spray_extraction_machine
+  - high_pressure_cleaner
 - code: IEC 60335-2-55
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical appliances for use with aquariums and garden ponds'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electrical appliances for use with aquariums and garden ponds'
   region: IEC
   category: safety
   directives:
@@ -1044,11 +1176,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - aquarium_appliance
 - code: IEC 60335-2-56
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for projectors and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for projectors and similar appliances'
   region: IEC
   category: safety
   directives:
@@ -1057,11 +1191,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - heating_lamp
+  - projector
 - code: IEC 60335-2-58
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric dishwashing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric dishwashing machines'
   region: IEC
   category: safety
   directives:
@@ -1069,12 +1205,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_washing_machine
 - code: IEC 60335-2-59
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for insect killers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for insect killers'
   region: IEC
   category: safety
   directives:
@@ -1083,11 +1221,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - insect_killer
 - code: IEC 60335-2-60
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for whirlpool baths and whirlpool spas'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for whirlpool baths and whirlpool spas'
   region: IEC
   category: safety
   directives:
@@ -1096,11 +1236,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - shower_cabinet
+  - whirlpool_bath
 - code: IEC 60335-2-61
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for thermal-storage room heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for thermal-storage room heaters'
   region: IEC
   category: safety
   directives:
@@ -1109,11 +1251,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - room_heating_appliance
 - code: IEC 60335-2-62
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric rinsing sinks'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric rinsing sinks'
   region: IEC
   category: safety
   directives:
@@ -1121,12 +1265,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - commercial_washing_machine
+  - commercial_rinsing_sink
 - code: IEC 60335-2-64
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric kitchen machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric kitchen machines'
   region: IEC
   category: safety
   directives:
@@ -1134,13 +1280,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - commercial_cooking_appliance
   - kitchen_machine
 - code: IEC 60335-2-65
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for air-cleaning appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for air-cleaning appliances'
   region: IEC
   category: safety
   directives:
@@ -1149,12 +1296,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - air_cleaner
   - air_purifier
 - code: IEC 60335-2-66
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for water-bed heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for water-bed heaters'
   region: IEC
   category: safety
   directives:
@@ -1163,11 +1312,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - water_bed_heater
 - code: IEC 60335-2-67
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment and floor cleaning machines for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for floor treatment and floor cleaning machines for industrial and
+    commercial use'
   region: IEC
   category: safety
   directives:
@@ -1175,12 +1327,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - floor_treatment_machine
 - code: IEC 60335-2-68
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spray extraction appliances for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for spray extraction appliances for industrial and commercial use'
   region: IEC
   category: safety
   directives:
@@ -1188,12 +1342,15 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - spray_extraction_machine
 - code: IEC 60335-2-69
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for wet and dry vacuum cleaners, including power brush, for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for wet and dry vacuum cleaners, including power brush, for industrial
+    and commercial use'
   region: IEC
   category: safety
   directives:
@@ -1201,13 +1358,15 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - vacuum_cleaner
   - water_suction_cleaner
 - code: IEC 60335-2-70
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for milking machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for milking machines'
   region: IEC
   category: safety
   directives:
@@ -1216,11 +1375,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - electric_pump
+  - milking_machine
 - code: IEC 60335-2-71
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heating appliances for breeding and rearing animals'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electrical heating appliances for breeding and rearing animals'
   region: IEC
   category: safety
   directives:
@@ -1229,11 +1390,15 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - livestock_heater
+  - incubator
 - code: IEC 60335-2-72
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for automatic machines for floor treatment for commercial and industrial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for automatic machines for floor treatment for commercial and industrial
+    use'
   region: IEC
   category: safety
   directives:
@@ -1241,12 +1406,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - floor_treatment_machine
 - code: IEC 60335-2-73
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fixed immersion heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for fixed immersion heaters'
   region: IEC
   category: safety
   directives:
@@ -1255,11 +1422,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - immersion_heater
 - code: IEC 60335-2-74
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable immersion heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for portable immersion heaters'
   region: IEC
   category: safety
   directives:
@@ -1268,11 +1437,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - portable_immersion_heater
 - code: IEC 60335-2-75
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial dispensing appliances and vending machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial dispensing appliances and vending machines'
   region: IEC
   category: safety
   directives:
@@ -1280,13 +1451,15 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_dispensing_appliance
   - vending_machine
 - code: IEC 60335-2-76
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fence energizers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electric fence energizers'
   region: IEC
   category: safety
   directives:
@@ -1295,11 +1468,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - fence_energizer
 - code: IEC 60335-2-77
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled mains-operated lawnmowers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for pedestrian-controlled mains-operated lawnmowers'
   region: IEC
   category: safety
   directives:
@@ -1308,11 +1483,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - lawn_mower
 - code: IEC 60335-2-78
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for outdoor barbecues'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for outdoor barbecues'
   region: IEC
   category: safety
   directives:
@@ -1321,11 +1498,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - outdoor_barbecue
+  - barbecue_grill
 - code: IEC 60335-2-79
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for high pressure cleaners and steam cleaners'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for high pressure cleaners and steam cleaners'
   region: IEC
   category: safety
   directives:
@@ -1334,11 +1514,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - high_pressure_cleaner
 - code: IEC 60335-2-80
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fans'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for fans'
   region: IEC
   category: safety
   directives:
@@ -1347,11 +1529,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - fan
 - code: IEC 60335-2-81
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for foot warmers and heating mats'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for foot warmers and heating mats'
   region: IEC
   category: safety
   directives:
@@ -1360,12 +1544,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - foot_warmer
   - heated_carpet
 - code: IEC 60335-2-82
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for amusement machines and personal service machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for amusement machines and personal service machines'
   region: IEC
   category: safety
   directives:
@@ -1374,11 +1560,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - beauty_treatment_appliance
+  - amusement_machine
 - code: IEC 60335-2-83
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated gullies for roof drainage'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for heated gullies for roof drainage'
   region: IEC
   category: safety
   directives:
@@ -1387,11 +1575,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - heated_carpet
+  - heated_gully
 - code: IEC 60335-2-84
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for toilets'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for toilets'
   region: IEC
   category: safety
   directives:
@@ -1400,11 +1590,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - shower_cabinet
+  - electric_toilet
 - code: IEC 60335-2-85
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fabric steamers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for fabric steamers'
   region: IEC
   category: safety
   directives:
@@ -1413,11 +1605,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - electric_iron
+  - fabric_steamer
 - code: IEC 60335-2-86
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fishing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electric fishing machines'
   region: IEC
   category: safety
   directives:
@@ -1426,11 +1620,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - electric_fish_stunner
 - code: IEC 60335-2-87
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical animal-stunning equipment'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electrical animal-stunning equipment'
   region: IEC
   category: safety
   directives:
@@ -1439,11 +1635,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - electric_fish_stunner
 - code: IEC 60335-2-88
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers intended for use with heating, ventilation or air-conditioning systems'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for humidifiers intended for use with heating, ventilation or air-conditioning
+    systems'
   region: IEC
   category: safety
   directives:
@@ -1452,12 +1651,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - humidifier
-  - heat_pump
+  - hvac_humidifier
 - code: IEC 60335-2-89
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial refrigerating appliances with an incorporated or remote refrigerant condensing unit or compressor'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial refrigerating appliances with an incorporated or remote
+    refrigerant condensing unit or compressor'
   region: IEC
   category: safety
   directives:
@@ -1465,12 +1666,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_refrigerator
 - code: IEC 60335-2-90
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial microwave ovens'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial microwave ovens'
   region: IEC
   category: safety
   directives:
@@ -1478,12 +1681,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_microwave
 - code: IEC 60335-2-91
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for walk-behind and hand-held lawn trimmers and lawn edge trimmers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for walk-behind and hand-held lawn trimmers and lawn edge trimmers'
   region: IEC
   category: safety
   directives:
@@ -1492,11 +1697,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - electric_garden_tool
+  - lawn_trimmer
 - code: IEC 60335-2-92
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled mains-operated lawn scarifiers and aerators'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for pedestrian-controlled mains-operated lawn scarifiers and aerators'
   region: IEC
   category: safety
   directives:
@@ -1505,11 +1712,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - lawn_mower
+  - lawn_scarifier
 - code: IEC 60335-2-94
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for scissors type grass shears'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for scissors type grass shears'
   region: IEC
   category: safety
   directives:
@@ -1517,12 +1726,15 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list. Intertek marks this entry as
+    draft only.
   applies_if_products:
-  - electric_garden_tool
+  - grass_shears
 - code: IEC 60335-2-95
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drivers for vertically moving garage doors for residential use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for drivers for vertically moving garage doors for residential use'
   region: IEC
   category: safety
   directives:
@@ -1531,11 +1743,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - gate_door_window_drive
+  - garage_door_drive
 - code: IEC 60335-2-96
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for flexible sheet heating elements for room heating'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for flexible sheet heating elements for room heating'
   region: IEC
   category: safety
   directives:
@@ -1544,12 +1758,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
-  - heated_carpet
-  - heating_pad
+  - flexible_sheet_heater
 - code: IEC 60335-2-97
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for rolling shutters, awnings, blinds and similar equipment'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for drives for rolling shutters, awnings, blinds and similar equipment'
   region: IEC
   category: safety
   directives:
@@ -1558,11 +1773,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - rolling_shutter_drive
 - code: IEC 60335-2-98
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for humidifiers'
   region: IEC
   category: safety
   directives:
@@ -1571,11 +1788,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - humidifier
 - code: IEC 60335-2-99
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hoods'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric hoods'
   region: IEC
   category: safety
   directives:
@@ -1583,12 +1802,14 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - commercial_hood
 - code: IEC 60335-2-101
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vaporizers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for vaporizers'
   region: IEC
   category: safety
   directives:
@@ -1597,11 +1818,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - vaporizer
 - code: IEC 60335-2-102
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for gas, oil and solid-fuel burning appliances having electrical connections'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for gas, oil and solid-fuel burning appliances having electrical
+    connections'
   region: IEC
   category: safety
   directives:
@@ -1610,11 +1834,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - fuel_burning_electrical_appliance
 - code: IEC 60335-2-103
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for gates, doors and windows'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for drives for gates, doors and windows'
   region: IEC
   category: safety
   directives:
@@ -1623,11 +1849,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - gate_door_window_drive
 - code: IEC 60335-2-105
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for multifunctional shower cabinets'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for multifunctional shower cabinets'
   region: IEC
   category: safety
   directives:
@@ -1636,11 +1864,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - shower_cabinet
 - code: IEC 60335-2-106
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated carpets and heating units for room heating installed under removable floor coverings'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for heated carpets and heating units for room heating installed under
+    removable floor coverings'
   region: IEC
   category: safety
   directives:
@@ -1649,11 +1880,14 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list.
   applies_if_products:
   - heated_carpet
+  - flexible_sheet_heater
 - code: IEC 60335-2-107
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for robotic battery powered electrical lawn mowers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for robotic battery powered electrical lawn mowers'
   region: IEC
   category: safety
   directives:
@@ -1661,12 +1895,15 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list. Intertek marks this entry as
+    draft only.
   applies_if_products:
   - robotic_lawn_mower
 - code: IEC 60335-2-108
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for detergent free electrolyser washing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for detergent free electrolyser washing machines'
   region: IEC
   category: safety
   directives:
@@ -1674,7 +1911,9 @@ standards:
   applies_if_all: []
   applies_if_any: []
   exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
+  confidence: medium
+  notes: Product-gated 60335-2 entry. Exact product match required before this standard
+    is proposed. Added from Intertek IEC 60335-2 list. Intertek marks this entry as
+    draft only.
   applies_if_products:
   - electrolyser_washing_machine

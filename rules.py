@@ -29,11 +29,15 @@ def infer_directives(traits: set[str], requested_directives: list[str]) -> list[
         directives.add("RED")
 
     if (
-        "electrical" in traits
-        or "electronic" in traits
+        "electronic" in traits
+        or "radio" in traits
         or "app_control" in traits
         or "cloud" in traits
+        or "internet" in traits
         or "ota" in traits
+        or "authentication" in traits
+        or "account" in traits
+        or "data_storage" in traits
     ):
         directives.add("CRA")
 
@@ -54,7 +58,7 @@ def infer_directives(traits: set[str], requested_directives: list[str]) -> list[
     if "electrical" in traits or "electronic" in traits or "radio" in traits:
         directives.add("EMC")
 
-    if "mains_powered" in traits or "mains_power_likely" in traits or "heating" in traits:
+    if "electrical" in traits or "mains_powered" in traits or "mains_power_likely" in traits or "heating" in traits:
         directives.add("LVD")
 
     return sorted(directives)
@@ -101,6 +105,8 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
 
     classification = extract_traits(description, category)
     product_type = classification["product_type"]
+    matched_products = classification.get("matched_products", [])
+    product_match_confidence = classification.get("product_match_confidence", "low")
     functional_classes = classification["functional_classes"]
     explicit_traits = classification["explicit_traits"]
     inferred_traits = classification["inferred_traits"]
@@ -116,8 +122,18 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
         "Product interpretation",
         "INFO",
         f"Detected product type: {product_type.replace('_', ' ') if product_type else 'not confidently identified'}.",
-        "Add more product detail if the classification looks wrong.",
+        f"Match confidence: {product_match_confidence}. Add more product detail if the classification looks wrong.",
     )
+
+    if len(matched_products) > 1:
+        add_finding(
+            findings,
+            "SYSTEM",
+            "Alternative product candidates",
+            "INFO",
+            "Other possible product matches: " + ", ".join(x.replace("_", " ") for x in matched_products[1:4]) + ".",
+            "Tighten the description if the top product match looks wrong.",
+        )
 
     if explicit_traits:
         add_finding(
@@ -150,7 +166,12 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
         )
 
     standards: list[StandardItem] = []
-    matched_standard_rows = find_applicable_standards(traits_set, inferred_directives)
+    matched_standard_rows = find_applicable_standards(
+        traits_set,
+        inferred_directives,
+        product_type=product_type,
+        matched_products=matched_products,
+    )
 
     for std in matched_standard_rows:
         primary_directive = std.get("directives", ["SYSTEM"])[0] if std.get("directives") else "SYSTEM"
@@ -178,7 +199,7 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
 
     missing_information: list[str] = []
 
-    if product_type == "kettle" and "mains_powered" not in traits_set and "mains_power_likely" in traits_set:
+    if product_type == "electric_kettle" and "mains_powered" not in traits_set and "mains_power_likely" in traits_set:
         missing_information.append("Rated voltage or power architecture was not explicitly stated.")
         add_finding(
             findings,
@@ -189,7 +210,7 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
             "Confirm rated voltage, supply method, and power characteristics.",
         )
 
-    if "radio" in traits_set and not any(x in traits_set for x in ["wifi", "bluetooth", "cellular"]):
+    if "radio" in traits_set and not any(x in traits_set for x in ["wifi", "bluetooth", "cellular", "zigbee", "thread", "nfc"]):
         missing_information.append("Radio technology was not clearly identified.")
         add_finding(
             findings,
@@ -222,7 +243,7 @@ def analyze(description: str, category: str, directives: list[str], depth: str) 
             "SYSTEM",
             "No standards matched",
             "WARN",
-            "No likely standards were matched from the current traits and directives.",
+            "No likely standards were matched from the current traits, product match, and directives.",
             "Expand the product description or add more archetypes and standards to the YAML database.",
         )
 
