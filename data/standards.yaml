@@ -1,398 +1,571 @@
 standards:
-  - code: EN 60335-1
-    title: Household and similar electrical appliances - Safety - General requirements
-    region: EU
-    category: safety
-    directives:
-      - LVD
-    applies_if_all:
-      - consumer
-      - household
-      - electrical
-    applies_if_any:
-      - heating
-      - motorized
-      - water_contact
-      - mains_powered
-      - mains_power_likely
-    exclude_if:
-      - industrial
-    confidence: high
-    notes: General baseline safety standard family often relevant to household electrical appliances.
-
-  - code: EN 62233
-    title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human exposure
-    region: EU
-    category: emf
-    directives:
-      - LVD
-    applies_if_all:
-      - consumer
-      - household
-      - electrical
-    applies_if_any:
-      - heating
-      - motorized
-      - mains_powered
-      - mains_power_likely
-    exclude_if: []
-    confidence: medium
-    notes: Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation.
-
-  - code: EN 55014-1
-    title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Emission
-    region: EU
-    category: emc
-    directives:
-      - EMC
-    applies_if_all:
-      - electrical
-    applies_if_any:
-      - household
-      - motorized
-      - heating
-      - consumer
-    exclude_if: []
-    confidence: high
-    notes: Emission-side EMC standard family commonly relevant to many household appliances.
-
-  - code: EN 55014-2
-    title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Immunity
-    region: EU
-    category: emc
-    directives:
-      - EMC
-    applies_if_all:
-      - electrical
-    applies_if_any:
-      - household
-      - motorized
-      - heating
-      - consumer
-    exclude_if: []
-    confidence: high
-    notes: Immunity-side EMC standard family commonly relevant to many household appliances.
-
-  - code: EN IEC 61000-3-2
-    title: Electromagnetic compatibility - Limits for harmonic current emissions
-    region: EU
-    category: emc
-    directives:
-      - EMC
-    applies_if_all:
-      - mains_powered
-    applies_if_any:
-      - household
-      - consumer
-      - electrical
-    exclude_if:
-      - battery_powered
-    confidence: medium
-    notes: Typically considered for mains-powered equipment depending on product characteristics and scope.
-
-  - code: EN 61000-3-3
-    title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations and flicker
-    region: EU
-    category: emc
-    directives:
-      - EMC
-    applies_if_all:
-      - mains_powered
-    applies_if_any:
-      - household
-      - consumer
-      - electrical
-    exclude_if:
-      - battery_powered
-    confidence: medium
-    notes: Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects.
-
-  - code: EN 300 328
-    title: Wideband transmission systems; Data transmission equipment operating in the 2.4 GHz band
-    region: EU
-    category: radio
-    directives:
-      - RED
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - wifi
-      - bluetooth
-      - matter
-      - thread
-    exclude_if: []
-    confidence: high
-    notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth.
-
-  - code: EN 301 489-1
-    title: EMC standard for radio equipment and services - Common technical requirements
-    region: EU
-    category: radio_emc
-    directives:
-      - RED
-      - EMC
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - wifi
-      - bluetooth
-      - cellular
-      - zigbee
-      - thread
-    exclude_if: []
-    confidence: high
-    notes: Common EMC framework standard for radio equipment.
-
-  - code: EN 301 489-17
-    title: EMC standard for radio equipment and services - Specific conditions for broadband data transmission systems
-    region: EU
-    category: radio_emc
-    directives:
-      - RED
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - wifi
-      - bluetooth
-      - zigbee
-      - thread
-    exclude_if: []
-    confidence: medium
-    notes: Often relevant alongside EN 301 489-1 depending on the short-range radio technology used.
-
-  - code: EN 301 489-52
-    title: EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
-    region: EU
-    category: radio_emc
-    directives:
-      - RED
-    applies_if_all:
-      - radio
-      - cellular
-    applies_if_any:
-      - internet
-      - remote_control
-    exclude_if: []
-    confidence: medium
-    notes: Commonly considered when cellular connectivity is present.
-
-  - code: EN 301 511
-    title: Harmonised standard for mobile stations in GSM networks
-    region: EU
-    category: radio
-    directives:
-      - RED
-    applies_if_all:
-      - radio
-      - cellular
-    applies_if_any: []
-    exclude_if: []
-    confidence: low
-    notes: Legacy cellular route that may be relevant for certain GSM-capable devices; verify actual radio technology.
-
-  - code: EN 301 908 series review
-    title: Cellular radio standard family review required
-    region: EU
-    category: radio
-    directives:
-      - RED
-    applies_if_all:
-      - radio
-      - cellular
-    applies_if_any:
-      - internet
-      - remote_control
-    exclude_if: []
-    confidence: medium
-    notes: For cellular products, the specific EN 301 908 route depends on the implemented access technology and module design.
-
-  - code: EN 300 220 series review
-    title: Short range device radio standard family review required
-    region: EU
-    category: radio
-    directives:
-      - RED
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - zigbee
-      - thread
-      - nfc
-    exclude_if: []
-    confidence: low
-    notes: Placeholder review bucket where the precise short-range radio route depends on frequency band and implementation.
-
-  - code: EN 62479
-    title: Assessment of the compliance of low power electronic and electrical equipment with the basic restrictions related to human exposure to electromagnetic fields
-    region: EU
-    category: emf
-    directives:
-      - RED
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - wifi
-      - bluetooth
-      - cellular
-      - zigbee
-      - thread
-    exclude_if: []
-    confidence: medium
-    notes: Common EMF assessment route for certain low-power radio products.
-
-  - code: EN 50663 / EN 62311 review
-    title: EMF assessment route review required
-    region: EU
-    category: emf
-    directives:
-      - RED
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - cellular
-      - wearable
-    exclude_if: []
-    confidence: low
-    notes: The applicable RF exposure assessment route may depend on power level, use scenario, and placement on the body.
-
-  - code: EN 18031-1
-    title: Common cybersecurity requirements for radio equipment - Part 1
-    region: EU
-    category: cybersecurity
-    directives:
-      - RED
-      - CRA
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - internet
-      - app_control
-      - cloud
-      - ota
-      - remote_control
-    exclude_if: []
-    confidence: medium
-    notes: Often relevant for connected radio products with networked or software-controlled functionality.
-
-  - code: EN 18031-2
-    title: Common cybersecurity requirements for radio equipment - Part 2
-    region: EU
-    category: cybersecurity
-    directives:
-      - RED
-      - CRA
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - account
-      - authentication
-      - internet
-      - cloud
-    exclude_if: []
-    confidence: medium
-    notes: Often relevant where network-connected radio equipment processes or protects access, credentials, or service integrity.
-
-  - code: EN 18031-3
-    title: Common cybersecurity requirements for radio equipment - Part 3
-    region: EU
-    category: cybersecurity
-    directives:
-      - RED
-      - CRA
-    applies_if_all:
-      - radio
-    applies_if_any:
-      - personal_data_likely
-      - camera
-      - microphone
-      - location
-      - child_targeted
-      - health_related
-    exclude_if: []
-    confidence: medium
-    notes: Often relevant where privacy, personal data, or child-related concerns arise.
-
-  - code: CRA review
-    title: Cyber Resilience Act assessment required
-    region: EU
-    category: cybersecurity
-    directives:
-      - CRA
-    applies_if_all: []
-    applies_if_any:
-      - electronic
-      - app_control
-      - cloud
-      - internet
-      - ota
-      - data_storage
-    exclude_if: []
-    confidence: medium
-    notes: Placeholder review bucket for wider CRA essential requirement assessment beyond radio-specific routes.
-
-  - code: GDPR review
-    title: GDPR assessment required
-    region: EU
-    category: privacy
-    directives:
-      - GDPR
-    applies_if_all: []
-    applies_if_any:
-      - personal_data_likely
-      - camera
-      - microphone
-      - location
-      - health_related
-      - account
-      - child_targeted
-      - data_storage
-    exclude_if: []
-    confidence: medium
-    notes: Placeholder compliance bucket for privacy and data protection review rather than a harmonized standard.
-
-  - code: AI Act review
-    title: AI Act assessment required
-    region: EU
-    category: ai
-    directives:
-      - AI_Act
-    applies_if_all:
-      - ai_related
-    applies_if_any: []
-    exclude_if: []
-    confidence: medium
-    notes: Placeholder assessment bucket for AI-related regulatory review.
-
-  - code: Battery safety review
-    title: Battery safety and transport review required
-    region: EU
-    category: battery
-    directives:
-      - LVD
-      - CRA
-    applies_if_all:
-      - battery_powered
-    applies_if_any:
-      - wearable
-      - consumer
-      - household
-    exclude_if: []
-    confidence: low
-    notes: Placeholder review bucket where battery chemistry, charger architecture, and transport obligations need separate evaluation.
-
-  - code: Charger / external PSU review
-    title: External power supply and charger route review required
-    region: EU
-    category: power
-    directives:
-      - LVD
-      - EMC
-    applies_if_all:
-      - electrical
-    applies_if_any:
-      - mains_powered
-      - mains_power_likely
-      - usb_powered
-    exclude_if: []
-    confidence: low
-    notes: Review whether the product relies on an external PSU, charger, or adapter that brings additional compliance dependencies.
+- code: EN 60335-1
+  title: Household and similar electrical appliances - Safety - General requirements
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: &id001
+  - consumer
+  - household
+  - electrical
+  applies_if_any:
+  - heating
+  - motorized
+  - water_contact
+  - mains_powered
+  - mains_power_likely
+  exclude_if: &id002
+  - industrial
+  confidence: high
+  notes: General standard used together with the relevant EN/IEC 60335-2 particular
+    part for household appliances.
+- code: EN 62233
+  title: Measurement methods for electromagnetic fields of household appliances and
+    similar apparatus with regard to human exposure
+  region: EU
+  category: emf
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - heating
+  - motorized
+  - mains_powered
+  - mains_power_likely
+  exclude_if: *id002
+  confidence: medium
+  notes: Often used as the household-appliance EMF assessment route within the EN
+    60335 family.
+- code: EN 55014-1
+  title: Electromagnetic compatibility requirements for household appliances, electric
+    tools and similar apparatus - Emission
+  region: EU
+  category: emc
+  directives:
+  - LVD
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - household
+  - motorized
+  - heating
+  - consumer
+  exclude_if: []
+  confidence: high
+  notes: Common emission-side EMC standard for household appliances.
+- code: EN 55014-2
+  title: Electromagnetic compatibility requirements for household appliances, electric
+    tools and similar apparatus - Immunity
+  region: EU
+  category: emc
+  directives:
+  - LVD
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - household
+  - motorized
+  - heating
+  - consumer
+  exclude_if: []
+  confidence: high
+  notes: Common immunity-side EMC standard for household appliances.
+- code: EN IEC 61000-3-2
+  title: Electromagnetic compatibility - Limits for harmonic current emissions
+  region: EU
+  category: emc
+  directives:
+  - LVD
+  applies_if_all:
+  - mains_powered
+  applies_if_any:
+  - household
+  - consumer
+  - electrical
+  exclude_if:
+  - battery_powered
+  confidence: medium
+  notes: Usually reviewed for mains-powered appliances.
+- code: EN 61000-3-3
+  title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations
+    and flicker
+  region: EU
+  category: emc
+  directives:
+  - LVD
+  applies_if_all:
+  - mains_powered
+  applies_if_any:
+  - household
+  - consumer
+  - electrical
+  exclude_if:
+  - battery_powered
+  confidence: medium
+  notes: Usually reviewed for mains-powered appliances.
+- code: EN IEC 60335-2-2
+  title: Particular requirements for vacuum cleaners and water-suction cleaning appliances
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - vacuum_cleaning
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: vacuum cleaners and water-suction cleaning appliances.'
+- code: EN 60335-2-3
+  title: Particular requirements for electric irons
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - garment_care
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: electric irons, including steam irons.'
+- code: EN 60335-2-4
+  title: Particular requirements for spin extractors
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - washing_function
+  exclude_if: *id002
+  confidence: medium
+  notes: 'Typical scope: standalone spin extractors.'
+- code: EN 60335-2-5
+  title: Particular requirements for dishwashers
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - dishwashing
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: household dishwashers.'
+- code: EN 60335-2-6
+  title: Particular requirements for stationary cooking ranges, hobs, ovens and similar
+    appliances
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - cooking
+  - hotplate_or_hob
+  - oven_appliance
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: stationary cooking appliances such as built-in ovens, hobs,
+    cookers and ranges.'
+- code: EN 60335-2-7
+  title: Particular requirements for washing machines
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - washing_function
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: household washing machines.'
+- code: EN 60335-2-8
+  title: Particular requirements for shavers, hair clippers and similar appliances
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - personal_care
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: shavers, hair clippers, epilators and similar grooming appliances.'
+- code: EN 60335-2-9
+  title: Particular requirements for grills, toasters and similar portable cooking
+    appliances
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - portable_cooking
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: toasters, grills, sandwich makers, waffle makers and similar
+    portable cooking appliances.'
+- code: EN 60335-2-10
+  title: Particular requirements for floor treatment machines and wet scrubbing machines
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - floor_treatment
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: polishers, scrubbers and floor treatment machines.'
+- code: EN 60335-2-11
+  title: Particular requirements for tumble dryers
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - drying_function
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: household tumble dryers.'
+- code: EN 60335-2-12
+  title: Particular requirements for warming plates and similar appliances
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - portable_cooking
+  exclude_if: *id002
+  confidence: medium
+  notes: 'Typical scope: warming plates and similar food-warming appliances.'
+- code: EN 60335-2-13
+  title: Particular requirements for deep fat fryers, frying pans and similar appliances
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - portable_cooking
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: deep fryers, frying pans, fondue sets and similar appliances.'
+- code: EN 60335-2-14
+  title: Particular requirements for kitchen machines
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - kitchen_machine
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: stand mixers, kneaders, food processors and similar kitchen
+    machines.'
+- code: EN 60335-2-15
+  title: Particular requirements for appliances for heating liquids
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - liquid_heating
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: kettles, coffee makers and other appliances mainly intended
+    for heating liquids.'
+- code: EN 60335-2-16
+  title: Particular requirements for food waste disposers
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - food_contact
+  - motorized
+  - water_contact
+  exclude_if: *id002
+  confidence: medium
+  notes: 'Typical scope: household food waste disposers.'
+- code: EN 60335-2-17
+  title: Particular requirements for blankets, pads, clothing and similar flexible
+    heating appliances
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - flexible_heating
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: electric blankets, heated pads, heated clothing and similar
+    flexible heating articles.'
+- code: EN 60335-2-21
+  title: Particular requirements for storage water heaters
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - water_heater
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: storage-type electric water heaters.'
+- code: EN IEC 60335-2-23
+  title: Particular requirements for appliances for skin or hair care
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - personal_care
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: hair dryers, straighteners, curling appliances, facial saunas
+    and similar appliances for skin or hair care.'
+- code: EN IEC 60335-2-24
+  title: Particular requirements for refrigerating appliances, ice-cream appliances
+    and ice makers
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - refrigeration
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: refrigerators, freezers, ice makers and ice-cream appliances.'
+- code: EN 60335-2-25
+  title: Particular requirements for microwave ovens, including combination microwave
+    ovens
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - microwave_heating
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: microwave ovens, including combination microwave ovens.'
+- code: EN IEC 60335-2-26
+  title: Particular requirements for clocks
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - mains_powered
+  - mains_power_likely
+  exclude_if: *id002
+  confidence: medium
+  notes: 'Typical scope: household clocks and alarm clocks.'
+- code: EN 60335-2-27
+  title: Particular requirements for appliances for skin exposure to ultraviolet and
+    infrared radiation
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - beauty_uv
+  exclude_if: *id002
+  confidence: medium
+  notes: 'Typical scope: sunlamps and similar UV/IR personal exposure appliances.'
+- code: EN 60335-2-29
+  title: Particular requirements for battery chargers
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - battery_charging
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: household battery chargers.'
+- code: EN 60335-2-30
+  title: Particular requirements for room heaters
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - room_heating
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: portable and fixed room heaters for household use.'
+- code: EN 60335-2-31
+  title: Particular requirements for range hoods and other cooking fume extractors
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - range_hood
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: cooker hoods and similar cooking fume extractors.'
+- code: EN 60335-2-32
+  title: Particular requirements for massage appliances
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - massage
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: massage appliances.'
+- code: EN 60335-2-35
+  title: Particular requirements for instantaneous water heaters
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - water_heater
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: instantaneous electric water heaters.'
+- code: EN 60335-2-80
+  title: Particular requirements for fans
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - fan_appliance
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: household fans.'
+- code: EN 60335-2-82
+  title: Particular requirements for service and entertainment machines
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - consumer
+  - household
+  - electrical
+  exclude_if: *id002
+  confidence: low
+  notes: Broader particular part that can cover certain coin-operated or entertainment-related
+    machines; keep as review bucket rather than default mapping.
+- code: EN 60335-2-84
+  title: Particular requirements for toilets
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - consumer
+  - household
+  - electrical
+  exclude_if: *id002
+  confidence: low
+  notes: Niche household appliance part for electric toilets or similar equipment;
+    keep for manual review.
+- code: EN 60335-2-85
+  title: Particular requirements for fabric steamers
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - garment_care
+  exclude_if: *id002
+  confidence: medium
+  notes: 'Typical scope: fabric steamers and similar garment care appliances.'
+- code: EN 60335-2-87
+  title: Particular requirements for electrical animal-stunning equipment
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - consumer
+  - electrical
+  exclude_if: *id002
+  confidence: low
+  notes: Very niche; usually not relevant to mainstream household portfolios.
+- code: EN 60335-2-90
+  title: Particular requirements for commercial microwave ovens
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - microwave_heating
+  - commercial_food_service
+  exclude_if: *id002
+  confidence: low
+  notes: Commercial route; included for series completeness but not default household
+    mapping.
+- code: EN 60335-2-98
+  title: Particular requirements for humidifiers
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: *id001
+  applies_if_any:
+  - humidifier
+  exclude_if: *id002
+  confidence: high
+  notes: 'Typical scope: household humidifiers.'
+- code: EN 60335-2-99
+  title: Particular requirements for commercial electric hoods
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - range_hood
+  - commercial_food_service
+  exclude_if: *id002
+  confidence: low
+  notes: Commercial route; included for series completeness, not default household
+    mapping.
+- code: EN 60335-2-103
+  title: Particular requirements for drives for gates, doors and windows
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - motorized
+  - remote_control
+  exclude_if: *id002
+  confidence: medium
+  notes: Not a core household small-appliance part, but within the 60335-2 family
+    and relevant for domestic door/gate/window drives.

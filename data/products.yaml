@@ -1,349 +1,620 @@
 products:
-  - id: kettle
-    label: Electric kettle
-    aliases:
-      - kettle
-      - electric kettle
-      - smart kettle
-      - connected kettle
-      - wifi kettle
-      - bluetooth kettle
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - heating
-      - water_contact
-      - food_contact
-      - mains_power_likely
-    functional_classes:
-      - beverage_preparation
-      - small_domestic_appliance
-
-  - id: coffee_machine
-    label: Coffee machine
-    aliases:
-      - coffee machine
-      - espresso machine
-      - coffee maker
-      - bean to cup machine
-      - pod machine
-      - capsule machine
-      - smart coffee machine
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - heating
-      - water_contact
-      - food_contact
-      - mains_power_likely
-    functional_classes:
-      - beverage_preparation
-      - small_domestic_appliance
-
-  - id: toaster
-    label: Toaster
-    aliases:
-      - toaster
-      - smart toaster
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - heating
-      - food_contact
-      - mains_power_likely
-    functional_classes:
-      - cooking_appliance
-      - small_domestic_appliance
-
-  - id: air_fryer
-    label: Air fryer
-    aliases:
-      - air fryer
-      - smart air fryer
-      - connected air fryer
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - heating
-      - food_contact
-      - mains_power_likely
-    functional_classes:
-      - cooking_appliance
-      - small_domestic_appliance
-
-  - id: rice_cooker
-    label: Rice cooker
-    aliases:
-      - rice cooker
-      - smart rice cooker
-      - multicooker
-      - multi cooker
-      - pressure cooker
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - heating
-      - food_contact
-      - mains_power_likely
-    functional_classes:
-      - cooking_appliance
-      - small_domestic_appliance
-
-  - id: blender
-    label: Blender
-    aliases:
-      - blender
-      - hand blender
-      - stick blender
-      - mixer
-      - food processor
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - motorized
-      - food_contact
-    functional_classes:
-      - food_preparation
-      - small_domestic_appliance
-
-  - id: vacuum_cleaner
-    label: Vacuum cleaner
-    aliases:
-      - vacuum
-      - vacuum cleaner
-      - cordless vacuum
-      - stick vacuum
-      - robot vacuum
-      - robotic vacuum
-      - canister vacuum
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - motorized
-    functional_classes:
-      - floor_care
-      - cleaning_appliance
-
-  - id: steam_iron
-    label: Steam iron
-    aliases:
-      - iron
-      - steam iron
-      - garment steamer
-      - clothes steamer
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - heating
-      - water_contact
-      - mains_power_likely
-    functional_classes:
-      - garment_care
-      - small_domestic_appliance
-
-  - id: fan
-    label: Fan
-    aliases:
-      - fan
-      - desk fan
-      - smart fan
-      - tower fan
-      - ceiling fan
-      - circulator fan
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - motorized
-      - mains_power_likely
-    functional_classes:
-      - comfort_appliance
-
-  - id: air_purifier
-    label: Air purifier
-    aliases:
-      - air purifier
-      - purifier
-      - humidifier
-      - dehumidifier
-      - air cleaner
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - motorized
-      - mains_power_likely
-    functional_classes:
-      - air_treatment
-      - comfort_appliance
-
-  - id: camera_device
-    label: Camera device
-    aliases:
-      - camera
-      - security camera
-      - smart camera
-      - wifi camera
-      - connected camera
-      - baby monitor
-      - doorbell camera
-      - dash cam
-      - webcam
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - camera
-      - personal_data_likely
-      - data_storage
-    functional_classes:
-      - imaging_device
-      - connected_sensor
-
-  - id: wearable
-    label: Wearable device
-    aliases:
-      - wearable
-      - smartwatch
-      - smart watch
-      - fitness band
-      - fitness tracker
-      - activity tracker
-      - heart rate monitor
-      - smart ring
-    implied_traits:
-      - consumer
-      - wearable
-      - electrical
-      - electronic
-      - battery_powered
-      - personal_data_likely
-      - data_storage
-    functional_classes:
-      - wearable_device
-
-  - id: smart_lock
-    label: Smart lock
-    aliases:
-      - smart lock
-      - connected lock
-      - digital lock
-      - bluetooth lock
-      - wifi lock
-      - door lock
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - authentication
-      - remote_control
-    functional_classes:
-      - access_control
-      - connected_actuator
-
-  - id: speaker
-    label: Smart speaker
-    aliases:
-      - smart speaker
-      - speaker
-      - voice assistant
-      - smart display
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - speaker
-      - microphone
-      - personal_data_likely
-    functional_classes:
-      - media_device
-      - connected_device
-
-  - id: toy
-    label: Toy
-    aliases:
-      - toy
-      - smart toy
-      - connected toy
-      - children's toy
-      - kids toy
-      - educational toy
-    implied_traits:
-      - consumer
-      - child_targeted
-    functional_classes:
-      - toy_product
-
-  - id: gateway
-    label: Gateway / hub
-    aliases:
-      - gateway
-      - hub
-      - bridge
-      - smart home hub
-      - controller hub
-      - router
-      - gateway device
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - internet
-      - cloud
-      - data_storage
-    functional_classes:
-      - connected_gateway
-
-  - id: sensor
-    label: Connected sensor
-    aliases:
-      - sensor
-      - leak detector
-      - water leak detector
-      - smoke detector
-      - co detector
-      - occupancy sensor
-      - door sensor
-      - motion sensor
-      - temperature sensor
-    implied_traits:
-      - consumer
-      - household
-      - electrical
-      - electronic
-      - data_storage
-    functional_classes:
-      - connected_sensor
-
-  - id: charger
-    label: Charger / power adapter
-    aliases:
-      - charger
-      - battery charger
-      - usb charger
-      - power adapter
-      - adapter
-      - charging dock
-    implied_traits:
-      - consumer
-      - electrical
-      - mains_power_likely
-    functional_classes:
-      - power_supply
+- id: vacuum_cleaner
+  label: Vacuum cleaner
+  aliases:
+  - vacuum
+  - vacuum cleaner
+  - cordless vacuum
+  - stick vacuum
+  - robot vacuum
+  - robotic vacuum
+  - canister vacuum
+  - wet vacuum
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - vacuum_cleaning
+  functional_classes:
+  - floor_care
+  - cleaning_appliance
+- id: water_suction_cleaner
+  label: Water-suction cleaning appliance
+  aliases:
+  - water suction cleaner
+  - wet vacuum cleaner
+  - water vacuum
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - vacuum_cleaning
+  - water_contact
+  functional_classes:
+  - floor_care
+  - cleaning_appliance
+- id: steam_iron
+  label: Steam iron
+  aliases:
+  - iron
+  - steam iron
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - garment_care
+  - mains_power_likely
+  functional_classes:
+  - garment_care
+  - small_domestic_appliance
+- id: dry_iron
+  label: Dry iron
+  aliases:
+  - dry iron
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - garment_care
+  - mains_power_likely
+  functional_classes:
+  - garment_care
+  - small_domestic_appliance
+- id: dishwasher
+  label: Dishwasher
+  aliases:
+  - dishwasher
+  - dish washer
+  - portable dishwasher
+  - countertop dishwasher
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - motorized
+  - water_contact
+  - dishwashing
+  - mains_power_likely
+  functional_classes:
+  - kitchen_appliance
+  - large_domestic_appliance
+- id: cooker_hob_oven
+  label: Cooking range, hob or oven
+  aliases:
+  - oven
+  - built in oven
+  - cooker
+  - cooking range
+  - hob
+  - cooktop
+  - induction hob
+  - ceramic hob
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - cooking
+  - hotplate_or_hob
+  - oven_appliance
+  - mains_power_likely
+  functional_classes:
+  - cooking_appliance
+  - large_domestic_appliance
+- id: washing_machine
+  label: Washing machine
+  aliases:
+  - washing machine
+  - washer
+  - washer dryer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  - washing_function
+  - mains_power_likely
+  functional_classes:
+  - laundry_appliance
+  - large_domestic_appliance
+- id: spin_extractor
+  label: Spin extractor
+  aliases:
+  - spin extractor
+  - spin dryer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - washing_function
+  - mains_power_likely
+  functional_classes:
+  - laundry_appliance
+- id: shaver
+  label: Shaver
+  aliases:
+  - shaver
+  - electric shaver
+  - razor
+  - epilator
+  - hair clipper
+  - beard trimmer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - battery_powered
+  - personal_care
+  functional_classes:
+  - personal_care_appliance
+- id: portable_grill_toaster
+  label: Portable grill, toaster or similar appliance
+  aliases:
+  - toaster
+  - sandwich maker
+  - contact grill
+  - waffle maker
+  - portable grill
+  - raclette
+  - table grill
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - cooking
+  - portable_cooking
+  - mains_power_likely
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+- id: floor_polisher_scrubber
+  label: Floor treatment machine
+  aliases:
+  - floor polisher
+  - floor scrubber
+  - floor cleaner
+  - hard floor cleaner
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - floor_treatment
+  - mains_power_likely
+  functional_classes:
+  - floor_care
+  - cleaning_appliance
+- id: tumble_dryer
+  label: Tumble dryer
+  aliases:
+  - tumble dryer
+  - dryer
+  - heat pump dryer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - drying_function
+  - mains_power_likely
+  functional_classes:
+  - laundry_appliance
+  - large_domestic_appliance
+- id: warming_plate
+  label: Warming plate
+  aliases:
+  - warming plate
+  - food warmer
+  - cup warmer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - portable_cooking
+  - mains_power_likely
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+- id: deep_fryer
+  label: Deep fat fryer or frying pan
+  aliases:
+  - deep fryer
+  - fryer
+  - deep fat fryer
+  - electric frying pan
+  - fondue set
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - cooking
+  - portable_cooking
+  - mains_power_likely
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+- id: kitchen_machine
+  label: Kitchen machine
+  aliases:
+  - kitchen machine
+  - stand mixer
+  - food processor
+  - mixer
+  - kneader
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - kitchen_machine
+  functional_classes:
+  - food_preparation
+  - small_domestic_appliance
+- id: kettle
+  label: Electric kettle
+  aliases:
+  - kettle
+  - electric kettle
+  - smart kettle
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - food_contact
+  - liquid_heating
+  - mains_power_likely
+  functional_classes:
+  - beverage_preparation
+  - small_domestic_appliance
+- id: coffee_machine
+  label: Coffee machine
+  aliases:
+  - coffee machine
+  - espresso machine
+  - coffee maker
+  - bean to cup machine
+  - pod machine
+  - capsule machine
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  - food_contact
+  - liquid_heating
+  - mains_power_likely
+  functional_classes:
+  - beverage_preparation
+  - small_domestic_appliance
+- id: food_waste_disposer
+  label: Food waste disposer
+  aliases:
+  - food waste disposer
+  - waste disposer
+  - garbage disposal
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - water_contact
+  functional_classes:
+  - kitchen_appliance
+- id: electric_blanket
+  label: Electric blanket or heating pad
+  aliases:
+  - electric blanket
+  - heating blanket
+  - heating pad
+  - heated mattress pad
+  - heated clothing
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - flexible_heating
+  functional_classes:
+  - comfort_appliance
+  - personal_care_appliance
+- id: storage_water_heater
+  label: Storage water heater
+  aliases:
+  - storage water heater
+  - boiler
+  - hot water cylinder
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - water_heater
+  - mains_power_likely
+  functional_classes:
+  - water_heating_appliance
+- id: hair_care_appliance
+  label: Hair or skin care appliance
+  aliases:
+  - hair dryer
+  - hair straightener
+  - curling iron
+  - facial sauna
+  - hand dryer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - personal_care
+  - mains_power_likely
+  functional_classes:
+  - personal_care_appliance
+- id: refrigerator_freezer
+  label: Refrigerator, freezer or ice maker
+  aliases:
+  - refrigerator
+  - fridge
+  - freezer
+  - fridge freezer
+  - ice maker
+  - ice cream maker
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - cooling
+  - refrigeration
+  - mains_power_likely
+  functional_classes:
+  - cooling_appliance
+  - large_domestic_appliance
+- id: microwave_oven
+  label: Microwave oven
+  aliases:
+  - microwave
+  - microwave oven
+  - combi microwave
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - cooking
+  - microwave_heating
+  - mains_power_likely
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+- id: clock
+  label: Clock
+  aliases:
+  - clock
+  - alarm clock
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - mains_power_likely
+  functional_classes:
+  - household_device
+- id: sunlamp
+  label: Sunlamp or infrared appliance
+  aliases:
+  - sunlamp
+  - tanning lamp
+  - infrared lamp
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - personal_care
+  - beauty_uv
+  - mains_power_likely
+  functional_classes:
+  - personal_care_appliance
+- id: battery_charger
+  label: Battery charger
+  aliases:
+  - battery charger
+  - charger
+  - portable battery charger
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - battery_charging
+  - mains_power_likely
+  functional_classes:
+  - power_supply
+- id: room_heater
+  label: Room heater
+  aliases:
+  - room heater
+  - space heater
+  - convector heater
+  - fan heater
+  - oil radiator
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - room_heating
+  - mains_power_likely
+  functional_classes:
+  - comfort_appliance
+- id: range_hood
+  label: Range hood
+  aliases:
+  - range hood
+  - cooker hood
+  - extractor hood
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - range_hood
+  - air_treatment
+  - mains_power_likely
+  functional_classes:
+  - kitchen_appliance
+  - air_treatment
+- id: massage_appliance
+  label: Massage appliance
+  aliases:
+  - massage appliance
+  - massager
+  - massage gun
+  - foot massager
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - personal_care
+  - massage
+  functional_classes:
+  - personal_care_appliance
+- id: instantaneous_water_heater
+  label: Instantaneous water heater
+  aliases:
+  - instantaneous water heater
+  - tankless water heater
+  - instant water heater
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - water_heater
+  - mains_power_likely
+  functional_classes:
+  - water_heating_appliance
+- id: sewing_machine
+  label: Sewing machine
+  aliases:
+  - sewing machine
+  - embroidery machine
+  - overlocker
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - sewing
+  - mains_power_likely
+  functional_classes:
+  - textile_appliance
+- id: fan
+  label: Fan
+  aliases:
+  - fan
+  - desk fan
+  - tower fan
+  - ceiling fan
+  - circulator fan
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - fan_appliance
+  - air_treatment
+  - mains_power_likely
+  functional_classes:
+  - comfort_appliance
+- id: humidifier
+  label: Humidifier
+  aliases:
+  - humidifier
+  - mist maker
+  - ultrasonic humidifier
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - humidifier
+  - air_treatment
+  - mains_power_likely
+  functional_classes:
+  - comfort_appliance
+  - air_treatment
+- id: air_purifier
+  label: Air purifier
+  aliases:
+  - air purifier
+  - air cleaner
+  - purifier
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - air_treatment
+  - mains_power_likely
+  functional_classes:
+  - comfort_appliance
+  - air_treatment
+- id: dehumidifier
+  label: Dehumidifier
+  aliases:
+  - dehumidifier
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - water_contact
+  - air_treatment
+  - mains_power_likely
+  functional_classes:
+  - comfort_appliance
+  - air_treatment
+- id: electric_heating_pad_pet
+  label: Heated animal mat or similar
+  aliases:
+  - heated pet mat
+  - animal heating pad
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - flexible_heating
+  functional_classes:
+  - comfort_appliance
