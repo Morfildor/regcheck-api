@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from models import AnalysisResult, ProductInput
 from rules import analyze
 
-app = FastAPI(title="RegCheck API", version="2.0.0")
+app = FastAPI(title="RegCheck API", version="2.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,7 +20,12 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"status": "RegCheck API is running", "version": "2.0.0"}
+    return {"status": "RegCheck API is running", "version": "2.1.0"}
+
+
+@app.get("/health")
+def health():
+    return {"ok": True}
 
 
 @app.post("/analyze", response_model=AnalysisResult)
