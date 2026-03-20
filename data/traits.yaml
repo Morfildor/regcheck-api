@@ -263,3 +263,9 @@ traits:
 - id: zigbee
   label: Zigbee
   description: Uses Zigbee radio technology
+- id: monetary_transaction
+  label: Monetary transaction or value transfer
+  description: Supports payments, subscriptions, orders, wallet functions, money transfer, or similar transfer of monetary value
+- id: wifi_5ghz
+  label: 5 GHz Wi-Fi
+  description: Supports 5 GHz Wi-Fi operation, including dual-band Wi-Fi where 5 GHz is present

@@ -68,31 +68,28 @@ legislations:
   bucket: ce
   applicability: applicable
   applicable_from: '2025-08-01'
-  reason: Review under the RED delegated cybersecurity regime where radio equipment is connected, software-enabled,
-    or handles privacy/security-sensitive functions.
+  reason: Review under the RED delegated cybersecurity regime where radio equipment is internet-connected, uses networked software features, requires account or authentication controls, or supports monetary transactions.
   triggers:
-  - radio equipment with internet, app, cloud, OTA, account, authentication, privacy, or sensitive-data features
+  - internet-connected radio equipment
+  - radio equipment with OTA, cloud, or other networked software functions
+  - radio equipment with account, login, password, PIN, or authentication controls
+  - radio equipment supporting payments, subscriptions, ordering, or other monetary-value transfer
   doc_impacts:
   - EU Declaration of Conformity
   - cybersecurity evidence
-  - EN 18031 mapping
+  - EN 18031 part mapping
   - technical documentation
-  notes: Treat separately from CRA. Use this route for current RED delegated-act analysis.
+  notes: Treat separately from CRA. Map current RED delegated-act scope to EN 18031-1, -2, and -3 based on network, authentication, and monetary-function features.
   all_of_traits:
   - radio
   any_of_traits:
   - internet
+  - wifi
   - cloud
-  - app_control
   - ota
   - account
   - authentication
-  - camera
-  - microphone
-  - location
-  - child_targeted
-  - health_related
-  - personal_data_likely
+  - monetary_transaction
 - code: Regulation (EU) 2024/1781
   title: Ecodesign for Sustainable Products Regulation framework
   family: Energy / ecodesign
@@ -103,8 +100,7 @@ legislations:
   applicability: conditional
   applicable_from: '2024-07-18'
   replaced_by: Directive 2009/125/EC
-  reason: Framework-level review may be needed where the product family is likely to fall under current or future
-    ecodesign measures.
+  reason: Framework-level review may be needed where the product family is likely to fall under current or future ecodesign measures.
   triggers:
   - energy-related or otherwise potentially in-scope product family
   doc_impacts:
@@ -202,8 +198,7 @@ legislations:
   applicability: conditional
   applicable_until: '2027-01-13'
   replaced_by: Regulation (EU) 2023/1230
-  reason: Machinery Directive review may be needed for machinery-style products with driven movement, pressure,
-    or safety-related functions.
+  reason: Machinery Directive review may be needed for machinery-style products with driven movement, pressure, or safety-related functions.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -257,8 +252,7 @@ legislations:
   directive_key: FCM
   bucket: non_ce
   applicability: applicable
-  reason: Food-contact materials compliance should be reviewed where food or beverage contact is part of intended
-    use.
+  reason: Food-contact materials compliance should be reviewed where food or beverage contact is part of intended use.
   triggers:
   - food or beverage contact
   doc_impacts:

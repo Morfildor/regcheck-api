@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import re
@@ -6,6 +7,7 @@ from typing import Any
 from knowledge_base import load_products, load_traits
 
 TRAIT_IDS_CACHE: set[str] | None = None
+
 GENERIC_ALIASES = {
     "air",
     "boiler",
@@ -35,6 +37,9 @@ NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
     (r"\bbluetooth low energy\b", "bluetooth"),
     (r"\bble\b", "bluetooth"),
     (r"\bover[ -]?the[ -]?air\b", "ota"),
+    (r"\bsign[ -]?in\b", "sign in"),
+    (r"\blog[ -]?in\b", "log in"),
+    (r"\b5[ -]?ghz\b", "5ghz"),
     (r"\bmulti[ -]?cooker\b", "multicooker"),
     (r"\bbean[ -]?to[ -]?cup\b", "bean to cup"),
     (r"\bair[ -]?conditioning\b", "air conditioner"),
@@ -67,6 +72,8 @@ def _trait_is_negated(text: str, trait: str) -> bool:
         "internet": [r"\bno internet\b", r"\bwithout internet\b", r"\boffline only\b"],
         "ota": [r"\bno ota\b", r"\bwithout ota\b", r"\bmanual update only\b"],
         "account": [r"\bno account\b", r"\bwithout account\b", r"\bguest only\b"],
+        "authentication": [r"\bno password\b", r"\bwithout login\b", r"\bwithout authentication\b"],
+        "monetary_transaction": [r"\bno payment\b", r"\bwithout payment\b", r"\bno purchase\b", r"\bwithout subscription\b"],
     }
     return _has_any_regex(text, negations.get(trait, []))
 
@@ -76,6 +83,7 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         "radio": [r"\bradio\b"],
         "bluetooth": [r"\bbluetooth\b"],
         "wifi": [r"\bwifi\b", r"\b802 11\b"],
+        "wifi_5ghz": [r"\b5ghz\b", r"\bdual band\b", r"\b802 11a\b", r"\b802 11ac\b", r"\b802 11ax\b", r"\bwifi 6\b", r"\bwifi 6e\b"],
         "zigbee": [r"\bzigbee\b"],
         "thread": [r"\bthread\b"],
         "matter": [r"\bmatter\b"],
@@ -83,11 +91,12 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         "cellular": [r"\bcellular\b", r"\blte\b", r"\b4g\b", r"\b5g\b", r"\bgsm\b", r"\bsim\b"],
         "app_control": [r"\bapp\b", r"\bmobile app\b", r"\bcompanion app\b", r"\bsmartphone control\b"],
         "cloud": [r"\bcloud\b", r"\baws\b", r"\bazure\b", r"\bbackend\b", r"\bserver\b"],
-        "internet": [r"\binternet\b", r"\bonline\b", r"\bremote access\b"],
+        "internet": [r"\binternet\b", r"\bonline\b", r"\bremote access\b", r"\bweb portal\b"],
         "local_only": [r"\boffline\b", r"\bno cloud\b", r"\bno internet\b", r"\blocal only\b"],
         "ota": [r"\bota\b", r"\bfirmware update\b", r"\bsoftware update\b", r"\bover the air\b"],
-        "account": [r"\baccount\b", r"\blogin\b", r"\bsign in\b", r"\buser profile\b"],
-        "authentication": [r"\bauthentication\b", r"\bpassword\b", r"\bpasscode\b", r"\bcredential\b", r"\bpin\b"],
+        "account": [r"\baccount\b", r"\blogin\b", r"\blog in\b", r"\bsign in\b", r"\buser account\b", r"\buser profile\b"],
+        "authentication": [r"\bauthentication\b", r"\bpassword\b", r"\bpasscode\b", r"\bcredential\b", r"\bpin\b", r"\bpin code\b", r"\btwo factor\b", r"\bmfa\b"],
+        "monetary_transaction": [r"\bpayment\b", r"\bpayments\b", r"\bpurchase\b", r"\bpurchases\b", r"\bcheckout\b", r"\bsubscription\b", r"\bwallet\b", r"\bmoney transfer\b", r"\bmonetary value\b", r"\bvirtual currency\b", r"\bin app purchase\b", r"\bplace order\b"],
         "camera": [r"\bcamera\b"],
         "microphone": [r"\bmicrophone\b", r"\bmic\b", r"\bvoice\b"],
         "speaker": [r"\bspeaker\b", r"\baudio\b", r"\bsound\b"],
@@ -109,7 +118,7 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bdrive\b"],
         "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
         "ai_related": [r"\bai\b", r"\bmachine learning\b", r"\bneural\b", r"\bllm\b"],
-        "personal_data_likely": [r"\bpersonal data\b", r"\bprofile\b", r"\buser data\b", r"\baccount\b", r"\blogin\b"],
+        "personal_data_likely": [r"\bpersonal data\b", r"\bprofile\b", r"\buser data\b", r"\baccount\b", r"\blogin\b", r"\blog in\b"],
         "food_contact": [r"\bfood\b", r"\bdrink\b", r"\bwater tank\b", r"\bbrew\b", r"\bcook\b"],
     }
 
@@ -119,10 +128,16 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         if _has_any_regex(text, regexes):
             explicit_traits.add(trait)
 
-    if any(t in explicit_traits for t in ["bluetooth", "wifi", "zigbee", "thread", "matter", "nfc", "cellular"]):
+    if any(t in explicit_traits for t in ["bluetooth", "wifi", "wifi_5ghz", "zigbee", "thread", "matter", "nfc", "cellular"]):
         explicit_traits.add("radio")
+    if "wifi_5ghz" in explicit_traits:
+        explicit_traits.add("wifi")
+    if any(t in explicit_traits for t in ["wifi", "cellular"]):
+        explicit_traits.add("internet")
     if "cloud" in explicit_traits and "local_only" not in explicit_traits:
         explicit_traits.add("internet")
+    if "account" in explicit_traits or "authentication" in explicit_traits:
+        explicit_traits.add("personal_data_likely")
 
 
 def _alias_score(text: str, alias: str) -> int:
@@ -132,36 +147,40 @@ def _alias_score(text: str, alias: str) -> int:
 
     exact_pattern = rf"(?<!\w){re.escape(alias_norm)}(?!\w)"
     if re.search(exact_pattern, text):
-        score = 100 + len(alias_norm) * 3 + len(alias_norm.split()) * 20
+        score = 100 + len(alias_norm) * 3 + len(alias_norm.split()) * 22
         if alias_norm == text:
             score += 80
         return score
 
     tokens = alias_norm.split()
-    if len(tokens) >= 2:
-        text_tokens = set(text.split())
-        if all(token in text_tokens for token in tokens):
-            return 45 + len(tokens) * 10
+    if len(tokens) >= 2 and all(token in text.split() for token in tokens):
+        return 45 + len(tokens) * 12
 
+    if len(tokens) >= 2:
         gap_pattern = r"\b" + r"\b(?:\s+\w+){0,2}\s+\b".join(re.escape(t) for t in tokens) + r"\b"
         if re.search(gap_pattern, text):
-            return 35 + len(tokens) * 8
+            return 35 + len(tokens) * 10
 
     return 0
 
 
 def _alias_specificity_bonus(alias: str) -> int:
     alias_norm = normalize(alias)
+    if not alias_norm:
+        return 0
+
     tokens = alias_norm.split()
-    bonus = len(tokens) * 6 + min(len(alias_norm), 30) // 5
-    if len(tokens) == 1 and alias_norm in GENERIC_ALIASES:
-        bonus -= 12
-    return bonus
+    if len(tokens) >= 3:
+        return 18
+    if len(tokens) == 2:
+        return 8
+    if alias_norm in GENERIC_ALIASES:
+        return -10
+    return 0
 
 
 def _trait_overlap_score(explicit_traits: set[str], product_traits: set[str]) -> int:
-    strong_overlap = explicit_traits & product_traits
-    return len(strong_overlap) * 6
+    return len(explicit_traits & product_traits) * 7
 
 
 def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]) -> tuple[int, list[str]]:
@@ -170,17 +189,17 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     pid = product["id"]
     traits = set(product.get("implied_traits", []))
 
-    if "commercial" in text or "professional" in text:
+    if any(term in text for term in ["commercial", "professional", "industrial", "horeca"]):
         if "professional" in traits or "commercial_food_service" in traits:
             score += 20
             reasons.append("commercial/professional context fits")
         elif "consumer" in traits or "household" in traits:
-            score -= 15
+            score -= 16
             reasons.append("consumer product conflicts with commercial wording")
 
-    if "household" in text or "domestic" in text or "home use" in text:
+    if any(term in text for term in ["household", "domestic", "home use", "consumer"]):
         if "consumer" in traits or "household" in traits:
-            score += 15
+            score += 16
             reasons.append("household context fits")
         elif "professional" in traits:
             score -= 12
@@ -192,7 +211,7 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     if "wifi" in text and "wifi" in traits:
         score += 8
         reasons.append("wifi wording fits")
-    if "built in" in text and "fixed_installation" in traits:
+    if "built in" in text and ("fixed_installation" in traits or "built_in" in traits):
         score += 8
         reasons.append("built-in wording fits")
     if "portable" in text and "portable" in traits:
@@ -201,12 +220,11 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     if "robot" in text and "robot" in pid:
         score += 10
         reasons.append("robot wording fits")
-    if "steam" in text and "steam" in traits:
-        score += 6
-        reasons.append("steam wording fits")
-    if "water" in text and "water_contact" in traits:
-        score += 5
-        reasons.append("water-path wording fits")
+    if ("cloud" in explicit_traits or "app_control" in explicit_traits or "ota" in explicit_traits) and (
+        {"wifi", "bluetooth", "thread", "zigbee", "matter", "radio"} & traits
+    ):
+        score += 10
+        reasons.append("connected context fits")
 
     return score, reasons
 
@@ -229,7 +247,7 @@ def _product_candidates(text: str, explicit_traits: set[str]) -> list[dict[str, 
             alias_bonus = _alias_specificity_bonus(alias)
             if alias_bonus:
                 score += alias_bonus
-                reasons.append(f"alias specificity +{alias_bonus}")
+                reasons.append(f"alias specificity {alias_bonus:+d}")
 
             overlap = _trait_overlap_score(explicit_traits, product_traits)
             if overlap:

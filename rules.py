@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 from datetime import date
@@ -20,12 +21,24 @@ TODAY = date.today()
 
 BUCKET_SORT = {"ce": 0, "framework": 1, "non_ce": 2, "future": 3, "informational": 4}
 PRIORITY_SORT = {"core": 0, "product_specific": 1, "conditional": 2, "informational": 3}
-SECTION_ORDER = ["harmonized", "state_of_the_art", "review", "unknown"]
-SECTION_TITLES = {
-    "harmonized": "Harmonized standards",
-    "state_of_the_art": "State of the art / latest technical route",
-    "review": "Review-required routes",
-    "unknown": "Other standards",
+DIR_ROUTE_ORDER = {
+    "LVD": 0,
+    "EMC": 1,
+    "RED": 2,
+    "RED_CYBER": 3,
+    "ROHS": 4,
+    "REACH": 5,
+    "GDPR": 6,
+    "FCM": 7,
+    "FCM_PLASTIC": 8,
+    "BATTERY": 9,
+    "ECO": 10,
+    "ESPR": 11,
+    "CRA": 12,
+    "AI_Act": 13,
+    "MD": 14,
+    "MACH_REG": 15,
+    "OTHER": 99,
 }
 LEG_SECTION_TITLES = {
     "ce": "Current CE legislation path",
@@ -33,6 +46,25 @@ LEG_SECTION_TITLES = {
     "non_ce": "Parallel obligations outside CE marking",
     "future": "Future watchlist",
     "informational": "Informational items",
+}
+DIR_SECTION_TITLES = {
+    "LVD": "LVD safety route",
+    "EMC": "EMC route",
+    "RED": "RED radio route",
+    "RED_CYBER": "RED delegated-act cybersecurity route",
+    "ROHS": "RoHS route",
+    "REACH": "REACH route",
+    "GDPR": "Data protection route",
+    "FCM": "Food contact route",
+    "FCM_PLASTIC": "Plastic food-contact route",
+    "BATTERY": "Battery route",
+    "ECO": "Ecodesign route",
+    "ESPR": "ESPR framework route",
+    "CRA": "CRA future route",
+    "AI_Act": "AI Act future route",
+    "MD": "Machinery route",
+    "MACH_REG": "Future machinery route",
+    "OTHER": "Other standards",
 }
 
 
@@ -116,6 +148,7 @@ def _pick_legislations(all_traits: set[str], functional_classes: set[str], produ
         key=lambda x: (
             BUCKET_SORT.get(x.get("bucket", "non_ce"), 9),
             PRIORITY_SORT.get(x.get("priority", "conditional"), 9),
+            DIR_ROUTE_ORDER.get(x.get("directive_key", "OTHER"), 99),
             x.get("code", ""),
         )
     )
@@ -184,6 +217,9 @@ def _missing_information_items(
 ) -> list[MissingInformationItem]:
     items: list[MissingInformationItem] = []
 
+    connected_traits = {"cloud", "internet", "ota"}
+    radio_traits = {"wifi", "bluetooth", "zigbee", "thread", "matter", "nfc", "cellular"}
+
     if not product_type:
         items.append(
             MissingInformationItem(
@@ -203,14 +239,34 @@ def _missing_information_items(
                 related_traits=["mains_powered", "battery_powered", "usb_powered"],
             )
         )
-    if "radio" in all_traits and not ({"wifi", "bluetooth", "zigbee", "thread", "matter", "nfc", "cellular"} & all_traits):
+    if ({"app_control", "cloud", "ota"} & all_traits) and "radio" not in all_traits:
+        items.append(
+            MissingInformationItem(
+                key="radio_scope_confirmation",
+                message="Connected features are described but no radio technology is explicit; confirm whether the product has Wi-Fi, Bluetooth, Thread, Zigbee, NFC, or cellular.",
+                importance="high",
+                examples=["Wi-Fi radio", "Bluetooth LE radio", "No radio, local-only wired control"],
+                related_traits=["radio", "wifi", "bluetooth", "thread", "zigbee", "nfc", "cellular"],
+            )
+        )
+    if "radio" in all_traits and not (radio_traits & all_traits):
         items.append(
             MissingInformationItem(
                 key="radio_technology",
                 message="Radio technology is unclear; specify Wi-Fi, Bluetooth, Thread, Zigbee, NFC, or cellular.",
                 importance="high",
-                examples=["Wi-Fi 2.4 GHz", "Bluetooth LE", "Zigbee"],
+                examples=["Wi-Fi 2.4 GHz", "Bluetooth LE", "Thread radio"],
                 related_traits=["radio"],
+            )
+        )
+    if "wifi" in all_traits and "wifi_5ghz" not in all_traits:
+        items.append(
+            MissingInformationItem(
+                key="wifi_band",
+                message="Confirm whether Wi-Fi is 2.4 GHz only or also includes 5 GHz. This changes whether EN 301 893 should be shown.",
+                importance="medium",
+                examples=["2.4 GHz only", "dual-band 2.4/5 GHz", "5 GHz Wi-Fi"],
+                related_traits=["wifi", "wifi_5ghz"],
             )
         )
     if "food_contact" in all_traits:
@@ -223,14 +279,34 @@ def _missing_information_items(
                 related_traits=["food_contact"],
             )
         )
-    if "cloud" in all_traits or "internet" in all_traits or "app_control" in all_traits:
+    if ({"radio"} & all_traits) and ((connected_traits & all_traits) or ("wifi" in all_traits) or ("account" in all_traits) or ("authentication" in all_traits)):
         items.append(
             MissingInformationItem(
                 key="connectivity_architecture",
-                message="Clarify whether the product requires cloud, user accounts, local LAN control, or OTA updates.",
+                message="Clarify whether the connected radio product requires cloud, has local-only LAN control, and supports OTA updates.",
                 importance="medium",
                 examples=["local LAN only", "cloud account required", "OTA security patching supported"],
-                related_traits=["cloud", "internet", "app_control", "ota"],
+                related_traits=["cloud", "internet", "ota"],
+            )
+        )
+    if ({"radio"} & all_traits) and ((connected_traits & all_traits) or ("wifi" in all_traits)) and not ({"account", "authentication"} & all_traits):
+        items.append(
+            MissingInformationItem(
+                key="redcyber_auth_scope",
+                message="Confirm whether the product or companion app uses account, login, password, PIN, pairing code, or similar authentication. This changes EN 18031-2 applicability.",
+                importance="medium",
+                examples=["user account required", "password or PIN entry", "no login or authentication"],
+                related_traits=["account", "authentication"],
+            )
+        )
+    if ({"radio"} & all_traits) and ((connected_traits & all_traits) or ("wifi" in all_traits)) and "monetary_transaction" not in all_traits:
+        items.append(
+            MissingInformationItem(
+                key="redcyber_transaction_scope",
+                message="Confirm whether the product or companion app supports purchases, subscriptions, payments, wallet functions, or any transfer of monetary value. This changes EN 18031-3 applicability.",
+                importance="medium",
+                examples=["subscription purchase through app", "payment or wallet function", "no payment or monetary transfer"],
+                related_traits=["monetary_transaction"],
             )
         )
     if contradiction_severity in {"medium", "high"} or contradictions:
@@ -243,8 +319,14 @@ def _missing_information_items(
             )
         )
 
-    return items
-
+    deduped: list[MissingInformationItem] = []
+    seen: set[str] = set()
+    for item in items:
+        if item.key in seen:
+            continue
+        seen.add(item.key)
+        deduped.append(item)
+    return deduped
 
 def _display_tags(item: StandardItem) -> list[str]:
     tags: list[str] = []
@@ -266,6 +348,13 @@ def _display_tags(item: StandardItem) -> list[str]:
         tags.append("Radio")
     if item.directive == "RED_CYBER":
         tags.append("Cybersecurity")
+    if code_upper.startswith("EN 18031-1"):
+        tags.append("Art. 3(3)(d)")
+        tags.append("Network security")
+    if code_upper.startswith("EN 18031-2"):
+        tags.append("Auth / login")
+    if code_upper.startswith("EN 18031-3"):
+        tags.append("Payments / fraud")
     if item.category == "emf":
         tags.append("EMF")
     if item.category == "energy":
@@ -274,8 +363,7 @@ def _display_tags(item: StandardItem) -> list[str]:
         tags.append("Privacy")
     if "software" in item.test_focus:
         tags.append("Software")
-    return tags[:4]
-
+    return tags[:5]
 
 def _standard_summary(item: StandardItem) -> str:
     code = item.code.upper()
@@ -292,35 +380,77 @@ def _standard_summary(item: StandardItem) -> str:
     if code.startswith("EN 61000-3-3") or code.startswith("EN 61000-3-11"):
         return "Voltage change and flicker route for mains-connected equipment."
     if code.startswith("EN 18031-1"):
-        return "RED delegated-act network and software cybersecurity route."
+        return "RED delegated-act route for internet-connected or network-enabled radio equipment."
     if code.startswith("EN 18031-2"):
-        return "RED delegated-act access control and misuse protection route."
+        return "RED delegated-act route for account, login, password, PIN, or other authentication controls."
     if code.startswith("EN 18031-3"):
-        return "RED delegated-act privacy and sensitive-data related route."
+        return "RED delegated-act route for payments, subscriptions, orders, wallet functions, or other monetary-value transfer."
+    if code.startswith("EN 301 893"):
+        return "5 GHz Wi-Fi spectrum route; confirm only when 5 GHz or dual-band Wi-Fi is present."
     if code.startswith("EN 300") or code.startswith("EN 301"):
         return "Radio spectrum or radio EMC route for the detected wireless technology."
+    if code.startswith("EN 62209-1528"):
+        return "SAR route for handheld, body-near, or cellular radio equipment."
     if code.startswith("EN 62311") or code.startswith("EN 62479") or code.startswith("EN 50364"):
         return "EMF or RF exposure assessment route."
     if code.startswith("EN 63000"):
         return "RoHS technical documentation route."
     return item.title
 
+def _standard_route_key(item: StandardItem) -> str:
+    code_upper = item.code.upper()
+    if code_upper.startswith("EN 18031-"):
+        return "RED_CYBER"
+    return item.directive or item.legislation_key or "OTHER"
+
+
+def _standard_sort_rank(item: StandardItem) -> tuple[int, int, str]:
+    code = item.code.upper()
+    if code.startswith("EN 60335-1"):
+        return (0, 0, code)
+    if code.startswith("EN 60335-2-"):
+        return (0, 1, code)
+    if code.startswith("EN 55014-1"):
+        return (1, 0, code)
+    if code.startswith("EN 55014-2"):
+        return (1, 1, code)
+    if code.startswith("EN 61000-3-2"):
+        return (1, 2, code)
+    if code.startswith("EN 61000-3-3") or code.startswith("EN 61000-3-11"):
+        return (1, 3, code)
+    if code.startswith("EN 300 328"):
+        return (2, 0, code)
+    if code.startswith("EN 301 489-1"):
+        return (2, 1, code)
+    if code.startswith("EN 301 489-17"):
+        return (2, 2, code)
+    if code.startswith("EN 62479") or code.startswith("EN 62311") or code.startswith("EN 50364"):
+        return (2, 3, code)
+    if code.startswith("EN 18031-1"):
+        return (3, 0, code)
+    if code.startswith("EN 18031-2"):
+        return (3, 1, code)
+    if code.startswith("EN 18031-3"):
+        return (3, 2, code)
+    if code.startswith("EN 63000"):
+        return (4, 0, code)
+    return (9, 9, code)
+
 
 def _build_standard_sections(standards: list[StandardItem], review_items: list[StandardItem]) -> list[dict[str, Any]]:
     grouped: dict[str, dict[str, Any]] = {}
+
     for item in [*standards, *review_items]:
-        status = item.harmonization_status or ("review" if item.item_type == "review" else "unknown")
-        if status not in SECTION_TITLES:
-            status = "unknown"
+        route_key = _standard_route_key(item)
         section = grouped.setdefault(
-            status,
-            {"key": status, "title": SECTION_TITLES[status], "count": 0, "items": []},
+            route_key,
+            {"key": route_key, "title": DIR_SECTION_TITLES.get(route_key, route_key), "count": 0, "items": []},
         )
         section["items"].append(
             {
                 "code": item.code,
                 "title": item.title,
-                "directive": item.directive,
+                "directive": route_key,
                 "legislation_key": item.legislation_key,
                 "category": item.category,
                 "item_type": item.item_type,
@@ -345,10 +475,24 @@ def _build_standard_sections(standards: list[StandardItem], review_items: list[S
                 "standard_summary": _standard_summary(item),
             }
         )
+
     for section in grouped.values():
-        section["items"].sort(key=lambda x: (x["directive"], x["code"]))
+        section["items"].sort(
+            key=lambda row: (
+                _standard_sort_rank(
+                    StandardItem(
+                        code=row["code"],
+                        title=row["title"],
+                        directive=row["directive"],
+                        legislation_key=row["legislation_key"],
+                        category=row["category"],
+                    )
+                )
+            )
+        )
         section["count"] = len(section["items"])
-    return [grouped[key] for key in SECTION_ORDER if key in grouped]
+
+    return [grouped[key] for key in sorted(grouped, key=lambda x: DIR_ROUTE_ORDER.get(x, 99))]
 
 
 def _build_legislation_sections(legislations: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -376,7 +520,7 @@ def _build_legislation_sections(legislations: list[dict[str, Any]]) -> list[dict
             }
         )
     for section in grouped.values():
-        section["items"].sort(key=lambda x: (x["directive_key"] or "", x["code"] or ""))
+        section["items"].sort(key=lambda x: (DIR_ROUTE_ORDER.get(x["directive_key"] or "OTHER", 99), x["code"] or ""))
         section["count"] = len(section["items"])
     return [grouped[key] for key in ["ce", "framework", "non_ce", "future", "informational"] if key in grouped]
 
@@ -498,8 +642,9 @@ def _hero_summary(
     ce_legislations: list[LegislationItem],
     standards: list[StandardItem],
     review_items: list[StandardItem],
+    missing_information_items: list[MissingInformationItem],
 ) -> dict[str, Any]:
-    primary_regimes = [row.directive_key for row in ce_legislations[:4]]
+    primary_regimes = [row.directive_key for row in sorted(ce_legislations, key=lambda x: DIR_ROUTE_ORDER.get(x.directive_key, 99))[:5]]
     return {
         "title": _nice_product(product_type).title() if product_type else "Product not confidently identified",
         "subtitle": "Current compliance path separated from future monitoring and parallel obligations.",
@@ -510,6 +655,7 @@ def _hero_summary(
             {"label": "Current CE", "value": len(ce_legislations)},
             {"label": "Standards", "value": len(standards)},
             {"label": "Review items", "value": len(review_items)},
+            {"label": "Input gaps", "value": len(missing_information_items)},
         ],
     }
 
@@ -553,34 +699,46 @@ def _top_actions(
     actions: list[str] = []
     if product_type:
         actions.append(f"Confirm that the detected product family '{_nice_product(product_type)}' is correct.")
-    if missing_information_items:
-        actions.append("Close the missing-input gaps before freezing the compliance route.")
+    if any(item.key == "radio_scope_confirmation" for item in missing_information_items):
+        actions.append("Confirm the radio stack explicitly before fixing RED and EN 18031 scope.")
+    if any(item.key == "wifi_band" for item in missing_information_items):
+        actions.append("Clarify whether Wi-Fi is 2.4 GHz only or also 5 GHz before finalizing RED radio standards.")
+    if any(item.key == "redcyber_auth_scope" for item in missing_information_items):
+        actions.append("Confirm account, login, password, PIN, or pairing flows to decide EN 18031-2.")
+    if any(item.key == "redcyber_transaction_scope" for item in missing_information_items):
+        actions.append("Confirm payment, subscription, ordering, or other money-transfer features to decide EN 18031-3.")
     if any(row.directive_key == "RED_CYBER" for row in ce_legislations):
-        actions.append("Map the connected radio functions to EN 18031 parts and keep CRA separate as a future regime.")
+        actions.append("Map connected radio functions to EN 18031-1, -2, and -3, and keep CRA separate as a future regime.")
     if any(item.directive == "LVD" and item.code.startswith("EN 60335-2-") for item in standards):
         actions.append("Use EN 60335-1 as the base route and the applicable EN 60335-2 Part 2 route for product-specific safety.")
     if any(item.directive == "EMC" for item in standards):
-        actions.append("Plan EMC evidence separately for emission, immunity, and mains-network phenomena where applicable.")
+        actions.append("Plan EMC evidence separately for emission, immunity, harmonics, and flicker where applicable.")
     if review_items:
         actions.append("Resolve all review-required routes before treating the output as final for declaration work.")
-    return actions[:5]
-
+    if missing_information_items:
+        actions.append("Close the missing-input gaps before freezing the compliance route.")
+    return actions[:7]
 
 def _current_path(ce_legislations: list[LegislationItem], standards: list[StandardItem]) -> list[str]:
+    directives = [row.directive_key for row in sorted(ce_legislations, key=lambda x: DIR_ROUTE_ORDER.get(x.directive_key, 99))]
     path: list[str] = []
-    directives = {row.directive_key for row in ce_legislations}
+    standard_codes = {item.code for item in standards}
+
     if "LVD" in directives:
-        path.append("Establish the LVD safety route first, including the base standard and any strict product Part 2 standard.")
+        path.append("Keep EN 60335-1 as the base safety route and apply the correct EN 60335-2 Part 2 product standard.")
     if "EMC" in directives:
         path.append("Confirm EMC routes for emission, immunity, and mains disturbance standards as applicable.")
     if "RED" in directives:
         path.append("Keep radio spectrum, radio EMC, and RF exposure under the RED route.")
-    if "RED_CYBER" in directives:
-        path.append("Treat RED delegated-act cybersecurity as part of current CE, not as CRA.")
+    if "EN 18031-1" in standard_codes:
+        path.append("Use EN 18031-1 for internet-connected or network-enabled radio functionality.")
+    if "EN 18031-2" in standard_codes:
+        path.append("Use EN 18031-2 where account, login, password, PIN, or similar authentication is present.")
+    if "EN 18031-3" in standard_codes:
+        path.append("Use EN 18031-3 where the product or companion flow supports payment or other monetary-value transfer.")
     if any(item.directive == "ROHS" for item in standards) or any(row.directive_key == "ROHS" for row in ce_legislations):
         path.append("Maintain RoHS technical documentation and supplier-material evidence alongside the CE file.")
-    return path[:5]
-
+    return path[:6]
 
 def _future_watchlist(future_regimes: list[LegislationItem], framework_regimes: list[LegislationItem]) -> list[str]:
     watchlist: list[str] = []
@@ -605,44 +763,59 @@ def _suggested_questions(
         questions.append("What exact product family is it, in commercial terms?")
     if any(item.key == "power_source" for item in missing_information_items):
         questions.append("Is it mains powered, battery powered, USB powered, or supplied via external PSU?")
-    if "radio" in all_traits:
+    if any(item.key in {"radio_scope_confirmation", "radio_technology"} for item in missing_information_items) or "radio" in all_traits:
         questions.append("Which radio technologies are present: Wi-Fi, Bluetooth, Thread, Zigbee, NFC, or cellular?")
+    if any(item.key == "wifi_band" for item in missing_information_items):
+        questions.append("Is the Wi-Fi 2.4 GHz only, or dual-band with 5 GHz as well?")
     if "food_contact" in all_traits:
         questions.append("Which materials are in the food-contact path?")
-    if "cloud" in all_traits or "internet" in all_traits or "app_control" in all_traits:
-        questions.append("Does it need a cloud account, local LAN control, OTA updates, or all of them?")
+    if "cloud" in all_traits or "internet" in all_traits or "ota" in all_traits or "wifi" in all_traits:
+        questions.append("Does the connected product need cloud, internet access, local-only LAN control, OTA updates, or some combination?")
+    if any(item.key == "redcyber_auth_scope" for item in missing_information_items) or ({"account", "authentication"} & all_traits):
+        questions.append("Does the product or companion app use login, password, PIN, pairing, or any other authentication control?")
+    if any(item.key == "redcyber_transaction_scope" for item in missing_information_items) or "monetary_transaction" in all_traits:
+        questions.append("Can the product or companion flow place orders, take payments, run subscriptions, or transfer monetary value?")
     if contradictions:
         questions.append("Which of the contradictory signals is actually correct in the product specification?")
-    return questions[:6]
-
+    return questions[:8]
 
 def _suggested_quick_adds(product_type: str | None, all_traits: set[str], missing_information_items: list[MissingInformationItem]) -> list[dict[str, str]]:
     chips: list[dict[str, str]] = []
 
     def add(label: str, text: str) -> None:
-        if len(chips) < 12 and not any(existing["text"] == text for existing in chips):
+        if len(chips) < 14 and not any(existing["text"] == text for existing in chips):
             chips.append({"label": label, "text": text})
 
     if product_type == "coffee_machine":
         add("Water tank", "water tank and brew path")
         add("Milk system", "milk system and food-contact elastomers")
         add("Grinder", "integrated grinder and motor")
-        add("App control", "Wi-Fi app control and OTA updates")
+        add("Wi-Fi", "Wi-Fi radio")
         add("Cloud", "cloud account and brew-profile storage")
+        add("Login", "user account and password login")
+        add("Payments", "capsule or subscription purchase through app")
     elif product_type == "electric_kettle":
-        add("2.4 GHz", "Wi-Fi 2.4 GHz connectivity")
+        add("2.4 GHz", "Wi-Fi 2.4 GHz radio")
         add("Heating liquids", "liquid heating and steam generation")
         add("Food-contact", "plastic and silicone food-contact parts")
-    elif product_type == "robot_vacuum_cleaner" or product_type == "robot_vacuum":
+    elif product_type in {"robot_vacuum_cleaner", "robot_vacuum"}:
         add("LiDAR", "LiDAR navigation and laser emitter")
         add("Camera", "camera for mapping and remote monitoring")
         add("Battery", "rechargeable lithium battery")
-        add("Cloud", "cloud cleaning history and user account")
-    elif product_type == "air_purifier" or product_type == "air_cleaner":
+        add("Login", "user account and password login")
+        add("Payments", "subscription or accessory purchase through app")
+    elif product_type in {"air_purifier", "air_cleaner"}:
         add("PM sensor", "air-quality sensing and fan control")
-        add("Wi-Fi", "Wi-Fi app control and cloud dashboard")
+        add("Wi-Fi", "Wi-Fi radio and app control")
         add("Standby", "networked standby and off-mode behaviour")
 
+    if any(item.key in {"radio_scope_confirmation", "radio_technology"} for item in missing_information_items):
+        add("Wi-Fi", "Wi-Fi radio")
+        add("Bluetooth", "Bluetooth LE radio")
+        add("No radio", "No radio, local-only wired control")
+    if any(item.key == "wifi_band" for item in missing_information_items):
+        add("2.4 GHz", "Wi-Fi 2.4 GHz radio")
+        add("5 GHz", "dual-band 2.4/5 GHz Wi-Fi")
     if "radio" in all_traits:
         add("Bluetooth", "Bluetooth LE radio")
         add("Wi-Fi", "Wi-Fi radio")
@@ -657,6 +830,14 @@ def _suggested_quick_adds(product_type: str | None, all_traits: set[str], missin
         add("Local LAN", "local LAN control without cloud dependency")
         add("Cloud account", "cloud account required")
         add("Security patching", "security and firmware patching over the air")
+    if any(item.key == "redcyber_auth_scope" for item in missing_information_items):
+        add("Login", "user account and password login")
+        add("PIN", "PIN or passcode entry")
+        add("No login", "no login or authentication")
+    if any(item.key == "redcyber_transaction_scope" for item in missing_information_items):
+        add("Payments", "payment or wallet function")
+        add("Subscriptions", "subscription purchase through app")
+        add("No payments", "no payment or monetary transfer")
 
     fallback = [
         ("Heating", "heating element"),
@@ -668,14 +849,13 @@ def _suggested_quick_adds(product_type: str | None, all_traits: set[str], missin
     for label, text in fallback:
         add(label, text)
 
-    return chips[:12]
-
+    return chips[:14]
 
 def analyze(description: str, category: str = "", directives: list[str] | None = None, depth: str = "standard") -> AnalysisResult:
     classification = extract_traits(description=description, category=category)
-    all_traits = set(classification["all_traits"])
-    functional_classes = set(classification["functional_classes"])
-    product_type = classification["product_type"]
+    product_type = classification.get("product_type")
+    all_traits = set(classification.get("all_traits", []))
+    functional_classes = set(classification.get("functional_classes", []))
 
     picked_legislations = _pick_legislations(all_traits=all_traits, functional_classes=functional_classes, product_type=product_type)
     directive_keys = _directive_keys_for_matching(picked_legislations, directives or [])
@@ -715,17 +895,27 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
         summary_parts.append(f"Detected product type: {_nice_product(product_type)}.")
     else:
         summary_parts.append("Product type could not be identified with confidence.")
+    if any(item.key == "radio_scope_confirmation" for item in missing_information_items):
+        summary_parts.append("Connected features were detected but the radio stack is not explicit, so RED and EN 18031 scoping may still be incomplete.")
     if ce_legislations:
         summary_parts.append("Current CE legislation is separated from future and parallel obligations.")
     if standards:
-        summary_parts.append("Standards are split into harmonized, state-of-the-art, and review-required routes.")
+        summary_parts.append("Standards are grouped by route so the main path is easier to review.")
     if classification["contradictions"]:
         summary_parts.append("Contradictions reduce confidence and should be resolved before declaration work.")
 
     kb_meta = KnowledgeBaseMeta(**load_meta())
     standard_sections = _build_standard_sections(standards, review_items)
     legislation_sections = _build_legislation_sections(picked_legislations)
-    hero_summary = _hero_summary(product_type, classification["product_match_confidence"], overall_risk, ce_legislations, standards, review_items)
+    hero_summary = _hero_summary(
+        product_type,
+        classification["product_match_confidence"],
+        overall_risk,
+        ce_legislations,
+        standards,
+        review_items,
+        missing_information_items,
+    )
     confidence_panel = _confidence_panel(classification)
     input_gaps_panel = _input_gaps_panel(missing_information_items)
     current_path = _current_path(ce_legislations, standards)
