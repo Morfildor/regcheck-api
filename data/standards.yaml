@@ -15,8 +15,8 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant for connected radio products with networked or software-controlled functionality. Excel scope: Cyber
-    security - network and security (3.3d) Excel checked: checked 2025/10/11'
+  notes: 'Often relevant for connected radio products with networked or software-controlled functionality. Scope: Cyber security
+    - network and security (3.3d)'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -56,7 +56,7 @@ standards:
   exclude_if: []
   confidence: medium
   notes: 'Often relevant where network-connected radio equipment processes or protects access, credentials, or service integrity.
-    Excel scope: Cyber security - personal, traffic and location data - 3.3.e) Excel checked: checked 2025/10/11'
+    Scope: Cyber security - personal, traffic and location data - 3.3.e)'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -97,8 +97,8 @@ standards:
   - health_related
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant where privacy, personal data, or child-related concerns arise. Excel scope: Cyber security - money
-    transfer, monetary value or virtual currency 3.3f) Excel checked: checked 2025/10/11'
+  notes: 'Often relevant where privacy, personal data, or child-related concerns arise. Scope: Cyber security - money transfer,
+    monetary value or virtual currency 3.3f)'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -148,7 +148,7 @@ standards:
   version: EN 50364:2010
   dated_version: EN 50364:2018
   supersedes: EN 50364:2010
-  notes: 'Excel scope: EMF measurement RF (Electronic Article Surveillance, RFID, NFC)'
+  notes: 'Scope: EMF measurement RF (Electronic Article Surveillance, RFID, NFC)'
   test_focus:
   - emf
   evidence_hint:
@@ -186,7 +186,7 @@ standards:
   harmonized_reference: EN 50563:2011 + A1:2013
   version: EN 50563:2011 + A1:2013
   dated_version: EN 50563:2011 + A1:2013
-  notes: 'Excel scope: Ext power supplies Excel checked: checked 2026/01/14'
+  notes: 'Scope: Ext power supplies'
   test_focus:
   - energy
   evidence_hint:
@@ -221,7 +221,7 @@ standards:
   version: EN 50564:2011
   dated_version: EN 50564:2011 (not harmonized under (EU) 2023/826 )
   supersedes: EN 50564:2011
-  notes: 'Excel scope: OFF mode, Standby mode, Networked standby energy consumption Excel checked: checked 2026/01/14'
+  notes: 'Scope: OFF mode, Standby mode, Networked standby energy consumption'
   test_focus:
   - energy
   evidence_hint:
@@ -257,8 +257,7 @@ standards:
   harmonized_reference: (EU) 2014/53
   version: EN 50566:2017 + A1:2023
   dated_version: EN 50566:2017 + A1:2023
-  notes: 'Excel scope: EMF hand held appl. Excel checked: checked 2025/10/11 Excel scope: EMF hand held appl. Excel checked:
-    checked 2025/10/11'
+  notes: 'Scope: EMF hand held appl.'
   test_focus:
   - emf
   evidence_hint:
@@ -292,7 +291,7 @@ standards:
   harmonized_reference: EN 50636-2-107:2015 + A1:2018 + A2:2020 + A3:2021
   version: EN 50636-2-107:2015 + A1:2018 + A2:2020 + A3:2021
   dated_version: EN 50636-2-107:2015 + A1:2018 + A2:2020 + A3:2021
-  notes: 'Excel scope: Robotic lawnmower Based on IEC: IEC 60335-2-107:2012+..(ed.2.2) Excel checked: checked 2026/01/14'
+  notes: 'Scope: Robotic lawnmower. IEC basis: IEC 60335-2-107:2012+.(ed.2.2)'
   test_focus:
   - safety
   - electrical
@@ -317,7 +316,7 @@ standards:
   exclude_if: []
   confidence: low
   notes: 'The applicable RF exposure assessment route may depend on power level, use scenario, and placement on the body.
-    Excel scope: EMF assesment of low power RF devices (10MHz to 300GHz)'
+    Scope: EMF assesment of low power RF devices (10MHz to 300GHz)'
   item_type: review
   applies_if_products: []
   exclude_if_products: []
@@ -363,8 +362,7 @@ standards:
   harmonized_reference: 2014/35/EU
   version: EN 50689 :2021
   dated_version: EN 50689 :2021
-  notes: 'Excel scope: Consumer laser products Excel checked: checked 2026/01/14 Excel scope: Consumer laser products Excel
-    checked: checked 2026/01/14 Narrowed to laser/light-engine products.'
+  notes: 'Scope: Consumer laser products Narrowed to laser/light-engine products.'
   test_focus:
   - safety
   - electrical
@@ -391,8 +389,7 @@ standards:
   - consumer
   exclude_if: []
   confidence: high
-  notes: 'Emission-side EMC standard family commonly relevant to many household appliances. Excel scope: Emission Excel checked:
-    checked 2025/10/11'
+  notes: 'Emission-side EMC standard family commonly relevant to many household appliances. Scope: Emission'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -430,8 +427,8 @@ standards:
   - consumer
   exclude_if: []
   confidence: high
-  notes: 'Immunity-side EMC standard family commonly relevant to many household appliances. Excel scope: Immunity IEC state-of-the-art:
-    Cl 7.2.7 exception shall not be used Excel checked: checked 2025/10/11'
+  notes: 'Immunity-side EMC standard family commonly relevant to many household appliances. Scope: Immunity. IEC state of
+    the art: Cl 7.2.7 exception shall not be used'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -480,9 +477,8 @@ standards:
   harmonized_reference: 2014/30/EU
   version: EN 55032:2015 + A11:2020 (class B)
   dated_version: EN 55032:2015 + A11:2020 (class B)
-  notes: 'Excel scope: EMC (Qi /Wireless Charging & FM) Excel checked: checked 2025/10/11 Excel scope: EMC (Qi /Wireless Charging
-    & FM) Excel checked: checked 2025/10/11 Narrowed to AV/ICT-style electronics; not intended to trigger for ordinary connected
-    household appliances only because they use internet/app/cloud.'
+  notes: 'Scope: EMC (Qi /Wireless Charging & FM) Narrowed to AV/ICT-style electronics; not intended to trigger for ordinary
+    connected household appliances only because they use internet/app/cloud.'
   test_focus:
   - emission
   - immunity
@@ -513,9 +509,8 @@ standards:
   exclude_if:
   - industrial
   confidence: high
-  notes: 'General baseline safety standard family often relevant to household electrical appliances. Excel scope: Household
-    appliances Based on IEC: IEC 60335-1:2012 + .. (ed.5.2); IEC 60335-1:2020 (ed.6.0) IEC state-of-the-art: IEC 60335-1:2020
-    + A1:2025 (ed.6.1) Excel checked: checked 2026/01/14'
+  notes: 'General baseline safety standard family often relevant to household electrical appliances. Scope: Household appliances.
+    IEC basis: IEC 60335-1:2012 +. (ed.5.2); IEC 60335-1:2020 (ed.6.0). IEC state of the art: IEC 60335-1:2020 + A1:2025 (ed.6.1)'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -549,8 +544,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: vacuum
-    cleaners Based on IEC: IEC 60335-2-2:2019 (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: vacuum cleaners.
+    IEC basis: IEC 60335-2-2:2019 (ed.7.0)'
   applies_if_products:
   - vacuum_cleaner
   - water_suction_cleaner
@@ -585,9 +580,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: irons
-    Based on IEC: IEC 60335-2-3:2012 +..(ed.6.1) IEC state-of-the-art: IEC 60335-2-3:2022 + A1:2025 (ed.7.1) Excel checked:
-    checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: irons. IEC
+    basis: IEC 60335-2-3:2012 +.(ed.6.1). IEC state of the art: IEC 60335-2-3:2022 + A1:2025 (ed.7.1)'
   applies_if_products:
   - electric_iron
   item_type: standard
@@ -676,9 +670,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: hobs,
-    ovens Based on IEC: IEC 60335-2-6:2014+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-6:2024 (ed.7.0) Excel checked: checked
-    2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: hobs, ovens.
+    IEC basis: IEC 60335-2-6:2014+.(ed.6.1). IEC state of the art: IEC 60335-2-6:2024 (ed.7.0)'
   applies_if_products:
   - cooking_range
   - hob
@@ -742,9 +735,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: (fabric)
-    shaver Based on IEC: IEC 60335-2-8:2012+..(ed.6.1); IEC 60335-2-8:2012+..(ed.6.2) IEC state-of-the-art: IEC 60335-2-8:2022
-    (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: (fabric)
+    shaver. IEC basis: IEC 60335-2-8:2012+.(ed.6.1); IEC 60335-2-8:2012+.(ed.6.2). IEC state of the art: IEC 60335-2-8:2022
+    (ed.7.0)'
   applies_if_products:
   - shaver
   - hair_clipper
@@ -780,8 +773,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: grills,
-    toasters Based on IEC: IEC 60335-2-9:2002+..(ed.5.2); IEC 60335-2-9:2019 (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: grills, toasters.
+    IEC basis: IEC 60335-2-9:2002+.(ed.5.2); IEC 60335-2-9:2019 (ed.7.0)'
   applies_if_products:
   - toaster
   - portable_grill
@@ -817,9 +810,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: floor
-    treatment/wet Based on IEC: IEC 60335-2-10:2002+..(ed.5.1) IEC state-of-the-art: IEC 60335-2-10:2021 (ed.6.0) Excel checked:
-    checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: floor treatment/wet.
+    IEC basis: IEC 60335-2-10:2002+.(ed.5.1). IEC state of the art: IEC 60335-2-10:2021 (ed.6.0)'
   applies_if_products:
   - floor_treatment_machine
   item_type: standard
@@ -881,9 +873,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: heating
-    plates Based on IEC: IEC 60335-2-12:2002+..(ed.5.2) IEC state-of-the-art: IEC 60335-2-12:2024 (ed.6.0) Excel checked:
-    checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: heating plates.
+    IEC basis: IEC 60335-2-12:2002+.(ed.5.2). IEC state of the art: IEC 60335-2-12:2024 (ed.6.0)'
   applies_if_products:
   - warming_plate
   item_type: standard
@@ -918,9 +909,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fryers
-    Based on IEC: IEC 60335-2-13:2019+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-13:2021 + A1:2025 (ed.7.1) Excel checked:
-    checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: fryers. IEC
+    basis: IEC 60335-2-13:2019+.(ed.6.1). IEC state of the art: IEC 60335-2-13:2021 + A1:2025 (ed.7.1)'
   applies_if_products:
   - electric_frying_pan
   - deep_fryer
@@ -955,9 +945,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: kitchen
-    Based on IEC: IEC 60335-2-14:2006+.. (ed.5.2); IEC 60335-2-14:2016 + ..(ed.6.1) IEC state-of-the-art: IEC 60335-2-14:2025
-    (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: kitchen.
+    IEC basis: IEC 60335-2-14:2006+. (ed.5.2); IEC 60335-2-14:2016 +.(ed.6.1). IEC state of the art: IEC 60335-2-14:2025 (ed.7.0)'
   applies_if_products:
   - kitchen_machine
   - blender
@@ -994,9 +983,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: medium
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: coffee,
-    kettles Based on IEC: IEC 60335-2-15:2012+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-15:2024 (ed.7.0) Excel checked:
-    checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: coffee, kettles.
+    IEC basis: IEC 60335-2-15:2012+.(ed.6.1). IEC state of the art: IEC 60335-2-15:2024 (ed.7.0)'
   applies_if_products:
   - electric_kettle
   - coffee_machine
@@ -1286,8 +1274,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: battery
-    chargers Based on IEC: IEC 60335-2-29:2016+..(ed.5.1) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: battery chargers.
+    IEC basis: IEC 60335-2-29:2016+.(ed.5.1)'
   applies_if_products:
   - battery_charger
   item_type: standard
@@ -1321,8 +1309,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: room
-    heaters Based on IEC: IEC 60335-2-30:2009+..(ed.5.2) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: room heaters.
+    IEC basis: IEC 60335-2-30:2009+.(ed.5.2)'
   applies_if_products:
   - room_heater
   - fan_heater
@@ -1609,9 +1597,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: A/C
-    Based on IEC: IEC 60335-2-40:2018 (ed.6.0); IEC 60335-2-40:2022(ed.7.0) IEC state-of-the-art: IEC 60335-2-40:2024 Excel
-    checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: A/C. IEC
+    basis: IEC 60335-2-40:2018 (ed.6.0); IEC 60335-2-40:2022(ed.7.0). IEC state of the art: IEC 60335-2-40:2024'
   applies_if_products:
   - heat_pump
   - room_dehumidifier
@@ -1730,9 +1717,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: ironers
-    Based on IEC: IEC 60335-2-44:2002+..(ed.3.0) IEC state-of-the-art: IEC 60335-2-44:2021 + AMD1:2025 (ed.4.1) Excel checked:
-    checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: ironers.
+    IEC basis: IEC 60335-2-44:2002+.(ed.3.0). IEC state of the art: IEC 60335-2-44:2021 + AMD1:2025 (ed.4.1)'
   applies_if_products:
   - ironer
   item_type: standard
@@ -2018,9 +2004,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: surface
-    (steam) cleaners Based on IEC: IEC 60335-2-54:2008+..(ed.4.2) IEC state-of-the-art: IEC 60335-2-54:2022 (ed.5.0) Excel
-    checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: surface (steam)
+    cleaners. IEC basis: IEC 60335-2-54:2008+.(ed.4.2). IEC state of the art: IEC 60335-2-54:2022 (ed.5.0)'
   applies_if_products:
   - floor_treatment_machine
   - spray_extraction_machine
@@ -2279,9 +2264,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: aircleaners
-    Based on IEC: IEC 60335-2-65:2002+..(ed.2.1); IEC 60335-2-65:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-65:2023
-    (ed.3.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: aircleaners.
+    IEC basis: IEC 60335-2-65:2002+.(ed.2.1); IEC 60335-2-65:2002+.(ed.2.2). IEC state of the art: IEC 60335-2-65:2023 (ed.3.0)'
   applies_if_products:
   - air_cleaner
   - air_purifier
@@ -2566,9 +2550,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: vending
-    mach (beer) Based on IEC: IEC 60335-2-75:2002+..(ed.2.2); IEC 60335-2-75:2012+..(ed.3.2) IEC state-of-the-art: IEC 60335-2-75:2024
-    (ed.4.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: vending mach
+    (beer). IEC basis: IEC 60335-2-75:2002+.(ed.2.2); IEC 60335-2-75:2012+.(ed.3.2). IEC state of the art: IEC 60335-2-75:2024
+    (ed.4.0)'
   applies_if_products:
   - commercial_dispensing_appliance
   - vending_machine
@@ -2713,9 +2697,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fans
-    Based on IEC: IEC 60335-2-80:2002 (ed.2.2); IEC 60335-2-80:2015 (ed.3.0) IEC state-of-the-art: IEC 60335-2-80:2024 (ed.4.0)
-    Excel checked: checked 2025/07/09'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: fans. IEC
+    basis: IEC 60335-2-80:2002 (ed.2.2); IEC 60335-2-80:2015 (ed.3.0). IEC state of the art: IEC 60335-2-80:2024 (ed.4.0)'
   applies_if_products:
   - fan
   item_type: standard
@@ -2861,9 +2844,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fabric
-    steamers Based on IEC: IEC 60335-2-85:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-85:2022 +A1:2025 (ed.3.1) Excel
-    checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: fabric steamers.
+    IEC basis: IEC 60335-2-85:2002+.(ed.2.2). IEC state of the art: IEC 60335-2-85:2022 +A1:2025 (ed.3.1)'
   applies_if_products:
   - electric_iron
   item_type: standard
@@ -3206,9 +3188,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: humidifier
-    Based on IEC: IEC 60335-2-98:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-98:2023 (ed.3.0) Excel checked: checked
-    2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Scope: humidifier.
+    IEC basis: IEC 60335-2-98:2002+.(ed.2.2). IEC state of the art: IEC 60335-2-98:2023 (ed.3.0)'
   applies_if_products:
   - humidifier
   item_type: standard
@@ -3479,9 +3460,8 @@ standards:
   version: EN 60825-1:2014 + C1:2017 + A11:2021 +A11:2021/C11:2022
   dated_version: EN 60825-1:2014 + A11:2021
   supersedes: EN 60825-1:2014 + A11:2021
-  notes: 'Excel scope: Laser Based on IEC: IEC 608025-1:2014 (ed.3.0) + ISH1:2017 + ISH:2017 Excel checked: checked 2026/01/14
-    Excel scope: Laser Based on IEC: IEC 608025-1:2014 (ed.3.0) + ISH1:2017 + ISH:2017 Excel checked: checked 2026/01/14 Narrowed
-    to products with laser emission or display/light-engine risk.'
+  notes: 'Scope: Laser. IEC basis: IEC 608025-1:2014 (ed.3.0) + ISH1:2017 + ISH:2017 Narrowed to products with laser emission
+    or display/light-engine risk.'
   test_focus:
   - safety
   - electrical
@@ -3507,8 +3487,8 @@ standards:
   exclude_if:
   - battery_powered
   confidence: medium
-  notes: 'Typically considered for mains-powered equipment depending on product characteristics and scope. Excel scope: harmonics
-    Excel checked: checked 2025/10/11 Keep under EMC listing / other EMC standards.'
+  notes: 'Typically considered for mains-powered equipment depending on product characteristics and scope. Scope: harmonics
+    Keep under EMC listing / other EMC standards.'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3546,8 +3526,7 @@ standards:
   exclude_if:
   - battery_powered
   confidence: medium
-  notes: 'Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects. Excel scope:
-    flicker Excel checked: checked 2025/10/11'
+  notes: 'Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects. Scope: flicker'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3598,8 +3577,7 @@ standards:
   harmonized_reference: 2014/35/EU
   version: EN IEC 61558-1:2019
   dated_version: EN IEC 61558-1:2019
-  notes: 'Excel scope: transformers Based on IEC: IEC 61558-1:2017 (ed.3.0) Excel checked: checked 2026/01/14 Excel scope:
-    transformers Based on IEC: IEC 61558-1:2017 (ed.3.0) Excel checked: checked 2026/01/14'
+  notes: 'Scope: transformers. IEC basis: IEC 61558-1:2017 (ed.3.0)'
   test_focus:
   - safety
   - electrical
@@ -3641,9 +3619,7 @@ standards:
   version: EN 61558-2-16:2021 +C1:2023
   dated_version: EN 61558-2-16:2009 + A1:2013
   supersedes: EN 61558-2-16:2009 + A1:2013
-  notes: 'Excel scope: SMPS Based on IEC: IEC 61558-2-16:2009+..(ed.1.0); IEC 61558-2-16:2021+C1:2023 (ed.2.0) Excel checked:
-    checked 2026/01/14 Excel scope: SMPS Based on IEC: IEC 61558-2-16:2009+..(ed.1.0); IEC 61558-2-16:2021+C1:2023 (ed.2.0)
-    Excel checked: checked 2026/01/14'
+  notes: 'Scope: SMPS. IEC basis: IEC 61558-2-16:2009+.(ed.1.0); IEC 61558-2-16:2021+C1:2023 (ed.2.0)'
   test_focus:
   - safety
   - electrical
@@ -3680,7 +3656,7 @@ standards:
   harmonized_reference: EN 62133-2:2017 + A1:2021
   version: EN 62133-2:2017 + A1:2021
   dated_version: EN 62133-2:2017 + A1:2021
-  notes: 'Excel scope: Lithium systems Based on IEC: IEC 62133-2:2017+.. (ed.1.1) Excel checked: checked 2026/01/14'
+  notes: 'Scope: Lithium systems. IEC basis: IEC 62133-2:2017+. (ed.1.1)'
   test_focus:
   - battery
   evidence_hint:
@@ -3716,7 +3692,7 @@ standards:
   harmonized_reference: 2014/53/EU
   version: EN 62209-2:2010 + A1:2019
   dated_version: EN 62209-2:2010 + A1:2019
-  notes: 'Excel scope: EMF hand held appl. Excel scope: EMF hand held appl.'
+  notes: 'Scope: EMF hand held appl.'
   test_focus:
   - emf
   evidence_hint:
@@ -3755,7 +3731,7 @@ standards:
   harmonized_reference: null
   version: EN IEC/IEEE 62209-1528:2021
   dated_version: EN IEC/IEEE 62209-1528:2021
-  notes: 'Excel scope: EMF measurment short distance (SAR for handheld &body mounted devices)'
+  notes: 'Scope: EMF measurment short distance (SAR for handheld &body mounted devices)'
   test_focus:
   - emf
   evidence_hint:
@@ -3783,8 +3759,8 @@ standards:
   - mains_power_likely
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation. Excel
-    scope: EMF measurement Excel checked: checked 2025/07/09'
+  notes: 'Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation. Scope:
+    EMF measurement'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3832,8 +3808,7 @@ standards:
   version: EN IEC 62311:2020
   dated_version: EN 62311:2008
   supersedes: EN 62311:2008
-  notes: 'Excel scope: EMF assessment RF Excel checked: checked 2025/07/09 Excel scope: EMF assessment RF Excel checked: checked
-    2025/07/09'
+  notes: 'Scope: EMF assessment RF'
   test_focus:
   - emf
   evidence_hint:
@@ -3871,11 +3846,11 @@ standards:
   version: EN IEC 62368-1:2024 + A11:2024
   dated_version: 'EN 62368-1:2014 + AC:2015 + AC: 2015 + AC:2015'
   supersedes: 'EN 62368-1:2014 + AC:2015 + AC: 2015 + AC:2015'
-  notes: 'Excel scope: Audio/video, ICT Based on IEC: IEC 62368-1:2014 (ed.2.0); IEC 62368-1:2023 (ed.4.0) Restrictions/notice:
-    Notice: this publication concerns only clauses 3.3.19 “Sound exposure” and 10.6 “Safeguard against acoustic energy sources”
-    of EN IEC 62368-1:2020/A11:2020. Excel checked: checked 2026/01/14 Excel scope: Audio/video, ICT; Restriction: Based on
-    IEC: IEC 62368-1:2014 (ed.2.0); IEC 62368-1:2023 (ed.4.0) Excel checked: checked 2026/01/14 Narrowed to AV/ICT-style electronics;
-    not intended to trigger for ordinary connected household appliances only because they use internet/app/cloud.'
+  notes: 'Scope: Audio/video, ICT. IEC basis: IEC 62368-1:2014 (ed.2.0); IEC 62368-1:2023 (ed.4.0) Restrictions/notice: Notice:
+    this publication concerns only clauses 3.3.19 “Sound exposure” and 10.6 “Safeguard against acoustic energy sources” of
+    EN IEC 62368-1:2020/A11:2020. Scope: Audio/video, ICT; Restriction:. IEC basis: IEC 62368-1:2014 (ed.2.0); IEC 62368-1:2023
+    (ed.4.0) Narrowed to AV/ICT-style electronics; not intended to trigger for ordinary connected household appliances only
+    because they use internet/app/cloud.'
   test_focus:
   - safety
   - electrical
@@ -3910,9 +3885,8 @@ standards:
   harmonized_reference: 2014/35/EU
   version: EN 62471:2008
   dated_version: EN 62471:2008
-  notes: 'Excel scope: Photobio. Safety Based on IEC: IEC 62471:2006 (ed.1.0) Excel checked: checked 2026/01/14 Excel scope:
-    Photobio. Safety Based on IEC: IEC 62471:2006 (ed.1.0) Excel checked: checked 2026/01/14 Narrowed to photobiological/optical
-    radiation cases, not general heating appliances.'
+  notes: 'Scope: Photobio. Safety. IEC basis: IEC 62471:2006 (ed.1.0) Narrowed to photobiological/optical radiation cases,
+    not general heating appliances.'
   test_focus:
   - safety
   - electrical
@@ -3941,8 +3915,8 @@ standards:
   - thread
   exclude_if: []
   confidence: medium
-  notes: 'Common EMF assessment route for certain low-power radio products. Excel scope: EMF assesment low power RF devices
-    (10MHz to 300GHz)'
+  notes: 'Common EMF assessment route for certain low-power radio products. Scope: EMF assesment low power RF devices (10MHz
+    to 300GHz)'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3987,7 +3961,7 @@ standards:
   harmonized_reference: 2011/65/EU
   version: EN-IEC 63000:2018
   dated_version: EN-IEC 63000:2018
-  notes: 'Excel scope: Tech doc Excel checked: checked 2026/01/14 Excel scope: Tech doc Excel checked: checked 2026/01/14'
+  notes: 'Scope: Tech doc'
   test_focus:
   - materials
   evidence_hint:
@@ -4013,7 +3987,7 @@ standards:
   exclude_if: []
   confidence: low
   notes: 'Placeholder review bucket where the precise short-range radio route depends on frequency band and implementation.
-    Excel scope: RF Spectrum 2,4 GHz Wifi Excel checked: checked 2025/10/11'
+    Scope: RF Spectrum 2,4 GHz Wifi'
   item_type: review
   applies_if_products: []
   exclude_if_products: []
@@ -4049,8 +4023,8 @@ standards:
   - thread
   exclude_if: []
   confidence: high
-  notes: 'Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth. Excel scope: RF Spectrum
-    2,4 GHz Wifi Excel checked: checked 2025/10/11'
+  notes: 'Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth. Scope: RF Spectrum 2,4
+    GHz Wifi'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -4089,8 +4063,7 @@ standards:
   - thread
   exclude_if: []
   confidence: high
-  notes: 'Common EMC framework standard for radio equipment. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data
-    transm. Excel checked: checked 2025/10/11'
+  notes: 'Common EMC framework standard for radio equipment. Scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm.'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -4140,8 +4113,8 @@ standards:
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
-  notes: 'Excel scope: EMC Radio equipm.; Specific EMC requirements for SRD operating between 9KHz and 246 GHz (RFID, NFC,  Qi/Wireless
-    Charging & FM) Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Scope: EMC Radio equipm.; Specific EMC requirements for SRD operating between 9KHz and 246 GHz (RFID, NFC, Qi/Wireless
+    Charging & FM) Scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm.'
   test_focus:
   - immunity
   - emission
@@ -4179,8 +4152,7 @@ standards:
   harmonized_reference: (EU) 2014/53
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
-  notes: 'Excel scope: EMC (DECT) Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked:
-    checked 2025/10/11'
+  notes: 'Scope: EMC (DECT) Scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm.'
   test_focus:
   - immunity
   - emission
@@ -4208,8 +4180,8 @@ standards:
   - thread
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant alongside EN 301 489-1 depending on the short-range radio technology used. Excel scope: RF Spectrum
-    5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Often relevant alongside EN 301 489-1 depending on the short-range radio technology used. Scope: RF Spectrum 5 GHz
+    Wifi; EMC Radio equipm.; EMC Data transm.'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -4248,8 +4220,8 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: 'Commonly considered when cellular connectivity is present. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.;
-    EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Commonly considered when cellular connectivity is present. Scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC
+    Data transm.'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -4284,8 +4256,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: low
-  notes: 'Legacy cellular route that may be relevant for certain GSM-capable devices; verify actual radio technology. Excel
-    scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Legacy cellular route that may be relevant for certain GSM-capable devices; verify actual radio technology. Scope:
+    RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm.'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -4330,8 +4302,7 @@ standards:
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
-  notes: 'Excel scope: RF Spectrum 5 GHz Wifi Excel checked: checked 2025/10/11 Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio
-    equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Scope: RF Spectrum 5 GHz Wifi Scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm.'
   test_focus:
   - rf
   evidence_hint:
@@ -4356,7 +4327,7 @@ standards:
   exclude_if: []
   confidence: medium
   notes: 'For cellular products, the specific EN 301 908 route depends on the implemented access technology and module design.
-    Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+    Scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm.'
   item_type: review
   applies_if_products: []
   exclude_if_products: []
