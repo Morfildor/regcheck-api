@@ -63,7 +63,7 @@ class StandardItem(BaseModel):
     category: str
     confidence: ConfidenceLevel = "medium"
     item_type: Literal["standard", "review"] = "standard"
-    match_basis: Literal["product", "alternate_product", "traits"] = "traits"
+    match_basis: Literal["product", "alternate_product", "preferred_product", "traits"] = "traits"
     score: int = 0
     reason: str | None = None
     notes: str | None = None

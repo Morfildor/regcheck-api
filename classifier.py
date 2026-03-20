@@ -6,24 +6,46 @@ from typing import Any
 from knowledge_base import load_products, load_traits
 
 TRAIT_IDS_CACHE: set[str] | None = None
+GENERIC_ALIASES = {
+    "air",
+    "boiler",
+    "clock",
+    "cooler",
+    "dryer",
+    "fan",
+    "fryer",
+    "grill",
+    "heater",
+    "hood",
+    "iron",
+    "kettle",
+    "lamp",
+    "microwave",
+    "oven",
+    "pump",
+    "shaver",
+    "toaster",
+    "vacuum",
+    "washer",
+}
+
+NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
+    (r"\bwi[ -]?fi\b", "wifi"),
+    (r"\bwlan\b", "wifi"),
+    (r"\bbluetooth low energy\b", "bluetooth"),
+    (r"\bble\b", "bluetooth"),
+    (r"\bover[ -]?the[ -]?air\b", "ota"),
+    (r"\bmulti[ -]?cooker\b", "multicooker"),
+    (r"\bbean[ -]?to[ -]?cup\b", "bean to cup"),
+    (r"\bair[ -]?conditioning\b", "air conditioner"),
+    (r"\bsmart home\b", "smart_home"),
+]
 
 
 def normalize(text: str) -> str:
     text = (text or "").lower()
-    replacements = {
-        "wi-fi": "wifi",
-        "wlan": "wifi",
-        "bluetooth low energy": "bluetooth",
-        "ble": "bluetooth",
-        "over-the-air": "ota",
-        "over the air": "ota",
-        "multi-cooker": "multicooker",
-        "bean-to-cup": "bean to cup",
-        "air-conditioning": "air conditioner",
-        "smart home": "smart_home",
-    }
-    for old, new in replacements.items():
-        text = text.replace(old, new)
+    for pattern, replacement in NORMALIZATION_REPLACEMENTS:
+        text = re.sub(pattern, replacement, text)
     text = re.sub(r"[^a-z0-9_]+", " ", text)
     return re.sub(r"\s+", " ", text).strip()
 
@@ -35,6 +57,20 @@ def _known_trait_ids() -> set[str]:
     return TRAIT_IDS_CACHE
 
 
+def _has_any_regex(text: str, patterns: list[str]) -> bool:
+    return any(re.search(pattern, text) for pattern in patterns)
+
+
+def _trait_is_negated(text: str, trait: str) -> bool:
+    negations: dict[str, list[str]] = {
+        "cloud": [r"\bno cloud\b", r"\bwithout cloud\b", r"\bcloud free\b"],
+        "internet": [r"\bno internet\b", r"\bwithout internet\b", r"\boffline only\b"],
+        "ota": [r"\bno ota\b", r"\bwithout ota\b", r"\bmanual update only\b"],
+        "account": [r"\bno account\b", r"\bwithout account\b", r"\bguest only\b"],
+    }
+    return _has_any_regex(text, negations.get(trait, []))
+
+
 def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
     patterns = {
         "radio": [r"\bradio\b"],
@@ -43,7 +79,7 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         "zigbee": [r"\bzigbee\b"],
         "thread": [r"\bthread\b"],
         "matter": [r"\bmatter\b"],
-        "nfc": [r"\bnfc\b"],
+        "nfc": [r"\bnfc\b", r"\brfid\b"],
         "cellular": [r"\bcellular\b", r"\blte\b", r"\b4g\b", r"\b5g\b", r"\bgsm\b", r"\bsim\b"],
         "app_control": [r"\bapp\b", r"\bmobile app\b", r"\bcompanion app\b", r"\bsmartphone control\b"],
         "cloud": [r"\bcloud\b", r"\baws\b", r"\bazure\b", r"\bbackend\b", r"\bserver\b"],
@@ -58,32 +94,34 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         "display": [r"\bdisplay\b", r"\bscreen\b", r"\btouchscreen\b", r"\btouch screen\b", r"\bmonitor\b"],
         "laser": [r"\blaser\b", r"\blidar\b", r"\blaser scanner\b", r"\brangefinder\b"],
         "location": [r"\bgps\b", r"\bgnss\b", r"\blocation\b", r"\bgeolocation\b"],
-        "battery_powered": [r"\bbattery\b", r"\brechargeable\b", r"\bcordless\b"],
+        "battery_powered": [r"\bbattery\b", r"\brechargeable\b", r"\bcordless\b", r"\bli ion\b", r"\blithium\b"],
         "usb_powered": [r"\busb\b", r"\busb c\b", r"\btype c\b"],
-        "mains_powered": [r"\bmains\b", r"\b230v\b", r"\b220v\b", r"\b240v\b", r"\bac power\b", r"\bplug in\b"],
+        "mains_powered": [r"\bmains\b", r"\b230v\b", r"\b220v\b", r"\b240v\b", r"\bac power\b", r"\bplug in\b", r"\bplugged in\b"],
         "professional": [r"\bprofessional\b", r"\bcommercial\b", r"\bindustrial\b", r"\bcatering\b", r"\bhoreca\b"],
         "consumer": [r"\bconsumer\b", r"\bdomestic\b", r"\bhousehold\b", r"\bhome use\b"],
         "household": [r"\bhousehold\b", r"\bdomestic\b", r"\bhome use\b"],
         "outdoor_use": [r"\boutdoor\b", r"\bgarden\b", r"\blawn\b"],
         "fixed_installation": [r"\bbuilt in\b", r"\bfixed\b", r"\bwall mounted\b", r"\bceiling mounted\b", r"\bpermanently installed\b"],
         "portable": [r"\bportable\b", r"\btravel\b"],
-        "water_contact": [r"\bwater\b", r"\bliquid\b", r"\bsteam\b"],
+        "water_contact": [r"\bwater\b", r"\bliquid\b", r"\bsteam\b", r"\bwater tank\b"],
         "heating": [r"\bheating\b", r"\bheater\b", r"\bhot\b", r"\bboil\b", r"\bbrew\b", r"\bsteam\b"],
         "cooling": [r"\bcooling\b", r"\brefrigerat", r"\bfreezer\b", r"\bice\b", r"\bchill\b"],
         "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bdrive\b"],
         "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
-        "ai_related": [r"\bai\b", r"\bmachine learning\b", r"\bneural\b", r"\bmodel\b", r"\bllm\b"],
+        "ai_related": [r"\bai\b", r"\bmachine learning\b", r"\bneural\b", r"\bllm\b"],
         "personal_data_likely": [r"\bpersonal data\b", r"\bprofile\b", r"\buser data\b", r"\baccount\b", r"\blogin\b"],
         "food_contact": [r"\bfood\b", r"\bdrink\b", r"\bwater tank\b", r"\bbrew\b", r"\bcook\b"],
     }
 
     for trait, regexes in patterns.items():
-        if any(re.search(rx, text) for rx in regexes):
+        if _trait_is_negated(text, trait):
+            continue
+        if _has_any_regex(text, regexes):
             explicit_traits.add(trait)
 
     if any(t in explicit_traits for t in ["bluetooth", "wifi", "zigbee", "thread", "matter", "nfc", "cellular"]):
         explicit_traits.add("radio")
-    if "cloud" in explicit_traits:
+    if "cloud" in explicit_traits and "local_only" not in explicit_traits:
         explicit_traits.add("internet")
 
 
@@ -101,7 +139,8 @@ def _alias_score(text: str, alias: str) -> int:
 
     tokens = alias_norm.split()
     if len(tokens) >= 2:
-        if all(token in text.split() for token in tokens):
+        text_tokens = set(text.split())
+        if all(token in text_tokens for token in tokens):
             return 45 + len(tokens) * 10
 
         gap_pattern = r"\b" + r"\b(?:\s+\w+){0,2}\s+\b".join(re.escape(t) for t in tokens) + r"\b"
@@ -109,6 +148,15 @@ def _alias_score(text: str, alias: str) -> int:
             return 35 + len(tokens) * 8
 
     return 0
+
+
+def _alias_specificity_bonus(alias: str) -> int:
+    alias_norm = normalize(alias)
+    tokens = alias_norm.split()
+    bonus = len(tokens) * 6 + min(len(alias_norm), 30) // 5
+    if len(tokens) == 1 and alias_norm in GENERIC_ALIASES:
+        bonus -= 12
+    return bonus
 
 
 def _trait_overlap_score(explicit_traits: set[str], product_traits: set[str]) -> int:
@@ -153,6 +201,12 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     if "robot" in text and "robot" in pid:
         score += 10
         reasons.append("robot wording fits")
+    if "steam" in text and "steam" in traits:
+        score += 6
+        reasons.append("steam wording fits")
+    if "water" in text and "water_contact" in traits:
+        score += 5
+        reasons.append("water-path wording fits")
 
     return score, reasons
 
@@ -171,6 +225,12 @@ def _product_candidates(text: str, explicit_traits: set[str]) -> list[dict[str, 
                 continue
 
             reasons = [f"matched alias '{alias}'"]
+
+            alias_bonus = _alias_specificity_bonus(alias)
+            if alias_bonus:
+                score += alias_bonus
+                reasons.append(f"alias specificity +{alias_bonus}")
+
             overlap = _trait_overlap_score(explicit_traits, product_traits)
             if overlap:
                 score += overlap
@@ -207,13 +267,19 @@ def _candidate_confidence(index: int, candidate: dict[str, Any], next_candidate:
     score = candidate["score"]
     gap = score - next_candidate["score"] if next_candidate else score
 
-    if index == 0 and score >= 150 and gap >= 25:
+    if index == 0 and score >= 155 and gap >= 22:
         return "high"
-    if index == 0 and score >= 110 and gap >= 10:
+    if index == 0 and score >= 120 and gap >= 10:
         return "medium"
-    if score >= 90:
+    if score >= 105:
         return "medium"
     return "low"
+
+
+def _select_matched_products(product_candidates: list[dict[str, Any]]) -> list[str]:
+    if not product_candidates:
+        return []
+    return [product_candidates[0]["id"]]
 
 
 def _contradiction_severity(contradictions: list[str]) -> str:
@@ -242,11 +308,14 @@ def extract_traits(description: str, category: str = "") -> dict:
 
     product_type = None
     product_match_confidence = "low"
-    matched_products: list[str] = []
     product_candidates: list[dict[str, Any]] = []
 
     for idx, candidate in enumerate(top_candidates):
-        confidence = _candidate_confidence(idx, candidate, top_candidates[idx + 1] if idx + 1 < len(top_candidates) else None)
+        confidence = _candidate_confidence(
+            idx,
+            candidate,
+            top_candidates[idx + 1] if idx + 1 < len(top_candidates) else None,
+        )
         item = {
             "id": candidate["id"],
             "label": candidate["label"],
@@ -257,7 +326,6 @@ def extract_traits(description: str, category: str = "") -> dict:
             "likely_standards": candidate.get("likely_standards", []),
         }
         product_candidates.append(item)
-        matched_products.append(candidate["id"])
 
     if product_candidates:
         winner = product_candidates[0]
@@ -279,6 +347,8 @@ def extract_traits(description: str, category: str = "") -> dict:
     else:
         diagnostics.append("product_winner=none")
 
+    matched_products = _select_matched_products(product_candidates)
+
     if "battery_powered" in explicit_traits and "mains_powered" in explicit_traits:
         contradictions.append("Both battery-powered and mains-powered signals were detected.")
     if "cloud" in explicit_traits and "local_only" in explicit_traits:
@@ -290,6 +360,7 @@ def extract_traits(description: str, category: str = "") -> dict:
     explicit_traits = {t for t in explicit_traits if t in known_traits}
     inferred_traits = {t for t in inferred_traits if t in known_traits}
 
+    diagnostics.append("matched_products=" + ",".join(matched_products))
     diagnostics.append("explicit_traits=" + ",".join(sorted(explicit_traits)))
     diagnostics.append("inferred_traits=" + ",".join(sorted(inferred_traits)))
     diagnostics.append("contradiction_severity=" + _contradiction_severity(contradictions))

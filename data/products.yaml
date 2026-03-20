@@ -383,6 +383,27 @@ products:
   - major_appliance
   likely_standards:
   - EN 60335-2-6
+- id: air_fryer
+  label: Air fryer
+  aliases:
+  - air fryer
+  - smart air fryer
+  - connected air fryer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - motorized
+  - food_contact
+  - mains_powered
+  - food_preparation
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-13
 - id: deep_fryer
   label: Deep fryer
   aliases:
@@ -1676,6 +1697,28 @@ products:
   - home_device
   likely_standards:
   - EN 60335-2-27
+- id: robot_vacuum
+  label: Robot vacuum cleaner
+  aliases:
+  - robot vacuum
+  - robot vacuum cleaner
+  - robovac
+  - robotic vacuum
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - cleaning
+  - surface_cleaning
+  - portable
+  functional_classes:
+  - floor_care
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-2
 - id: vacuum_cleaner
   label: Vacuum cleaner
   aliases:
@@ -1685,9 +1728,6 @@ products:
   - upright vacuum
   - stick vacuum
   - corded vacuum
-  - robot vacuum
-  - robot vacuum cleaner
-  - robovac
   - cordless vacuum cleaner
   implied_traits:
   - consumer
@@ -1703,7 +1743,6 @@ products:
   - cleaning_appliance
   likely_standards:
   - EN 60335-2-2
-  - EN 60335-2-69
 - id: vaporizer
   label: Vaporizer
   aliases:
