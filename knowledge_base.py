@@ -3,6 +3,7 @@ from __future__ import annotations
 from functools import lru_cache
 from pathlib import Path
 import os
+import re
 
 import yaml
 
@@ -12,6 +13,26 @@ class KnowledgeBaseError(RuntimeError):
 
 
 BASE_DIR = Path(__file__).resolve().parent
+KB_META_VERSION = "4.0.0"
+ALLOWED_HARMONIZATION_STATUSES = {"harmonized", "state_of_the_art", "review", "unknown"}
+ALLOWED_TEST_FOCUS = {
+    "safety",
+    "mechanical",
+    "electrical",
+    "emission",
+    "immunity",
+    "harmonics",
+    "flicker",
+    "rf",
+    "emf",
+    "cybersecurity",
+    "privacy",
+    "materials",
+    "food_contact",
+    "software",
+    "battery",
+    "energy",
+}
 
 
 def _candidate_dirs() -> list[Path]:
@@ -56,9 +77,7 @@ def _resolve_data_path(filename: str) -> Path:
             return candidate
 
     tried = "\n".join(str(directory / filename) for directory in _candidate_dirs())
-    raise KnowledgeBaseError(
-        f"Missing knowledge-base file: {filename}. Tried:\n{tried}"
-    )
+    raise KnowledgeBaseError(f"Missing knowledge-base file: {filename}. Tried:\n{tried}")
 
 
 def _load_yaml_raw(filename: str) -> dict:
@@ -165,6 +184,7 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
     }
     allowed_priorities = {"core", "product_specific", "conditional", "informational"}
     allowed_applicability = {"applicable", "conditional", "not_applicable"}
+    allowed_buckets = {"ce", "non_ce", "framework", "future", "informational"}
 
     for idx, row in enumerate(legislations, start=1):
         if not isinstance(row, dict):
@@ -190,6 +210,8 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
             raise KnowledgeBaseError(
                 f"Legislation '{code}' has invalid applicability '{row.get('applicability')}'."
             )
+        if row.get("bucket", "non_ce") not in allowed_buckets:
+            raise KnowledgeBaseError(f"Legislation '{code}' has invalid bucket '{row.get('bucket')}'.")
 
         for field in (
             "triggers",
@@ -218,6 +240,54 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
                     raise KnowledgeBaseError(f"Legislation '{code}' references unknown product id '{pid}'.")
 
     return legislations
+
+
+def _validate_standard_metadata(code: str, row: dict) -> None:
+    bool_fields = ("is_harmonized",)
+    list_fields = ("test_focus", "evidence_hint", "keywords")
+    str_fields = (
+        "standard_family",
+        "harmonized_under",
+        "harmonized_reference",
+        "version",
+        "dated_version",
+        "supersedes",
+        "harmonization_status",
+    )
+
+    for field in bool_fields:
+        if field in row and not isinstance(row[field], bool):
+            raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must be boolean.")
+
+    for field in list_fields:
+        if field in row and not isinstance(row[field], list):
+            raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must be a list.")
+        for item in row.get(field, []):
+            if not isinstance(item, str):
+                raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must contain only strings.")
+
+    for field in str_fields:
+        if field in row and row[field] is not None and not isinstance(row[field], str):
+            raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must be a string or null.")
+
+    harmonization_status = row.get("harmonization_status")
+    if harmonization_status and harmonization_status not in ALLOWED_HARMONIZATION_STATUSES:
+        raise KnowledgeBaseError(
+            f"Standard '{code}' has invalid harmonization_status '{harmonization_status}'."
+        )
+
+    test_focus = row.get("test_focus", [])
+    invalid_test_focus = [item for item in test_focus if item not in ALLOWED_TEST_FOCUS]
+    if invalid_test_focus:
+        raise KnowledgeBaseError(
+            f"Standard '{code}' has invalid test_focus values: {', '.join(invalid_test_focus)}."
+        )
+
+    is_harmonized = row.get("is_harmonized")
+    if is_harmonized is True and not (row.get("harmonized_under") or row.get("harmonized_reference")):
+        raise KnowledgeBaseError(
+            f"Standard '{code}' is marked harmonized but lacks harmonized_under or harmonized_reference."
+        )
 
 
 def _validate_standards(
@@ -274,7 +344,54 @@ def _validate_standards(
         if item_type is not None and item_type not in {"standard", "review"}:
             raise KnowledgeBaseError(f"Standard '{code}' has invalid item_type '{item_type}'.")
 
+        _validate_standard_metadata(code, row)
+
     return standards
+
+
+def _normalize_standard_code(code: str) -> str:
+    value = re.sub(r"\s+", " ", (code or "").strip())
+    if value.startswith("EN EN "):
+        value = value.replace("EN EN ", "EN ", 1)
+    return value
+
+
+def _derive_harmonization_status(row: dict) -> str:
+    explicit = row.get("harmonization_status")
+    if explicit in ALLOWED_HARMONIZATION_STATUSES:
+        return explicit
+    if row.get("item_type") == "review":
+        return "review"
+    if row.get("is_harmonized") is True:
+        return "harmonized"
+    if row.get("is_harmonized") is False:
+        return "state_of_the_art"
+    return "unknown"
+
+
+def _enrich_standards(rows: list[dict]) -> list[dict]:
+    out: list[dict] = []
+    for row in rows:
+        enriched = dict(row)
+        enriched["code"] = _normalize_standard_code(enriched.get("code", ""))
+        enriched["standard_family"] = enriched.get("standard_family") or enriched["code"].split(":", 1)[0].strip()
+        enriched["harmonization_status"] = _derive_harmonization_status(enriched)
+        enriched.setdefault("test_focus", [])
+        enriched.setdefault("evidence_hint", [])
+        enriched.setdefault("keywords", [])
+        out.append(enriched)
+    return out
+
+
+def _kb_meta(counts: dict[str, int], standards: list[dict]) -> dict:
+    return {
+        **counts,
+        "harmonized_standards": sum(1 for row in standards if row.get("harmonization_status") == "harmonized"),
+        "state_of_the_art_standards": sum(1 for row in standards if row.get("harmonization_status") == "state_of_the_art"),
+        "review_items": sum(1 for row in standards if row.get("item_type") == "review"),
+        "product_gated_standards": sum(1 for row in standards if row.get("applies_if_products")),
+        "version": KB_META_VERSION,
+    }
 
 
 @lru_cache(maxsize=1)
@@ -292,19 +409,22 @@ def load_all() -> dict:
     legislation_keys = {row["directive_key"] for row in legislations} | {"CRA", "GDPR", "AI_Act", "ESPR", "OTHER"}
 
     standards_data = _load_yaml_raw("standards.yaml")
-    standards = _validate_standards(standards_data, product_ids, trait_ids, legislation_keys)
+    standards = _enrich_standards(_validate_standards(standards_data, product_ids, trait_ids, legislation_keys))
+
+    counts = {
+        "traits": len(traits),
+        "products": len(products),
+        "legislations": len(legislations),
+        "standards": len(standards),
+    }
 
     return {
         "traits": traits,
         "products": products,
         "legislations": legislations,
         "standards": standards,
-        "counts": {
-            "traits": len(traits),
-            "products": len(products),
-            "legislations": len(legislations),
-            "standards": len(standards),
-        },
+        "counts": counts,
+        "meta": _kb_meta(counts, standards),
     }
 
 
@@ -324,8 +444,12 @@ def load_standards() -> list[dict]:
     return load_all()["standards"]
 
 
+def load_meta() -> dict:
+    return load_all()["meta"]
+
+
 def warmup_knowledge_base() -> dict:
-    return load_all()["counts"]
+    return load_all()["meta"]
 
 
 def reset_cache() -> None:

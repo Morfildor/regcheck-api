@@ -4,11 +4,15 @@ from datetime import date
 from typing import Any
 
 from classifier import extract_traits
-from knowledge_base import load_legislations
-from models import AnalysisResult, Finding, LegislationItem, StandardItem
+from knowledge_base import load_legislations, load_meta
+from models import AnalysisResult, AnalysisStats, Finding, KnowledgeBaseMeta, LegislationItem, MissingInformationItem, StandardItem
 from standards_engine import find_applicable_items
 
 TODAY = date.today()
+
+
+BUCKET_SORT = {"ce": 0, "framework": 1, "non_ce": 2, "future": 3, "informational": 4}
+PRIORITY_SORT = {"core": 0, "product_specific": 1, "conditional": 2, "informational": 3}
 
 
 def _parse_date(value: str | None) -> date | None:
@@ -90,8 +94,8 @@ def _pick_legislations(all_traits: set[str], functional_classes: set[str], produ
 
     picked.sort(
         key=lambda x: (
-            {"ce": 0, "framework": 1, "non_ce": 2, "future": 3, "informational": 4}.get(x.get("bucket", "non_ce"), 9),
-            {"core": 0, "product_specific": 1, "conditional": 2, "informational": 3}.get(x.get("priority", "conditional"), 9),
+            BUCKET_SORT.get(x.get("bucket", "non_ce"), 9),
+            PRIORITY_SORT.get(x.get("priority", "conditional"), 9),
             x.get("code", ""),
         )
     )
@@ -113,6 +117,8 @@ def _annotate_standard_items(rows: list[dict[str, Any]], legislation_index: dict
         if leg:
             enriched["regime_bucket"] = leg.get("bucket")
             enriched["timing_status"] = leg.get("timing_status", "current")
+
+        harmonization_status = enriched.get("harmonization_status", "unknown")
         out.append(StandardItem(
             code=enriched["code"],
             title=enriched["title"],
@@ -127,26 +133,92 @@ def _annotate_standard_items(rows: list[dict[str, Any]], legislation_index: dict
             notes=enriched.get("notes"),
             regime_bucket=enriched.get("regime_bucket"),
             timing_status=enriched.get("timing_status", "current"),
+            matched_traits_all=enriched.get("matched_traits_all", []),
+            matched_traits_any=enriched.get("matched_traits_any", []),
+            missing_required_traits=enriched.get("missing_required_traits", []),
+            excluded_by_traits=enriched.get("excluded_by_traits", []),
+            applies_if_products=enriched.get("applies_if_products", []),
+            exclude_if_products=enriched.get("exclude_if_products", []),
+            product_match_type=enriched.get("product_match_type"),
+            standard_family=enriched.get("standard_family"),
+            is_harmonized=enriched.get("is_harmonized"),
+            harmonized_under=enriched.get("harmonized_under"),
+            harmonization_status=harmonization_status,
+            harmonized_reference=enriched.get("harmonized_reference"),
+            version=enriched.get("version"),
+            dated_version=enriched.get("dated_version"),
+            supersedes=enriched.get("supersedes"),
+            test_focus=enriched.get("test_focus", []),
+            evidence_hint=enriched.get("evidence_hint", []),
+            keywords=enriched.get("keywords", []),
         ))
     return out
 
 
-def _missing_information(all_traits: set[str], product_type: str | None, contradictions: list[str]) -> list[str]:
-    missing: list[str] = []
+def _missing_information_items(
+    all_traits: set[str],
+    product_type: str | None,
+    contradictions: list[str],
+    contradiction_severity: str,
+) -> list[MissingInformationItem]:
+    items: list[MissingInformationItem] = []
+
     if not product_type:
-        missing.append("Exact product type is unclear; provide the commercial product description or product family.")
+        items.append(MissingInformationItem(
+            key="product_type",
+            message="Exact product type is unclear; provide the commercial product description or product family.",
+            importance="high",
+            examples=["air fryer", "robot vacuum cleaner", "built-in induction hob"],
+        ))
     if "electrical" in all_traits and not ({"mains_powered", "battery_powered", "usb_powered", "mains_power_likely"} & all_traits):
-        missing.append("Power source is unclear; specify mains, battery, USB, or external PSU.")
+        items.append(MissingInformationItem(
+            key="power_source",
+            message="Power source is unclear; specify mains, battery, USB, or external PSU.",
+            importance="high",
+            examples=["230 V mains", "rechargeable Li-ion battery", "USB-C powered"],
+            related_traits=["mains_powered", "battery_powered", "usb_powered"],
+        ))
     if "radio" in all_traits and not ({"wifi", "bluetooth", "zigbee", "thread", "matter", "nfc", "cellular"} & all_traits):
-        missing.append("Radio technology is unclear; specify Wi-Fi, Bluetooth, Thread, Zigbee, NFC, or cellular.")
+        items.append(MissingInformationItem(
+            key="radio_technology",
+            message="Radio technology is unclear; specify Wi-Fi, Bluetooth, Thread, Zigbee, NFC, or cellular.",
+            importance="high",
+            examples=["Wi-Fi 2.4 GHz", "Bluetooth LE", "Zigbee"],
+            related_traits=["radio"],
+        ))
     if "food_contact" in all_traits:
-        missing.append("Confirm whether food-contact parts include plastic, coating, rubber, silicone, paper, or metal materials.")
-    if contradictions:
-        missing.append("Resolve contradictory product signals before relying on the output for compliance decisions.")
-    return missing
+        items.append(MissingInformationItem(
+            key="food_contact_materials",
+            message="Confirm whether food-contact parts include plastic, coating, rubber, silicone, paper, or metal materials.",
+            importance="medium",
+            examples=["PA plastic water tank", "silicone seal", "non-stick coating"],
+            related_traits=["food_contact"],
+        ))
+    if "cloud" in all_traits or "internet" in all_traits or "app_control" in all_traits:
+        items.append(MissingInformationItem(
+            key="connectivity_architecture",
+            message="Clarify whether the product requires cloud, user accounts, local LAN control, or OTA updates.",
+            importance="medium",
+            examples=["local LAN only", "cloud account required", "OTA security patching supported"],
+            related_traits=["cloud", "internet", "app_control", "ota"],
+        ))
+    if contradiction_severity in {"medium", "high"} or contradictions:
+        items.append(MissingInformationItem(
+            key="contradictions",
+            message="Resolve contradictory product signals before relying on the output for compliance decisions.",
+            importance="high",
+            examples=contradictions[:3],
+        ))
+
+    return items
 
 
-def _findings(legislations: list[dict[str, Any]], review_items: list[StandardItem], missing_information: list[str]) -> list[Finding]:
+def _findings(
+    legislations: list[dict[str, Any]],
+    review_items: list[StandardItem],
+    missing_information_items: list[MissingInformationItem],
+    contradictions: list[str],
+) -> list[Finding]:
     findings: list[Finding] = []
 
     for row in legislations:
@@ -166,7 +238,7 @@ def _findings(legislations: list[dict[str, Any]], review_items: list[StandardIte
             )
         )
 
-    for item in review_items[:8]:
+    for item in review_items[:10]:
         findings.append(
             Finding(
                 directive=item.directive,
@@ -177,17 +249,67 @@ def _findings(legislations: list[dict[str, Any]], review_items: list[StandardIte
             )
         )
 
-    for note in missing_information:
+    for item in missing_information_items:
         findings.append(
             Finding(
                 directive="INPUT",
                 article="Missing information",
                 status="WARN",
-                finding=note,
+                finding=item.message,
+            )
+        )
+
+    for contradiction in contradictions:
+        findings.append(
+            Finding(
+                directive="INPUT",
+                article="Contradiction",
+                status="WARN",
+                finding=contradiction,
             )
         )
 
     return findings
+
+
+def _diagnostics(
+    depth: str,
+    classification: dict[str, Any],
+    picked_legislations: list[dict[str, Any]],
+    applicable_items: dict[str, Any],
+) -> list[str]:
+    diagnostics = [f"analysis_date={TODAY.isoformat()}", f"depth={depth}"]
+    diagnostics.extend(classification.get("diagnostics", []))
+    diagnostics.append("legislation_keys=" + ",".join(sorted({row["directive_key"] for row in picked_legislations if row.get("directive_key")})))
+    diagnostics.append(f"standard_hits={len(applicable_items.get('standards', []))}")
+    diagnostics.append(f"review_hits={len(applicable_items.get('review_items', []))}")
+    diagnostics.append(f"rejections={len(applicable_items.get('rejections', []))}")
+    for rejection in applicable_items.get("rejections", [])[:10]:
+        code = rejection.get("code") or "unknown"
+        reason = rejection.get("reason") or "rejected"
+        diagnostics.append(f"rejected:{code}:{reason}")
+    return diagnostics
+
+
+def _stats(
+    picked_legislations: list[dict[str, Any]],
+    standards: list[StandardItem],
+    review_items: list[StandardItem],
+    missing_information_items: list[MissingInformationItem],
+    contradictions: list[str],
+) -> AnalysisStats:
+    return AnalysisStats(
+        legislation_count=len(picked_legislations),
+        current_legislation_count=sum(1 for row in picked_legislations if row.get("timing_status") == "current"),
+        future_legislation_count=sum(1 for row in picked_legislations if row.get("timing_status") == "future"),
+        standards_count=len(standards),
+        review_items_count=len(review_items),
+        harmonized_standards_count=sum(1 for row in standards if row.harmonization_status == "harmonized"),
+        state_of_the_art_standards_count=sum(1 for row in standards if row.harmonization_status == "state_of_the_art"),
+        product_gated_standards_count=sum(1 for row in standards if row.applies_if_products),
+        ambiguity_flag_count=len(contradictions),
+        missing_information_count=len(missing_information_items),
+    )
 
 
 def analyze(description: str, category: str = "", directives: list[str] | None = None, depth: str = "standard") -> AnalysisResult:
@@ -220,17 +342,30 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
     future_regimes = [LegislationItem(**row) for row in picked_legislations if row["bucket"] == "future"]
     informational_items = [LegislationItem(**row) for row in picked_legislations if row["bucket"] == "informational"]
 
-    missing_information = _missing_information(all_traits, product_type, classification["contradictions"])
+    contradiction_severity = classification.get("contradiction_severity", "none")
+    missing_information_items = _missing_information_items(
+        all_traits,
+        product_type,
+        classification["contradictions"],
+        contradiction_severity,
+    )
+    missing_information = [item.message for item in missing_information_items]
 
     overall_risk = "LOW"
-    if classification["contradictions"] or missing_information:
+    if contradiction_severity == "high":
+        overall_risk = "CRITICAL"
+    elif contradiction_severity == "medium" or missing_information:
         overall_risk = "MEDIUM"
-    if future_regimes or any(item.item_type == "review" for item in review_items):
-        overall_risk = "HIGH" if missing_information else "MEDIUM"
+    if future_regimes or review_items:
+        overall_risk = "HIGH" if overall_risk in {"MEDIUM", "CRITICAL"} or missing_information else "MEDIUM"
+    if contradiction_severity == "high":
+        overall_risk = "CRITICAL"
 
     summary_parts = []
     if product_type:
         summary_parts.append(f"Detected product type: {product_type.replace('_', ' ')}.")
+    else:
+        summary_parts.append("Product type could not be identified with confidence.")
     if ce_legislations:
         summary_parts.append("Current CE harmonisation acts are separated from non-CE obligations.")
     if non_ce_obligations:
@@ -239,6 +374,12 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
         summary_parts.append("Framework or product-family regimes need a separate product-specific check.")
     if future_regimes:
         summary_parts.append("Future regimes are flagged separately and not merged into current obligations.")
+    if any(item.harmonization_status == "harmonized" for item in standards):
+        summary_parts.append("Harmonized standards are tagged separately from state-of-the-art routes.")
+    if contradiction_severity in {"medium", "high"}:
+        summary_parts.append("Input contradictions reduce confidence and need resolution.")
+
+    kb_meta = KnowledgeBaseMeta(**load_meta())
 
     return AnalysisResult(
         product_summary=description.strip() or category.strip() or "Product analysis",
@@ -261,7 +402,11 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
         standards=standards,
         review_items=review_items,
         missing_information=missing_information,
+        missing_information_items=missing_information_items,
         contradictions=classification["contradictions"],
-        diagnostics=[f"analysis_date={TODAY.isoformat()}", f"depth={depth}"],
-        findings=_findings(picked_legislations, review_items, missing_information),
+        contradiction_severity=contradiction_severity,
+        diagnostics=_diagnostics(depth, classification, picked_legislations, applicable_items),
+        stats=_stats(picked_legislations, standards, review_items, missing_information_items, classification["contradictions"]),
+        knowledge_base_meta=kb_meta,
+        findings=_findings(picked_legislations, review_items, missing_information_items, classification["contradictions"]),
     )

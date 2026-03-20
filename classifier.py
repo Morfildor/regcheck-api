@@ -20,10 +20,11 @@ def normalize(text: str) -> str:
         "multi-cooker": "multicooker",
         "bean-to-cup": "bean to cup",
         "air-conditioning": "air conditioner",
+        "smart home": "smart_home",
     }
     for old, new in replacements.items():
         text = text.replace(old, new)
-    text = re.sub(r"[^a-z0-9]+", " ", text)
+    text = re.sub(r"[^a-z0-9_]+", " ", text)
     return re.sub(r"\s+", " ", text).strip()
 
 
@@ -67,6 +68,10 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         "heating": [r"\bheating\b", r"\bheater\b", r"\bhot\b", r"\bboil\b", r"\bbrew\b", r"\bsteam\b"],
         "cooling": [r"\bcooling\b", r"\brefrigerat", r"\bfreezer\b", r"\bice\b", r"\bchill\b"],
         "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bdrive\b"],
+        "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
+        "ai_related": [r"\bai\b", r"\bmachine learning\b", r"\bneural\b", r"\bmodel\b", r"\bllm\b"],
+        "personal_data_likely": [r"\bpersonal data\b", r"\bprofile\b", r"\buser data\b", r"\baccount\b", r"\blogin\b"],
+        "food_contact": [r"\bfood\b", r"\bdrink\b", r"\bwater tank\b", r"\bbrew\b", r"\bcook\b"],
     }
 
     for trait, regexes in patterns.items():
@@ -208,14 +213,26 @@ def _candidate_confidence(index: int, candidate: dict[str, Any], next_candidate:
     return "low"
 
 
+def _contradiction_severity(contradictions: list[str]) -> str:
+    if not contradictions:
+        return "none"
+    if any("ambiguous" in item.lower() for item in contradictions):
+        return "high"
+    if len(contradictions) >= 2:
+        return "high"
+    return "medium"
+
+
 def extract_traits(description: str, category: str = "") -> dict:
     text = normalize(f"{category} {description}")
     explicit_traits: set[str] = set()
     inferred_traits: set[str] = set()
     functional_classes: set[str] = set()
     contradictions: list[str] = []
+    diagnostics: list[str] = []
 
     _add_regex_trait(text, explicit_traits)
+    diagnostics.append(f"normalized_text={text}")
 
     candidates = _product_candidates(text, explicit_traits)
     top_candidates = candidates[:5]
@@ -243,6 +260,8 @@ def extract_traits(description: str, category: str = "") -> dict:
         winner = product_candidates[0]
         product_type = winner["id"]
         product_match_confidence = winner["confidence"]
+        diagnostics.append(f"product_winner={winner['id']}")
+        diagnostics.append(f"product_alias={winner.get('matched_alias') or ''}")
 
         winner_full = top_candidates[0]
         inferred_traits.update(winner_full.get("implied_traits", []))
@@ -254,6 +273,8 @@ def extract_traits(description: str, category: str = "") -> dict:
                 f"{product_candidates[0]['id'].replace('_', ' ')} and "
                 f"{product_candidates[1]['id'].replace('_', ' ')}."
             )
+    else:
+        diagnostics.append("product_winner=none")
 
     if "battery_powered" in explicit_traits and "mains_powered" in explicit_traits:
         contradictions.append("Both battery-powered and mains-powered signals were detected.")
@@ -266,6 +287,10 @@ def extract_traits(description: str, category: str = "") -> dict:
     explicit_traits = {t for t in explicit_traits if t in known_traits}
     inferred_traits = {t for t in inferred_traits if t in known_traits}
 
+    diagnostics.append("explicit_traits=" + ",".join(sorted(explicit_traits)))
+    diagnostics.append("inferred_traits=" + ",".join(sorted(inferred_traits)))
+    diagnostics.append("contradiction_severity=" + _contradiction_severity(contradictions))
+
     return {
         "product_type": product_type,
         "matched_products": matched_products,
@@ -276,4 +301,6 @@ def extract_traits(description: str, category: str = "") -> dict:
         "inferred_traits": sorted(inferred_traits),
         "all_traits": sorted(explicit_traits | inferred_traits),
         "contradictions": contradictions,
+        "contradiction_severity": _contradiction_severity(contradictions),
+        "diagnostics": diagnostics,
     }

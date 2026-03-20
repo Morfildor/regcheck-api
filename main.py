@@ -8,14 +8,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from knowledge_base import (
     KnowledgeBaseError,
     load_legislations,
+    load_meta,
     load_products,
+    load_standards,
     load_traits,
+    reset_cache,
     warmup_knowledge_base,
 )
 from models import AnalysisResult, ProductInput
 from rules import analyze
 
-APP_VERSION = "3.2.1"
+APP_VERSION = "4.0.0"
 
 app = FastAPI(title="RegCheck API", version=APP_VERSION)
 
@@ -106,10 +109,60 @@ def metadata_options():
                 "directive_key": row["directive_key"],
                 "family": row["family"],
                 "priority": row.get("priority", "conditional"),
+                "bucket": row.get("bucket", "non_ce"),
             }
             for row in legislations
         ],
+        "knowledge_base_meta": load_meta(),
     }
+
+
+@app.get("/metadata/standards")
+def metadata_standards():
+    if not _kb_status["ok"]:
+        raise HTTPException(status_code=503, detail=f"Knowledge base failed to load: {_kb_status['error']}")
+
+    return {
+        "knowledge_base_meta": load_meta(),
+        "standards": [
+            {
+                "code": row["code"],
+                "title": row["title"],
+                "category": row["category"],
+                "directive": (row.get("directives") or [row.get("legislation_key") or "OTHER"])[0],
+                "legislation_key": row.get("legislation_key"),
+                "item_type": row.get("item_type", "standard"),
+                "standard_family": row.get("standard_family"),
+                "harmonization_status": row.get("harmonization_status", "unknown"),
+                "is_harmonized": row.get("is_harmonized"),
+                "harmonized_under": row.get("harmonized_under"),
+                "harmonized_reference": row.get("harmonized_reference"),
+                "version": row.get("version"),
+                "dated_version": row.get("dated_version"),
+                "supersedes": row.get("supersedes"),
+                "test_focus": row.get("test_focus", []),
+                "evidence_hint": row.get("evidence_hint", []),
+                "keywords": row.get("keywords", []),
+                "applies_if_products": row.get("applies_if_products", []),
+                "applies_if_all": row.get("applies_if_all", []),
+                "applies_if_any": row.get("applies_if_any", []),
+            }
+            for row in load_standards()
+        ],
+    }
+
+
+@app.post("/admin/reload")
+def admin_reload():
+    global _kb_status
+    try:
+        reset_cache()
+        counts = warmup_knowledge_base()
+        _kb_status = {"ok": True, "error": None, "counts": counts}
+        return {"ok": True, "knowledge_base": counts}
+    except KnowledgeBaseError as exc:
+        _kb_status = {"ok": False, "error": str(exc), "counts": {}}
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
 @app.post("/analyze", response_model=AnalysisResult)
