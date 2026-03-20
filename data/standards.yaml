@@ -85,7 +85,7 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   legislation_key: EMC
-- code: EN IEC 61000-3-2
+- code: EN EN 61000-3-2
   title: Electromagnetic compatibility - Limits for harmonic current emissions
   region: EU
   category: emc
@@ -463,9 +463,9 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-2
+- code: EN 60335-2-2
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vacuum cleaners and water-suction cleaning appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -480,9 +480,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-3
+- code: EN 60335-2-3
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric irons'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -496,9 +496,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-4
+- code: EN 60335-2-4
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spin extractors'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -512,9 +512,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-5
+- code: EN 60335-2-5
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for dishwashers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -528,9 +528,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-6
+- code: EN 60335-2-6
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary cooking ranges, hobs, ovens and similar appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -546,9 +546,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-7
+- code: EN 60335-2-7
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for washing machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -562,9 +562,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-8
+- code: EN 60335-2-8
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for shavers, hair clippers and similar appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -579,9 +579,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-9
+- code: EN 60335-2-9
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for grills, toasters and similar portable cooking appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -596,9 +596,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-10
+- code: EN 60335-2-10
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment machines and wet scrubbing machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -612,9 +612,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-11
+- code: EN 60335-2-11
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for tumble dryers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -628,9 +628,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-12
+- code: EN 60335-2-12
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for warming plates and similar appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -644,9 +644,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-13
+- code: EN 60335-2-13
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for deep fat fryers, frying pans and similar appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -660,9 +660,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-14
+- code: EN 60335-2-14
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for kitchen machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -677,9 +677,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-15
+- code: EN 60335-2-15
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for heating liquids'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -696,9 +696,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-16
+- code: EN 60335-2-16
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for food waste disposers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -712,9 +712,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-17
+- code: EN 60335-2-17
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for blankets, pads and similar flexible heating appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -731,9 +731,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-21
+- code: EN 60335-2-21
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for storage water heaters'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -747,9 +747,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-23
+- code: EN 60335-2-23
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin or hair care'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -764,9 +764,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-24
+- code: EN 60335-2-24
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for refrigerating appliances, ice-cream appliances and ice-makers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -781,9 +781,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-25
+- code: EN 60335-2-25
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for microwave ovens, including combination microwave ovens'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -797,9 +797,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-26
+- code: EN 60335-2-26
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for clocks'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -813,9 +813,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-27
+- code: EN 60335-2-27
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin exposure to ultraviolet and infrared radiation'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -829,9 +829,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-28
+- code: EN 60335-2-28
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sewing machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -845,9 +845,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-29
+- code: EN 60335-2-29
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for battery chargers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -861,9 +861,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-30
+- code: EN 60335-2-30
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for room heaters'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -879,9 +879,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-31
+- code: EN 60335-2-31
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for range hoods'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -896,9 +896,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-32
+- code: EN 60335-2-32
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for massage appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -912,9 +912,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-33
+- code: EN 60335-2-33
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for coffee mills and coffee grinders'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -928,9 +928,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-34
+- code: EN 60335-2-34
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for motor-compressors'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -944,9 +944,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-35
+- code: EN 60335-2-35
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for instantaneous water heaters'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -960,9 +960,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-36
+- code: EN 60335-2-36
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric cooking ranges, ovens, hobs and hob elements'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -977,9 +977,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-37
+- code: EN 60335-2-37
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric deep fat fryers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -993,9 +993,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-38
+- code: EN 60335-2-38
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric griddles and griddle grills'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1009,9 +1009,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-39
+- code: EN 60335-2-39
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric multi-purpose cooking pans'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1025,9 +1025,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-40
+- code: EN 60335-2-40
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heat pumps, air-conditioners and dehumidifiers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1042,9 +1042,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-41
+- code: EN 60335-2-41
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pumps'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1058,9 +1058,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-42
+- code: EN 60335-2-42
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric forced convection ovens, steam cookers and steam-convection ovens'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1075,9 +1075,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-43
+- code: EN 60335-2-43
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for clothes dryers and towel rails'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1091,9 +1091,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-44
+- code: EN 60335-2-44
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for ironers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1107,9 +1107,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-45
+- code: EN 60335-2-45
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable heating tools and similar appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1124,9 +1124,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-46
+- code: EN 60335-2-46
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric steam cookers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1140,9 +1140,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-47
+- code: EN 60335-2-47
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric boiling pans'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1156,9 +1156,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-48
+- code: EN 60335-2-48
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric grillers and toasters'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1172,9 +1172,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-49
+- code: EN 60335-2-49
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hot cupboards'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1188,9 +1188,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-50
+- code: EN 60335-2-50
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric bains-marie'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1204,9 +1204,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-51
+- code: EN 60335-2-51
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary circulation pumps for heating and service water installations'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1220,9 +1220,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-52
+- code: EN 60335-2-52
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for oral hygiene appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1237,9 +1237,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-53
+- code: EN 60335-2-53
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sauna heating appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1253,9 +1253,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-54
+- code: EN 60335-2-54
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for surface-cleaning appliances for household use employing liquids or steam'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1270,9 +1270,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-55
+- code: EN 60335-2-55
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical appliances for use with aquariums and garden ponds'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1286,9 +1286,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-56
+- code: EN 60335-2-56
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for projectors and similar appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1302,9 +1302,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-58
+- code: EN 60335-2-58
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric dishwashing machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1318,9 +1318,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-59
+- code: EN 60335-2-59
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for insect killers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1334,9 +1334,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-60
+- code: EN 60335-2-60
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for whirlpool baths and whirlpool spas'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1350,9 +1350,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-61
+- code: EN 60335-2-61
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for thermal-storage room heaters'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1366,9 +1366,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-62
+- code: EN 60335-2-62
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric rinsing sinks'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1382,9 +1382,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-64
+- code: EN 60335-2-64
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric kitchen machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1399,9 +1399,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-65
+- code: EN 60335-2-65
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for air-cleaning appliances'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1416,9 +1416,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-66
+- code: EN 60335-2-66
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for water-bed heaters'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1432,9 +1432,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-67
+- code: EN 60335-2-67
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment and floor cleaning machines for industrial and commercial use'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1448,9 +1448,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-68
+- code: EN 60335-2-68
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spray extraction appliances for industrial and commercial use'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1464,9 +1464,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-69
+- code: EN 60335-2-69
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for wet and dry vacuum cleaners, including power brush, for industrial and commercial use'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1481,9 +1481,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-70
+- code: EN 60335-2-70
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for milking machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1497,9 +1497,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-71
+- code: EN 60335-2-71
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heating appliances for breeding and rearing animals'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1513,9 +1513,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-72
+- code: EN 60335-2-72
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for automatic machines for floor treatment for commercial and industrial use'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1529,9 +1529,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-73
+- code: EN 60335-2-73
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fixed immersion heaters'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1545,9 +1545,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-74
+- code: EN 60335-2-74
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable immersion heaters'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1561,9 +1561,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-75
+- code: EN 60335-2-75
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial dispensing appliances and vending machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1578,9 +1578,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-76
+- code: EN 60335-2-76
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fence energizers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1594,9 +1594,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-77
+- code: EN 60335-2-77
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled mains-operated lawnmowers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1610,9 +1610,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-78
+- code: EN 60335-2-78
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for outdoor barbecues'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1626,9 +1626,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-79
+- code: EN 60335-2-79
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for high pressure cleaners and steam cleaners'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1642,9 +1642,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-80
+- code: EN 60335-2-80
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fans'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1658,9 +1658,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-81
+- code: EN 60335-2-81
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for foot warmers and heating mats'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1675,9 +1675,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-82
+- code: EN 60335-2-82
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for amusement machines and personal service machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1691,9 +1691,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-83
+- code: EN 60335-2-83
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated gullies for roof drainage'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1707,9 +1707,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-84
+- code: EN 60335-2-84
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for toilets'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1723,9 +1723,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-85
+- code: EN 60335-2-85
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fabric steamers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1739,9 +1739,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-86
+- code: EN 60335-2-86
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fishing machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1755,9 +1755,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-87
+- code: EN 60335-2-87
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical animal-stunning equipment'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1771,9 +1771,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-88
+- code: EN 60335-2-88
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers intended for use with heating, ventilation or air-conditioning systems'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1788,9 +1788,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-89
+- code: EN 60335-2-89
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial refrigerating appliances with an incorporated or remote refrigerant condensing unit or compressor'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1804,9 +1804,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-90
+- code: EN 60335-2-90
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial microwave ovens'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1820,9 +1820,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-91
+- code: EN 60335-2-91
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for walk-behind and hand-held lawn trimmers and lawn edge trimmers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1836,9 +1836,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-92
+- code: EN 60335-2-92
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled mains-operated lawn scarifiers and aerators'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1852,9 +1852,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-94
+- code: EN 60335-2-94
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for scissors type grass shears'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1868,9 +1868,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-95
+- code: EN 60335-2-95
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drivers for vertically moving garage doors for residential use'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1885,9 +1885,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-96
+- code: EN 60335-2-96
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for flexible sheet heating elements for room heating'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1902,9 +1902,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-97
+- code: EN 60335-2-97
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for rolling shutters, awnings, blinds and similar equipment'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1918,9 +1918,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-98
+- code: EN 60335-2-98
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1934,9 +1934,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-99
+- code: EN 60335-2-99
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hoods'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1950,9 +1950,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-101
+- code: EN 60335-2-101
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vaporizers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1966,9 +1966,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-102
+- code: EN 60335-2-102
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for gas, oil and solid-fuel burning appliances having electrical connections'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1982,9 +1982,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-103
+- code: EN 60335-2-103
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for gates, doors and windows'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -1998,9 +1998,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-105
+- code: EN 60335-2-105
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for multifunctional shower cabinets'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -2014,9 +2014,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-106
+- code: EN 60335-2-106
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated carpets and heating units for room heating installed under removable floor coverings'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -2030,9 +2030,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-107
+- code: EN 60335-2-107
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for robotic battery powered electrical lawn mowers'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD
@@ -2046,9 +2046,9 @@ standards:
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
-- code: IEC 60335-2-108
+- code: EN 60335-2-108
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for detergent free electrolyser washing machines'
-  region: IEC
+  region: EN
   category: safety
   directives:
   - LVD

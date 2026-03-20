@@ -34,6 +34,9 @@ def _product_hit_type(
     if product_type and product_type in applies_if_products:
         return "primary_product"
 
+    if any(pid in applies_if_products for pid in matched_products):
+        return "alternate_product"
+
     return None
 
 
@@ -64,6 +67,9 @@ def _build_reason(
     if product_hit_type == "primary_product" and product_type:
         parts.append(f"exact product match: {product_type.replace('_', ' ')}")
         match_basis = "product"
+    elif product_hit_type == "alternate_product":
+        parts.append("matched through alternate detected product candidate")
+        match_basis = "alternate_product"
 
     all_hits = [t for t in standard.get("applies_if_all", []) if t in traits]
     any_hits = [t for t in standard.get("applies_if_any", []) if t in traits]
