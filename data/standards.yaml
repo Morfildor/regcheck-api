@@ -1,4 +1,251 @@
 standards:
+- code: AI Act review
+  title: AI Act assessment required
+  region: EU
+  category: ai
+  directives:
+  - AI_Act
+  applies_if_all:
+  - ai_related
+  applies_if_any: []
+  exclude_if: []
+  confidence: medium
+  notes: Placeholder assessment bucket for AI-related regulatory review.
+  item_type: review
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: AI_Act
+  test_focus: []
+- code: CRA review
+  title: Cyber Resilience Act assessment required
+  region: EU
+  category: cybersecurity
+  directives:
+  - CRA
+  applies_if_all: []
+  applies_if_any:
+  - electronic
+  - app_control
+  - cloud
+  - internet
+  - ota
+  - data_storage
+  exclude_if: []
+  confidence: medium
+  notes: Placeholder review bucket for wider CRA essential requirement assessment
+    beyond radio-specific routes.
+  item_type: review
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: CRA
+  test_focus: []
+- code: EN 55014-1
+  title: Electromagnetic compatibility requirements for household appliances, electric
+    tools and similar apparatus - Emission
+  region: EU
+  category: emc
+  directives:
+  - EMC
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - household
+  - motorized
+  - heating
+  - consumer
+  exclude_if: []
+  confidence: high
+  notes: Emission-side EMC standard family commonly relevant to many household appliances.
+  item_type: standard
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: EMC
+  is_harmonized: true
+  harmonized_under: EMC
+  harmonization_status: harmonized
+  harmonized_reference: European Commission EMC summary list under Directive 2014/30/EU
+  dated_version: EN 55014-1:2021
+  version: CISPR 14-1:2020
+  standard_family: EN 55014-1
+  test_focus:
+  - emission
+  evidence_hint:
+  - emissions test report
+  - worst-case operating mode
+  - external accessories list
+- code: EN 55014-2
+  title: Electromagnetic compatibility requirements for household appliances, electric
+    tools and similar apparatus - Immunity
+  region: EU
+  category: emc
+  directives:
+  - EMC
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - household
+  - motorized
+  - heating
+  - consumer
+  exclude_if: []
+  confidence: high
+  notes: Immunity-side EMC standard family commonly relevant to many household appliances.
+  item_type: standard
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: EMC
+  is_harmonized: true
+  harmonized_under: EMC
+  harmonization_status: harmonized
+  harmonized_reference: European Commission EMC summary list under Directive 2014/30/EU
+  dated_version: EN IEC 55014-2:2021
+  version: CISPR 14-2:2020
+  standard_family: EN 55014-2
+  test_focus:
+  - immunity
+  evidence_hint:
+  - immunity test report
+  - performance criteria definition
+  - EUT operating modes
+- code: EN 61000-3-3
+  title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations
+    and flicker
+  region: EU
+  category: emc
+  directives:
+  - EMC
+  applies_if_all:
+  - mains_powered
+  applies_if_any:
+  - household
+  - consumer
+  - electrical
+  exclude_if:
+  - battery_powered
+  confidence: medium
+  notes: Commonly reviewed for mains-powered equipment that may create voltage fluctuation
+    or flicker effects.
+  item_type: standard
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: EMC
+  is_harmonized: true
+  harmonized_under: EMC
+  harmonization_status: harmonized
+  harmonized_reference: European Commission EMC summary list under Directive 2014/30/EU
+  dated_version: EN 61000-3-3:2013/A2:2021
+  version: IEC 61000-3-3:2013/A2:2021
+  standard_family: EN 61000-3-3
+  test_focus:
+  - flicker
+  - immunity
+  evidence_hint:
+  - flicker / voltage fluctuation test report
+  - supply configuration
+- code: EN IEC 61000-3-2
+  title: Electromagnetic compatibility - Limits for harmonic current emissions
+  region: EU
+  category: emc
+  directives:
+  - EMC
+  applies_if_all:
+  - mains_powered
+  applies_if_any:
+  - household
+  - consumer
+  - electrical
+  exclude_if:
+  - battery_powered
+  confidence: medium
+  notes: Typically considered for mains-powered equipment depending on product characteristics
+    and scope.
+  item_type: standard
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: EMC
+  is_harmonized: true
+  harmonized_under: EMC
+  harmonization_status: harmonized
+  harmonized_reference: European Commission EMC summary list under Directive 2014/30/EU
+  dated_version: EN IEC 61000-3-2:2019/A2:2024
+  version: IEC 61000-3-2:2018+A1:2020+A2:2024
+  standard_family: EN IEC 61000-3-2
+  test_focus:
+  - harmonics
+  - immunity
+  evidence_hint:
+  - harmonics test report
+  - equipment class justification
+  - input current data
+- code: GDPR review
+  title: GDPR assessment required
+  region: EU
+  category: privacy
+  directives:
+  - GDPR
+  applies_if_all: []
+  applies_if_any:
+  - personal_data_likely
+  - camera
+  - microphone
+  - location
+  - health_related
+  - account
+  - child_targeted
+  - data_storage
+  exclude_if: []
+  confidence: medium
+  notes: Placeholder compliance bucket for privacy and data protection review rather
+    than a harmonized standard.
+  item_type: review
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: GDPR
+  test_focus: []
+- code: Battery safety review
+  title: Battery safety and transport review required
+  region: EU
+  category: battery
+  directives:
+  - LVD
+  - CRA
+  applies_if_all:
+  - battery_powered
+  applies_if_any:
+  - wearable
+  - consumer
+  - household
+  exclude_if: []
+  confidence: low
+  notes: Placeholder review bucket where battery chemistry, charger architecture,
+    and transport obligations need separate evaluation.
+  item_type: review
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: Charger / external PSU review
+  title: External power supply and charger route review required
+  region: EU
+  category: power
+  directives:
+  - LVD
+  - EMC
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - mains_powered
+  - mains_power_likely
+  - usb_powered
+  exclude_if: []
+  confidence: low
+  notes: Review whether the product relies on an external PSU, charger, or adapter
+    that brings additional compliance dependencies.
+  item_type: review
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
 - code: EN 60335-1
   title: Household and similar electrical appliances - Safety - General requirements
   region: EU
@@ -18,13 +265,1931 @@ standards:
   exclude_if:
   - industrial
   confidence: high
-  notes: General baseline safety standard family often relevant to household electrical appliances.
+  notes: General baseline safety standard family often relevant to household electrical
+    appliances.
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
   legislation_key: LVD
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonization_status: harmonized
+  harmonized_reference: European Commission LVD summary list under Directive 2014/35/EU
+  dated_version: EN 60335-1:2012/A16:2023
+  version: IEC 60335-1:2020+AMD1:2025 CSV
+  standard_family: EN 60335-1
+  test_focus:
+  - safety
+  evidence_hint:
+  - CB report / safety test report
+  - critical component list
+  - ratings / markings
+  - instruction manual
+- code: EN 60335-2-10
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for floor treatment machines and wet scrubbing machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - floor_treatment_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-101
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for vaporizers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - vaporizer
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-102
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for gas, oil and solid-fuel burning appliances having electrical
+    connections'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - fuel_burning_electrical_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-103
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for drives for gates, doors and windows'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - gate_door_window_drive
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-105
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for multifunctional shower cabinets'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - shower_cabinet
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-106
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for heated carpets and heating units for room heating installed under
+    removable floor coverings'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - heated_carpet
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-107
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for robotic battery powered electrical lawn mowers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - robotic_lawn_mower
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-108
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for detergent free electrolyser washing machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electrolyser_washing_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-11
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for tumble dryers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - tumble_dryer
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-12
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for warming plates and similar appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - warming_plate
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-13
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for deep fat fryers, frying pans and similar appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_frying_pan
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-14
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for kitchen machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - kitchen_machine
+  - blender
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-15
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for appliances for heating liquids'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: medium
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_kettle
+  - coffee_machine
+  - liquid_heater
+  - portable_immersion_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-16
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for food waste disposers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - food_waste_disposer
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-17
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for blankets, pads and similar flexible heating appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: medium
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_blanket
+  - heating_pad
+  - foot_warmer
+  - water_bed_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-2
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for vacuum cleaners and water-suction cleaning appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - vacuum_cleaner
+  - water_suction_cleaner
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-21
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for storage water heaters'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - storage_water_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-23
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for appliances for skin or hair care'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - skin_hair_care_appliance
+  - beauty_treatment_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-24
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for refrigerating appliances, ice-cream appliances and ice-makers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - refrigerator_freezer
+  - commercial_refrigerator
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-25
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for microwave ovens, including combination microwave ovens'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - microwave_oven
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-26
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for clocks'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - clock
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-27
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for appliances for skin exposure to ultraviolet and infrared radiation'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - ultraviolet_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-28
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for sewing machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - sewing_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-29
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for battery chargers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - battery_charger
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-3
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electric irons'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_iron
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-30
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for room heaters'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - room_heater
+  - fan_heater
+  - patio_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-31
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for range hoods'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - range_hood
+  - kitchen_extractor_fan
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-32
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for massage appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - massage_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-33
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for coffee mills and coffee grinders'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - kitchen_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-34
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for motor-compressors'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - motor_compressor
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-35
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for instantaneous water heaters'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - immersion_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-36
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric cooking ranges, ovens, hobs and hob elements'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_cooking_appliance
+  - commercial_oven
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-37
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric deep fat fryers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_fryer
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-38
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric griddles and griddle grills'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_cooking_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-39
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric multi-purpose cooking pans'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_cooking_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-4
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for spin extractors'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - spin_extractor
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-40
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electrical heat pumps, air-conditioners and dehumidifiers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - heat_pump
+  - room_dehumidifier
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-41
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for pumps'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_pump
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-42
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric forced convection ovens, steam cookers and
+    steam-convection ovens'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_oven
+  - commercial_cooking_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-43
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for appliances for clothes dryers and towel rails'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - tumble_dryer
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-44
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for ironers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - ironer
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-45
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for portable heating tools and similar appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - skin_hair_care_appliance
+  - electric_iron
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-46
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric steam cookers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_cooking_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-47
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric boiling pans'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_cooking_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-48
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric grillers and toasters'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_cooking_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-49
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric hot cupboards'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - hot_cupboard
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-5
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for dishwashers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - dishwasher
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-50
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric bains-marie'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - hot_cupboard
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-51
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for stationary circulation pumps for heating and service water installations'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - circulator
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-52
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for oral hygiene appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - oral_hygiene_appliance
+  - battery_powered_oral_hygiene
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-53
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for sauna heating appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - sauna_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-54
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for surface-cleaning appliances for household use employing liquids
+    or steam'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - floor_treatment_machine
+  - spray_extraction_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-55
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electrical appliances for use with aquariums and garden ponds'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - aquarium_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-56
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for projectors and similar appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - heating_lamp
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-58
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric dishwashing machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_washing_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-59
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for insect killers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - insect_killer
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-6
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for stationary cooking ranges, hobs, ovens and similar appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - cooking_range
+  - hob
+  - oven
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-60
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for whirlpool baths and whirlpool spas'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - shower_cabinet
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-61
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for thermal-storage room heaters'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - room_heating_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-62
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric rinsing sinks'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_washing_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-64
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric kitchen machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_cooking_appliance
+  - kitchen_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-65
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for air-cleaning appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - air_cleaner
+  - air_purifier
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-66
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for water-bed heaters'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - water_bed_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-67
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for floor treatment and floor cleaning machines for industrial and
+    commercial use'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - floor_treatment_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-68
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for spray extraction appliances for industrial and commercial use'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - spray_extraction_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-69
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for wet and dry vacuum cleaners, including power brush, for industrial
+    and commercial use'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - vacuum_cleaner
+  - water_suction_cleaner
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-7
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for washing machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - washing_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-70
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for milking machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_pump
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-71
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electrical heating appliances for breeding and rearing animals'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - livestock_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-72
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for automatic machines for floor treatment for commercial and industrial
+    use'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - floor_treatment_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-73
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for fixed immersion heaters'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - immersion_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-74
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for portable immersion heaters'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - portable_immersion_heater
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-75
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial dispensing appliances and vending machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_dispensing_appliance
+  - vending_machine
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-76
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electric fence energizers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - fence_energizer
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-77
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for pedestrian-controlled mains-operated lawnmowers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - lawn_mower
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-78
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for outdoor barbecues'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - outdoor_barbecue
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-79
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for high pressure cleaners and steam cleaners'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - high_pressure_cleaner
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-8
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for shavers, hair clippers and similar appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - shaver
+  - hair_clipper
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-80
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for fans'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - fan
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-81
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for foot warmers and heating mats'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - foot_warmer
+  - heated_carpet
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-82
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for amusement machines and personal service machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - beauty_treatment_appliance
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-83
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for heated gullies for roof drainage'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - heated_carpet
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-84
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for toilets'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - shower_cabinet
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-85
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for fabric steamers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_iron
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-86
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electric fishing machines'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_fish_stunner
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-87
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for electrical animal-stunning equipment'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_fish_stunner
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-88
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for humidifiers intended for use with heating, ventilation or air-conditioning
+    systems'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - humidifier
+  - heat_pump
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-89
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial refrigerating appliances with an incorporated or remote
+    refrigerant condensing unit or compressor'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_refrigerator
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-9
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for grills, toasters and similar portable cooking appliances'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - toaster
+  - portable_grill
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-90
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial microwave ovens'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_microwave
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-91
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for walk-behind and hand-held lawn trimmers and lawn edge trimmers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_garden_tool
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-92
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for pedestrian-controlled mains-operated lawn scarifiers and aerators'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - lawn_mower
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-94
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for scissors type grass shears'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - electric_garden_tool
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-95
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for drivers for vertically moving garage doors for residential use'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - gate_door_window_drive
+  - garage_door_drive
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-96
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for flexible sheet heating elements for room heating'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - heated_carpet
+  - heating_pad
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-97
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for drives for rolling shutters, awnings, blinds and similar equipment'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - rolling_shutter_drive
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-98
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for humidifiers'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - humidifier
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
+- code: EN 60335-2-99
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular
+    requirements for commercial electric hoods'
+  region: EN
+  category: safety
+  directives:
+  - LVD
+  applies_if_all: []
+  applies_if_any: []
+  exclude_if: []
+  confidence: high
+  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical
+    traits.
+  applies_if_products:
+  - commercial_hood
+  item_type: standard
+  exclude_if_products: []
+  legislation_key: LVD
+  test_focus: []
 - code: EN 62233
-  title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human exposure
+  title: Measurement methods for electromagnetic fields of household appliances and
+    similar apparatus with regard to human exposure
   region: EU
   category: emf
   directives:
@@ -40,93 +2205,79 @@ standards:
   - mains_power_likely
   exclude_if: []
   confidence: medium
-  notes: Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation.
+  notes: Often relevant for household electrical appliances where EMF assessment is
+    part of the safety evaluation.
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
   legislation_key: LVD
-- code: EN 55014-1
-  title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Emission
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonization_status: harmonized
+  harmonized_reference: European Commission LVD summary list under Directive 2014/35/EU
+  dated_version: EN 62233:2008
+  version: IEC 62233:2005
+  standard_family: EN 62233
+  test_focus:
+  - emf
+  - safety
+  evidence_hint:
+  - EMF assessment report
+  - measurement setup and operating mode
+- code: REACH Article 33 / SVHC review
+  title: REACH SVHC communication and substance assessment review required
   region: EU
-  category: emc
+  category: substances
   directives:
-  - EMC
+  - REACH
   applies_if_all:
   - electrical
   applies_if_any:
-  - household
-  - motorized
-  - heating
   - consumer
+  - household
+  - food_contact
   exclude_if: []
-  confidence: high
-  notes: Emission-side EMC standard family commonly relevant to many household appliances.
-  item_type: standard
+  confidence: medium
+  notes: Review whether Candidate List SVHC communication or SCIP-related downstream
+    obligations are triggered.
+  item_type: review
   applies_if_products: []
   exclude_if_products: []
-  legislation_key: EMC
-- code: EN 55014-2
-  title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Immunity
+  legislation_key: REACH
+  is_harmonized: false
+  harmonized_under: REACH
+  harmonization_status: review
+  standard_family: REACH substances review
+  test_focus:
+  - materials
+  - software
+  evidence_hint:
+  - supplier SVHC declarations
+  - article-level substance assessment
+- code: EN 300 220 series review
+  title: Short range device radio standard family review required
   region: EU
-  category: emc
+  category: radio
   directives:
-  - EMC
+  - RED
   applies_if_all:
-  - electrical
+  - radio
   applies_if_any:
-  - household
-  - motorized
-  - heating
-  - consumer
+  - zigbee
+  - thread
+  - nfc
   exclude_if: []
-  confidence: high
-  notes: Immunity-side EMC standard family commonly relevant to many household appliances.
-  item_type: standard
+  confidence: low
+  notes: Placeholder review bucket where the precise short-range radio route depends
+    on frequency band and implementation.
+  item_type: review
   applies_if_products: []
   exclude_if_products: []
-  legislation_key: EMC
-- code: EN EN 61000-3-2
-  title: Electromagnetic compatibility - Limits for harmonic current emissions
-  region: EU
-  category: emc
-  directives:
-  - EMC
-  applies_if_all:
-  - mains_powered
-  applies_if_any:
-  - household
-  - consumer
-  - electrical
-  exclude_if:
-  - battery_powered
-  confidence: medium
-  notes: Typically considered for mains-powered equipment depending on product characteristics and scope.
-  item_type: standard
-  applies_if_products: []
-  exclude_if_products: []
-  legislation_key: EMC
-- code: EN 61000-3-3
-  title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations and flicker
-  region: EU
-  category: emc
-  directives:
-  - EMC
-  applies_if_all:
-  - mains_powered
-  applies_if_any:
-  - household
-  - consumer
-  - electrical
-  exclude_if:
-  - battery_powered
-  confidence: medium
-  notes: Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects.
-  item_type: standard
-  applies_if_products: []
-  exclude_if_products: []
-  legislation_key: EMC
+  legislation_key: RED
+  test_focus: []
 - code: EN 300 328
-  title: Wideband transmission systems; Data transmission equipment operating in the 2.4 GHz band
+  title: Wideband transmission systems; Data transmission equipment operating in the
+    2.4 GHz band
   region: EU
   category: radio
   directives:
@@ -140,11 +2291,26 @@ standards:
   - thread
   exclude_if: []
   confidence: high
-  notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth.
+  notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi
+    or Bluetooth.
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED
+  is_harmonized: true
+  harmonized_under: RED
+  harmonization_status: harmonized
+  harmonized_reference: Commission Implementing Decision (EU) 2022/2191 as amended
+  dated_version: ETSI EN 300 328 V2.2.2 (2019-07)
+  version: ETSI EN 300 328 V2.2.2 (2019-07)
+  standard_family: EN 300 328
+  test_focus:
+  - rf
+  - rf
+  evidence_hint:
+  - radio test report
+  - supported band/channel list
+  - antenna details
 - code: EN 301 489-1
   title: EMC standard for radio equipment and services - Common technical requirements
   region: EU
@@ -167,8 +2333,21 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED
+  is_harmonized: true
+  harmonized_under: RED
+  harmonization_status: harmonized
+  harmonized_reference: Commission Implementing Decision (EU) 2022/2191 as amended
+  dated_version: ETSI EN 301 489-1 V2.2.3 (2019-11)
+  version: ETSI EN 301 489-1 V2.2.3 (2019-11)
+  standard_family: EN 301 489-1
+  test_focus:
+  - immunity
+  evidence_hint:
+  - radio EMC test report
+  - radio operating modes
 - code: EN 301 489-17
-  title: EMC standard for radio equipment and services - Specific conditions for broadband data transmission systems
+  title: EMC standard for radio equipment and services - Specific conditions for broadband
+    data transmission systems
   region: EU
   category: radio_emc
   directives:
@@ -182,13 +2361,27 @@ standards:
   - thread
   exclude_if: []
   confidence: medium
-  notes: Often relevant alongside EN 301 489-1 depending on the short-range radio technology used.
+  notes: Often relevant alongside EN 301 489-1 depending on the short-range radio
+    technology used.
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED
+  is_harmonized: true
+  harmonized_under: RED
+  harmonization_status: harmonized
+  harmonized_reference: Commission Implementing Decision (EU) 2022/2191 as amended
+  dated_version: ETSI EN 301 489-17 V3.2.6 (2023-01)
+  version: ETSI EN 301 489-17 V3.2.6 (2023-01)
+  standard_family: EN 301 489-17
+  test_focus:
+  - immunity
+  evidence_hint:
+  - radio EMC test report
+  - Wi-Fi/Bluetooth active modes
 - code: EN 301 489-52
-  title: EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
+  title: EMC standard for radio equipment and services - Specific conditions for cellular
+    communications user equipment
   region: EU
   category: radio_emc
   directives:
@@ -206,6 +2399,19 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED
+  is_harmonized: false
+  harmonized_under: RED
+  harmonization_status: state_of_the_art
+  harmonized_reference: Not confirmed in the current RED harmonised references checked;
+    treat as latest technical route pending route confirmation
+  dated_version: ETSI EN 301 489-52 V1.3.1 (2024-11)
+  version: ETSI EN 301 489-52 V1.3.1 (2024-11)
+  standard_family: EN 301 489-52
+  test_focus:
+  - immunity
+  evidence_hint:
+  - cellular EMC test report
+  - module integration details
 - code: EN 301 511
   title: Harmonised standard for mobile stations in GSM networks
   region: EU
@@ -218,11 +2424,25 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: low
-  notes: Legacy cellular route that may be relevant for certain GSM-capable devices; verify actual radio technology.
+  notes: Legacy cellular route that may be relevant for certain GSM-capable devices;
+    verify actual radio technology.
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED
+  is_harmonized: true
+  harmonized_under: RED
+  harmonization_status: harmonized
+  harmonized_reference: Commission Implementing Decision (EU) 2022/2191 as amended
+  dated_version: ETSI EN 301 511 V12.5.1 (2017-03)
+  version: ETSI EN 301 511 V12.5.1 (2017-03)
+  standard_family: EN 301 511
+  test_focus:
+  - rf
+  - rf
+  evidence_hint:
+  - GSM radio test report
+  - cellular technology confirmation
 - code: EN 301 908 series review
   title: Cellular radio standard family review required
   region: EU
@@ -237,32 +2457,36 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: For cellular products, the specific EN 301 908 route depends on the implemented access technology and module design.
+  notes: For cellular products, the specific EN 301 908 route depends on the implemented
+    access technology and module design.
   item_type: review
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED
-- code: EN 300 220 series review
-  title: Short range device radio standard family review required
+  test_focus: []
+- code: EN 50663 / EN 62311 review
+  title: EMF assessment route review required
   region: EU
-  category: radio
+  category: emf
   directives:
   - RED
   applies_if_all:
   - radio
   applies_if_any:
-  - zigbee
-  - thread
-  - nfc
+  - cellular
+  - wearable
   exclude_if: []
   confidence: low
-  notes: Placeholder review bucket where the precise short-range radio route depends on frequency band and implementation.
+  notes: The applicable RF exposure assessment route may depend on power level, use
+    scenario, and placement on the body.
   item_type: review
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED
+  test_focus: []
 - code: EN 62479
-  title: Assessment of the compliance of low power electronic and electrical equipment with the basic restrictions related to human exposure to electromagnetic fields
+  title: Assessment of the compliance of low power electronic and electrical equipment
+    with the basic restrictions related to human exposure to electromagnetic fields
   region: EU
   category: emf
   directives:
@@ -282,24 +2506,19 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED
-- code: EN 50663 / EN 62311 review
-  title: EMF assessment route review required
-  region: EU
-  category: emf
-  directives:
-  - RED
-  applies_if_all:
-  - radio
-  applies_if_any:
-  - cellular
-  - wearable
-  exclude_if: []
-  confidence: low
-  notes: The applicable RF exposure assessment route may depend on power level, use scenario, and placement on the body.
-  item_type: review
-  applies_if_products: []
-  exclude_if_products: []
-  legislation_key: RED
+  is_harmonized: true
+  harmonized_under: RED
+  harmonization_status: harmonized
+  harmonized_reference: Commission Implementing Decision (EU) 2022/2191 as amended
+  dated_version: EN 62479:2010
+  version: IEC 62479:2010
+  standard_family: EN 62479
+  test_focus:
+  - emf
+  - rf
+  evidence_hint:
+  - RF exposure assessment
+  - SAR / power density rationale
 - code: EN 18031-1
   title: Common cybersecurity requirements for radio equipment - Part 1
   region: EU
@@ -316,11 +2535,26 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: Often relevant for connected radio products with networked or software-controlled functionality.
+  notes: Often relevant for connected radio products with networked or software-controlled
+    functionality.
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED_CYBER
+  is_harmonized: true
+  harmonized_under: RED
+  harmonization_status: harmonized
+  harmonized_reference: Commission Implementing Decision (EU) 2025/138 under Directive
+    2014/53/EU
+  dated_version: EN 18031-1:2024
+  version: EN 18031-1:2024
+  standard_family: EN 18031-1
+  test_focus:
+  - cybersecurity
+  evidence_hint:
+  - threat model
+  - secure update design
+  - auth / access control evidence
 - code: EN 18031-2
   title: Common cybersecurity requirements for radio equipment - Part 2
   region: EU
@@ -336,11 +2570,27 @@ standards:
   - cloud
   exclude_if: []
   confidence: medium
-  notes: Often relevant where network-connected radio equipment processes or protects access, credentials, or service integrity.
+  notes: Often relevant where network-connected radio equipment processes or protects
+    access, credentials, or service integrity.
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED_CYBER
+  is_harmonized: true
+  harmonized_under: RED
+  harmonization_status: harmonized
+  harmonized_reference: Commission Implementing Decision (EU) 2025/138 under Directive
+    2014/53/EU
+  dated_version: EN 18031-2:2024
+  version: EN 18031-2:2024
+  standard_family: EN 18031-2
+  test_focus:
+  - cybersecurity
+  - privacy
+  evidence_hint:
+  - data flow map
+  - privacy / data protection controls
+  - credential handling evidence
 - code: EN 18031-3
   title: Common cybersecurity requirements for radio equipment - Part 3
   region: EU
@@ -363,1702 +2613,85 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   legislation_key: RED_CYBER
-- code: CRA review
-  title: Cyber Resilience Act assessment required
+  is_harmonized: true
+  harmonized_under: RED
+  harmonization_status: harmonized
+  harmonized_reference: Commission Implementing Decision (EU) 2025/138 under Directive
+    2014/53/EU
+  dated_version: EN 18031-3:2024
+  version: EN 18031-3:2024
+  standard_family: EN 18031-3
+  test_focus:
+  - cybersecurity
+  - privacy
+  evidence_hint:
+  - fraud / monetary value protection controls
+  - transaction security design
+- code: EN IEC 63000
+  title: Technical documentation for the assessment of electrical and electronic products
+    with respect to the restriction of hazardous substances
   region: EU
-  category: cybersecurity
+  category: substances
   directives:
-  - CRA
-  applies_if_all: []
-  applies_if_any:
-  - electronic
-  - app_control
-  - cloud
-  - internet
-  - ota
-  - data_storage
-  exclude_if: []
-  confidence: medium
-  notes: Placeholder review bucket for wider CRA essential requirement assessment beyond radio-specific routes.
-  item_type: review
-  applies_if_products: []
-  exclude_if_products: []
-  legislation_key: CRA
-- code: GDPR review
-  title: GDPR assessment required
-  region: EU
-  category: privacy
-  directives:
-  - GDPR
-  applies_if_all: []
-  applies_if_any:
-  - personal_data_likely
-  - camera
-  - microphone
-  - location
-  - health_related
-  - account
-  - child_targeted
-  - data_storage
-  exclude_if: []
-  confidence: medium
-  notes: Placeholder compliance bucket for privacy and data protection review rather than a harmonized standard.
-  item_type: review
-  applies_if_products: []
-  exclude_if_products: []
-  legislation_key: GDPR
-- code: AI Act review
-  title: AI Act assessment required
-  region: EU
-  category: ai
-  directives:
-  - AI_Act
-  applies_if_all:
-  - ai_related
-  applies_if_any: []
-  exclude_if: []
-  confidence: medium
-  notes: Placeholder assessment bucket for AI-related regulatory review.
-  item_type: review
-  applies_if_products: []
-  exclude_if_products: []
-  legislation_key: AI_Act
-- code: Battery safety review
-  title: Battery safety and transport review required
-  region: EU
-  category: battery
-  directives:
-  - LVD
-  - CRA
-  applies_if_all:
-  - battery_powered
-  applies_if_any:
-  - wearable
-  - consumer
-  - household
-  exclude_if: []
-  confidence: low
-  notes: Placeholder review bucket where battery chemistry, charger architecture, and transport obligations need separate evaluation.
-  item_type: review
-  applies_if_products: []
-  exclude_if_products: []
-  legislation_key: LVD
-- code: Charger / external PSU review
-  title: External power supply and charger route review required
-  region: EU
-  category: power
-  directives:
-  - LVD
-  - EMC
+  - ROHS
   applies_if_all:
   - electrical
   applies_if_any:
+  - consumer
+  - household
+  - radio
   - mains_powered
-  - mains_power_likely
-  - usb_powered
+  - battery_powered
   exclude_if: []
-  confidence: low
-  notes: Review whether the product relies on an external PSU, charger, or adapter that brings additional compliance dependencies.
+  confidence: high
+  notes: Core documentation route for RoHS technical documentation.
+  item_type: standard
+  applies_if_products: []
+  exclude_if_products: []
+  legislation_key: ROHS
+  is_harmonized: true
+  harmonized_under: ROHS
+  harmonization_status: harmonized
+  harmonized_reference: European Commission RoHS harmonised standards page / summary
+    list under Directive 2011/65/EU
+  dated_version: EN IEC 63000:2018
+  version: IEC 63000:2016+A1:2022
+  standard_family: EN IEC 63000
+  test_focus:
+  - materials
+  - software
+  evidence_hint:
+  - supplier declarations
+  - BOM / material declarations
+  - technical documentation file
+- code: IEC 62321 series review
+  title: RoHS material test method series review required where analytical verification
+    is needed
+  region: IEC
+  category: substances
+  directives:
+  - ROHS
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - consumer
+  - household
+  - radio
+  exclude_if: []
+  confidence: medium
+  notes: Use the relevant IEC 62321 part(s) if analytical testing is needed for restricted
+    substances.
   item_type: review
   applies_if_products: []
   exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-2
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vacuum cleaners and water-suction cleaning appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - vacuum_cleaner
-  - water_suction_cleaner
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-3
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric irons'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_iron
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-4
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spin extractors'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - spin_extractor
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-5
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for dishwashers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - dishwasher
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-6
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary cooking ranges, hobs, ovens and similar appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - cooking_range
-  - hob
-  - oven
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-7
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for washing machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - washing_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-8
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for shavers, hair clippers and similar appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - shaver
-  - hair_clipper
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-9
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for grills, toasters and similar portable cooking appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - toaster
-  - portable_grill
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-10
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment machines and wet scrubbing machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - floor_treatment_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-11
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for tumble dryers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - tumble_dryer
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-12
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for warming plates and similar appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - warming_plate
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-13
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for deep fat fryers, frying pans and similar appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_frying_pan
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-14
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for kitchen machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - kitchen_machine
-  - blender
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-15
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for heating liquids'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: medium
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_kettle
-  - coffee_machine
-  - liquid_heater
-  - portable_immersion_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-16
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for food waste disposers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - food_waste_disposer
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-17
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for blankets, pads and similar flexible heating appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: medium
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_blanket
-  - heating_pad
-  - foot_warmer
-  - water_bed_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-21
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for storage water heaters'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - storage_water_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-23
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin or hair care'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - skin_hair_care_appliance
-  - beauty_treatment_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-24
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for refrigerating appliances, ice-cream appliances and ice-makers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - refrigerator_freezer
-  - commercial_refrigerator
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-25
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for microwave ovens, including combination microwave ovens'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - microwave_oven
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-26
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for clocks'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - clock
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-27
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin exposure to ultraviolet and infrared radiation'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - ultraviolet_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-28
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sewing machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - sewing_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-29
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for battery chargers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - battery_charger
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-30
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for room heaters'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - room_heater
-  - fan_heater
-  - patio_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-31
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for range hoods'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - range_hood
-  - kitchen_extractor_fan
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-32
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for massage appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - massage_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-33
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for coffee mills and coffee grinders'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - kitchen_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-34
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for motor-compressors'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - motor_compressor
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-35
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for instantaneous water heaters'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - immersion_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-36
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric cooking ranges, ovens, hobs and hob elements'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_cooking_appliance
-  - commercial_oven
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-37
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric deep fat fryers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_fryer
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-38
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric griddles and griddle grills'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_cooking_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-39
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric multi-purpose cooking pans'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_cooking_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-40
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heat pumps, air-conditioners and dehumidifiers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - heat_pump
-  - room_dehumidifier
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-41
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pumps'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_pump
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-42
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric forced convection ovens, steam cookers and steam-convection ovens'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_oven
-  - commercial_cooking_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-43
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for clothes dryers and towel rails'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - tumble_dryer
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-44
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for ironers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - ironer
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-45
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable heating tools and similar appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - skin_hair_care_appliance
-  - electric_iron
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-46
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric steam cookers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_cooking_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-47
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric boiling pans'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_cooking_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-48
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric grillers and toasters'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_cooking_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-49
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hot cupboards'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - hot_cupboard
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-50
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric bains-marie'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - hot_cupboard
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-51
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary circulation pumps for heating and service water installations'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - circulator
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-52
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for oral hygiene appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - oral_hygiene_appliance
-  - battery_powered_oral_hygiene
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-53
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sauna heating appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - sauna_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-54
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for surface-cleaning appliances for household use employing liquids or steam'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - floor_treatment_machine
-  - spray_extraction_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-55
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical appliances for use with aquariums and garden ponds'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - aquarium_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-56
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for projectors and similar appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - heating_lamp
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-58
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric dishwashing machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_washing_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-59
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for insect killers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - insect_killer
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-60
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for whirlpool baths and whirlpool spas'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - shower_cabinet
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-61
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for thermal-storage room heaters'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - room_heating_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-62
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric rinsing sinks'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_washing_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-64
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric kitchen machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_cooking_appliance
-  - kitchen_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-65
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for air-cleaning appliances'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - air_cleaner
-  - air_purifier
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-66
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for water-bed heaters'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - water_bed_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-67
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment and floor cleaning machines for industrial and commercial use'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - floor_treatment_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-68
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spray extraction appliances for industrial and commercial use'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - spray_extraction_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-69
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for wet and dry vacuum cleaners, including power brush, for industrial and commercial use'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - vacuum_cleaner
-  - water_suction_cleaner
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-70
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for milking machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_pump
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-71
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heating appliances for breeding and rearing animals'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - livestock_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-72
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for automatic machines for floor treatment for commercial and industrial use'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - floor_treatment_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-73
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fixed immersion heaters'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - immersion_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-74
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable immersion heaters'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - portable_immersion_heater
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-75
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial dispensing appliances and vending machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_dispensing_appliance
-  - vending_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-76
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fence energizers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - fence_energizer
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-77
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled mains-operated lawnmowers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - lawn_mower
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-78
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for outdoor barbecues'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - outdoor_barbecue
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-79
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for high pressure cleaners and steam cleaners'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - high_pressure_cleaner
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-80
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fans'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - fan
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-81
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for foot warmers and heating mats'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - foot_warmer
-  - heated_carpet
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-82
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for amusement machines and personal service machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - beauty_treatment_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-83
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated gullies for roof drainage'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - heated_carpet
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-84
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for toilets'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - shower_cabinet
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-85
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fabric steamers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_iron
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-86
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fishing machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_fish_stunner
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-87
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical animal-stunning equipment'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_fish_stunner
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-88
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers intended for use with heating, ventilation or air-conditioning systems'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - humidifier
-  - heat_pump
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-89
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial refrigerating appliances with an incorporated or remote refrigerant condensing unit or compressor'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_refrigerator
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-90
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial microwave ovens'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_microwave
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-91
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for walk-behind and hand-held lawn trimmers and lawn edge trimmers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_garden_tool
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-92
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled mains-operated lawn scarifiers and aerators'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - lawn_mower
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-94
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for scissors type grass shears'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electric_garden_tool
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-95
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drivers for vertically moving garage doors for residential use'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - gate_door_window_drive
-  - garage_door_drive
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-96
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for flexible sheet heating elements for room heating'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - heated_carpet
-  - heating_pad
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-97
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for rolling shutters, awnings, blinds and similar equipment'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - rolling_shutter_drive
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-98
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - humidifier
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-99
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hoods'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - commercial_hood
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-101
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vaporizers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - vaporizer
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-102
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for gas, oil and solid-fuel burning appliances having electrical connections'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - fuel_burning_electrical_appliance
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-103
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for gates, doors and windows'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - gate_door_window_drive
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-105
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for multifunctional shower cabinets'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - shower_cabinet
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-106
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated carpets and heating units for room heating installed under removable floor coverings'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - heated_carpet
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-107
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for robotic battery powered electrical lawn mowers'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - robotic_lawn_mower
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
-- code: EN 60335-2-108
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for detergent free electrolyser washing machines'
-  region: EN
-  category: safety
-  directives:
-  - LVD
-  applies_if_all: []
-  applies_if_any: []
-  exclude_if: []
-  confidence: high
-  notes: Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits.
-  applies_if_products:
-  - electrolyser_washing_machine
-  item_type: standard
-  exclude_if_products: []
-  legislation_key: LVD
+  legislation_key: ROHS
+  is_harmonized: false
+  harmonized_under: ROHS
+  harmonization_status: review
+  standard_family: IEC 62321 series
+  test_focus:
+  - materials
+  - software
+  evidence_hint:
+  - lab test plan
+  - restricted substance screening rationale

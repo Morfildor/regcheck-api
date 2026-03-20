@@ -154,4 +154,7 @@ class AnalysisResult(BaseModel):
     stats: AnalysisStats = Field(default_factory=AnalysisStats)
     knowledge_base_meta: KnowledgeBaseMeta | None = None
 
+    standard_sections: list[dict] = Field(default_factory=list)
+    legislation_sections: list[dict] = Field(default_factory=list)
+
     findings: list[Finding] = Field(default_factory=list)

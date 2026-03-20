@@ -13,6 +13,20 @@ TODAY = date.today()
 
 BUCKET_SORT = {"ce": 0, "framework": 1, "non_ce": 2, "future": 3, "informational": 4}
 PRIORITY_SORT = {"core": 0, "product_specific": 1, "conditional": 2, "informational": 3}
+SECTION_ORDER = ["harmonized", "state_of_the_art", "review", "unknown"]
+SECTION_TITLES = {
+    "harmonized": "Harmonized standards",
+    "state_of_the_art": "State of the art / latest technical route",
+    "review": "Review-required routes",
+    "unknown": "Other standards",
+}
+LEG_SECTION_TITLES = {
+    "ce": "CE legislations",
+    "framework": "Framework regimes",
+    "non_ce": "Parallel obligations",
+    "future": "Future regimes",
+    "informational": "Informational items",
+}
 
 
 def _parse_date(value: str | None) -> date | None:
@@ -213,8 +227,81 @@ def _missing_information_items(
     return items
 
 
+def _build_standard_sections(standards: list[StandardItem], review_items: list[StandardItem]) -> list[dict[str, Any]]:
+    grouped: dict[str, dict[str, Any]] = {}
+    for item in [*standards, *review_items]:
+        status = item.harmonization_status or ("review" if item.item_type == "review" else "unknown")
+        if status not in SECTION_TITLES:
+            status = "unknown"
+        section = grouped.setdefault(status, {
+            "key": status,
+            "title": SECTION_TITLES[status],
+            "count": 0,
+            "items": [],
+        })
+        section["items"].append({
+            "code": item.code,
+            "title": item.title,
+            "directive": item.directive,
+            "legislation_key": item.legislation_key,
+            "category": item.category,
+            "item_type": item.item_type,
+            "confidence": item.confidence,
+            "reason": item.reason,
+            "notes": item.notes,
+            "standard_family": item.standard_family,
+            "is_harmonized": item.is_harmonized,
+            "harmonized_under": item.harmonized_under,
+            "harmonized_reference": item.harmonized_reference,
+            "harmonization_status": item.harmonization_status,
+            "version": item.version,
+            "dated_version": item.dated_version,
+            "supersedes": item.supersedes,
+            "applies_if_products": item.applies_if_products,
+            "match_basis": item.match_basis,
+            "product_match_type": item.product_match_type,
+            "test_focus": item.test_focus,
+            "evidence_hint": item.evidence_hint,
+            "keywords": item.keywords,
+        })
+    for section in grouped.values():
+        section["items"].sort(key=lambda x: (x["directive"], x["code"]))
+        section["count"] = len(section["items"])
+    return [grouped[key] for key in SECTION_ORDER if key in grouped]
+
+
+def _build_legislation_sections(legislations: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[str, dict[str, Any]] = {}
+    for row in legislations:
+        bucket = row.get("bucket", "non_ce")
+        section = grouped.setdefault(bucket, {
+            "key": bucket,
+            "title": LEG_SECTION_TITLES.get(bucket, bucket.title()),
+            "count": 0,
+            "items": [],
+        })
+        section["items"].append({
+            "code": row.get("code"),
+            "title": row.get("title"),
+            "family": row.get("family"),
+            "directive_key": row.get("directive_key"),
+            "priority": row.get("priority"),
+            "applicability": row.get("applicability"),
+            "timing_status": row.get("timing_status"),
+            "reason": row.get("reason"),
+            "notes": row.get("notes"),
+            "applicable_from": row.get("applicable_from"),
+            "applicable_until": row.get("applicable_until"),
+        })
+    for section in grouped.values():
+        section["items"].sort(key=lambda x: (x["directive_key"], x["code"]))
+        section["count"] = len(section["items"])
+    return [grouped[key] for key in ["ce", "framework", "non_ce", "future", "informational"] if key in grouped]
+
+
 def _findings(
     legislations: list[dict[str, Any]],
+    standards: list[StandardItem],
     review_items: list[StandardItem],
     missing_information_items: list[MissingInformationItem],
     contradictions: list[str],
@@ -230,19 +317,30 @@ def _findings(
 
         findings.append(
             Finding(
-                directive=row["directive_key"],
-                article="Scope",
+                directive=row.get("directive_key", "OTHER"),
+                article=row["code"],
                 status=status,
                 finding=row["title"],
                 action=row.get("reason"),
             )
         )
 
-    for item in review_items[:10]:
+    for item in standards:
         findings.append(
             Finding(
-                directive=item.directive,
-                article="Review",
+                directive=item.directive or item.legislation_key or "OTHER",
+                article=item.code,
+                status="PASS" if item.harmonization_status == "harmonized" else "INFO",
+                finding=item.title,
+                action=item.reason or item.notes,
+            )
+        )
+
+    for item in review_items:
+        findings.append(
+            Finding(
+                directive=item.directive or item.legislation_key or "OTHER",
+                article=item.code,
                 status="WARN",
                 finding=item.title,
                 action=item.reason or item.notes,
@@ -253,9 +351,10 @@ def _findings(
         findings.append(
             Finding(
                 directive="INPUT",
-                article="Missing information",
+                article=f"Missing: {item.key}",
                 status="WARN",
                 finding=item.message,
+                action=("Examples: " + "; ".join(item.examples)) if item.examples else None,
             )
         )
 
@@ -380,6 +479,8 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
         summary_parts.append("Input contradictions reduce confidence and need resolution.")
 
     kb_meta = KnowledgeBaseMeta(**load_meta())
+    standard_sections = _build_standard_sections(standards, review_items)
+    legislation_sections = _build_legislation_sections(picked_legislations)
 
     return AnalysisResult(
         product_summary=description.strip() or category.strip() or "Product analysis",
@@ -408,5 +509,7 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
         diagnostics=_diagnostics(depth, classification, picked_legislations, applicable_items),
         stats=_stats(picked_legislations, standards, review_items, missing_information_items, classification["contradictions"]),
         knowledge_base_meta=kb_meta,
-        findings=_findings(picked_legislations, review_items, missing_information_items, classification["contradictions"]),
+        standard_sections=standard_sections,
+        legislation_sections=legislation_sections,
+        findings=_findings(picked_legislations, standards, review_items, missing_information_items, classification["contradictions"]),
     )
