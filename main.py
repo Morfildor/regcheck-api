@@ -15,7 +15,7 @@ from knowledge_base import (
 from models import AnalysisResult, ProductInput
 from rules import analyze
 
-APP_VERSION = "3.2.0"
+APP_VERSION = "3.2.1"
 
 app = FastAPI(title="RegCheck API", version=APP_VERSION)
 
@@ -24,6 +24,8 @@ DEFAULT_ALLOWED_ORIGINS = [
     "https://rulegrid.net",
     "https://www.rulegrid.net",
     "https://regcheck-frontend-kutrb6fg3-morfildors-projects.vercel.app",
+    "https://regcheck-frontend-git-main-morfildors-projects.vercel.app",
+    "https://regcheck-frontend-gxo61fmnd-morfildors-projects.vercel.app",
 ]
 
 extra_origins = [
