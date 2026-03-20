@@ -10,8 +10,7 @@ traits:
   description: Filters or cleans air
 - id: air_treatment
   label: Air treatment
-  description: Used to purify, humidify, dehumidify, condition, or otherwise treat
-    air
+  description: Used to purify, humidify, dehumidify, condition, or otherwise treat air
 - id: animal_use
   label: Animal use
   description: Intended for animals, aquariums, terrariums, or livestock environments
@@ -21,6 +20,10 @@ traits:
 - id: authentication
   label: Authentication
   description: Uses login, password, PIN, tokens, or similar controls
+- id: av_ict
+  label: AV / ICT equipment
+  description: Audio, video, display, communication, or ICT-style electronic equipment rather than ordinary household appliance
+    equipment.
 - id: battery_powered
   label: Battery powered
   description: Powered by primary or rechargeable batteries
@@ -86,8 +89,7 @@ traits:
   description: Extracts fumes, vapours, dust, or liquids
 - id: fixed_installation
   label: Fixed installation
-  description: Intended to be fixed, built in, wall mounted, ceiling mounted, or permanently
-    installed
+  description: Intended to be fixed, built in, wall mounted, ceiling mounted, or permanently installed
 - id: floor_standing
   label: Floor-standing appliance
   description: Normally positioned on the floor during use
@@ -136,6 +138,9 @@ traits:
 - id: internet
   label: Internet connected
   description: Connects to the public internet
+- id: laser
+  label: Laser emission
+  description: Product includes or uses a laser source, laser engine, scanner, rangefinder, or similar optical emitter.
 - id: liquid_heating
   label: Liquid heating
   description: Heats liquids such as water, milk, oil, or similar substances
@@ -225,8 +230,7 @@ traits:
   description: Normally placed on a table, counter, or worktop during use
 - id: textile_care
   label: Textile care
-  description: Used to wash, dry, iron, steam, or otherwise care for garments and
-    textiles
+  description: Used to wash, dry, iron, steam, or otherwise care for garments and textiles
 - id: thread
   label: Thread
   description: Uses Thread radio technology

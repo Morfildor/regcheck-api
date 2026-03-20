@@ -15,7 +15,8 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant for connected radio products with networked or software-controlled functionality. Excel scope: Cyber security - network and security (3.3d) Excel checked: checked 2025/10/11'
+  notes: 'Often relevant for connected radio products with networked or software-controlled functionality. Excel scope: Cyber
+    security - network and security (3.3d) Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -37,6 +38,8 @@ standards:
   keywords:
   - cyber security - network and security (3.3d)
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 18031-2
   title: Common cybersecurity requirements for radio equipment - Part 2
   region: EU
@@ -52,7 +55,8 @@ standards:
   - cloud
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant where network-connected radio equipment processes or protects access, credentials, or service integrity. Excel scope: Cyber security - personal, traffic and location data - 3.3.e) Excel checked: checked 2025/10/11'
+  notes: 'Often relevant where network-connected radio equipment processes or protects access, credentials, or service integrity.
+    Excel scope: Cyber security - personal, traffic and location data - 3.3.e) Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -74,6 +78,8 @@ standards:
   keywords:
   - cyber security - personal, traffic and location data - 3.3.e)
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 18031-3
   title: Common cybersecurity requirements for radio equipment - Part 3
   region: EU
@@ -91,7 +97,8 @@ standards:
   - health_related
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant where privacy, personal data, or child-related concerns arise. Excel scope: Cyber security - money transfer, monetary value or virtual currency 3.3f) Excel checked: checked 2025/10/11'
+  notes: 'Often relevant where privacy, personal data, or child-related concerns arise. Excel scope: Cyber security - money
+    transfer, monetary value or virtual currency 3.3f) Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -113,7 +120,10 @@ standards:
   keywords:
   - cyber security - money transfer, monetary value or virtual currency 3.3f)
   supersedes: null
-- title: Limitation of human exposure to electromagnetic fields from devices operating in the frequency range 0 Hz to 300 GHz used in electronic article surveillance, radio frequency identification and similar applications
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: Limitation of human exposure to electromagnetic fields from devices operating in the frequency range 0 Hz to 300
+    GHz used in electronic article surveillance, radio frequency identification and similar applications
   region: EU
   category: emf
   directives:
@@ -146,7 +156,10 @@ standards:
   - technical construction file
   keywords:
   - emf measurement rf (electronic article surveillance, rfid, nfc)
-- title: External a.c.-d.c. and a.c.-a.c. power supplies - Determination of no-load power and average efficiency of active modes
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: External a.c.-d.c. and a.c.-a.c. power supplies - Determination of no-load power and average efficiency of active
+    modes
   region: EU
   category: energy
   directives:
@@ -181,6 +194,8 @@ standards:
   - product information review
   keywords:
   - ext power supplies
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: Electrical and electronic household and office equipment - Measurement of low power consumption
   region: EU
   category: energy
@@ -214,7 +229,10 @@ standards:
   - product information review
   keywords:
   - off mode, standby mode, networked standby energy consumption
-- title: Product standard to demonstrate the compliance of wireless communication devices used in close proximity to the ear with the basic restrictions and exposure limit values related to human exposure to electromagnetic fields
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: Product standard to demonstrate the compliance of wireless communication devices used in close proximity to the ear
+    with the basic restrictions and exposure limit values related to human exposure to electromagnetic fields
   region: EU
   category: emf
   directives:
@@ -239,7 +257,8 @@ standards:
   harmonized_reference: (EU) 2022/30
   version: EN 50566:2017 + A1:2023
   dated_version: EN 50566:2017 + A1:2023
-  notes: 'Excel scope: EMF hand held appl. Excel checked: checked 2025/10/11 Excel scope: EMF hand held appl. Excel checked: checked 2025/10/11'
+  notes: 'Excel scope: EMF hand held appl. Excel checked: checked 2025/10/11 Excel scope: EMF hand held appl. Excel checked:
+    checked 2025/10/11'
   test_focus:
   - emf
   evidence_hint:
@@ -248,6 +267,8 @@ standards:
   keywords:
   - emf hand held appl.
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: Safety of household and similar appliances - Particular requirements for robotic battery powered electrical lawnmowers
   region: EU
   category: safety
@@ -280,6 +301,8 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - robotic lawnmower
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 50663 / EN 62311 review
   title: EMF assessment route review required
   region: EU
@@ -293,7 +316,8 @@ standards:
   - wearable
   exclude_if: []
   confidence: low
-  notes: 'The applicable RF exposure assessment route may depend on power level, use scenario, and placement on the body. Excel scope: EMF assesment of low power RF devices (10MHz to 300GHz)'
+  notes: 'The applicable RF exposure assessment route may depend on power level, use scenario, and placement on the body.
+    Excel scope: EMF assesment of low power RF devices (10MHz to 300GHz)'
   item_type: review
   applies_if_products: []
   exclude_if_products: []
@@ -312,6 +336,8 @@ standards:
   - test report
   keywords:
   - emf assesment of low power rf devices (10mhz to 300ghz)
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: Safety standard for consumer laser products consisting of solely or including removable laser containing light engine
   region: EU
   category: safety
@@ -322,7 +348,7 @@ standards:
   - consumer
   - electrical
   applies_if_any:
-  - electronic
+  - laser
   - display
   exclude_if: []
   confidence: low
@@ -337,7 +363,8 @@ standards:
   harmonized_reference: 2014/35/EU
   version: EN 50689 :2021
   dated_version: EN 50689 :2021
-  notes: 'Excel scope: Consumer laser products Excel checked: checked 2026/01/14 Excel scope: Consumer laser products Excel checked: checked 2026/01/14'
+  notes: 'Excel scope: Consumer laser products Excel checked: checked 2026/01/14 Excel scope: Consumer laser products Excel
+    checked: checked 2026/01/14 Narrowed to laser/light-engine products.'
   test_focus:
   - safety
   - electrical
@@ -347,6 +374,8 @@ standards:
   keywords:
   - consumer laser products
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 55014-1
   title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Emission
   region: EU
@@ -362,7 +391,8 @@ standards:
   - consumer
   exclude_if: []
   confidence: high
-  notes: 'Emission-side EMC standard family commonly relevant to many household appliances. Excel scope: Emission Excel checked: checked 2025/10/11'
+  notes: 'Emission-side EMC standard family commonly relevant to many household appliances. Excel scope: Emission Excel checked:
+    checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -383,6 +413,8 @@ standards:
   - test report
   keywords:
   - emission
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 55014-2
   title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Immunity
   region: EU
@@ -398,7 +430,8 @@ standards:
   - consumer
   exclude_if: []
   confidence: high
-  notes: 'Immunity-side EMC standard family commonly relevant to many household appliances. Excel scope: Immunity IEC state-of-the-art: Cl 7.2.7 exception shall not be used Excel checked: checked 2025/10/11'
+  notes: 'Immunity-side EMC standard family commonly relevant to many household appliances. Excel scope: Immunity IEC state-of-the-art:
+    Cl 7.2.7 exception shall not be used Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -419,6 +452,8 @@ standards:
   - test report
   keywords:
   - immunity
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: Electromagnetic compatibility of multimedia equipment - Emission requirements
   region: EU
   category: emc
@@ -432,7 +467,6 @@ standards:
   - speaker
   - microphone
   - camera
-  - internet
   exclude_if: []
   confidence: medium
   item_type: standard
@@ -446,7 +480,9 @@ standards:
   harmonized_reference: 2014/30/EU
   version: EN 55032:2015 + A11:2020 (class B)
   dated_version: EN 55032:2015 + A11:2020 (class B)
-  notes: 'Excel scope: EMC (Qi /Wireless Charging & FM) Excel checked: checked 2025/10/11 Excel scope: EMC (Qi /Wireless Charging & FM) Excel checked: checked 2025/10/11'
+  notes: 'Excel scope: EMC (Qi /Wireless Charging & FM) Excel checked: checked 2025/10/11 Excel scope: EMC (Qi /Wireless Charging
+    & FM) Excel checked: checked 2025/10/11 Narrowed to AV/ICT-style electronics; not intended to trigger for ordinary connected
+    household appliances only because they use internet/app/cloud.'
   test_focus:
   - emission
   - immunity
@@ -456,6 +492,8 @@ standards:
   keywords:
   - emc (qi /wireless charging & fm)
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-1
   title: Household and similar electrical appliances - Safety - General requirements
   region: EU
@@ -475,7 +513,9 @@ standards:
   exclude_if:
   - industrial
   confidence: high
-  notes: 'General baseline safety standard family often relevant to household electrical appliances. Excel scope: Household appliances Based on IEC: IEC 60335-1:2012 + .. (ed.5.2); IEC 60335-1:2020 (ed.6.0) IEC state-of-the-art: IEC 60335-1:2020 + A1:2025 (ed.6.1) Excel checked: checked 2026/01/14'
+  notes: 'General baseline safety standard family often relevant to household electrical appliances. Excel scope: Household
+    appliances Based on IEC: IEC 60335-1:2012 + .. (ed.5.2); IEC 60335-1:2020 (ed.6.0) IEC state-of-the-art: IEC 60335-1:2020
+    + A1:2025 (ed.6.1) Excel checked: checked 2026/01/14'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -496,8 +536,11 @@ standards:
   - safety test report
   keywords:
   - household appliances
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-2
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vacuum cleaners and water-suction cleaning appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vacuum cleaners and water-suction
+    cleaning appliances'
   region: EN
   category: safety
   directives:
@@ -506,7 +549,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: vacuum cleaners Based on IEC: IEC 60335-2-2:2019 (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: vacuum
+    cleaners Based on IEC: IEC 60335-2-2:2019 (ed.7.0) Excel checked: checked 2026/01/14'
   applies_if_products:
   - vacuum_cleaner
   - water_suction_cleaner
@@ -529,6 +573,8 @@ standards:
   - safety test report
   keywords:
   - vacuum cleaners
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-3
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric irons'
   region: EN
@@ -539,7 +585,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: irons Based on IEC: IEC 60335-2-3:2012 +..(ed.6.1) IEC state-of-the-art: IEC 60335-2-3:2022 + A1:2025 (ed.7.1) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: irons
+    Based on IEC: IEC 60335-2-3:2012 +..(ed.6.1) IEC state-of-the-art: IEC 60335-2-3:2022 + A1:2025 (ed.7.1) Excel checked:
+    checked 2026/01/14'
   applies_if_products:
   - electric_iron
   item_type: standard
@@ -561,6 +609,8 @@ standards:
   keywords:
   - irons
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-4
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spin extractors'
   region: EN
@@ -586,6 +636,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-5
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for dishwashers'
   region: EN
@@ -611,8 +663,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-6
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary cooking ranges, hobs, ovens and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary cooking ranges,
+    hobs, ovens and similar appliances'
   region: EN
   category: safety
   directives:
@@ -621,7 +676,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: hobs, ovens Based on IEC: IEC 60335-2-6:2014+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-6:2024 (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: hobs,
+    ovens Based on IEC: IEC 60335-2-6:2014+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-6:2024 (ed.7.0) Excel checked: checked
+    2026/01/14'
   applies_if_products:
   - cooking_range
   - hob
@@ -645,6 +702,8 @@ standards:
   keywords:
   - hobs, ovens
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-7
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for washing machines'
   region: EN
@@ -670,8 +729,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-8
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for shavers, hair clippers and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for shavers, hair clippers
+    and similar appliances'
   region: EN
   category: safety
   directives:
@@ -680,7 +742,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: (fabric) shaver Based on IEC: IEC 60335-2-8:2012+..(ed.6.1); IEC 60335-2-8:2012+..(ed.6.2) IEC state-of-the-art: IEC 60335-2-8:2022 (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: (fabric)
+    shaver Based on IEC: IEC 60335-2-8:2012+..(ed.6.1); IEC 60335-2-8:2012+..(ed.6.2) IEC state-of-the-art: IEC 60335-2-8:2022
+    (ed.7.0) Excel checked: checked 2026/01/14'
   applies_if_products:
   - shaver
   - hair_clipper
@@ -703,8 +767,11 @@ standards:
   - safety test report
   keywords:
   - (fabric) shaver
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-9
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for grills, toasters and similar portable cooking appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for grills, toasters and
+    similar portable cooking appliances'
   region: EN
   category: safety
   directives:
@@ -713,7 +780,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: grills, toasters Based on IEC: IEC 60335-2-9:2002+..(ed.5.2); IEC 60335-2-9:2019 (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: grills,
+    toasters Based on IEC: IEC 60335-2-9:2002+..(ed.5.2); IEC 60335-2-9:2019 (ed.7.0) Excel checked: checked 2026/01/14'
   applies_if_products:
   - toaster
   - portable_grill
@@ -736,8 +804,11 @@ standards:
   - safety test report
   keywords:
   - grills, toasters
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-10
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment machines and wet scrubbing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment machines
+    and wet scrubbing machines'
   region: EN
   category: safety
   directives:
@@ -746,7 +817,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: floor treatment/wet Based on IEC: IEC 60335-2-10:2002+..(ed.5.1) IEC state-of-the-art: IEC 60335-2-10:2021 (ed.6.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: floor
+    treatment/wet Based on IEC: IEC 60335-2-10:2002+..(ed.5.1) IEC state-of-the-art: IEC 60335-2-10:2021 (ed.6.0) Excel checked:
+    checked 2026/01/14'
   applies_if_products:
   - floor_treatment_machine
   item_type: standard
@@ -768,6 +841,8 @@ standards:
   keywords:
   - floor treatment/wet
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-11
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for tumble dryers'
   region: EN
@@ -793,8 +868,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-12
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for warming plates and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for warming plates and similar
+    appliances'
   region: EN
   category: safety
   directives:
@@ -803,7 +881,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: heating plates Based on IEC: IEC 60335-2-12:2002+..(ed.5.2) IEC state-of-the-art: IEC 60335-2-12:2024 (ed.6.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: heating
+    plates Based on IEC: IEC 60335-2-12:2002+..(ed.5.2) IEC state-of-the-art: IEC 60335-2-12:2024 (ed.6.0) Excel checked:
+    checked 2026/01/14'
   applies_if_products:
   - warming_plate
   item_type: standard
@@ -825,8 +905,11 @@ standards:
   keywords:
   - heating plates
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-13
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for deep fat fryers, frying pans and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for deep fat fryers, frying
+    pans and similar appliances'
   region: EN
   category: safety
   directives:
@@ -835,9 +918,12 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fryers Based on IEC: IEC 60335-2-13:2019+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-13:2021 + A1:2025 (ed.7.1) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fryers
+    Based on IEC: IEC 60335-2-13:2019+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-13:2021 + A1:2025 (ed.7.1) Excel checked:
+    checked 2026/01/14'
   applies_if_products:
   - electric_frying_pan
+  - deep_fryer
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
@@ -857,6 +943,8 @@ standards:
   keywords:
   - fryers
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-14
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for kitchen machines'
   region: EN
@@ -867,10 +955,13 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: kitchen Based on IEC: IEC 60335-2-14:2006+.. (ed.5.2); IEC 60335-2-14:2016 + ..(ed.6.1) IEC state-of-the-art: IEC 60335-2-14:2025 (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: kitchen
+    Based on IEC: IEC 60335-2-14:2006+.. (ed.5.2); IEC 60335-2-14:2016 + ..(ed.6.1) IEC state-of-the-art: IEC 60335-2-14:2025
+    (ed.7.0) Excel checked: checked 2026/01/14'
   applies_if_products:
   - kitchen_machine
   - blender
+  - food_processor
   item_type: standard
   exclude_if_products: []
   legislation_key: LVD
@@ -890,8 +981,11 @@ standards:
   keywords:
   - kitchen
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-15
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for heating liquids'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for heating
+    liquids'
   region: EN
   category: safety
   directives:
@@ -900,7 +994,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: medium
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: coffee, kettles Based on IEC: IEC 60335-2-15:2012+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-15:2024 (ed.7.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: coffee,
+    kettles Based on IEC: IEC 60335-2-15:2012+..(ed.6.1) IEC state-of-the-art: IEC 60335-2-15:2024 (ed.7.0) Excel checked:
+    checked 2026/01/14'
   applies_if_products:
   - electric_kettle
   - coffee_machine
@@ -925,6 +1021,8 @@ standards:
   keywords:
   - coffee, kettles
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-16
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for food waste disposers'
   region: EN
@@ -950,8 +1048,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-17
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for blankets, pads and similar flexible heating appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for blankets, pads and similar
+    flexible heating appliances'
   region: EN
   category: safety
   directives:
@@ -978,6 +1079,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-21
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for storage water heaters'
   region: EN
@@ -1003,8 +1106,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-23
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin or hair care'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin or
+    hair care'
   region: EN
   category: safety
   directives:
@@ -1029,8 +1135,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-24
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for refrigerating appliances, ice-cream appliances and ice-makers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for refrigerating appliances,
+    ice-cream appliances and ice-makers'
   region: EN
   category: safety
   directives:
@@ -1055,8 +1164,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-25
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for microwave ovens, including combination microwave ovens'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for microwave ovens, including
+    combination microwave ovens'
   region: EN
   category: safety
   directives:
@@ -1080,6 +1192,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-26
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for clocks'
   region: EN
@@ -1105,8 +1219,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-27
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin exposure to ultraviolet and infrared radiation'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin exposure
+    to ultraviolet and infrared radiation'
   region: EN
   category: safety
   directives:
@@ -1130,6 +1247,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-28
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sewing machines'
   region: EN
@@ -1155,6 +1274,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-29
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for battery chargers'
   region: EN
@@ -1165,7 +1286,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: battery chargers Based on IEC: IEC 60335-2-29:2016+..(ed.5.1) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: battery
+    chargers Based on IEC: IEC 60335-2-29:2016+..(ed.5.1) Excel checked: checked 2026/01/14'
   applies_if_products:
   - battery_charger
   item_type: standard
@@ -1187,6 +1309,8 @@ standards:
   keywords:
   - battery chargers
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-30
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for room heaters'
   region: EN
@@ -1197,7 +1321,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: room heaters Based on IEC: IEC 60335-2-30:2009+..(ed.5.2) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: room
+    heaters Based on IEC: IEC 60335-2-30:2009+..(ed.5.2) Excel checked: checked 2026/01/14'
   applies_if_products:
   - room_heater
   - fan_heater
@@ -1221,6 +1346,8 @@ standards:
   keywords:
   - room heaters
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-31
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for range hoods'
   region: EN
@@ -1247,6 +1374,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-32
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for massage appliances'
   region: EN
@@ -1272,8 +1401,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-33
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for coffee mills and coffee grinders'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for coffee mills and coffee
+    grinders'
   region: EN
   category: safety
   directives:
@@ -1297,6 +1429,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-34
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for motor-compressors'
   region: EN
@@ -1322,6 +1456,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-35
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for instantaneous water heaters'
   region: EN
@@ -1347,8 +1483,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-36
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric cooking ranges, ovens, hobs and hob elements'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric cooking
+    ranges, ovens, hobs and hob elements'
   region: EN
   category: safety
   directives:
@@ -1373,8 +1512,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-37
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric deep fat fryers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric deep
+    fat fryers'
   region: EN
   category: safety
   directives:
@@ -1398,8 +1540,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-38
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric griddles and griddle grills'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric griddles
+    and griddle grills'
   region: EN
   category: safety
   directives:
@@ -1423,8 +1568,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-39
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric multi-purpose cooking pans'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric multi-purpose
+    cooking pans'
   region: EN
   category: safety
   directives:
@@ -1448,8 +1596,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-40
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heat pumps, air-conditioners and dehumidifiers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heat pumps,
+    air-conditioners and dehumidifiers'
   region: EN
   category: safety
   directives:
@@ -1458,7 +1609,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: A/C Based on IEC: IEC 60335-2-40:2018 (ed.6.0); IEC 60335-2-40:2022(ed.7.0) IEC state-of-the-art: IEC 60335-2-40:2024 Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: A/C
+    Based on IEC: IEC 60335-2-40:2018 (ed.6.0); IEC 60335-2-40:2022(ed.7.0) IEC state-of-the-art: IEC 60335-2-40:2024 Excel
+    checked: checked 2026/01/14'
   applies_if_products:
   - heat_pump
   - room_dehumidifier
@@ -1481,6 +1634,8 @@ standards:
   - safety test report
   keywords:
   - a/c
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-41
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pumps'
   region: EN
@@ -1506,8 +1661,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-42
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric forced convection ovens, steam cookers and steam-convection ovens'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric forced
+    convection ovens, steam cookers and steam-convection ovens'
   region: EN
   category: safety
   directives:
@@ -1532,8 +1690,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-43
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for clothes dryers and towel rails'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for clothes
+    dryers and towel rails'
   region: EN
   category: safety
   directives:
@@ -1557,6 +1718,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-44
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for ironers'
   region: EN
@@ -1567,7 +1730,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: ironers Based on IEC: IEC 60335-2-44:2002+..(ed.3.0) IEC state-of-the-art: IEC 60335-2-44:2021 + AMD1:2025 (ed.4.1) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: ironers
+    Based on IEC: IEC 60335-2-44:2002+..(ed.3.0) IEC state-of-the-art: IEC 60335-2-44:2021 + AMD1:2025 (ed.4.1) Excel checked:
+    checked 2026/01/14'
   applies_if_products:
   - ironer
   item_type: standard
@@ -1589,8 +1754,11 @@ standards:
   keywords:
   - ironers
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-45
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable heating tools and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable heating tools
+    and similar appliances'
   region: EN
   category: safety
   directives:
@@ -1615,8 +1783,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-46
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric steam cookers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric steam
+    cookers'
   region: EN
   category: safety
   directives:
@@ -1640,8 +1811,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-47
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric boiling pans'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric boiling
+    pans'
   region: EN
   category: safety
   directives:
@@ -1665,8 +1839,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-48
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric grillers and toasters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric grillers
+    and toasters'
   region: EN
   category: safety
   directives:
@@ -1690,8 +1867,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-49
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hot cupboards'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hot
+    cupboards'
   region: EN
   category: safety
   directives:
@@ -1715,6 +1895,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-50
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric bains-marie'
   region: EN
@@ -1740,8 +1922,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-51
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary circulation pumps for heating and service water installations'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary circulation
+    pumps for heating and service water installations'
   region: EN
   category: safety
   directives:
@@ -1765,6 +1950,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-52
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for oral hygiene appliances'
   region: EN
@@ -1791,6 +1978,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-53
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sauna heating appliances'
   region: EN
@@ -1816,8 +2005,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-54
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for surface-cleaning appliances for household use employing liquids or steam'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for surface-cleaning appliances
+    for household use employing liquids or steam'
   region: EN
   category: safety
   directives:
@@ -1826,7 +2018,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: surface (steam) cleaners Based on IEC: IEC 60335-2-54:2008+..(ed.4.2) IEC state-of-the-art: IEC 60335-2-54:2022 (ed.5.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: surface
+    (steam) cleaners Based on IEC: IEC 60335-2-54:2008+..(ed.4.2) IEC state-of-the-art: IEC 60335-2-54:2022 (ed.5.0) Excel
+    checked: checked 2026/01/14'
   applies_if_products:
   - floor_treatment_machine
   - spray_extraction_machine
@@ -1849,8 +2043,11 @@ standards:
   keywords:
   - surface (steam) cleaners
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-55
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical appliances for use with aquariums and garden ponds'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical appliances
+    for use with aquariums and garden ponds'
   region: EN
   category: safety
   directives:
@@ -1874,8 +2071,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-56
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for projectors and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for projectors and similar
+    appliances'
   region: EN
   category: safety
   directives:
@@ -1899,8 +2099,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-58
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric dishwashing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric dishwashing
+    machines'
   region: EN
   category: safety
   directives:
@@ -1924,6 +2127,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-59
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for insect killers'
   region: EN
@@ -1949,8 +2154,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-60
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for whirlpool baths and whirlpool spas'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for whirlpool baths and whirlpool
+    spas'
   region: EN
   category: safety
   directives:
@@ -1974,8 +2182,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-61
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for thermal-storage room heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for thermal-storage room
+    heaters'
   region: EN
   category: safety
   directives:
@@ -1999,8 +2210,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-62
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric rinsing sinks'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric rinsing
+    sinks'
   region: EN
   category: safety
   directives:
@@ -2024,8 +2238,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-64
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric kitchen machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric kitchen
+    machines'
   region: EN
   category: safety
   directives:
@@ -2050,6 +2267,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-65
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for air-cleaning appliances'
   region: EN
@@ -2060,7 +2279,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: aircleaners Based on IEC: IEC 60335-2-65:2002+..(ed.2.1); IEC 60335-2-65:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-65:2023 (ed.3.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: aircleaners
+    Based on IEC: IEC 60335-2-65:2002+..(ed.2.1); IEC 60335-2-65:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-65:2023
+    (ed.3.0) Excel checked: checked 2026/01/14'
   applies_if_products:
   - air_cleaner
   - air_purifier
@@ -2083,6 +2304,8 @@ standards:
   - safety test report
   keywords:
   - aircleaners
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-66
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for water-bed heaters'
   region: EN
@@ -2108,8 +2331,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-67
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment and floor cleaning machines for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment and floor
+    cleaning machines for industrial and commercial use'
   region: EN
   category: safety
   directives:
@@ -2133,8 +2359,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-68
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spray extraction appliances for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spray extraction appliances
+    for industrial and commercial use'
   region: EN
   category: safety
   directives:
@@ -2158,8 +2387,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-69
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for wet and dry vacuum cleaners, including power brush, for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for wet and dry vacuum cleaners,
+    including power brush, for industrial and commercial use'
   region: EN
   category: safety
   directives:
@@ -2184,6 +2416,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-70
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for milking machines'
   region: EN
@@ -2209,8 +2443,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-71
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heating appliances for breeding and rearing animals'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heating appliances
+    for breeding and rearing animals'
   region: EN
   category: safety
   directives:
@@ -2234,8 +2471,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-72
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for automatic machines for floor treatment for commercial and industrial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for automatic machines for
+    floor treatment for commercial and industrial use'
   region: EN
   category: safety
   directives:
@@ -2259,6 +2499,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-73
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fixed immersion heaters'
   region: EN
@@ -2284,6 +2526,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-74
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable immersion heaters'
   region: EN
@@ -2309,8 +2553,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-75
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial dispensing appliances and vending machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial dispensing
+    appliances and vending machines'
   region: EN
   category: safety
   directives:
@@ -2319,7 +2566,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: vending mach (beer) Based on IEC: IEC 60335-2-75:2002+..(ed.2.2); IEC 60335-2-75:2012+..(ed.3.2) IEC state-of-the-art: IEC 60335-2-75:2024 (ed.4.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: vending
+    mach (beer) Based on IEC: IEC 60335-2-75:2002+..(ed.2.2); IEC 60335-2-75:2012+..(ed.3.2) IEC state-of-the-art: IEC 60335-2-75:2024
+    (ed.4.0) Excel checked: checked 2026/01/14'
   applies_if_products:
   - commercial_dispensing_appliance
   - vending_machine
@@ -2342,6 +2591,8 @@ standards:
   - safety test report
   keywords:
   - vending mach (beer)
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-76
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fence energizers'
   region: EN
@@ -2367,8 +2618,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-77
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled mains-operated lawnmowers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled
+    mains-operated lawnmowers'
   region: EN
   category: safety
   directives:
@@ -2392,6 +2646,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-78
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for outdoor barbecues'
   region: EN
@@ -2417,8 +2673,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-79
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for high pressure cleaners and steam cleaners'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for high pressure cleaners
+    and steam cleaners'
   region: EN
   category: safety
   directives:
@@ -2442,6 +2701,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-80
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fans'
   region: EN
@@ -2452,7 +2713,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fans Based on IEC: IEC 60335-2-80:2002 (ed.2.2); IEC 60335-2-80:2015 (ed.3.0) IEC state-of-the-art: IEC 60335-2-80:2024 (ed.4.0) Excel checked: checked 2025/07/09'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fans
+    Based on IEC: IEC 60335-2-80:2002 (ed.2.2); IEC 60335-2-80:2015 (ed.3.0) IEC state-of-the-art: IEC 60335-2-80:2024 (ed.4.0)
+    Excel checked: checked 2025/07/09'
   applies_if_products:
   - fan
   item_type: standard
@@ -2474,8 +2737,11 @@ standards:
   - safety test report
   keywords:
   - fans
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-81
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for foot warmers and heating mats'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for foot warmers and heating
+    mats'
   region: EN
   category: safety
   directives:
@@ -2500,8 +2766,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-82
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for amusement machines and personal service machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for amusement machines and
+    personal service machines'
   region: EN
   category: safety
   directives:
@@ -2525,8 +2794,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-83
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated gullies for roof drainage'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated gullies for roof
+    drainage'
   region: EN
   category: safety
   directives:
@@ -2550,6 +2822,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-84
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for toilets'
   region: EN
@@ -2575,6 +2849,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-85
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fabric steamers'
   region: EN
@@ -2585,7 +2861,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fabric steamers Based on IEC: IEC 60335-2-85:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-85:2022 +A1:2025 (ed.3.1) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: fabric
+    steamers Based on IEC: IEC 60335-2-85:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-85:2022 +A1:2025 (ed.3.1) Excel
+    checked: checked 2026/01/14'
   applies_if_products:
   - electric_iron
   item_type: standard
@@ -2607,6 +2885,8 @@ standards:
   keywords:
   - fabric steamers
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-86
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fishing machines'
   region: EN
@@ -2632,8 +2912,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-87
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical animal-stunning equipment'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical animal-stunning
+    equipment'
   region: EN
   category: safety
   directives:
@@ -2657,8 +2940,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-88
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers intended for use with heating, ventilation or air-conditioning systems'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers intended
+    for use with heating, ventilation or air-conditioning systems'
   region: EN
   category: safety
   directives:
@@ -2683,8 +2969,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-89
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial refrigerating appliances with an incorporated or remote refrigerant condensing unit or compressor'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial refrigerating
+    appliances with an incorporated or remote refrigerant condensing unit or compressor'
   region: EN
   category: safety
   directives:
@@ -2708,8 +2997,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-90
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial microwave ovens'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial microwave
+    ovens'
   region: EN
   category: safety
   directives:
@@ -2733,8 +3025,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-91
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for walk-behind and hand-held lawn trimmers and lawn edge trimmers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for walk-behind and hand-held
+    lawn trimmers and lawn edge trimmers'
   region: EN
   category: safety
   directives:
@@ -2758,8 +3053,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-92
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled mains-operated lawn scarifiers and aerators'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for pedestrian-controlled
+    mains-operated lawn scarifiers and aerators'
   region: EN
   category: safety
   directives:
@@ -2783,6 +3081,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-94
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for scissors type grass shears'
   region: EN
@@ -2808,8 +3108,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-95
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drivers for vertically moving garage doors for residential use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drivers for vertically
+    moving garage doors for residential use'
   region: EN
   category: safety
   directives:
@@ -2834,8 +3137,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-96
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for flexible sheet heating elements for room heating'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for flexible sheet heating
+    elements for room heating'
   region: EN
   category: safety
   directives:
@@ -2860,8 +3166,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-97
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for rolling shutters, awnings, blinds and similar equipment'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for rolling shutters,
+    awnings, blinds and similar equipment'
   region: EN
   category: safety
   directives:
@@ -2885,6 +3194,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-98
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers'
   region: EN
@@ -2895,7 +3206,9 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: high
-  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: humidifier Based on IEC: IEC 60335-2-98:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-98:2023 (ed.3.0) Excel checked: checked 2026/01/14'
+  notes: 'Strict product-gated 60335-2 entry. Do not auto-match from generic household/electrical traits. Excel scope: humidifier
+    Based on IEC: IEC 60335-2-98:2002+..(ed.2.2) IEC state-of-the-art: IEC 60335-2-98:2023 (ed.3.0) Excel checked: checked
+    2026/01/14'
   applies_if_products:
   - humidifier
   item_type: standard
@@ -2917,6 +3230,8 @@ standards:
   keywords:
   - humidifier
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-99
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hoods'
   region: EN
@@ -2942,6 +3257,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-101
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vaporizers'
   region: EN
@@ -2967,8 +3284,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-102
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for gas, oil and solid-fuel burning appliances having electrical connections'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for gas, oil and solid-fuel
+    burning appliances having electrical connections'
   region: EN
   category: safety
   directives:
@@ -2992,8 +3312,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-103
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for gates, doors and windows'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for gates, doors
+    and windows'
   region: EN
   category: safety
   directives:
@@ -3017,8 +3340,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-105
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for multifunctional shower cabinets'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for multifunctional shower
+    cabinets'
   region: EN
   category: safety
   directives:
@@ -3042,8 +3368,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-106
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated carpets and heating units for room heating installed under removable floor coverings'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated carpets and heating
+    units for room heating installed under removable floor coverings'
   region: EN
   category: safety
   directives:
@@ -3067,8 +3396,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-107
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for robotic battery powered electrical lawn mowers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for robotic battery powered
+    electrical lawn mowers'
   region: EN
   category: safety
   directives:
@@ -3092,8 +3424,11 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 60335-2-108
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for detergent free electrolyser washing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for detergent free electrolyser
+    washing machines'
   region: EN
   category: safety
   directives:
@@ -3117,6 +3452,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: 'Safety of laser products - Part 1: Equipment classification and requirements'
   region: EU
   category: safety
@@ -3126,7 +3463,7 @@ standards:
   applies_if_all:
   - electrical
   applies_if_any:
-  - electronic
+  - laser
   - display
   exclude_if: []
   confidence: low
@@ -3142,7 +3479,9 @@ standards:
   version: EN 60825-1:2014 + C1:2017 + A11:2021 +A11:2021/C11:2022
   dated_version: EN 60825-1:2014 + A11:2021
   supersedes: EN 60825-1:2014 + A11:2021
-  notes: 'Excel scope: Laser Based on IEC: IEC 608025-1:2014 (ed.3.0) + ISH1:2017 + ISH:2017 Excel checked: checked 2026/01/14 Excel scope: Laser Based on IEC: IEC 608025-1:2014 (ed.3.0) + ISH1:2017 + ISH:2017 Excel checked: checked 2026/01/14'
+  notes: 'Excel scope: Laser Based on IEC: IEC 608025-1:2014 (ed.3.0) + ISH1:2017 + ISH:2017 Excel checked: checked 2026/01/14
+    Excel scope: Laser Based on IEC: IEC 608025-1:2014 (ed.3.0) + ISH1:2017 + ISH:2017 Excel checked: checked 2026/01/14 Narrowed
+    to products with laser emission or display/light-engine risk.'
   test_focus:
   - safety
   - electrical
@@ -3151,6 +3490,8 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - laser
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 61000-3-2
   title: Electromagnetic compatibility - Limits for harmonic current emissions
   region: EU
@@ -3166,7 +3507,8 @@ standards:
   exclude_if:
   - battery_powered
   confidence: medium
-  notes: 'Typically considered for mains-powered equipment depending on product characteristics and scope. Excel scope: harmonics Excel checked: checked 2025/10/11'
+  notes: 'Typically considered for mains-powered equipment depending on product characteristics and scope. Excel scope: harmonics
+    Excel checked: checked 2025/10/11 Keep under EMC listing / other EMC standards.'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3187,6 +3529,8 @@ standards:
   - test report
   keywords:
   - harmonics
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 61000-3-3
   title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations and flicker
   region: EU
@@ -3202,7 +3546,8 @@ standards:
   exclude_if:
   - battery_powered
   confidence: medium
-  notes: 'Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects. Excel scope: flicker Excel checked: checked 2025/10/11'
+  notes: 'Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects. Excel scope:
+    flicker Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3223,6 +3568,8 @@ standards:
   - test report
   keywords:
   - flicker
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: Safety of transformers, reactors, power supply units and combinations thereof - General requirements and tests
   region: EU
   category: safety
@@ -3251,7 +3598,8 @@ standards:
   harmonized_reference: 2014/35/EU
   version: EN IEC 61558-1:2019
   dated_version: EN IEC 61558-1:2019
-  notes: 'Excel scope: transformers Based on IEC: IEC 61558-1:2017 (ed.3.0) Excel checked: checked 2026/01/14 Excel scope: transformers Based on IEC: IEC 61558-1:2017 (ed.3.0) Excel checked: checked 2026/01/14'
+  notes: 'Excel scope: transformers Based on IEC: IEC 61558-1:2017 (ed.3.0) Excel checked: checked 2026/01/14 Excel scope:
+    transformers Based on IEC: IEC 61558-1:2017 (ed.3.0) Excel checked: checked 2026/01/14'
   test_focus:
   - safety
   - electrical
@@ -3261,7 +3609,10 @@ standards:
   keywords:
   - transformers
   supersedes: null
-- title: Safety of transformers, reactors, power supply units and combinations thereof - Particular requirements for switch mode power supply units and transformers for switch mode power supply units
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: Safety of transformers, reactors, power supply units and combinations thereof - Particular requirements for switch
+    mode power supply units and transformers for switch mode power supply units
   region: EU
   category: safety
   directives:
@@ -3290,7 +3641,9 @@ standards:
   version: EN 61558-2-16:2021 +C1:2023
   dated_version: EN 61558-2-16:2009 + A1:2013
   supersedes: EN 61558-2-16:2009 + A1:2013
-  notes: 'Excel scope: SMPS Based on IEC: IEC 61558-2-16:2009+..(ed.1.0); IEC 61558-2-16:2021+C1:2023 (ed.2.0) Excel checked: checked 2026/01/14 Excel scope: SMPS Based on IEC: IEC 61558-2-16:2009+..(ed.1.0); IEC 61558-2-16:2021+C1:2023 (ed.2.0) Excel checked: checked 2026/01/14'
+  notes: 'Excel scope: SMPS Based on IEC: IEC 61558-2-16:2009+..(ed.1.0); IEC 61558-2-16:2021+C1:2023 (ed.2.0) Excel checked:
+    checked 2026/01/14 Excel scope: SMPS Based on IEC: IEC 61558-2-16:2009+..(ed.1.0); IEC 61558-2-16:2021+C1:2023 (ed.2.0)
+    Excel checked: checked 2026/01/14'
   test_focus:
   - safety
   - electrical
@@ -3299,7 +3652,10 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - smps
-- title: Secondary cells and batteries containing alkaline or other non-acid electrolytes - Safety requirements for portable sealed secondary lithium cells and for batteries made from them for use in portable applications
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: Secondary cells and batteries containing alkaline or other non-acid electrolytes - Safety requirements for portable
+    sealed secondary lithium cells and for batteries made from them for use in portable applications
   region: EU
   category: battery
   directives:
@@ -3332,7 +3688,10 @@ standards:
   - cell or pack qualification records
   keywords:
   - lithium systems
-- title: Human exposure to radio frequency fields from hand-held and body-mounted wireless communication devices - Human models, instrumentation, and procedures - Part 2
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: Human exposure to radio frequency fields from hand-held and body-mounted wireless communication devices - Human models,
+    instrumentation, and procedures - Part 2
   region: EU
   category: emf
   directives:
@@ -3366,7 +3725,10 @@ standards:
   keywords:
   - emf hand held appl.
   supersedes: null
-- title: Measurement procedure for the assessment of specific absorption rate of human exposure to radio frequency fields from hand-held and body-mounted wireless communication devices
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: Measurement procedure for the assessment of specific absorption rate of human exposure to radio frequency fields
+    from hand-held and body-mounted wireless communication devices
   region: EU
   category: emf
   directives:
@@ -3401,8 +3763,11 @@ standards:
   - technical construction file
   keywords:
   - emf measurment short distance (sar for handheld &body mounted devices)
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 62233
-  title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human exposure
+  title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human
+    exposure
   region: EU
   category: emf
   directives:
@@ -3418,7 +3783,8 @@ standards:
   - mains_power_likely
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation. Excel scope: EMF measurement Excel checked: checked 2025/07/09'
+  notes: 'Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation. Excel
+    scope: EMF measurement Excel checked: checked 2025/07/09'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3438,6 +3804,8 @@ standards:
   keywords:
   - emf measurement
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: Assessment of electronic and electrical equipment related to human exposure restrictions for electromagnetic fields
   region: EU
   category: emf
@@ -3464,7 +3832,8 @@ standards:
   version: EN IEC 62311:2020
   dated_version: EN 62311:2008
   supersedes: EN 62311:2008
-  notes: 'Excel scope: EMF assessment RF Excel checked: checked 2025/07/09 Excel scope: EMF assessment RF Excel checked: checked 2025/07/09'
+  notes: 'Excel scope: EMF assessment RF Excel checked: checked 2025/07/09 Excel scope: EMF assessment RF Excel checked: checked
+    2025/07/09'
   test_focus:
   - emf
   evidence_hint:
@@ -3472,6 +3841,8 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - emf assessment rf
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: Audio/video, information and communication technology equipment - Safety requirements
   region: EU
   category: safety
@@ -3486,7 +3857,6 @@ standards:
   - speaker
   - microphone
   - camera
-  - internet
   exclude_if: []
   confidence: medium
   item_type: standard
@@ -3501,7 +3871,11 @@ standards:
   version: EN IEC 62368-1:2024 + A11:2024
   dated_version: 'EN 62368-1:2014 + AC:2015 + AC: 2015 + AC:2015'
   supersedes: 'EN 62368-1:2014 + AC:2015 + AC: 2015 + AC:2015'
-  notes: 'Excel scope: Audio/video, ICT Based on IEC: IEC 62368-1:2014 (ed.2.0); IEC 62368-1:2023 (ed.4.0) Restrictions/notice: Notice: this publication concerns only clauses 3.3.19 “Sound exposure” and 10.6 “Safeguard against acoustic energy sources” of EN IEC 62368-1:2020/A11:2020. Excel checked: checked 2026/01/14 Excel scope: Audio/video, ICT; Restriction: Based on IEC: IEC 62368-1:2014 (ed.2.0); IEC 62368-1:2023 (ed.4.0) Excel checked: checked 2026/01/14'
+  notes: 'Excel scope: Audio/video, ICT Based on IEC: IEC 62368-1:2014 (ed.2.0); IEC 62368-1:2023 (ed.4.0) Restrictions/notice:
+    Notice: this publication concerns only clauses 3.3.19 “Sound exposure” and 10.6 “Safeguard against acoustic energy sources”
+    of EN IEC 62368-1:2020/A11:2020. Excel checked: checked 2026/01/14 Excel scope: Audio/video, ICT; Restriction: Based on
+    IEC: IEC 62368-1:2014 (ed.2.0); IEC 62368-1:2023 (ed.4.0) Excel checked: checked 2026/01/14 Narrowed to AV/ICT-style electronics;
+    not intended to trigger for ordinary connected household appliances only because they use internet/app/cloud.'
   test_focus:
   - safety
   - electrical
@@ -3510,6 +3884,8 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - audio/video, ict
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: Photobiological safety of lamps and lamp systems
   region: EU
   category: safety
@@ -3519,8 +3895,8 @@ standards:
   applies_if_all:
   - electrical
   applies_if_any:
+  - laser
   - display
-  - heating
   exclude_if: []
   confidence: low
   item_type: standard
@@ -3534,7 +3910,9 @@ standards:
   harmonized_reference: 2014/35/EU
   version: EN 62471:2008
   dated_version: EN 62471:2008
-  notes: 'Excel scope: Photobio. Safety Based on IEC: IEC 62471:2006 (ed.1.0) Excel checked: checked 2026/01/14 Excel scope: Photobio. Safety Based on IEC: IEC 62471:2006 (ed.1.0) Excel checked: checked 2026/01/14'
+  notes: 'Excel scope: Photobio. Safety Based on IEC: IEC 62471:2006 (ed.1.0) Excel checked: checked 2026/01/14 Excel scope:
+    Photobio. Safety Based on IEC: IEC 62471:2006 (ed.1.0) Excel checked: checked 2026/01/14 Narrowed to photobiological/optical
+    radiation cases, not general heating appliances.'
   test_focus:
   - safety
   - electrical
@@ -3544,8 +3922,11 @@ standards:
   keywords:
   - photobio. safety
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 62479
-  title: Assessment of the compliance of low power electronic and electrical equipment with the basic restrictions related to human exposure to electromagnetic fields
+  title: Assessment of the compliance of low power electronic and electrical equipment with the basic restrictions related
+    to human exposure to electromagnetic fields
   region: EU
   category: emf
   directives:
@@ -3560,7 +3941,8 @@ standards:
   - thread
   exclude_if: []
   confidence: medium
-  notes: 'Common EMF assessment route for certain low-power radio products. Excel scope: EMF assesment low power RF devices (10MHz to 300GHz)'
+  notes: 'Common EMF assessment route for certain low-power radio products. Excel scope: EMF assesment low power RF devices
+    (10MHz to 300GHz)'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3579,7 +3961,10 @@ standards:
   - test report
   keywords:
   - emf assesment low power rf devices (10mhz to 300ghz)
-- title: Technical documentation for the assessment of electrical and electronic products with respect to the restriction of hazardous substances
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: Technical documentation for the assessment of electrical and electronic products with respect to the restriction
+    of hazardous substances
   region: EU
   category: substances
   directives:
@@ -3611,6 +3996,8 @@ standards:
   keywords:
   - tech doc
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 300 220 series review
   title: Short range device radio standard family review required
   region: EU
@@ -3625,7 +4012,8 @@ standards:
   - nfc
   exclude_if: []
   confidence: low
-  notes: 'Placeholder review bucket where the precise short-range radio route depends on frequency band and implementation. Excel scope: RF Spectrum 2,4 GHz Wifi Excel checked: checked 2025/10/11'
+  notes: 'Placeholder review bucket where the precise short-range radio route depends on frequency band and implementation.
+    Excel scope: RF Spectrum 2,4 GHz Wifi Excel checked: checked 2025/10/11'
   item_type: review
   applies_if_products: []
   exclude_if_products: []
@@ -3644,6 +4032,8 @@ standards:
   is_harmonized: true
   harmonized_under: RED
   harmonized_reference: (EU) 2022/30
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 300 328
   title: Wideband transmission systems; Data transmission equipment operating in the 2.4 GHz band
   region: EU
@@ -3659,7 +4049,8 @@ standards:
   - thread
   exclude_if: []
   confidence: high
-  notes: 'Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth. Excel scope: RF Spectrum 2,4 GHz Wifi Excel checked: checked 2025/10/11'
+  notes: 'Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi or Bluetooth. Excel scope: RF Spectrum
+    2,4 GHz Wifi Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3679,6 +4070,8 @@ standards:
   keywords:
   - rf spectrum 2,4 ghz wifi
   supersedes: null
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 301 489-1
   title: EMC standard for radio equipment and services - Common technical requirements
   region: EU
@@ -3696,7 +4089,8 @@ standards:
   - thread
   exclude_if: []
   confidence: high
-  notes: 'Common EMC framework standard for radio equipment. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Common EMC framework standard for radio equipment. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data
+    transm. Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3719,6 +4113,8 @@ standards:
   keywords:
   - emc radio equipm.
   - general emc requirements for radio equipments
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: EMC standard for radio equipment and services - Specific conditions for short-range devices
   region: EU
   category: radio_emc
@@ -3744,7 +4140,8 @@ standards:
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
-  notes: 'Excel scope: EMC Radio equipm.; Specific EMC requirements for SRD operating between 9KHz and 246 GHz (RFID, NFC,  Qi/Wireless Charging & FM) Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Excel scope: EMC Radio equipm.; Specific EMC requirements for SRD operating between 9KHz and 246 GHz (RFID, NFC,  Qi/Wireless
+    Charging & FM) Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
   test_focus:
   - immunity
   - emission
@@ -3755,7 +4152,10 @@ standards:
   keywords:
   - emc radio equipm.
   - specific emc requirements for srd operating between 9khz and 246 ghz (rfid, nfc,  qi/wireless charging & fm)
-- title: EMC standard for radio equipment and services - Specific conditions for digital enhanced cordless telecommunications equipment
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
+- title: EMC standard for radio equipment and services - Specific conditions for digital enhanced cordless telecommunications
+    equipment
   region: EU
   category: radio_emc
   directives:
@@ -3779,7 +4179,8 @@ standards:
   harmonized_reference: (EU) 2022/30
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
-  notes: 'Excel scope: EMC (DECT) Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Excel scope: EMC (DECT) Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked:
+    checked 2025/10/11'
   test_focus:
   - immunity
   - emission
@@ -3790,6 +4191,8 @@ standards:
   keywords:
   - emc (dect)
   supersedes: EN 301 893 V2.1.1:2017
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 301 489-17
   title: EMC standard for radio equipment and services - Specific conditions for broadband data transmission systems
   region: EU
@@ -3805,7 +4208,8 @@ standards:
   - thread
   exclude_if: []
   confidence: medium
-  notes: 'Often relevant alongside EN 301 489-1 depending on the short-range radio technology used. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Often relevant alongside EN 301 489-1 depending on the short-range radio technology used. Excel scope: RF Spectrum
+    5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3828,6 +4232,8 @@ standards:
   keywords:
   - emc data transm.
   - specific emc requirements for broadband data transmissions (bt, wifi)
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 301 489-52
   title: EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
   region: EU
@@ -3842,7 +4248,8 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: 'Commonly considered when cellular connectivity is present. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Commonly considered when cellular connectivity is present. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.;
+    EMC Data transm. Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3863,6 +4270,8 @@ standards:
   is_harmonized: true
   harmonized_under: RED
   harmonized_reference: (EU) 2022/30
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 301 511
   title: Harmonised standard for mobile stations in GSM networks
   region: EU
@@ -3875,7 +4284,8 @@ standards:
   applies_if_any: []
   exclude_if: []
   confidence: low
-  notes: 'Legacy cellular route that may be relevant for certain GSM-capable devices; verify actual radio technology. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Legacy cellular route that may be relevant for certain GSM-capable devices; verify actual radio technology. Excel
+    scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
   item_type: standard
   applies_if_products: []
   exclude_if_products: []
@@ -3894,6 +4304,8 @@ standards:
   is_harmonized: true
   harmonized_under: RED
   harmonized_reference: (EU) 2022/30
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - title: 5 GHz RLAN radio spectrum standard
   region: EU
   category: radio
@@ -3918,7 +4330,8 @@ standards:
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
-  notes: 'Excel scope: RF Spectrum 5 GHz Wifi Excel checked: checked 2025/10/11 Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'Excel scope: RF Spectrum 5 GHz Wifi Excel checked: checked 2025/10/11 Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio
+    equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
   test_focus:
   - rf
   evidence_hint:
@@ -3926,6 +4339,8 @@ standards:
   - technical construction file
   keywords:
   - rf spectrum 5 ghz wifi
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: EN 301 908 series review
   title: Cellular radio standard family review required
   region: EU
@@ -3940,7 +4355,8 @@ standards:
   - remote_control
   exclude_if: []
   confidence: medium
-  notes: 'For cellular products, the specific EN 301 908 route depends on the implemented access technology and module design. Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
+  notes: 'For cellular products, the specific EN 301 908 route depends on the implemented access technology and module design.
+    Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked: checked 2025/10/11'
   item_type: review
   applies_if_products: []
   exclude_if_products: []
@@ -3959,6 +4375,8 @@ standards:
   is_harmonized: true
   harmonized_under: RED
   harmonized_reference: (EU) 2022/30
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: AI Act review
   title: AI Act assessment required
   region: EU
@@ -3980,6 +4398,8 @@ standards:
   test_focus: []
   evidence_hint: []
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: Battery safety review
   title: Battery safety and transport review required
   region: EU
@@ -3995,7 +4415,8 @@ standards:
   - household
   exclude_if: []
   confidence: low
-  notes: Placeholder review bucket where battery chemistry, charger architecture, and transport obligations need separate evaluation.
+  notes: Placeholder review bucket where battery chemistry, charger architecture, and transport obligations need separate
+    evaluation.
   item_type: review
   applies_if_products: []
   exclude_if_products: []
@@ -4008,6 +4429,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: CRA review
   title: Cyber Resilience Act assessment required
   region: EU
@@ -4037,6 +4460,8 @@ standards:
   - privacy
   evidence_hint: []
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: Charger / external PSU review
   title: External power supply and charger route review required
   region: EU
@@ -4064,6 +4489,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
 - code: GDPR review
   title: GDPR assessment required
   region: EU
@@ -4092,3 +4519,5 @@ standards:
   test_focus: []
   evidence_hint: []
   keywords: []
+  state_of_the_art_scope: EU
+  international_state_of_the_art: null
