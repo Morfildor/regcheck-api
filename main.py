@@ -18,7 +18,7 @@ from knowledge_base import (
 from models import AnalysisResult, ProductInput
 from rules import analyze
 
-APP_VERSION = "4.0.0"
+APP_VERSION = "5.0.0"
 
 app = FastAPI(title="RegCheck API", version=APP_VERSION)
 
@@ -31,12 +31,7 @@ DEFAULT_ALLOWED_ORIGINS = [
     "https://regcheck-frontend-gxo61fmnd-morfildors-projects.vercel.app",
 ]
 
-extra_origins = [
-    origin.strip()
-    for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
-    if origin.strip()
-]
-
+extra_origins = [origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin.strip()]
 allow_origins = sorted(set(DEFAULT_ALLOWED_ORIGINS + extra_origins))
 
 app.add_middleware(
@@ -60,15 +55,12 @@ def startup_event() -> None:
 
 
 @app.get("/")
-def root():
-    return {
-        "status": "RegCheck API is running",
-        "version": APP_VERSION,
-    }
+def root() -> dict:
+    return {"status": "RegCheck API is running", "version": APP_VERSION}
 
 
 @app.get("/health")
-def health():
+def health() -> dict:
     return {
         "ok": _kb_status["ok"],
         "version": APP_VERSION,
@@ -79,7 +71,7 @@ def health():
 
 
 @app.get("/metadata/options")
-def metadata_options():
+def metadata_options() -> dict:
     if not _kb_status["ok"]:
         raise HTTPException(status_code=503, detail=f"Knowledge base failed to load: {_kb_status['error']}")
 
@@ -88,10 +80,7 @@ def metadata_options():
     legislations = load_legislations()
 
     return {
-        "traits": [
-            {"id": row["id"], "label": row["label"], "description": row["description"]}
-            for row in traits
-        ],
+        "traits": [{"id": row["id"], "label": row["label"], "description": row["description"]} for row in traits],
         "products": [
             {
                 "id": row["id"],
@@ -99,6 +88,7 @@ def metadata_options():
                 "aliases": row.get("aliases", []),
                 "functional_classes": row.get("functional_classes", []),
                 "implied_traits": row.get("implied_traits", []),
+                "likely_standards": row.get("likely_standards", []),
             }
             for row in products
         ],
@@ -118,7 +108,7 @@ def metadata_options():
 
 
 @app.get("/metadata/standards")
-def metadata_standards():
+def metadata_standards() -> dict:
     if not _kb_status["ok"]:
         raise HTTPException(status_code=503, detail=f"Knowledge base failed to load: {_kb_status['error']}")
 
@@ -153,7 +143,7 @@ def metadata_standards():
 
 
 @app.post("/admin/reload")
-def admin_reload():
+def admin_reload() -> dict:
     global _kb_status
     try:
         reset_cache()
@@ -166,7 +156,7 @@ def admin_reload():
 
 
 @app.post("/analyze", response_model=AnalysisResult)
-def run_analysis(product: ProductInput):
+def run_analysis(product: ProductInput) -> AnalysisResult:
     if not _kb_status["ok"]:
         raise HTTPException(status_code=503, detail=f"Knowledge base failed to load: {_kb_status['error']}")
     try:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 from pydantic import BaseModel, Field
 
 Status = Literal["PASS", "WARN", "FAIL", "INFO"]
@@ -154,7 +154,15 @@ class AnalysisResult(BaseModel):
     stats: AnalysisStats = Field(default_factory=AnalysisStats)
     knowledge_base_meta: KnowledgeBaseMeta | None = None
 
-    standard_sections: list[dict] = Field(default_factory=list)
-    legislation_sections: list[dict] = Field(default_factory=list)
+    standard_sections: list[dict[str, Any]] = Field(default_factory=list)
+    legislation_sections: list[dict[str, Any]] = Field(default_factory=list)
+    hero_summary: dict[str, Any] = Field(default_factory=dict)
+    confidence_panel: dict[str, Any] = Field(default_factory=dict)
+    input_gaps_panel: dict[str, Any] = Field(default_factory=dict)
+    top_actions: list[str] = Field(default_factory=list)
+    current_path: list[str] = Field(default_factory=list)
+    future_watchlist: list[str] = Field(default_factory=list)
+    suggested_questions: list[str] = Field(default_factory=list)
+    suggested_quick_adds: list[dict[str, Any]] = Field(default_factory=list)
 
     findings: list[Finding] = Field(default_factory=list)

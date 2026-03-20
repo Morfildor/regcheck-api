@@ -25,7 +25,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: 2014/53/EU
   version: EN 18031-1:2024
   dated_version: EN 18031-1:2024
   test_focus:
@@ -65,7 +65,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: 2014/53/EU
   version: EN 18031-2:2024
   dated_version: EN 18031-2:2024
   test_focus:
@@ -107,7 +107,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53/EU
   version: EN 18031-3:2024
   dated_version: EN 18031-3:2024
   test_focus:
@@ -254,7 +254,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   version: EN 50566:2017 + A1:2023
   dated_version: EN 50566:2017 + A1:2023
   notes: 'Excel scope: EMF hand held appl. Excel checked: checked 2025/10/11 Excel scope: EMF hand held appl. Excel checked:
@@ -4031,7 +4031,7 @@ standards:
   supersedes: null
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   state_of_the_art_scope: EU
   international_state_of_the_art: null
 - code: EN 300 328
@@ -4059,7 +4059,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   version: EN 300 328 V2.2.2:2019
   dated_version: EN 300 328 V2.2.2:2019
   test_focus:
@@ -4099,7 +4099,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
@@ -4136,7 +4136,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
@@ -4176,7 +4176,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   notes: 'Excel scope: EMC (DECT) Excel scope: RF Spectrum 5 GHz Wifi; EMC Radio equipm.; EMC Data transm. Excel checked:
@@ -4218,7 +4218,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
@@ -4269,7 +4269,7 @@ standards:
   supersedes: EN 301 893 V2.1.1:2017
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   state_of_the_art_scope: EU
   international_state_of_the_art: null
 - code: EN 301 511
@@ -4303,7 +4303,7 @@ standards:
   supersedes: EN 301 893 V2.1.1:2017
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   state_of_the_art_scope: EU
   international_state_of_the_art: null
 - title: 5 GHz RLAN radio spectrum standard
@@ -4326,7 +4326,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
@@ -4374,7 +4374,7 @@ standards:
   supersedes: EN 301 893 V2.1.1:2017
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: (EU) 2014/53
   state_of_the_art_scope: EU
   international_state_of_the_art: null
 - code: AI Act review
