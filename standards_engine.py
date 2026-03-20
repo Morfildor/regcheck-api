@@ -92,6 +92,9 @@ def _score_standard(
     score = 0
     if product_hit_type == "primary_product":
         score += 300
+    elif product_hit_type == "alternate_product":
+        score += 220
+
     score += len([t for t in standard.get("applies_if_all", []) if t in traits]) * 35
     score += len([t for t in standard.get("applies_if_any", []) if t in traits]) * 12
 
