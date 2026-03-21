@@ -1276,23 +1276,26 @@ def analyze(
     traits_data = extract_traits(description=description, category=category)
     diagnostics = list(traits_data.get("diagnostics") or [])
     matched_products = set(traits_data.get("matched_products") or [])
+    routing_matched_products = set(traits_data.get("routing_matched_products") or [])
     product_type = traits_data.get("product_type")
+    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    routing_product_type = product_type if product_match_stage == "subtype" else None
     likely_standards: set[str] = set(traits_data.get("preferred_standard_codes") or [])
     for candidate in traits_data.get("product_candidates") or []:
-        if candidate.get("id") in matched_products:
+        if candidate.get("id") in routing_matched_products:
             likely_standards.update(candidate.get("likely_standards") or [])
 
     trait_set = set(traits_data.get("all_traits") or [])
     confirmed_traits = set(traits_data.get("confirmed_traits") or [])
     functional_classes = set(traits_data.get("functional_classes") or [])
-    trait_set, extra_diag = _derive_engine_traits(description, trait_set, matched_products)
+    trait_set, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
     diagnostics.extend(extra_diag)
 
     legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
         traits=trait_set,
         functional_classes=functional_classes,
-        product_type=product_type,
-        matched_products=matched_products,
+        product_type=routing_product_type,
+        matched_products=routing_matched_products,
         confirmed_traits=confirmed_traits,
         forced_directives=directives,
     )
@@ -1302,8 +1305,8 @@ def analyze(
     items = find_applicable_items(
         traits=trait_set,
         directives=detected_directives,
-        product_type=product_type,
-        matched_products=sorted(matched_products),
+        product_type=routing_product_type,
+        matched_products=sorted(routing_matched_products),
         preferred_standard_codes=sorted(likely_standards),
         explicit_traits=set(traits_data.get("explicit_traits") or []),
         confirmed_traits=confirmed_traits,
@@ -1312,10 +1315,10 @@ def analyze(
     selected_rows = _apply_post_selection_gates(
         selected_rows,
         trait_set,
-        matched_products,
+        routing_matched_products,
         diagnostics,
         allowed_directives,
-        product_type=product_type,
+        product_type=routing_product_type,
         confirmed_traits=confirmed_traits,
         description=description,
     )
@@ -1339,7 +1342,7 @@ def analyze(
     review_items = _sort_standard_items(review_items)
     all_standard_items = _sort_standard_items(standard_items + review_items)
     current_review_items = [item for item in review_items if item.timing_status == "current"]
-    missing_items = _missing_information(trait_set, matched_products, description)
+    missing_items = _missing_information(trait_set, routing_matched_products, description)
     standard_sections = _build_standard_sections(all_standard_items)
     primary_regimes = [section["key"] for section in standard_sections[:4]]
 
@@ -1392,6 +1395,11 @@ def analyze(
         future_watchlist_risk=future_risk,
         summary=summary,
         product_type=traits_data.get("product_type"),
+        product_family=traits_data.get("product_family"),
+        product_family_confidence=traits_data.get("product_family_confidence", "low"),
+        product_subtype=traits_data.get("product_subtype"),
+        product_subtype_confidence=traits_data.get("product_subtype_confidence", "low"),
+        product_match_stage=traits_data.get("product_match_stage", "ambiguous"),
         product_match_confidence=traits_data.get("product_match_confidence", "low"),
         product_candidates=traits_data.get("product_candidates") or [],
         functional_classes=traits_data.get("functional_classes") or [],
@@ -1420,7 +1428,11 @@ def analyze(
         analysis_audit={
             "allowed_directives": detected_directives,
             "matched_products": sorted(matched_products),
+            "routing_matched_products": sorted(routing_matched_products),
             "preferred_standards": sorted(likely_standards),
+            "product_family": traits_data.get("product_family"),
+            "product_subtype": traits_data.get("product_subtype"),
+            "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
             "depth": depth,
         },
         standard_sections=standard_sections,
@@ -1435,6 +1447,9 @@ def analyze(
         confidence_panel={
             "confidence": traits_data.get("product_match_confidence", "low"),
             "matched_products": sorted(matched_products),
+            "product_family": traits_data.get("product_family"),
+            "product_subtype": traits_data.get("product_subtype"),
+            "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
         },
         input_gaps_panel={
             "items": [item.model_dump() for item in missing_items],

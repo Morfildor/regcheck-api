@@ -37,6 +37,9 @@ class MatchingTests(unittest.TestCase):
         result = extract_traits("smart speaker with wifi and bluetooth")
 
         self.assertEqual(result["product_type"], "smart_speaker")
+        self.assertEqual(result["product_family"], "smart_assistant_device")
+        self.assertEqual(result["product_subtype"], "smart_speaker")
+        self.assertEqual(result["product_match_stage"], "subtype")
         self.assertIn("EN 62368-1", result["preferred_standard_codes"])
 
     def test_product_implied_wireless_traits_expand_to_radio(self) -> None:
@@ -51,6 +54,59 @@ class MatchingTests(unittest.TestCase):
 
         for trait in ("wifi", "wifi_7", "mesh_network_node", "wpa3", "voice_assistant", "radio"):
             self.assertIn(trait, result["all_traits"])
+
+    def test_smart_display_beats_speaker_when_display_clues_are_present(self) -> None:
+        result = extract_traits("smart display with screen camera speaker and wifi")
+
+        self.assertEqual(result["product_family"], "smart_assistant_device")
+        self.assertEqual(result["product_subtype"], "smart_display")
+        self.assertEqual(result["product_match_stage"], "subtype")
+        self.assertEqual(result["product_type"], "smart_display")
+
+    def test_smart_speaker_with_screen_stays_at_family_stage(self) -> None:
+        result = extract_traits("smart speaker with screen and wifi")
+
+        self.assertEqual(result["product_family"], "smart_assistant_device")
+        self.assertIsNone(result["product_subtype"])
+        self.assertEqual(result["product_match_stage"], "family")
+        self.assertIn("smart_speaker", result["matched_products"])
+        self.assertIn("smart_display", result["matched_products"])
+        self.assertEqual(result["preferred_standard_codes"], ["EN 62368-1"])
+        self.assertEqual(result["contradiction_severity"], "none")
+
+    def test_mesh_router_beats_plain_router(self) -> None:
+        result = extract_traits("mesh router with tri-band Wi-Fi 6 and mobile app")
+
+        self.assertEqual(result["product_family"], "wifi_networking")
+        self.assertEqual(result["product_subtype"], "mesh_wifi_system")
+        self.assertEqual(result["product_match_stage"], "subtype")
+
+    def test_wireless_access_point_beats_router_when_ap_clues_are_present(self) -> None:
+        result = extract_traits("wireless access point with PoE and dual-band wifi")
+
+        self.assertEqual(result["product_family"], "wifi_networking")
+        self.assertEqual(result["product_subtype"], "wireless_access_point")
+        self.assertEqual(result["product_match_stage"], "subtype")
+
+    def test_air_purifier_beats_air_cleaner_with_hepa_clue(self) -> None:
+        result = extract_traits("HEPA air purifier with wifi")
+
+        self.assertEqual(result["product_family"], "air_treatment_cleaner")
+        self.assertEqual(result["product_subtype"], "air_purifier")
+
+    def test_fan_heater_beats_fan_with_heater_clue(self) -> None:
+        result = extract_traits("fan heater for indoor room heating")
+
+        self.assertEqual(result["product_family"], "indoor_air_mover")
+        self.assertEqual(result["product_subtype"], "fan_heater")
+        self.assertEqual(result["product_match_stage"], "subtype")
+
+    def test_home_projector_beats_generic_projector_with_home_cinema_clues(self) -> None:
+        result = extract_traits("laser projector with wifi bluetooth and home cinema apps")
+
+        self.assertEqual(result["product_family"], "projector_device")
+        self.assertEqual(result["product_subtype"], "home_projector")
+        self.assertEqual(result["product_match_stage"], "subtype")
 
     def test_preferred_standard_can_surface_as_review_when_feature_trigger_is_missing(self) -> None:
         items = find_applicable_items(
@@ -262,6 +318,41 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual(deep.analysis_audit["depth"], "deep")
         self.assertEqual(quick.hero_summary["depth"], "quick")
         self.assertEqual(deep.hero_summary["depth"], "deep")
+
+    def test_family_stage_product_match_does_not_inject_subtype_specific_fan_standard(self) -> None:
+        result = analyze("smart speaker with screen and wifi")
+
+        self.assertEqual(result.product_match_stage, "family")
+        self.assertIsNone(result.product_subtype)
+        self.assertEqual(result.product_family, "smart_assistant_device")
+        standard_codes = {item.code for item in result.standards}
+        self.assertIn("EN 62368-1", standard_codes)
+
+    def test_fan_heater_route_prefers_fan_heater_standard_not_fan_standard(self) -> None:
+        result = analyze("fan heater with app control and wifi")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertIn("EN 60335-2-30", standard_codes)
+        self.assertNotIn("EN 60335-2-80", standard_codes)
+
+    def test_mesh_router_route_keeps_connected_networking_traits(self) -> None:
+        result = analyze("mesh router with tri-band Wi-Fi 6 and mobile app")
+
+        self.assertEqual(result.product_subtype, "mesh_wifi_system")
+        self.assertIn("CRA", result.directives)
+        self.assertIn("cloud", result.all_traits)
+        self.assertIn("ota", result.all_traits)
+
+    def test_home_projector_route_keeps_home_projector_traits(self) -> None:
+        result = analyze("laser projector with wifi bluetooth and home cinema apps")
+
+        self.assertEqual(result.product_subtype, "home_projector")
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertIn("EN 60825-1", standard_codes)
+        self.assertIn("EN 62471", standard_codes)
+        self.assertIn("RED", result.directives)
 
     def test_admin_reload_is_disabled_without_token(self) -> None:
         with self.assertRaises(HTTPException) as ctx:

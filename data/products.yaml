@@ -1,8 +1,29 @@
 products:
 - id: air_cleaner
   label: Air cleaner / purifier
+  product_family: air_treatment_cleaner
+  product_subfamily: air_cleaner
   aliases:
   - air cleaner unit
+  required_clues: []
+  preferred_clues:
+  - cleaner
+  - air cleaner
+  exclude_clues:
+  - purifier
+  confusable_with:
+  - air_purifier
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - air_treatment
+  - air_cleaning
+  - indoor_use
+  subtype_traits: []
   implied_traits:
   - consumer
   - household
@@ -20,6 +41,8 @@ products:
   - EN 60335-2-65
 - id: air_purifier
   label: Air purifier
+  product_family: air_treatment_cleaner
+  product_subfamily: air_purifier
   aliases:
   - air purifier
   - air cleaner
@@ -29,6 +52,25 @@ products:
   - connected air purifier
   - wifi air purifier
   - hepa air purifier
+  required_clues: []
+  preferred_clues:
+  - purifier
+  - hepa
+  - air purifier
+  exclude_clues: []
+  confusable_with:
+  - air_cleaner
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - air_treatment
+  - air_cleaning
+  - indoor_use
+  subtype_traits: []
   implied_traits:
   - consumer
   - household
@@ -612,6 +654,8 @@ products:
   - EN 60335-2-108
 - id: fan
   label: Fan
+  product_family: indoor_air_mover
+  product_subfamily: fan
   aliases:
   - fan
   - desk fan
@@ -621,6 +665,27 @@ products:
   - pedestal fan
   - standing fan
   - smart fan
+  required_clues: []
+  preferred_clues:
+  - fan
+  - ventilation
+  - air circulator
+  exclude_clues:
+  - heater
+  - heating
+  confusable_with:
+  - fan_heater
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - indoor_use
+  subtype_traits:
+  - ventilation
+  - air_treatment
+  - electronic
   implied_traits:
   - consumer
   - household
@@ -637,9 +702,30 @@ products:
   - EN 60335-2-80
 - id: fan_heater
   label: Fan heater
+  product_family: indoor_air_mover
+  product_subfamily: fan_heater
   aliases:
   - fan heater
   - heater fan
+  required_clues:
+  - heater
+  preferred_clues:
+  - heater
+  - heating
+  - fan heater
+  exclude_clues: []
+  confusable_with:
+  - fan
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - indoor_use
+  subtype_traits:
+  - heating
+  - heating_personal_environment
   implied_traits:
   - consumer
   - household
@@ -2016,6 +2102,8 @@ products:
   - EN 62368-1
 - id: smart_speaker
   label: Smart speaker
+  product_family: smart_assistant_device
+  product_subfamily: smart_speaker
   aliases:
   - smart speaker
   - voice assistant speaker
@@ -2027,6 +2115,40 @@ products:
   - google home
   - apple homepod
   - smart home speaker
+  required_clues: []
+  preferred_clues:
+  - speaker
+  - audio
+  - music
+  - voice assistant
+  exclude_clues:
+  - screen
+  - display
+  - camera
+  confusable_with:
+  - smart_display
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - speaker
+  - microphone
+  - app_control
+  subtype_traits:
+  - voice_assistant
+  - cloud
+  - internet
+  - data_storage
+  - ota
+  - authentication
+  - account
+  - personal_data_likely
   implied_traits:
   - consumer
   - household
@@ -2099,11 +2221,36 @@ products:
   - EN 60335-2-88
 - id: projector
   label: Projector
+  product_family: projector_device
+  product_subfamily: projector
   aliases:
   - projector
   - video projector
   - home projector
   - portable projector
+  required_clues: []
+  preferred_clues:
+  - video projector
+  - conference room
+  - presentation
+  - business
+  exclude_clues:
+  - smart
+  - wifi
+  - bluetooth
+  - home cinema
+  - laser
+  - ultra short throw
+  confusable_with:
+  - home_projector
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_power_likely
+  subtype_traits: []
   implied_traits:
   - consumer
   - electrical
@@ -2374,11 +2521,38 @@ products:
   - EN 60335-2-85
 - id: smart_display
   label: Smart display
+  product_family: smart_assistant_device
+  product_subfamily: smart_display
   aliases:
   - smart display
   - display hub
   - assistant display
   - voice assistant display
+  required_clues: []
+  preferred_clues:
+  - display
+  - screen
+  - touchscreen
+  - camera
+  exclude_clues: []
+  confusable_with:
+  - smart_speaker
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - speaker
+  - microphone
+  - app_control
+  subtype_traits:
+  - display
+  - camera
   implied_traits:
   - consumer
   - household
@@ -2401,11 +2575,36 @@ products:
   - EN 62368-1
 - id: router
   label: Router
+  product_family: wifi_networking
+  product_subfamily: router
   aliases:
   - router
   - wifi router
   - wireless router
   - internet router
+  required_clues: []
+  preferred_clues:
+  - router
+  - internet router
+  - wan
+  - nat
+  - dhcp
+  exclude_clues:
+  - access point
+  - mesh
+  confusable_with:
+  - wireless_access_point
+  - mesh_wifi_system
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  subtype_traits: []
   implied_traits:
   - consumer
   - electrical
@@ -2485,10 +2684,35 @@ products:
   - EN 62368-1
 - id: wireless_access_point
   label: Wireless access point
+  product_family: wifi_networking
+  product_subfamily: wireless_access_point
   aliases:
   - access point
   - wireless access point
   - wifi access point
+  required_clues:
+  - access point
+  preferred_clues:
+  - access point
+  - wireless access point
+  - wifi access point
+  - poe
+  exclude_clues:
+  - router
+  - mesh
+  confusable_with:
+  - router
+  - mesh_wifi_system
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  subtype_traits: []
   implied_traits:
   - consumer
   - electrical
@@ -2765,6 +2989,8 @@ products:
   - EN 62368-1
 - id: home_projector
   label: Home projector / smart projector
+  product_family: projector_device
+  product_subfamily: home_projector
   aliases:
   - projector
   - home projector
@@ -2775,6 +3001,37 @@ products:
   - laser projector
   - ultra-short throw projector
   - cinema projector home
+  required_clues: []
+  preferred_clues:
+  - smart
+  - wifi
+  - bluetooth
+  - home cinema
+  - laser
+  - ultra short throw
+  - android tv
+  - netflix
+  exclude_clues:
+  - conference room
+  - presentation
+  - business
+  confusable_with:
+  - projector
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_power_likely
+  subtype_traits:
+  - household
+  - speaker
+  - bluetooth
+  - wifi
+  - hdmi_interface
+  - app_control
+  - screen_mirroring
   implied_traits:
   - consumer
   - household
@@ -3084,6 +3341,8 @@ products:
   - EN 62368-1
 - id: mesh_wifi_system
   label: Mesh Wi-Fi system (node)
+  product_family: wifi_networking
+  product_subfamily: mesh_wifi_system
   aliases:
   - mesh wifi
   - mesh router
@@ -3095,6 +3354,40 @@ products:
   - deco mesh
   - mesh wifi system
   - mesh network router
+  required_clues:
+  - mesh
+  preferred_clues:
+  - mesh
+  - whole home wifi
+  - node
+  - tri band
+  - eero
+  - orbi
+  - deco mesh
+  exclude_clues:
+  - access point
+  confusable_with:
+  - router
+  - wireless_access_point
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  subtype_traits:
+  - wifi_6
+  - tri_band_wifi
+  - mesh_network_node
+  - bluetooth
+  - app_control
+  - ota
+  - wpa3
+  - cloud
   implied_traits:
   - consumer
   - household

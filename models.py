@@ -11,6 +11,7 @@ TimingStatus = Literal["current", "future", "legacy", "informational"]
 ConfidenceLevel = Literal["low", "medium", "high"]
 ContradictionSeverity = Literal["none", "low", "medium", "high"]
 FactBasis = Literal["confirmed", "mixed", "inferred"]
+ProductMatchStage = Literal["family", "subtype", "ambiguous"]
 
 
 class ProductInput(BaseModel):
@@ -32,9 +33,15 @@ class ProductCandidate(BaseModel):
     id: str
     label: str
     matched_alias: str | None = None
+    family: str | None = None
+    subtype: str | None = None
+    family_score: int = 0
+    subtype_score: int = 0
     score: int = 0
     confidence: ConfidenceLevel = "medium"
     reasons: list[str] = Field(default_factory=list)
+    positive_clues: list[str] = Field(default_factory=list)
+    negative_clues: list[str] = Field(default_factory=list)
     likely_standards: list[str] = Field(default_factory=list)
 
 
@@ -139,6 +146,11 @@ class AnalysisResult(BaseModel):
     summary: str
 
     product_type: str | None = None
+    product_family: str | None = None
+    product_family_confidence: ConfidenceLevel = "low"
+    product_subtype: str | None = None
+    product_subtype_confidence: ConfidenceLevel = "low"
+    product_match_stage: ProductMatchStage = "ambiguous"
     product_match_confidence: ConfidenceLevel = "low"
     product_candidates: list[ProductCandidate] = Field(default_factory=list)
     functional_classes: list[str] = Field(default_factory=list)

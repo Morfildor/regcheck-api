@@ -554,15 +554,40 @@ def _alias_specificity_bonus(alias: str) -> int:
     return 0
 
 
-def _trait_overlap_score(explicit_traits: set[str], product_traits: set[str]) -> int:
-    return len(explicit_traits & product_traits) * 7
+def _string_list(value: Any) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, str) and item]
+
+
+def _product_family(product: dict[str, Any]) -> str:
+    return str(product.get("product_family") or product["id"])
+
+
+def _product_subfamily(product: dict[str, Any]) -> str:
+    return str(product.get("product_subfamily") or product["id"])
+
+
+def _phrase_present(text: str, phrase: str) -> bool:
+    norm = normalize(phrase)
+    if not norm:
+        return False
+    return re.search(rf"(?<!\w){re.escape(norm)}(?!\w)", text) is not None
+
+
+def _matching_clues(text: str, clues: list[str]) -> list[str]:
+    return [clue for clue in clues if _phrase_present(text, clue)]
+
+
+def _trait_overlap_score(explicit_traits: set[str], product_traits: set[str], weight: int = 7) -> int:
+    return len(explicit_traits & product_traits) * weight
 
 
 def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]) -> tuple[int, list[str]]:
     score = 0
     reasons: list[str] = []
     pid = product["id"]
-    traits = set(product.get("implied_traits", []))
+    traits = set(_string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")))
 
     if any(term in text for term in ["commercial", "professional", "industrial", "horeca"]):
         if "professional" in traits or "commercial_food_service" in traits:
@@ -605,55 +630,159 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     return score, reasons
 
 
-def _product_candidates(text: str, explicit_traits: set[str]) -> list[dict[str, Any]]:
+def _best_alias_match(text: str, product: dict[str, Any]) -> tuple[str | None, int, list[str]]:
+    best_alias = None
+    best_score = 0
+    best_reasons: list[str] = []
+
+    for alias in product.get("aliases", []):
+        score = _alias_score(text, alias)
+        if score <= 0:
+            continue
+
+        reasons = [f"matched alias '{alias}'"]
+        alias_bonus = _alias_specificity_bonus(alias)
+        if alias_bonus:
+            score += alias_bonus
+            reasons.append(f"alias specificity {alias_bonus:+d}")
+
+        if best_alias is None or score > best_score:
+            best_alias = alias
+            best_score = score
+            best_reasons = reasons
+
+    return best_alias, best_score, best_reasons
+
+
+def _family_seed_candidates(text: str, explicit_traits: set[str]) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
     for product in load_products():
-        best_alias = None
-        best_score = 0
-        best_reasons: list[str] = []
-        product_traits = set(product.get("implied_traits", []))
+        best_alias, alias_score, alias_reasons = _best_alias_match(text, product)
+        if best_alias is None:
+            continue
 
-        for alias in product.get("aliases", []):
-            score = _alias_score(text, alias)
-            if score <= 0:
-                continue
+        family_traits = set(_string_list(product.get("family_traits")) or _string_list(product.get("implied_traits")))
+        score = alias_score
+        reasons = list(alias_reasons)
 
-            reasons = [f"matched alias '{alias}'"]
+        overlap = _trait_overlap_score(explicit_traits, family_traits, weight=5)
+        if overlap:
+            score += overlap
+            reasons.append(f"family trait overlap +{overlap}")
 
-            alias_bonus = _alias_specificity_bonus(alias)
-            if alias_bonus:
-                score += alias_bonus
-                reasons.append(f"alias specificity {alias_bonus:+d}")
+        bonus, bonus_reasons = _context_bonus(text, product, explicit_traits)
+        score += bonus
+        reasons.extend(bonus_reasons)
 
-            overlap = _trait_overlap_score(explicit_traits, product_traits)
-            if overlap:
-                score += overlap
-                reasons.append(f"trait overlap +{overlap}")
+        candidates.append(
+            {
+                "id": product["id"],
+                "family": _product_family(product),
+                "subtype": _product_subfamily(product),
+                "label": product.get("label", product["id"]),
+                "product": product,
+                "matched_alias": best_alias,
+                "score": score,
+                "reasons": reasons,
+            }
+        )
 
-            bonus, bonus_reasons = _context_bonus(text, product, explicit_traits)
-            score += bonus
-            reasons.extend(bonus_reasons)
+    candidates.sort(key=lambda row: (-row["score"], row["id"]))
+    return candidates
 
-            if best_alias is None or score > best_score:
-                best_alias = alias
-                best_score = score
-                best_reasons = reasons
 
-        if best_alias:
-            candidates.append(
-                {
-                    "id": product["id"],
-                    "label": product.get("label", product["id"]),
-                    "score": best_score,
-                    "matched_alias": best_alias,
-                    "reasons": best_reasons,
-                    "implied_traits": product.get("implied_traits", []),
-                    "functional_classes": product.get("functional_classes", []),
-                    "likely_standards": product.get("likely_standards", []),
-                }
-            )
+def _family_confidence(candidate: dict[str, Any], next_candidate: dict[str, Any] | None) -> str:
+    score = candidate["score"]
+    gap = score - next_candidate["score"] if next_candidate else score
 
-    candidates.sort(key=lambda x: (-x["score"], x["id"]))
+    if score >= 160 and gap >= 20:
+        return "high"
+    if score >= 115 and gap >= 8:
+        return "medium"
+    if score >= 95:
+        return "medium"
+    return "low"
+
+
+def _clue_score(text: str, product: dict[str, Any]) -> tuple[int, list[str], list[str], list[str], bool]:
+    required_hits = _matching_clues(text, _string_list(product.get("required_clues")))
+    preferred_hits = _matching_clues(text, _string_list(product.get("preferred_clues")))
+    exclude_hits = _matching_clues(text, _string_list(product.get("exclude_clues")))
+
+    score = len(required_hits) * 26 + len(preferred_hits) * 14 - len(exclude_hits) * 34
+    reasons = [f"required clue '{clue}'" for clue in required_hits]
+    reasons.extend(f"preferred clue '{clue}'" for clue in preferred_hits)
+    reasons.extend(f"exclude clue '{clue}'" for clue in exclude_hits)
+
+    required_clues = _string_list(product.get("required_clues"))
+    if required_clues and not required_hits:
+        score -= 18
+        reasons.append("missing required subtype clues")
+
+    decisive = bool(required_hits or len(preferred_hits) >= 2)
+    positive_clues = required_hits + preferred_hits
+    negative_clues = exclude_hits
+    return score, reasons, positive_clues, negative_clues, decisive
+
+
+def _family_members(products: list[dict[str, Any]], family: str) -> list[dict[str, Any]]:
+    return [product for product in products if _product_family(product) == family]
+
+
+def _subtype_candidates(
+    text: str,
+    explicit_traits: set[str],
+    family_score: int,
+    family_products: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    for product in family_products:
+        best_alias, alias_score, alias_reasons = _best_alias_match(text, product)
+        clue_score, clue_reasons, positive_clues, negative_clues, decisive = _clue_score(text, product)
+        family_overlap = _trait_overlap_score(explicit_traits, set(_string_list(product.get("family_traits"))), weight=4)
+        subtype_overlap = _trait_overlap_score(
+            explicit_traits,
+            set(_string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits"))),
+            weight=7,
+        )
+        bonus, bonus_reasons = _context_bonus(text, product, explicit_traits)
+
+        if best_alias is None and not positive_clues and subtype_overlap == 0 and family_overlap == 0:
+            continue
+
+        score = alias_score + clue_score + family_overlap + subtype_overlap + bonus
+        reasons = list(alias_reasons)
+        if family_overlap:
+            reasons.append(f"family trait overlap +{family_overlap}")
+        if subtype_overlap:
+            reasons.append(f"subtype trait overlap +{subtype_overlap}")
+        reasons.extend(clue_reasons)
+        reasons.extend(bonus_reasons)
+
+        candidates.append(
+            {
+                "id": product["id"],
+                "label": product.get("label", product["id"]),
+                "family": _product_family(product),
+                "subtype": _product_subfamily(product),
+                "matched_alias": best_alias,
+                "family_score": family_score,
+                "subtype_score": score,
+                "score": score,
+                "reasons": reasons,
+                "positive_clues": positive_clues,
+                "negative_clues": negative_clues,
+                "decisive": decisive,
+                "implied_traits": _string_list(product.get("implied_traits")),
+                "family_traits": _string_list(product.get("family_traits")),
+                "subtype_traits": _string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")),
+                "functional_classes": _string_list(product.get("functional_classes")),
+                "likely_standards": _string_list(product.get("likely_standards")),
+                "confusable_with": _string_list(product.get("confusable_with")),
+            }
+        )
+
+    candidates.sort(key=lambda row: (-row["score"], row["id"]))
     return candidates
 
 
@@ -670,6 +799,215 @@ def _candidate_confidence(index: int, candidate: dict[str, Any], next_candidate:
     return "low"
 
 
+def _common_strings(rows: list[dict[str, Any]], field: str) -> list[str]:
+    if not rows:
+        return []
+
+    common = set(_string_list(rows[0].get(field)))
+    for row in rows[1:]:
+        common &= set(_string_list(row.get(field)))
+    return sorted(common)
+
+
+def _hierarchical_product_match(text: str, explicit_traits: set[str]) -> dict[str, Any]:
+    products = load_products()
+    seed_candidates = _family_seed_candidates(text, explicit_traits)
+    if not seed_candidates:
+        return {
+            "product_family": None,
+            "product_family_confidence": "low",
+            "product_subtype": None,
+            "product_subtype_confidence": "low",
+            "product_match_stage": "ambiguous",
+            "product_type": None,
+            "product_match_confidence": "low",
+            "product_candidates": [],
+            "matched_products": [],
+            "routing_matched_products": [],
+            "confirmed_products": [],
+            "family_traits": set(),
+            "subtype_traits": set(),
+            "preferred_standard_codes": [],
+            "functional_classes": set(),
+            "confirmed_functional_classes": set(),
+            "diagnostics": ["product_winner=none"],
+            "contradictions": [],
+        }
+
+    by_family: dict[str, dict[str, Any]] = {}
+    for row in seed_candidates:
+        family = row["family"]
+        existing = by_family.get(family)
+        if existing is None or row["score"] > existing["score"]:
+            by_family[family] = {
+                "family": family,
+                "score": row["score"],
+                "representative": row,
+            }
+
+    family_candidates = sorted(by_family.values(), key=lambda row: (-row["score"], row["family"]))
+    top_family = family_candidates[0]
+    next_family = family_candidates[1] if len(family_candidates) > 1 else None
+    family_confidence = _family_confidence(top_family, next_family)
+    family_products = _family_members(products, top_family["family"])
+    subtype_candidates = _subtype_candidates(text, explicit_traits, top_family["score"], family_products)
+    if not subtype_candidates:
+        subtype_candidates = [
+            {
+                **top_family["representative"],
+                "family_score": top_family["score"],
+                "subtype_score": top_family["score"],
+                "positive_clues": [],
+                "negative_clues": [],
+                "decisive": False,
+                "implied_traits": _string_list(top_family["representative"]["product"].get("implied_traits")),
+                "family_traits": _string_list(top_family["representative"]["product"].get("family_traits")),
+                "subtype_traits": _string_list(top_family["representative"]["product"].get("subtype_traits")),
+                "functional_classes": _string_list(top_family["representative"]["product"].get("functional_classes")),
+                "likely_standards": _string_list(top_family["representative"]["product"].get("likely_standards")),
+                "confusable_with": _string_list(top_family["representative"]["product"].get("confusable_with")),
+            }
+        ]
+
+    next_subtype = subtype_candidates[1] if len(subtype_candidates) > 1 else None
+    subtype_confidence = _candidate_confidence(0, subtype_candidates[0], next_subtype)
+    same_family_gap = subtype_candidates[0]["score"] - next_subtype["score"] if next_subtype else subtype_candidates[0]["score"]
+    subtype_band = [row for row in subtype_candidates if subtype_candidates[0]["score"] - row["score"] <= 12][:3]
+    top_row = subtype_candidates[0]
+    decisive_medium = subtype_confidence == "medium" and (top_row["decisive"] or bool(top_row["matched_alias"]))
+    family_stage = "subtype"
+    contradictions: list[str] = []
+
+    cross_family_ambiguous = bool(
+        next_family and top_family["score"] - next_family["score"] < 8 and next_family["family"] != top_family["family"]
+    )
+    if cross_family_ambiguous and next_family is not None:
+        family_stage = "ambiguous"
+        contradictions.append(
+            "Product identification is ambiguous between "
+            f"{top_family['representative']['id'].replace('_', ' ')} and "
+            f"{next_family['representative']['id'].replace('_', ' ')}."
+        )
+    elif next_subtype and top_row["negative_clues"] and next_subtype.get("positive_clues"):
+        family_stage = "family"
+    elif len(subtype_band) > 1 and same_family_gap < 12:
+        family_stage = "family"
+    elif subtype_confidence == "high" or decisive_medium or len(family_products) == 1:
+        family_stage = "subtype"
+    else:
+        family_stage = "family"
+
+    if family_stage == "family" and next_subtype and next_subtype["id"] not in {row["id"] for row in subtype_band}:
+        subtype_band = [top_row, next_subtype]
+    common_classes = _common_strings(subtype_band, "functional_classes")
+    common_standards = _common_strings(subtype_band, "likely_standards")
+
+    family_traits = set(_string_list(family_products[0].get("family_traits")) if family_products else [])
+    subtype_traits = set(_string_list(top_row.get("subtype_traits")))
+    functional_classes = set(_string_list(top_row.get("functional_classes")))
+    confirmed_functional_classes: set[str] = set()
+    preferred_standard_codes: list[str] = []
+    confirmed_products: list[str] = []
+    matched_products = [row["id"] for row in subtype_band]
+    routing_matched_products: list[str] = []
+    product_subtype = top_row["id"] if family_stage == "subtype" else None
+    product_type = top_row["id"]
+    product_match_confidence = subtype_confidence
+
+    if family_stage == "ambiguous" and next_family is not None:
+        matched_products = [top_family["representative"]["id"], next_family["representative"]["id"]]
+        functional_classes = set()
+        product_match_confidence = "low"
+    elif family_stage == "family":
+        functional_classes = set(common_classes)
+        if family_confidence == "high":
+            confirmed_functional_classes.update(common_classes)
+        preferred_standard_codes = common_standards
+        product_match_confidence = "medium" if family_confidence == "high" else family_confidence
+    else:
+        routing_matched_products = [top_row["id"]]
+        preferred_standard_codes = _string_list(top_row.get("likely_standards"))
+        if subtype_confidence == "high":
+            confirmed_products = [top_row["id"]]
+            confirmed_functional_classes.update(_string_list(top_row.get("functional_classes")))
+        elif common_classes:
+            confirmed_functional_classes.update(common_classes)
+
+    product_candidates = []
+    public_candidates = subtype_candidates[:5]
+    if cross_family_ambiguous and next_family is not None:
+        representative = next_family["representative"]
+        public_candidates = public_candidates + [
+            {
+                "id": representative["id"],
+                "label": representative["label"],
+                "family": representative["family"],
+                "subtype": representative["subtype"],
+                "matched_alias": representative["matched_alias"],
+                "family_score": next_family["score"],
+                "subtype_score": representative["score"],
+                "score": representative["score"],
+                "reasons": representative["reasons"],
+                "positive_clues": [],
+                "negative_clues": [],
+                "likely_standards": _string_list(representative["product"].get("likely_standards")),
+            }
+        ]
+
+    for idx, candidate in enumerate(public_candidates[:5]):
+        confidence = _candidate_confidence(
+            idx,
+            candidate,
+            public_candidates[idx + 1] if idx + 1 < len(public_candidates) else None,
+        )
+        product_candidates.append(
+            {
+                "id": candidate["id"],
+                "label": candidate["label"],
+                "family": candidate.get("family"),
+                "subtype": candidate.get("subtype"),
+                "matched_alias": candidate.get("matched_alias"),
+                "family_score": int(candidate.get("family_score", candidate.get("score", 0))),
+                "subtype_score": int(candidate.get("subtype_score", candidate.get("score", 0))),
+                "score": int(candidate.get("score", 0)),
+                "confidence": confidence,
+                "reasons": candidate.get("reasons", []),
+                "positive_clues": candidate.get("positive_clues", []),
+                "negative_clues": candidate.get("negative_clues", []),
+                "likely_standards": candidate.get("likely_standards", []),
+            }
+        )
+
+    diagnostics = [
+        f"product_family={top_family['family']}",
+        f"product_family_confidence={family_confidence}",
+        f"product_subtype_candidate={top_row['id']}",
+        f"product_subtype_confidence={subtype_confidence}",
+        f"product_match_stage={family_stage}",
+    ]
+
+    return {
+        "product_family": top_family["family"],
+        "product_family_confidence": family_confidence,
+        "product_subtype": product_subtype,
+        "product_subtype_confidence": subtype_confidence,
+        "product_match_stage": family_stage,
+        "product_type": product_type,
+        "product_match_confidence": product_match_confidence,
+        "product_candidates": product_candidates,
+        "matched_products": matched_products,
+        "routing_matched_products": routing_matched_products,
+        "confirmed_products": confirmed_products,
+        "family_traits": family_traits,
+        "subtype_traits": subtype_traits if family_stage == "subtype" else set(),
+        "preferred_standard_codes": preferred_standard_codes,
+        "functional_classes": functional_classes,
+        "confirmed_functional_classes": confirmed_functional_classes,
+        "diagnostics": diagnostics,
+        "contradictions": contradictions,
+    }
+
+
 def _select_matched_products(product_candidates: list[dict[str, Any]]) -> list[str]:
     if not product_candidates:
         return []
@@ -684,42 +1022,6 @@ def _select_matched_products(product_candidates: list[dict[str, Any]]) -> list[s
             selected.append(candidate["id"])
 
     return selected[:3] or [product_candidates[0]["id"]]
-
-
-def _aggregate_candidate_context(
-    selected_rows: list[dict[str, Any]],
-    winner_confidence: str,
-    ambiguous: bool,
-) -> tuple[set[str], set[str], set[str], set[str], list[str]]:
-    if not selected_rows:
-        return set(), set(), set(), set(), []
-
-    winner = selected_rows[0]
-    inferred_traits = set(winner.get("implied_traits", []))
-    confirmed_traits: set[str] = set()
-    functional_classes = set(winner.get("functional_classes", []))
-    confirmed_functional_classes: set[str] = set()
-    preferred_standard_codes = list(dict.fromkeys(winner.get("likely_standards", [])))
-
-    if winner_confidence == "high" and not ambiguous:
-        confirmed_traits.update(winner.get("implied_traits", []))
-        confirmed_functional_classes.update(winner.get("functional_classes", []))
-
-    if len(selected_rows) > 1:
-        common_traits = set(selected_rows[0].get("implied_traits", []))
-        common_classes = set(selected_rows[0].get("functional_classes", []))
-        for row in selected_rows[1:]:
-            common_traits &= set(row.get("implied_traits", []))
-            common_classes &= set(row.get("functional_classes", []))
-            inferred_traits.update(row.get("implied_traits", []))
-            functional_classes.update(row.get("functional_classes", []))
-            for code in row.get("likely_standards", []):
-                if code not in preferred_standard_codes:
-                    preferred_standard_codes.append(code)
-        confirmed_traits.update(common_traits)
-        confirmed_functional_classes.update(common_classes)
-
-    return inferred_traits, confirmed_traits, functional_classes, confirmed_functional_classes, preferred_standard_codes
 
 
 def _contradiction_severity(contradictions: list[str]) -> str:
@@ -747,74 +1049,37 @@ def extract_traits(description: str, category: str = "") -> dict:
     inferred_traits.update(_infer_baseline_traits(text, explicit_traits))
     diagnostics.append(f"normalized_text={text}")
 
-    candidates = _product_candidates(text, explicit_traits | inferred_traits)
-    top_candidates = candidates[:5]
+    match = _hierarchical_product_match(text, explicit_traits | inferred_traits)
+    product_type = match["product_type"]
+    product_match_confidence = match["product_match_confidence"]
+    product_candidates = match["product_candidates"]
+    matched_products = match["matched_products"]
+    routing_matched_products = match["routing_matched_products"]
+    confirmed_products = match["confirmed_products"]
+    preferred_standard_codes = match["preferred_standard_codes"]
+    product_family = match["product_family"]
+    product_family_confidence = match["product_family_confidence"]
+    product_subtype = match["product_subtype"]
+    product_subtype_confidence = match["product_subtype_confidence"]
+    product_match_stage = match["product_match_stage"]
 
-    product_type = None
-    product_match_confidence = "low"
-    product_candidates: list[dict[str, Any]] = []
-    matched_products: list[str] = []
-    confirmed_products: list[str] = []
-    preferred_standard_codes: list[str] = []
+    inferred_traits.update(match["family_traits"])
+    inferred_traits.update(match["subtype_traits"])
+    functional_classes.update(match["functional_classes"])
+    confirmed_functional_classes.update(match["confirmed_functional_classes"])
+    if product_family_confidence == "high":
+        confirmed_traits.update(match["family_traits"])
+    if product_match_stage == "subtype" and product_subtype_confidence == "high":
+        confirmed_traits.update(match["subtype_traits"])
 
-    for idx, candidate in enumerate(top_candidates):
-        confidence = _candidate_confidence(
-            idx,
-            candidate,
-            top_candidates[idx + 1] if idx + 1 < len(top_candidates) else None,
-        )
-        item = {
-            "id": candidate["id"],
-            "label": candidate["label"],
-            "matched_alias": candidate["matched_alias"],
-            "score": candidate["score"],
-            "confidence": confidence,
-            "reasons": candidate["reasons"],
-            "likely_standards": candidate.get("likely_standards", []),
-        }
-        product_candidates.append(item)
-
+    diagnostics.extend(match["diagnostics"])
     if product_candidates:
-        winner = product_candidates[0]
-        product_type = winner["id"]
-        product_match_confidence = winner["confidence"]
-        diagnostics.append(f"product_winner={winner['id']}")
-        diagnostics.append(f"product_alias={winner.get('matched_alias') or ''}")
-
-        ambiguous = len(product_candidates) > 1 and product_candidates[0]["score"] - product_candidates[1]["score"] < 15
-        if ambiguous and product_match_confidence == "high":
-            product_match_confidence = "medium"
-
-        matched_products = _select_matched_products(product_candidates)
-        selected_rows = [row for row in top_candidates if row["id"] in matched_products]
-        selected_rows.sort(key=lambda row: matched_products.index(row["id"]))
-
-        (
-            aggregate_inferred_traits,
-            aggregate_confirmed_traits,
-            aggregate_classes,
-            aggregate_confirmed_classes,
-            preferred_standard_codes,
-        ) = _aggregate_candidate_context(selected_rows, product_match_confidence, ambiguous)
-        inferred_traits.update(aggregate_inferred_traits)
-        confirmed_traits.update(aggregate_confirmed_traits)
-        functional_classes.update(aggregate_classes)
-        confirmed_functional_classes.update(aggregate_confirmed_classes)
-
-        if product_match_confidence == "high" and not ambiguous:
-            confirmed_products = [product_type]
-        elif selected_rows:
-            common_products = [row["id"] for row in selected_rows if row["id"] == product_type]
-            confirmed_products = common_products[:1]
-
-        if ambiguous:
-            contradictions.append(
-                "Product identification is ambiguous between "
-                f"{product_candidates[0]['id'].replace('_', ' ')} and "
-                f"{product_candidates[1]['id'].replace('_', ' ')}."
-            )
+        diagnostics.append(f"product_winner={product_candidates[0]['id']}")
+        diagnostics.append(f"product_alias={product_candidates[0].get('matched_alias') or ''}")
     else:
         diagnostics.append("product_winner=none")
+
+    contradictions.extend(match["contradictions"])
 
     if "battery_powered" in explicit_traits and "mains_powered" in explicit_traits:
         contradictions.append("Both battery-powered and mains-powered signals were detected.")
@@ -834,6 +1099,7 @@ def extract_traits(description: str, category: str = "") -> dict:
     confirmed_traits = {t for t in (confirmed_traits | explicit_traits) if t in known_traits}
 
     diagnostics.append("matched_products=" + ",".join(matched_products))
+    diagnostics.append("routing_matched_products=" + ",".join(routing_matched_products))
     diagnostics.append("confirmed_products=" + ",".join(confirmed_products))
     diagnostics.append("preferred_standard_codes=" + ",".join(preferred_standard_codes))
     diagnostics.append("explicit_traits=" + ",".join(sorted(explicit_traits)))
@@ -843,7 +1109,13 @@ def extract_traits(description: str, category: str = "") -> dict:
 
     return {
         "product_type": product_type,
+        "product_family": product_family,
+        "product_family_confidence": product_family_confidence,
+        "product_subtype": product_subtype,
+        "product_subtype_confidence": product_subtype_confidence,
+        "product_match_stage": product_match_stage,
         "matched_products": matched_products,
+        "routing_matched_products": routing_matched_products,
         "confirmed_products": confirmed_products,
         "preferred_standard_codes": preferred_standard_codes,
         "product_match_confidence": product_match_confidence,

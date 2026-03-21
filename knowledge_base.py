@@ -13,7 +13,7 @@ class KnowledgeBaseError(RuntimeError):
 
 
 BASE_DIR = Path(__file__).resolve().parent
-KB_META_VERSION = "5.0.0"
+KB_META_VERSION = "5.1.0"
 ALLOWED_HARMONIZATION_STATUSES = {"harmonized", "state_of_the_art", "review", "unknown"}
 ALLOWED_TEST_FOCUS = {
     "safety",
@@ -146,6 +146,11 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
         if not isinstance(aliases, list) or not aliases or not all(isinstance(item, str) and item.strip() for item in aliases):
             raise KnowledgeBaseError(f"Product '{pid}' must define a non-empty aliases list.")
 
+        for field in ("product_family", "product_subfamily"):
+            value = row.get(field)
+            if value is not None and (not isinstance(value, str) or not value.strip()):
+                raise KnowledgeBaseError(f"Product '{pid}' field '{field}' must be a non-empty string when provided.")
+
         for key in ("implied_traits", "functional_classes", "likely_standards"):
             value = row.get(key, [])
             if not isinstance(value, list):
@@ -158,6 +163,28 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
                 for item in value:
                     if not isinstance(item, str):
                         raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only strings.")
+
+        for key in ("required_clues", "preferred_clues", "exclude_clues", "confusable_with"):
+            value = row.get(key, [])
+            if not isinstance(value, list):
+                raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
+            for item in value:
+                if not isinstance(item, str) or not item.strip():
+                    raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only non-empty strings.")
+
+        for key in ("family_traits", "subtype_traits"):
+            value = row.get(key, [])
+            if not isinstance(value, list):
+                raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
+            for trait in value:
+                if trait not in trait_ids:
+                    raise KnowledgeBaseError(f"Product '{pid}' field '{key}' references unknown trait '{trait}'.")
+
+    for row in products:
+        pid = row["id"]
+        for other in row.get("confusable_with", []):
+            if other not in seen:
+                raise KnowledgeBaseError(f"Product '{pid}' field 'confusable_with' references unknown product '{other}'.")
 
     return products
 
@@ -365,6 +392,22 @@ def _enrich_standards(rows: list[dict]) -> list[dict]:
     return out
 
 
+def _enrich_products(rows: list[dict]) -> list[dict]:
+    out: list[dict] = []
+    for row in rows:
+        enriched = dict(row)
+        enriched["product_family"] = enriched.get("product_family") or enriched["id"]
+        enriched["product_subfamily"] = enriched.get("product_subfamily") or enriched["id"]
+        enriched.setdefault("required_clues", [])
+        enriched.setdefault("preferred_clues", [])
+        enriched.setdefault("exclude_clues", [])
+        enriched.setdefault("confusable_with", [])
+        enriched.setdefault("family_traits", [])
+        enriched.setdefault("subtype_traits", list(enriched.get("implied_traits", [])))
+        out.append(enriched)
+    return out
+
+
 def _post_validate_product_standard_links(products: list[dict], standards: list[dict]) -> None:
     standard_codes = {row["code"] for row in standards}
     standard_families = {row.get("standard_family") for row in standards if isinstance(row.get("standard_family"), str)}
@@ -396,7 +439,7 @@ def load_all() -> dict:
     trait_ids = {row["id"] for row in traits}
 
     products_data = _load_yaml_raw("products.yaml")
-    products = _validate_products(products_data, trait_ids)
+    products = _enrich_products(_validate_products(products_data, trait_ids))
     product_ids = {row["id"] for row in products}
 
     legislations_data = _load_yaml_raw("legislation_catalog.yaml")
