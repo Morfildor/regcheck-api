@@ -2071,12 +2071,12 @@ products:
   - consumer
   - electrical
   - electronic
+  - av_ict
   - display
   - mains_power_likely
   functional_classes:
   - home_device
   likely_standards:
-  - EN 60335-2-56
   - EN 62368-1
 - id: whirlpool_bath
   label: Whirlpool bath / spa bath
@@ -2335,3 +2335,261 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-85
+- id: smart_display
+  label: Smart display
+  aliases:
+  - smart display
+  - display hub
+  - assistant display
+  - voice assistant display
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - display
+  - speaker
+  - microphone
+  - camera
+  - app_control
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: router
+  label: Router
+  aliases:
+  - router
+  - wifi router
+  - wireless router
+  - internet router
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: modem
+  label: Modem
+  aliases:
+  - modem
+  - cable modem
+  - dsl modem
+  - broadband modem
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: iot_gateway
+  label: IoT gateway / hub
+  aliases:
+  - iot gateway
+  - smart home gateway
+  - smart home hub
+  - hub gateway
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - zigbee
+  - thread
+  - matter
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: network_switch
+  label: Network switch
+  aliases:
+  - network switch
+  - ethernet switch
+  - lan switch
+  - poe switch
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: wireless_access_point
+  label: Wireless access point
+  aliases:
+  - access point
+  - wireless access point
+  - wifi access point
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: laptop
+  label: Laptop
+  aliases:
+  - laptop
+  - notebook computer
+  - notebook pc
+  - portable computer
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - display
+  - radio
+  - wifi
+  - bluetooth
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: desktop_pc
+  label: Desktop PC
+  aliases:
+  - desktop pc
+  - desktop computer
+  - personal computer
+  - mini pc
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: server
+  label: Server / NAS
+  aliases:
+  - server
+  - network attached storage
+  - nas server
+  - home server
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: monitor
+  label: Monitor
+  aliases:
+  - monitor
+  - computer monitor
+  - display monitor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_powered
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: smart_tv
+  label: Television / smart TV
+  aliases:
+  - smart tv
+  - television
+  - tv
+  - connected television
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - speaker
+  - mains_powered
+  - radio
+  - wifi
+  - bluetooth
+  - app_control
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+- id: streaming_device
+  label: Streaming device / set-top box
+  aliases:
+  - streaming device
+  - streaming stick
+  - set-top box
+  - media player
+  - tv box
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - data_storage
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1

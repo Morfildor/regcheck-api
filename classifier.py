@@ -34,6 +34,7 @@ POWER_TRAITS = {"battery_powered", "mains_powered", "mains_power_likely", "usb_p
 RADIO_TRAITS = {"bluetooth", "wifi", "wifi_5ghz", "zigbee", "thread", "matter", "nfc", "cellular"}
 CONNECTED_TRAITS = {"app_control", "cloud", "internet", "ota", "account", "authentication"}
 ELECTRONIC_SIGNAL_TRAITS = RADIO_TRAITS | CONNECTED_TRAITS | {
+    "av_ict",
     "camera",
     "display",
     "location",
@@ -138,6 +139,35 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bpairing code\b",
         r"\btwo factor\b",
         r"\bmfa\b",
+    ],
+    "av_ict": [
+        r"\brouter\b",
+        r"\bmodem\b",
+        r"\bgateway\b",
+        r"\bnetwork switch\b",
+        r"\bethernet switch\b",
+        r"\baccess point\b",
+        r"\bwireless access point\b",
+        r"\blaptop\b",
+        r"\bnotebook\b",
+        r"\bdesktop pc\b",
+        r"\bpersonal computer\b",
+        r"\bserver\b",
+        r"\bmonitor\b",
+        r"\btelevision\b",
+        r"\bsmart tv\b",
+        r"\btv\b",
+        r"\bsmart display\b",
+        r"\bdisplay hub\b",
+        r"\bset top box\b",
+        r"\bset-top box\b",
+        r"\bstreaming device\b",
+        r"\bmedia player\b",
+        r"\bprojector\b",
+        r"\bsmart speaker\b",
+        r"\bvoice assistant\b",
+        r"\bict equipment\b",
+        r"\baudio video equipment\b",
     ],
     "monetary_transaction": [
         r"\bpayment\b",
@@ -278,6 +308,7 @@ def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
     inferred: set[str] = set()
 
     electrical_signals = POWER_TRAITS | {
+        "av_ict",
         "heating",
         "motorized",
         "radio",

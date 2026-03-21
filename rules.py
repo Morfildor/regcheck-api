@@ -136,6 +136,104 @@ PERSONAL_CARE_PRODUCT_HINTS = {
     "beauty_treatment_appliance",
 }
 
+AV_ICT_PRODUCT_HINTS = {
+    "smart_speaker",
+    "smart_display",
+    "router",
+    "modem",
+    "iot_gateway",
+    "network_switch",
+    "wireless_access_point",
+    "laptop",
+    "desktop_pc",
+    "server",
+    "nas",
+    "monitor",
+    "smart_tv",
+    "streaming_device",
+    "set_top_box",
+    "projector",
+}
+
+APPLIANCE_PRIMARY_TRAITS = {
+    "air_cleaning",
+    "air_treatment",
+    "beverage_preparation",
+    "cleaning",
+    "coffee_brewing",
+    "cooking",
+    "cooling",
+    "dehumidification",
+    "drying",
+    "extraction",
+    "food_contact",
+    "food_preparation",
+    "garden_use",
+    "hair_care",
+    "heating",
+    "heating_personal_environment",
+    "humidification",
+    "motorized",
+    "oral_care",
+    "personal_care",
+    "surface_cleaning",
+    "steam",
+    "textile_care",
+    "water_contact",
+    "water_heating",
+    "washing",
+}
+
+AV_ICT_SUPPORTING_TRAITS = {
+    "av_ict",
+    "camera",
+    "data_storage",
+    "display",
+    "microphone",
+    "speaker",
+}
+
+
+def _scope_route(
+    traits: set[str],
+    matched_products: set[str],
+    product_type: str | None,
+    confirmed_traits: set[str] | None = None,
+) -> tuple[str, list[str]]:
+    confirmed_traits = confirmed_traits or set()
+    reasons: list[str] = []
+
+    appliance_signals = set(APPLIANCE_PRIMARY_TRAITS) & traits
+    av_ict_signals = {"av_ict"} & traits
+
+    if matched_products & AV_ICT_PRODUCT_HINTS:
+        reasons.append("matched_av_ict_product")
+        av_ict_signals.add("av_ict")
+    if product_type in AV_ICT_PRODUCT_HINTS:
+        reasons.append(f"primary_product={product_type}")
+        av_ict_signals.add("av_ict")
+
+    if not av_ict_signals and (AV_ICT_SUPPORTING_TRAITS & confirmed_traits) and not appliance_signals:
+        reasons.append("confirmed_av_ict_signals")
+        av_ict_signals.add("av_ict")
+
+    if appliance_signals and not av_ict_signals:
+        reasons.append("appliance_primary_traits=" + ",".join(sorted(appliance_signals)))
+        return "appliance", reasons
+    if av_ict_signals and not appliance_signals:
+        reasons.append("av_ict_primary")
+        return "av_ict", reasons
+    if av_ict_signals and appliance_signals:
+        reasons.append("convergent_product_boundary")
+        if product_type in AV_ICT_PRODUCT_HINTS:
+            reasons.append("resolved_by_primary_product=av_ict")
+            return "av_ict", reasons
+        if product_type and product_type not in AV_ICT_PRODUCT_HINTS:
+            reasons.append("resolved_by_primary_product=appliance")
+            return "appliance", reasons
+        return "convergent", reasons
+    return "generic", reasons
+
 
 def _has_any(text: str, patterns: list[str]) -> bool:
     return any(re.search(pattern, text) for pattern in patterns)
@@ -454,11 +552,19 @@ def _apply_post_selection_gates(
     matched_products: set[str],
     diagnostics: list[str],
     allowed_directives: set[str],
+    product_type: str | None = None,
+    confirmed_traits: set[str] | None = None,
 ) -> list[dict[str, Any]]:
     kept: list[dict[str, Any]] = []
+    scope_route, scope_reasons = _scope_route(traits, matched_products, product_type, confirmed_traits)
+    diagnostics.append("scope_route=" + scope_route)
+    if scope_reasons:
+        diagnostics.append("scope_route_reasons=" + ";".join(scope_reasons))
+
     has_external_psu = "external_psu" in traits or bool(matched_products & {"battery_charger", "industrial_charger"})
     prefer_62233 = (
-        "electrical" in traits
+        scope_route != "av_ict"
+        and "electrical" in traits
         and "consumer" in traits
         and "household" in traits
         and ({"heating", "motorized", "mains_powered", "mains_power_likely"} & traits)
@@ -469,7 +575,8 @@ def _apply_post_selection_gates(
     prefer_62311 = (
         "electrical" in traits
         and (
-            "wearable" in traits
+            scope_route == "av_ict"
+            or "wearable" in traits
             or "handheld" in traits
             or "body_worn_or_applied" in traits
             or ("radio" in traits and "consumer" not in traits)
@@ -497,6 +604,26 @@ def _apply_post_selection_gates(
                 continue
             item["directive"] = "ECO"
             item["legislation_key"] = "ECO"
+
+        if code == "EN 62368-1":
+            if scope_route == "appliance":
+                diagnostics.append("gate=drop_EN62368-1:appliance_primary")
+                continue
+            if "radio" in traits and "RED" in allowed_directives and "LVD" not in allowed_directives:
+                item["directive"] = "RED"
+                item["legislation_key"] = "RED"
+
+        if code.startswith("EN 60335-") and scope_route == "av_ict":
+            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
+            continue
+
+        if code in {"EN 55032", "EN 55035"} and scope_route == "appliance":
+            diagnostics.append(f"gate=drop_{code}:appliance_primary")
+            continue
+
+        if code.startswith("EN 55014-") and scope_route == "av_ict":
+            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
+            continue
 
         if code == "EN 62233" and prefer_62311 and not prefer_62233:
             diagnostics.append("gate=drop_EN62233:prefer_EN62311")
@@ -710,6 +837,17 @@ def _missing_information(
             ["cloud account required", "local LAN control without cloud dependency", "OTA firmware updates"],
             ["cloud", "app_control", "ota"],
         )
+    if "av_ict" in traits and (APPLIANCE_PRIMARY_TRAITS & traits):
+        add(
+            "primary_function_boundary",
+            "Confirm whether the primary function is household appliance operation or AV/ICT signal processing / communication equipment.",
+            "high",
+            [
+                "primary function is heating, cleaning, cooking, pumping, or another appliance task",
+                "primary function is audio, video, display, computing, or network communication",
+            ],
+            ["av_ict"],
+        )
     return items[:8]
 
 
@@ -728,7 +866,7 @@ def _build_quick_adds(missing: list[MissingInformationItem]) -> list[dict[str, s
 def _build_standard_sections(items: list[StandardItem]) -> list[dict[str, Any]]:
     grouped: dict[str, list[StandardItem]] = defaultdict(list)
     for item in items:
-        route_keys = [key for key in item.directives if key] or [item.directive]
+        route_keys = [item.directive] if item.category == "safety" else ([key for key in item.directives if key] or [item.directive])
         for key in route_keys:
             grouped[key].append(item)
     sections: list[dict[str, Any]] = []
@@ -806,14 +944,15 @@ def _primary_legislation_by_directive(items: list[LegislationItem]) -> dict[str,
 def _standard_item_from_row(
     row: dict[str, Any],
     legislation_by_directive: dict[str, LegislationItem],
+    traits: set[str],
 ) -> StandardItem:
-    primary_directive = str(row.get("directive") or row.get("legislation_key") or "OTHER")
+    primary_directive = _standard_primary_directive(row, traits)
     legislation = legislation_by_directive.get(primary_directive)
     return StandardItem(
         code=str(row["code"]),
         title=str(row["title"]),
         directive=primary_directive,
-        directives=[str(item) for item in (row.get("directives") or []) if isinstance(item, str)],
+        directives=[str(item) for item in (row.get("directives") or []) if isinstance(item, str)] or [primary_directive],
         legislation_key=row.get("legislation_key"),
         category=str(row.get("category", "other")),
         confidence=_confidence_from_score(int(row.get("score", 0))),
@@ -888,7 +1027,15 @@ def analyze(
         confirmed_traits=confirmed_traits,
     )
     selected_rows = list(items["standards"]) + list(items["review_items"])
-    selected_rows = _apply_post_selection_gates(selected_rows, trait_set, matched_products, diagnostics, allowed_directives)
+    selected_rows = _apply_post_selection_gates(
+        selected_rows,
+        trait_set,
+        matched_products,
+        diagnostics,
+        allowed_directives,
+        product_type=product_type,
+        confirmed_traits=confirmed_traits,
+    )
 
     dedup: dict[str, dict[str, Any]] = {}
     for row in selected_rows:
@@ -899,7 +1046,7 @@ def analyze(
     standard_items: list[StandardItem] = []
     review_items: list[StandardItem] = []
     for row in dedup.values():
-        item = _standard_item_from_row(row, legislation_by_directive)
+        item = _standard_item_from_row(row, legislation_by_directive, trait_set)
         if item.item_type == "review":
             review_items.append(item)
         else:
