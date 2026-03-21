@@ -620,6 +620,7 @@ def _build_legislation_sections(
         "non_ce": {"key": "non_ce", "title": "Parallel obligations", "items": []},
         "framework": {"key": "framework", "title": "Additional framework checks", "items": []},
         "future": {"key": "future", "title": "Future / lifecycle watchlist", "items": []},
+        "informational": {"key": "informational", "title": "Informational notices", "items": []},
     }
     for item in items:
         sections_dict[item.bucket]["items"].append(item.model_dump())
@@ -907,6 +908,7 @@ def analyze(
     standard_items = _sort_standard_items(standard_items)
     review_items = _sort_standard_items(review_items)
     all_standard_items = _sort_standard_items(standard_items + review_items)
+    current_review_items = [item for item in review_items if item.timing_status == "current"]
     missing_items = _missing_information(trait_set, matched_products, description)
     standard_sections = _build_standard_sections(all_standard_items)
     primary_regimes = [section["key"] for section in standard_sections[:4]]
@@ -914,7 +916,7 @@ def analyze(
     current_risk = _current_risk(
         product_confidence=str(traits_data.get("product_match_confidence") or "low"),
         contradiction_severity=str(traits_data.get("contradiction_severity") or "none"),
-        review_items=review_items,
+        review_items=current_review_items,
         missing_items=missing_items,
     )
     future_risk = _future_risk(detected_directives, trait_set)
@@ -963,7 +965,7 @@ def analyze(
         non_ce_obligations=[x for x in legislation_items if x.bucket == "non_ce"],
         framework_regimes=[x for x in legislation_items if x.bucket == "framework"],
         future_regimes=[x for x in legislation_items if x.bucket == "future"],
-        informational_items=[],
+        informational_items=[x for x in legislation_items if x.bucket == "informational"],
         standards=standard_items,
         review_items=review_items,
         missing_information=[item.message for item in missing_items],

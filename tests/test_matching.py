@@ -8,6 +8,7 @@ from classifier import _select_matched_products, extract_traits
 from knowledge_base import reset_cache
 import main
 from models import ProductInput
+from models import LegislationItem
 from rules import _pick_legislations, analyze
 from standards_engine import find_applicable_items
 
@@ -127,6 +128,72 @@ class MatchingTests(unittest.TestCase):
 
         future_keys = {item.directive_key for item in result.future_regimes}
         self.assertIn("AI_Act", future_keys)
+
+    def test_analyze_includes_informational_legislation_without_crashing(self) -> None:
+        result = analyze("mains-powered toaster")
+
+        info_codes = {item.code for item in result.informational_items}
+        self.assertIn("2017/1357", info_codes)
+
+        section_keys = {section["key"] for section in result.legislation_sections}
+        self.assertIn("informational", section_keys)
+
+    def test_future_only_review_items_do_not_raise_current_risk(self) -> None:
+        fake_traits = {
+            "product_type": "synthetic_product",
+            "matched_products": [],
+            "confirmed_products": [],
+            "preferred_standard_codes": [],
+            "product_match_confidence": "high",
+            "product_candidates": [],
+            "functional_classes": [],
+            "confirmed_functional_classes": [],
+            "explicit_traits": ["ai_related"],
+            "confirmed_traits": ["ai_related"],
+            "inferred_traits": [],
+            "all_traits": ["ai_related"],
+            "contradictions": [],
+            "contradiction_severity": "none",
+            "diagnostics": [],
+        }
+        future_legislation = LegislationItem(
+            code="2024/1689",
+            title="Artificial Intelligence Act",
+            family="AI regulation",
+            directive_key="AI_Act",
+            bucket="future",
+            timing_status="future",
+            applicability="conditional",
+        )
+        future_review_row = {
+            "code": "AI Act review",
+            "title": "AI Act assessment required",
+            "directive": "AI_Act",
+            "directives": ["AI_Act"],
+            "legislation_key": "AI_Act",
+            "category": "ai",
+            "item_type": "review",
+            "score": 80,
+            "confidence": "medium",
+            "harmonization_status": "review",
+            "reason": "synthetic future-only review item",
+        }
+
+        with patch("rules.extract_traits", return_value=fake_traits):
+            with patch("rules._build_legislation_sections", return_value=([future_legislation], [], ["AI_Act"])):
+                with patch(
+                    "rules.find_applicable_items",
+                    return_value={"standards": [], "review_items": [future_review_row], "rejections": []},
+                ):
+                    with patch("rules._apply_post_selection_gates", side_effect=lambda rows, *_: rows):
+                        with patch("rules._missing_information", return_value=[]):
+                            result = analyze("synthetic")
+
+        self.assertEqual(result.current_compliance_risk, "LOW")
+        self.assertEqual(result.future_watchlist_risk, "MEDIUM")
+        self.assertEqual(result.overall_risk, "MEDIUM")
+        self.assertEqual(result.stats.current_review_items_count, 0)
+        self.assertEqual(result.stats.future_review_items_count, 1)
 
     def test_admin_reload_is_disabled_without_token(self) -> None:
         with self.assertRaises(HTTPException) as ctx:
