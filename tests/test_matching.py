@@ -231,13 +231,37 @@ class MatchingTests(unittest.TestCase):
                 ):
                     with patch("rules._apply_post_selection_gates", side_effect=lambda rows, *_, **__: rows):
                         with patch("rules._missing_information", return_value=[]):
-                            result = analyze("synthetic")
+                            result = analyze("synthetic", depth="deep")
 
         self.assertEqual(result.current_compliance_risk, "LOW")
         self.assertEqual(result.future_watchlist_risk, "MEDIUM")
         self.assertEqual(result.overall_risk, "MEDIUM")
         self.assertEqual(result.stats.current_review_items_count, 0)
         self.assertEqual(result.stats.future_review_items_count, 1)
+        self.assertTrue(any(item.article == "Future standard review" for item in result.findings))
+
+    def test_analyze_populates_actionable_findings(self) -> None:
+        result = analyze("bluetooth tracker with mobile app and battery", depth="standard")
+
+        self.assertTrue(result.findings)
+        self.assertTrue(any(item.article == "Legislation route" for item in result.findings))
+        self.assertTrue(any(item.article == "Standard route" for item in result.findings))
+        self.assertTrue(any(item.directive == "INPUT" for item in result.findings))
+
+    def test_analysis_depth_changes_findings_and_question_volume(self) -> None:
+        description = "AI-enabled smart camera with wifi, cloud account, OTA updates, and mobile app control"
+
+        quick = analyze(description, depth="quick")
+        deep = analyze(description, depth="deep")
+
+        self.assertLess(len(quick.findings), len(deep.findings))
+        self.assertLess(len(quick.suggested_questions), len(deep.suggested_questions))
+        self.assertFalse(any(item.directive == "AI_Act" for item in quick.findings))
+        self.assertTrue(any(item.directive == "AI_Act" for item in deep.findings))
+        self.assertEqual(quick.analysis_audit["depth"], "quick")
+        self.assertEqual(deep.analysis_audit["depth"], "deep")
+        self.assertEqual(quick.hero_summary["depth"], "quick")
+        self.assertEqual(deep.hero_summary["depth"], "deep")
 
     def test_admin_reload_is_disabled_without_token(self) -> None:
         with self.assertRaises(HTTPException) as ctx:

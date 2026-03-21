@@ -21,7 +21,7 @@ from knowledge_base import (
 from models import AnalysisResult, ProductInput
 from rules import analyze
 
-APP_VERSION = "5.1.0"
+APP_VERSION = "5.2.0"
 ADMIN_RELOAD_TOKEN_ENV = "REGCHECK_ADMIN_RELOAD_TOKEN"
 EXPOSE_HEALTH_DETAILS = os.getenv("REGCHECK_EXPOSE_HEALTH_DETAILS", "false").strip().lower() in {"1", "true", "yes", "on"}
 

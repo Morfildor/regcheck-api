@@ -11,6 +11,7 @@ from models import (
     AnalysisResult,
     AnalysisStats,
     ConfidenceLevel,
+    Finding,
     KnowledgeBaseMeta,
     LegislationItem,
     MissingInformationItem,
@@ -294,6 +295,10 @@ def _route_title(key: str) -> str:
         "CRA": "CRA review route",
         "GDPR": "GDPR data route",
     }.get(key, "Additional route")
+
+
+def _analysis_depth(depth: str) -> str:
+    return depth if depth in {"quick", "standard", "deep"} else "standard"
 
 
 def _current_date() -> date:
@@ -839,6 +844,7 @@ def _missing_information(
         importance: MissingImportance = "medium",
         examples: list[str] | None = None,
         related: list[str] | None = None,
+        route_impact: list[str] | None = None,
     ) -> None:
         items.append(
             MissingInformationItem(
@@ -847,6 +853,7 @@ def _missing_information(
                 importance=importance,
                 examples=examples or [],
                 related_traits=related or [],
+                route_impact=route_impact or [],
             )
         )
 
@@ -857,6 +864,7 @@ def _missing_information(
             "high",
             ["230 V mains powered", "rechargeable lithium battery", "mains plus battery backup"],
             ["mains_powered", "battery_powered"],
+            ["LVD", "BATTERY", "ECO"],
         )
     if "radio" in traits and not any(t in traits for t in ["wifi", "bluetooth", "cellular", "zigbee", "thread", "nfc"]):
         add(
@@ -865,6 +873,7 @@ def _missing_information(
             "high",
             ["Wi-Fi radio", "Bluetooth LE radio", "NFC radio"],
             ["radio"],
+            ["RED", "RED_CYBER"],
         )
     if "wifi" in traits and "wifi_5ghz" not in traits:
         add(
@@ -873,6 +882,7 @@ def _missing_information(
             "medium",
             ["2.4 GHz only", "dual-band 2.4/5 GHz"],
             ["wifi", "wifi_5ghz"],
+            ["RED"],
         )
     if ({"usb_powered", "external_psu"} & traits or "adapter" in text) and "external_psu" not in traits and not _has_any(text, POWER_EXTERNAL_NEGATION_PATTERNS):
         add(
@@ -881,6 +891,7 @@ def _missing_information(
             "high",
             ["external AC/DC adapter included", "USB-C PD power adapter included", "internal PSU only"],
             ["external_psu"],
+            ["LVD", "ECO"],
         )
     if "radio" in traits and not ({"wearable", "handheld", "body_worn_or_applied"} & traits) and bool(matched_products & PERSONAL_CARE_PRODUCT_HINTS):
         add(
@@ -889,6 +900,7 @@ def _missing_information(
             "medium",
             ["body-worn use", "handheld close to face", "countertop use only"],
             ["wearable", "handheld", "body_worn_or_applied"],
+            ["RED"],
         )
     if "radio" in traits and ({"portable", "battery_powered", "cellular"} & traits or bool(matched_products & PERSONAL_CARE_PRODUCT_HINTS)) and not ({"handheld", "wearable", "body_worn_or_applied"} & traits):
         add(
@@ -897,6 +909,7 @@ def _missing_information(
             "medium",
             ["handheld use", "body-worn wearable use", "desktop use with separation distance"],
             ["handheld", "wearable", "body_worn_or_applied"],
+            ["RED"],
         )
     if "cloud" in traits or "app_control" in traits or "ota" in traits:
         add(
@@ -905,6 +918,7 @@ def _missing_information(
             "high",
             ["cloud account required", "local LAN control without cloud dependency", "OTA firmware updates"],
             ["cloud", "app_control", "ota"],
+            ["RED_CYBER", "CRA", "GDPR"],
         )
     if "av_ict" in traits and (APPLIANCE_PRIMARY_TRAITS & traits):
         add(
@@ -916,6 +930,7 @@ def _missing_information(
                 "primary function is audio, video, display, computing, or network communication",
             ],
             ["av_ict"],
+            ["LVD", "EMC", "RED"],
         )
     return items[:8]
 
@@ -966,6 +981,203 @@ def _build_summary(directives: list[str], standards: list[StandardItem], review_
     if "external_psu" in traits:
         parts.append("external power supply route retained because adapter or charger evidence was explicitly detected")
     return ". ".join(parts).strip().rstrip(".") + "."
+
+
+def _directive_label(key: str) -> str:
+    return DIRECTIVE_TITLES.get(key, (key, key))[0]
+
+
+def _join_readable(values: list[str], limit: int = 3) -> str:
+    filtered = [value for value in values if value]
+    if not filtered:
+        return ""
+    if len(filtered) <= limit:
+        return ", ".join(filtered)
+    return ", ".join(filtered[:limit]) + f", +{len(filtered) - limit} more"
+
+
+def _finding_action_from_legislation(item: LegislationItem) -> str | None:
+    actions: list[str] = []
+    if item.doc_impacts:
+        actions.append("Prepare: " + _join_readable(item.doc_impacts, 3))
+    if item.evidence_strength != "confirmed" and item.triggers:
+        actions.append("Confirm: " + _join_readable(item.triggers, 2))
+    return " ".join(actions) or None
+
+
+def _finding_action_from_standard(item: StandardItem) -> str | None:
+    actions: list[str] = []
+    if item.evidence_hint:
+        actions.append("Collect: " + _join_readable(item.evidence_hint, 3))
+    if item.test_focus:
+        actions.append("Check: " + _join_readable(item.test_focus, 2))
+    return " ".join(actions) or None
+
+
+def _build_findings(
+    *,
+    depth: str,
+    legislation_items: list[LegislationItem],
+    standards: list[StandardItem],
+    review_items: list[StandardItem],
+    missing_items: list[MissingInformationItem],
+    contradictions: list[str],
+    contradiction_severity: str,
+) -> list[Finding]:
+    depth = _analysis_depth(depth)
+    limits = {
+        "quick": {"max": 6, "missing": 2, "review": 2, "legislation": 3, "standards": 0, "future": 0, "info": 0},
+        "standard": {"max": 14, "missing": 4, "review": 4, "legislation": 6, "standards": 4, "future": 2, "info": 0},
+        "deep": {"max": 24, "missing": 8, "review": 8, "legislation": 12, "standards": 10, "future": 6, "info": 2},
+    }[depth]
+
+    current_legislation = [item for item in legislation_items if item.timing_status == "current" and item.bucket != "informational"]
+    future_legislation = [item for item in legislation_items if item.timing_status == "future"]
+    informational_legislation = [item for item in legislation_items if item.bucket == "informational"]
+    current_review_items = [item for item in review_items if item.timing_status == "current"]
+    future_review_items = [item for item in review_items if item.timing_status == "future"]
+
+    candidates: list[tuple[int, Finding]] = []
+    seen: set[tuple[str, str, str]] = set()
+
+    def add(priority: int, finding: Finding) -> None:
+        key = (finding.directive, finding.article, finding.finding)
+        if key in seen:
+            return
+        seen.add(key)
+        candidates.append((priority, finding))
+
+    if contradictions:
+        status = "FAIL" if contradiction_severity in {"medium", "high"} else "WARN"
+        add(
+            0,
+            Finding(
+                directive="INPUT",
+                article="Contradiction",
+                status=status,
+                finding="Conflicting product signals need resolution: " + _join_readable(contradictions, 3),
+                action="Clarify the actual product architecture and power/connectivity claims before relying on the route output.",
+            ),
+        )
+
+    for item in missing_items[: limits["missing"]]:
+        impacted_routes = [_directive_label(route) for route in item.route_impact]
+        finding_text = item.message
+        if impacted_routes:
+            finding_text += " Affects: " + _join_readable(impacted_routes, 3) + "."
+        action = None
+        if item.examples:
+            action = "Clarify with: " + _join_readable(item.examples, 2)
+        status = "FAIL" if item.importance == "high" else ("WARN" if item.importance == "medium" else "INFO")
+        add(
+            10 if item.importance == "high" else 40,
+            Finding(
+                directive="INPUT",
+                article="Missing information",
+                status=status,
+                finding=finding_text,
+                action=action,
+            ),
+        )
+
+    for item in current_review_items[: limits["review"]]:
+        finding_text = f"{item.code} stays review-dependent before it can be relied on."
+        if item.reason:
+            finding_text += " " + item.reason
+        action = _finding_action_from_standard(item)
+        add(
+            20,
+            Finding(
+                directive=item.directive,
+                article="Standard review",
+                status="WARN",
+                finding=finding_text,
+                action=action,
+            ),
+        )
+
+    for item in current_legislation[: limits["legislation"]]:
+        finding_text = f"{item.title} is part of the current compliance route."
+        if item.reason:
+            finding_text += " " + item.reason
+        if item.is_forced:
+            finding_text += " Included because the route was explicitly forced."
+        status = "WARN" if item.applicability == "applicable" and item.bucket in {"ce", "non_ce"} else "INFO"
+        add(
+            30,
+            Finding(
+                directive=item.directive_key,
+                article="Legislation route",
+                status=status,
+                finding=finding_text,
+                action=_finding_action_from_legislation(item),
+            ),
+        )
+
+    for item in standards[: limits["standards"]]:
+        finding_text = f"{item.code} selected as a {item.harmonization_status.replace('_', ' ')} standard route."
+        if item.reason:
+            finding_text += " " + item.reason
+        status = "PASS" if item.harmonization_status == "harmonized" else "INFO"
+        add(
+            50,
+            Finding(
+                directive=item.directive,
+                article="Standard route",
+                status=status,
+                finding=finding_text,
+                action=_finding_action_from_standard(item),
+            ),
+        )
+
+    if depth in {"standard", "deep"}:
+        for item in future_legislation[: limits["future"]]:
+            finding_text = f"{item.title} is a future watchlist regime."
+            if item.applicable_from:
+                finding_text += f" Applies from {item.applicable_from}."
+            if item.reason:
+                finding_text += " " + item.reason
+            add(
+                70,
+                Finding(
+                    directive=item.directive_key,
+                    article="Future regime",
+                    status="INFO",
+                    finding=finding_text,
+                    action=_finding_action_from_legislation(item),
+                ),
+            )
+
+    if depth == "deep":
+        for item in future_review_items[: limits["review"]]:
+            finding_text = f"{item.code} is not yet a current route and remains future review-dependent."
+            if item.reason:
+                finding_text += " " + item.reason
+            add(
+                60,
+                Finding(
+                    directive=item.directive,
+                    article="Future standard review",
+                    status="INFO",
+                    finding=finding_text,
+                    action=_finding_action_from_standard(item),
+                ),
+            )
+
+        for item in informational_legislation[: limits["info"]]:
+            add(
+                80,
+                Finding(
+                    directive=item.directive_key,
+                    article="Informational notice",
+                    status="INFO",
+                    finding=f"{item.title} is informational context rather than a primary conformity route.",
+                    action=_finding_action_from_legislation(item),
+                ),
+            )
+
+    candidates.sort(key=lambda row: (row[0], row[1].directive, row[1].article, row[1].finding))
+    return [finding for _, finding in candidates[: limits["max"]]]
 
 
 def _current_risk(
@@ -1060,6 +1272,7 @@ def analyze(
     directives: list[str] | None = None,
     depth: str = "standard",
 ) -> AnalysisResult:
+    depth = _analysis_depth(depth)
     traits_data = extract_traits(description=description, category=category)
     diagnostics = list(traits_data.get("diagnostics") or [])
     matched_products = set(traits_data.get("matched_products") or [])
@@ -1159,6 +1372,18 @@ def analyze(
     )
 
     summary = _build_summary(detected_directives, standard_items, review_items, trait_set)
+    findings = _build_findings(
+        depth=depth,
+        legislation_items=legislation_items,
+        standards=standard_items,
+        review_items=review_items,
+        missing_items=missing_items,
+        contradictions=traits_data.get("contradictions") or [],
+        contradiction_severity=traits_data.get("contradiction_severity", "none"),
+    )
+    top_actions_limit = {"quick": 2, "standard": 3, "deep": 5}[depth]
+    suggested_questions_limit = {"quick": 2, "standard": 4, "deep": 6}[depth]
+    quick_adds_limit = {"quick": 4, "standard": 8, "deep": 10}[depth]
 
     return AnalysisResult(
         product_summary=description.strip(),
@@ -1196,6 +1421,7 @@ def analyze(
             "allowed_directives": detected_directives,
             "matched_products": sorted(matched_products),
             "preferred_standards": sorted(likely_standards),
+            "depth": depth,
         },
         standard_sections=standard_sections,
         legislation_sections=legislation_sections,
@@ -1204,6 +1430,7 @@ def analyze(
             "subtitle": "Describe the product clearly to generate the standards route and the applicable legislation path.",
             "primary_regimes": primary_regimes,
             "confidence": traits_data.get("product_match_confidence", "low"),
+            "depth": depth,
         },
         confidence_panel={
             "confidence": traits_data.get("product_match_confidence", "low"),
@@ -1212,10 +1439,10 @@ def analyze(
         input_gaps_panel={
             "items": [item.model_dump() for item in missing_items],
         },
-        top_actions=[item.message for item in missing_items[:3]],
+        top_actions=[item.message for item in missing_items[:top_actions_limit]],
         current_path=[section["title"] for section in standard_sections],
         future_watchlist=[item.title for item in legislation_items if item.bucket == "future"],
-        suggested_questions=[item.message for item in missing_items[:4]],
-        suggested_quick_adds=_build_quick_adds(missing_items),
-        findings=[],
+        suggested_questions=[item.message for item in missing_items[:suggested_questions_limit]],
+        suggested_quick_adds=_build_quick_adds(missing_items)[:quick_adds_limit],
+        findings=findings,
     )
