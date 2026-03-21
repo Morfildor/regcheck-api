@@ -59,7 +59,7 @@ legislations:
   - RF exposure assessment
   all_of_traits:
   - radio
-- code: (EU) 2022/30 as amended by (EU) 2023/2444
+- code: 2022/30/EU
   title: RED DA Cybersecurity
   family: Cybersecurity for radio equipment
   legal_form: Delegated Regulation
@@ -92,7 +92,7 @@ legislations:
   - account
   - authentication
   - monetary_transaction
-- code: Regulation (EU) 2024/1781
+- code: 2024/1781
   title: Ecodesign for Sustainable Products Regulation framework
   family: Energy / ecodesign
   legal_form: Regulation
@@ -199,7 +199,7 @@ legislations:
   bucket: ce
   applicability: conditional
   applicable_until: '2027-01-13'
-  replaced_by: Regulation (EU) 2023/1230
+  replaced_by: 2023/1230/EU
   reason: Machinery Directive review is typically needed for machinery-style products such as powered garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
   triggers:
   - motorized drive
@@ -230,7 +230,7 @@ legislations:
   - scarifier_aerator
   - grass_shear
   - milking_machine
-- code: Regulation (EU) 2023/1230
+- code: 2023/1230
   title: Machinery Regulation
   family: Machinery safety
   legal_form: Regulation
@@ -302,7 +302,7 @@ legislations:
   - supplier declarations for plastic food-contact materials
   all_of_traits:
   - food_contact
-- code: Regulation (EU) 2024/2847
+- code: 2024/2847
   title: Cyber Resilience Act
   family: Cybersecurity for products with digital elements
   legal_form: Regulation
@@ -325,7 +325,7 @@ legislations:
   - internet
   - ota
   - data_storage
-- code: Regulation (EU) 2016/679
+- code: 2016/679
   title: General Data Protection Regulation
   family: Data protection
   legal_form: Regulation
@@ -349,7 +349,7 @@ legislations:
   - location
   - personal_data_likely
   - health_related
-- code: Regulation (EU) 2024/1689
+- code: 2024/1689
   title: Artificial Intelligence Act
   family: AI regulation
   legal_form: Regulation
