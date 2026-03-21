@@ -12,7 +12,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
-  harmonized_reference: (EU) 2022/30 as amended by (EU) 2023/2444
+  harmonized_reference: 2022/30/EU
   version: EN 18031-1:2024
   dated_version: EN 18031-1:2024
   applies_if_products: []
@@ -49,7 +49,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
-  harmonized_reference: (EU) 2022/30
+  harmonized_reference: 2022/30/EU
   version: EN 18031-2:2024
   dated_version: EN 18031-2:2024
   applies_if_products: []
@@ -84,7 +84,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
-  harmonized_reference: (EU) 2022/30 as amended by (EU) 2023/2444
+  harmonized_reference: 2022/30/EU
   version: EN 18031-3:2024
   dated_version: EN 18031-3:2024
   applies_if_products: []
@@ -139,13 +139,12 @@ standards:
   - emf measurement rf (electronic article surveillance, rfid, nfc)
   notes: EMF assessment route for RFID, NFC, and similar low-range radio field exposure cases.
   state_of_the_art_scope: EU
-
 - code: EN 50563
   title: External a.c.-d.c. and a.c.-a.c. power supplies - Determination of no-load power and average efficiency of active modes
   region: EU
   category: energy
   directives:
-    - ECO
+  - ECO
   legislation_key: ECO
   item_type: standard
   standard_family: EN 50563
@@ -157,26 +156,25 @@ standards:
   version: EN 50563:2011 + A1:2013
   dated_version: EN 50563:2011 + A1:2013
   applies_if_products:
-    - battery_charger
-    - industrial_charger
+  - battery_charger
+  - industrial_charger
   exclude_if_products: []
   applies_if_all:
-    - electrical
+  - electrical
   applies_if_any:
-    - external_psu
+  - external_psu
   exclude_if: []
   test_focus:
-    - energy
+  - energy
   evidence_hint:
-    - measurement report
-    - product information review
-    - power architecture description
+  - measurement report
+  - product information review
+  - power architecture description
   keywords:
-    - ext power supplies
-    - external ac dc adapter
+  - ext power supplies
+  - external ac dc adapter
   notes: Energy-efficiency route for relevant external AC/DC or AC/AC power supplies only; do not trigger merely because the end product is mains-powered.
   state_of_the_art_scope: EU
-
 - code: EN 50564
   title: Electrical and electronic household and office equipment - Measurement of low power consumption
   region: EU
@@ -191,8 +189,8 @@ standards:
   is_harmonized: false
   harmonized_under: ECO
   harmonized_reference: 2023/826/EU
-  version: null
-  dated_version: EN 50564:2011 (not harmonized)
+  version: not harmonized
+  dated_version: EN 50564:2011
   supersedes: EN 50564:2011
   applies_if_products: []
   exclude_if_products: []
@@ -209,7 +207,7 @@ standards:
   - product information review
   keywords:
   - off mode, standby mode, networked standby energy consumption
-  notes: Low-power consumption measurement route for off mode, standby, and networked standby under Regulation (EU) 2023/826.
+  notes: Low-power consumption measurement route for off mode, standby, and networked standby under Regulation 2023/826/EU.
   state_of_the_art_scope: EU
 - code: EN 50566
   title: Product standard to demonstrate the compliance of wireless communication devices used in close proximity to the ear with the basic restrictions and exposure limit values related to human exposure to electromagnetic fields
@@ -3490,7 +3488,7 @@ standards:
   harmonization_status: state_of_the_art
   is_harmonized: false
   harmonized_under: BATTERY
-  harmonized_reference: (EU) 2023/1542
+  harmonized_reference: 2023/1542/EU
   version: EN 62133-2:2017 + A1:2021
   dated_version: EN 62133-2:2017 + A1:2021
   applies_if_products: []
@@ -3579,13 +3577,12 @@ standards:
   - emf measurment short distance (sar for handheld &body mounted devices)
   notes: SAR route for handheld, body-near, or cellular radio equipment; typically not the default route for countertop appliances.
   state_of_the_art_scope: EU
-
 - code: EN 62233
   title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human exposure
   region: EU
   category: emf
   directives:
-    - LVD
+  - LVD
   legislation_key: LVD
   item_type: standard
   standard_family: EN 62233
@@ -3599,35 +3596,34 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-    - consumer
-    - household
-    - electrical
+  - consumer
+  - household
+  - electrical
   applies_if_any:
-    - heating
-    - motorized
-    - mains_powered
-    - mains_power_likely
+  - heating
+  - motorized
+  - mains_powered
+  - mains_power_likely
   exclude_if:
-    - wearable
-    - body_worn_or_applied
-    - handheld
+  - wearable
+  - body_worn_or_applied
+  - handheld
   test_focus:
-    - emf
+  - emf
   evidence_hint:
-    - CB report or equivalent technical evidence
-    - safety test report
+  - CB report or equivalent technical evidence
+  - safety test report
   keywords:
-    - emf measurement household appliance
+  - emf measurement household appliance
   notes: Default LVD EMF route for ordinary household and similar appliances. Prefer this over EN 62311 for countertop or floor-care appliances unless the use case is close to the body.
   state_of_the_art_scope: EU
-
 - code: EN 62311
   title: Assessment of electronic and electrical equipment related to human exposure restrictions for electromagnetic fields
   region: EU
   category: emf
   directives:
-    - LVD
-    - RED
+  - LVD
+  - RED
   legislation_key: LVD
   item_type: standard
   standard_family: EN 62311
@@ -3642,25 +3638,24 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-    - electrical
+  - electrical
   applies_if_any:
-    - radio
-    - electronic
-    - handheld
-    - wearable
-    - body_worn_or_applied
+  - radio
+  - electronic
+  - handheld
+  - wearable
+  - body_worn_or_applied
   exclude_if: []
   test_focus:
-    - emf
+  - emf
   evidence_hint:
-    - safety test report
-    - CB report or equivalent technical evidence
+  - safety test report
+  - CB report or equivalent technical evidence
   keywords:
-    - emf assessment
-    - rf exposure
+  - emf assessment
+  - rf exposure
   notes: General EMF assessment route for equipment that is handheld, wearable, body-near, or otherwise better assessed under the general exposure framework than EN 62233.
   state_of_the_art_scope: EU
-
 - code: EN 62368-1
   title: Audio/video, information and communication technology equipment - Safety requirements
   region: EU
@@ -4249,14 +4244,13 @@ standards:
   - Cyber Resilience Act assessment required
   notes: Review whether the product with digital elements falls into the Cyber Resilience Act route and lifecycle obligations.
   state_of_the_art_scope: EU
-
 - code: Charger / external PSU review
   title: External power supply and charger route review required
   region: EU
   category: power
   directives:
-    - LVD
-    - ECO
+  - LVD
+  - ECO
   legislation_key: LVD
   item_type: review
   standard_family: CHARGER / EXTERNAL PSU REVIEW
@@ -4266,23 +4260,22 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-    - electrical
+  - electrical
   applies_if_any:
-    - external_psu
+  - external_psu
   exclude_if: []
   test_focus:
-    - electrical
-    - energy
+  - electrical
+  - energy
   evidence_hint:
-    - power architecture description
-    - adapter / charger specification
-    - safety test report
+  - power architecture description
+  - adapter / charger specification
+  - safety test report
   keywords:
-    - external power supply review
-    - charger architecture review
+  - external power supply review
+  - charger architecture review
   notes: Review whether a supplied external AC/DC adapter, charging dock, or charger creates additional safety or ecodesign obligations. Do not trigger for ordinary direct-mains products with internal power conversion only.
   state_of_the_art_scope: EU
-  
 - code: GDPR review
   title: GDPR assessment required
   region: EU
