@@ -13,7 +13,7 @@ class KnowledgeBaseError(RuntimeError):
 
 
 BASE_DIR = Path(__file__).resolve().parent
-KB_META_VERSION = "4.0.0"
+KB_META_VERSION = "5.0.0"
 ALLOWED_HARMONIZATION_STATUSES = {"harmonized", "state_of_the_art", "review", "unknown"}
 ALLOWED_TEST_FOCUS = {
     "safety",
@@ -127,7 +127,6 @@ def _validate_traits(data: dict) -> list[dict]:
 def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
     products = _require_list(data, "products", "products.yaml")
     seen: set[str] = set()
-    alias_to_id: dict[str, str] = {}
 
     for idx, row in enumerate(products, start=1):
         if not isinstance(row, dict):
@@ -138,50 +137,34 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
             if not isinstance(value, str) or not value.strip():
                 raise KnowledgeBaseError(f"products.yaml product #{idx} is missing a valid '{field}'.")
 
-        for field in ("aliases", "implied_traits", "functional_classes"):
-            if not isinstance(row.get(field), list):
-                raise KnowledgeBaseError(
-                    f"products.yaml product '{row.get('id', idx)}' must contain list field '{field}'."
-                )
-
         pid = row["id"]
         if pid in seen:
             raise KnowledgeBaseError(f"Duplicate product id in products.yaml: {pid}")
         seen.add(pid)
 
-        for trait in row.get("implied_traits", []):
-            if trait not in trait_ids:
-                raise KnowledgeBaseError(f"Unknown trait '{trait}' referenced by product '{pid}'.")
+        aliases = row.get("aliases", [])
+        if not isinstance(aliases, list) or not aliases or not all(isinstance(item, str) and item.strip() for item in aliases):
+            raise KnowledgeBaseError(f"Product '{pid}' must define a non-empty aliases list.")
 
-        for alias in row.get("aliases", []):
-            if not isinstance(alias, str):
-                raise KnowledgeBaseError(f"Product '{pid}' contains a non-string alias.")
-            alias_norm = alias.strip().lower()
-            previous = alias_to_id.get(alias_norm)
-            if previous and previous != pid:
-                raise KnowledgeBaseError(
-                    f"Duplicate alias '{alias}' used by both '{previous}' and '{pid}' in products.yaml."
-                )
-            alias_to_id[alias_norm] = pid
-
-        if "likely_standards" in row and not isinstance(row["likely_standards"], list):
-            raise KnowledgeBaseError(f"Product '{pid}' has non-list likely_standards.")
+        for key in ("implied_traits", "functional_classes", "likely_standards"):
+            value = row.get(key, [])
+            if not isinstance(value, list):
+                raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
+            if key == "implied_traits":
+                for trait in value:
+                    if trait not in trait_ids:
+                        raise KnowledgeBaseError(f"Product '{pid}' references unknown trait '{trait}'.")
+            else:
+                for item in value:
+                    if not isinstance(item, str):
+                        raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only strings.")
 
     return products
 
 
 def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str]) -> list[dict]:
     legislations = _require_list(data, "legislations", "legislation_catalog.yaml")
-    seen: set[str] = set()
-
-    allowed_legal_forms = {
-        "Directive",
-        "Regulation",
-        "Delegated Regulation",
-        "Implementing Decision",
-        "Framework",
-        "Other",
-    }
+    seen_codes: set[str] = set()
     allowed_priorities = {"core", "product_specific", "conditional", "informational"}
     allowed_applicability = {"applicable", "conditional", "not_applicable"}
     allowed_buckets = {"ce", "non_ce", "framework", "future", "informational"}
@@ -190,26 +173,20 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"legislation_catalog.yaml legislation #{idx} must be a mapping.")
 
-        for field in ("code", "title", "family", "reason", "directive_key"):
+        for field in ("code", "title", "family", "directive_key"):
             value = row.get(field)
             if not isinstance(value, str) or not value.strip():
-                raise KnowledgeBaseError(
-                    f"legislation_catalog.yaml entry #{idx} is missing a valid '{field}'."
-                )
+                raise KnowledgeBaseError(f"legislation_catalog.yaml entry #{idx} is missing a valid '{field}'.")
 
         code = row["code"]
-        if code in seen:
+        if code in seen_codes:
             raise KnowledgeBaseError(f"Duplicate legislation code in legislation_catalog.yaml: {code}")
-        seen.add(code)
+        seen_codes.add(code)
 
-        if row.get("legal_form", "Other") not in allowed_legal_forms:
-            raise KnowledgeBaseError(f"Legislation '{code}' has invalid legal_form '{row.get('legal_form')}'.")
         if row.get("priority", "conditional") not in allowed_priorities:
             raise KnowledgeBaseError(f"Legislation '{code}' has invalid priority '{row.get('priority')}'.")
         if row.get("applicability", "conditional") not in allowed_applicability:
-            raise KnowledgeBaseError(
-                f"Legislation '{code}' has invalid applicability '{row.get('applicability')}'."
-            )
+            raise KnowledgeBaseError(f"Legislation '{code}' has invalid applicability '{row.get('applicability')}'.")
         if row.get("bucket", "non_ce") not in allowed_buckets:
             raise KnowledgeBaseError(f"Legislation '{code}' has invalid bucket '{row.get('bucket')}'.")
 
@@ -272,22 +249,22 @@ def _validate_standard_metadata(code: str, row: dict) -> None:
 
     harmonization_status = row.get("harmonization_status")
     if harmonization_status and harmonization_status not in ALLOWED_HARMONIZATION_STATUSES:
-        raise KnowledgeBaseError(
-            f"Standard '{code}' has invalid harmonization_status '{harmonization_status}'."
-        )
+        raise KnowledgeBaseError(f"Standard '{code}' has invalid harmonization_status '{harmonization_status}'.")
 
     test_focus = row.get("test_focus", [])
     invalid_test_focus = [item for item in test_focus if item not in ALLOWED_TEST_FOCUS]
     if invalid_test_focus:
-        raise KnowledgeBaseError(
-            f"Standard '{code}' has invalid test_focus values: {', '.join(invalid_test_focus)}."
-        )
+        raise KnowledgeBaseError(f"Standard '{code}' has invalid test_focus values: {', '.join(invalid_test_focus)}.")
 
     is_harmonized = row.get("is_harmonized")
     if is_harmonized is True and not (row.get("harmonized_under") or row.get("harmonized_reference")):
-        raise KnowledgeBaseError(
-            f"Standard '{code}' is marked harmonized but lacks harmonized_under or harmonized_reference."
-        )
+        raise KnowledgeBaseError(f"Standard '{code}' is marked harmonized but lacks harmonized_under or harmonized_reference.")
+    if row.get("item_type") == "review" and is_harmonized is True:
+        raise KnowledgeBaseError(f"Standard '{code}' cannot be both a review item and harmonized.")
+    if harmonization_status == "harmonized" and is_harmonized is False:
+        raise KnowledgeBaseError(f"Standard '{code}' has harmonization_status='harmonized' but is_harmonized=false.")
+    if harmonization_status == "review" and row.get("item_type") != "review":
+        raise KnowledgeBaseError(f"Standard '{code}' has harmonization_status='review' but item_type is not 'review'.")
 
 
 def _validate_standards(
@@ -316,15 +293,16 @@ def _validate_standards(
         directives = row.get("directives", [])
         if not isinstance(directives, list):
             raise KnowledgeBaseError(f"Standard '{code}' must have a directives list.")
+        for directive in directives:
+            if not isinstance(directive, str) or not directive.strip():
+                raise KnowledgeBaseError(f"Standard '{code}' has an invalid directive entry.")
 
         legislation_key = row.get("legislation_key")
         if legislation_key is not None:
             if not isinstance(legislation_key, str) or not legislation_key.strip():
                 raise KnowledgeBaseError(f"Standard '{code}' has invalid legislation_key.")
             if legislation_key not in legislation_keys:
-                raise KnowledgeBaseError(
-                    f"Standard '{code}' references unknown legislation_key '{legislation_key}'."
-                )
+                raise KnowledgeBaseError(f"Standard '{code}' references unknown legislation_key '{legislation_key}'.")
 
         for field in ("applies_if_all", "applies_if_any", "exclude_if", "applies_if_products", "exclude_if_products"):
             value = row.get(field, [])
@@ -371,9 +349,13 @@ def _derive_harmonization_status(row: dict) -> str:
 
 def _enrich_standards(rows: list[dict]) -> list[dict]:
     out: list[dict] = []
+    seen_normalized_codes: set[str] = set()
     for row in rows:
         enriched = dict(row)
         enriched["code"] = _normalize_standard_code(enriched.get("code", ""))
+        if enriched["code"] in seen_normalized_codes:
+            raise KnowledgeBaseError(f"Duplicate normalized standard code in standards.yaml: {enriched['code']}")
+        seen_normalized_codes.add(enriched["code"])
         enriched["standard_family"] = enriched.get("standard_family") or enriched["code"].split(":", 1)[0].strip()
         enriched["harmonization_status"] = _derive_harmonization_status(enriched)
         enriched.setdefault("test_focus", [])
@@ -381,6 +363,19 @@ def _enrich_standards(rows: list[dict]) -> list[dict]:
         enriched.setdefault("keywords", [])
         out.append(enriched)
     return out
+
+
+def _post_validate_product_standard_links(products: list[dict], standards: list[dict]) -> None:
+    standard_codes = {row["code"] for row in standards}
+    standard_families = {row.get("standard_family") for row in standards if isinstance(row.get("standard_family"), str)}
+
+    for product in products:
+        pid = product["id"]
+        for reference in product.get("likely_standards", []):
+            if reference not in standard_codes and reference not in standard_families:
+                raise KnowledgeBaseError(
+                    f"Product '{pid}' references likely_standard '{reference}' that does not match any standard code or family."
+                )
 
 
 def _kb_meta(counts: dict[str, int], standards: list[dict]) -> dict:
@@ -410,6 +405,8 @@ def load_all() -> dict:
 
     standards_data = _load_yaml_raw("standards.yaml")
     standards = _enrich_standards(_validate_standards(standards_data, product_ids, trait_ids, legislation_keys))
+
+    _post_validate_product_standard_links(products, standards)
 
     counts = {
         "traits": len(traits),

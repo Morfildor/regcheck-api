@@ -57,6 +57,170 @@ NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
     (r"\bsmart home\b", "smart_home"),
 ]
 
+NEGATIONS: dict[str, list[str]] = {
+    "radio": [r"\bno radio\b", r"\bwithout radio\b"],
+    "wifi": [r"\bno wifi\b", r"\bwithout wifi\b", r"\bnon wifi\b"],
+    "bluetooth": [r"\bno bluetooth\b", r"\bwithout bluetooth\b"],
+    "cloud": [r"\bno cloud\b", r"\bwithout cloud\b", r"\bcloud free\b", r"\blocal only\b"],
+    "internet": [r"\bno internet\b", r"\bwithout internet\b", r"\boffline only\b", r"\blocal only\b"],
+    "app_control": [r"\bno app\b", r"\bwithout app\b"],
+    "ota": [r"\bno ota\b", r"\bwithout ota\b", r"\bmanual update only\b"],
+    "account": [r"\bno account\b", r"\bwithout account\b", r"\bguest only\b"],
+    "authentication": [r"\bno password\b", r"\bwithout login\b", r"\bwithout authentication\b"],
+    "monetary_transaction": [
+        r"\bno payment\b",
+        r"\bwithout payment\b",
+        r"\bno purchase\b",
+        r"\bwithout subscription\b",
+        r"\bno wallet\b",
+    ],
+}
+
+TRAIT_PATTERNS: dict[str, list[str]] = {
+    "radio": [r"\bradio\b"],
+    "bluetooth": [r"\bbluetooth\b"],
+    "wifi": [r"\bwifi\b", r"\b802 11\b"],
+    "wifi_5ghz": [
+        r"\b5ghz\b",
+        r"\bdual band\b",
+        r"\b802 11a\b",
+        r"\b802 11ac\b",
+        r"\b802 11ax\b",
+        r"\bwifi 6\b",
+        r"\bwifi 6e\b",
+    ],
+    "zigbee": [r"\bzigbee\b"],
+    "thread": [r"\bthread\b"],
+    "matter": [r"\bmatter\b"],
+    "nfc": [r"\bnfc\b", r"\brfid\b"],
+    "cellular": [r"\bcellular\b", r"\blte\b", r"\b4g\b", r"\b5g\b", r"\bgsm\b", r"\bsim\b"],
+    "app_control": [
+        r"\bmobile app\b",
+        r"\bcompanion app\b",
+        r"\bsmartphone app\b",
+        r"\bapp control\b",
+        r"\bapp controlled\b",
+        r"\bcontrol(?:led)? via app\b",
+        r"\bworks with app\b",
+    ],
+    "cloud": [
+        r"\bcloud\b",
+        r"\bcloud account\b",
+        r"\bcloud service\b",
+        r"\bremote server\b",
+        r"\bbackend api\b",
+        r"\bweb service\b",
+    ],
+    "internet": [
+        r"\binternet\b",
+        r"\binternet connected\b",
+        r"\bonline service\b",
+        r"\bremote access\b",
+        r"\bweb portal\b",
+    ],
+    "local_only": [r"\boffline\b", r"\bno cloud\b", r"\bno internet\b", r"\blocal only\b", r"\blan only\b"],
+    "ota": [
+        r"\bota\b",
+        r"\bfirmware update\b",
+        r"\bover the air\b",
+        r"\bremote firmware update\b",
+        r"\bsecurity patch\b",
+        r"\bsoftware update over\b",
+    ],
+    "account": [r"\baccount\b", r"\blogin\b", r"\blog in\b", r"\bsign in\b", r"\buser account\b", r"\buser profile\b"],
+    "authentication": [
+        r"\bauthentication\b",
+        r"\bpassword\b",
+        r"\bpasscode\b",
+        r"\bcredential\b",
+        r"\bpin\b",
+        r"\bpin code\b",
+        r"\bpairing code\b",
+        r"\btwo factor\b",
+        r"\bmfa\b",
+    ],
+    "monetary_transaction": [
+        r"\bpayment\b",
+        r"\bpayments\b",
+        r"\bpurchase\b",
+        r"\bpurchases\b",
+        r"\bcheckout\b",
+        r"\bsubscription\b",
+        r"\bwallet\b",
+        r"\bmoney transfer\b",
+        r"\bmonetary value\b",
+        r"\bvirtual currency\b",
+        r"\bin app purchase\b",
+        r"\bplace order\b",
+    ],
+    "camera": [r"\bcamera\b"],
+    "microphone": [r"\bmicrophone\b", r"\bmic\b", r"\bvoice assistant\b", r"\bvoice control\b", r"\bvoice command\b"],
+    "speaker": [r"\bspeaker\b", r"\baudio playback\b", r"\bsound output\b"],
+    "display": [r"\bdisplay\b", r"\bscreen\b", r"\btouchscreen\b", r"\btouch screen\b", r"\bmonitor\b"],
+    "laser": [r"\blaser\b", r"\blidar\b", r"\blaser scanner\b", r"\brangefinder\b"],
+    "location": [r"\bgps\b", r"\bgnss\b", r"\bgeolocation\b", r"\blocation tracking\b"],
+    "battery_powered": [
+        r"\bbattery powered\b",
+        r"\bbattery operated\b",
+        r"\brechargeable\b",
+        r"\bcordless\b",
+        r"\bli ion\b",
+        r"\blithium\b",
+        r"\bbattery\b",
+    ],
+    "external_psu": [
+        r"\bexternal psu\b",
+        r"\bexternal power supply\b",
+        r"\bpower adapter\b",
+        r"\bac adapter\b",
+        r"\bdc adapter\b",
+        r"\bpower brick\b",
+        r"\bwall wart\b",
+        r"\bplug pack\b",
+        r"\bmains adapter\b",
+    ],
+    "usb_powered": [r"\busb powered\b", r"\busb c powered\b", r"\bpowered by usb\b", r"\btype c powered\b"],
+    "mains_powered": [r"\bmains\b", r"\b230v\b", r"\b220v\b", r"\b240v\b", r"\bac power\b", r"\bplug in\b", r"\bplugged in\b"],
+    "professional": [r"\bprofessional\b", r"\bcommercial\b", r"\bindustrial\b", r"\bcatering\b", r"\bhoreca\b"],
+    "consumer": [r"\bconsumer\b", r"\bdomestic\b", r"\bhousehold\b", r"\bhome use\b"],
+    "household": [r"\bhousehold\b", r"\bdomestic\b", r"\bhome use\b"],
+    "outdoor_use": [r"\boutdoor\b", r"\bgarden\b", r"\blawn\b"],
+    "fixed_installation": [r"\bbuilt in\b", r"\bfixed\b", r"\bwall mounted\b", r"\bceiling mounted\b", r"\bpermanently installed\b"],
+    "portable": [r"\bportable\b", r"\btravel\b", r"\bhandheld\b"],
+    "water_contact": [
+        r"\bwater tank\b",
+        r"\bwater reservoir\b",
+        r"\bwater path\b",
+        r"\bliquid handling\b",
+        r"\bsteam\b",
+        r"\brinse\b",
+        r"\bwet use\b",
+        r"\bimmersion\b",
+    ],
+    "heating": [r"\bheating\b", r"\bheater\b", r"\bhot\b", r"\bboil\b", r"\bbrew\b", r"\bsteam\b"],
+    "cooling": [r"\bcooling\b", r"\brefrigerat\b", r"\bfreezer\b", r"\bice\b", r"\bchill\b"],
+    "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bdrive\b"],
+    "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
+    "ai_related": [r"\bai\b", r"\bmachine learning\b", r"\bneural\b", r"\bllm\b"],
+    "personal_data_likely": [
+        r"\bpersonal data\b",
+        r"\buser data\b",
+        r"\bprofile\b",
+        r"\bprivacy\b",
+    ],
+    "food_contact": [
+        r"\bfood contact\b",
+        r"\bfood\b",
+        r"\bdrink\b",
+        r"\bbrew path\b",
+        r"\bcook\b",
+        r"\bwater tank\b",
+    ],
+    "wet_environment": [r"\bwet environment\b", r"\bbathroom\b", r"\bshower\b", r"\bsplash\b"],
+    "body_worn_or_applied": [r"\bbody worn\b", r"\bbody worn use\b", r"\bon body\b", r"\bon skin\b"],
+    "child_targeted": [r"\bchild targeted\b", r"\bfor children\b", r"\bkids mode\b"],
+}
+
 
 def normalize(text: str) -> str:
     text = (text or "").lower()
@@ -83,73 +247,11 @@ def _has_any_regex(text: str, patterns: list[str]) -> bool:
 
 
 def _trait_is_negated(text: str, trait: str) -> bool:
-    negations: dict[str, list[str]] = {
-        "cloud": [r"\bno cloud\b", r"\bwithout cloud\b", r"\bcloud free\b"],
-        "internet": [r"\bno internet\b", r"\bwithout internet\b", r"\boffline only\b"],
-        "ota": [r"\bno ota\b", r"\bwithout ota\b", r"\bmanual update only\b"],
-        "account": [r"\bno account\b", r"\bwithout account\b", r"\bguest only\b"],
-        "authentication": [r"\bno password\b", r"\bwithout login\b", r"\bwithout authentication\b"],
-        "monetary_transaction": [r"\bno payment\b", r"\bwithout payment\b", r"\bno purchase\b", r"\bwithout subscription\b"],
-    }
-    return _has_any_regex(text, negations.get(trait, []))
+    return _has_any_regex(text, NEGATIONS.get(trait, []))
 
 
 def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
-    patterns = {
-        "radio": [r"\bradio\b"],
-        "bluetooth": [r"\bbluetooth\b"],
-        "wifi": [r"\bwifi\b", r"\b802 11\b"],
-        "wifi_5ghz": [r"\b5ghz\b", r"\bdual band\b", r"\b802 11a\b", r"\b802 11ac\b", r"\b802 11ax\b", r"\bwifi 6\b", r"\bwifi 6e\b"],
-        "zigbee": [r"\bzigbee\b"],
-        "thread": [r"\bthread\b"],
-        "matter": [r"\bmatter\b"],
-        "nfc": [r"\bnfc\b", r"\brfid\b"],
-        "cellular": [r"\bcellular\b", r"\blte\b", r"\b4g\b", r"\b5g\b", r"\bgsm\b", r"\bsim\b"],
-        "app_control": [r"\bapp\b", r"\bmobile app\b", r"\bcompanion app\b", r"\bsmartphone control\b"],
-        "cloud": [r"\bcloud\b", r"\baws\b", r"\bazure\b", r"\bbackend\b", r"\bserver\b"],
-        "internet": [r"\binternet\b", r"\bonline\b", r"\bremote access\b", r"\bweb portal\b"],
-        "local_only": [r"\boffline\b", r"\bno cloud\b", r"\bno internet\b", r"\blocal only\b"],
-        "ota": [r"\bota\b", r"\bfirmware update\b", r"\bsoftware update\b", r"\bover the air\b"],
-        "account": [r"\baccount\b", r"\blogin\b", r"\blog in\b", r"\bsign in\b", r"\buser account\b", r"\buser profile\b"],
-        "authentication": [r"\bauthentication\b", r"\bpassword\b", r"\bpasscode\b", r"\bcredential\b", r"\bpin\b", r"\bpin code\b", r"\btwo factor\b", r"\bmfa\b"],
-        "monetary_transaction": [r"\bpayment\b", r"\bpayments\b", r"\bpurchase\b", r"\bpurchases\b", r"\bcheckout\b", r"\bsubscription\b", r"\bwallet\b", r"\bmoney transfer\b", r"\bmonetary value\b", r"\bvirtual currency\b", r"\bin app purchase\b", r"\bplace order\b"],
-        "camera": [r"\bcamera\b"],
-        "microphone": [r"\bmicrophone\b", r"\bmic\b", r"\bvoice\b"],
-        "speaker": [r"\bspeaker\b", r"\baudio\b", r"\bsound\b"],
-        "display": [r"\bdisplay\b", r"\bscreen\b", r"\btouchscreen\b", r"\btouch screen\b", r"\bmonitor\b"],
-        "laser": [r"\blaser\b", r"\blidar\b", r"\blaser scanner\b", r"\brangefinder\b"],
-        "location": [r"\bgps\b", r"\bgnss\b", r"\blocation\b", r"\bgeolocation\b"],
-        "battery_powered": [r"\bbattery\b", r"\brechargeable\b", r"\bcordless\b", r"\bli ion\b", r"\blithium\b"],
-        "external_psu": [
-            r"\bexternal psu\b",
-            r"\bexternal power supply\b",
-            r"\bpower adapter\b",
-            r"\bac adapter\b",
-            r"\bdc adapter\b",
-            r"\bpower brick\b",
-            r"\bwall wart\b",
-            r"\bplug pack\b",
-            r"\bmains adapter\b",
-        ],
-        "usb_powered": [r"\busb\b", r"\busb c\b", r"\btype c\b"],
-        "mains_powered": [r"\bmains\b", r"\b230v\b", r"\b220v\b", r"\b240v\b", r"\bac power\b", r"\bplug in\b", r"\bplugged in\b"],
-        "professional": [r"\bprofessional\b", r"\bcommercial\b", r"\bindustrial\b", r"\bcatering\b", r"\bhoreca\b"],
-        "consumer": [r"\bconsumer\b", r"\bdomestic\b", r"\bhousehold\b", r"\bhome use\b"],
-        "household": [r"\bhousehold\b", r"\bdomestic\b", r"\bhome use\b"],
-        "outdoor_use": [r"\boutdoor\b", r"\bgarden\b", r"\blawn\b"],
-        "fixed_installation": [r"\bbuilt in\b", r"\bfixed\b", r"\bwall mounted\b", r"\bceiling mounted\b", r"\bpermanently installed\b"],
-        "portable": [r"\bportable\b", r"\btravel\b"],
-        "water_contact": [r"\bwater\b", r"\bliquid\b", r"\bsteam\b", r"\bwater tank\b"],
-        "heating": [r"\bheating\b", r"\bheater\b", r"\bhot\b", r"\bboil\b", r"\bbrew\b", r"\bsteam\b"],
-        "cooling": [r"\bcooling\b", r"\brefrigerat", r"\bfreezer\b", r"\bice\b", r"\bchill\b"],
-        "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bdrive\b"],
-        "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
-        "ai_related": [r"\bai\b", r"\bmachine learning\b", r"\bneural\b", r"\bllm\b"],
-        "personal_data_likely": [r"\bpersonal data\b", r"\bprofile\b", r"\buser data\b", r"\baccount\b", r"\blogin\b", r"\blog in\b"],
-        "food_contact": [r"\bfood\b", r"\bdrink\b", r"\bwater tank\b", r"\bbrew\b", r"\bcook\b"],
-    }
-
-    for trait, regexes in patterns.items():
+    for trait, regexes in TRAIT_PATTERNS.items():
         if _trait_is_negated(text, trait):
             continue
         if _has_any_regex(text, regexes):
@@ -159,11 +261,16 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         explicit_traits.add("radio")
     if "wifi_5ghz" in explicit_traits:
         explicit_traits.add("wifi")
-    if any(t in explicit_traits for t in ["wifi", "cellular"]):
-        explicit_traits.add("internet")
+
     if "cloud" in explicit_traits and "local_only" not in explicit_traits:
         explicit_traits.add("internet")
-    if "account" in explicit_traits or "authentication" in explicit_traits:
+    if "ota" in explicit_traits and not _trait_is_negated(text, "internet"):
+        explicit_traits.add("internet")
+    if ("account" in explicit_traits or "authentication" in explicit_traits) and (
+        {"cloud", "ota", "app_control", "wifi", "cellular", "internet"} & explicit_traits
+    ):
+        explicit_traits.add("internet")
+    if {"account", "authentication", "camera", "microphone", "location"} & explicit_traits:
         explicit_traits.add("personal_data_likely")
 
 
@@ -210,8 +317,17 @@ def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
         inferred.add("electrical")
     if (electronic_signals & explicit_traits) or _has_any_regex(text, electronic_cues):
         inferred.add("electronic")
-    if "electronic" in inferred and not ("electrical" in explicit_traits or "electrical" in inferred):
+    if "electronic" in inferred and not ({"electrical"} & (explicit_traits | inferred)):
         inferred.add("electrical")
+
+    if "wifi" in explicit_traits and ({"cloud", "ota", "account", "authentication", "app_control"} & explicit_traits):
+        inferred.add("internet")
+    if "cellular" in explicit_traits:
+        inferred.add("internet")
+    if "battery_powered" in explicit_traits and "portable" not in explicit_traits:
+        inferred.add("portable")
+    if "food_contact" in explicit_traits and "consumer" not in explicit_traits:
+        inferred.add("consumer")
 
     return inferred
 
@@ -290,7 +406,7 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     if "bluetooth" in text and "bluetooth" in traits:
         score += 8
         reasons.append("bluetooth wording fits")
-    if "built in" in text and ("fixed_installation" in traits or "built_in" in traits):
+    if "built in" in text and ({"fixed_installation", "built_in"} & traits):
         score += 8
         reasons.append("built-in wording fits")
     if "portable" in text and "portable" in traits:
@@ -299,9 +415,7 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     if "robot" in text and "robot" in pid:
         score += 10
         reasons.append("robot wording fits")
-    if ("cloud" in explicit_traits or "app_control" in explicit_traits or "ota" in explicit_traits) and (
-        {"wifi", "bluetooth", "thread", "zigbee", "matter", "radio"} & traits
-    ):
+    if ({"cloud", "app_control", "ota"} & explicit_traits) and ({"wifi", "bluetooth", "thread", "zigbee", "matter", "radio"} & traits):
         score += 10
         reasons.append("connected context fits")
 
@@ -389,27 +503,40 @@ def _select_matched_products(product_candidates: list[dict[str, Any]]) -> list[s
     return selected[:3] or [product_candidates[0]["id"]]
 
 
-def _aggregate_candidate_context(selected_rows: list[dict[str, Any]]) -> tuple[set[str], set[str], list[str]]:
+def _aggregate_candidate_context(
+    selected_rows: list[dict[str, Any]],
+    winner_confidence: str,
+    ambiguous: bool,
+) -> tuple[set[str], set[str], set[str], set[str], list[str]]:
     if not selected_rows:
-        return set(), set(), []
+        return set(), set(), set(), set(), []
 
     winner = selected_rows[0]
     inferred_traits = set(winner.get("implied_traits", []))
+    confirmed_traits: set[str] = set()
     functional_classes = set(winner.get("functional_classes", []))
+    confirmed_functional_classes: set[str] = set()
     preferred_standard_codes = list(dict.fromkeys(winner.get("likely_standards", [])))
+
+    if winner_confidence == "high" and not ambiguous:
+        confirmed_traits.update(winner.get("implied_traits", []))
+        confirmed_functional_classes.update(winner.get("functional_classes", []))
 
     if len(selected_rows) > 1:
         common_traits = set(selected_rows[0].get("implied_traits", []))
+        common_classes = set(selected_rows[0].get("functional_classes", []))
         for row in selected_rows[1:]:
             common_traits &= set(row.get("implied_traits", []))
-        inferred_traits.update(common_traits)
-
-        for row in selected_rows[1:]:
+            common_classes &= set(row.get("functional_classes", []))
+            inferred_traits.update(row.get("implied_traits", []))
+            functional_classes.update(row.get("functional_classes", []))
             for code in row.get("likely_standards", []):
                 if code not in preferred_standard_codes:
                     preferred_standard_codes.append(code)
+        confirmed_traits.update(common_traits)
+        confirmed_functional_classes.update(common_classes)
 
-    return inferred_traits, functional_classes, preferred_standard_codes
+    return inferred_traits, confirmed_traits, functional_classes, confirmed_functional_classes, preferred_standard_codes
 
 
 def _contradiction_severity(contradictions: list[str]) -> str:
@@ -426,7 +553,9 @@ def extract_traits(description: str, category: str = "") -> dict:
     text = normalize(f"{category} {description}")
     explicit_traits: set[str] = set()
     inferred_traits: set[str] = set()
+    confirmed_traits: set[str] = set()
     functional_classes: set[str] = set()
+    confirmed_functional_classes: set[str] = set()
     contradictions: list[str] = []
     diagnostics: list[str] = []
 
@@ -440,6 +569,9 @@ def extract_traits(description: str, category: str = "") -> dict:
     product_type = None
     product_match_confidence = "low"
     product_candidates: list[dict[str, Any]] = []
+    matched_products: list[str] = []
+    confirmed_products: list[str] = []
+    preferred_standard_codes: list[str] = []
 
     for idx, candidate in enumerate(top_candidates):
         confidence = _candidate_confidence(
@@ -465,23 +597,39 @@ def extract_traits(description: str, category: str = "") -> dict:
         diagnostics.append(f"product_winner={winner['id']}")
         diagnostics.append(f"product_alias={winner.get('matched_alias') or ''}")
 
+        ambiguous = len(product_candidates) > 1 and product_candidates[0]["score"] - product_candidates[1]["score"] < 15
+        if ambiguous and product_match_confidence == "high":
+            product_match_confidence = "medium"
+
         matched_products = _select_matched_products(product_candidates)
         selected_rows = [row for row in top_candidates if row["id"] in matched_products]
         selected_rows.sort(key=lambda row: matched_products.index(row["id"]))
 
-        aggregate_traits, aggregate_classes, preferred_standard_codes = _aggregate_candidate_context(selected_rows)
-        inferred_traits.update(aggregate_traits)
+        (
+            aggregate_inferred_traits,
+            aggregate_confirmed_traits,
+            aggregate_classes,
+            aggregate_confirmed_classes,
+            preferred_standard_codes,
+        ) = _aggregate_candidate_context(selected_rows, product_match_confidence, ambiguous)
+        inferred_traits.update(aggregate_inferred_traits)
+        confirmed_traits.update(aggregate_confirmed_traits)
         functional_classes.update(aggregate_classes)
+        confirmed_functional_classes.update(aggregate_confirmed_classes)
 
-        if len(product_candidates) > 1 and product_candidates[0]["score"] - product_candidates[1]["score"] < 15:
+        if product_match_confidence == "high" and not ambiguous:
+            confirmed_products = [product_type]
+        elif selected_rows:
+            common_products = [row["id"] for row in selected_rows if row["id"] == product_type]
+            confirmed_products = common_products[:1]
+
+        if ambiguous:
             contradictions.append(
                 "Product identification is ambiguous between "
                 f"{product_candidates[0]['id'].replace('_', ' ')} and "
                 f"{product_candidates[1]['id'].replace('_', ' ')}."
             )
     else:
-        matched_products = []
-        preferred_standard_codes = []
         diagnostics.append("product_winner=none")
 
     if "battery_powered" in explicit_traits and "mains_powered" in explicit_traits:
@@ -490,25 +638,33 @@ def extract_traits(description: str, category: str = "") -> dict:
         contradictions.append("Both cloud-connected and local-only signals were detected.")
     if "professional" in explicit_traits and "household" in explicit_traits:
         contradictions.append("Both professional/commercial and household-use signals were detected.")
+    if "wifi" in explicit_traits and _trait_is_negated(text, "internet") and {"cloud", "ota", "account"} & explicit_traits:
+        contradictions.append("Wi-Fi is present while the text also says no internet, but cloud or OTA features were also detected.")
 
     known_traits = _known_trait_ids()
     explicit_traits = {t for t in explicit_traits if t in known_traits}
     inferred_traits = {t for t in inferred_traits if t in known_traits}
+    confirmed_traits = {t for t in (confirmed_traits | explicit_traits) if t in known_traits}
 
     diagnostics.append("matched_products=" + ",".join(matched_products))
+    diagnostics.append("confirmed_products=" + ",".join(confirmed_products))
     diagnostics.append("preferred_standard_codes=" + ",".join(preferred_standard_codes))
     diagnostics.append("explicit_traits=" + ",".join(sorted(explicit_traits)))
+    diagnostics.append("confirmed_traits=" + ",".join(sorted(confirmed_traits)))
     diagnostics.append("inferred_traits=" + ",".join(sorted(inferred_traits)))
     diagnostics.append("contradiction_severity=" + _contradiction_severity(contradictions))
 
     return {
         "product_type": product_type,
         "matched_products": matched_products,
+        "confirmed_products": confirmed_products,
         "preferred_standard_codes": preferred_standard_codes,
         "product_match_confidence": product_match_confidence,
         "product_candidates": product_candidates,
         "functional_classes": sorted(functional_classes),
+        "confirmed_functional_classes": sorted(confirmed_functional_classes),
         "explicit_traits": sorted(explicit_traits),
+        "confirmed_traits": sorted(confirmed_traits),
         "inferred_traits": sorted(inferred_traits),
         "all_traits": sorted(explicit_traits | inferred_traits),
         "contradictions": contradictions,

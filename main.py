@@ -21,8 +21,9 @@ from knowledge_base import (
 from models import AnalysisResult, ProductInput
 from rules import analyze
 
-APP_VERSION = "5.0.0"
+APP_VERSION = "5.1.0"
 ADMIN_RELOAD_TOKEN_ENV = "REGCHECK_ADMIN_RELOAD_TOKEN"
+EXPOSE_HEALTH_DETAILS = os.getenv("REGCHECK_EXPOSE_HEALTH_DETAILS", "false").strip().lower() in {"1", "true", "yes", "on"}
 
 app = FastAPI(title="RegCheck API", version=APP_VERSION)
 logger = logging.getLogger(__name__)
@@ -93,13 +94,19 @@ def root() -> dict:
 
 @app.get("/health")
 def health() -> dict:
-    return {
+    payload = {
         "ok": _kb_status["ok"],
         "version": APP_VERSION,
-        "knowledge_base": _kb_status["counts"],
-        "error": _kb_status["error"],
-        "cors_allowed_origins": allow_origins,
     }
+    if EXPOSE_HEALTH_DETAILS:
+        payload.update(
+            {
+                "knowledge_base": _kb_status["counts"],
+                "error": _kb_status["error"],
+                "cors_allowed_origins": allow_origins,
+            }
+        )
+    return payload
 
 
 @app.get("/metadata/options")
@@ -193,6 +200,13 @@ def run_analysis(product: ProductInput) -> AnalysisResult:
     if not _kb_status["ok"]:
         raise HTTPException(status_code=503, detail=f"Knowledge base failed to load: {_kb_status['error']}")
     try:
+        logger.info(
+            "analyze_request chars=%s category=%s directives=%s depth=%s",
+            len(product.description or ""),
+            product.category or "",
+            ",".join(product.directives or []),
+            product.depth,
+        )
         return analyze(
             description=product.description,
             category=product.category,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any, Literal
+
 from pydantic import BaseModel, Field
 
 Status = Literal["PASS", "WARN", "FAIL", "INFO"]
@@ -9,6 +10,7 @@ LegislationBucket = Literal["ce", "non_ce", "framework", "future", "informationa
 TimingStatus = Literal["current", "future", "legacy", "informational"]
 ConfidenceLevel = Literal["low", "medium", "high"]
 ContradictionSeverity = Literal["none", "low", "medium", "high"]
+FactBasis = Literal["confirmed", "mixed", "inferred"]
 
 
 class ProductInput(BaseModel):
@@ -53,6 +55,8 @@ class LegislationItem(BaseModel):
     applicable_from: str | None = None
     applicable_until: str | None = None
     replaced_by: str | None = None
+    evidence_strength: FactBasis = "confirmed"
+    is_forced: bool = False
 
 
 class StandardItem(BaseModel):
@@ -65,6 +69,7 @@ class StandardItem(BaseModel):
     confidence: ConfidenceLevel = "medium"
     item_type: Literal["standard", "review"] = "standard"
     match_basis: Literal["product", "alternate_product", "preferred_product", "traits"] = "traits"
+    fact_basis: FactBasis = "confirmed"
     score: int = 0
     reason: str | None = None
     notes: str | None = None
@@ -96,6 +101,7 @@ class MissingInformationItem(BaseModel):
     importance: Literal["high", "medium", "low"] = "medium"
     examples: list[str] = Field(default_factory=list)
     related_traits: list[str] = Field(default_factory=list)
+    route_impact: list[str] = Field(default_factory=list)
 
 
 class AnalysisStats(BaseModel):
@@ -104,6 +110,8 @@ class AnalysisStats(BaseModel):
     future_legislation_count: int = 0
     standards_count: int = 0
     review_items_count: int = 0
+    current_review_items_count: int = 0
+    future_review_items_count: int = 0
     harmonized_standards_count: int = 0
     state_of_the_art_standards_count: int = 0
     product_gated_standards_count: int = 0
@@ -126,18 +134,23 @@ class KnowledgeBaseMeta(BaseModel):
 class AnalysisResult(BaseModel):
     product_summary: str
     overall_risk: RiskLevel
+    current_compliance_risk: RiskLevel = "LOW"
+    future_watchlist_risk: RiskLevel = "LOW"
     summary: str
 
     product_type: str | None = None
     product_match_confidence: ConfidenceLevel = "low"
     product_candidates: list[ProductCandidate] = Field(default_factory=list)
     functional_classes: list[str] = Field(default_factory=list)
+    confirmed_functional_classes: list[str] = Field(default_factory=list)
 
     explicit_traits: list[str] = Field(default_factory=list)
+    confirmed_traits: list[str] = Field(default_factory=list)
     inferred_traits: list[str] = Field(default_factory=list)
     all_traits: list[str] = Field(default_factory=list)
 
     directives: list[str] = Field(default_factory=list)
+    forced_directives: list[str] = Field(default_factory=list)
     legislations: list[LegislationItem] = Field(default_factory=list)
     ce_legislations: list[LegislationItem] = Field(default_factory=list)
     non_ce_obligations: list[LegislationItem] = Field(default_factory=list)
@@ -154,6 +167,7 @@ class AnalysisResult(BaseModel):
     diagnostics: list[str] = Field(default_factory=list)
     stats: AnalysisStats = Field(default_factory=AnalysisStats)
     knowledge_base_meta: KnowledgeBaseMeta | None = None
+    analysis_audit: dict[str, Any] = Field(default_factory=dict)
 
     standard_sections: list[dict[str, Any]] = Field(default_factory=list)
     legislation_sections: list[dict[str, Any]] = Field(default_factory=list)
