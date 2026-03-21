@@ -74,6 +74,9 @@ traits:
 - id: display
   label: Display
   description: Includes a visual display or screen
+- id: external_psu
+  label: External PSU / adapter
+  description: Supplied via an external power supply, charger, or AC/DC adapter
 - id: drying
   label: Drying function
   description: Used to dry textiles, hands, hair, air, or other items

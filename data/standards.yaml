@@ -162,9 +162,7 @@ standards:
   applies_if_all:
   - electrical
   applies_if_any:
-  - mains_powered
-  - mains_power_likely
-  - usb_powered
+  - external_psu
   exclude_if: []
   test_focus:
   - energy

@@ -229,14 +229,16 @@ def _missing_information_items(
                 examples=["air fryer", "robot vacuum cleaner", "built-in induction hob"],
             )
         )
-    if "electrical" in all_traits and not ({"mains_powered", "battery_powered", "usb_powered", "mains_power_likely"} & all_traits):
+    if "electrical" in all_traits and not (
+        {"mains_powered", "battery_powered", "usb_powered", "external_psu", "mains_power_likely"} & all_traits
+    ):
         items.append(
             MissingInformationItem(
                 key="power_source",
                 message="Power source is unclear; specify mains, battery, USB, or external PSU.",
                 importance="high",
-                examples=["230 V mains", "rechargeable Li-ion battery", "USB-C powered"],
-                related_traits=["mains_powered", "battery_powered", "usb_powered"],
+                examples=["230 V mains", "rechargeable Li-ion battery", "USB-C powered", "12 V DC via external adapter"],
+                related_traits=["mains_powered", "battery_powered", "usb_powered", "external_psu"],
             )
         )
     if ({"app_control", "cloud", "ota"} & all_traits) and "radio" not in all_traits:
