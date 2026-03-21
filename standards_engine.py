@@ -65,7 +65,21 @@ def _product_hit_type(
     return None
 
 
-def _trait_gate_details(standard: dict, traits: set[str]) -> dict[str, list[str] | bool]:
+def _is_preferred_standard(standard: dict, preferred_standard_codes: set[str]) -> bool:
+    if not preferred_standard_codes:
+        return False
+    code = standard.get("code")
+    family = standard.get("standard_family")
+    return (isinstance(code, str) and code in preferred_standard_codes) or (
+        isinstance(family, str) and family in preferred_standard_codes
+    )
+
+
+def _trait_gate_details(
+    standard: dict,
+    traits: set[str],
+    allow_soft_any_miss: bool,
+) -> dict[str, list[str] | bool]:
     applies_if_all = set(standard.get("applies_if_all", []))
     applies_if_any = set(standard.get("applies_if_any", []))
     exclude_if = set(standard.get("exclude_if", []))
@@ -75,10 +89,12 @@ def _trait_gate_details(standard: dict, traits: set[str]) -> dict[str, list[str]
     matched_traits_any = sorted(applies_if_any & traits)
     missing_required_traits = sorted(applies_if_all - traits)
     missing_any_group = sorted(applies_if_any) if applies_if_any and not matched_traits_any else []
+    soft_missing_any = bool(missing_any_group and allow_soft_any_miss)
 
-    passes = not excluded_by_traits and not missing_required_traits and not missing_any_group
+    passes = not excluded_by_traits and not missing_required_traits and (not missing_any_group or soft_missing_any)
     return {
         "passes": passes,
+        "soft_missing_any": soft_missing_any,
         "matched_traits_all": matched_traits_all,
         "matched_traits_any": matched_traits_any,
         "missing_required_traits": missing_required_traits,
@@ -101,11 +117,11 @@ def _rejection_reason(product_hit_type: str | None, gate: dict[str, list[str] | 
 
 def _build_reason(
     standard: dict,
-    traits: set[str],
     product_type: str | None,
     matched_products: list[str],
     product_hit_type: str | None,
     gate: dict[str, list[str] | bool],
+    is_preferred: bool,
 ) -> tuple[str, str]:
     parts: list[str] = []
     match_basis = "traits"
@@ -117,6 +133,9 @@ def _build_reason(
         matched_list = ", ".join(pid.replace("_", " ") for pid in matched_products)
         parts.append(f"matched through alternate detected product candidate: {matched_list}")
         match_basis = "alternate_product"
+    elif is_preferred:
+        parts.append("recommended by the matched product knowledge base")
+        match_basis = "preferred_product"
 
     matched_all = gate.get("matched_traits_all", [])
     matched_any = gate.get("matched_traits_any", [])
@@ -124,6 +143,8 @@ def _build_reason(
         parts.append("required traits matched: " + ", ".join(matched_all))
     if matched_any:
         parts.append("additional traits matched: " + ", ".join(matched_any))
+    if gate.get("soft_missing_any"):
+        parts.append("product context suggests relevance but the feature-specific trigger still needs confirmation")
 
     if standard.get("notes"):
         parts.append(standard["notes"])
@@ -135,6 +156,7 @@ def _score_standard(
     standard: dict,
     gate: dict[str, list[str] | bool],
     product_hit_type: str | None,
+    is_preferred: bool,
 ) -> int:
     score = 0
     if product_hit_type == "primary_product":
@@ -142,8 +164,14 @@ def _score_standard(
     elif product_hit_type == "alternate_product":
         score += 220
 
+    if is_preferred:
+        score += 80
+
     score += len(gate.get("matched_traits_all", [])) * 35
     score += len(gate.get("matched_traits_any", [])) * 14
+
+    if gate.get("soft_missing_any"):
+        score -= 20
 
     if _standard_item_type(standard) == "standard":
         score += 40
@@ -170,9 +198,11 @@ def find_applicable_items(
     directives: list[str],
     product_type: str | None = None,
     matched_products: list[str] | None = None,
+    preferred_standard_codes: list[str] | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
     standards = load_standards()
     matched_products = matched_products or []
+    preferred_standard_codes = set(preferred_standard_codes or [])
 
     results: list[dict[str, Any]] = []
     rejections: list[dict[str, Any]] = []
@@ -188,7 +218,9 @@ def find_applicable_items(
             continue
 
         product_hit_type = _product_hit_type(standard, product_type, matched_products)
-        gate = _trait_gate_details(standard, traits)
+        preferred_hit = _is_preferred_standard(standard, preferred_standard_codes)
+        allow_soft_any_miss = preferred_hit
+        gate = _trait_gate_details(standard, traits, allow_soft_any_miss=allow_soft_any_miss)
         if product_hit_type is None or not gate["passes"]:
             rejections.append(
                 {
@@ -199,11 +231,18 @@ def find_applicable_items(
             continue
 
         enriched = dict(standard)
-        reason, match_basis = _build_reason(standard, traits, product_type, matched_products, product_hit_type, gate)
+        reason, match_basis = _build_reason(
+            standard,
+            product_type,
+            matched_products,
+            product_hit_type,
+            gate,
+            preferred_hit,
+        )
         enriched["reason"] = reason
         enriched["match_basis"] = match_basis
-        enriched["item_type"] = _standard_item_type(standard)
-        enriched["score"] = _score_standard(standard, gate, product_hit_type)
+        enriched["item_type"] = "review" if gate["soft_missing_any"] else _standard_item_type(standard)
+        enriched["score"] = _score_standard(standard, gate, product_hit_type, preferred_hit)
         enriched["matched_traits_all"] = gate["matched_traits_all"]
         enriched["matched_traits_any"] = gate["matched_traits_any"]
         enriched["missing_required_traits"] = gate["missing_required_traits"]
@@ -233,10 +272,12 @@ def find_applicable_standards(
     directives: list[str],
     product_type: str | None = None,
     matched_products: list[str] | None = None,
+    preferred_standard_codes: list[str] | None = None,
 ) -> list[dict[str, Any]]:
     return find_applicable_items(
         traits=traits,
         directives=directives,
         product_type=product_type,
         matched_products=matched_products,
+        preferred_standard_codes=preferred_standard_codes,
     )["standards"]

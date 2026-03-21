@@ -866,6 +866,7 @@ def analyze(description: str, category: str = "", directives: list[str] | None =
         directives=directive_keys,
         product_type=product_type,
         matched_products=classification.get("matched_products", []),
+        preferred_standard_codes=classification.get("preferred_standard_codes", []),
     )
 
     legislation_index = {row["directive_key"]: row for row in picked_legislations}

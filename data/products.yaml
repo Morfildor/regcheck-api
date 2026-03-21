@@ -1560,6 +1560,100 @@ products:
   - EN 60335-2-105
   - EN 60335-2-60
   - EN 60335-2-84
+- id: smart_plug
+  label: Smart plug / outlet
+  aliases:
+  - smart plug
+  - wifi smart plug
+  - wifi plug
+  - smart outlet
+  - connected outlet
+  - wifi socket
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - radio
+  - wifi
+  - app_control
+  - remote_control
+  functional_classes:
+  - building_automation
+  - power_control
+  likely_standards: []
+- id: smart_speaker
+  label: Smart speaker
+  aliases:
+  - smart speaker
+  - voice assistant speaker
+  - connected speaker
+  - wifi speaker
+  - bluetooth speaker
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - speaker
+  - microphone
+  - app_control
+  functional_classes:
+  - av_ict_device
+  - connected_audio
+  likely_standards:
+  - EN 62368-1
+- id: smart_thermostat
+  label: Smart thermostat
+  aliases:
+  - smart thermostat
+  - wifi thermostat
+  - connected thermostat
+  - programmable thermostat
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - fixed_installation
+  - radio
+  - wifi
+  - app_control
+  - remote_control
+  - display
+  functional_classes:
+  - building_automation
+  - hvac_control
+  likely_standards: []
+- id: bluetooth_tracker
+  label: Bluetooth tracker
+  aliases:
+  - bluetooth tracker
+  - key finder
+  - item tracker
+  - bluetooth tag
+  - smart tag
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - radio
+  - bluetooth
+  - location
+  functional_classes:
+  - tracking_device
+  - portable_electronics
+  likely_standards: []
 - id: skin_hair_care_appliance
   label: Skin or hair care appliance
   aliases:

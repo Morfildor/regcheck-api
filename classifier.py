@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 import re
@@ -29,6 +28,18 @@ GENERIC_ALIASES = {
     "toaster",
     "vacuum",
     "washer",
+}
+
+POWER_TRAITS = {"battery_powered", "mains_powered", "mains_power_likely", "usb_powered", "external_psu"}
+RADIO_TRAITS = {"bluetooth", "wifi", "wifi_5ghz", "zigbee", "thread", "matter", "nfc", "cellular"}
+CONNECTED_TRAITS = {"app_control", "cloud", "internet", "ota", "account", "authentication"}
+ELECTRONIC_SIGNAL_TRAITS = RADIO_TRAITS | CONNECTED_TRAITS | {
+    "camera",
+    "display",
+    "location",
+    "microphone",
+    "personal_data_likely",
+    "speaker",
 }
 
 NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
@@ -139,7 +150,7 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         if _has_any_regex(text, regexes):
             explicit_traits.add(trait)
 
-    if any(t in explicit_traits for t in ["bluetooth", "wifi", "wifi_5ghz", "zigbee", "thread", "matter", "nfc", "cellular"]):
+    if RADIO_TRAITS & explicit_traits:
         explicit_traits.add("radio")
     if "wifi_5ghz" in explicit_traits:
         explicit_traits.add("wifi")
@@ -149,6 +160,55 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         explicit_traits.add("internet")
     if "account" in explicit_traits or "authentication" in explicit_traits:
         explicit_traits.add("personal_data_likely")
+
+
+def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
+    inferred: set[str] = set()
+
+    electrical_signals = POWER_TRAITS | {
+        "heating",
+        "motorized",
+        "radio",
+        "camera",
+        "display",
+        "microphone",
+        "speaker",
+    }
+    electronic_signals = ELECTRONIC_SIGNAL_TRAITS | {"radio", "electronic"}
+
+    electrical_cues = [
+        r"\belectric(?:al)?\b",
+        r"\belectronic\b",
+        r"\bpowered\b",
+        r"\bvoltage\b",
+        r"\bcharger\b",
+        r"\badapter\b",
+        r"\bplug\b",
+        r"\bsocket\b",
+        r"\bdevice\b",
+        r"\bequipment\b",
+        r"\bappliance\b",
+    ]
+    electronic_cues = [
+        r"\belectronic\b",
+        r"\bdigital\b",
+        r"\bfirmware\b",
+        r"\bsoftware\b",
+        r"\bpcb\b",
+        r"\bcircuit\b",
+        r"\bsensor\b",
+        r"\bsmart\b",
+        r"\bconnected\b",
+    ]
+
+    if (electrical_signals & explicit_traits) or _has_any_regex(text, electrical_cues):
+        inferred.add("electrical")
+    if (electronic_signals & explicit_traits) or _has_any_regex(text, electronic_cues):
+        inferred.add("electronic")
+    if "electronic" in inferred and not ("electrical" in explicit_traits or "electrical" in inferred):
+        inferred.add("electrical")
+
+    return inferred
 
 
 def _alias_score(text: str, alias: str) -> int:
@@ -222,6 +282,9 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     if "wifi" in text and "wifi" in traits:
         score += 8
         reasons.append("wifi wording fits")
+    if "bluetooth" in text and "bluetooth" in traits:
+        score += 8
+        reasons.append("bluetooth wording fits")
     if "built in" in text and ("fixed_installation" in traits or "built_in" in traits):
         score += 8
         reasons.append("built-in wording fits")
@@ -308,7 +371,40 @@ def _candidate_confidence(index: int, candidate: dict[str, Any], next_candidate:
 def _select_matched_products(product_candidates: list[dict[str, Any]]) -> list[str]:
     if not product_candidates:
         return []
-    return [product_candidates[0]["id"]]
+
+    top_score = product_candidates[0]["score"]
+    selected: list[str] = []
+
+    for idx, candidate in enumerate(product_candidates[:4]):
+        within_primary_band = top_score - candidate["score"] <= 18
+        close_medium_alternative = idx > 0 and candidate["confidence"] != "low" and top_score - candidate["score"] <= 12
+        if idx == 0 or within_primary_band or close_medium_alternative:
+            selected.append(candidate["id"])
+
+    return selected[:3] or [product_candidates[0]["id"]]
+
+
+def _aggregate_candidate_context(selected_rows: list[dict[str, Any]]) -> tuple[set[str], set[str], list[str]]:
+    if not selected_rows:
+        return set(), set(), []
+
+    winner = selected_rows[0]
+    inferred_traits = set(winner.get("implied_traits", []))
+    functional_classes = set(winner.get("functional_classes", []))
+    preferred_standard_codes = list(dict.fromkeys(winner.get("likely_standards", [])))
+
+    if len(selected_rows) > 1:
+        common_traits = set(selected_rows[0].get("implied_traits", []))
+        for row in selected_rows[1:]:
+            common_traits &= set(row.get("implied_traits", []))
+        inferred_traits.update(common_traits)
+
+        for row in selected_rows[1:]:
+            for code in row.get("likely_standards", []):
+                if code not in preferred_standard_codes:
+                    preferred_standard_codes.append(code)
+
+    return inferred_traits, functional_classes, preferred_standard_codes
 
 
 def _contradiction_severity(contradictions: list[str]) -> str:
@@ -330,9 +426,10 @@ def extract_traits(description: str, category: str = "") -> dict:
     diagnostics: list[str] = []
 
     _add_regex_trait(text, explicit_traits)
+    inferred_traits.update(_infer_baseline_traits(text, explicit_traits))
     diagnostics.append(f"normalized_text={text}")
 
-    candidates = _product_candidates(text, explicit_traits)
+    candidates = _product_candidates(text, explicit_traits | inferred_traits)
     top_candidates = candidates[:5]
 
     product_type = None
@@ -363,9 +460,13 @@ def extract_traits(description: str, category: str = "") -> dict:
         diagnostics.append(f"product_winner={winner['id']}")
         diagnostics.append(f"product_alias={winner.get('matched_alias') or ''}")
 
-        winner_full = top_candidates[0]
-        inferred_traits.update(winner_full.get("implied_traits", []))
-        functional_classes.update(winner_full.get("functional_classes", []))
+        matched_products = _select_matched_products(product_candidates)
+        selected_rows = [row for row in top_candidates if row["id"] in matched_products]
+        selected_rows.sort(key=lambda row: matched_products.index(row["id"]))
+
+        aggregate_traits, aggregate_classes, preferred_standard_codes = _aggregate_candidate_context(selected_rows)
+        inferred_traits.update(aggregate_traits)
+        functional_classes.update(aggregate_classes)
 
         if len(product_candidates) > 1 and product_candidates[0]["score"] - product_candidates[1]["score"] < 15:
             contradictions.append(
@@ -374,9 +475,9 @@ def extract_traits(description: str, category: str = "") -> dict:
                 f"{product_candidates[1]['id'].replace('_', ' ')}."
             )
     else:
+        matched_products = []
+        preferred_standard_codes = []
         diagnostics.append("product_winner=none")
-
-    matched_products = _select_matched_products(product_candidates)
 
     if "battery_powered" in explicit_traits and "mains_powered" in explicit_traits:
         contradictions.append("Both battery-powered and mains-powered signals were detected.")
@@ -390,6 +491,7 @@ def extract_traits(description: str, category: str = "") -> dict:
     inferred_traits = {t for t in inferred_traits if t in known_traits}
 
     diagnostics.append("matched_products=" + ",".join(matched_products))
+    diagnostics.append("preferred_standard_codes=" + ",".join(preferred_standard_codes))
     diagnostics.append("explicit_traits=" + ",".join(sorted(explicit_traits)))
     diagnostics.append("inferred_traits=" + ",".join(sorted(inferred_traits)))
     diagnostics.append("contradiction_severity=" + _contradiction_severity(contradictions))
@@ -397,6 +499,7 @@ def extract_traits(description: str, category: str = "") -> dict:
     return {
         "product_type": product_type,
         "matched_products": matched_products,
+        "preferred_standard_codes": preferred_standard_codes,
         "product_match_confidence": product_match_confidence,
         "product_candidates": product_candidates,
         "functional_classes": sorted(functional_classes),
