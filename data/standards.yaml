@@ -139,6 +139,7 @@ standards:
   - emf measurement rf (electronic article surveillance, rfid, nfc)
   notes: EMF assessment route for RFID, NFC, and similar low-range radio field exposure cases.
   state_of_the_art_scope: EU
+
 - code: EN 50563
   title: External a.c.-d.c. and a.c.-a.c. power supplies - Determination of no-load power and average efficiency of active modes
   region: EU
@@ -155,15 +156,15 @@ standards:
   harmonized_reference: EN 50563:2011 + A1:2013
   version: EN 50563:2011 + A1:2013
   dated_version: EN 50563:2011 + A1:2013
-  applies_if_products: []
+  applies_if_products:
+    - battery_charger
+    - industrial_charger
   exclude_if_products: []
   applies_if_all:
-    - external_power_supply
-  applies_if_any:
     - electrical
-    - electronic
-  exclude_if:
-    - internal_power_supply
+  applies_if_any:
+    - external_psu
+  exclude_if: []
   test_focus:
     - energy
   evidence_hint:
@@ -190,7 +191,7 @@ standards:
   is_harmonized: false
   harmonized_under: ECO
   harmonized_reference: 2023/826/EU
-  version: -
+  version: null
   dated_version: EN 50564:2011 (not harmonized)
   supersedes: EN 50564:2011
   applies_if_products: []
@@ -3578,6 +3579,7 @@ standards:
   - emf measurment short distance (sar for handheld &body mounted devices)
   notes: SAR route for handheld, body-near, or cellular radio equipment; typically not the default route for countertop appliances.
   state_of_the_art_scope: EU
+
 - code: EN 62233
   title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human exposure
   region: EU
@@ -3608,6 +3610,7 @@ standards:
   exclude_if:
     - wearable
     - body_worn_or_applied
+    - handheld
   test_focus:
     - emf
   evidence_hint:
@@ -3615,8 +3618,9 @@ standards:
     - safety test report
   keywords:
     - emf measurement household appliance
-  notes: Default LVD EMF route for household and similar appliances. Typically preferred for ordinary mains-powered countertop or floor-care appliances rather than close-to-body electronic equipment.
+  notes: Default LVD EMF route for ordinary household and similar appliances. Prefer this over EN 62311 for countertop or floor-care appliances unless the use case is close to the body.
   state_of_the_art_scope: EU
+
 - code: EN 62311
   title: Assessment of electronic and electrical equipment related to human exposure restrictions for electromagnetic fields
   region: EU
@@ -3654,8 +3658,9 @@ standards:
   keywords:
     - emf assessment
     - rf exposure
-  notes: General EMF assessment route for electronic/electrical equipment, especially where the product is handheld, wearable, body-near, or otherwise better assessed under the generic equipment exposure framework instead of EN 62233.
+  notes: General EMF assessment route for equipment that is handheld, wearable, body-near, or otherwise better assessed under the general exposure framework than EN 62233.
   state_of_the_art_scope: EU
+
 - code: EN 62368-1
   title: Audio/video, information and communication technology equipment - Safety requirements
   region: EU
@@ -4250,9 +4255,9 @@ standards:
   region: EU
   category: power
   directives:
-    - ECO
     - LVD
-  legislation_key: ECO
+    - ECO
+  legislation_key: LVD
   item_type: review
   standard_family: CHARGER / EXTERNAL PSU REVIEW
   confidence: low
@@ -4261,12 +4266,10 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-    - external_power_supply
-  applies_if_any:
     - electrical
-    - electronic
-  exclude_if:
-    - internal_power_supply
+  applies_if_any:
+    - external_psu
+  exclude_if: []
   test_focus:
     - electrical
     - energy
@@ -4277,7 +4280,7 @@ standards:
   keywords:
     - external power supply review
     - charger architecture review
-  notes: Review whether a supplied external AC/DC adapter, charging dock, or charger creates additional LVD or ecodesign obligations. Do not trigger for ordinary direct-mains products with internal power conversion only.
+  notes: Review whether a supplied external AC/DC adapter, charging dock, or charger creates additional safety or ecodesign obligations. Do not trigger for ordinary direct-mains products with internal power conversion only.
   state_of_the_art_scope: EU
   
 - code: GDPR review
