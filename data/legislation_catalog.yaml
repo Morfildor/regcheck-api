@@ -68,7 +68,7 @@ legislations:
   bucket: ce
   applicability: applicable
   applicable_from: '2025-08-01'
-  reason: Review under the RED delegated cybersecurity regime where radio equipment is internet-connected, uses networked software features, requires account or authentication controls, or supports monetary transactions.
+  reason: Review under the RED delegated cybersecurity regime where radio equipment is internet-connected, app-connected, uses networked software features, requires account or authentication controls, or supports monetary transactions.
   triggers:
   - internet-connected radio equipment
   - radio equipment with OTA, cloud, or other networked software functions
@@ -87,6 +87,8 @@ legislations:
   - wifi
   - cloud
   - ota
+  - app_control
+  - cellular
   - account
   - authentication
   - monetary_transaction
@@ -99,7 +101,6 @@ legislations:
   bucket: framework
   applicability: conditional
   applicable_from: '2024-07-18'
-  replaced_by: Directive 2009/125/EC
   reason: Framework-level review may be needed where the product family is likely to fall under current or future ecodesign measures.
   triggers:
   - energy-related or otherwise potentially in-scope product family
@@ -116,6 +117,7 @@ legislations:
   - laundry_appliance
   - kitchen_appliance
   - hvac_appliance
+  replaces: Directive 2009/125/EC
 - code: (EU) 2023/826
   title: Off mode, standby and networked standby ecodesign regulation
   family: Energy / ecodesign
@@ -178,7 +180,7 @@ legislations:
   directive_key: BATTERY
   bucket: non_ce
   applicability: conditional
-  reason: Battery Regulation obligations should be reviewed where the product contains or is supplied with batteries.
+  reason: Battery Regulation obligations should be reviewed where the product contains, is supplied with, or relies on portable batteries or rechargeable battery packs.
   triggers:
   - battery-powered product
   - product supplied with batteries
@@ -198,7 +200,7 @@ legislations:
   applicability: conditional
   applicable_until: '2027-01-13'
   replaced_by: Regulation (EU) 2023/1230
-  reason: Machinery Directive review may be needed for machinery-style products with driven movement, pressure, or safety-related functions.
+  reason: Machinery Directive review is typically needed for machinery-style products such as powered garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -210,13 +212,24 @@ legislations:
   - machinery technical file
   any_of_traits:
   - motorized
-  - safety_function
   - security_or_barrier
+  - safety_function
   - pressure
   any_of_functional_classes:
   - building_automation
   - garden_tool
   - industrial_equipment
+  - agricultural_appliance
+  any_of_product_types:
+  - garage_door_drive
+  - gate_door_window_drive
+  - rolling_shutter_drive
+  - robotic_lawn_mower
+  - lawn_mower
+  - grass_trimmer
+  - scarifier_aerator
+  - grass_shear
+  - milking_machine
 - code: Regulation (EU) 2023/1230
   title: Machinery Regulation
   family: Machinery safety
@@ -226,7 +239,7 @@ legislations:
   bucket: future
   applicability: conditional
   applicable_from: '2027-01-14'
-  reason: Future Machinery Regulation review for machinery-style products from 14 January 2027 onward.
+  reason: Future Machinery Regulation review from 14 January 2027 for machinery-style products such as powered garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -237,13 +250,24 @@ legislations:
   - technical file review
   any_of_traits:
   - motorized
-  - safety_function
   - security_or_barrier
+  - safety_function
   - pressure
   any_of_functional_classes:
   - building_automation
   - garden_tool
   - industrial_equipment
+  - agricultural_appliance
+  any_of_product_types:
+  - garage_door_drive
+  - gate_door_window_drive
+  - rolling_shutter_drive
+  - robotic_lawn_mower
+  - lawn_mower
+  - grass_trimmer
+  - scarifier_aerator
+  - grass_shear
+  - milking_machine
 - code: Regulation (EC) No 1935/2004
   title: Framework Regulation on food contact materials
   family: Food contact

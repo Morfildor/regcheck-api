@@ -74,9 +74,6 @@ traits:
 - id: display
   label: Display
   description: Includes a visual display or screen
-- id: external_psu
-  label: External PSU / adapter
-  description: Supplied via an external power supply, charger, or AC/DC adapter
 - id: drying
   label: Drying function
   description: Used to dry textiles, hands, hair, air, or other items
@@ -272,3 +269,21 @@ traits:
 - id: wifi_5ghz
   label: 5 GHz Wi-Fi
   description: Supports 5 GHz Wi-Fi operation, including dual-band Wi-Fi where 5 GHz is present
+- id: coffee_brewing
+  label: Coffee brewing
+  description: Brews coffee from grounds, capsules, pods, or beans.
+- id: coffee_grinding
+  label: Coffee grinding
+  description: Grinds coffee beans as part of normal operation.
+- id: wet_and_dry_cleaning
+  label: Wet and dry cleaning
+  description: Can pick up liquids or perform both wet and dry floor cleaning.
+- id: dect
+  label: DECT
+  description: Uses DECT cordless radio technology.
+- id: gsm
+  label: GSM
+  description: Uses GSM radio technology specifically.
+- id: external_psu
+  label: External PSU / adapter
+  description: Supplied via an external power supply, charger, or AC/DC adapter.
