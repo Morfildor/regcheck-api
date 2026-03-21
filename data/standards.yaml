@@ -154,7 +154,7 @@ standards:
   harmonized_under: ECO
   harmonized_reference: EN 50563:2011 + A1:2013
   version: EN 50563:2011 + A1:2013
-  dated_version: EN 50563:2011 + A1:2013
+  dated_version: not harmonized
   applies_if_products:
   - battery_charger
   - industrial_charger
