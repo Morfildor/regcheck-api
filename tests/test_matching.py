@@ -5,7 +5,7 @@ from unittest.mock import patch
 from fastapi import HTTPException
 import classifier
 from classifier import _select_matched_products, extract_traits
-from knowledge_base import reset_cache
+from knowledge_base import load_products, load_standards, reset_cache
 import main
 from models import ProductInput
 from models import LegislationItem
@@ -38,6 +38,19 @@ class MatchingTests(unittest.TestCase):
 
         self.assertEqual(result["product_type"], "smart_speaker")
         self.assertIn("EN 62368-1", result["preferred_standard_codes"])
+
+    def test_product_implied_wireless_traits_expand_to_radio(self) -> None:
+        result = extract_traits("smart smoke alarm")
+
+        self.assertEqual(result["product_type"], "smart_smoke_co_alarm")
+        self.assertIn("radio", result["all_traits"])
+        self.assertIn("wifi", result["all_traits"])
+
+    def test_new_feature_traits_are_detected_from_text(self) -> None:
+        result = extract_traits("Wi-Fi 7 mesh router with WPA3 and voice assistant support")
+
+        for trait in ("wifi", "wifi_7", "mesh_network_node", "wpa3", "voice_assistant", "radio"):
+            self.assertIn(trait, result["all_traits"])
 
     def test_preferred_standard_can_surface_as_review_when_feature_trigger_is_missing(self) -> None:
         items = find_applicable_items(
@@ -138,6 +151,37 @@ class MatchingTests(unittest.TestCase):
         section_keys = {section["key"] for section in result.legislation_sections}
         self.assertIn("informational", section_keys)
 
+    def test_ev_charger_catalog_links_resolve_and_surface_review_route(self) -> None:
+        standards = load_standards()
+        products = load_products()
+
+        product = next(row for row in products if row["id"] == "ev_charger_home")
+        known_refs = {row["code"] for row in standards} | {
+            row["standard_family"] for row in standards if row.get("standard_family")
+        }
+
+        for reference in product["likely_standards"]:
+            self.assertIn(reference, known_refs)
+
+        result = analyze("smart ev charger wallbox with wifi, bluetooth and mobile app")
+        review_codes = {item.code for item in result.review_items}
+        self.assertIn("IEC 61851-1", review_codes)
+
+    def test_all_product_likely_standards_resolve_to_known_codes_or_families(self) -> None:
+        standards = load_standards()
+        known_refs = {row["code"] for row in standards} | {
+            row["standard_family"] for row in standards if row.get("standard_family")
+        }
+
+        unresolved = [
+            (product["id"], reference)
+            for product in load_products()
+            for reference in product.get("likely_standards", [])
+            if reference not in known_refs
+        ]
+
+        self.assertEqual(unresolved, [])
+
     def test_future_only_review_items_do_not_raise_current_risk(self) -> None:
         fake_traits = {
             "product_type": "synthetic_product",
@@ -185,7 +229,7 @@ class MatchingTests(unittest.TestCase):
                     "rules.find_applicable_items",
                     return_value={"standards": [], "review_items": [future_review_row], "rejections": []},
                 ):
-                    with patch("rules._apply_post_selection_gates", side_effect=lambda rows, *_: rows):
+                    with patch("rules._apply_post_selection_gates", side_effect=lambda rows, *_, **__: rows):
                         with patch("rules._missing_information", return_value=[]):
                             result = analyze("synthetic")
 

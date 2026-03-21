@@ -3953,6 +3953,80 @@ standards:
     whose primary function is heating, cleaning, cooking, pumping, or similar appliance
     operation.
   state_of_the_art_scope: EU
+- code: IEC 61851-1
+  title: 'Electric vehicle conductive charging system - Part 1: General requirements'
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: review
+  standard_family: IEC 61851-1
+  confidence: medium
+  harmonization_status: review
+  is_harmonized: false
+  version: IEC 61851-1
+  dated_version: IEC 61851-1
+  applies_if_products:
+  - ev_charger_home
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - ev_charging
+  - vehicle_supply
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - EVSE function description
+  - charging interface and installation details
+  - product architecture description
+  keywords:
+  - ev charger
+  - wallbox
+  - evse
+  notes: Review route for EV charging equipment so product-linked EVSE references in
+    the catalog stay connected to an actionable backend route.
+  state_of_the_art_scope: EU
+- code: EN 14604
+  title: Smoke alarm devices
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: review
+  standard_family: EN 14604
+  confidence: medium
+  harmonization_status: review
+  is_harmonized: false
+  version: EN 14604
+  dated_version: EN 14604
+  applies_if_products:
+  - smart_smoke_co_alarm
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - smoke_detection
+  - safety_function
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - alarm function description
+  - detector technology description
+  - installation and warning output details
+  keywords:
+  - smoke alarm
+  - connected smoke detector
+  - safety alarm
+  notes: Review route for smoke alarm product families so the catalog can keep specific
+    life-safety references connected without breaking the main standards engine.
+  state_of_the_art_scope: EU
 - code: EN 62471
   title: Photobiological safety of lamps and lamp systems
   region: EU

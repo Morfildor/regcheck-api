@@ -31,7 +31,27 @@ GENERIC_ALIASES = {
 }
 
 POWER_TRAITS = {"battery_powered", "mains_powered", "mains_power_likely", "usb_powered", "external_psu"}
-RADIO_TRAITS = {"bluetooth", "wifi", "wifi_5ghz", "zigbee", "thread", "matter", "nfc", "cellular"}
+RADIO_TRAITS = {
+    "bluetooth",
+    "wifi",
+    "wifi_5ghz",
+    "wifi_6",
+    "wifi_7",
+    "zigbee",
+    "thread",
+    "matter",
+    "nfc",
+    "cellular",
+    "dect",
+    "gsm",
+    "uwb",
+    "5g_nr",
+    "lora",
+    "lorawan",
+    "sigfox",
+    "lte_m",
+    "satellite_connectivity",
+}
 CONNECTED_TRAITS = {"app_control", "cloud", "internet", "ota", "account", "authentication"}
 ELECTRONIC_SIGNAL_TRAITS = RADIO_TRAITS | CONNECTED_TRAITS | {
     "av_ict",
@@ -56,6 +76,9 @@ NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
     (r"\bbean[ -]?to[ -]?cup\b", "bean to cup"),
     (r"\bair[ -]?conditioning\b", "air conditioner"),
     (r"\bsmart home\b", "smart_home"),
+    (r"\be[ -]?ink\b", "eink"),
+    (r"\be[ -]?paper\b", "epaper"),
+    (r"\bpower over ethernet\b", "poe"),
 ]
 
 NEGATIONS: dict[str, list[str]] = {
@@ -90,11 +113,26 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bwifi 6\b",
         r"\bwifi 6e\b",
     ],
+    "wifi_6": [r"\bwifi 6\b", r"\bwifi 6e\b", r"\b802 11ax\b"],
+    "wifi_7": [r"\bwifi 7\b", r"\b802 11be\b"],
     "zigbee": [r"\bzigbee\b"],
     "thread": [r"\bthread\b"],
     "matter": [r"\bmatter\b"],
+    "matter_bridge": [r"\bmatter bridge\b"],
     "nfc": [r"\bnfc\b", r"\brfid\b"],
     "cellular": [r"\bcellular\b", r"\blte\b", r"\b4g\b", r"\b5g\b", r"\bgsm\b", r"\bsim\b"],
+    "dect": [r"\bdect\b"],
+    "gsm": [r"\bgsm\b"],
+    "sigfox": [r"\bsigfox\b"],
+    "lte_m": [r"\blte m\b", r"\blte-m\b", r"\bnb iot\b", r"\bnb-iot\b"],
+    "5g_nr": [r"\b5g nr\b", r"\bstandalone 5g\b"],
+    "satellite_connectivity": [r"\bsatellite internet\b", r"\bsatellite connectivity\b", r"\bstarlink\b", r"\bvsat\b"],
+    "lora": [r"\blora\b"],
+    "lorawan": [r"\blorawan\b"],
+    "uwb": [r"\buwb\b", r"\bultra wideband\b"],
+    "wpa3": [r"\bwpa3\b"],
+    "mesh_network_node": [r"\bmesh wifi\b", r"\bmesh node\b", r"\bwhole home wifi\b", r"\bmesh router\b", r"\bmesh network router\b"],
+    "tri_band_wifi": [r"\btri band\b", r"\btri band wifi\b"],
     "app_control": [
         r"\bmobile app\b",
         r"\bcompanion app\b",
@@ -187,6 +225,17 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "microphone": [r"\bmicrophone\b", r"\bmic\b", r"\bvoice assistant\b", r"\bvoice control\b", r"\bvoice command\b"],
     "speaker": [r"\bspeaker\b", r"\baudio playback\b", r"\bsound output\b"],
     "display": [r"\bdisplay\b", r"\bscreen\b", r"\btouchscreen\b", r"\btouch screen\b", r"\bmonitor\b"],
+    "display_touchscreen": [r"\btouchscreen\b", r"\btouch screen\b"],
+    "e_ink_display": [r"\beink\b", r"\bepaper\b", r"\be reader\b"],
+    "hdr_display": [r"\bhdr10\b", r"\bhdr10\+\b", r"\bdolby vision\b", r"\bhlg\b"],
+    "high_refresh_display": [r"\b90hz\b", r"\b120hz\b", r"\b144hz\b", r"\bhigh refresh\b"],
+    "screen_mirroring": [r"\bscreen mirroring\b", r"\bchromecast\b", r"\bairplay\b", r"\bmiracast\b"],
+    "multi_room_audio": [r"\bmulti room audio\b", r"\bmultiroom audio\b"],
+    "spatial_audio": [r"\bspatial audio\b", r"\bdolby atmos\b", r"\bdts x\b", r"\b3d audio\b"],
+    "voice_assistant": [r"\bvoice assistant\b", r"\balexa\b", r"\bgoogle assistant\b", r"\bsiri\b", r"\bbixby\b"],
+    "privacy_switch": [r"\bprivacy switch\b", r"\bmic mute switch\b", r"\bcamera kill switch\b"],
+    "parental_controls": [r"\bparental control\b", r"\bfamily safety\b", r"\bcontent filter\b"],
+    "subscription_dependency": [r"\bsubscription required\b", r"\brequires subscription\b", r"\bpaid subscription\b"],
     "laser": [r"\blaser\b", r"\blidar\b", r"\blaser scanner\b", r"\brangefinder\b"],
     "location": [r"\bgps\b", r"\bgnss\b", r"\bgeolocation\b", r"\blocation tracking\b"],
     "battery_powered": [
@@ -210,12 +259,24 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bmains adapter\b",
     ],
     "usb_powered": [r"\busb powered\b", r"\busb c powered\b", r"\bpowered by usb\b", r"\btype c powered\b"],
+    "usb_pd": [r"\busb pd\b", r"\bpower delivery\b", r"\busb power delivery\b"],
+    "poe_powered": [r"\bpoe powered\b", r"\bpoe\b", r"\b802 3af\b", r"\b802 3at\b", r"\b802 3bt\b"],
+    "poe_supply": [r"\bpoe injector\b", r"\bpoe switch\b", r"\bpower sourcing equipment\b"],
+    "wireless_charging_tx": [r"\bwireless charger\b", r"\bcharging pad\b", r"\bcharging stand\b"],
+    "wireless_charging_rx": [r"\bsupports wireless charging\b", r"\bwireless charging receiver\b"],
+    "backup_battery": [r"\bbackup battery\b", r"\bbattery backup\b"],
+    "energy_monitoring": [r"\benergy monitoring\b", r"\bpower monitoring\b", r"\benergy meter\b", r"\bpower consumption\b"],
+    "smart_grid_ready": [r"\bsmart grid\b", r"\bdemand response\b", r"\bdynamic load management\b"],
     "mains_powered": [r"\bmains\b", r"\b230v\b", r"\b220v\b", r"\b240v\b", r"\bac power\b", r"\bplug in\b", r"\bplugged in\b"],
     "professional": [r"\bprofessional\b", r"\bcommercial\b", r"\bindustrial\b", r"\bcatering\b", r"\bhoreca\b"],
     "consumer": [r"\bconsumer\b", r"\bdomestic\b", r"\bhousehold\b", r"\bhome use\b"],
     "household": [r"\bhousehold\b", r"\bdomestic\b", r"\bhome use\b"],
     "outdoor_use": [r"\boutdoor\b", r"\bgarden\b", r"\blawn\b"],
     "fixed_installation": [r"\bbuilt in\b", r"\bfixed\b", r"\bwall mounted\b", r"\bceiling mounted\b", r"\bpermanently installed\b"],
+    "wall_mount": [r"\bwall mounted\b", r"\bwall mount\b"],
+    "ceiling_mount": [r"\bceiling mounted\b", r"\bceiling mount\b"],
+    "rack_mount": [r"\brack mount\b", r"\b19 inch rack\b"],
+    "din_rail_mount": [r"\bdin rail\b"],
     "portable": [r"\bportable\b", r"\btravel\b", r"\bhandheld\b"],
     "water_contact": [
         r"\bwater tank\b",
@@ -231,6 +292,9 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "cooling": [r"\bcooling\b", r"\brefrigerat\b", r"\bfreezer\b", r"\bice\b", r"\bchill\b"],
     "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bdrive\b"],
     "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
+    "remote_management": [r"\bremote management\b", r"\bdevice management\b", r"\bremote provisioning\b"],
+    "secure_boot": [r"\bsecure boot\b"],
+    "hardware_security_element": [r"\bsecurity element\b", r"\btpm\b", r"\bhsm\b", r"\bsecure enclave\b"],
     "ai_related": [r"\bai\b", r"\bmachine learning\b", r"\bneural\b", r"\bllm\b"],
     "personal_data_likely": [
         r"\bpersonal data\b",
@@ -249,6 +313,12 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "wet_environment": [r"\bwet environment\b", r"\bbathroom\b", r"\bshower\b", r"\bsplash\b"],
     "body_worn_or_applied": [r"\bbody worn\b", r"\bbody worn use\b", r"\bon body\b", r"\bon skin\b"],
     "child_targeted": [r"\bchild targeted\b", r"\bfor children\b", r"\bkids mode\b"],
+    "ambient_light_sensor": [r"\bambient light sensor\b", r"\blight sensor\b", r"\bauto brightness\b"],
+    "occupancy_detection": [r"\boccupancy detection\b", r"\boccupancy sensor\b", r"\bpresence detection\b"],
+    "gas_detection": [r"\bgas detection\b", r"\bgas detector\b", r"\blpg detector\b", r"\bnatural gas detector\b"],
+    "flood_detection": [r"\bflood detection\b", r"\bwater leak\b", r"\bleak sensor\b"],
+    "door_window_sensor": [r"\bdoor sensor\b", r"\bwindow sensor\b", r"\bcontact sensor\b"],
+    "strobe_output": [r"\bstrobe\b", r"\bvisual alarm\b", r"\bflashing alarm\b"],
 }
 
 
@@ -361,6 +431,88 @@ def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
         inferred.add("consumer")
 
     return inferred
+
+
+def _expand_related_traits(traits: set[str]) -> set[str]:
+    expanded = set(traits)
+
+    if expanded & RADIO_TRAITS:
+        expanded.add("radio")
+    if expanded & {"wifi_5ghz", "wifi_6", "wifi_7", "tri_band_wifi", "mesh_network_node", "wpa3"}:
+        expanded.add("wifi")
+    if expanded & {"gsm", "lte_m", "5g_nr"}:
+        expanded.add("cellular")
+    if "lorawan" in expanded:
+        expanded.add("lora")
+    if expanded & {"display_touchscreen", "e_ink_display", "hdr_display", "high_refresh_display"}:
+        expanded.add("display")
+    if expanded & {"voice_assistant", "privacy_switch"}:
+        expanded.update({"microphone", "speaker", "personal_data_likely"})
+    if expanded & {"parental_controls", "subscription_dependency"}:
+        expanded.add("account")
+    if "subscription_dependency" in expanded:
+        expanded.add("monetary_transaction")
+    if "matter_bridge" in expanded:
+        expanded.add("matter")
+    if expanded & {"wireless_charging_rx", "wireless_charging_tx", "usb_pd", "poe_powered", "poe_supply", "backup_battery", "energy_monitoring", "smart_grid_ready", "vehicle_supply", "ev_charging", "solar_powered"}:
+        expanded.add("electrical")
+    if expanded & {
+        "camera",
+        "display",
+        "microphone",
+        "speaker",
+        "data_storage",
+        "screen_mirroring",
+        "multi_room_audio",
+        "spatial_audio",
+        "voice_assistant",
+        "parental_controls",
+        "subscription_dependency",
+        "secure_boot",
+        "hardware_security_element",
+        "remote_management",
+        "matter_bridge",
+        "e_ink_display",
+        "hdr_display",
+        "high_refresh_display",
+        "display_touchscreen",
+    }:
+        expanded.add("av_ict")
+    if expanded & {
+        "camera",
+        "display",
+        "microphone",
+        "speaker",
+        "data_storage",
+        "screen_mirroring",
+        "multi_room_audio",
+        "spatial_audio",
+        "voice_assistant",
+        "privacy_switch",
+        "parental_controls",
+        "subscription_dependency",
+        "secure_boot",
+        "hardware_security_element",
+        "remote_management",
+        "matter_bridge",
+        "poe_powered",
+        "poe_supply",
+        "wireless_charging_rx",
+        "wireless_charging_tx",
+        "usb_pd",
+        "energy_monitoring",
+        "smart_grid_ready",
+        "backup_battery",
+        "ambient_light_sensor",
+        "occupancy_detection",
+        "gas_detection",
+        "flood_detection",
+        "door_window_sensor",
+        "strobe_output",
+    }:
+        expanded.add("electronic")
+
+    return expanded
 
 
 def _alias_score(text: str, alias: str) -> int:
@@ -591,6 +743,7 @@ def extract_traits(description: str, category: str = "") -> dict:
     diagnostics: list[str] = []
 
     _add_regex_trait(text, explicit_traits)
+    explicit_traits = _expand_related_traits(explicit_traits)
     inferred_traits.update(_infer_baseline_traits(text, explicit_traits))
     diagnostics.append(f"normalized_text={text}")
 
@@ -673,6 +826,9 @@ def extract_traits(description: str, category: str = "") -> dict:
         contradictions.append("Wi-Fi is present while the text also says no internet, but cloud or OTA features were also detected.")
 
     known_traits = _known_trait_ids()
+    explicit_traits = _expand_related_traits(explicit_traits)
+    inferred_traits = _expand_related_traits(inferred_traits)
+    confirmed_traits = _expand_related_traits(confirmed_traits)
     explicit_traits = {t for t in explicit_traits if t in known_traits}
     inferred_traits = {t for t in inferred_traits if t in known_traits}
     confirmed_traits = {t for t in (confirmed_traits | explicit_traits) if t in known_traits}

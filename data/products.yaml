@@ -3395,6 +3395,7 @@ products:
   - cloud
   - authentication
   - ev_charging
+  - vehicle_supply
   - energy_monitoring
   - smart_grid_ready
   - data_storage
