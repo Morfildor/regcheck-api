@@ -225,6 +225,40 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("EN 55035", standard_codes)
         self.assertNotIn("EN 55014-1", standard_codes)
 
+    def test_laptop_keeps_red_emf_routes_but_drops_optical_noise_and_generic_battery_review(self) -> None:
+        result = analyze(
+            "Laptop notebook computer with integrated Wi-Fi and Bluetooth, rechargeable lithium battery, display, USB-C charger."
+        )
+
+        standard_codes = {item.code for item in result.standards}
+        review_codes = {item.code for item in result.review_items}
+
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 62311", standard_codes)
+        self.assertIn("EN 62479", standard_codes)
+        self.assertIn("EN 62133-2", standard_codes)
+        self.assertNotIn("EN 60825-1", standard_codes)
+        self.assertNotIn("EN 62471", standard_codes)
+        self.assertNotIn("Battery safety review", review_codes)
+
+    def test_laser_projector_keeps_laser_and_photobiological_routes(self) -> None:
+        result = analyze("Laser projector with Wi-Fi and Bluetooth")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 60825-1", standard_codes)
+        self.assertIn("EN 62471", standard_codes)
+
+    def test_cellular_handheld_routes_to_specific_red_emf_standards_not_en_62479(self) -> None:
+        result = analyze("Handheld LTE scanner with display, rechargeable battery, and Wi-Fi")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertTrue(any(code.startswith("EN 62209") for code in standard_codes))
+        self.assertTrue(any(code in standard_codes for code in {"EN 50566", "EN 50663", "EN 50665", "EN 62311"}))
+        self.assertNotIn("EN 62479", standard_codes)
+
 
     def test_admin_reload_is_disabled_without_token(self) -> None:
         with self.assertRaises(HTTPException) as ctx:

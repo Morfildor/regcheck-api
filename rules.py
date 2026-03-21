@@ -128,6 +128,41 @@ CLOSE_PROXIMITY_PATTERNS = [
     r"\bface\b",
 ]
 
+LASER_SOURCE_PATTERNS = [
+    r"\blaser\b",
+    r"\blidar\b",
+    r"\blaser scanner\b",
+    r"\brangefinder\b",
+    r"\blaser projector\b",
+    r"\blaser module\b",
+]
+
+PHOTOBIOLOGICAL_SOURCE_PATTERNS = [
+    r"\bprojector\b",
+    r"\blamp\b",
+    r"\blighting\b",
+    r"\bluminaire\b",
+    r"\bspotlight\b",
+    r"\bfloodlight\b",
+    r"\bflashlight\b",
+    r"\btorch\b",
+    r"\buv\b",
+    r"\bultraviolet\b",
+    r"\binfrared\b",
+    r"\bir emitter\b",
+    r"\bir lamp\b",
+    r"\bgrow light\b",
+    r"\bstage light\b",
+    r"\bdisinfection lamp\b",
+    r"\bdisinfection light\b",
+    r"\bphototherapy\b",
+]
+
+PHOTOBIO_PRODUCT_HINTS = {
+    "projector",
+    "heating_lamp",
+}
+
 PERSONAL_CARE_PRODUCT_HINTS = {
     "shaver",
     "hair_clipper",
@@ -554,6 +589,7 @@ def _apply_post_selection_gates(
     allowed_directives: set[str],
     product_type: str | None = None,
     confirmed_traits: set[str] | None = None,
+    description: str = "",
 ) -> list[dict[str, Any]]:
     kept: list[dict[str, Any]] = []
     scope_route, scope_reasons = _scope_route(traits, matched_products, product_type, confirmed_traits)
@@ -561,7 +597,18 @@ def _apply_post_selection_gates(
     if scope_reasons:
         diagnostics.append("scope_route_reasons=" + ";".join(scope_reasons))
 
+    text = normalize(description)
     has_external_psu = "external_psu" in traits or bool(matched_products & {"battery_charger", "industrial_charger"})
+    has_laser_source = "laser" in traits or _has_any(text, LASER_SOURCE_PATTERNS)
+    has_photobiological_source = (
+        has_laser_source
+        or bool(matched_products & PHOTOBIO_PRODUCT_HINTS)
+        or (product_type in PHOTOBIO_PRODUCT_HINTS if product_type else False)
+        or _has_any(text, PHOTOBIOLOGICAL_SOURCE_PATTERNS)
+    )
+    prefer_specific_red_emf = bool(
+        "radio" in traits and ({"cellular", "wearable", "handheld", "body_worn_or_applied", "close_proximity_emf"} & traits)
+    )
     prefer_62233 = (
         scope_route != "av_ict"
         and "electrical" in traits
@@ -640,9 +687,21 @@ def _apply_post_selection_gates(
                 item["directive"] = "LVD"
                 item["legislation_key"] = "LVD"
 
-        if code == "EN 62479" and "radio" not in traits:
-            diagnostics.append("gate=drop_EN62479:no_radio_signal")
+        if code == "EN 60825-1" and not has_laser_source:
+            diagnostics.append("gate=drop_EN60825-1:no_laser_source")
             continue
+
+        if code == "EN 62471" and not has_photobiological_source:
+            diagnostics.append("gate=drop_EN62471:no_photobiological_source")
+            continue
+
+        if code == "EN 62479":
+            if "radio" not in traits:
+                diagnostics.append("gate=drop_EN62479:no_radio_signal")
+                continue
+            if prefer_specific_red_emf:
+                diagnostics.append("gate=drop_EN62479:prefer_specific_red_emf_route")
+                continue
 
         if code.startswith("EN 62209") and not (
             "radio" in traits and ({"wearable", "handheld", "body_worn_or_applied", "cellular"} & traits)
@@ -663,6 +722,16 @@ def _apply_post_selection_gates(
     elif "EN 62233" in codes and "EN 62311" in codes and prefer_62311:
         kept = [item for item in kept if item.get("code") != "EN 62233"]
         diagnostics.append("gate=prune_EN62233_after_pairing")
+
+    codes = {str(item.get("code") or "") for item in kept}
+    if (
+        "Battery safety review" in codes
+        and "EN 62133-2" in codes
+        and scope_route == "av_ict"
+        and not ({"wearable", "handheld", "body_worn_or_applied", "replaceable_battery"} & traits)
+    ):
+        kept = [item for item in kept if item.get("code") != "Battery safety review"]
+        diagnostics.append("gate=prune_Battery_safety_review:covered_by_EN62133-2")
 
     return kept
 
@@ -1035,6 +1104,7 @@ def analyze(
         allowed_directives,
         product_type=product_type,
         confirmed_traits=confirmed_traits,
+        description=description,
     )
 
     dedup: dict[str, dict[str, Any]] = {}
