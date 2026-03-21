@@ -49,7 +49,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
-  harmonized_reference: (EU) 2022/30 as amended by (EU) 2023/2444
+  harmonized_reference: (EU) 2022/30
   version: EN 18031-2:2024
   dated_version: EN 18031-2:2024
   applies_if_products: []
@@ -144,7 +144,7 @@ standards:
   region: EU
   category: energy
   directives:
-  - ECO
+    - ECO
   legislation_key: ECO
   item_type: standard
   standard_family: EN 50563
@@ -152,29 +152,30 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: ECO
-  harmonized_reference: (EU) 2019/1782
+  harmonized_reference: EN 50563:2011 + A1:2013
   version: EN 50563:2011 + A1:2013
   dated_version: EN 50563:2011 + A1:2013
-  applies_if_products:
-  - battery_charger
-  - industrial_charger
+  applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-  - electrical
+    - external_power_supply
   applies_if_any:
-  - mains_powered
-  - mains_power_likely
-  - usb_powered
-  exclude_if: []
+    - electrical
+    - electronic
+  exclude_if:
+    - internal_power_supply
   test_focus:
-  - energy
+    - energy
   evidence_hint:
-  - measurement report
-  - product information review
+    - measurement report
+    - product information review
+    - power architecture description
   keywords:
-  - ext power supplies
-  notes: Energy-efficiency route for relevant external AC/DC or AC/AC power supplies under Regulation (EU) 2019/1782.
+    - ext power supplies
+    - external ac dc adapter
+  notes: Energy-efficiency route for relevant external AC/DC or AC/AC power supplies only; do not trigger merely because the end product is mains-powered.
   state_of_the_art_scope: EU
+
 - code: EN 50564
   title: Electrical and electronic household and office equipment - Measurement of low power consumption
   region: EU
@@ -188,9 +189,9 @@ standards:
   harmonization_status: state_of_the_art
   is_harmonized: false
   harmonized_under: ECO
-  harmonized_reference: (EU) 2023/826
-  version: EN 50564:2011 (not harmonized under (EU) 2023/826 )
-  dated_version: EN 50564:2011 (not harmonized under (EU) 2023/826 )
+  harmonized_reference: 2023/826/EU
+  version: -
+  dated_version: EN 50564:2011 (not harmonized)
   supersedes: EN 50564:2011
   applies_if_products: []
   exclude_if_products: []
@@ -222,7 +223,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: EN 50566:2017 + A1:2023
   dated_version: EN 50566:2017 + A1:2023
   applies_if_products: []
@@ -3582,7 +3583,7 @@ standards:
   region: EU
   category: emf
   directives:
-  - LVD
+    - LVD
   legislation_key: LVD
   item_type: standard
   standard_family: EN 62233
@@ -3596,31 +3597,33 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-  - consumer
-  - household
-  - electrical
+    - consumer
+    - household
+    - electrical
   applies_if_any:
-  - heating
-  - motorized
-  - mains_powered
-  - mains_power_likely
-  exclude_if: []
+    - heating
+    - motorized
+    - mains_powered
+    - mains_power_likely
+  exclude_if:
+    - wearable
+    - body_worn_or_applied
   test_focus:
-  - emf
+    - emf
   evidence_hint:
-  - CB report or equivalent technical evidence
-  - safety test report
+    - CB report or equivalent technical evidence
+    - safety test report
   keywords:
-  - emf measurement
-  notes: Often relevant for household electrical appliances where EMF assessment is part of the safety evaluation. EMF measurement.
+    - emf measurement household appliance
+  notes: Default LVD EMF route for household and similar appliances. Typically preferred for ordinary mains-powered countertop or floor-care appliances rather than close-to-body electronic equipment.
   state_of_the_art_scope: EU
 - code: EN 62311
   title: Assessment of electronic and electrical equipment related to human exposure restrictions for electromagnetic fields
   region: EU
   category: emf
   directives:
-  - LVD
-  - RED
+    - LVD
+    - RED
   legislation_key: LVD
   item_type: standard
   standard_family: EN 62311
@@ -3635,19 +3638,23 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-  - electrical
+    - electrical
   applies_if_any:
-  - radio
-  - electronic
+    - radio
+    - electronic
+    - handheld
+    - wearable
+    - body_worn_or_applied
   exclude_if: []
   test_focus:
-  - emf
+    - emf
   evidence_hint:
-  - safety test report
-  - CB report or equivalent technical evidence
+    - safety test report
+    - CB report or equivalent technical evidence
   keywords:
-  - emf assessment rf
-  notes: General EMF assessment route for electrical or radio equipment where EN 62233, EN 62479, EN 50566, or SAR-specific routes are not the better fit.
+    - emf assessment
+    - rf exposure
+  notes: General EMF assessment route for electronic/electrical equipment, especially where the product is handheld, wearable, body-near, or otherwise better assessed under the generic equipment exposure framework instead of EN 62233.
   state_of_the_art_scope: EU
 - code: EN 62368-1
   title: Audio/video, information and communication technology equipment - Safety requirements
@@ -3836,7 +3843,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: EN 300 328 V2.2.2:2019
   dated_version: EN 300 328 V2.2.2:2019
   applies_if_products: []
@@ -3872,7 +3879,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: ETSI EN 301 489-1 V2.2.3:2019
   dated_version: EN 301 489-1 V1.9.2:2011
   supersedes: EN 301 489-1 V1.9.2:2011
@@ -3913,7 +3920,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: EN 301 489-3 V2.3.2:2023 (clause 6 exception)
   dated_version: EN 301 489-3 V2.3.2:2023 (clause 6 exception)
   supersedes: EN 301 489-3 V2.3.2:2023 (clause 6 exception)
@@ -3950,7 +3957,7 @@ standards:
   harmonization_status: state_of_the_art
   is_harmonized: false
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: EN 301 489-6 V2.2.1:2019
   dated_version: EN 301 489-6 V2.2.1:2019
   applies_if_products: []
@@ -3984,7 +3991,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: EN 301 489-17 V3.3.1:2024 (clause 6 exception)
   dated_version: EN 301 489-17 V3.3.1:2024 (clause 6 exception)
   supersedes: EN 301 489-17 V3.3.1:2024 (clause 6 exception)
@@ -4023,7 +4030,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
@@ -4060,7 +4067,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
@@ -4094,7 +4101,7 @@ standards:
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED
-  harmonized_reference: (EU) 2014/53
+  harmonized_reference: 2014/53/EU
   version: EN 301 893 V2.2.1:2024
   dated_version: EN 301 893 V2.1.1:2017
   supersedes: EN 301 893 V2.1.1:2017
@@ -4237,14 +4244,15 @@ standards:
   - Cyber Resilience Act assessment required
   notes: Review whether the product with digital elements falls into the Cyber Resilience Act route and lifecycle obligations.
   state_of_the_art_scope: EU
+
 - code: Charger / external PSU review
   title: External power supply and charger route review required
   region: EU
   category: power
   directives:
-  - LVD
-  - EMC
-  legislation_key: LVD
+    - ECO
+    - LVD
+  legislation_key: ECO
   item_type: review
   standard_family: CHARGER / EXTERNAL PSU REVIEW
   confidence: low
@@ -4253,22 +4261,25 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-  - electrical
+    - external_power_supply
   applies_if_any:
-  - mains_powered
-  - mains_power_likely
-  - usb_powered
-  exclude_if: []
+    - electrical
+    - electronic
+  exclude_if:
+    - internal_power_supply
   test_focus:
-  - electrical
-  - energy
+    - electrical
+    - energy
   evidence_hint:
-  - safety test report
-  - CB report or equivalent technical evidence
+    - power architecture description
+    - adapter / charger specification
+    - safety test report
   keywords:
-  - External power supply and charger route review required
-  notes: Review whether an external PSU, charger, or adapter introduces additional safety, EMC, or ecodesign dependencies.
+    - external power supply review
+    - charger architecture review
+  notes: Review whether a supplied external AC/DC adapter, charging dock, or charger creates additional LVD or ecodesign obligations. Do not trigger for ordinary direct-mains products with internal power conversion only.
   state_of_the_art_scope: EU
+  
 - code: GDPR review
   title: GDPR assessment required
   region: EU
