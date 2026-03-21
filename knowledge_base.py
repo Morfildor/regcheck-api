@@ -13,8 +13,9 @@ class KnowledgeBaseError(RuntimeError):
 
 
 BASE_DIR = Path(__file__).resolve().parent
-KB_META_VERSION = "5.1.0"
+KB_META_VERSION = "6.0.0"
 ALLOWED_HARMONIZATION_STATUSES = {"harmonized", "state_of_the_art", "review", "unknown"}
+ALLOWED_FACT_BASIS = {"confirmed", "mixed", "inferred"}
 ALLOWED_TEST_FOCUS = {
     "safety",
     "mechanical",
@@ -151,7 +152,7 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
             if value is not None and (not isinstance(value, str) or not value.strip()):
                 raise KnowledgeBaseError(f"Product '{pid}' field '{field}' must be a non-empty string when provided.")
 
-        for key in ("implied_traits", "functional_classes", "likely_standards"):
+        for key in ("implied_traits", "functional_classes", "likely_standards", "family_keywords"):
             value = row.get(key, [])
             if not isinstance(value, list):
                 raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
@@ -164,6 +165,14 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
                     if not isinstance(item, str):
                         raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only strings.")
 
+        for key in ("core_traits", "default_traits"):
+            value = row.get(key, [])
+            if not isinstance(value, list):
+                raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
+            for trait in value:
+                if trait not in trait_ids:
+                    raise KnowledgeBaseError(f"Product '{pid}' field '{key}' references unknown trait '{trait}'.")
+
         for key in ("required_clues", "preferred_clues", "exclude_clues", "confusable_with"):
             value = row.get(key, [])
             if not isinstance(value, list):
@@ -171,6 +180,11 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
             for item in value:
                 if not isinstance(item, str) or not item.strip():
                     raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only non-empty strings.")
+
+        if row.get("confusable_with") and not (row.get("product_family") and row.get("product_subfamily")):
+            raise KnowledgeBaseError(
+                f"Product '{pid}' with confusable_with entries must define both product_family and product_subfamily."
+            )
 
         for key in ("family_traits", "subtype_traits"):
             value = row.get(key, [])
@@ -257,6 +271,8 @@ def _validate_standard_metadata(code: str, row: dict) -> None:
         "dated_version",
         "supersedes",
         "harmonization_status",
+        "selection_group",
+        "required_fact_basis",
     )
 
     for field in bool_fields:
@@ -277,6 +293,13 @@ def _validate_standard_metadata(code: str, row: dict) -> None:
     harmonization_status = row.get("harmonization_status")
     if harmonization_status and harmonization_status not in ALLOWED_HARMONIZATION_STATUSES:
         raise KnowledgeBaseError(f"Standard '{code}' has invalid harmonization_status '{harmonization_status}'.")
+
+    required_fact_basis = row.get("required_fact_basis")
+    if required_fact_basis and required_fact_basis not in ALLOWED_FACT_BASIS:
+        raise KnowledgeBaseError(f"Standard '{code}' has invalid required_fact_basis '{required_fact_basis}'.")
+
+    if "selection_priority" in row and not isinstance(row["selection_priority"], int):
+        raise KnowledgeBaseError(f"Standard '{code}' field 'selection_priority' must be an integer.")
 
     test_focus = row.get("test_focus", [])
     invalid_test_focus = [item for item in test_focus if item not in ALLOWED_TEST_FOCUS]
@@ -388,6 +411,9 @@ def _enrich_standards(rows: list[dict]) -> list[dict]:
         enriched.setdefault("test_focus", [])
         enriched.setdefault("evidence_hint", [])
         enriched.setdefault("keywords", [])
+        enriched.setdefault("selection_group", None)
+        enriched.setdefault("selection_priority", 0)
+        enriched["required_fact_basis"] = enriched.get("required_fact_basis") or "inferred"
         out.append(enriched)
     return out
 
@@ -404,6 +430,21 @@ def _enrich_products(rows: list[dict]) -> list[dict]:
         enriched.setdefault("confusable_with", [])
         enriched.setdefault("family_traits", [])
         enriched.setdefault("subtype_traits", list(enriched.get("implied_traits", [])))
+        enriched.setdefault("family_keywords", [])
+        core_traits = list(enriched.get("core_traits") or [])
+        default_traits = list(enriched.get("default_traits") or [])
+        if not core_traits and enriched.get("family_traits"):
+            core_traits.extend(list(enriched.get("family_traits") or []))
+        if not core_traits and enriched.get("subtype_traits"):
+            core_traits.extend(list(enriched.get("subtype_traits") or []))
+        if not core_traits:
+            core_traits.extend(list(enriched.get("implied_traits") or []))
+        if not default_traits:
+            default_traits.extend(list(enriched.get("implied_traits") or []))
+        enriched["core_traits"] = list(dict.fromkeys(core_traits))
+        enriched["default_traits"] = [
+            trait for trait in dict.fromkeys(default_traits) if trait not in enriched["core_traits"]
+        ]
         out.append(enriched)
     return out
 

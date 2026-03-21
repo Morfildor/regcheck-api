@@ -12,6 +12,8 @@ ConfidenceLevel = Literal["low", "medium", "high"]
 ContradictionSeverity = Literal["none", "low", "medium", "high"]
 FactBasis = Literal["confirmed", "mixed", "inferred"]
 ProductMatchStage = Literal["family", "subtype", "ambiguous"]
+TraitEvidenceState = Literal["text_explicit", "text_inferred", "product_core", "product_default", "engine_derived"]
+StandardAuditOutcome = Literal["selected", "review", "rejected"]
 
 
 class ProductInput(BaseModel):
@@ -43,6 +45,14 @@ class ProductCandidate(BaseModel):
     positive_clues: list[str] = Field(default_factory=list)
     negative_clues: list[str] = Field(default_factory=list)
     likely_standards: list[str] = Field(default_factory=list)
+
+
+class TraitEvidenceItem(BaseModel):
+    trait: str
+    state: TraitEvidenceState
+    fact_basis: FactBasis = "confirmed"
+    confirmed: bool = False
+    evidence: list[str] = Field(default_factory=list)
 
 
 class LegislationItem(BaseModel):
@@ -100,6 +110,41 @@ class StandardItem(BaseModel):
     test_focus: list[str] = Field(default_factory=list)
     evidence_hint: list[str] = Field(default_factory=list)
     keywords: list[str] = Field(default_factory=list)
+    selection_group: str | None = None
+    selection_priority: int = 0
+    required_fact_basis: FactBasis = "inferred"
+
+
+class StandardAuditItem(BaseModel):
+    code: str
+    title: str
+    outcome: StandardAuditOutcome
+    score: int = 0
+    confidence: ConfidenceLevel = "medium"
+    fact_basis: FactBasis = "confirmed"
+    selection_group: str | None = None
+    selection_priority: int = 0
+    keyword_hits: list[str] = Field(default_factory=list)
+    reason: str | None = None
+
+
+class ProductMatchAudit(BaseModel):
+    engine_version: str
+    normalized_text: str
+    retrieval_basis: list[str] = Field(default_factory=list)
+    alias_hits: list[str] = Field(default_factory=list)
+    family_keyword_hits: list[str] = Field(default_factory=list)
+    clue_hits: list[str] = Field(default_factory=list)
+    negations: list[str] = Field(default_factory=list)
+    ambiguity_reason: str | None = None
+
+
+class StandardMatchAudit(BaseModel):
+    engine_version: str
+    context_tags: list[str] = Field(default_factory=list)
+    selected: list[StandardAuditItem] = Field(default_factory=list)
+    review: list[StandardAuditItem] = Field(default_factory=list)
+    rejected: list[StandardAuditItem] = Field(default_factory=list)
 
 
 class MissingInformationItem(BaseModel):
@@ -180,6 +225,10 @@ class AnalysisResult(BaseModel):
     stats: AnalysisStats = Field(default_factory=AnalysisStats)
     knowledge_base_meta: KnowledgeBaseMeta | None = None
     analysis_audit: dict[str, Any] = Field(default_factory=dict)
+    engine_version: str = "2.0"
+    trait_evidence: list[TraitEvidenceItem] = Field(default_factory=list)
+    product_match_audit: ProductMatchAudit | None = None
+    standard_match_audit: StandardMatchAudit | None = None
 
     standard_sections: list[dict[str, Any]] = Field(default_factory=list)
     legislation_sections: list[dict[str, Any]] = Field(default_factory=list)

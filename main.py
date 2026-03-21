@@ -21,7 +21,7 @@ from knowledge_base import (
 from models import AnalysisResult, ProductInput
 from rules import analyze
 
-APP_VERSION = "5.3.0"
+APP_VERSION = "6.0.0"
 ADMIN_RELOAD_TOKEN_ENV = "REGCHECK_ADMIN_RELOAD_TOKEN"
 EXPOSE_HEALTH_DETAILS = os.getenv("REGCHECK_EXPOSE_HEALTH_DETAILS", "false").strip().lower() in {"1", "true", "yes", "on"}
 
@@ -124,8 +124,19 @@ def metadata_options() -> dict:
             {
                 "id": row["id"],
                 "label": row["label"],
+                "product_family": row.get("product_family"),
+                "product_subfamily": row.get("product_subfamily"),
                 "aliases": row.get("aliases", []),
+                "family_keywords": row.get("family_keywords", []),
+                "required_clues": row.get("required_clues", []),
+                "preferred_clues": row.get("preferred_clues", []),
+                "exclude_clues": row.get("exclude_clues", []),
+                "confusable_with": row.get("confusable_with", []),
                 "functional_classes": row.get("functional_classes", []),
+                "family_traits": row.get("family_traits", []),
+                "subtype_traits": row.get("subtype_traits", []),
+                "core_traits": row.get("core_traits", []),
+                "default_traits": row.get("default_traits", []),
                 "implied_traits": row.get("implied_traits", []),
                 "likely_standards": row.get("likely_standards", []),
             }
@@ -173,6 +184,9 @@ def metadata_standards() -> dict:
                 "test_focus": row.get("test_focus", []),
                 "evidence_hint": row.get("evidence_hint", []),
                 "keywords": row.get("keywords", []),
+                "selection_group": row.get("selection_group"),
+                "selection_priority": row.get("selection_priority", 0),
+                "required_fact_basis": row.get("required_fact_basis", "inferred"),
                 "applies_if_products": row.get("applies_if_products", []),
                 "applies_if_all": row.get("applies_if_all", []),
                 "applies_if_any": row.get("applies_if_any", []),

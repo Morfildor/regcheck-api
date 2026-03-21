@@ -53,6 +53,8 @@ RADIO_TRAITS = {
     "satellite_connectivity",
 }
 CONNECTED_TRAITS = {"app_control", "cloud", "internet", "ota", "account", "authentication"}
+SERVICE_DEPENDENT_TRAITS = CONNECTED_TRAITS | {"personal_data_likely", "monetary_transaction"}
+ENGINE_VERSION = "2.0"
 ELECTRONIC_SIGNAL_TRAITS = RADIO_TRAITS | CONNECTED_TRAITS | {
     "av_ict",
     "camera",
@@ -1034,7 +1036,503 @@ def _contradiction_severity(contradictions: list[str]) -> str:
     return "medium"
 
 
-def extract_traits(description: str, category: str = "") -> dict:
+def _empty_trait_state_map() -> dict[str, dict[str, list[str]]]:
+    return {
+        "text_explicit": {},
+        "text_inferred": {},
+        "product_core": {},
+        "product_default": {},
+        "engine_derived": {},
+    }
+
+
+def _record_trait_state(
+    state_map: dict[str, dict[str, list[str]]],
+    state: str,
+    traits: set[str] | list[str],
+    evidence: str,
+) -> None:
+    for trait in traits:
+        state_map.setdefault(state, {}).setdefault(trait, [])
+        if evidence not in state_map[state][trait]:
+            state_map[state][trait].append(evidence)
+
+
+def _trait_evidence_items(
+    state_map: dict[str, dict[str, list[str]]],
+    confirmed_traits: set[str],
+) -> list[dict[str, Any]]:
+    items: list[dict[str, Any]] = []
+    fact_basis_by_state = {
+        "text_explicit": "confirmed",
+        "product_core": "confirmed",
+        "text_inferred": "inferred",
+        "product_default": "inferred",
+        "engine_derived": "inferred",
+    }
+    for state in ("text_explicit", "text_inferred", "product_core", "product_default", "engine_derived"):
+        for trait in sorted(state_map.get(state, {})):
+            items.append(
+                {
+                    "trait": trait,
+                    "state": state,
+                    "fact_basis": fact_basis_by_state[state],
+                    "confirmed": trait in confirmed_traits,
+                    "evidence": list(state_map[state][trait]),
+                }
+            )
+    return items
+
+
+def _collect_text_trait_signals(text: str) -> tuple[set[str], set[str], dict[str, dict[str, list[str]]], list[str]]:
+    explicit_direct: set[str] = set()
+    negations = sorted(trait for trait in TRAIT_PATTERNS if _trait_is_negated(text, trait))
+    state_map = _empty_trait_state_map()
+
+    for trait, regexes in TRAIT_PATTERNS.items():
+        if trait in negations:
+            continue
+        if _has_any_regex(text, regexes):
+            explicit_direct.add(trait)
+            _record_trait_state(state_map, "text_explicit", {trait}, f"text:{trait}")
+
+    explicit_traits = _expand_related_traits(explicit_direct)
+    derived_explicit = explicit_traits - explicit_direct
+    if derived_explicit:
+        _record_trait_state(state_map, "text_explicit", derived_explicit, "text:derived")
+
+    inferred_traits = _expand_related_traits(_infer_baseline_traits(text, explicit_traits))
+    if inferred_traits:
+        _record_trait_state(state_map, "text_inferred", inferred_traits, "text:baseline_inference")
+
+    return explicit_traits, inferred_traits, state_map, negations
+
+
+def _product_family_keywords(product: dict[str, Any]) -> list[str]:
+    keywords = _string_list(product.get("family_keywords"))
+    family_phrase = _product_family(product).replace("_", " ")
+    if family_phrase and family_phrase != product["id"] and family_phrase not in keywords:
+        keywords.append(family_phrase)
+    return keywords
+
+
+def _product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]:
+    implied_traits = set(_string_list(product.get("implied_traits")))
+    family_traits = set(_string_list(product.get("family_traits")))
+    subtype_traits = set(_string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")))
+    raw_core = set(_string_list(product.get("core_traits")))
+    raw_default = set(_string_list(product.get("default_traits")))
+
+    if not raw_core:
+        raw_core = set(family_traits | subtype_traits or implied_traits)
+    if not raw_default:
+        raw_default = implied_traits - raw_core
+
+    raw_default |= raw_core & SERVICE_DEPENDENT_TRAITS
+    raw_core -= SERVICE_DEPENDENT_TRAITS
+    raw_default |= implied_traits - raw_core
+
+    core_traits = _expand_related_traits(raw_core)
+    default_traits = _expand_related_traits(raw_default) - core_traits
+    return core_traits, default_traits
+
+
+def _candidate_confidence_v2(candidate: dict[str, Any], next_candidate: dict[str, Any] | None = None) -> str:
+    score = int(candidate.get("score", 0))
+    gap = score - int(next_candidate.get("score", 0)) if next_candidate else score
+    direct_signals = int(candidate.get("direct_signal_count", 0))
+    if score >= 150 and gap >= 16 and direct_signals >= 2:
+        return "high"
+    if score >= 110 and gap >= 8 and direct_signals >= 1:
+        return "medium"
+    if score >= 85 and direct_signals >= 2:
+        return "medium"
+    return "low"
+
+
+def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dict[str, Any]) -> dict[str, Any] | None:
+    best_alias, alias_score, alias_reasons = _best_alias_match(text, product)
+    family_keyword_hits = _matching_clues(text, _product_family_keywords(product))
+    clue_score, clue_reasons, positive_clues, negative_clues, decisive = _clue_score(text, product)
+    core_traits, default_traits = _product_trait_buckets(product)
+    family_overlap = _trait_overlap_score(signal_traits, set(_string_list(product.get("family_traits"))) or core_traits, weight=4)
+    core_overlap = _trait_overlap_score(signal_traits, core_traits, weight=6)
+    default_overlap = _trait_overlap_score(signal_traits, default_traits, weight=3)
+    bonus, bonus_reasons = _context_bonus(text, product, signal_traits)
+
+    score = alias_score + clue_score + family_overlap + core_overlap + default_overlap + bonus
+    score += len(family_keyword_hits) * 24
+
+    direct_signal_count = int(bool(best_alias)) + len(positive_clues) + len(family_keyword_hits)
+    if not direct_signal_count and score < 28:
+        return None
+
+    reasons = list(alias_reasons)
+    reasons.extend(f"family keyword '{hit}'" for hit in family_keyword_hits)
+    reasons.extend(clue_reasons)
+    if family_overlap:
+        reasons.append(f"family trait overlap +{family_overlap}")
+    if core_overlap:
+        reasons.append(f"product core overlap +{core_overlap}")
+    if default_overlap:
+        reasons.append(f"product default overlap +{default_overlap}")
+    reasons.extend(bonus_reasons)
+
+    return {
+        "id": product["id"],
+        "label": product.get("label", product["id"]),
+        "family": _product_family(product),
+        "subtype": _product_subfamily(product),
+        "product": product,
+        "matched_alias": best_alias,
+        "alias_hits": [best_alias] if best_alias else [],
+        "family_keyword_hits": family_keyword_hits,
+        "positive_clues": positive_clues,
+        "negative_clues": negative_clues,
+        "decisive": decisive or bool(best_alias) or bool(family_keyword_hits),
+        "score": score,
+        "direct_signal_count": direct_signal_count,
+        "reasons": reasons,
+        "core_traits": sorted(core_traits),
+        "default_traits": sorted(default_traits),
+        "family_traits": _string_list(product.get("family_traits")),
+        "subtype_traits": _string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")),
+        "functional_classes": _string_list(product.get("functional_classes")),
+        "likely_standards": _string_list(product.get("likely_standards")),
+        "confusable_with": _string_list(product.get("confusable_with")),
+    }
+
+
+def _common_sets(rows: list[dict[str, Any]], field: str) -> set[str]:
+    if not rows:
+        return set()
+    common = set(_string_list(rows[0].get(field)))
+    for row in rows[1:]:
+        common &= set(_string_list(row.get(field)))
+    return common
+
+
+def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> dict[str, Any]:
+    candidates = [
+        candidate
+        for product in load_products()
+        if (candidate := _build_product_candidate_v2(text, signal_traits, product)) is not None
+    ]
+    candidates.sort(key=lambda row: (-int(row["score"]), row["id"]))
+
+    if not candidates:
+        return {
+            "product_family": None,
+            "product_family_confidence": "low",
+            "product_subtype": None,
+            "product_subtype_confidence": "low",
+            "product_match_stage": "ambiguous",
+            "product_type": None,
+            "product_match_confidence": "low",
+            "product_candidates": [],
+            "matched_products": [],
+            "routing_matched_products": [],
+            "confirmed_products": [],
+            "product_core_traits": set(),
+            "product_default_traits": set(),
+            "preferred_standard_codes": [],
+            "functional_classes": set(),
+            "confirmed_functional_classes": set(),
+            "diagnostics": ["product_winner=none"],
+            "contradictions": [],
+            "audit": {
+                "engine_version": ENGINE_VERSION,
+                "normalized_text": text,
+                "retrieval_basis": [],
+                "alias_hits": [],
+                "family_keyword_hits": [],
+                "clue_hits": [],
+                "negations": [],
+                "ambiguity_reason": None,
+            },
+        }
+
+    families: dict[str, dict[str, Any]] = {}
+    for row in candidates:
+        family = row["family"]
+        existing = families.get(family)
+        if existing is None or int(row["score"]) > int(existing["score"]):
+            families[family] = row
+
+    family_candidates = sorted(families.values(), key=lambda row: (-int(row["score"]), row["family"]))
+    top_family = family_candidates[0]
+    next_family = family_candidates[1] if len(family_candidates) > 1 else None
+    family_confidence = _candidate_confidence_v2(top_family, next_family)
+
+    family_rows = [row for row in candidates if row["family"] == top_family["family"]]
+    top_row = family_rows[0]
+    next_subtype = family_rows[1] if len(family_rows) > 1 else None
+    subtype_confidence = _candidate_confidence_v2(top_row, next_subtype)
+    contradictions: list[str] = []
+    ambiguity_reason: str | None = None
+
+    family_gap = int(top_family["score"]) - int(next_family["score"]) if next_family else int(top_family["score"])
+    subtype_gap = int(top_row["score"]) - int(next_subtype["score"]) if next_subtype else int(top_row["score"])
+    close_family_competition = bool(next_family and family_gap < 8 and next_family["family"] != top_family["family"])
+    close_subtype_competition = bool(next_subtype and subtype_gap < 10)
+
+    if close_family_competition:
+        assert next_family is not None
+        family_stage = "ambiguous"
+        ambiguity_reason = (
+            f"Product identification remains ambiguous between {top_family['id'].replace('_', ' ')} "
+            f"and {next_family['id'].replace('_', ' ')}."
+        )
+        contradictions.append(ambiguity_reason)
+    elif next_subtype and top_row.get("negative_clues") and next_subtype.get("positive_clues"):
+        family_stage = "family"
+        ambiguity_reason = f"Confusable subtype clues remain unresolved within family {top_family['family'].replace('_', ' ')}."
+    elif close_subtype_competition:
+        family_stage = "family"
+        ambiguity_reason = f"Subtype evidence is too close within family {top_family['family'].replace('_', ' ')}."
+    elif subtype_confidence == "high" or (subtype_confidence == "medium" and top_row["decisive"]):
+        family_stage = "subtype"
+    elif family_confidence in {"high", "medium"}:
+        family_stage = "family"
+    else:
+        family_stage = "ambiguous"
+        ambiguity_reason = f"Product evidence for {top_family['label']} is too weak to confirm a subtype."
+
+    subtype_band = [row for row in family_rows if int(top_row["score"]) - int(row["score"]) <= 10][:3]
+    if family_stage == "family" and next_subtype and next_subtype["id"] not in {row["id"] for row in subtype_band}:
+        subtype_band = [top_row, next_subtype]
+
+    common_classes = _common_strings(subtype_band, "functional_classes")
+    common_standards = _common_strings(subtype_band, "likely_standards")
+    common_core_traits = _common_sets(subtype_band, "core_traits")
+    common_default_traits = _common_sets(subtype_band, "default_traits")
+
+    product_core_traits = set(_string_list(top_row.get("core_traits")))
+    product_default_traits = set(_string_list(top_row.get("default_traits")))
+    functional_classes = set(_string_list(top_row.get("functional_classes")))
+    confirmed_functional_classes: set[str] = set()
+    preferred_standard_codes: list[str] = []
+    confirmed_products: list[str] = []
+    matched_products = [row["id"] for row in subtype_band]
+    routing_matched_products: list[str] = []
+    product_subtype = top_row["id"] if family_stage == "subtype" else None
+    product_type = top_row["id"]
+    product_match_confidence = subtype_confidence
+
+    if family_stage == "ambiguous" and next_family is not None:
+        matched_products = [top_family["id"], next_family["id"]]
+        functional_classes = set()
+        product_core_traits = set()
+        product_default_traits = set()
+        product_match_confidence = "low"
+    elif family_stage == "family":
+        functional_classes = set(common_classes)
+        product_core_traits = set(common_core_traits)
+        product_default_traits = set(common_default_traits)
+        preferred_standard_codes = common_standards
+        product_match_confidence = "medium" if family_confidence == "high" else family_confidence
+        if family_confidence == "high":
+            confirmed_functional_classes.update(common_classes)
+    else:
+        routing_matched_products = [top_row["id"]]
+        preferred_standard_codes = _string_list(top_row.get("likely_standards"))
+        if subtype_confidence == "high":
+            confirmed_products = [top_row["id"]]
+            confirmed_functional_classes.update(_string_list(top_row.get("functional_classes")))
+        elif common_classes:
+            confirmed_functional_classes.update(common_classes)
+
+    public_candidates = family_rows[:5]
+    if close_family_competition and next_family is not None and next_family not in public_candidates:
+        public_candidates = public_candidates + [next_family]
+
+    product_candidates: list[dict[str, Any]] = []
+    for idx, candidate in enumerate(public_candidates[:5]):
+        confidence = _candidate_confidence_v2(
+            candidate,
+            public_candidates[idx + 1] if idx + 1 < len(public_candidates) else None,
+        )
+        product_candidates.append(
+            {
+                "id": candidate["id"],
+                "label": candidate["label"],
+                "family": candidate.get("family"),
+                "subtype": candidate.get("subtype"),
+                "matched_alias": candidate.get("matched_alias"),
+                "family_score": int(families[candidate["family"]]["score"]) if candidate["family"] in families else int(candidate["score"]),
+                "subtype_score": int(candidate.get("score", 0)),
+                "score": int(candidate.get("score", 0)),
+                "confidence": confidence,
+                "reasons": candidate.get("reasons", []),
+                "positive_clues": candidate.get("positive_clues", []),
+                "negative_clues": candidate.get("negative_clues", []),
+                "likely_standards": candidate.get("likely_standards", []),
+            }
+        )
+
+    audit_rows = subtype_band if family_stage == "family" else [top_row]
+    alias_hits = sorted({hit for row in audit_rows for hit in row.get("alias_hits", []) if hit})
+    family_keyword_hits = sorted({hit for row in audit_rows for hit in row.get("family_keyword_hits", []) if hit})
+    clue_hits = sorted({hit for row in audit_rows for hit in row.get("positive_clues", []) if hit})
+
+    diagnostics = [
+        f"product_family={top_family['family']}",
+        f"product_family_confidence={family_confidence}",
+        f"product_subtype_candidate={top_row['id']}",
+        f"product_subtype_confidence={subtype_confidence}",
+        f"product_match_stage={family_stage}",
+    ]
+
+    return {
+        "product_family": top_family["family"],
+        "product_family_confidence": family_confidence,
+        "product_subtype": product_subtype,
+        "product_subtype_confidence": subtype_confidence,
+        "product_match_stage": family_stage,
+        "product_type": product_type,
+        "product_match_confidence": product_match_confidence,
+        "product_candidates": product_candidates,
+        "matched_products": matched_products,
+        "routing_matched_products": routing_matched_products,
+        "confirmed_products": confirmed_products,
+        "product_core_traits": product_core_traits,
+        "product_default_traits": product_default_traits,
+        "preferred_standard_codes": preferred_standard_codes,
+        "functional_classes": functional_classes,
+        "confirmed_functional_classes": confirmed_functional_classes,
+        "diagnostics": diagnostics,
+        "contradictions": contradictions,
+        "audit": {
+            "engine_version": ENGINE_VERSION,
+            "normalized_text": text,
+            "retrieval_basis": top_row.get("reasons", []),
+            "alias_hits": alias_hits,
+            "family_keyword_hits": family_keyword_hits,
+            "clue_hits": clue_hits,
+            "negations": [],
+            "ambiguity_reason": ambiguity_reason,
+        },
+    }
+
+
+def extract_traits_v2(description: str, category: str = "") -> dict:
+    text = normalize(f"{category} {description}")
+    explicit_traits, inferred_traits, state_map, negations = _collect_text_trait_signals(text)
+    functional_classes: set[str] = set()
+    confirmed_functional_classes: set[str] = set()
+    contradictions: list[str] = []
+    diagnostics: list[str] = [f"normalized_text={text}"]
+
+    match = _hierarchical_product_match_v2(text, explicit_traits | inferred_traits)
+    product_candidates = match["product_candidates"]
+    matched_products = match["matched_products"]
+    routing_matched_products = match["routing_matched_products"]
+    confirmed_products = match["confirmed_products"]
+    preferred_standard_codes = match["preferred_standard_codes"]
+    product_family_confidence = match["product_family_confidence"]
+    product_subtype_confidence = match["product_subtype_confidence"]
+    product_match_stage = match["product_match_stage"]
+    product_core_traits = _expand_related_traits(set(match.get("product_core_traits") or set()))
+    product_default_traits = _expand_related_traits(set(match.get("product_default_traits") or set()))
+
+    functional_classes.update(match["functional_classes"])
+    confirmed_functional_classes.update(match["confirmed_functional_classes"])
+    if product_core_traits:
+        product_evidence = (
+            f"product:{match['product_subtype']}" if product_match_stage == "subtype" and match.get("product_subtype") else f"family:{match['product_family']}"
+        )
+        _record_trait_state(state_map, "product_core", product_core_traits, product_evidence)
+    if product_default_traits:
+        product_evidence = (
+            f"product_default:{match['product_subtype']}"
+            if product_match_stage == "subtype" and match.get("product_subtype")
+            else f"family_default:{match['product_family']}"
+        )
+        _record_trait_state(state_map, "product_default", product_default_traits, product_evidence)
+
+    confirmed_traits = set(explicit_traits)
+    top_candidate = product_candidates[0] if product_candidates else {}
+    decisive_medium = (
+        product_match_stage == "subtype"
+        and product_subtype_confidence == "medium"
+        and bool(top_candidate.get("matched_alias") or top_candidate.get("positive_clues"))
+    )
+    if product_family_confidence == "high":
+        confirmed_traits.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
+    if product_match_stage == "subtype" and (product_subtype_confidence == "high" or decisive_medium):
+        confirmed_traits.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
+
+    corroborated_default = {trait for trait in product_default_traits if trait in explicit_traits}
+    confirmed_traits.update(corroborated_default - SERVICE_DEPENDENT_TRAITS)
+
+    diagnostics.extend(match["diagnostics"])
+    if product_candidates:
+        diagnostics.append(f"product_winner={product_candidates[0]['id']}")
+        diagnostics.append(f"product_alias={product_candidates[0].get('matched_alias') or ''}")
+    else:
+        diagnostics.append("product_winner=none")
+
+    contradictions.extend(match["contradictions"])
+
+    if "battery_powered" in explicit_traits and "mains_powered" in explicit_traits:
+        contradictions.append("Both battery-powered and mains-powered signals were detected.")
+    if "cloud" in explicit_traits and "local_only" in explicit_traits:
+        contradictions.append("Both cloud-connected and local-only signals were detected.")
+    if "professional" in explicit_traits and "household" in explicit_traits:
+        contradictions.append("Both professional/commercial and household-use signals were detected.")
+    if "wifi" in explicit_traits and _trait_is_negated(text, "internet") and {"cloud", "ota", "account"} & explicit_traits:
+        contradictions.append("Wi-Fi is present while the text also says no internet, but cloud or OTA features were also detected.")
+
+    known_traits = _known_trait_ids()
+    explicit_traits = {trait for trait in _expand_related_traits(explicit_traits) if trait in known_traits}
+    inferred_traits = {trait for trait in _expand_related_traits(inferred_traits | product_core_traits | product_default_traits) if trait in known_traits}
+    confirmed_traits = {trait for trait in _expand_related_traits(confirmed_traits) if trait in known_traits}
+
+    diagnostics.append("matched_products=" + ",".join(matched_products))
+    diagnostics.append("routing_matched_products=" + ",".join(routing_matched_products))
+    diagnostics.append("confirmed_products=" + ",".join(confirmed_products))
+    diagnostics.append("preferred_standard_codes=" + ",".join(preferred_standard_codes))
+    diagnostics.append("explicit_traits=" + ",".join(sorted(explicit_traits)))
+    diagnostics.append("confirmed_traits=" + ",".join(sorted(confirmed_traits)))
+    diagnostics.append("inferred_traits=" + ",".join(sorted(inferred_traits)))
+    diagnostics.append("negations=" + ",".join(negations))
+    diagnostics.append("contradiction_severity=" + _contradiction_severity(contradictions))
+
+    match["audit"]["negations"] = negations
+    return {
+        "product_type": match.get("product_type"),
+        "product_family": match.get("product_family"),
+        "product_family_confidence": product_family_confidence,
+        "product_subtype": match.get("product_subtype"),
+        "product_subtype_confidence": product_subtype_confidence,
+        "product_match_stage": product_match_stage,
+        "matched_products": matched_products,
+        "routing_matched_products": routing_matched_products,
+        "confirmed_products": confirmed_products,
+        "preferred_standard_codes": preferred_standard_codes,
+        "product_match_confidence": match.get("product_match_confidence"),
+        "product_candidates": product_candidates,
+        "functional_classes": sorted(functional_classes),
+        "confirmed_functional_classes": sorted(confirmed_functional_classes),
+        "explicit_traits": sorted(explicit_traits),
+        "confirmed_traits": sorted(confirmed_traits),
+        "inferred_traits": sorted((explicit_traits | inferred_traits) - confirmed_traits),
+        "all_traits": sorted(explicit_traits | inferred_traits),
+        "text_explicit_traits": sorted(explicit_traits),
+        "text_inferred_traits": sorted({trait for trait in state_map["text_inferred"] if trait in known_traits}),
+        "product_core_traits": sorted(product_core_traits & known_traits),
+        "product_default_traits": sorted(product_default_traits & known_traits),
+        "contradictions": contradictions,
+        "contradiction_severity": _contradiction_severity(contradictions),
+        "diagnostics": diagnostics,
+        "trait_state_map": state_map,
+        "trait_evidence": _trait_evidence_items(state_map, confirmed_traits),
+        "product_match_audit": match["audit"],
+        "engine_version": ENGINE_VERSION,
+    }
+
+
+def extract_traits_v1(description: str, category: str = "") -> dict:
     text = normalize(f"{category} {description}")
     explicit_traits: set[str] = set()
     inferred_traits: set[str] = set()
@@ -1130,3 +1628,7 @@ def extract_traits(description: str, category: str = "") -> dict:
         "contradiction_severity": _contradiction_severity(contradictions),
         "diagnostics": diagnostics,
     }
+
+
+def extract_traits(description: str, category: str = "") -> dict:
+    return extract_traits_v2(description=description, category=category)

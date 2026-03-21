@@ -3,6 +3,9 @@ products:
   label: Air cleaner / purifier
   product_family: air_treatment_cleaner
   product_subfamily: air_cleaner
+  family_keywords:
+  - air treatment
+  - air cleaning
   aliases:
   - air cleaner unit
   required_clues: []
@@ -43,6 +46,9 @@ products:
   label: Air purifier
   product_family: air_treatment_cleaner
   product_subfamily: air_purifier
+  family_keywords:
+  - air treatment
+  - air cleaning
   aliases:
   - air purifier
   - air cleaner
@@ -656,6 +662,9 @@ products:
   label: Fan
   product_family: indoor_air_mover
   product_subfamily: fan
+  family_keywords:
+  - indoor air
+  - air mover
   aliases:
   - fan
   - desk fan
@@ -704,6 +713,9 @@ products:
   label: Fan heater
   product_family: indoor_air_mover
   product_subfamily: fan_heater
+  family_keywords:
+  - indoor air
+  - room heating
   aliases:
   - fan heater
   - heater fan
@@ -2104,6 +2116,10 @@ products:
   label: Smart speaker
   product_family: smart_assistant_device
   product_subfamily: smart_speaker
+  family_keywords:
+  - smart assistant
+  - assistant device
+  - voice assistant
   aliases:
   - smart speaker
   - voice assistant speaker
@@ -2523,6 +2539,10 @@ products:
   label: Smart display
   product_family: smart_assistant_device
   product_subfamily: smart_display
+  family_keywords:
+  - smart assistant
+  - assistant device
+  - voice assistant
   aliases:
   - smart display
   - display hub
@@ -2577,6 +2597,10 @@ products:
   label: Router
   product_family: wifi_networking
   product_subfamily: router
+  family_keywords:
+  - wifi networking
+  - home networking
+  - network gateway
   aliases:
   - router
   - wifi router
@@ -2686,6 +2710,10 @@ products:
   label: Wireless access point
   product_family: wifi_networking
   product_subfamily: wireless_access_point
+  family_keywords:
+  - wifi networking
+  - wireless networking
+  - network access
   aliases:
   - access point
   - wireless access point
@@ -2991,6 +3019,10 @@ products:
   label: Home projector / smart projector
   product_family: projector_device
   product_subfamily: home_projector
+  family_keywords:
+  - home cinema
+  - smart projector
+  - projector device
   aliases:
   - projector
   - home projector
@@ -3343,6 +3375,10 @@ products:
   label: Mesh Wi-Fi system (node)
   product_family: wifi_networking
   product_subfamily: mesh_wifi_system
+  family_keywords:
+  - wifi networking
+  - whole home wifi
+  - mesh network
   aliases:
   - mesh wifi
   - mesh router
@@ -3662,6 +3698,10 @@ products:
   - EN 62368-1
 - id: ev_charger_home
   label: Home EV charger (EVSE)
+  family_keywords:
+  - ev charging
+  - vehicle charging
+  - electric vehicle charging
   aliases:
   - ev charger
   - home ev charger
@@ -3773,6 +3813,10 @@ products:
   - EN 62368-1
 - id: ip_camera
   label: IP camera / smart security camera
+  family_keywords:
+  - security camera
+  - smart security
+  - connected camera
   aliases:
   - ip camera
   - smart camera

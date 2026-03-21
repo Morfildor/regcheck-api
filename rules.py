@@ -3,22 +3,29 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 from datetime import date
+import os
 from typing import Any, Literal
 
-from classifier import extract_traits, normalize
+from classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, extract_traits, extract_traits_v1, normalize
 from knowledge_base import load_legislations, load_meta
 from models import (
     AnalysisResult,
     AnalysisStats,
     ConfidenceLevel,
+    FactBasis,
     Finding,
     KnowledgeBaseMeta,
     LegislationItem,
     MissingInformationItem,
+    ProductMatchAudit,
     RiskLevel,
+    StandardAuditItem,
+    StandardMatchAudit,
     StandardItem,
+    TraitEvidenceItem,
+    TraitEvidenceState,
 )
-from standards_engine import find_applicable_items
+from standards_engine import find_applicable_items, find_applicable_items_v1
 
 LegislationBucket = Literal["ce", "non_ce", "framework", "future", "informational"]
 MissingImportance = Literal["high", "medium", "low"]
@@ -50,6 +57,9 @@ DIRECTIVE_ORDER = [
     "GDPR",
     "OTHER",
 ]
+
+ENGINE_VERSION = CLASSIFIER_ENGINE_VERSION
+ENABLE_ENGINE_V2_SHADOW = os.getenv("REGCHECK_ENGINE_V2_SHADOW", "false").strip().lower() in {"1", "true", "yes", "on"}
 
 POWER_EXTERNAL_PATTERNS = [
     r"\bexternal power supply\b",
@@ -586,7 +596,7 @@ def _derive_directives(traits: set[str], forced_directives: list[str] | None = N
     return [d for i, d in enumerate(directives) if d not in directives[:i]]
 
 
-def _apply_post_selection_gates(
+def _apply_post_selection_gates_v1(
     selected: list[dict[str, Any]],
     traits: set[str],
     matched_products: set[str],
@@ -733,6 +743,173 @@ def _apply_post_selection_gates(
         "Battery safety review" in codes
         and "EN 62133-2" in codes
         and scope_route == "av_ict"
+        and not ({"wearable", "handheld", "body_worn_or_applied", "replaceable_battery"} & traits)
+    ):
+        kept = [item for item in kept if item.get("code") != "Battery safety review"]
+        diagnostics.append("gate=prune_Battery_safety_review:covered_by_EN62133-2")
+
+    return kept
+
+
+def _standard_context(
+    traits: set[str],
+    matched_products: set[str],
+    product_type: str | None,
+    confirmed_traits: set[str] | None,
+    description: str,
+) -> dict[str, Any]:
+    scope_route, scope_reasons = _scope_route(traits, matched_products, product_type, confirmed_traits)
+    text = normalize(description)
+    has_external_psu = "external_psu" in traits or bool(matched_products & {"battery_charger", "industrial_charger"})
+    has_laser_source = "laser" in traits or _has_any(text, LASER_SOURCE_PATTERNS)
+    has_photobiological_source = (
+        has_laser_source
+        or bool(matched_products & PHOTOBIO_PRODUCT_HINTS)
+        or (product_type in PHOTOBIO_PRODUCT_HINTS if product_type else False)
+        or _has_any(text, PHOTOBIOLOGICAL_SOURCE_PATTERNS)
+    )
+    prefer_specific_red_emf = bool(
+        "radio" in traits and ({"cellular", "wearable", "handheld", "body_worn_or_applied", "close_proximity_emf"} & traits)
+    )
+    prefer_62233 = (
+        scope_route != "av_ict"
+        and "electrical" in traits
+        and "consumer" in traits
+        and "household" in traits
+        and ({"heating", "motorized", "mains_powered", "mains_power_likely"} & traits)
+        and "wearable" not in traits
+        and "handheld" not in traits
+        and "body_worn_or_applied" not in traits
+    )
+    prefer_62311 = (
+        "electrical" in traits
+        and (
+            scope_route == "av_ict"
+            or "wearable" in traits
+            or "handheld" in traits
+            or "body_worn_or_applied" in traits
+            or ("radio" in traits and "consumer" not in traits)
+            or bool(matched_products & PERSONAL_CARE_PRODUCT_HINTS)
+        )
+    )
+
+    context_tags: set[str] = {f"scope:{scope_route}"}
+    if has_external_psu:
+        context_tags.add("power:external_psu")
+    if has_laser_source:
+        context_tags.add("optical:laser")
+    if has_photobiological_source:
+        context_tags.add("optical:photobio")
+    if prefer_specific_red_emf:
+        context_tags.add("exposure:close_proximity")
+    if prefer_62233:
+        context_tags.add("exposure:household_emf")
+
+    return {
+        "scope_route": scope_route,
+        "scope_reasons": scope_reasons,
+        "text": text,
+        "context_tags": context_tags,
+        "has_external_psu": has_external_psu,
+        "has_laser_source": has_laser_source,
+        "has_photobiological_source": has_photobiological_source,
+        "prefer_specific_red_emf": prefer_specific_red_emf,
+        "prefer_62233": prefer_62233,
+        "prefer_62311": prefer_62311,
+    }
+
+
+def _apply_post_selection_gates(
+    selected: list[dict[str, Any]],
+    traits: set[str],
+    matched_products: set[str],
+    diagnostics: list[str],
+    allowed_directives: set[str],
+    product_type: str | None = None,
+    confirmed_traits: set[str] | None = None,
+    description: str = "",
+) -> list[dict[str, Any]]:
+    kept: list[dict[str, Any]] = []
+    context = _standard_context(traits, matched_products, product_type, confirmed_traits, description)
+    diagnostics.append("scope_route=" + context["scope_route"])
+    if context["scope_reasons"]:
+        diagnostics.append("scope_route_reasons=" + ";".join(context["scope_reasons"]))
+    diagnostics.append("standard_context_tags=" + ",".join(sorted(context["context_tags"])))
+
+    for item in selected:
+        code = str(item.get("code") or "")
+        route = str(item.get("directive") or item.get("legislation_key") or "OTHER")
+
+        if code == "Charger / external PSU review":
+            if not context["has_external_psu"]:
+                diagnostics.append("gate=drop_external_psu_review:no_external_psu_signal")
+                continue
+            item["directive"] = "LVD"
+            item["legislation_key"] = "LVD"
+        elif code == "EN 50563":
+            if not context["has_external_psu"]:
+                diagnostics.append("gate=drop_EN50563:no_external_psu_signal")
+                continue
+            item["directive"] = "ECO"
+            item["legislation_key"] = "ECO"
+
+        if code == "EN 62368-1" and "radio" in traits and "RED" in allowed_directives and "LVD" not in allowed_directives:
+            item["directive"] = "RED"
+            item["legislation_key"] = "RED"
+
+        if code == "EN 62311":
+            if context["prefer_62233"] and not ("radio" in traits and ({"wearable", "handheld", "body_worn_or_applied"} & traits)):
+                diagnostics.append("gate=drop_EN62311:prefer_EN62233")
+                continue
+            item["directive"] = "RED" if "radio" in traits else "LVD"
+            item["legislation_key"] = item["directive"]
+
+        if code == "EN 60825-1" and not context["has_laser_source"]:
+            diagnostics.append("gate=drop_EN60825-1:no_laser_source")
+            continue
+
+        if code == "EN 62471" and not context["has_photobiological_source"]:
+            diagnostics.append("gate=drop_EN62471:no_photobiological_source")
+            continue
+
+        if code == "EN 62479":
+            if "radio" not in traits:
+                diagnostics.append("gate=drop_EN62479:no_radio_signal")
+                continue
+            if context["prefer_specific_red_emf"]:
+                diagnostics.append("gate=drop_EN62479:prefer_specific_red_emf_route")
+                continue
+
+        if code.startswith("EN 62209") and not (
+            "radio" in traits and ({"wearable", "handheld", "body_worn_or_applied", "cellular"} & traits)
+        ):
+            diagnostics.append(f"gate=drop_{code}:not_close_proximity_radio")
+            continue
+
+        if route == "EMC" and code == "Charger / external PSU review":
+            diagnostics.append("gate=drop_external_psu_from_emc")
+            continue
+
+        route = str(item.get("directive") or item.get("legislation_key") or "OTHER")
+        if route not in allowed_directives and route != "OTHER":
+            diagnostics.append(f"gate=drop_{code}:directive_{route}_not_selected")
+            continue
+
+        kept.append(item)
+
+    codes = {str(item.get("code") or "") for item in kept}
+    if "EN 62233" in codes and "EN 62311" in codes and context["prefer_62233"]:
+        kept = [item for item in kept if item.get("code") != "EN 62311"]
+        diagnostics.append("gate=prune_EN62311_after_pairing")
+    elif "EN 62233" in codes and "EN 62311" in codes and context["prefer_62311"]:
+        kept = [item for item in kept if item.get("code") != "EN 62233"]
+        diagnostics.append("gate=prune_EN62233_after_pairing")
+
+    codes = {str(item.get("code") or "") for item in kept}
+    if (
+        "Battery safety review" in codes
+        and "EN 62133-2" in codes
+        and context["scope_route"] == "av_ict"
         and not ({"wearable", "handheld", "body_worn_or_applied", "replaceable_battery"} & traits)
     ):
         kept = [item for item in kept if item.get("code") != "Battery safety review"]
@@ -1131,14 +1308,18 @@ def _build_findings(
         )
 
     if depth in {"standard", "deep"}:
-        for item in future_legislation[: limits["future"]]:
+        prioritized_future = sorted(
+            future_legislation,
+            key=lambda item: (0 if item.directive_key == "AI_Act" else 1, item.directive_key, item.title),
+        )
+        for item in prioritized_future[: limits["future"]]:
             finding_text = f"{item.title} is a future watchlist regime."
             if item.applicable_from:
                 finding_text += f" Applies from {item.applicable_from}."
             if item.reason:
                 finding_text += " " + item.reason
             add(
-                70,
+                45 if item.directive_key == "AI_Act" else 70,
                 Finding(
                     directive=item.directive_key,
                     article="Future regime",
@@ -1263,17 +1444,119 @@ def _standard_item_from_row(
         test_focus=row.get("test_focus", []),
         evidence_hint=row.get("evidence_hint", []),
         keywords=row.get("keywords", []),
+        selection_group=row.get("selection_group"),
+        selection_priority=int(row.get("selection_priority", 0)),
+        required_fact_basis=row.get("required_fact_basis", "inferred"),
     )
 
 
-def analyze(
+def _normalize_trait_state_map(raw: Any) -> dict[str, dict[str, list[str]]]:
+    states = {
+        "text_explicit": {},
+        "text_inferred": {},
+        "product_core": {},
+        "product_default": {},
+        "engine_derived": {},
+    }
+    if not isinstance(raw, dict):
+        return states
+
+    for state in states:
+        value = raw.get(state, {})
+        if not isinstance(value, dict):
+            continue
+        for trait, evidence in value.items():
+            if not isinstance(trait, str):
+                continue
+            if isinstance(evidence, list):
+                states[state][trait] = [item for item in evidence if isinstance(item, str)]
+            elif isinstance(evidence, str):
+                states[state][trait] = [evidence]
+    return states
+
+
+def _trait_evidence_from_state_map(
+    state_map: dict[str, dict[str, list[str]]],
+    confirmed_traits: set[str],
+) -> list[TraitEvidenceItem]:
+    states: tuple[TraitEvidenceState, ...] = (
+        "text_explicit",
+        "text_inferred",
+        "product_core",
+        "product_default",
+        "engine_derived",
+    )
+    fact_basis_by_state: dict[TraitEvidenceState, FactBasis] = {
+        "text_explicit": "confirmed",
+        "product_core": "confirmed",
+        "text_inferred": "inferred",
+        "product_default": "inferred",
+        "engine_derived": "inferred",
+    }
+    items: list[TraitEvidenceItem] = []
+    for state in states:
+        for trait in sorted(state_map.get(state, {})):
+            items.append(
+                TraitEvidenceItem(
+                    trait=trait,
+                    state=state,
+                    fact_basis=fact_basis_by_state[state],
+                    confirmed=trait in confirmed_traits,
+                    evidence=state_map[state][trait],
+                )
+            )
+    return items
+
+
+def _build_standard_match_audit(items_audit: dict[str, Any], context_tags: set[str]) -> StandardMatchAudit:
+    return StandardMatchAudit(
+        engine_version=ENGINE_VERSION,
+        context_tags=sorted(context_tags),
+        selected=[StandardAuditItem.model_validate(item) for item in items_audit.get("selected", [])],
+        review=[StandardAuditItem.model_validate(item) for item in items_audit.get("review", [])],
+        rejected=[StandardAuditItem.model_validate(item) for item in items_audit.get("rejected", [])],
+    )
+
+
+def _shadow_diff(v1: AnalysisResult, v2: AnalysisResult) -> list[dict[str, Any]]:
+    v1_traits = set(v1.confirmed_traits)
+    v2_traits = set(v2.confirmed_traits)
+    v1_standards = {item.code for item in v1.standards}
+    v2_standards = {item.code for item in v2.standards}
+    trait_evidence = {item.trait for item in v2.trait_evidence if item.confirmed}
+    audited_standard_codes = set()
+    if v2.standard_match_audit:
+        audited_standard_codes.update(item.code for item in v2.standard_match_audit.selected)
+        audited_standard_codes.update(item.code for item in v2.standard_match_audit.review)
+
+    diff: list[dict[str, Any]] = []
+    for trait in sorted(v2_traits - v1_traits):
+        diff.append(
+            {
+                "kind": "trait",
+                "key": trait,
+                "has_evidence": trait in trait_evidence,
+            }
+        )
+    for code in sorted(v2_standards - v1_standards):
+        diff.append(
+            {
+                "kind": "standard",
+                "key": code,
+                "has_evidence": code in audited_standard_codes,
+            }
+        )
+    return diff
+
+
+def analyze_v1(
     description: str,
     category: str = "",
     directives: list[str] | None = None,
     depth: str = "standard",
 ) -> AnalysisResult:
     depth = _analysis_depth(depth)
-    traits_data = extract_traits(description=description, category=category)
+    traits_data = extract_traits_v1(description=description, category=category)
     diagnostics = list(traits_data.get("diagnostics") or [])
     matched_products = set(traits_data.get("matched_products") or [])
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
@@ -1302,7 +1585,7 @@ def analyze(
     legislation_by_directive = _primary_legislation_by_directive(legislation_items)
     allowed_directives = set(detected_directives)
 
-    items = find_applicable_items(
+    items = find_applicable_items_v1(
         traits=trait_set,
         directives=detected_directives,
         product_type=routing_product_type,
@@ -1312,7 +1595,7 @@ def analyze(
         confirmed_traits=confirmed_traits,
     )
     selected_rows = list(items["standards"]) + list(items["review_items"])
-    selected_rows = _apply_post_selection_gates(
+    selected_rows = _apply_post_selection_gates_v1(
         selected_rows,
         trait_set,
         routing_matched_products,
@@ -1461,3 +1744,282 @@ def analyze(
         suggested_quick_adds=_build_quick_adds(missing_items)[:quick_adds_limit],
         findings=findings,
     )
+
+
+def analyze(
+    description: str,
+    category: str = "",
+    directives: list[str] | None = None,
+    depth: str = "standard",
+) -> AnalysisResult:
+    depth = _analysis_depth(depth)
+    traits_data = extract_traits(description=description, category=category)
+    diagnostics = list(traits_data.get("diagnostics") or [])
+    matched_products = set(traits_data.get("matched_products") or [])
+    routing_matched_products = set(traits_data.get("routing_matched_products") or [])
+    product_type = traits_data.get("product_type")
+    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    routing_product_type = product_type if product_match_stage == "subtype" else None
+    likely_standards: set[str] = set(traits_data.get("preferred_standard_codes") or [])
+    for candidate in traits_data.get("product_candidates") or []:
+        if candidate.get("id") in routing_matched_products:
+            likely_standards.update(candidate.get("likely_standards") or [])
+
+    base_trait_set = set(traits_data.get("all_traits") or [])
+    trait_set = set(base_trait_set)
+    confirmed_traits = set(traits_data.get("confirmed_traits") or [])
+    functional_classes = set(traits_data.get("functional_classes") or [])
+    trait_set, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
+    diagnostics.extend(extra_diag)
+    engine_added_traits = trait_set - base_trait_set
+
+    raw_state_map = _normalize_trait_state_map(traits_data.get("trait_state_map"))
+    for trait in sorted(engine_added_traits):
+        raw_state_map["engine_derived"].setdefault(trait, []).append("engine:derived")
+
+    context = _standard_context(trait_set, routing_matched_products, routing_product_type, confirmed_traits, description)
+    legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
+        traits=trait_set,
+        functional_classes=functional_classes,
+        product_type=routing_product_type,
+        matched_products=routing_matched_products,
+        confirmed_traits=confirmed_traits,
+        forced_directives=directives,
+    )
+    legislation_by_directive = _primary_legislation_by_directive(legislation_items)
+    allowed_directives = set(detected_directives)
+
+    items = find_applicable_items(
+        traits=trait_set,
+        directives=detected_directives,
+        product_type=routing_product_type,
+        matched_products=sorted(routing_matched_products),
+        preferred_standard_codes=sorted(likely_standards),
+        explicit_traits=set(traits_data.get("explicit_traits") or []),
+        confirmed_traits=confirmed_traits,
+        normalized_text=normalize(description),
+        context_tags=context["context_tags"],
+    )
+    selected_rows = list(items["standards"]) + list(items["review_items"])
+    selected_rows = _apply_post_selection_gates(
+        selected_rows,
+        trait_set,
+        routing_matched_products,
+        diagnostics,
+        allowed_directives,
+        product_type=routing_product_type,
+        confirmed_traits=confirmed_traits,
+        description=description,
+    )
+
+    dedup: dict[str, dict[str, Any]] = {}
+    for row in selected_rows:
+        key = str(row.get("code") or "")
+        if key not in dedup or int(row.get("score", 0)) > int(dedup[key].get("score", 0)):
+            dedup[key] = row
+
+    standard_items: list[StandardItem] = []
+    review_items: list[StandardItem] = []
+    for row in dedup.values():
+        item = _standard_item_from_row(row, legislation_by_directive, trait_set)
+        if item.item_type == "review":
+            review_items.append(item)
+        else:
+            standard_items.append(item)
+
+    standard_items = _sort_standard_items(standard_items)
+    review_items = _sort_standard_items(review_items)
+    all_standard_items = _sort_standard_items(standard_items + review_items)
+    current_review_items = [item for item in review_items if item.timing_status == "current"]
+    missing_items = _missing_information(trait_set, routing_matched_products, description)
+    standard_sections = _build_standard_sections(all_standard_items)
+    primary_regimes = [section["key"] for section in standard_sections[:4]]
+
+    current_risk = _current_risk(
+        product_confidence=str(traits_data.get("product_match_confidence") or "low"),
+        contradiction_severity=str(traits_data.get("contradiction_severity") or "none"),
+        review_items=current_review_items,
+        missing_items=missing_items,
+    )
+    future_risk = _future_risk(detected_directives, trait_set)
+    overall_risk: RiskLevel = "LOW"
+    if current_risk == "HIGH" or future_risk == "HIGH":
+        overall_risk = "HIGH"
+    elif current_risk == "MEDIUM" or future_risk == "MEDIUM":
+        overall_risk = "MEDIUM"
+
+    stats = AnalysisStats(
+        legislation_count=len(legislation_items),
+        current_legislation_count=len([x for x in legislation_items if x.timing_status == "current"]),
+        future_legislation_count=len([x for x in legislation_items if x.timing_status == "future"]),
+        standards_count=len(standard_items),
+        review_items_count=len(review_items),
+        current_review_items_count=len([x for x in review_items if x.timing_status == "current"]),
+        future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
+        harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
+        state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
+        product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
+        ambiguity_flag_count=1 if traits_data.get("contradictions") else 0,
+        missing_information_count=len(missing_items),
+    )
+
+    summary = _build_summary(detected_directives, standard_items, review_items, trait_set)
+    findings = _build_findings(
+        depth=depth,
+        legislation_items=legislation_items,
+        standards=standard_items,
+        review_items=review_items,
+        missing_items=missing_items,
+        contradictions=traits_data.get("contradictions") or [],
+        contradiction_severity=traits_data.get("contradiction_severity", "none"),
+    )
+    top_actions_limit = {"quick": 2, "standard": 3, "deep": 5}[depth]
+    suggested_questions_limit = {"quick": 2, "standard": 4, "deep": 6}[depth]
+    quick_adds_limit = {"quick": 4, "standard": 8, "deep": 10}[depth]
+
+    trait_evidence = _trait_evidence_from_state_map(raw_state_map, confirmed_traits)
+    product_match_audit_raw = traits_data.get("product_match_audit")
+    product_match_audit = (
+        ProductMatchAudit.model_validate(product_match_audit_raw)
+        if isinstance(product_match_audit_raw, dict)
+        else None
+    )
+    rejected_audit_rows = list(items.get("audit", {}).get("rejected", []))
+    rejected_audit_rows.extend(
+        {
+            "code": row.get("code"),
+            "title": row.get("code"),
+            "outcome": "rejected",
+            "score": 0,
+            "confidence": "low",
+            "fact_basis": "inferred",
+            "selection_group": None,
+            "selection_priority": 0,
+            "keyword_hits": [],
+            "reason": row.get("reason"),
+        }
+        for row in items.get("rejections", [])
+        if row.get("code") not in {item.code for item in standard_items + review_items}
+    )
+    standard_match_audit = _build_standard_match_audit(
+        {
+            "selected": [
+                {
+                    "code": item.code,
+                    "title": item.title,
+                    "outcome": "selected",
+                    "score": item.score,
+                    "confidence": item.confidence,
+                    "fact_basis": item.fact_basis,
+                    "selection_group": item.selection_group,
+                    "selection_priority": item.selection_priority,
+                    "keyword_hits": item.keywords,
+                    "reason": item.reason,
+                }
+                for item in standard_items
+            ],
+            "review": [
+                {
+                    "code": item.code,
+                    "title": item.title,
+                    "outcome": "review",
+                    "score": item.score,
+                    "confidence": item.confidence,
+                    "fact_basis": item.fact_basis,
+                    "selection_group": item.selection_group,
+                    "selection_priority": item.selection_priority,
+                    "keyword_hits": item.keywords,
+                    "reason": item.reason,
+                }
+                for item in review_items
+            ],
+            "rejected": rejected_audit_rows,
+        },
+        context["context_tags"],
+    )
+
+    result = AnalysisResult(
+        product_summary=description.strip(),
+        overall_risk=overall_risk,
+        current_compliance_risk=current_risk,
+        future_watchlist_risk=future_risk,
+        summary=summary,
+        product_type=traits_data.get("product_type"),
+        product_family=traits_data.get("product_family"),
+        product_family_confidence=traits_data.get("product_family_confidence", "low"),
+        product_subtype=traits_data.get("product_subtype"),
+        product_subtype_confidence=traits_data.get("product_subtype_confidence", "low"),
+        product_match_stage=traits_data.get("product_match_stage", "ambiguous"),
+        product_match_confidence=traits_data.get("product_match_confidence", "low"),
+        product_candidates=traits_data.get("product_candidates") or [],
+        functional_classes=traits_data.get("functional_classes") or [],
+        confirmed_functional_classes=traits_data.get("confirmed_functional_classes") or [],
+        explicit_traits=traits_data.get("explicit_traits") or [],
+        confirmed_traits=sorted(confirmed_traits),
+        inferred_traits=sorted(set(traits_data.get("inferred_traits") or []) | (trait_set - set(traits_data.get("explicit_traits") or []))),
+        all_traits=sorted(trait_set),
+        directives=detected_directives,
+        forced_directives=[item for item in dict.fromkeys(directives or []) if item],
+        legislations=legislation_items,
+        ce_legislations=[x for x in legislation_items if x.bucket == "ce"],
+        non_ce_obligations=[x for x in legislation_items if x.bucket == "non_ce"],
+        framework_regimes=[x for x in legislation_items if x.bucket == "framework"],
+        future_regimes=[x for x in legislation_items if x.bucket == "future"],
+        informational_items=[x for x in legislation_items if x.bucket == "informational"],
+        standards=standard_items,
+        review_items=review_items,
+        missing_information=[item.message for item in missing_items],
+        missing_information_items=missing_items,
+        contradictions=traits_data.get("contradictions") or [],
+        contradiction_severity=traits_data.get("contradiction_severity", "none"),
+        diagnostics=diagnostics,
+        stats=stats,
+        knowledge_base_meta=KnowledgeBaseMeta(**load_meta()),
+        analysis_audit={
+            "allowed_directives": detected_directives,
+            "matched_products": sorted(matched_products),
+            "routing_matched_products": sorted(routing_matched_products),
+            "preferred_standards": sorted(likely_standards),
+            "product_family": traits_data.get("product_family"),
+            "product_subtype": traits_data.get("product_subtype"),
+            "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
+            "depth": depth,
+            "engine_version": ENGINE_VERSION,
+            "context_tags": sorted(context["context_tags"]),
+        },
+        engine_version=ENGINE_VERSION,
+        trait_evidence=trait_evidence,
+        product_match_audit=product_match_audit,
+        standard_match_audit=standard_match_audit,
+        standard_sections=standard_sections,
+        legislation_sections=legislation_sections,
+        hero_summary={
+            "title": "RuleGrid Regulatory Scoping",
+            "subtitle": "Describe the product clearly to generate the standards route and the applicable legislation path.",
+            "primary_regimes": primary_regimes,
+            "confidence": traits_data.get("product_match_confidence", "low"),
+            "depth": depth,
+        },
+        confidence_panel={
+            "confidence": traits_data.get("product_match_confidence", "low"),
+            "matched_products": sorted(matched_products),
+            "product_family": traits_data.get("product_family"),
+            "product_subtype": traits_data.get("product_subtype"),
+            "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
+        },
+        input_gaps_panel={
+            "items": [item.model_dump() for item in missing_items],
+        },
+        top_actions=[item.message for item in missing_items[:top_actions_limit]],
+        current_path=[section["title"] for section in standard_sections],
+        future_watchlist=[item.title for item in legislation_items if item.bucket == "future"],
+        suggested_questions=[item.message for item in missing_items[:suggested_questions_limit]],
+        suggested_quick_adds=_build_quick_adds(missing_items)[:quick_adds_limit],
+        findings=findings,
+    )
+
+    if ENABLE_ENGINE_V2_SHADOW:
+        legacy = analyze_v1(description=description, category=category, directives=directives, depth=depth)
+        result.analysis_audit["shadow_diff"] = _shadow_diff(legacy, result)
+
+    return result

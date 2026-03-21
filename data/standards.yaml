@@ -9,6 +9,7 @@ standards:
   item_type: standard
   standard_family: EN 18031-1
   confidence: medium
+  required_fact_basis: confirmed
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
@@ -47,6 +48,7 @@ standards:
   item_type: standard
   standard_family: EN 18031-2
   confidence: medium
+  required_fact_basis: confirmed
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
@@ -83,6 +85,7 @@ standards:
   item_type: standard
   standard_family: EN 18031-3
   confidence: medium
+  required_fact_basis: confirmed
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: RED_CYBER
@@ -369,6 +372,8 @@ standards:
   item_type: standard
   standard_family: EN 55014-1
   confidence: high
+  selection_group: emc_primary_emission
+  selection_priority: 20
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: EMC
@@ -407,6 +412,8 @@ standards:
   item_type: standard
   standard_family: EN 55014-2
   confidence: high
+  selection_group: emc_primary_immunity
+  selection_priority: 20
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: EMC
@@ -444,6 +451,8 @@ standards:
   item_type: standard
   standard_family: EN 55032
   confidence: medium
+  selection_group: emc_primary_emission
+  selection_priority: 20
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: EMC
@@ -482,6 +491,8 @@ standards:
   item_type: standard
   standard_family: EN 55035
   confidence: medium
+  selection_group: emc_primary_immunity
+  selection_priority: 20
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: EMC
@@ -521,6 +532,8 @@ standards:
   item_type: standard
   standard_family: EN 60335-1
   confidence: high
+  selection_group: lvd_primary_safety
+  selection_priority: 20
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: LVD
@@ -3921,6 +3934,8 @@ standards:
   item_type: standard
   standard_family: EN 62368-1
   confidence: medium
+  selection_group: lvd_primary_safety
+  selection_priority: 20
   harmonization_status: harmonized
   is_harmonized: true
   harmonized_under: LVD

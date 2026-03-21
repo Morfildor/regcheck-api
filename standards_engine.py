@@ -48,6 +48,7 @@ class ApplicableItems(TypedDict):
     standards: list[dict[str, Any]]
     review_items: list[dict[str, Any]]
     rejections: list[dict[str, Any]]
+    audit: dict[str, Any]
 
 
 BASE_STANDARD_PRIORITY = {
@@ -295,7 +296,159 @@ def _score_standard(
     return score
 
 
-def find_applicable_items(
+FACT_BASIS_RANK: dict[FactBasis, int] = {"inferred": 0, "mixed": 1, "confirmed": 2}
+
+BASE_STANDARD_PRIORITY_V2 = {
+    "EN 60335-1": 155,
+    "EN 60335-2": 175,
+    "EN 55014-1": 145,
+    "EN 55014-2": 140,
+    "EN 55032": 145,
+    "EN 55035": 140,
+    "EN 62368-1": 155,
+    "EN 62311": 130,
+    "EN 62479": 125,
+    "EN 62209": 150,
+    "EN 50566": 145,
+    "EN 18031-": 150,
+    "EN 300 328": 155,
+    "EN 301 489-1": 145,
+    "EN 301 489-17": 140,
+    "EN 301 893": 140,
+    "EN 63000": 120,
+}
+
+
+def _fact_basis_satisfies(required: FactBasis, actual: FactBasis) -> bool:
+    return FACT_BASIS_RANK[actual] >= FACT_BASIS_RANK[required]
+
+
+def _keyword_hits(standard: dict[str, Any], normalized_text: str) -> list[str]:
+    hits: list[str] = []
+    if not normalized_text:
+        return hits
+    for keyword in _string_list(standard.get("keywords")):
+        phrase = " ".join(str(keyword).lower().split())
+        if phrase and phrase in normalized_text:
+            hits.append(keyword)
+    return hits
+
+
+def _priority_bonus_v2(standard: dict[str, Any]) -> int:
+    code = str(standard.get("code", "")).upper()
+    for prefix, bonus in BASE_STANDARD_PRIORITY_V2.items():
+        if code.startswith(prefix):
+            return bonus
+    return 95 if _standard_item_type(standard) == "standard" else 45
+
+
+def _context_bonus_v2(standard: dict[str, Any], context_tags: set[str]) -> int:
+    code = str(standard.get("code", ""))
+    bonus = 0
+    if "scope:av_ict" in context_tags and (code == "EN 62368-1" or code in {"EN 55032", "EN 55035"}):
+        bonus += 80
+    if "scope:appliance" in context_tags and (code.startswith("EN 60335-") or code.startswith("EN 55014-")):
+        bonus += 80
+    if "exposure:close_proximity" in context_tags and (
+        code.startswith("EN 62209") or code in {"EN 50566", "EN 50663 / EN 62311 review", "EN 50665"}
+    ):
+        bonus += 70
+    if "exposure:household_emf" in context_tags and code == "EN 62233":
+        bonus += 45
+    if "optical:laser" in context_tags and code == "EN 60825-1":
+        bonus += 35
+    if "optical:photobio" in context_tags and code == "EN 62471":
+        bonus += 30
+    if "power:external_psu" in context_tags and code == "EN 50563":
+        bonus += 35
+    if "power:external_psu" not in context_tags and code == "EN 50563":
+        bonus -= 40
+    return bonus
+
+
+def _score_standard_v2(
+    standard: dict[str, Any],
+    gate: TraitGate,
+    product_hit_type: ProductHitType | None,
+    is_preferred: bool,
+    keyword_hits: list[str],
+    context_tags: set[str],
+) -> int:
+    score = _priority_bonus_v2(standard)
+
+    if product_hit_type == "primary_product":
+        score += 135
+    elif product_hit_type == "alternate_product":
+        score += 85
+    if is_preferred:
+        score += 65
+
+    score += len(gate["confirmed_traits_all"]) * 34
+    score += len(gate["confirmed_traits_any"]) * 16
+    score += (len(gate["matched_traits_all"]) - len(gate["confirmed_traits_all"])) * 12
+    score += (len(gate["matched_traits_any"]) - len(gate["confirmed_traits_any"])) * 6
+    score += len(keyword_hits) * 16
+    score += int(standard.get("selection_priority") or 0) * 2
+    score += _context_bonus_v2(standard, context_tags)
+
+    if gate["soft_missing_any"]:
+        score -= 18
+    if gate["soft_inferred_match"]:
+        score -= 28
+
+    confidence = standard.get("confidence", "medium")
+    if confidence == "high":
+        score += 18
+    elif confidence == "low":
+        score -= 8
+
+    harmonization_status = standard.get("harmonization_status")
+    if harmonization_status == "harmonized":
+        score += 24
+    elif harmonization_status == "state_of_the_art":
+        score += 12
+    elif harmonization_status == "review":
+        score -= 10
+
+    return score
+
+
+def _selection_sort_key(row: dict[str, Any]) -> tuple[int, int, int, str]:
+    return (
+        int(row.get("score", 0)),
+        int(row.get("selection_priority", 0)),
+        FACT_BASIS_RANK[cast(FactBasis, row.get("fact_basis", "inferred"))],
+        str(row.get("code", "")),
+    )
+
+
+def _selection_group_winners(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    winners: list[dict[str, Any]] = []
+    losers: list[dict[str, Any]] = []
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for row in rows:
+        selection_group = row.get("selection_group")
+        if not isinstance(selection_group, str) or not selection_group:
+            winners.append(row)
+            continue
+        grouped.setdefault(selection_group, []).append(row)
+
+    for selection_group, group_rows in grouped.items():
+        ordered = sorted(group_rows, key=_selection_sort_key, reverse=True)
+        winner = ordered[0]
+        winners.append(winner)
+        for loser in ordered[1:]:
+            losers.append(
+                {
+                    **loser,
+                    "rejection_reason": f"selection group '{selection_group}' won by {winner.get('code')}",
+                }
+            )
+
+    return winners, losers
+
+
+def find_applicable_items_v1(
     traits: set[str],
     directives: list[str],
     product_type: str | None = None,
@@ -362,7 +515,216 @@ def find_applicable_items(
         "standards": [row for row in final if row["item_type"] == "standard"],
         "review_items": [row for row in final if row["item_type"] == "review"],
         "rejections": rejections,
+        "audit": {"selected": [], "review": [], "rejected": []},
     }
+
+
+def find_applicable_standards_v1(
+    traits: set[str],
+    directives: list[str],
+    product_type: str | None = None,
+    matched_products: list[str] | None = None,
+    preferred_standard_codes: list[str] | None = None,
+    explicit_traits: set[str] | None = None,
+    confirmed_traits: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    return find_applicable_items_v1(
+        traits=traits,
+        directives=directives,
+        product_type=product_type,
+        matched_products=matched_products,
+        preferred_standard_codes=preferred_standard_codes,
+        explicit_traits=explicit_traits,
+        confirmed_traits=confirmed_traits,
+    )["standards"]
+
+
+def find_applicable_items_v2(
+    traits: set[str],
+    directives: list[str],
+    product_type: str | None = None,
+    matched_products: list[str] | None = None,
+    preferred_standard_codes: list[str] | None = None,
+    explicit_traits: set[str] | None = None,
+    confirmed_traits: set[str] | None = None,
+    normalized_text: str = "",
+    context_tags: set[str] | None = None,
+) -> ApplicableItems:
+    standards = load_standards()
+    matched_products = matched_products or []
+    preferred_codes = set(preferred_standard_codes or [])
+    confirmed_traits = confirmed_traits or set(traits)
+    explicit_traits = explicit_traits or set(confirmed_traits)
+    context_tags = context_tags or set()
+
+    candidates: list[dict[str, Any]] = []
+    rejections: list[dict[str, Any]] = []
+    for standard in standards:
+        standard_directives = _string_list(standard.get("directives"))
+        if directives and standard_directives and not any(d in directives for d in standard_directives):
+            rejections.append({"code": standard.get("code"), "reason": "directive filter mismatch"})
+            continue
+
+        product_hit_type = _product_hit_type(standard, product_type, matched_products)
+        preferred_hit = _is_preferred_standard(standard, preferred_codes)
+        gate = _trait_gate_details(standard, traits, confirmed_traits, allow_soft_any_miss=preferred_hit)
+        if product_hit_type is None or not gate["passes"]:
+            rejections.append({"code": standard.get("code"), "reason": _rejection_reason(product_hit_type, gate)})
+            continue
+
+        keyword_hits = _keyword_hits(standard, normalized_text)
+        required_fact_basis = cast(FactBasis, standard.get("required_fact_basis", "inferred"))
+        sufficient_fact_basis = _fact_basis_satisfies(required_fact_basis, gate["fact_basis"])
+
+        enriched = dict(standard)
+        reason, match_basis = _build_reason(
+            standard,
+            product_type,
+            matched_products,
+            product_hit_type,
+            gate,
+            preferred_hit,
+        )
+        if keyword_hits:
+            reason += ". keyword evidence: " + ", ".join(keyword_hits)
+        if not sufficient_fact_basis:
+            reason += f". requires {required_fact_basis} evidence before the route can be treated as fully selected"
+
+        needs_review = gate["soft_missing_any"] or gate["soft_inferred_match"] or not sufficient_fact_basis
+        enriched["reason"] = reason
+        enriched["match_basis"] = match_basis
+        enriched["fact_basis"] = gate["fact_basis"]
+        enriched["required_fact_basis"] = required_fact_basis
+        enriched["item_type"] = "review" if needs_review else _standard_item_type(standard)
+        enriched["score"] = _score_standard_v2(standard, gate, product_hit_type, preferred_hit, keyword_hits, context_tags)
+        enriched["matched_traits_all"] = gate["matched_traits_all"]
+        enriched["matched_traits_any"] = gate["matched_traits_any"]
+        enriched["missing_required_traits"] = gate["missing_required_traits"]
+        enriched["excluded_by_traits"] = gate["excluded_by_traits"]
+        enriched["product_match_type"] = product_hit_type
+        enriched["keyword_hits"] = keyword_hits
+        enriched["selection_group"] = standard.get("selection_group")
+        enriched["selection_priority"] = int(standard.get("selection_priority") or 0)
+        candidates.append(enriched)
+
+    winners, group_losers = _selection_group_winners(candidates)
+    for loser in group_losers:
+        rejections.append({"code": loser.get("code"), "reason": loser.get("rejection_reason")})
+
+    deduped: dict[str, dict[str, Any]] = {}
+    for row in winners:
+        code = str(row.get("code", ""))
+        existing = deduped.get(code)
+        if existing is None or _selection_sort_key(row) > _selection_sort_key(existing):
+            deduped[code] = row
+
+    final = list(deduped.values())
+    final.sort(key=lambda row: (-cast(int, row["score"]), -int(row.get("selection_priority", 0)), *_directive_sort_key(row)))
+
+    standards_rows = [row for row in final if row["item_type"] == "standard"]
+    review_rows = [row for row in final if row["item_type"] == "review"]
+    audit = {
+        "selected": [
+            {
+                "code": row.get("code"),
+                "title": row.get("title"),
+                "outcome": "selected",
+                "score": int(row.get("score", 0)),
+                "confidence": row.get("confidence", "medium"),
+                "fact_basis": row.get("fact_basis", "confirmed"),
+                "selection_group": row.get("selection_group"),
+                "selection_priority": int(row.get("selection_priority", 0)),
+                "keyword_hits": row.get("keyword_hits", []),
+                "reason": row.get("reason"),
+            }
+            for row in standards_rows
+        ],
+        "review": [
+            {
+                "code": row.get("code"),
+                "title": row.get("title"),
+                "outcome": "review",
+                "score": int(row.get("score", 0)),
+                "confidence": row.get("confidence", "medium"),
+                "fact_basis": row.get("fact_basis", "confirmed"),
+                "selection_group": row.get("selection_group"),
+                "selection_priority": int(row.get("selection_priority", 0)),
+                "keyword_hits": row.get("keyword_hits", []),
+                "reason": row.get("reason"),
+            }
+            for row in review_rows
+        ],
+        "rejected": [
+            {
+                "code": row.get("code"),
+                "title": row.get("title", row.get("code")),
+                "outcome": "rejected",
+                "score": int(row.get("score", 0)),
+                "confidence": row.get("confidence", "medium"),
+                "fact_basis": row.get("fact_basis", "inferred"),
+                "selection_group": row.get("selection_group"),
+                "selection_priority": int(row.get("selection_priority", 0)),
+                "keyword_hits": row.get("keyword_hits", []),
+                "reason": row.get("reason") or row.get("rejection_reason"),
+            }
+            for row in group_losers
+        ],
+    }
+
+    return {
+        "standards": standards_rows,
+        "review_items": review_rows,
+        "rejections": rejections,
+        "audit": audit,
+    }
+
+
+def find_applicable_standards_v2(
+    traits: set[str],
+    directives: list[str],
+    product_type: str | None = None,
+    matched_products: list[str] | None = None,
+    preferred_standard_codes: list[str] | None = None,
+    explicit_traits: set[str] | None = None,
+    confirmed_traits: set[str] | None = None,
+    normalized_text: str = "",
+    context_tags: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    return find_applicable_items_v2(
+        traits=traits,
+        directives=directives,
+        product_type=product_type,
+        matched_products=matched_products,
+        preferred_standard_codes=preferred_standard_codes,
+        explicit_traits=explicit_traits,
+        confirmed_traits=confirmed_traits,
+        normalized_text=normalized_text,
+        context_tags=context_tags,
+    )["standards"]
+
+
+def find_applicable_items(
+    traits: set[str],
+    directives: list[str],
+    product_type: str | None = None,
+    matched_products: list[str] | None = None,
+    preferred_standard_codes: list[str] | None = None,
+    explicit_traits: set[str] | None = None,
+    confirmed_traits: set[str] | None = None,
+    normalized_text: str = "",
+    context_tags: set[str] | None = None,
+) -> ApplicableItems:
+    return find_applicable_items_v2(
+        traits=traits,
+        directives=directives,
+        product_type=product_type,
+        matched_products=matched_products,
+        preferred_standard_codes=preferred_standard_codes,
+        explicit_traits=explicit_traits,
+        confirmed_traits=confirmed_traits,
+        normalized_text=normalized_text,
+        context_tags=context_tags,
+    )
 
 
 def find_applicable_standards(
@@ -373,6 +735,8 @@ def find_applicable_standards(
     preferred_standard_codes: list[str] | None = None,
     explicit_traits: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
+    normalized_text: str = "",
+    context_tags: set[str] | None = None,
 ) -> list[dict[str, Any]]:
     return find_applicable_items(
         traits=traits,
@@ -382,4 +746,6 @@ def find_applicable_standards(
         preferred_standard_codes=preferred_standard_codes,
         explicit_traits=explicit_traits,
         confirmed_traits=confirmed_traits,
+        normalized_text=normalized_text,
+        context_tags=context_tags,
     )["standards"]

@@ -5,7 +5,14 @@ from unittest.mock import patch
 from fastapi import HTTPException
 import classifier
 from classifier import _select_matched_products, extract_traits
-from knowledge_base import load_products, load_standards, reset_cache
+from knowledge_base import (
+    _validate_products,
+    _validate_standard_metadata,
+    load_products,
+    load_standards,
+    load_traits,
+    reset_cache,
+)
 import main
 from models import ProductInput
 from models import LegislationItem
@@ -353,6 +360,141 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("EN 60825-1", standard_codes)
         self.assertIn("EN 62471", standard_codes)
         self.assertIn("RED", result.directives)
+
+    def test_router_routes_to_en_62368_and_not_en_60335(self) -> None:
+        result = analyze("wifi router with ethernet ports and external power adapter")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertNotIn("EN 60335-1", standard_codes)
+
+    def test_connected_appliance_keeps_en_60335_and_drops_en_62368(self) -> None:
+        result = analyze("connected espresso machine with wifi app control cloud account OTA updates and display")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertIn("EN 60335-1", standard_codes)
+        self.assertIn("EN 60335-2-15", standard_codes)
+        self.assertNotIn("EN 62368-1", standard_codes)
+
+    def test_smart_speaker_routes_to_av_ict_and_not_household_appliance_safety(self) -> None:
+        result = analyze("smart speaker with wifi and bluetooth")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertNotIn("EN 60335-1", standard_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertNotIn("EN 55014-1", standard_codes)
+
+    def test_laptop_keeps_red_emf_routes_but_drops_optical_noise_and_generic_battery_review(self) -> None:
+        result = analyze(
+            "Laptop notebook computer with integrated Wi-Fi and Bluetooth, rechargeable lithium battery, display, USB-C charger."
+        )
+
+        standard_codes = {item.code for item in result.standards}
+        review_codes = {item.code for item in result.review_items}
+
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 62311", standard_codes)
+        self.assertIn("EN 62479", standard_codes)
+        self.assertIn("EN 62133-2", standard_codes)
+        self.assertNotIn("EN 60825-1", standard_codes)
+        self.assertNotIn("EN 62471", standard_codes)
+        self.assertNotIn("Battery safety review", review_codes)
+
+    def test_laser_projector_keeps_laser_and_photobiological_routes(self) -> None:
+        result = analyze("Laser projector with Wi-Fi and Bluetooth")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 60825-1", standard_codes)
+        self.assertIn("EN 62471", standard_codes)
+
+    def test_cellular_handheld_routes_to_specific_red_emf_standards_not_en_62479(self) -> None:
+        result = analyze("Handheld LTE scanner with display, rechargeable battery, and Wi-Fi")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertTrue(any(code.startswith("EN 62209") for code in standard_codes))
+        self.assertTrue(any(code in standard_codes for code in {"EN 50566", "EN 50663", "EN 50665", "EN 62311"}))
+        self.assertNotIn("EN 62479", standard_codes)
+
+    def test_alias_free_voice_assistant_description_can_retrieve_family(self) -> None:
+        result = extract_traits("voice controlled assistant device with speaker microphone and wifi")
+
+        self.assertEqual(result["product_family"], "smart_assistant_device")
+        self.assertIn(result["product_match_stage"], {"family", "subtype"})
+
+    def test_service_traits_from_product_match_stay_unconfirmed_without_text(self) -> None:
+        result = extract_traits("smart speaker with wifi and bluetooth")
+
+        self.assertIn("cloud", result["all_traits"])
+        self.assertNotIn("cloud", result["confirmed_traits"])
+        self.assertNotIn("account", result["confirmed_traits"])
+        self.assertNotIn("authentication", result["confirmed_traits"])
+
+    def test_analysis_exposes_trait_and_standard_audits(self) -> None:
+        result = analyze("smart speaker with wifi and bluetooth")
+
+        self.assertEqual(result.engine_version, "2.0")
+        self.assertTrue(result.trait_evidence)
+        self.assertIsNotNone(result.product_match_audit)
+        self.assertIsNotNone(result.standard_match_audit)
+        self.assertTrue(result.standard_match_audit.selected)
+        self.assertEqual(result.product_match_audit.engine_version, "2.0")
+        self.assertIn("scope:av_ict", result.standard_match_audit.context_tags)
+
+    def test_metadata_endpoints_expose_v2_fields(self) -> None:
+        with patch.dict(main._kb_status, {"ok": True, "error": None, "counts": {}}):
+            options = main.metadata_options()
+            standards = main.metadata_standards()
+
+        product_row = next(row for row in options["products"] if row["id"] == "smart_speaker")
+        standard_row = next(row for row in standards["standards"] if row["code"] == "EN 62368-1")
+
+        self.assertIn("product_family", product_row)
+        self.assertIn("family_keywords", product_row)
+        self.assertIn("core_traits", product_row)
+        self.assertIn("default_traits", product_row)
+        self.assertIn("selection_group", standard_row)
+        self.assertIn("selection_priority", standard_row)
+        self.assertIn("required_fact_basis", standard_row)
+
+    def test_product_schema_validation_requires_family_for_confusable_products(self) -> None:
+        trait_ids = {row["id"] for row in load_traits()}
+        with self.assertRaisesRegex(Exception, "confusable_with"):
+            _validate_products(
+                {
+                    "products": [
+                        {
+                            "id": "broken",
+                            "label": "Broken",
+                            "aliases": ["broken"],
+                            "confusable_with": ["other"],
+                            "implied_traits": ["electrical"],
+                            "functional_classes": [],
+                            "likely_standards": [],
+                        },
+                        {
+                            "id": "other",
+                            "label": "Other",
+                            "aliases": ["other"],
+                            "implied_traits": ["electrical"],
+                            "functional_classes": [],
+                            "likely_standards": [],
+                        },
+                    ]
+                },
+                trait_ids,
+            )
+
+    def test_standard_schema_validation_rejects_invalid_required_fact_basis(self) -> None:
+        with self.assertRaisesRegex(Exception, "required_fact_basis"):
+            _validate_standard_metadata("TEST", {"required_fact_basis": "unsupported"})
 
     def test_admin_reload_is_disabled_without_token(self) -> None:
         with self.assertRaises(HTTPException) as ctx:
