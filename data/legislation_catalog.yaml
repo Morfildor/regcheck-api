@@ -60,7 +60,7 @@ legislations:
   all_of_traits:
   - radio
 - code: (EU) 2022/30 as amended by (EU) 2023/2444
-  title: RED Delegated Act on cybersecurity, privacy and fraud protection
+  title: RED DA Cybersecurity
   family: Cybersecurity for radio equipment
   legal_form: Delegated Regulation
   priority: product_specific
@@ -118,7 +118,7 @@ legislations:
   - kitchen_appliance
   - hvac_appliance
   replaces: Directive 2009/125/EC
-- code: (EU) 2023/826
+- code: 2023/826/EU
   title: Off mode, standby and networked standby ecodesign regulation
   family: Energy / ecodesign
   legal_form: Regulation
@@ -157,7 +157,7 @@ legislations:
   any_of_traits:
   - electrical
   - electronic
-- code: Regulation (EC) No 1907/2006
+- code: 1907/2006
   title: REACH Regulation
   family: Substances
   legal_form: Regulation
@@ -172,7 +172,7 @@ legislations:
   - SVHC review
   - Article 33 communication
   - substance compliance records
-- code: Regulation (EU) 2023/1542
+- code: 2023/1542/EU
   title: Batteries Regulation
   family: Batteries
   legal_form: Regulation
@@ -268,7 +268,7 @@ legislations:
   - scarifier_aerator
   - grass_shear
   - milking_machine
-- code: Regulation (EC) No 1935/2004
+- code: 1935/2004
   title: Framework Regulation on food contact materials
   family: Food contact
   legal_form: Regulation
@@ -285,7 +285,7 @@ legislations:
   - supplier compliance records
   all_of_traits:
   - food_contact
-- code: (EU) No 10/2011
+- code: 10/2011/EU
   title: Plastic food contact materials regulation
   family: Food contact
   legal_form: Regulation
