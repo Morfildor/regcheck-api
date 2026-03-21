@@ -189,8 +189,8 @@ standards:
   is_harmonized: false
   harmonized_under: ECO
   harmonized_reference: 2023/826/EU
-  version: not harmonized
-  dated_version: EN 50564:2011
+  version: EN 50564:2011
+  dated_version: not harmonized
   supersedes: EN 50564:2011
   applies_if_products: []
   exclude_if_products: []
