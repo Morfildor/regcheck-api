@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import re
 from collections import defaultdict
+from datetime import date
 from typing import Any, Literal
 
 from classifier import extract_traits, normalize
-from knowledge_base import load_meta, load_standards
+from knowledge_base import load_legislations, load_meta
 from models import (
     AnalysisResult,
     AnalysisStats,
@@ -16,6 +17,7 @@ from models import (
     RiskLevel,
     StandardItem,
 )
+from standards_engine import find_applicable_items
 
 LegislationBucket = Literal["ce", "non_ce", "framework", "future", "informational"]
 MissingImportance = Literal["high", "medium", "low"]
@@ -159,6 +161,150 @@ def _route_title(key: str) -> str:
         "CRA": "CRA review route",
         "GDPR": "GDPR data route",
     }.get(key, "Additional route")
+
+
+def _current_date() -> date:
+    return date.today()
+
+
+def _string_list(value: Any) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, str) and item]
+
+
+def _parse_date(value: Any) -> date | None:
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        return date.fromisoformat(value)
+    except ValueError:
+        return None
+
+
+def _timing_status(row: dict[str, Any], today: date) -> str:
+    if row.get("bucket") == "informational":
+        return "informational"
+
+    applicable_from = _parse_date(row.get("applicable_from"))
+    applicable_until = _parse_date(row.get("applicable_until"))
+
+    if applicable_from and today < applicable_from:
+        return "future"
+    if applicable_until and today > applicable_until:
+        return "legacy"
+    return "current"
+
+
+def _fact_basis_for_legislation(
+    row: dict[str, Any],
+    traits: set[str],
+    confirmed_traits: set[str],
+) -> str:
+    relevant = (
+        set(_string_list(row.get("all_of_traits")))
+        | (set(_string_list(row.get("any_of_traits"))) & traits)
+        | (set(_string_list(row.get("none_of_traits"))) & traits)
+    )
+    if not relevant:
+        return "confirmed"
+    if relevant.issubset(confirmed_traits):
+        return "confirmed"
+    if relevant & confirmed_traits:
+        return "mixed"
+    return "inferred"
+
+
+def _legislation_matches(
+    row: dict[str, Any],
+    traits: set[str],
+    functional_classes: set[str],
+    product_type: str | None,
+    matched_products: set[str],
+) -> bool:
+    all_of_traits = set(_string_list(row.get("all_of_traits")))
+    any_of_traits = set(_string_list(row.get("any_of_traits")))
+    none_of_traits = set(_string_list(row.get("none_of_traits")))
+    all_of_classes = set(_string_list(row.get("all_of_functional_classes")))
+    any_of_classes = set(_string_list(row.get("any_of_functional_classes")))
+    none_of_classes = set(_string_list(row.get("none_of_functional_classes")))
+    any_of_products = set(_string_list(row.get("any_of_product_types")))
+    exclude_products = set(_string_list(row.get("exclude_product_types")))
+
+    if all_of_traits and not all_of_traits.issubset(traits):
+        return False
+    if any_of_traits and not (any_of_traits & traits):
+        return False
+    if none_of_traits & traits:
+        return False
+
+    if all_of_classes and not all_of_classes.issubset(functional_classes):
+        return False
+    if any_of_classes and not (any_of_classes & functional_classes):
+        return False
+    if none_of_classes & functional_classes:
+        return False
+
+    candidate_products = set(matched_products)
+    if product_type:
+        candidate_products.add(product_type)
+
+    if candidate_products & exclude_products:
+        return False
+    if any_of_products and not (candidate_products & any_of_products):
+        return False
+
+    return True
+
+
+def _legislation_sort_key(row: dict[str, Any]) -> tuple[int, int, str]:
+    timing_rank = {"current": 0, "future": 1, "legacy": 2, "informational": 3}
+    return (
+        _directive_rank(str(row.get("directive_key") or "OTHER")),
+        timing_rank.get(str(row.get("timing_status") or "current"), 9),
+        str(row.get("code") or ""),
+    )
+
+
+def _directive_keys(items: list[LegislationItem]) -> list[str]:
+    keys: list[str] = []
+    for item in items:
+        if item.directive_key not in keys:
+            keys.append(item.directive_key)
+    return keys
+
+
+def _pick_legislations(
+    traits: set[str],
+    functional_classes: set[str],
+    product_type: str | None,
+    forced_directives: list[str] | None = None,
+    matched_products: set[str] | None = None,
+    confirmed_traits: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    matched_products = matched_products or set()
+    confirmed_traits = confirmed_traits or set(traits)
+    forced_set = {item for item in (forced_directives or []) if item}
+    today = _current_date()
+
+    picked: list[dict[str, Any]] = []
+    for row in load_legislations():
+        directive_key = str(row.get("directive_key") or "OTHER")
+        matched = _legislation_matches(row, traits, functional_classes, product_type, matched_products)
+        forced = directive_key in forced_set and row.get("bucket") != "informational"
+        if not matched and not forced:
+            continue
+
+        enriched = dict(row)
+        enriched["timing_status"] = _timing_status(enriched, today)
+        enriched["evidence_strength"] = _fact_basis_for_legislation(enriched, traits, confirmed_traits)
+        enriched["is_forced"] = forced
+        if forced and not matched:
+            enriched["applicability"] = "conditional"
+        picked.append(enriched)
+
+    picked.sort(key=_legislation_sort_key)
+    return picked
 
 
 def _confidence_from_score(score: int) -> ConfidenceLevel:
@@ -429,37 +575,43 @@ def _sort_standard_items(items: list[StandardItem]) -> list[StandardItem]:
 
 def _build_legislation_sections(
     traits: set[str],
+    functional_classes: set[str],
+    product_type: str | None,
+    matched_products: set[str],
+    confirmed_traits: set[str],
     forced_directives: list[str] | None = None,
 ) -> tuple[list[LegislationItem], list[dict[str, Any]], list[str]]:
-    directives = _derive_directives(traits, forced_directives)
+    picked_rows = _pick_legislations(
+        traits=traits,
+        functional_classes=functional_classes,
+        product_type=product_type,
+        forced_directives=forced_directives,
+        matched_products=matched_products,
+        confirmed_traits=confirmed_traits,
+    )
 
-    bucket_map: dict[str, LegislationBucket] = {
-        "LVD": "ce",
-        "EMC": "ce",
-        "RED": "ce",
-        "RED_CYBER": "ce",
-        "ROHS": "non_ce",
-        "REACH": "non_ce",
-        "BATTERY": "non_ce",
-        "ECO": "framework",
-        "CRA": "future",
-        "GDPR": "non_ce",
-    }
     items: list[LegislationItem] = []
-    for directive in directives:
-        code, title = DIRECTIVE_TITLES.get(directive, (directive, directive))
-        bucket = bucket_map.get(directive, "non_ce")
+    for row in picked_rows:
         items.append(
             LegislationItem(
-                code=code,
-                title=title,
-                family=title,
-                directive_key=directive,
-                bucket=bucket,
-                applicability="applicable",
-                priority="core" if bucket == "ce" else "conditional",
-                reason="Detected from product power, connectivity, and functional traits.",
-                is_forced=directive in (forced_directives or []),
+                code=str(row.get("code") or ""),
+                title=str(row.get("title") or ""),
+                family=str(row.get("family") or row.get("title") or ""),
+                legal_form=str(row.get("legal_form") or "Other"),
+                priority=row.get("priority", "conditional"),
+                applicability=row.get("applicability", "conditional"),
+                directive_key=str(row.get("directive_key") or "OTHER"),
+                bucket=row.get("bucket", "non_ce"),
+                timing_status=row.get("timing_status", "current"),
+                reason=row.get("reason"),
+                triggers=_string_list(row.get("triggers")),
+                doc_impacts=_string_list(row.get("doc_impacts")),
+                notes=row.get("notes"),
+                applicable_from=row.get("applicable_from"),
+                applicable_until=row.get("applicable_until"),
+                replaced_by=row.get("replaced_by"),
+                evidence_strength=row.get("evidence_strength", "confirmed"),
+                is_forced=bool(row.get("is_forced")),
             )
         )
 
@@ -473,7 +625,7 @@ def _build_legislation_sections(
         sections_dict[item.bucket]["items"].append(item.model_dump())
     sections = [value for value in sections_dict.values() if value["items"]]
 
-    return items, sections, directives
+    return items, sections, _directive_keys(items)
 
 
 def _missing_information(
@@ -575,7 +727,9 @@ def _build_quick_adds(missing: list[MissingInformationItem]) -> list[dict[str, s
 def _build_standard_sections(items: list[StandardItem]) -> list[dict[str, Any]]:
     grouped: dict[str, list[StandardItem]] = defaultdict(list)
     for item in items:
-        grouped[item.directive].append(item)
+        route_keys = [key for key in item.directives if key] or [item.directive]
+        for key in route_keys:
+            grouped[key].append(item)
     sections: list[dict[str, Any]] = []
     for key in sorted(grouped.keys(), key=_directive_rank):
         route_items = _sort_standard_items(grouped[key])
@@ -626,9 +780,69 @@ def _current_risk(
 def _future_risk(directives: list[str], traits: set[str]) -> RiskLevel:
     if "CRA" in directives and ({"cloud", "internet", "ota", "app_control"} & traits):
         return "HIGH"
+    if "AI_Act" in directives or "MACH_REG" in directives:
+        return "MEDIUM"
     if "CRA" in directives:
         return "MEDIUM"
     return "LOW"
+
+
+def _primary_legislation_by_directive(items: list[LegislationItem]) -> dict[str, LegislationItem]:
+    by_directive: dict[str, LegislationItem] = {}
+    for item in items:
+        existing = by_directive.get(item.directive_key)
+        if existing is None:
+            by_directive[item.directive_key] = item
+            continue
+
+        existing_rank = 1 if existing.bucket == "informational" else 0
+        current_rank = 1 if item.bucket == "informational" else 0
+        if current_rank < existing_rank:
+            by_directive[item.directive_key] = item
+    return by_directive
+
+
+def _standard_item_from_row(
+    row: dict[str, Any],
+    legislation_by_directive: dict[str, LegislationItem],
+) -> StandardItem:
+    primary_directive = str(row.get("directive") or row.get("legislation_key") or "OTHER")
+    legislation = legislation_by_directive.get(primary_directive)
+    return StandardItem(
+        code=str(row["code"]),
+        title=str(row["title"]),
+        directive=primary_directive,
+        directives=[str(item) for item in (row.get("directives") or []) if isinstance(item, str)],
+        legislation_key=row.get("legislation_key"),
+        category=str(row.get("category", "other")),
+        confidence=_confidence_from_score(int(row.get("score", 0))),
+        item_type=row.get("item_type", "standard"),
+        match_basis=row.get("match_basis", "traits"),
+        fact_basis=row.get("fact_basis", "confirmed"),
+        score=int(row.get("score", 0)),
+        reason=row.get("reason"),
+        notes=row.get("notes"),
+        regime_bucket=legislation.bucket if legislation else None,
+        timing_status=legislation.timing_status if legislation else "current",
+        matched_traits_all=row.get("matched_traits_all", []),
+        matched_traits_any=row.get("matched_traits_any", []),
+        missing_required_traits=row.get("missing_required_traits", []),
+        excluded_by_traits=row.get("excluded_by_traits", []),
+        applies_if_products=row.get("applies_if_products", []),
+        exclude_if_products=row.get("exclude_if_products", []),
+        product_match_type=row.get("product_match_type"),
+        standard_family=row.get("standard_family"),
+        is_harmonized=row.get("is_harmonized"),
+        harmonized_under=row.get("harmonized_under"),
+        harmonization_status=row.get("harmonization_status", "unknown"),
+        harmonized_reference=row.get("harmonized_reference"),
+        version=row.get("version"),
+        dated_version=row.get("dated_version"),
+        supersedes=row.get("supersedes"),
+        test_focus=row.get("test_focus", []),
+        evidence_hint=row.get("evidence_hint", []),
+        keywords=row.get("keywords", []),
+    )
 
 
 def analyze(
@@ -640,6 +854,7 @@ def analyze(
     traits_data = extract_traits(description=description, category=category)
     diagnostics = list(traits_data.get("diagnostics") or [])
     matched_products = set(traits_data.get("matched_products") or [])
+    product_type = traits_data.get("product_type")
     likely_standards: set[str] = set(traits_data.get("preferred_standard_codes") or [])
     for candidate in traits_data.get("product_candidates") or []:
         if candidate.get("id") in matched_products:
@@ -647,72 +862,43 @@ def analyze(
 
     trait_set = set(traits_data.get("all_traits") or [])
     confirmed_traits = set(traits_data.get("confirmed_traits") or [])
+    functional_classes = set(traits_data.get("functional_classes") or [])
     trait_set, extra_diag = _derive_engine_traits(description, trait_set, matched_products)
     diagnostics.extend(extra_diag)
 
-    legislation_items, legislation_sections, detected_directives = _build_legislation_sections(trait_set, directives)
+    legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
+        traits=trait_set,
+        functional_classes=functional_classes,
+        product_type=product_type,
+        matched_products=matched_products,
+        confirmed_traits=confirmed_traits,
+        forced_directives=directives,
+    )
+    legislation_by_directive = _primary_legislation_by_directive(legislation_items)
     allowed_directives = set(detected_directives)
 
-    standards_rows = load_standards()
-    selected_rows: list[dict[str, Any]] = []
-    for row in standards_rows:
-        ok, score, meta = _match_standard(row, trait_set, matched_products, likely_standards)
-        if not ok:
-            continue
-        primary_directive = _standard_primary_directive(row, trait_set)
-        selected_rows.append(
-            {
-                **row,
-                **meta,
-                "score": score,
-                "directive": primary_directive,
-                "legislation_key": row.get("legislation_key") or primary_directive,
-            }
-        )
-
+    items = find_applicable_items(
+        traits=trait_set,
+        directives=detected_directives,
+        product_type=product_type,
+        matched_products=sorted(matched_products),
+        preferred_standard_codes=sorted(likely_standards),
+        explicit_traits=set(traits_data.get("explicit_traits") or []),
+        confirmed_traits=confirmed_traits,
+    )
+    selected_rows = list(items["standards"]) + list(items["review_items"])
     selected_rows = _apply_post_selection_gates(selected_rows, trait_set, matched_products, diagnostics, allowed_directives)
 
-    dedup: dict[tuple[str, str], dict[str, Any]] = {}
+    dedup: dict[str, dict[str, Any]] = {}
     for row in selected_rows:
-        key = (str(row.get("directive") or "OTHER"), str(row.get("code") or ""))
+        key = str(row.get("code") or "")
         if key not in dedup or int(row.get("score", 0)) > int(dedup[key].get("score", 0)):
             dedup[key] = row
 
     standard_items: list[StandardItem] = []
     review_items: list[StandardItem] = []
     for row in dedup.values():
-        item = StandardItem(
-            code=str(row["code"]),
-            title=str(row["title"]),
-            directive=str(row.get("directive") or row.get("legislation_key") or "OTHER"),
-            directives=[str(item) for item in (row.get("directives") or []) if isinstance(item, str)],
-            legislation_key=row.get("legislation_key"),
-            category=str(row.get("category", "other")),
-            confidence=_confidence_from_score(int(row.get("score", 0))),
-            item_type=row.get("item_type", "standard"),
-            match_basis="product" if row.get("product_match_type") else "traits",
-            score=int(row.get("score", 0)),
-            reason=None,
-            notes=row.get("notes"),
-            matched_traits_all=row.get("matched_traits_all", []),
-            matched_traits_any=row.get("matched_traits_any", []),
-            missing_required_traits=row.get("missing_required_traits", []),
-            excluded_by_traits=row.get("excluded_by_traits", []),
-            applies_if_products=row.get("applies_if_products", []),
-            exclude_if_products=row.get("exclude_if_products", []),
-            product_match_type=row.get("product_match_type"),
-            standard_family=row.get("standard_family"),
-            is_harmonized=row.get("is_harmonized"),
-            harmonized_under=row.get("harmonized_under"),
-            harmonization_status=row.get("harmonization_status", "unknown"),
-            harmonized_reference=row.get("harmonized_reference"),
-            version=row.get("version"),
-            dated_version=row.get("dated_version"),
-            supersedes=row.get("supersedes"),
-            test_focus=row.get("test_focus", []),
-            evidence_hint=row.get("evidence_hint", []),
-            keywords=row.get("keywords", []),
-        )
+        item = _standard_item_from_row(row, legislation_by_directive)
         if item.item_type == "review":
             review_items.append(item)
         else:
@@ -744,6 +930,8 @@ def analyze(
         future_legislation_count=len([x for x in legislation_items if x.timing_status == "future"]),
         standards_count=len(standard_items),
         review_items_count=len(review_items),
+        current_review_items_count=len([x for x in review_items if x.timing_status == "current"]),
+        future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
         harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
         state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
         product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),

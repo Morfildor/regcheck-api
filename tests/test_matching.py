@@ -51,6 +51,43 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("EN 62368-1", review_codes)
         self.assertNotIn("EN 62368-1", standard_codes)
 
+    def test_analyze_preserves_preferred_standard_review_fallback(self) -> None:
+        fake_traits = {
+            "product_type": "smart_speaker",
+            "matched_products": ["smart_speaker"],
+            "confirmed_products": [],
+            "preferred_standard_codes": ["EN 62368-1"],
+            "product_match_confidence": "medium",
+            "product_candidates": [
+                {
+                    "id": "smart_speaker",
+                    "label": "Smart speaker",
+                    "score": 140,
+                    "confidence": "medium",
+                    "reasons": ["synthetic fixture"],
+                    "likely_standards": ["EN 62368-1"],
+                }
+            ],
+            "functional_classes": ["home_device"],
+            "confirmed_functional_classes": [],
+            "explicit_traits": ["electrical", "electronic", "mains_powered"],
+            "confirmed_traits": ["electrical", "electronic", "mains_powered"],
+            "inferred_traits": [],
+            "all_traits": ["electrical", "electronic", "mains_powered"],
+            "contradictions": [],
+            "contradiction_severity": "none",
+            "diagnostics": [],
+        }
+
+        with patch("rules.extract_traits", return_value=fake_traits):
+            result = analyze("synthetic")
+
+        review_item = next(item for item in result.review_items if item.code == "EN 62368-1")
+
+        self.assertEqual(review_item.match_basis, "preferred_product")
+        self.assertIsNotNone(review_item.reason)
+        self.assertEqual(review_item.fact_basis, "confirmed")
+
     def test_reset_cache_clears_classifier_trait_cache(self) -> None:
         classifier._known_trait_ids()
 
@@ -84,6 +121,12 @@ class MatchingTests(unittest.TestCase):
 
         self.assertEqual(future_ai_act["timing_status"], "future")
         self.assertEqual(current_ai_act["timing_status"], "current")
+
+    def test_analyze_surfaces_ai_act_in_future_regimes(self) -> None:
+        result = analyze("AI-enabled smart camera with wifi")
+
+        future_keys = {item.directive_key for item in result.future_regimes}
+        self.assertIn("AI_Act", future_keys)
 
     def test_admin_reload_is_disabled_without_token(self) -> None:
         with self.assertRaises(HTTPException) as ctx:
