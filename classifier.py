@@ -73,6 +73,11 @@ def _known_trait_ids() -> set[str]:
     return TRAIT_IDS_CACHE
 
 
+def reset_classifier_cache() -> None:
+    global TRAIT_IDS_CACHE
+    TRAIT_IDS_CACHE = None
+
+
 def _has_any_regex(text: str, patterns: list[str]) -> bool:
     return any(re.search(pattern, text) for pattern in patterns)
 

@@ -59,6 +59,7 @@ class StandardItem(BaseModel):
     code: str
     title: str
     directive: str
+    directives: list[str] = Field(default_factory=list)
     legislation_key: str | None = None
     category: str
     confidence: ConfidenceLevel = "medium"

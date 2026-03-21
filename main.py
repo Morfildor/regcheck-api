@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import logging
 import os
+import secrets
+from typing import Annotated, Any
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from knowledge_base import (
@@ -19,8 +22,10 @@ from models import AnalysisResult, ProductInput
 from rules import analyze
 
 APP_VERSION = "5.0.0"
+ADMIN_RELOAD_TOKEN_ENV = "REGCHECK_ADMIN_RELOAD_TOKEN"
 
 app = FastAPI(title="RegCheck API", version=APP_VERSION)
+logger = logging.getLogger(__name__)
 
 DEFAULT_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -41,7 +46,34 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_kb_status: dict = {"ok": False, "error": None, "counts": {}}
+_kb_status: dict[str, Any] = {"ok": False, "error": None, "counts": {}}
+
+
+def _standard_directives(row: dict[str, Any]) -> list[str]:
+    directives = row.get("directives")
+    if isinstance(directives, list):
+        values = [item for item in directives if isinstance(item, str) and item]
+        if values:
+            return values
+
+    legislation_key = row.get("legislation_key")
+    if isinstance(legislation_key, str) and legislation_key:
+        return [legislation_key]
+
+    return ["OTHER"]
+
+
+def _require_admin_reload_token(
+    x_admin_token: Annotated[str | None, Header(alias="X-Admin-Token")] = None,
+) -> None:
+    expected_token = os.getenv(ADMIN_RELOAD_TOKEN_ENV, "").strip()
+    if not expected_token:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Admin reload is disabled. Set {ADMIN_RELOAD_TOKEN_ENV} to enable it.",
+        )
+    if not x_admin_token or not secrets.compare_digest(x_admin_token, expected_token):
+        raise HTTPException(status_code=403, detail="Forbidden")
 
 
 @app.on_event("startup")
@@ -116,10 +148,11 @@ def metadata_standards() -> dict:
         "knowledge_base_meta": load_meta(),
         "standards": [
             {
+                "directive": _standard_directives(row)[0],
+                "directives": _standard_directives(row),
                 "code": row["code"],
                 "title": row["title"],
                 "category": row["category"],
-                "directive": (row.get("directives") or [row.get("legislation_key") or "OTHER"])[0],
                 "legislation_key": row.get("legislation_key"),
                 "item_type": row.get("item_type", "standard"),
                 "standard_family": row.get("standard_family"),
@@ -143,7 +176,7 @@ def metadata_standards() -> dict:
 
 
 @app.post("/admin/reload")
-def admin_reload() -> dict:
+def admin_reload(_: None = Depends(_require_admin_reload_token)) -> dict:
     global _kb_status
     try:
         reset_cache()
@@ -169,4 +202,5 @@ def run_analysis(product: ProductInput) -> AnalysisResult:
     except KnowledgeBaseError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Analysis failed: {exc}") from exc
+        logger.exception("Analysis failed")
+        raise HTTPException(status_code=500, detail="Analysis failed") from exc

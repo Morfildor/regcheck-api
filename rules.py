@@ -17,8 +17,6 @@ from models import (
 )
 from standards_engine import find_applicable_items
 
-TODAY = date.today()
-
 BUCKET_SORT = {"ce": 0, "framework": 1, "non_ce": 2, "future": 3, "informational": 4}
 PRIORITY_SORT = {"core": 0, "product_specific": 1, "conditional": 2, "informational": 3}
 DIR_ROUTE_ORDER = {
@@ -66,6 +64,10 @@ DIR_SECTION_TITLES = {
     "MACH_REG": "Future machinery route",
     "OTHER": "Other standards",
 }
+
+
+def _current_date() -> date:
+    return date.today()
 
 
 def _parse_date(value: str | None) -> date | None:
@@ -136,11 +138,12 @@ def _build_legislation_reason(row: dict[str, Any], timing_status: str) -> str:
 
 def _pick_legislations(all_traits: set[str], functional_classes: set[str], product_type: str | None) -> list[dict[str, Any]]:
     picked: list[dict[str, Any]] = []
+    today = _current_date()
     for row in load_legislations():
         if not _matches_conditions(row, all_traits, functional_classes, product_type):
             continue
         enriched = dict(row)
-        enriched["timing_status"] = _timing_status(row, TODAY)
+        enriched["timing_status"] = _timing_status(row, today)
         enriched["reason"] = _build_legislation_reason(row, enriched["timing_status"])
         picked.append(enriched)
 
@@ -161,6 +164,37 @@ def _directive_keys_for_matching(legislations: list[dict[str, Any]], forced: lis
     return sorted(keys)
 
 
+def _row_directives(row: dict[str, Any]) -> list[str]:
+    directives = row.get("directives")
+    if isinstance(directives, list):
+        values = [item for item in directives if isinstance(item, str) and item]
+        if values:
+            return values
+
+    for key in ("directive", "legislation_key"):
+        value = row.get(key)
+        if isinstance(value, str) and value:
+            return [value]
+
+    return ["OTHER"]
+
+
+def _item_directives(item: StandardItem) -> list[str]:
+    directives = item.directives or [item.directive]
+    if item.legislation_key:
+        directives = [*directives, item.legislation_key]
+    unique = [value for value in dict.fromkeys(directives) if value]
+    return unique or ["OTHER"]
+
+
+def _has_directive(item: StandardItem, directive: str) -> bool:
+    return directive in _item_directives(item)
+
+
+def _directive_label(item: StandardItem) -> str:
+    return " / ".join(_item_directives(item))
+
+
 def _annotate_standard_items(rows: list[dict[str, Any]], legislation_index: dict[str, dict[str, Any]]) -> list[StandardItem]:
     out: list[StandardItem] = []
     for row in rows:
@@ -171,11 +205,14 @@ def _annotate_standard_items(rows: list[dict[str, Any]], legislation_index: dict
             enriched["regime_bucket"] = leg.get("bucket")
             enriched["timing_status"] = leg.get("timing_status", "current")
 
+        directives = _row_directives(enriched)
+
         out.append(
             StandardItem(
                 code=enriched["code"],
                 title=enriched["title"],
-                directive=(enriched.get("directives") or [enriched.get("legislation_key") or "OTHER"])[0],
+                directive=directives[0],
+                directives=directives,
                 legislation_key=enriched.get("legislation_key"),
                 category=enriched["category"],
                 confidence=enriched.get("confidence", "medium"),
@@ -340,15 +377,15 @@ def _display_tags(item: StandardItem) -> list[str]:
     elif item.item_type == "review":
         tags.append("Review required")
 
-    if item.directive == "LVD" and code_upper.startswith("EN 60335-2-"):
+    if _has_directive(item, "LVD") and code_upper.startswith("EN 60335-2-"):
         tags.append("Part 2")
-    if item.directive == "LVD" and code_upper.startswith("EN 60335-1"):
+    if _has_directive(item, "LVD") and code_upper.startswith("EN 60335-1"):
         tags.append("Base safety")
     if item.category == "emc" or code_upper.startswith("EN 55014") or code_upper.startswith("EN 61000"):
         tags.append("EMC")
-    if item.directive == "RED":
+    if _has_directive(item, "RED"):
         tags.append("Radio")
-    if item.directive == "RED_CYBER":
+    if _has_directive(item, "RED_CYBER"):
         tags.append("Cybersecurity")
     if code_upper.startswith("EN 18031-1"):
         tags.append("Art. 3(3)(d)")
@@ -399,11 +436,11 @@ def _standard_summary(item: StandardItem) -> str:
         return "RoHS technical documentation route."
     return item.title
 
-def _standard_route_key(item: StandardItem) -> str:
+def _standard_route_keys(item: StandardItem) -> list[str]:
     code_upper = item.code.upper()
     if code_upper.startswith("EN 18031-"):
-        return "RED_CYBER"
-    return item.directive or item.legislation_key or "OTHER"
+        return ["RED_CYBER"]
+    return _item_directives(item)
 
 
 def _standard_sort_rank(item: StandardItem) -> tuple[int, int, str]:
@@ -443,40 +480,41 @@ def _build_standard_sections(standards: list[StandardItem], review_items: list[S
     grouped: dict[str, dict[str, Any]] = {}
 
     for item in [*standards, *review_items]:
-        route_key = _standard_route_key(item)
-        section = grouped.setdefault(
-            route_key,
-            {"key": route_key, "title": DIR_SECTION_TITLES.get(route_key, route_key), "count": 0, "items": []},
-        )
-        section["items"].append(
-            {
-                "code": item.code,
-                "title": item.title,
-                "directive": route_key,
-                "legislation_key": item.legislation_key,
-                "category": item.category,
-                "item_type": item.item_type,
-                "confidence": item.confidence,
-                "reason": item.reason,
-                "notes": item.notes,
-                "standard_family": item.standard_family,
-                "is_harmonized": item.is_harmonized,
-                "harmonized_under": item.harmonized_under,
-                "harmonized_reference": item.harmonized_reference,
-                "harmonization_status": item.harmonization_status,
-                "version": item.version,
-                "dated_version": item.dated_version,
-                "supersedes": item.supersedes,
-                "applies_if_products": item.applies_if_products,
-                "match_basis": item.match_basis,
-                "product_match_type": item.product_match_type,
-                "test_focus": item.test_focus,
-                "evidence_hint": item.evidence_hint,
-                "keywords": item.keywords,
-                "display_tags": _display_tags(item),
-                "standard_summary": _standard_summary(item),
-            }
-        )
+        for route_key in _standard_route_keys(item):
+            section = grouped.setdefault(
+                route_key,
+                {"key": route_key, "title": DIR_SECTION_TITLES.get(route_key, route_key), "count": 0, "items": []},
+            )
+            section["items"].append(
+                {
+                    "code": item.code,
+                    "title": item.title,
+                    "directive": route_key,
+                    "directives": _item_directives(item),
+                    "legislation_key": item.legislation_key,
+                    "category": item.category,
+                    "item_type": item.item_type,
+                    "confidence": item.confidence,
+                    "reason": item.reason,
+                    "notes": item.notes,
+                    "standard_family": item.standard_family,
+                    "is_harmonized": item.is_harmonized,
+                    "harmonized_under": item.harmonized_under,
+                    "harmonized_reference": item.harmonized_reference,
+                    "harmonization_status": item.harmonization_status,
+                    "version": item.version,
+                    "dated_version": item.dated_version,
+                    "supersedes": item.supersedes,
+                    "applies_if_products": item.applies_if_products,
+                    "match_basis": item.match_basis,
+                    "product_match_type": item.product_match_type,
+                    "test_focus": item.test_focus,
+                    "evidence_hint": item.evidence_hint,
+                    "keywords": item.keywords,
+                    "display_tags": _display_tags(item),
+                    "standard_summary": _standard_summary(item),
+                }
+            )
 
     for section in grouped.values():
         section["items"].sort(
@@ -555,7 +593,7 @@ def _findings(
     for item in standards:
         findings.append(
             Finding(
-                directive=item.directive or item.legislation_key or "OTHER",
+                directive=_directive_label(item),
                 article=item.code,
                 status="PASS" if item.harmonization_status == "harmonized" else "INFO",
                 finding=item.title,
@@ -566,7 +604,7 @@ def _findings(
     for item in review_items:
         findings.append(
             Finding(
-                directive=item.directive or item.legislation_key or "OTHER",
+                directive=_directive_label(item),
                 article=item.code,
                 status="WARN",
                 finding=item.title,
@@ -597,7 +635,7 @@ def _diagnostics(
     picked_legislations: list[dict[str, Any]],
     applicable_items: dict[str, Any],
 ) -> list[str]:
-    diagnostics = [f"analysis_date={TODAY.isoformat()}", f"depth={depth}"]
+    diagnostics = [f"analysis_date={_current_date().isoformat()}", f"depth={depth}"]
     diagnostics.extend(classification.get("diagnostics", []))
     diagnostics.append(
         "legislation_keys=" + ",".join(sorted({row["directive_key"] for row in picked_legislations if row.get("directive_key")}))
@@ -711,9 +749,9 @@ def _top_actions(
         actions.append("Confirm payment, subscription, ordering, or other money-transfer features to decide EN 18031-3.")
     if any(row.directive_key == "RED_CYBER" for row in ce_legislations):
         actions.append("Map connected radio functions to EN 18031-1, -2, and -3, and keep CRA separate as a future regime.")
-    if any(item.directive == "LVD" and item.code.startswith("EN 60335-2-") for item in standards):
+    if any(_has_directive(item, "LVD") and item.code.startswith("EN 60335-2-") for item in standards):
         actions.append("Use EN 60335-1 as the base route and the applicable EN 60335-2 Part 2 route for product-specific safety.")
-    if any(item.directive == "EMC" for item in standards):
+    if any(_has_directive(item, "EMC") for item in standards):
         actions.append("Plan EMC evidence separately for emission, immunity, harmonics, and flicker where applicable.")
     if review_items:
         actions.append("Resolve all review-required routes before treating the output as final for declaration work.")
@@ -738,7 +776,7 @@ def _current_path(ce_legislations: list[LegislationItem], standards: list[Standa
         path.append("Use EN 18031-2 where account, login, password, PIN, or similar authentication is present.")
     if "EN 18031-3" in standard_codes:
         path.append("Use EN 18031-3 where the product or companion flow supports payment or other monetary-value transfer.")
-    if any(item.directive == "ROHS" for item in standards) or any(row.directive_key == "ROHS" for row in ce_legislations):
+    if any(_has_directive(item, "ROHS") for item in standards) or any(row.directive_key == "ROHS" for row in ce_legislations):
         path.append("Maintain RoHS technical documentation and supplier-material evidence alongside the CE file.")
     return path[:6]
 

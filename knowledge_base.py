@@ -454,3 +454,6 @@ def warmup_knowledge_base() -> dict:
 
 def reset_cache() -> None:
     load_all.cache_clear()
+    from classifier import reset_classifier_cache
+
+    reset_classifier_cache()
