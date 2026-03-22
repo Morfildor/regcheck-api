@@ -6,6 +6,10 @@ from datetime import date
 import os
 from typing import Any, Literal
 
+from env_config import init_env
+
+init_env()
+
 from classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, extract_traits, extract_traits_v1, normalize
 from knowledge_base import load_legislations, load_meta
 from models import (

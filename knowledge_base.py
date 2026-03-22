@@ -8,6 +8,10 @@ from typing import Any
 
 import yaml
 
+from env_config import init_env
+
+init_env()
+
 
 class KnowledgeBaseError(RuntimeError):
     pass

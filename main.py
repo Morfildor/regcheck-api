@@ -8,6 +8,10 @@ from typing import Annotated, Any
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+from env_config import init_env
+
+init_env()
+
 from knowledge_base import (
     KnowledgeBaseError,
     load_genres,
