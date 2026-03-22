@@ -17,7 +17,7 @@ import main
 from models import ProductInput
 from models import LegislationItem
 from rules import _pick_legislations, analyze
-from standards_engine import find_applicable_items
+from standards_engine import _keyword_hits, find_applicable_items
 
 
 class MatchingTests(unittest.TestCase):
@@ -203,6 +203,18 @@ class MatchingTests(unittest.TestCase):
             if any(row["code"] == "EN 301 489-1" for row in section["items"])
         }
         self.assertTrue({"RED", "EMC"}.issubset(section_keys))
+
+    def test_analyze_keeps_genre_gated_iot_review_routes(self) -> None:
+        result = analyze("consumer iot smart plug with app control")
+
+        review_codes = {item.code for item in result.review_items}
+        self.assertIn("EN 303 645 review", review_codes)
+
+    def test_keyword_matching_handles_reordered_phrase_tokens(self) -> None:
+        standard = next(row for row in load_standards() if row["code"] == "EN 62368-1")
+        hits = _keyword_hits(standard, classifier.normalize("ict audio video equipment with display"))
+
+        self.assertIn("audio/video, ict", hits)
 
     def test_pick_legislations_uses_current_date_per_call(self) -> None:
         with patch("rules._current_date", return_value=date(2026, 3, 21)):

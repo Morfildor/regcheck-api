@@ -31,6 +31,7 @@ DIRECTIVE_ORDER = {
 
 StandardItemType = Literal["standard", "review"]
 ProductHitType = Literal["not_product_gated", "primary_product", "alternate_product", "primary_genre"]
+
 MatchBasis = Literal["product", "alternate_product", "preferred_product", "genre", "traits"]
 FactBasis = Literal["confirmed", "mixed", "inferred"]
 
@@ -139,18 +140,48 @@ def _product_hit_type(
         return "not_product_gated"
 
     if applies_if_genres & set(product_genres):
+        if _is_subtype_specific_standard(standard) and not product_type and not applies_if_products:
+            return None
         return "primary_genre"
 
     return None
 
 
-def _is_preferred_standard(standard: dict[str, Any], preferred_standard_codes: set[str]) -> bool:
+def _normalize_selection_group(standard: dict[str, Any]) -> str | None:
+    selection_group = standard.get("selection_group")
+    if isinstance(selection_group, str) and selection_group.strip():
+        return selection_group.strip()
+
+    code = str(standard.get("code", "")).upper()
+    if code.startswith("EN 60335-2-"):
+        return "lvd_household_part2"
+    return None
+
+
+def _is_subtype_specific_standard(standard: dict[str, Any]) -> bool:
+    code = str(standard.get("code", "")).upper()
+    family = str(standard.get("standard_family", "")).upper()
+    selection_group = _normalize_selection_group(standard)
+    return code.startswith("EN 60335-2-") or family.startswith("EN 60335-2-") or selection_group == "lvd_household_part2"
+
+
+def _is_exact_preferred_standard(standard: dict[str, Any], preferred_standard_codes: set[str]) -> bool:
     if not preferred_standard_codes:
         return False
     code = standard.get("code")
+    return isinstance(code, str) and code in preferred_standard_codes
+
+
+def _is_family_preferred_standard(standard: dict[str, Any], preferred_standard_codes: set[str]) -> bool:
+    if not preferred_standard_codes:
+        return False
     family = standard.get("standard_family")
-    return (isinstance(code, str) and code in preferred_standard_codes) or (
-        isinstance(family, str) and family in preferred_standard_codes
+    return isinstance(family, str) and family in preferred_standard_codes
+
+
+def _is_preferred_standard(standard: dict[str, Any], preferred_standard_codes: set[str]) -> bool:
+    return _is_exact_preferred_standard(standard, preferred_standard_codes) or _is_family_preferred_standard(
+        standard, preferred_standard_codes
     )
 
 
@@ -644,7 +675,7 @@ def find_applicable_items_v2(
         enriched["excluded_by_traits"] = gate["excluded_by_traits"]
         enriched["product_match_type"] = product_hit_type
         enriched["keyword_hits"] = keyword_hits
-        enriched["selection_group"] = standard.get("selection_group")
+        enriched["selection_group"] = _normalize_selection_group(standard)
         enriched["selection_priority"] = int(standard.get("selection_priority") or 0)
         candidates.append(enriched)
 

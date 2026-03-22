@@ -490,6 +490,20 @@ def _confidence_from_score(score: int) -> ConfidenceLevel:
     return "low"
 
 
+def _collect_preferred_standard_codes(traits_data: dict[str, Any]) -> set[str]:
+    preferred: set[str] = set(traits_data.get("preferred_standard_codes") or [])
+    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    routing_matched_products = set(traits_data.get("routing_matched_products") or [])
+
+    if product_match_stage != "subtype":
+        return preferred
+
+    for candidate in traits_data.get("product_candidates") or []:
+        if candidate.get("id") in routing_matched_products:
+            preferred.update(candidate.get("likely_standards") or [])
+    return preferred
+
+
 def _derive_engine_traits(description: str, traits: set[str], matched_products: set[str]) -> tuple[set[str], list[str]]:
     text = normalize(description)
     diagnostics: list[str] = []
@@ -978,11 +992,6 @@ def _apply_post_selection_gates(
         kept = [item for item in kept if item.get("code") != "Battery safety review"]
         diagnostics.append("gate=prune_Battery_safety_review:covered_by_EN62133-2")
 
-    codes = {str(item.get("code") or "") for item in kept}
-    if "EN 60335 review" in codes and any(code == "EN 60335-1" or code.startswith("EN 60335-2-") for code in codes):
-        kept = [item for item in kept if item.get("code") != "EN 60335 review"]
-        diagnostics.append("gate=prune_EN60335_review:covered_by_specific_EN60335_route")
-
     return kept
 
 
@@ -1197,8 +1206,9 @@ def _build_quick_adds(missing: list[MissingInformationItem]) -> list[dict[str, s
 def _build_standard_sections(items: list[StandardItem]) -> list[dict[str, Any]]:
     grouped: dict[str, list[StandardItem]] = defaultdict(list)
     for item in items:
-        route_key = item.directive or (item.directives[0] if item.directives else "OTHER")
-        grouped[route_key].append(item)
+        route_keys = [item.directive] if item.category == "safety" else ([key for key in item.directives if key] or [item.directive])
+        for key in route_keys:
+            grouped[key].append(item)
     sections: list[dict[str, Any]] = []
     for key in sorted(grouped.keys(), key=_directive_rank):
         route_items = _sort_standard_items(grouped[key])
@@ -1633,10 +1643,7 @@ def analyze_v1(
     product_type = traits_data.get("product_type")
     product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
     routing_product_type = product_type if product_match_stage == "subtype" else None
-    likely_standards: set[str] = set(traits_data.get("preferred_standard_codes") or [])
-    for candidate in traits_data.get("product_candidates") or []:
-        if candidate.get("id") in routing_matched_products:
-            likely_standards.update(candidate.get("likely_standards") or [])
+    likely_standards = _collect_preferred_standard_codes(traits_data)
 
     trait_set = set(traits_data.get("all_traits") or [])
     confirmed_traits = set(traits_data.get("confirmed_traits") or [])
@@ -1835,10 +1842,7 @@ def analyze(
     product_type = traits_data.get("product_type")
     product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
     routing_product_type = product_type if product_match_stage == "subtype" else None
-    likely_standards: set[str] = set(traits_data.get("preferred_standard_codes") or [])
-    for candidate in traits_data.get("product_candidates") or []:
-        if candidate.get("id") in routing_matched_products:
-            likely_standards.update(candidate.get("likely_standards") or [])
+    likely_standards = _collect_preferred_standard_codes(traits_data)
 
     base_trait_set = set(traits_data.get("all_traits") or [])
     trait_set = set(base_trait_set)
@@ -1870,6 +1874,7 @@ def analyze(
         directives=detected_directives,
         product_type=routing_product_type,
         matched_products=sorted(routing_matched_products),
+        product_genres=sorted(product_genres),
         preferred_standard_codes=sorted(likely_standards),
         explicit_traits=set(traits_data.get("explicit_traits") or []),
         confirmed_traits=confirmed_traits,

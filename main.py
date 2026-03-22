@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import os
 import secrets
+from contextlib import asynccontextmanager
 from typing import Annotated, Any
 
 from fastapi import Depends, FastAPI, Header, HTTPException
@@ -30,8 +31,21 @@ APP_VERSION = "6.0.0"
 ADMIN_RELOAD_TOKEN_ENV = "REGCHECK_ADMIN_RELOAD_TOKEN"
 EXPOSE_HEALTH_DETAILS = os.getenv("REGCHECK_EXPOSE_HEALTH_DETAILS", "false").strip().lower() in {"1", "true", "yes", "on"}
 
-app = FastAPI(title="RegCheck API", version=APP_VERSION)
 logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    global _kb_status
+    try:
+        counts = warmup_knowledge_base()
+        _kb_status = {"ok": True, "error": None, "counts": counts}
+    except KnowledgeBaseError as exc:
+        _kb_status = {"ok": False, "error": str(exc), "counts": {}}
+    yield
+
+
+app = FastAPI(title="RegCheck API", version=APP_VERSION, lifespan=lifespan)
 
 DEFAULT_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -80,16 +94,6 @@ def _require_admin_reload_token(
         )
     if not x_admin_token or not secrets.compare_digest(x_admin_token, expected_token):
         raise HTTPException(status_code=403, detail="Forbidden")
-
-
-@app.on_event("startup")
-def startup_event() -> None:
-    global _kb_status
-    try:
-        counts = warmup_knowledge_base()
-        _kb_status = {"ok": True, "error": None, "counts": counts}
-    except KnowledgeBaseError as exc:
-        _kb_status = {"ok": False, "error": str(exc), "counts": {}}
 
 
 @app.get("/")

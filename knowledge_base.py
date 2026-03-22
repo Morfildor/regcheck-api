@@ -232,6 +232,7 @@ def _validate_genres(data: dict[str, Any], trait_ids: set[str]) -> list[dict[str
             value = row.get(key, [])
             if value is not None and not isinstance(value, list):
                 raise KnowledgeBaseError(f"Genre '{genre_id}' field '{key}' must be a list when present.")
+        _normalize_likely_standard_refs(row, f"Genre '{genre_id}'")
     return genres
 
 
@@ -279,6 +280,8 @@ def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set
                 for genre in value:
                     if genre not in genre_ids:
                         raise KnowledgeBaseError(f"Product '{pid}' references unknown genre '{genre}'.")
+
+        _normalize_likely_standard_refs(row, f"Product '{pid}'")
 
         for key in ("core_traits", "default_traits", "required_clues", "preferred_clues", "exclude_clues", "confusable_with", "family_traits", "subtype_traits"):
             value = row.get(key, [])
@@ -558,6 +561,10 @@ def _enrich_products(rows: list[dict[str, Any]], genres: list[dict[str, Any]]) -
             default_traits.extend(list(enriched.get("implied_traits") or []))
         enriched["core_traits"] = list(dict.fromkeys(core_traits))
         enriched["default_traits"] = [trait for trait in dict.fromkeys(default_traits) if trait not in enriched["core_traits"]]
+        enriched["likely_standard_refs"] = _normalize_likely_standard_refs(enriched, f"Genre '{enriched['id']}'") if "id" in enriched else []
+        enriched["likely_standards"] = [item["ref"] for item in enriched["likely_standard_refs"]]
+        enriched["likely_standard_refs"] = _normalize_likely_standard_refs(enriched, f"Product '{enriched['id']}'") if "id" in enriched else []
+        enriched["likely_standards"] = [item["ref"] for item in enriched["likely_standard_refs"]]
         out.append(enriched)
     return out
 
@@ -587,6 +594,30 @@ def _enrich_standards(rows: list[dict[str, Any]], products: list[dict[str, Any]]
     return out
 
 
+def _normalize_likely_standard_refs(row: dict[str, Any], owner: str) -> list[dict[str, str]]:
+    raw_refs = row.get("likely_standard_refs")
+    if raw_refs is None:
+        return [{"ref": ref, "kind": "unspecified"} for ref in _string_list(row.get("likely_standards"))]
+    if not isinstance(raw_refs, list):
+        raise KnowledgeBaseError(f"{owner} field 'likely_standard_refs' must be a list when present.")
+
+    refs: list[dict[str, str]] = []
+    for item in raw_refs:
+        if isinstance(item, str) and item.strip():
+            refs.append({"ref": item.strip(), "kind": "unspecified"})
+            continue
+        if not isinstance(item, dict):
+            raise KnowledgeBaseError(f"{owner} field 'likely_standard_refs' must contain strings or mappings.")
+        ref = item.get("ref")
+        kind = item.get("kind") or "unspecified"
+        if not isinstance(ref, str) or not ref.strip():
+            raise KnowledgeBaseError(f"{owner} field 'likely_standard_refs' contains an item without a valid 'ref'.")
+        if not isinstance(kind, str) or not kind.strip():
+            raise KnowledgeBaseError(f"{owner} field 'likely_standard_refs' contains an item without a valid 'kind'.")
+        refs.append({"ref": ref.strip(), "kind": kind.strip()})
+    return refs
+
+
 def _post_validate_product_standard_links(
     products: list[dict[str, Any]],
     genres: list[dict[str, Any]],
@@ -598,7 +629,8 @@ def _post_validate_product_standard_links(
 
     for product in products:
         pid = product["id"]
-        for reference in _string_list(product.get("likely_standards")):
+        for ref_item in product.get("likely_standard_refs") or _normalize_likely_standard_refs(product, f"Product '{pid}'"):
+            reference = ref_item["ref"]
             if reference not in known_references:
                 raise KnowledgeBaseError(
                     f"Product '{pid}' references likely_standard '{reference}' that does not match any standard code or family."
@@ -606,7 +638,8 @@ def _post_validate_product_standard_links(
 
     for genre in genres:
         gid = genre["id"]
-        for reference in _string_list(genre.get("likely_standards")):
+        for ref_item in genre.get("likely_standard_refs") or _normalize_likely_standard_refs(genre, f"Genre '{gid}'"):
+            reference = ref_item["ref"]
             if reference not in known_references:
                 raise KnowledgeBaseError(
                     f"Genre '{gid}' references likely_standard '{reference}' that does not match any standard code or family."
