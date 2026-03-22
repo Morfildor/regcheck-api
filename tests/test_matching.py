@@ -462,6 +462,15 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("EN 60825-1", standard_codes)
         self.assertIn("EN 62471", standard_codes)
 
+    def test_video_doorbell_promotes_en_62368_from_explicit_av_ict_signals(self) -> None:
+        result = analyze("video doorbell with wifi and camera")
+
+        standard_codes = {item.code for item in result.standards}
+        review_codes = {item.code for item in result.review_items}
+
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertNotIn("EN 62368-1", review_codes)
+
     def test_cellular_handheld_routes_to_specific_red_emf_standards_not_en_62479(self) -> None:
         result = analyze("Handheld LTE scanner with display, rechargeable battery, and Wi-Fi")
 

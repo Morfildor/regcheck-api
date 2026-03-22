@@ -376,6 +376,70 @@ BASE_STANDARD_PRIORITY_V2 = {
     "EN 63000": 120,
 }
 
+RADIO_EXPLICIT_TRAITS = {"wifi", "bluetooth", "zigbee", "thread", "matter", "nfc", "cellular", "dect", "radio"}
+ELECTRICAL_EXPLICIT_TRAITS = {
+    "electrical",
+    "electronic",
+    "radio",
+    "av_ict",
+    "heating",
+    "motorized",
+    "camera",
+    "display",
+    "microphone",
+    "speaker",
+    "mains_powered",
+    "mains_power_likely",
+    "battery_powered",
+    "usb_powered",
+    "poe_powered",
+    "poe_supply",
+    "backup_battery",
+    "ev_charging",
+    "vehicle_supply",
+    "wireless_charging_rx",
+    "wireless_charging_tx",
+}
+ELECTRONIC_EXPLICIT_TRAITS = {
+    "electronic",
+    "radio",
+    "camera",
+    "display",
+    "microphone",
+    "speaker",
+    "data_storage",
+    "ota",
+    "cloud",
+    "app_control",
+    "wifi",
+    "bluetooth",
+    "zigbee",
+    "thread",
+    "matter",
+    "cellular",
+    "nfc",
+    "dect",
+}
+
+
+def _baseline_confirmed_traits(explicit_traits: set[str]) -> set[str]:
+    confirmed: set[str] = set()
+    if explicit_traits & RADIO_EXPLICIT_TRAITS:
+        confirmed.add("radio")
+    if explicit_traits & ELECTRICAL_EXPLICIT_TRAITS:
+        confirmed.add("electrical")
+    if explicit_traits & ELECTRONIC_EXPLICIT_TRAITS:
+        confirmed.add("electronic")
+    if "wifi" in explicit_traits and ({"cloud", "ota", "account", "authentication", "app_control"} & explicit_traits):
+        confirmed.add("internet")
+    if "cellular" in explicit_traits:
+        confirmed.add("internet")
+    if "battery_powered" in explicit_traits:
+        confirmed.add("portable")
+    if "food_contact" in explicit_traits:
+        confirmed.add("consumer")
+    return confirmed
+
 
 def _fact_basis_satisfies(required: FactBasis, actual: FactBasis) -> bool:
     return FACT_BASIS_RANK[actual] >= FACT_BASIS_RANK[required]
@@ -632,6 +696,7 @@ def find_applicable_items_v2(
     preferred_codes = set(preferred_standard_codes or [])
     confirmed_traits = confirmed_traits or set(traits)
     explicit_traits = explicit_traits or set(confirmed_traits)
+    effective_confirmed_traits = confirmed_traits | _baseline_confirmed_traits(explicit_traits)
     context_tags = context_tags or set()
 
     candidates: list[dict[str, Any]] = []
@@ -644,7 +709,7 @@ def find_applicable_items_v2(
 
         product_hit_type = _product_hit_type(standard, product_type, matched_products, product_genres)
         preferred_hit = _is_preferred_standard(standard, preferred_codes)
-        gate = _trait_gate_details(standard, traits, confirmed_traits, allow_soft_any_miss=preferred_hit)
+        gate = _trait_gate_details(standard, traits, effective_confirmed_traits, allow_soft_any_miss=preferred_hit)
         if product_hit_type is None or not gate["passes"]:
             rejections.append({"code": standard.get("code"), "reason": _rejection_reason(product_hit_type, gate)})
             continue
