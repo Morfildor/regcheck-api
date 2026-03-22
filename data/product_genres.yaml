@@ -2,20 +2,30 @@ genres:
 - id: household_appliance
   label: Household appliance
   keywords:
-  - electric household appliance
   - household appliance
-  - electric domestic appliance
   - domestic appliance
-  - electric home appliance
   - home appliance
-  - electric white goods
   - white goods
-  - electric domestic equipment
-  - domestic equipment
-  - electric consumer appliance
-  - consumer appliance
-  - electric appliance for home use
-  - appliance for home use
+  - domestic electrical
+  - home device
+  - household-appliance
+  - householdappliance
+  - household appliances
+  - domestic-appliance
+  - domesticappliance
+  - domestic appliances
+  - home-appliance
+  - homeappliance
+  - home appliances
+  - white-goods
+  - whitegoods
+  - white good
+  - domestic-electrical
+  - domesticelectrical
+  - domestic electricals
+  - home-device
+  - homedevice
+  - home devices
   traits:
   - consumer
   - household
@@ -28,25 +38,70 @@ genres:
   likely_standards:
   - EN 60335-1
   - EN 62233
+  strong_keywords:
+  - household appliance
+  - domestic appliance
+  - home appliance
+  - white goods
+  - domestic electrical
+  - home device
+  - household-appliance
+  - householdappliance
+  - household appliances
+  - domestic-appliance
+  - domesticappliance
+  - domestic appliances
+  weak_keywords:
+  - home-appliance
+  - homeappliance
+  - home appliances
+  - white-goods
+  - whitegoods
+  - white good
+  - domestic-electrical
+  - domesticelectrical
+  - domestic electricals
+  - home-device
+  - homedevice
+  - home devices
+  likely_standard_refs:
+  - EN 60335-1
+  - EN 62233
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - indoor_use
+  score_penalty_if_traits:
+  - server_rack
+  - industrial_control
+  negative_examples: []
 - id: commercial_appliance
   label: Commercial appliance
   keywords:
   - commercial appliance
-  - electric commercial appliance
-  - electric professional equipment
   - professional equipment
-  - electric horeca
   - horeca
-  - electric catering equipment
   - catering equipment
-  - horeca equipment
-  - electric horeca equipment
-  - food service equipment
-  - foodservice equipment
-  - electric food-service equipment
-  - food-service equipment
-  - commercial machine
-  - electric commercial machine
+  - professional kitchen equipment
+  - commercial device
+  - commercial-appliance
+  - commercialappliance
+  - commercial appliances
+  - professional-equipment
+  - professionalequipment
+  - professional equipments
+  - horecas
+  - catering-equipment
+  - cateringequipment
+  - catering equipments
+  - professional-kitchen-equipment
+  - professionalkitchenequipment
+  - professional kitchen equipments
+  - commercial-device
+  - commercialdevice
+  - commercial devices
   traits:
   - professional
   - industrial
@@ -57,25 +112,67 @@ genres:
   - commercial_equipment
   likely_standards:
   - EN 60335-1
+  strong_keywords:
+  - commercial appliance
+  - professional equipment
+  - horeca
+  - catering equipment
+  - professional kitchen equipment
+  - commercial device
+  - commercial-appliance
+  - commercialappliance
+  - commercial appliances
+  - professional-equipment
+  - professionalequipment
+  - professional equipments
+  weak_keywords:
+  - horecas
+  - catering-equipment
+  - cateringequipment
+  - catering equipments
+  - professional-kitchen-equipment
+  - professionalkitchenequipment
+  - professional kitchen equipments
+  - commercial-device
+  - commercialdevice
+  - commercial devices
+  likely_standard_refs:
+  - EN 60335-1
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - mains_powered
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: kitchen_food_appliance
   label: Kitchen / food appliance
   keywords:
-  - electric kitchen appliance
   - kitchen appliance
-  - electric food appliance
   - food appliance
   - cooking appliance
-  - electric cooking appliance
-  - food preparation device
-  - electric food preparation device
-  - kitchen machine
-  - electric kitchen machine
-  - electric cooking device
-  - cooking device
+  - countertop kitchen appliance
+  - food prep appliance
   - small kitchen appliance
-  - electric small kitchen appliance
-  - electric countertop cooking appliance
-  - countertop cooking appliance
+  - kitchen-appliance
+  - kitchenappliance
+  - kitchen appliances
+  - food-appliance
+  - foodappliance
+  - food appliances
+  - cooking-appliance
+  - cookingappliance
+  - cooking appliances
+  - countertop-kitchen-appliance
+  - countertopkitchenappliance
+  - countertop kitchen appliances
+  - food-prep-appliance
+  - foodprepappliance
+  - food prep appliances
+  - small-kitchen-appliance
+  - smallkitchenappliance
+  - small kitchen appliances
   traits:
   - food_preparation
   - food_contact
@@ -86,30 +183,70 @@ genres:
   likely_standards:
   - EN 55014-1
   - EN 55014-2
+  strong_keywords:
+  - kitchen appliance
+  - food appliance
+  - cooking appliance
+  - countertop kitchen appliance
+  - food prep appliance
+  - small kitchen appliance
+  - kitchen-appliance
+  - kitchenappliance
+  - kitchen appliances
+  - food-appliance
+  - foodappliance
+  - food appliances
+  weak_keywords:
+  - cooking-appliance
+  - cookingappliance
+  - cooking appliances
+  - countertop-kitchen-appliance
+  - countertopkitchenappliance
+  - countertop kitchen appliances
+  - food-prep-appliance
+  - foodprepappliance
+  - food prep appliances
+  - small-kitchen-appliance
+  - smallkitchenappliance
+  - small kitchen appliances
+  likely_standard_refs:
+  - EN 55014-1
+  - EN 55014-2
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - food_preparation
+  - food_contact
+  - tabletop
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: cleaning_laundry_appliance
   label: Cleaning / laundry appliance
   keywords:
-  - electric cleaning appliance
   - cleaning appliance
-  - electric laundry appliance
   - laundry appliance
   - vacuum
-  - vacuum cleaner
-  - electric vacuum
   - washer
-  - electric washer
-  - floorcare
-  - electric floorcare
-  - vacuum cleaner cleaner
-  - electric vacuum cleaner
-  - washing appliance
-  - electric washing appliance
-  - fabric care appliance
-  - electric fabric care appliance
-  - electric wet cleaner
-  - wet cleaner
-  - surface cleaner
-  - electric surface cleaner
+  - robot vacuum
+  - steam cleaner
+  - floor cleaner
+  - cleaning-appliance
+  - cleaningappliance
+  - cleaning appliances
+  - laundry-appliance
+  - laundryappliance
+  - laundry appliances
+  - vacuums
+  - washers
+  - robo vac
+  - robot-vacuum
+  - robotvacuum
+  - robot vacuums
+  - steam-cleaner
+  - steamcleaner
+  - steam cleaners
+  - floor-cleaner
+  - floorcleaner
+  - floor cleaners
   traits:
   - cleaning
   default_traits:
@@ -121,34 +258,70 @@ genres:
   - EN 60335-1
   - EN 55014-1
   - EN 55014-2
+  strong_keywords:
+  - cleaning appliance
+  - laundry appliance
+  - vacuum
+  - washer
+  - robot vacuum
+  - steam cleaner
+  - floor cleaner
+  - cleaning-appliance
+  - cleaningappliance
+  - cleaning appliances
+  - laundry-appliance
+  - laundryappliance
+  weak_keywords:
+  - laundry appliances
+  - vacuums
+  - washers
+  - robo vac
+  - robot-vacuum
+  - robotvacuum
+  - robot vacuums
+  - steam-cleaner
+  - steamcleaner
+  - steam cleaners
+  - floor-cleaner
+  - floorcleaner
+  - floor cleaners
+  likely_standard_refs:
+  - EN 60335-1
+  - EN 55014-1
+  - EN 55014-2
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - cleaning
+  - motorized
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: hvac_environmental_appliance
   label: HVAC / environmental appliance
   keywords:
   - air treatment
-  - electric air treatment
-  - electric heater
   - heater
   - humidifier
-  - electric humidifier
-  - air humidifier
-  - electric dehumidifier
   - dehumidifier
-  - deair humidifier
-  - air dehumidifier
-  - electric fan
   - fan
-  - air purifier
-  - electric air purifier
-  - air cleaner
-  - electric air cleaner
-  - electric air treatment device
-  - air treatment device
-  - electric climate appliance
+  - air quality appliance
   - climate appliance
-  - electric space heater
-  - space heater
   - environmental appliance
-  - electric environmental appliance
+  - air-treatment
+  - airtreatment
+  - air treatments
+  - heaters
+  - humidifiers
+  - dehumidifiers
+  - fans
+  - air-quality-appliance
+  - airqualityappliance
+  - air quality appliances
+  - climate-appliance
+  - climateappliance
+  - climate appliances
+  - environmental-appliance
+  - environmentalappliance
+  - environmental appliances
   traits:
   - air_treatment
   default_traits:
@@ -159,25 +332,68 @@ genres:
   likely_standards:
   - EN 55014-1
   - EN 55014-2
+  strong_keywords:
+  - air treatment
+  - heater
+  - humidifier
+  - dehumidifier
+  - fan
+  - air quality appliance
+  - climate appliance
+  - environmental appliance
+  - air-treatment
+  - airtreatment
+  - air treatments
+  - heaters
+  weak_keywords:
+  - humidifiers
+  - dehumidifiers
+  - fans
+  - air-quality-appliance
+  - airqualityappliance
+  - air quality appliances
+  - climate-appliance
+  - climateappliance
+  - climate appliances
+  - environmental-appliance
+  - environmentalappliance
+  - environmental appliances
+  likely_standard_refs:
+  - EN 55014-1
+  - EN 55014-2
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - air_treatment
+  - indoor_use
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: personal_care_appliance
   label: Personal care appliance
   keywords:
   - personal care
-  - electric personal care
-  - electric beauty appliance
   - beauty appliance
   - oral care
-  - electric oral care
-  - electric grooming appliance
   - grooming appliance
   - beauty device
-  - electric beauty device
-  - body care appliance
-  - electric body care appliance
-  - electric oral care device
-  - oral care device
-  - electric hair care appliance
-  - hair care appliance
+  - wellness appliance
+  - personal-care
+  - personalcare
+  - personal cares
+  - beauty-appliance
+  - beautyappliance
+  - beauty appliances
+  - oral-care
+  - oralcare
+  - oral cares
+  - grooming-appliance
+  - groomingappliance
+  - grooming appliances
+  - beauty-device
+  - beautydevice
+  - beauty devices
+  - wellness-appliance
+  - wellnessappliance
+  - wellness appliances
   traits:
   - personal_care
   default_traits:
@@ -186,23 +402,55 @@ genres:
   - personal_care_appliance
   likely_standards:
   - EN 62233
+  strong_keywords:
+  - personal care
+  - beauty appliance
+  - oral care
+  - grooming appliance
+  - beauty device
+  - wellness appliance
+  - personal-care
+  - personalcare
+  - personal cares
+  - beauty-appliance
+  - beautyappliance
+  - beauty appliances
+  weak_keywords:
+  - oral-care
+  - oralcare
+  - oral cares
+  - grooming-appliance
+  - groomingappliance
+  - grooming appliances
+  - beauty-device
+  - beautydevice
+  - beauty devices
+  - wellness-appliance
+  - wellnessappliance
+  - wellness appliances
+  likely_standard_refs:
+  - EN 62233
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - personal_care
+  - handheld
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: garden_outdoor_power
   label: Garden / outdoor powered equipment
   keywords:
   - garden equipment
-  - electric garden equipment
   - outdoor powered equipment
-  - electric outdoor powered equipment
-  - electric lawn care
   - lawn care
-  - garden power tool
-  - electric garden power tool
-  - outdoor power equipment
-  - electric outdoor power equipment
-  - lawn care equipment
-  - electric lawn care equipment
-  - powered gardening equipment
-  - electric powered gardening equipment
+  - garden-equipment
+  - gardenequipment
+  - garden equipments
+  - outdoor-powered-equipment
+  - outdoorpoweredequipment
+  - outdoor powered equipments
+  - lawn-care
+  - lawncare
+  - lawn cares
   traits:
   - outdoor_use
   - motorized
@@ -213,27 +461,48 @@ genres:
   - outdoor_device
   likely_standards:
   - EN 50636 review
+  strong_keywords:
+  - garden equipment
+  - outdoor powered equipment
+  - lawn care
+  - garden-equipment
+  - gardenequipment
+  - garden equipments
+  - outdoor-powered-equipment
+  - outdoorpoweredequipment
+  - outdoor powered equipments
+  - lawn-care
+  - lawncare
+  - lawn cares
+  weak_keywords: []
+  likely_standard_refs:
+  - EN 50636 review
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - outdoor_use
+  - motorized
+  - consumer
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: building_access_drive
   label: Building / access drive
   keywords:
   - garage door drive
-  - electric garage door drive
   - gate drive
-  - electric gate drive
   - shutter drive
-  - electric shutter drive
-  - electric building automation
   - building automation
-  - electric door operator
-  - door operator
-  - electric gate operator
-  - gate operator
-  - electric garage opener
-  - garage opener
-  - rolling shutter motor
-  - electric rolling shutter motor
-  - electric building drive
-  - building drive
+  - garage-door-drive
+  - garagedoordrive
+  - garage door drives
+  - gate-drive
+  - gatedrive
+  - gate drives
+  - shutter-drive
+  - shutterdrive
+  - shutter drives
+  - building-automation
+  - buildingautomation
+  - building automations
   traits:
   - security_or_barrier
   - safety_function
@@ -242,32 +511,76 @@ genres:
   - fixed_installation
   functional_classes:
   - building_automation
+  strong_keywords:
+  - garage door drive
+  - gate drive
+  - shutter drive
+  - building automation
+  - garage-door-drive
+  - garagedoordrive
+  - garage door drives
+  - gate-drive
+  - gatedrive
+  - gate drives
+  - shutter-drive
+  - shutterdrive
+  weak_keywords:
+  - shutter drives
+  - building-automation
+  - buildingautomation
+  - building automations
+  likely_standard_refs: []
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - security_or_barrier
+  - safety_function
+  - motorized
+  - fixed_installation
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: av_ict_device
   label: AV / ICT equipment
   keywords:
   - ict equipment
-  - electric ict equipment
   - audio visual
-  - electric audio visual
-  - electric consumer electronics
   - consumer electronics
-  - electric network equipment
   - network equipment
-  - it equipment
-  - electric it equipment
-  - networking device
-  - electric networking device
-  - monitor device
-  - electric display device
+  - consumer tech
+  - smart electronics
+  - networking equipment
+  - connected electronics
   - display device
-  - electric computer peripheral
-  - computer peripheral
-  - home entertainment device
-  - electric home entertainment device
-  - audio device
-  - electric audio device
-  - video device
-  - electric video device
+  - media device
+  - ict-equipment
+  - ictequipment
+  - ict equipments
+  - audio-visual
+  - audiovisual
+  - audio visuals
+  - consumer-electronics
+  - consumerelectronics
+  - consumer electronic
+  - network-equipment
+  - networkequipment
+  - network equipments
+  - consumer-tech
+  - consumertech
+  - consumer techs
+  - smart-electronics
+  - smartelectronics
+  - smart electronic
+  - networking-equipment
+  - networkingequipment
+  - networking equipments
+  - connected-electronics
+  - connectedelectronics
+  - connected electronic
+  - display-device
+  - displaydevice
+  - display devices
+  - media-device
+  - mediadevice
+  - media devices
   traits:
   - electronic
   - av_ict
@@ -279,39 +592,104 @@ genres:
   - EN 62368-1
   - EN 55032
   - EN 55035
+  strong_keywords:
+  - ict equipment
+  - audio visual
+  - consumer electronics
+  - network equipment
+  - consumer tech
+  - smart electronics
+  - networking equipment
+  - connected electronics
+  - display device
+  - media device
+  - ict-equipment
+  - ictequipment
+  weak_keywords:
+  - ict equipments
+  - audio-visual
+  - audiovisual
+  - audio visuals
+  - consumer-electronics
+  - consumerelectronics
+  - consumer electronic
+  - network-equipment
+  - networkequipment
+  - network equipments
+  - consumer-tech
+  - consumertech
+  - consumer techs
+  - smart-electronics
+  - smartelectronics
+  - smart electronic
+  - networking-equipment
+  - networkingequipment
+  - networking equipments
+  - connected-electronics
+  - connectedelectronics
+  - connected electronic
+  - display-device
+  - displaydevice
+  - display devices
+  - media-device
+  - mediadevice
+  - media devices
+  likely_standard_refs:
+  - EN 62368-1
+  - EN 55032
+  - EN 55035
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - electronic
+  - av_ict
+  - electrical
+  score_penalty_if_traits:
+  - water_contact
+  - food_contact
+  negative_examples: []
 - id: smart_home_iot
   label: Smart home / IoT
   keywords:
   - smart home
-  - electric smart home
-  - home
-  - connected home
   - iot
-  - electric iot
-  - electric connected home
+  - connected home
   - home automation
-  - electric home automation
-  - connected device
-  - electric connected device
-  - connected appliance
-  - electric connected appliance
-  - electric app connected
-  - app connected
-  - wifi enabled
-  - electric wifi enabled
-  - wi-fi enabled
-  - electric works with app
-  - works with app
-  - voice assistant compatible
-  - electric voice assistant compatible
-  - alexa compatible
-  - electric alexa compatible
-  - electric google home compatible
-  - google home compatible
+  - app connected device
+  - wifi enabled device
+  - works with alexa
+  - google home device
   - matter device
-  - electric matter device
-  - connected home device
-  - electric connected home device
+  - connected home accessory
+  - smart-home
+  - smarthome
+  - smart homes
+  - iots
+  - connected-home
+  - connectedhome
+  - connected homes
+  - home-automation
+  - homeautomation
+  - home automations
+  - app-connected-device
+  - appconnecteddevice
+  - app connected devices
+  - wi-fi enabled device
+  - wi fi enabled device
+  - wifi-enabled-device
+  - wifienableddevice
+  - wifi enabled devices
+  - works-with-alexa
+  - workswithalexa
+  - works with alexas
+  - google-home-device
+  - googlehomedevice
+  - google home devices
+  - matter-device
+  - matterdevice
+  - matter devices
+  - connected-home-accessory
+  - connectedhomeaccessory
+  - connected home accessorys
   traits:
   - consumer
   - electronic
@@ -327,31 +705,77 @@ genres:
   - EN 18031-1
   - EN 18031-2
   - EN 303 645 review
+  strong_keywords:
+  - smart home
+  - iot
+  - connected home
+  - home automation
+  - app connected device
+  - wifi enabled device
+  - works with alexa
+  - google home device
+  - matter device
+  - connected home accessory
+  - smart-home
+  - smarthome
+  weak_keywords:
+  - smart homes
+  - iots
+  - connected-home
+  - connectedhome
+  - connected homes
+  - home-automation
+  - homeautomation
+  - home automations
+  - app-connected-device
+  - appconnecteddevice
+  - app connected devices
+  - wi-fi enabled device
+  - wi fi enabled device
+  - wifi-enabled-device
+  - wifienableddevice
+  - wifi enabled devices
+  - works-with-alexa
+  - workswithalexa
+  - works with alexas
+  - google-home-device
+  - googlehomedevice
+  - google home devices
+  - matter-device
+  - matterdevice
+  - matter devices
+  - connected-home-accessory
+  - connectedhomeaccessory
+  - connected home accessorys
+  likely_standard_refs:
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - electronic
+  - app_control
+  - internet_connected
+  - cloud
+  - networked_standby
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: security_access_iot
   label: Security / access IoT
   keywords:
-  - electric security camera
   - security camera
   - doorbell
-  - electric doorbell
-  - video doorbell
   - smart lock
-  - electric smart lock
-  - connected lock
-  - lock
   - alarm
-  - electric alarm
-  - electric video doorbell
-  - video video doorbell
-  - connected alarm
-  - smart alarm
-  - electric smart alarm
-  - electric connected camera
-  - connected camera
-  - access control device
-  - electric access control device
-  - electric connected security device
-  - connected security device
+  - security-camera
+  - securitycamera
+  - security cameras
+  - doorbells
+  - smart-lock
+  - smartlock
+  - smart locks
+  - alarms
   traits:
   - camera_surveillance
   - security_or_barrier
@@ -365,29 +789,46 @@ genres:
   likely_standards:
   - EN 18031-1
   - EN 303 645 review
+  strong_keywords:
+  - security camera
+  - doorbell
+  - smart lock
+  - alarm
+  - security-camera
+  - securitycamera
+  - security cameras
+  - doorbells
+  - smart-lock
+  - smartlock
+  - smart locks
+  - alarms
+  weak_keywords: []
+  likely_standard_refs:
+  - EN 18031-1
+  - EN 303 645 review
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - camera_surveillance
+  - security_or_barrier
+  - electronic
+  - internet_connected
+  - app_control
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: wearable_device
   label: Wearable device
   keywords:
   - wearable
-  - electric wearable
   - body-worn
-  - body worn
-  - electric body-worn
-  - bodyworn
   - smartwatch
-  - electric smartwatch
   - smart ring
-  - ring
-  - electric smart ring
-  - connected ring
-  - wearable tech
-  - electric wearable tech
-  - fitness wearable
-  - electric fitness wearable
-  - electric body worn electronics
-  - body worn electronics
-  - health wearable
-  - electric health wearable
+  - wearables
+  - body worn
+  - body-worns
+  - smartwatchs
+  - smart-ring
+  - smartring
+  - smart rings
   traits:
   - consumer
   - electronic
@@ -402,27 +843,48 @@ genres:
   - EN 62368-1
   - EN 62479
   - EN 62209-1528
+  strong_keywords:
+  - wearable
+  - body-worn
+  - smartwatch
+  - smart ring
+  - wearables
+  - body worn
+  - body-worns
+  - smartwatchs
+  - smart-ring
+  - smartring
+  - smart rings
+  weak_keywords: []
+  likely_standard_refs:
+  - EN 62368-1
+  - EN 62479
+  - EN 62209-1528
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - electronic
+  - wearable
+  - body_worn_or_applied
+  - battery_powered
+  - close_proximity_emf
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: connected_toy_childcare
   label: Connected toy / childcare product
   keywords:
   - toy
-  - electric toy
-  - electric childcare
   - childcare
   - educational toy
-  - electric educational toy
-  - connected toy
-  - electric smart toy
   - smart toy
-  - smart baby device
-  - baby device
-  - connected baby device
-  - electric smart baby device
-  - electric connected toy
-  - interactive learning toy
-  - electric interactive learning toy
-  - nursery device
-  - electric nursery device
+  - toys
+  - childcares
+  - educational-toy
+  - educationaltoy
+  - educational toys
+  - smart-toy
+  - smarttoy
+  - smart toys
   traits:
   - consumer
   - toy
@@ -439,29 +901,51 @@ genres:
   - EN 71 review
   - EN 62115
   - EN 18031-1
+  strong_keywords:
+  - toy
+  - childcare
+  - educational toy
+  - smart toy
+  - toys
+  - childcares
+  - educational-toy
+  - educationaltoy
+  - educational toys
+  - smart-toy
+  - smarttoy
+  - smart toys
+  weak_keywords: []
+  likely_standard_refs:
+  - EN 71 review
+  - EN 62115
+  - EN 18031-1
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - toy
+  - child_targeted
+  - electronic
+  - app_control
+  - radio
+  - internet_connected
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: micromobility
   label: Micromobility
   keywords:
   - micromobility
-  - electric micromobility
   - ride-on
-  - ride on
-  - rideon
-  - electric ride-on
   - electric mobility
-  - mobility
-  - electric personal transporter
   - personal transporter
-  - electric e mobility
-  - e mobility
-  - electric personal electric transport
-  - personal electric transport
-  - electric light electric vehicle
-  - light electric vehicle
-  - electric last mile mobility
-  - last mile mobility
-  - rideable electric device
-  - electric rideable electric device
+  - micromobilitys
+  - ride on
+  - ride-ons
+  - electric-mobility
+  - electricmobility
+  - electric mobilitys
+  - personal-transporter
+  - personaltransporter
+  - personal transporters
   traits:
   - consumer
   - electrical
@@ -480,17 +964,51 @@ genres:
   - EN 17128
   - EN 15194
   - EN 62133-2
+  strong_keywords:
+  - micromobility
+  - ride-on
+  - electric mobility
+  - personal transporter
+  - micromobilitys
+  - ride on
+  - ride-ons
+  - electric-mobility
+  - electricmobility
+  - electric mobilitys
+  - personal-transporter
+  - personaltransporter
+  weak_keywords:
+  - personal transporters
+  likely_standard_refs:
+  - EN 17128
+  - EN 15194
+  - EN 62133-2
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - traction_motor
+  - vehicle_use
+  - light_means_of_transport
+  - outdoor_environment
+  - location_tracking
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: drone_uas
   label: Drone / UAS
   keywords:
   - drone
-  - electric drone
   - unmanned aircraft
-  - electric unmanned aircraft
-  - electric quadcopter
   - quadcopter
-  - electric fpv
   - fpv
+  - drones
+  - unmanned-aircraft
+  - unmannedaircraft
+  - unmanned aircrafts
+  - quadcopters
+  - fpvs
   traits:
   - consumer
   - electrical
@@ -509,31 +1027,68 @@ genres:
   - EN 62368-1
   - EN 62133-2
   - UAS open-category review
+  strong_keywords:
+  - drone
+  - unmanned aircraft
+  - quadcopter
+  - fpv
+  - drones
+  - unmanned-aircraft
+  - unmannedaircraft
+  - unmanned aircrafts
+  - quadcopters
+  - fpvs
+  weak_keywords: []
+  likely_standard_refs:
+  - EN 62368-1
+  - EN 62133-2
+  - UAS open-category review
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - radio
+  - drone_flight
+  - outdoor_environment
+  - camera
+  - location_tracking
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: portable_energy
   label: Portable energy / charging ecosystem
   keywords:
-  - portable charger
   - power bank
-  - electric power bank
-  - solar generator
   - portable power station
-  - electric portable power station
-  - electric charger
   - charger
   - battery pack
-  - electric battery pack
-  - portable charging
-  - electric portable charging
   - battery backup
-  - electric battery backup
-  - power storage
-  - electric power storage
-  - electric charging accessory
-  - charging accessory
-  - electric off-grid power
-  - offgrid power
-  - off grid power
-  - off-grid power
+  - portable battery
+  - power station
+  - backup power
+  - power-bank
+  - powerbank
+  - power banks
+  - portable-power-station
+  - portablepowerstation
+  - portable power stations
+  - chargers
+  - battery-pack
+  - batterypack
+  - battery packs
+  - battery-backup
+  - batterybackup
+  - battery backups
+  - portable-battery
+  - portablebattery
+  - portable batterys
+  - power-station
+  - powerstation
+  - power stations
+  - backup-power
+  - backuppower
+  - backup powers
   traits:
   - electrical
   - battery_powered
@@ -548,27 +1103,82 @@ genres:
   - EN 62133-2
   - UN 38.3 review
   - EN 50563
+  strong_keywords:
+  - power bank
+  - portable power station
+  - charger
+  - battery pack
+  - battery backup
+  - portable battery
+  - power station
+  - backup power
+  - power-bank
+  - powerbank
+  - power banks
+  - portable-power-station
+  weak_keywords:
+  - portablepowerstation
+  - portable power stations
+  - chargers
+  - battery-pack
+  - batterypack
+  - battery packs
+  - battery-backup
+  - batterybackup
+  - battery backups
+  - portable-battery
+  - portablebattery
+  - portable batterys
+  - power-station
+  - powerstation
+  - power stations
+  - backup-power
+  - backuppower
+  - backup powers
+  likely_standard_refs:
+  - EN 62133-2
+  - UN 38.3 review
+  - EN 50563
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - electrical
+  - battery_powered
+  - battery_pack
+  - portable_energy
+  - portable
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: pet_tech
   label: Pet tech
   keywords:
   - pet tech
-  - electric pet tech
   - pet tracker
-  - electric pet tracker
-  - electric pet feeder
   - pet feeder
   - pet camera
-  - electric pet camera
-  - electric pet device
-  - pet device
-  - connected pet product
-  - electric connected pet product
-  - animal tech
-  - electric animal tech
-  - electric smart pet care
-  - pet care
-  - connected pet care
-  - smart pet care
+  - pet gadget
+  - connected pet device
+  - pet electronics
+  - pet-tech
+  - pettech
+  - pet techs
+  - pet-tracker
+  - pettracker
+  - pet trackers
+  - pet-feeder
+  - petfeeder
+  - pet feeders
+  - pet-camera
+  - petcamera
+  - pet cameras
+  - pet-gadget
+  - petgadget
+  - pet gadgets
+  - connected-pet-device
+  - connectedpetdevice
+  - connected pet devices
+  - pet-electronics
+  - petelectronics
+  - pet electronic
   traits:
   - consumer
   - pet_use
@@ -582,16 +1192,63 @@ genres:
   likely_standards:
   - EN 303 645 review
   - EN 62368-1
+  strong_keywords:
+  - pet tech
+  - pet tracker
+  - pet feeder
+  - pet camera
+  - pet gadget
+  - connected pet device
+  - pet electronics
+  - pet-tech
+  - pettech
+  - pet techs
+  - pet-tracker
+  - pettracker
+  weak_keywords:
+  - pet trackers
+  - pet-feeder
+  - petfeeder
+  - pet feeders
+  - pet-camera
+  - petcamera
+  - pet cameras
+  - pet-gadget
+  - petgadget
+  - pet gadgets
+  - connected-pet-device
+  - connectedpetdevice
+  - connected pet devices
+  - pet-electronics
+  - petelectronics
+  - pet electronic
+  likely_standard_refs:
+  - EN 303 645 review
+  - EN 62368-1
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - pet_use
+  - electronic
+  - app_control
+  - internet_connected
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: wellness_borderline_medical
   label: Wellness / borderline medical
   keywords:
   - wellness device
-  - electric wellness device
-  - electric health monitor
   - health monitor
-  - health display
   - therapy device
-  - electric therapy device
+  - wellness-device
+  - wellnessdevice
+  - wellness devices
+  - health-monitor
+  - healthmonitor
+  - health monitors
+  - therapy-device
+  - therapydevice
+  - therapy devices
   traits:
   - consumer
   - electronic
@@ -603,14 +1260,44 @@ genres:
   likely_standards:
   - EN 60601 review
   - EN 62479
+  strong_keywords:
+  - wellness device
+  - health monitor
+  - therapy device
+  - wellness-device
+  - wellnessdevice
+  - wellness devices
+  - health-monitor
+  - healthmonitor
+  - health monitors
+  - therapy-device
+  - therapydevice
+  - therapy devices
+  weak_keywords: []
+  likely_standard_refs:
+  - EN 60601 review
+  - EN 62479
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - electronic
+  - health_related
+  - medical_claims
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: xr_immersive
   label: XR / immersive device
   keywords:
-  - electric vr
-  - electric ar
+  - vr
+  - ar
   - mixed reality
-  - electric mixed reality
-  - electric xr
+  - xr
+  - vrs
+  - ars
+  - mixed-reality
+  - mixedreality
+  - mixed realitys
+  - xrs
   traits:
   - consumer
   - electronic
@@ -626,3 +1313,29 @@ genres:
   - EN 62368-1
   - EN 62479
   - EN 62209-1528
+  strong_keywords:
+  - vr
+  - ar
+  - mixed reality
+  - xr
+  - vrs
+  - ars
+  - mixed-reality
+  - mixedreality
+  - mixed realitys
+  - xrs
+  weak_keywords: []
+  likely_standard_refs:
+  - EN 62368-1
+  - EN 62479
+  - EN 62209-1528
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - consumer
+  - electronic
+  - xr
+  - display
+  - wearable
+  - body_worn_or_applied
+  score_penalty_if_traits: []
+  negative_examples: []

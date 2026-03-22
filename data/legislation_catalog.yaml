@@ -11,8 +11,6 @@ legislations:
   triggers:
   - electrical product
   - mains powered or likely mains powered
-  - plug-in electrical equipment
-  - mains-powered consumer or professional equipment
   doc_impacts:
   - EU Declaration of Conformity
   - technical documentation
@@ -23,9 +21,20 @@ legislations:
   any_of_traits:
   - mains_powered
   - mains_power_likely
-  keywords:
-  - electrical safety
-  - low voltage electrical equipment
+  required_any_traits_normalized:
+  - mains_powered
+  - mains_power_likely
+  required_all_traits_normalized:
+  - electrical
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - electrical product
+  - mains powered or likely mains powered
+  - EU Declaration of Conformity
+  - technical documentation
+  - risk assessment
+  - electrical safety evidence
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2014/30/EU
   title: EMC Directive
   family: Electromagnetic compatibility
@@ -37,7 +46,6 @@ legislations:
   reason: Likely applicable where the product can generate or be affected by electromagnetic disturbance.
   triggers:
   - electrical or electronic product
-  - product containing motors, electronics, switching circuits, displays, or radios
   doc_impacts:
   - EU Declaration of Conformity
   - EMC assessment
@@ -46,9 +54,18 @@ legislations:
   any_of_traits:
   - electrical
   - electronic
-  keywords:
-  - electromagnetic compatibility
-  - emissions and immunity
+  required_any_traits_normalized:
+  - electrical
+  - electronic
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - electrical or electronic product
+  - EU Declaration of Conformity
+  - EMC assessment
+  - test reports
+  - technical documentation
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2014/53/EU
   title: Radio Equipment Directive
   family: Radio
@@ -61,8 +78,6 @@ legislations:
   triggers:
   - radio functionality
   - Wi-Fi, Bluetooth, Zigbee, Thread, Matter, NFC, or cellular connectivity
-  - wireless functionality
-  - Wi-Fi, Bluetooth, Zigbee, Thread, Matter, NFC, DECT, or cellular
   doc_impacts:
   - EU Declaration of Conformity
   - radio test evidence
@@ -70,10 +85,18 @@ legislations:
   - RF exposure assessment
   all_of_traits:
   - radio
-  keywords:
-  - radio equipment
-  - wireless device
-  - RF function
+  required_any_traits_normalized: []
+  required_all_traits_normalized:
+  - radio
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - radio functionality
+  - Wi-Fi, Bluetooth, Zigbee, Thread, Matter, NFC, or cellular connectivity
+  - EU Declaration of Conformity
+  - radio test evidence
+  - EMC under RED
+  - RF exposure assessment
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2022/30/EU
   title: RED DA Cybersecurity
   family: Cybersecurity for radio equipment
@@ -90,9 +113,6 @@ legislations:
   - radio equipment with OTA, cloud, or other networked software functions
   - radio equipment with account, login, password, PIN, or authentication controls
   - radio equipment supporting payments, subscriptions, ordering, or other monetary-value transfer
-  - radio product with companion app
-  - radio product with cloud account
-  - radio product with update mechanism
   doc_impacts:
   - EU Declaration of Conformity
   - cybersecurity evidence
@@ -112,10 +132,29 @@ legislations:
   - account
   - authentication
   - monetary_transaction
-  keywords:
-  - RED cybersecurity
-  - EN 18031
-  - connected radio equipment
+  required_any_traits_normalized:
+  - internet
+  - wifi
+  - cloud
+  - ota
+  - app_control
+  - cellular
+  - account
+  - authentication
+  - monetary_transaction
+  required_all_traits_normalized:
+  - radio
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - internet-connected radio equipment
+  - radio equipment with OTA, cloud, or other networked software functions
+  - radio equipment with account, login, password, PIN, or authentication controls
+  - radio equipment supporting payments, subscriptions, ordering, or other monetary-value transfer
+  - EU Declaration of Conformity
+  - cybersecurity evidence
+  - EN 18031 part mapping
+  - technical documentation
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2009/125/EC
   title: Ecodesign Directive framework
   family: Energy / ecodesign
@@ -139,6 +178,21 @@ legislations:
   - heating
   - cooling
   - motorized
+  required_any_traits_normalized:
+  - electrical
+  - electronic
+  - heating
+  - cooling
+  - motorized
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - energy-related product
+  - possible product-specific ecodesign implementing regulation
+  - implementing-regulation scoping review
+  - product parameter review
+  - technical file inputs
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2024/1781
   title: Ecodesign for Sustainable Products Regulation framework
   family: Energy / ecodesign
@@ -166,6 +220,16 @@ legislations:
   - kitchen_appliance
   - hvac_appliance
   replaces: Directive 2009/125/EC
+  required_any_traits_normalized: []
+  required_all_traits_normalized:
+  - electrical
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - energy-related or otherwise potentially in-scope product family
+  - delegated-act scoping review
+  - product parameter review
+  - technical file inputs
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2023/826/EU
   title: Off mode, standby and networked standby ecodesign regulation
   family: Energy / ecodesign
@@ -187,6 +251,19 @@ legislations:
   any_of_traits:
   - electronic
   - radio
+  required_any_traits_normalized:
+  - electronic
+  - radio
+  required_all_traits_normalized:
+  - electrical
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - electrical product
+  - electronic or radio functionality
+  - power mode measurements
+  - technical documentation
+  - product information review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2011/65/EU
   title: RoHS Directive
   family: Substances
@@ -205,6 +282,17 @@ legislations:
   any_of_traits:
   - electrical
   - electronic
+  required_any_traits_normalized:
+  - electrical
+  - electronic
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - electrical or electronic product
+  - EU Declaration of Conformity
+  - material declarations
+  - IEC 63000 technical documentation
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 1907/2006
   title: REACH Regulation
   family: Substances
@@ -220,6 +308,15 @@ legislations:
   - SVHC review
   - Article 33 communication
   - substance compliance records
+  required_any_traits_normalized: []
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - placed-on-market product
+  - SVHC review
+  - Article 33 communication
+  - substance compliance records
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2023/1542/EU
   title: Batteries Regulation
   family: Batteries
@@ -234,9 +331,6 @@ legislations:
   - battery-powered product
   - product supplied with batteries
   - battery sold as a standalone product
-  - rechargeable device
-  - portable battery product
-  - battery pack supplied with product
   doc_impacts:
   - battery labelling review
   - battery documentation review
@@ -250,11 +344,20 @@ legislations:
     categories.
   none_of_traits:
   - fixed_installation
-  keywords:
-  - battery regulation
-  - portable battery
-  - LMT battery
-  - battery removability
+  required_any_traits_normalized:
+  - battery_powered
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - battery-powered product
+  - product supplied with batteries
+  - battery sold as a standalone product
+  - battery labelling review
+  - battery documentation review
+  - removability and replaceability review where relevant
+  - category classification review
+  - end-of-life and EPR review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2006/42/EC
   title: Machinery Directive
   family: Machinery safety
@@ -309,6 +412,22 @@ legislations:
   - av_ict_device
   - smart_home_iot
   - connected_toy_childcare
+  required_any_traits_normalized:
+  - motorized
+  - security_or_barrier
+  - safety_function
+  - pressure
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - motorized drive
+  - machinery-style mechanism
+  - safety or barrier function
+  - EU Declaration of Conformity
+  - risk assessment
+  - instructions
+  - machinery technical file
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2023/1230
   title: Machinery Regulation
   family: Machinery safety
@@ -361,6 +480,21 @@ legislations:
   - av_ict_device
   - smart_home_iot
   - connected_toy_childcare
+  required_any_traits_normalized:
+  - motorized
+  - security_or_barrier
+  - safety_function
+  - pressure
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - motorized drive
+  - machinery-style mechanism
+  - safety or barrier function
+  - machinery conformity assessment update
+  - revised instructions
+  - technical file review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 1935/2004
   title: Framework Regulation on food contact materials
   family: Food contact
@@ -378,6 +512,16 @@ legislations:
   - supplier compliance records
   all_of_traits:
   - food_contact
+  required_any_traits_normalized: []
+  required_all_traits_normalized:
+  - food_contact
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - food or beverage contact
+  - food-contact declaration or supporting evidence
+  - material compliance evidence
+  - supplier compliance records
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 10/2011/EU
   title: Plastic food contact materials regulation
   family: Food contact
@@ -395,6 +539,16 @@ legislations:
   - supplier declarations for plastic food-contact materials
   all_of_traits:
   - food_contact
+  required_any_traits_normalized: []
+  required_all_traits_normalized:
+  - food_contact
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - food contact
+  - plastic parts in food path if applicable
+  - migration testing route review
+  - supplier declarations for plastic food-contact materials
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2024/2847
   title: Cyber Resilience Act
   family: Cybersecurity for products with digital elements
@@ -419,6 +573,21 @@ legislations:
   - internet
   - ota
   - data_storage
+  required_any_traits_normalized:
+  - app_control
+  - cloud
+  - internet
+  - ota
+  - data_storage
+  required_all_traits_normalized:
+  - electronic
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - electronic or connected product with software
+  - cybersecurity lifecycle process review
+  - vulnerability handling review
+  - software bill of materials and technical documentation review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2016/679
   title: General Data Protection Regulation
   family: Data protection
@@ -443,6 +612,23 @@ legislations:
   - location
   - personal_data_likely
   - health_related
+  required_any_traits_normalized:
+  - account
+  - authentication
+  - camera
+  - microphone
+  - location
+  - personal_data_likely
+  - health_related
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - personal data processing
+  - lawful-basis review
+  - privacy notice inputs
+  - controller-processor assessment
+  - data-retention review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2024/1689
   title: Artificial Intelligence Act
   family: AI regulation
@@ -461,6 +647,16 @@ legislations:
   - provider or deployer obligation review
   any_of_traits:
   - ai_related
+  required_any_traits_normalized:
+  - ai_related
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - AI or machine-learning functionality
+  - AI system classification review
+  - technical documentation inputs
+  - provider or deployer obligation review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2017/1357
   title: Publication reference for EN 60335-2-9 under the LVD
   family: Harmonised standards restriction
@@ -482,6 +678,13 @@ legislations:
   - household_appliance
   - hvac_environmental_appliance
   - kitchen_food_appliance
+  required_any_traits_normalized: []
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - toaster, grill, or similar portable cooking appliance
+  - verify publication-reference caveat in the technical file
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2023/988
   title: General Product Safety Regulation
   family: General consumer product safety
@@ -497,18 +700,24 @@ legislations:
   - consumer product safety review
   - online sales and traceability review
   - residual hazards outside sector-specific conformity routes
-  - consumer product sold online
-  - traceability and safety information review
   doc_impacts:
   - safety information and warnings
   - traceability data
   - post-market surveillance inputs
   all_of_traits:
   - consumer
-  keywords:
-  - GPSR
-  - consumer product safety
-  - online marketplace compliance
+  required_any_traits_normalized: []
+  required_all_traits_normalized:
+  - consumer
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - consumer product safety review
+  - online sales and traceability review
+  - residual hazards outside sector-specific conformity routes
+  - safety information and warnings
+  - traceability data
+  - post-market surveillance inputs
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2012/19/EU
   title: WEEE Directive
   family: Waste electrical and electronic equipment
@@ -523,10 +732,6 @@ legislations:
   - electrical or electronic equipment
   - finished EEE placed on the EU market
   - crossed-out wheeled bin marking and producer obligations
-  - electrical appliance
-  - electronic device
-  - crossed-out wheeled bin marking
-  - EEE category review
   doc_impacts:
   - product marking review
   - EPR / registration review
@@ -542,11 +747,20 @@ legislations:
   - industrial
   exclude_genres:
   - micromobility
-  keywords:
-  - waste electrical and electronic equipment
-  - producer responsibility
-  - end-of-life electrical equipment
-  - WEEE marking
+  required_any_traits_normalized:
+  - electrical
+  - electronic
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - electrical or electronic equipment
+  - finished EEE placed on the EU market
+  - crossed-out wheeled bin marking and producer obligations
+  - product marking review
+  - EPR / registration review
+  - user information review
+  - Annex III category review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2009/48/EC
   title: Toy Safety Directive
   family: Toy safety
@@ -573,6 +787,20 @@ legislations:
   - connected_toy_childcare
   notes: Use intended play value and child-targeting as the primary fork. Decorative, collector, transport, and non-play products
     should not fall into this route merely because they look toy-like.
+  required_any_traits_normalized:
+  - toy
+  - child_targeted
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - toy or play value
+  - child-targeted connected product
+  - designed or intended for play by children under 14
+  - toy safety assessment
+  - warnings and age grading review
+  - chemical / mechanical / electrical toy evidence
+  - EN 71 and EN 62115 route review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: 2019/945+2019/947
   title: EU drone / UAS framework review
   family: Unmanned aircraft systems
@@ -594,6 +822,17 @@ legislations:
   - drone_flight
   any_of_genres:
   - drone_uas
+  required_any_traits_normalized:
+  - drone_flight
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - consumer or prosumer drone
+  - UAS class / open-category review
+  - UAS class review
+  - operator / category information review
+  - technical documentation mapping
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
 - code: MDR-borderline
   title: Medical Device Regulation borderline review
   family: Medical-device borderline assessment
@@ -614,3 +853,15 @@ legislations:
   any_of_traits:
   - medical_claims
   - health_related
+  required_any_traits_normalized:
+  - medical_claims
+  - health_related
+  required_all_traits_normalized: []
+  excluded_traits_normalized: []
+  evidence_keywords:
+  - medical or diagnostic claims
+  - wellness versus medical intended-purpose review
+  - intended-purpose review
+  - claims review
+  - classification review
+  classification_notes: Normalization metadata added for trait-name mapping and evidence-oriented routing.
