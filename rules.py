@@ -978,6 +978,11 @@ def _apply_post_selection_gates(
         kept = [item for item in kept if item.get("code") != "Battery safety review"]
         diagnostics.append("gate=prune_Battery_safety_review:covered_by_EN62133-2")
 
+    codes = {str(item.get("code") or "") for item in kept}
+    if "EN 60335 review" in codes and any(code == "EN 60335-1" or code.startswith("EN 60335-2-") for code in codes):
+        kept = [item for item in kept if item.get("code") != "EN 60335 review"]
+        diagnostics.append("gate=prune_EN60335_review:covered_by_specific_EN60335_route")
+
     return kept
 
 
@@ -1192,9 +1197,8 @@ def _build_quick_adds(missing: list[MissingInformationItem]) -> list[dict[str, s
 def _build_standard_sections(items: list[StandardItem]) -> list[dict[str, Any]]:
     grouped: dict[str, list[StandardItem]] = defaultdict(list)
     for item in items:
-        route_keys = [item.directive] if item.category == "safety" else ([key for key in item.directives if key] or [item.directive])
-        for key in route_keys:
-            grouped[key].append(item)
+        route_key = item.directive or (item.directives[0] if item.directives else "OTHER")
+        grouped[route_key].append(item)
     sections: list[dict[str, Any]] = []
     for key in sorted(grouped.keys(), key=_directive_rank):
         route_items = _sort_standard_items(grouped[key])
