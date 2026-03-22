@@ -642,8 +642,19 @@ def _standard_primary_directive(row: dict[str, Any], traits: set[str]) -> str:
 def _derive_directives(traits: set[str], forced_directives: list[str] | None = None) -> list[str]:
     directives: list[str] = []
 
+    appliance_lvd_signal = bool(
+        "electrical" in traits
+        and "radio" not in traits
+        and "consumer" in traits
+        and "household" in traits
+        and ({"heating", "motorized", "water_contact", "mains_powered", "mains_power_likely"} & traits)
+    )
+
     if "electrical" in traits and ({"mains_powered", "mains_power_likely"} & traits):
         directives.append("LVD")
+    elif appliance_lvd_signal:
+        directives.append("LVD")
+
     if "electrical" in traits and "radio" not in traits:
         directives.append("EMC")
     if "radio" in traits:

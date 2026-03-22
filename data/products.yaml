@@ -2107,6 +2107,7 @@ products:
   - electrical
   - electronic
   - battery_powered
+  - mains_power_likely
   - motorized
   - cleaning
   - surface_cleaning
@@ -2119,6 +2120,7 @@ products:
   genres:
   - household_appliance
   - cleaning_laundry_appliance
+
 - id: vacuum_cleaner
   label: Vacuum cleaner
   aliases:
