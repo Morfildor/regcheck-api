@@ -7,7 +7,8 @@ legislations:
   directive_key: LVD
   bucket: ce
   applicability: applicable
-  reason: Likely applicable to mains-powered electrical equipment within the Low Voltage Directive voltage scope.
+  reason: Likely applicable to mains-powered electrical equipment within the Low Voltage Directive voltage
+    scope.
   triggers:
   - electrical product
   - mains powered or likely mains powered
@@ -68,7 +69,9 @@ legislations:
   bucket: ce
   applicability: applicable
   applicable_from: '2025-08-01'
-  reason: Review under the RED delegated cybersecurity regime where radio equipment is internet-connected, app-connected, uses networked software features, requires account or authentication controls, or supports monetary transactions.
+  reason: Review under the RED delegated cybersecurity regime where radio equipment is internet-connected,
+    app-connected, uses networked software features, requires account or authentication controls, or supports
+    monetary transactions.
   triggers:
   - internet-connected radio equipment
   - radio equipment with OTA, cloud, or other networked software functions
@@ -79,7 +82,8 @@ legislations:
   - cybersecurity evidence
   - EN 18031 part mapping
   - technical documentation
-  notes: Treat separately from CRA. Map current RED delegated-act scope to EN 18031-1, -2, and -3 based on network, authentication, and monetary-function features.
+  notes: Treat separately from CRA. Map current RED delegated-act scope to EN 18031-1, -2, and -3 based
+    on network, authentication, and monetary-function features.
   all_of_traits:
   - radio
   any_of_traits:
@@ -101,7 +105,8 @@ legislations:
   bucket: framework
   applicability: conditional
   applicable_from: '2024-07-18'
-  reason: Framework-level review may be needed where the product family is likely to fall under current or future ecodesign measures.
+  reason: Framework-level review may be needed where the product family is likely to fall under current
+    or future ecodesign measures.
   triggers:
   - energy-related or otherwise potentially in-scope product family
   doc_impacts:
@@ -180,7 +185,8 @@ legislations:
   directive_key: BATTERY
   bucket: non_ce
   applicability: conditional
-  reason: Battery Regulation obligations should be reviewed where the product contains, is supplied with, or relies on portable batteries or rechargeable battery packs.
+  reason: Battery Regulation obligations should be reviewed where the product contains, is supplied with,
+    or relies on portable batteries or rechargeable battery packs.
   triggers:
   - battery-powered product
   - product supplied with batteries
@@ -200,7 +206,8 @@ legislations:
   applicability: conditional
   applicable_until: '2027-01-13'
   replaced_by: 2023/1230/EU
-  reason: Machinery Directive review is typically needed for machinery-style products such as powered garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
+  reason: Machinery Directive review is typically needed for machinery-style products such as powered
+    garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -230,6 +237,8 @@ legislations:
   - scarifier_aerator
   - grass_shear
   - milking_machine
+  any_of_genres:
+  - garden_outdoor_power
 - code: 2023/1230
   title: Machinery Regulation
   family: Machinery safety
@@ -239,7 +248,8 @@ legislations:
   bucket: future
   applicability: conditional
   applicable_from: '2027-01-14'
-  reason: Future Machinery Regulation review from 14 January 2027 for machinery-style products such as powered garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
+  reason: Future Machinery Regulation review from 14 January 2027 for machinery-style products such as
+    powered garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -268,6 +278,8 @@ legislations:
   - scarifier_aerator
   - grass_shear
   - milking_machine
+  any_of_genres:
+  - garden_outdoor_power
 - code: 1935/2004
   title: Framework Regulation on food contact materials
   family: Food contact
@@ -276,7 +288,8 @@ legislations:
   directive_key: FCM
   bucket: non_ce
   applicability: applicable
-  reason: Food-contact materials compliance should be reviewed where food or beverage contact is part of intended use.
+  reason: Food-contact materials compliance should be reviewed where food or beverage contact is part
+    of intended use.
   triggers:
   - food or beverage contact
   doc_impacts:
@@ -311,7 +324,8 @@ legislations:
   bucket: future
   applicability: conditional
   applicable_from: '2027-12-11'
-  reason: Future Cyber Resilience Act obligations should be tracked separately for products with digital elements.
+  reason: Future Cyber Resilience Act obligations should be tracked separately for products with digital
+    elements.
   triggers:
   - electronic or connected product with software
   doc_impacts:
@@ -333,7 +347,8 @@ legislations:
   directive_key: GDPR
   bucket: non_ce
   applicability: conditional
-  reason: Data-protection obligations should be reviewed where personal data is processed outside the core CE route.
+  reason: Data-protection obligations should be reviewed where personal data is processed outside the
+    core CE route.
   triggers:
   - personal data processing
   doc_impacts:
@@ -375,7 +390,8 @@ legislations:
   directive_key: LVD
   bucket: informational
   applicability: conditional
-  reason: Relevant only when relying on EN 60335-2-9 for grills, toasters, or similar portable cooking appliances.
+  reason: Relevant only when relying on EN 60335-2-9 for grills, toasters, or similar portable cooking
+    appliances.
   triggers:
   - toaster, grill, or similar portable cooking appliance
   doc_impacts:
@@ -384,3 +400,111 @@ legislations:
   any_of_product_types:
   - toaster
   - portable_grill
+  any_of_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - kitchen_food_appliance
+- code: 2023/988
+  title: General Product Safety Regulation
+  family: General consumer product safety
+  legal_form: Regulation
+  priority: conditional
+  directive_key: GPSR
+  bucket: non_ce
+  applicability: applicable
+  applicable_from: '2024-12-13'
+  reason: Residual consumer-safety review for products not fully covered by harmonised sector legislation,
+    and horizontal safety obligations for consumer products placed on the EU market.
+  triggers:
+  - consumer product safety review
+  - online sales and traceability review
+  - residual hazards outside sector-specific conformity routes
+  doc_impacts:
+  - safety information and warnings
+  - traceability data
+  - post-market surveillance inputs
+  all_of_traits:
+  - consumer
+- code: 2012/19/EU
+  title: WEEE Directive
+  family: Waste electrical and electronic equipment
+  legal_form: Directive
+  priority: conditional
+  directive_key: WEEE
+  bucket: non_ce
+  applicability: applicable
+  reason: Review collection, marking, producer-responsibility, and end-of-life obligations for electrical
+    and electronic equipment.
+  triggers:
+  - electrical or electronic equipment
+  - crossed-out wheeled bin marking and producer obligations
+  doc_impacts:
+  - product marking review
+  - EPR / registration review
+  - user information review
+  any_of_traits:
+  - electrical
+  - electronic
+- code: 2009/48/EC
+  title: Toy Safety Directive
+  family: Toy safety
+  legal_form: Directive
+  priority: product_specific
+  directive_key: TOY
+  bucket: ce
+  applicability: applicable
+  reason: Applicable where the product is designed or intended, whether or not exclusively, for use in
+    play by children under 14 years of age.
+  triggers:
+  - toy or play value
+  - child-targeted connected product
+  doc_impacts:
+  - toy safety assessment
+  - warnings and age grading review
+  - chemical / mechanical / electrical toy evidence
+  any_of_traits:
+  - toy
+  - child_targeted
+  any_of_genres:
+  - connected_toy_childcare
+- code: 2019/945+2019/947
+  title: EU drone / UAS framework review
+  family: Unmanned aircraft systems
+  legal_form: Regulation
+  priority: product_specific
+  directive_key: UAS
+  bucket: non_ce
+  applicability: applicable
+  reason: Dedicated drone framework review for unmanned aircraft systems and related classes, in parallel
+    with product legislation such as RED, EMC, RoHS, and battery rules.
+  triggers:
+  - consumer or prosumer drone
+  - UAS class / open-category review
+  doc_impacts:
+  - UAS class review
+  - operator / category information review
+  - technical documentation mapping
+  any_of_traits:
+  - drone_flight
+  any_of_genres:
+  - drone_uas
+- code: MDR-borderline
+  title: Medical Device Regulation borderline review
+  family: Medical-device borderline assessment
+  legal_form: Regulation
+  priority: informational
+  directive_key: MDR
+  bucket: framework
+  applicability: conditional
+  reason: Borderline review needed where a consumer product makes medical, diagnostic, monitoring, or
+    treatment claims that may move it into MDR scope.
+  triggers:
+  - medical or diagnostic claims
+  - wellness versus medical intended-purpose review
+  doc_impacts:
+  - intended-purpose review
+  - claims review
+  - classification review
+  any_of_traits:
+  - medical_claims
+  - health_related

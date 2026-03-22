@@ -22,7 +22,8 @@ traits:
   description: Uses passwords, PINs, tokens, certificates, or similar access controls
 - id: av_ict
   label: AV/ICT equipment
-  description: Audio, video, display, communication, or ICT-style equipment rather than a typical household appliance
+  description: Audio, video, display, communication, or ICT-style equipment rather than a typical household
+    appliance
 - id: battery_powered
   label: Battery powered
   description: Powered by primary or rechargeable batteries
@@ -88,7 +89,8 @@ traits:
   description: Extracts fumes, vapours, dust, or liquids
 - id: fixed_installation
   label: Fixed installation
-  description: Intended to be fixed, wall mounted, ceiling mounted, built in, or otherwise permanently installed
+  description: Intended to be fixed, wall mounted, ceiling mounted, built in, or otherwise permanently
+    installed
 - id: floor_standing
   label: Floor-standing appliance
   description: Normally positioned on the floor during use
@@ -265,8 +267,8 @@ traits:
   description: Uses Zigbee radio technology
 - id: monetary_transaction
   label: Monetary transaction or value transfer
-  description: Supports payments, subscriptions, orders, wallet functions, money transfer, or similar transfer of monetary
-    value
+  description: Supports payments, subscriptions, orders, wallet functions, money transfer, or similar
+    transfer of monetary value
 - id: wifi_5ghz
   label: 5 GHz Wi-Fi
   description: Supports 5 GHz Wi-Fi operation, including dual-band Wi-Fi where 5 GHz is present
@@ -290,7 +292,8 @@ traits:
   description: Supplied via an external power supply, charger, or AC/DC adapter.
 - id: uwb
   label: Ultra-Wideband (UWB)
-  description: Uses Ultra-Wideband radio for precise ranging, spatial awareness, or secure device-to-device positioning
+  description: Uses Ultra-Wideband radio for precise ranging, spatial awareness, or secure device-to-device
+    positioning
 - id: z_wave
   label: Z-Wave
   description: Uses Z-Wave radio technology for low-power mesh networking
@@ -311,10 +314,12 @@ traits:
   description: Uses 5G New Radio (NR) cellular technology, including Sub-6GHz and mmWave bands
 - id: satellite_connectivity
   label: Satellite connectivity
-  description: Connects via satellite network (e.g. Starlink, OneWeb, Iridium) for internet or telemetry access
+  description: Connects via satellite network (e.g. Starlink, OneWeb, Iridium) for internet or telemetry
+    access
 - id: esim
   label: eSIM
-  description: Contains an embedded SIM (eSIM) for cellular network provisioning without a physical SIM card
+  description: Contains an embedded SIM (eSIM) for cellular network provisioning without a physical SIM
+    card
 - id: poe_powered
   label: PoE powered
   description: Receives power over Ethernet (PoE, PoE+, or PoE++) rather than a separate power supply
@@ -329,7 +334,8 @@ traits:
   description: Supports Wi-Fi 7 (802.11be) multi-link operation
 - id: tri_band_wifi
   label: Tri-band Wi-Fi
-  description: Supports simultaneous operation on three Wi-Fi bands (2.4 GHz + 5 GHz + 6 GHz or dual 5 GHz)
+  description: Supports simultaneous operation on three Wi-Fi bands (2.4 GHz + 5 GHz + 6 GHz or dual 5
+    GHz)
 - id: mesh_network_node
   label: Mesh network node
   description: Can act as a node in a Wi-Fi or IoT mesh network, extending coverage
@@ -386,7 +392,8 @@ traits:
   description: Supports HDMI Audio Return Channel (ARC) or Enhanced ARC (eARC)
 - id: lidar
   label: LiDAR sensor
-  description: Uses a LiDAR (light detection and ranging) sensor for distance measurement or obstacle detection
+  description: Uses a LiDAR (light detection and ranging) sensor for distance measurement or obstacle
+    detection
 - id: slam_navigation
   label: SLAM navigation
   description: Uses Simultaneous Localisation and Mapping (SLAM) for autonomous navigation
@@ -461,7 +468,8 @@ traits:
   description: Integrates a voice assistant (e.g. Alexa, Google Assistant, Siri, Bixby) as a primary interface
 - id: privacy_switch
   label: Hardware privacy switch
-  description: Includes a physical hardware switch that disables the microphone and/or camera at circuit level
+  description: Includes a physical hardware switch that disables the microphone and/or camera at circuit
+    level
 - id: parental_controls
   label: Parental controls
   description: Offers parental control or family safety features for content filtering or usage limits
@@ -479,13 +487,16 @@ traits:
   description: Supports remote device management, provisioning, or monitoring by a vendor or fleet operator
 - id: matter_bridge
   label: Matter bridge
-  description: Acts as a Matter bridge, translating between non-Matter protocols (Zigbee, Z-Wave, etc.) and Matter
+  description: Acts as a Matter bridge, translating between non-Matter protocols (Zigbee, Z-Wave, etc.)
+    and Matter
 - id: outdoor_rated
   label: Outdoor rated
-  description: Weatherproofed or rated for outdoor installation (IP65 or higher, or equivalent enclosure class)
+  description: Weatherproofed or rated for outdoor installation (IP65 or higher, or equivalent enclosure
+    class)
 - id: fanless
   label: Fanless / passive cooling
-  description: Uses passive cooling only; no active fans, relevant to noise, ingress protection, and reliability ratings
+  description: Uses passive cooling only; no active fans, relevant to noise, ingress protection, and reliability
+    ratings
 - id: rack_mount
   label: Rack mountable
   description: Designed for installation in a standard 19-inch equipment rack
@@ -498,3 +509,56 @@ traits:
 - id: ceiling_mount
   label: Ceiling mounted
   description: Designed to be ceiling mounted (e.g. access points, cameras, sensors)
+- id: traction_motor
+  label: Traction motor
+  description: Uses an electric drive motor to propel a rider, vehicle, or mobile platform
+- id: vehicle_use
+  label: Vehicle or ride-on use
+  description: Intended to transport a rider or to operate as a ride-on product
+- id: light_means_of_transport
+  label: Light means of transport
+  description: Product or battery is intended for e-bikes, e-scooters, e-skateboards, or similar light
+    transport
+- id: drone_flight
+  label: Drone flight
+  description: Intended to fly as an unmanned aircraft system or to directly control one
+- id: robotic_motion
+  label: Robotic motion
+  description: Moves autonomously or semi-autonomously as part of intended function
+- id: outdoor_environment
+  label: Outdoor environment
+  description: Intended for outdoor use or exposure to weather and environmental conditions
+- id: location_tracking
+  label: Location tracking
+  description: Tracks a person, animal, vehicle, or object using GNSS or other positioning data
+- id: battery_pack
+  label: Battery pack or power station
+  description: Stores electrical energy for later use, charging, backup, or power delivery
+- id: portable_energy
+  label: Portable energy product
+  description: Portable energy storage, power bank, or power station function is a main intended use
+- id: medical_claims
+  label: Medical or diagnostic claims
+  description: Claims diagnosis, treatment, monitoring, or other medical purpose and needs borderline
+    review
+- id: toy
+  label: Toy-like product
+  description: Designed or intended for use in play by children or marketed as a toy
+- id: pet_use
+  label: Pet use
+  description: Intended mainly for pets or companion animals
+- id: camera_surveillance
+  label: Surveillance-style camera function
+  description: Captures or streams images for security, monitoring, or watch functions
+- id: networked_standby
+  label: Networked standby
+  description: Maintains network connectivity or remote-response function while in standby
+- id: internet_connected
+  label: Internet connected
+  description: Directly or indirectly connects to the internet or remote services during normal use
+- id: xr
+  label: XR / AR / VR device
+  description: Augmented reality, mixed reality, or virtual reality function is part of intended use
+- id: close_proximity_emf
+  label: Close proximity EMF
+  description: Radio transmitter or field source is used close to the body, head, or limbs

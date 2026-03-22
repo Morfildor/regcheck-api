@@ -42,6 +42,9 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-65
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: air_purifier
   label: Air purifier
   product_family: air_treatment_cleaner
@@ -92,6 +95,9 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-65
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: aquarium_appliance
   label: Aquarium appliance
   aliases:
@@ -109,6 +115,8 @@ products:
   - pet_care_appliance
   likely_standards:
   - EN 60335-2-55
+  genres:
+  - household_appliance
 - id: barbecue_grill
   label: Electric barbecue grill
   aliases:
@@ -131,6 +139,10 @@ products:
   - cooking_appliance
   likely_standards:
   - EN 60335-2-78
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: battery_charger
   label: Battery charger
   aliases:
@@ -147,6 +159,8 @@ products:
   - power_supply
   likely_standards:
   - EN 60335-2-29
+  genres:
+  - portable_energy
 - id: battery_powered_oral_hygiene
   label: Battery-powered oral hygiene appliance
   aliases:
@@ -166,6 +180,9 @@ products:
   - personal_care_appliance
   likely_standards:
   - EN 60335-2-52
+  genres:
+  - household_appliance
+  - personal_care_appliance
 - id: beauty_treatment_appliance
   label: Beauty treatment appliance
   aliases:
@@ -184,6 +201,10 @@ products:
   - personal_care_appliance
   likely_standards:
   - EN 60335-2-23
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
 - id: blender
   label: Blender
   aliases:
@@ -204,6 +225,9 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-14
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
 - id: circulator
   label: Circulator
   aliases:
@@ -222,6 +246,9 @@ products:
   - pump
   likely_standards:
   - EN 60335-2-51
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: clock
   label: Clock
   aliases:
@@ -238,6 +265,8 @@ products:
   - home_device
   likely_standards:
   - EN 60335-2-26
+  genres:
+  - household_appliance
 - id: coffee_machine
   label: Coffee machine
   aliases:
@@ -279,6 +308,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-15
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: commercial_cooking_appliance
   label: Commercial cooking appliance
   aliases:
@@ -301,6 +334,10 @@ products:
   - EN 60335-2-46
   - EN 60335-2-47
   - EN 60335-2-48
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: commercial_dispensing_appliance
   label: Commercial dispensing appliance
   aliases:
@@ -319,6 +356,10 @@ products:
   - commercial_appliance
   likely_standards:
   - EN 60335-2-75
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: commercial_fryer
   label: Commercial fryer
   aliases:
@@ -335,6 +376,10 @@ products:
   - cooking_appliance
   likely_standards:
   - EN 60335-2-37
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: commercial_hood
   label: Commercial hood
   aliases:
@@ -350,6 +395,8 @@ products:
   - air_treatment
   likely_standards:
   - EN 60335-2-99
+  genres:
+  - commercial_appliance
 - id: commercial_microwave
   label: Commercial microwave oven
   aliases:
@@ -367,6 +414,10 @@ products:
   - cooking_appliance
   likely_standards:
   - EN 60335-2-90
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: commercial_oven
   label: Commercial oven
   aliases:
@@ -385,6 +436,10 @@ products:
   likely_standards:
   - EN 60335-2-36
   - EN 60335-2-42
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: commercial_refrigerator
   label: Commercial refrigerator
   aliases:
@@ -404,6 +459,10 @@ products:
   - cooling_appliance
   likely_standards:
   - EN 60335-2-89
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: commercial_washing_machine
   label: Commercial washing machine
   aliases:
@@ -422,6 +481,9 @@ products:
   - commercial_appliance
   - laundry_appliance
   likely_standards: []
+  genres:
+  - commercial_appliance
+  - hvac_environmental_appliance
 - id: cooking_range
   label: Cooking range
   aliases:
@@ -440,6 +502,10 @@ products:
   - major_appliance
   likely_standards:
   - EN 60335-2-6
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: air_fryer
   label: Air fryer
   aliases:
@@ -461,6 +527,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-13
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: deep_fryer
   label: Deep fryer
   aliases:
@@ -480,6 +550,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-13
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: dishwasher
   label: Dishwasher
   aliases:
@@ -503,6 +577,10 @@ products:
   - kitchen_appliance
   likely_standards:
   - EN 60335-2-5
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
 - id: electric_blanket
   label: Electric blanket
   aliases:
@@ -519,6 +597,10 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-17
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
 - id: electric_fish_stunner
   label: Electric fishing machine / fish stunner
   aliases:
@@ -534,6 +616,8 @@ products:
   likely_standards:
   - EN 60335-2-86
   - EN 60335-2-87
+  genres:
+  - av_ict_device
 - id: electric_frying_pan
   label: Electric frying pan
   aliases:
@@ -552,6 +636,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-13
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: electric_garden_tool
   label: Electric garden tool
   aliases:
@@ -572,6 +660,8 @@ products:
   - outdoor_appliance
   - garden_tool
   likely_standards: []
+  genres:
+  - garden_outdoor_power
 - id: electric_iron
   label: Electric iron
   aliases:
@@ -595,6 +685,10 @@ products:
   likely_standards:
   - EN 60335-2-3
   - EN 60335-2-45
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
 - id: electric_kettle
   label: Electric kettle
   aliases:
@@ -620,6 +714,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-15
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: electric_pump
   label: Electric pump
   aliases:
@@ -640,6 +738,8 @@ products:
   - pump
   likely_standards:
   - EN 60335-2-41
+  genres:
+  - household_appliance
 - id: electrolyser_washing_machine
   label: Detergent-free electrolyser washing machine
   aliases:
@@ -658,6 +758,9 @@ products:
   - laundry_appliance
   likely_standards:
   - EN 60335-2-108
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: fan
   label: Fan
   product_family: indoor_air_mover
@@ -709,6 +812,9 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-80
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: fan_heater
   label: Fan heater
   product_family: indoor_air_mover
@@ -752,6 +858,9 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-30
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: fence_energizer
   label: Electric fence energizer
   aliases:
@@ -766,6 +875,8 @@ products:
   - agricultural_appliance
   likely_standards:
   - EN 60335-2-76
+  genres:
+  - av_ict_device
 - id: floor_treatment_machine
   label: Floor treatment machine
   aliases:
@@ -786,6 +897,8 @@ products:
   likely_standards:
   - EN 60335-2-10
   - EN 60335-2-54
+  genres:
+  - cleaning_laundry_appliance
 - id: food_processor
   label: Food processor
   aliases:
@@ -803,6 +916,9 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-14
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
 - id: food_waste_disposer
   label: Food waste disposer
   aliases:
@@ -820,6 +936,8 @@ products:
   - kitchen_appliance
   likely_standards:
   - EN 60335-2-16
+  genres:
+  - household_appliance
 - id: foot_warmer
   label: Foot warmer
   aliases:
@@ -836,6 +954,10 @@ products:
   likely_standards:
   - EN 60335-2-17
   - EN 60335-2-81
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
 - id: fuel_burning_electrical_appliance
   label: Fuel-burning appliance with electrical connections
   aliases:
@@ -851,6 +973,8 @@ products:
   - heating_appliance
   likely_standards:
   - EN 60335-2-102
+  genres:
+  - household_appliance
 - id: garage_door_drive
   label: Garage door drive
   aliases:
@@ -870,6 +994,8 @@ products:
   - building_automation
   likely_standards:
   - EN 60335-2-95
+  genres:
+  - building_access_drive
 - id: gate_door_window_drive
   label: Drive for gates, doors or windows
   aliases:
@@ -891,6 +1017,8 @@ products:
   likely_standards:
   - EN 60335-2-103
   - EN 60335-2-95
+  genres:
+  - building_access_drive
 - id: hair_clipper
   label: Hair clipper
   aliases:
@@ -911,6 +1039,10 @@ products:
   - personal_care_appliance
   likely_standards:
   - EN 60335-2-8
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
 - id: heat_pump
   label: Heat pump / air conditioner
   aliases:
@@ -937,6 +1069,9 @@ products:
   - hvac_appliance
   likely_standards:
   - EN 60335-2-40
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: heated_carpet
   label: Heated carpet / underfloor heating mat
   aliases:
@@ -955,6 +1090,9 @@ products:
   - EN 60335-2-81
   - EN 60335-2-96
   - EN 60335-2-106
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: heating_lamp
   label: Heating lamp
   aliases:
@@ -968,6 +1106,9 @@ products:
   functional_classes:
   - heating_appliance
   likely_standards: []
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: heating_pad
   label: Heating pad / heating blanket
   aliases:
@@ -986,6 +1127,10 @@ products:
   likely_standards:
   - EN 60335-2-17
   - EN 60335-2-96
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
 - id: high_pressure_cleaner
   label: High-pressure cleaner
   aliases:
@@ -1007,6 +1152,10 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 60335-2-79
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - garden_outdoor_power
 - id: hob
   label: Hob / cooktop
   aliases:
@@ -1030,6 +1179,10 @@ products:
   - major_appliance
   likely_standards:
   - EN 60335-2-6
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: hot_cupboard
   label: Hot cupboard
   aliases:
@@ -1045,6 +1198,10 @@ products:
   - commercial_appliance
   likely_standards:
   - EN 60335-2-49
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: humidifier
   label: Humidifier
   aliases:
@@ -1068,6 +1225,9 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-98
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: immersion_heater
   label: Immersion heater
   aliases:
@@ -1087,6 +1247,9 @@ products:
   likely_standards:
   - EN 60335-2-35
   - EN 60335-2-73
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: incubator
   label: Incubator
   aliases:
@@ -1100,6 +1263,9 @@ products:
   functional_classes:
   - specialty_appliance
   likely_standards: []
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: industrial_charger
   label: Industrial battery charger
   aliases:
@@ -1117,6 +1283,8 @@ products:
   - industrial_equipment
   likely_standards:
   - EN 50563
+  genres:
+  - portable_energy
 - id: insect_killer
   label: Insect killer
   aliases:
@@ -1133,6 +1301,8 @@ products:
   - home_device
   likely_standards:
   - EN 60335-2-59
+  genres:
+  - av_ict_device
 - id: ironer
   label: Ironer
   aliases:
@@ -1151,6 +1321,10 @@ products:
   - garment_care
   likely_standards:
   - EN 60335-2-44
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
 - id: kitchen_extractor_fan
   label: Kitchen extractor fan
   aliases:
@@ -1171,6 +1345,10 @@ products:
   - kitchen_appliance
   likely_standards:
   - EN 60335-2-31
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: kitchen_machine
   label: Kitchen machine
   aliases:
@@ -1193,6 +1371,9 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-14
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
 - id: lawn_mower
   label: Electric lawn mower
   aliases:
@@ -1213,6 +1394,8 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 60335-2-77
+  genres:
+  - garden_outdoor_power
 - id: liquid_heater
   label: Liquid heater
   aliases:
@@ -1232,6 +1415,10 @@ products:
   - beverage_preparation
   likely_standards:
   - EN 60335-2-15
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: livestock_heater
   label: Livestock heating appliance
   aliases:
@@ -1247,6 +1434,9 @@ products:
   - agricultural_appliance
   likely_standards:
   - EN 60335-2-71
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: massage_appliance
   label: Massage appliance
   aliases:
@@ -1265,6 +1455,10 @@ products:
   - personal_care_appliance
   likely_standards:
   - EN 60335-2-32
+  genres:
+  - wellness_borderline_medical
+  - household_appliance
+  - personal_care_appliance
 - id: microwave_oven
   label: Microwave oven
   aliases:
@@ -1285,6 +1479,10 @@ products:
   - major_appliance
   likely_standards:
   - EN 60335-2-25
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: motor_compressor
   label: Motor-compressor
   aliases:
@@ -1298,6 +1496,8 @@ products:
   - component
   likely_standards:
   - EN 60335-2-34
+  genres:
+  - household_appliance
 - id: oral_hygiene_appliance
   label: Oral hygiene appliance
   aliases:
@@ -1318,6 +1518,9 @@ products:
   - personal_care_appliance
   likely_standards:
   - EN 60335-2-52
+  genres:
+  - household_appliance
+  - personal_care_appliance
 - id: outdoor_barbecue
   label: Outdoor electric barbecue
   aliases:
@@ -1337,6 +1540,11 @@ products:
   - cooking_appliance
   likely_standards:
   - EN 60335-2-78
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  - garden_outdoor_power
 - id: oven
   label: Oven
   aliases:
@@ -1359,6 +1567,10 @@ products:
   - major_appliance
   likely_standards:
   - EN 60335-2-6
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: patio_heater
   label: Patio heater
   aliases:
@@ -1376,6 +1588,10 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 60335-2-30
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - garden_outdoor_power
 - id: portable_grill
   label: Portable grill
   aliases:
@@ -1402,6 +1618,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-9
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: portable_immersion_heater
   label: Portable immersion heater
   aliases:
@@ -1421,6 +1641,9 @@ products:
   likely_standards:
   - EN 60335-2-15
   - EN 60335-2-74
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: range_hood
   label: Range hood
   aliases:
@@ -1449,6 +1672,10 @@ products:
   - air_treatment
   likely_standards:
   - EN 60335-2-31
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: refrigerator_freezer
   label: Refrigerator / freezer
   aliases:
@@ -1471,6 +1698,10 @@ products:
   - major_appliance
   likely_standards:
   - EN 60335-2-24
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: rice_cooker
   label: Rice cooker
   aliases:
@@ -1495,6 +1726,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-15
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: robotic_lawn_mower
   label: Robotic lawn mower
   aliases:
@@ -1516,6 +1751,8 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 50636-2-107
+  genres:
+  - garden_outdoor_power
 - id: rolling_shutter_drive
   label: Drive for rolling shutters, awnings or blinds
   aliases:
@@ -1536,6 +1773,8 @@ products:
   - building_automation
   likely_standards:
   - EN 60335-2-97
+  genres:
+  - building_access_drive
 - id: room_dehumidifier
   label: Dehumidifier
   aliases:
@@ -1558,6 +1797,9 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-40
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: room_heater
   label: Room heater
   aliases:
@@ -1584,6 +1826,9 @@ products:
   - heating_appliance
   likely_standards:
   - EN 60335-2-30
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: room_heating_appliance
   label: Room heating appliance
   aliases:
@@ -1604,6 +1849,9 @@ products:
   - heating_appliance
   likely_standards:
   - EN 60335-2-61
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: sauna_heater
   label: Sauna heater
   aliases:
@@ -1619,6 +1867,9 @@ products:
   - heating_appliance
   likely_standards:
   - EN 60335-2-53
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: sewing_machine
   label: Sewing machine
   aliases:
@@ -1635,6 +1886,8 @@ products:
   - home_device
   likely_standards:
   - EN 60335-2-28
+  genres:
+  - cleaning_laundry_appliance
 - id: shaver
   label: Electric shaver
   aliases:
@@ -1654,6 +1907,9 @@ products:
   - personal_care_appliance
   likely_standards:
   - EN 60335-2-8
+  genres:
+  - household_appliance
+  - personal_care_appliance
 - id: shower_cabinet
   label: Multifunctional shower cabinet
   aliases:
@@ -1672,6 +1928,10 @@ products:
   - bathroom_appliance
   likely_standards:
   - EN 60335-2-105
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
 - id: skin_hair_care_appliance
   label: Skin or hair care appliance
   aliases:
@@ -1697,6 +1957,10 @@ products:
   likely_standards:
   - EN 60335-2-23
   - EN 60335-2-45
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
 - id: spin_extractor
   label: Spin extractor
   aliases:
@@ -1714,6 +1978,9 @@ products:
   - laundry_appliance
   likely_standards:
   - EN 60335-2-4
+  genres:
+  - kitchen_food_appliance
+  - cleaning_laundry_appliance
 - id: spray_extraction_machine
   label: Spray extraction machine
   aliases:
@@ -1733,6 +2000,8 @@ products:
   - floor_care
   likely_standards:
   - EN 60335-2-54
+  genres:
+  - cleaning_laundry_appliance
 - id: storage_water_heater
   label: Storage water heater
   aliases:
@@ -1752,6 +2021,9 @@ products:
   - water_heating_appliance
   likely_standards:
   - EN 60335-2-21
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: toaster
   label: Toaster
   aliases:
@@ -1774,6 +2046,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-9
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: tumble_dryer
   label: Tumble dryer
   aliases:
@@ -1796,6 +2072,10 @@ products:
   likely_standards:
   - EN 60335-2-11
   - EN 60335-2-43
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
 - id: ultraviolet_appliance
   label: Ultraviolet appliance
   aliases:
@@ -1812,6 +2092,9 @@ products:
   - home_device
   likely_standards:
   - EN 60335-2-27
+  genres:
+  - household_appliance
+  - personal_care_appliance
 - id: robot_vacuum
   label: Robot vacuum cleaner
   aliases:
@@ -1837,6 +2120,9 @@ products:
   - cleaning_appliance
   likely_standards:
   - EN 60335-2-2
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
 - id: vacuum_cleaner
   label: Vacuum cleaner
   aliases:
@@ -1866,6 +2152,9 @@ products:
   - cleaning_appliance
   likely_standards:
   - EN 60335-2-2
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
 - id: vaporizer
   label: Vaporizer
   aliases:
@@ -1882,6 +2171,9 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-101
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: vending_machine
   label: Vending machine
   aliases:
@@ -1900,6 +2192,10 @@ products:
   - commercial_appliance
   likely_standards:
   - EN 60335-2-75
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: warming_plate
   label: Warming plate
   aliases:
@@ -1917,6 +2213,10 @@ products:
   - kitchen_appliance
   likely_standards:
   - EN 60335-2-12
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: washing_machine
   label: Washing machine
   aliases:
@@ -1943,6 +2243,10 @@ products:
   - major_appliance
   likely_standards:
   - EN 60335-2-7
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
 - id: water_bed_heater
   label: Water-bed heater
   aliases:
@@ -1960,6 +2264,10 @@ products:
   likely_standards:
   - EN 60335-2-17
   - EN 60335-2-66
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
 - id: water_suction_cleaner
   label: Water-suction cleaning appliance
   aliases:
@@ -1988,6 +2296,9 @@ products:
   likely_standards:
   - EN 60335-2-2
   - EN 60335-2-69
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
 - id: coffee_grinder
   label: Coffee grinder / coffee mill
   aliases:
@@ -2013,6 +2324,9 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-33
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
 - id: commercial_kitchen_machine
   label: Commercial kitchen machine
   aliases:
@@ -2035,6 +2349,9 @@ products:
   - food_preparation
   likely_standards:
   - EN 60335-2-64
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
 - id: smart_plug
   label: Smart plug / smart outlet
   aliases:
@@ -2070,6 +2387,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
 - id: smart_thermostat
   label: Smart thermostat
   aliases:
@@ -2112,6 +2431,8 @@ products:
   - building_automation
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
 - id: smart_speaker
   label: Smart speaker
   product_family: smart_assistant_device
@@ -2191,6 +2512,9 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: bluetooth_tracker
   label: Bluetooth tracker
   aliases:
@@ -2215,6 +2539,8 @@ products:
   functional_classes:
   - home_device
   likely_standards: []
+  genres:
+  - av_ict_device
 - id: hvac_humidifier
   label: Humidifier for HVAC systems
   aliases:
@@ -2235,6 +2561,9 @@ products:
   - air_treatment
   likely_standards:
   - EN 60335-2-88
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
 - id: projector
   label: Projector
   product_family: projector_device
@@ -2278,6 +2607,8 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: whirlpool_bath
   label: Whirlpool bath / spa bath
   aliases:
@@ -2297,6 +2628,8 @@ products:
   - bathroom_appliance
   likely_standards:
   - EN 60335-2-60
+  genres:
+  - hvac_environmental_appliance
 - id: smart_toilet
   label: Electric toilet / smart toilet
   aliases:
@@ -2317,6 +2650,9 @@ products:
   - bathroom_appliance
   likely_standards:
   - EN 60335-2-84
+  genres:
+  - smart_home_iot
+  - hvac_environmental_appliance
 - id: heated_gully
   label: Heated gully / roof drainage heater
   aliases:
@@ -2335,6 +2671,10 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 60335-2-83
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - garden_outdoor_power
 - id: grass_trimmer
   label: Grass trimmer / lawn edge trimmer
   aliases:
@@ -2356,6 +2696,8 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 60335-2-91
+  genres:
+  - garden_outdoor_power
 - id: scarifier_aerator
   label: Lawn scarifier / aerator
   aliases:
@@ -2375,6 +2717,8 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 60335-2-92
+  genres:
+  - garden_outdoor_power
 - id: grass_shear
   label: Grass shear
   aliases:
@@ -2395,6 +2739,8 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 60335-2-94
+  genres:
+  - garden_outdoor_power
 - id: milking_machine
   label: Milking machine
   aliases:
@@ -2412,6 +2758,8 @@ products:
   - agricultural_appliance
   likely_standards:
   - EN 60335-2-70
+  genres:
+  - commercial_appliance
 - id: commercial_floor_treatment_machine
   label: Commercial floor treatment machine
   aliases:
@@ -2434,6 +2782,9 @@ products:
   likely_standards:
   - EN 60335-2-67
   - EN 60335-2-72
+  genres:
+  - commercial_appliance
+  - cleaning_laundry_appliance
 - id: commercial_spray_extraction_machine
   label: Commercial spray extraction machine
   aliases:
@@ -2455,6 +2806,9 @@ products:
   - floor_care
   likely_standards:
   - EN 60335-2-68
+  genres:
+  - commercial_appliance
+  - cleaning_laundry_appliance
 - id: commercial_dishwasher
   label: Commercial dishwasher
   aliases:
@@ -2478,6 +2832,10 @@ products:
   - kitchen_appliance
   likely_standards:
   - EN 60335-2-58
+  genres:
+  - commercial_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
 - id: commercial_rinsing_sink
   label: Commercial rinsing sink
   aliases:
@@ -2495,6 +2853,9 @@ products:
   - kitchen_appliance
   likely_standards:
   - EN 60335-2-62
+  genres:
+  - commercial_appliance
+  - hvac_environmental_appliance
 - id: bain_marie
   label: Bain-marie
   aliases:
@@ -2513,6 +2874,10 @@ products:
   - kitchen_appliance
   likely_standards:
   - EN 60335-2-50
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
 - id: fabric_steamer
   label: Fabric steamer
   aliases:
@@ -2535,6 +2900,10 @@ products:
   - small_domestic_appliance
   likely_standards:
   - EN 60335-2-85
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
 - id: smart_display
   label: Smart display
   product_family: smart_assistant_device
@@ -2593,6 +2962,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: router
   label: Router
   product_family: wifi_networking
@@ -2643,6 +3015,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: modem
   label: Modem
   aliases:
@@ -2662,6 +3037,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: iot_gateway
   label: IoT gateway / hub
   aliases:
@@ -2687,6 +3065,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: network_switch
   label: Network switch
   aliases:
@@ -2706,6 +3087,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: wireless_access_point
   label: Wireless access point
   product_family: wifi_networking
@@ -2755,6 +3139,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: laptop
   label: Laptop
   aliases:
@@ -2779,6 +3166,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: desktop_pc
   label: Desktop PC
   aliases:
@@ -2798,6 +3187,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: server
   label: Server / NAS
   aliases:
@@ -2817,6 +3208,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: monitor
   label: Monitor
   aliases:
@@ -2835,6 +3228,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: smart_tv
   label: Television / smart TV
   aliases:
@@ -2859,6 +3254,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: streaming_device
   label: Streaming device / set-top box
   aliases:
@@ -2882,6 +3280,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: soundbar
   label: Soundbar
   aliases:
@@ -2910,6 +3310,8 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: home_cinema_system
   label: Home cinema system
   aliases:
@@ -2939,6 +3341,8 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: wireless_headphones
   label: Wireless headphones / earbuds
   aliases:
@@ -2968,6 +3372,8 @@ products:
   - wearable_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: bluetooth_speaker
   label: Portable Bluetooth speaker
   aliases:
@@ -2992,6 +3398,8 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: digital_audio_player
   label: Digital audio player / DAC
   aliases:
@@ -3015,6 +3423,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: home_projector
   label: Home projector / smart projector
   product_family: projector_device
@@ -3083,6 +3493,8 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: digital_photo_frame
   label: Smart digital photo frame
   aliases:
@@ -3109,6 +3521,8 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: smart_mirror
   label: Smart mirror / interactive mirror
   aliases:
@@ -3136,6 +3550,9 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: tablet
   label: Tablet computer
   aliases:
@@ -3172,6 +3589,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: e_reader
   label: E-reader
   aliases:
@@ -3201,6 +3620,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: docking_station
   label: Docking station / USB-C hub
   aliases:
@@ -3226,6 +3647,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: usb_hub
   label: USB hub
   aliases:
@@ -3248,6 +3671,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: external_storage
   label: External storage (SSD / HDD)
   aliases:
@@ -3272,6 +3697,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: webcam
   label: Webcam / smart camera (USB/IP)
   aliases:
@@ -3296,6 +3723,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: game_console
   label: Game console
   aliases:
@@ -3330,6 +3759,8 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: vr_ar_headset
   label: VR / AR headset
   aliases:
@@ -3371,6 +3802,10 @@ products:
   - wearable_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - xr_immersive
+  - wearable_device
+  - av_ict_device
 - id: mesh_wifi_system
   label: Mesh Wi-Fi system (node)
   product_family: wifi_networking
@@ -3447,6 +3882,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: 5g_home_gateway
   label: 5G home gateway / CPE
   aliases:
@@ -3482,6 +3920,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
 - id: voip_dect_phone
   label: VoIP / DECT phone
   aliases:
@@ -3512,6 +3953,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: satellite_terminal
   label: Satellite internet terminal
   aliases:
@@ -3539,6 +3982,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: lora_gateway
   label: LoRa / LoRaWAN gateway
   aliases:
@@ -3565,6 +4010,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: smart_power_strip
   label: Smart power strip / surge protector
   aliases:
@@ -3592,6 +4039,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
 - id: wireless_charger
   label: Wireless charging pad / stand
   aliases:
@@ -3616,6 +4065,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - portable_energy
 - id: usb_charging_hub
   label: USB charging hub / PD charger
   aliases:
@@ -3641,6 +4092,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - portable_energy
 - id: home_energy_monitor
   label: Home energy monitor
   aliases:
@@ -3671,6 +4124,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
 - id: smart_meter_display
   label: Smart meter in-home display (IHD)
   aliases:
@@ -3696,6 +4151,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
 - id: ev_charger_home
   label: Home EV charger (EVSE)
   family_keywords:
@@ -3741,6 +4198,8 @@ products:
   likely_standards:
   - EN 62368-1
   - IEC 61851-1
+  genres:
+  - portable_energy
 - id: home_battery_system
   label: Home battery energy storage system
   aliases:
@@ -3772,6 +4231,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - portable_energy
 - id: smart_doorbell
   label: Smart video doorbell
   aliases:
@@ -3811,6 +4272,9 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - security_access_iot
 - id: ip_camera
   label: IP camera / smart security camera
   family_keywords:
@@ -3858,6 +4322,8 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - security_access_iot
 - id: security_hub
   label: Smart security alarm hub
   aliases:
@@ -3899,6 +4365,9 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - security_access_iot
+  - building_access_drive
 - id: smart_smoke_co_alarm
   label: Smart smoke / CO alarm
   aliases:
@@ -3938,6 +4407,10 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 14604
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  - building_access_drive
 - id: baby_monitor
   label: Video baby monitor
   aliases:
@@ -3973,6 +4446,9 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - security_access_iot
+  - connected_toy_childcare
 - id: pet_camera
   label: Pet camera / pet monitor
   aliases:
@@ -4007,6 +4483,9 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - pet_tech
+  - security_access_iot
 - id: action_camera
   label: Action camera
   aliases:
@@ -4036,6 +4515,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - av_ict_device
 - id: ip_intercom
   label: IP video intercom
   aliases:
@@ -4067,6 +4548,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - security_access_iot
 - id: smart_lock
   label: Smart lock
   aliases:
@@ -4078,6 +4561,8 @@ products:
   - smart deadbolt
   - fingerprint lock
   - nfc lock
+  - connected lock
+  - electronic door lock
   implied_traits:
   - consumer
   - household
@@ -4103,8 +4588,18 @@ products:
   - security_device
   - av_ict_device
   - home_device
+  - connected_device
   likely_standards:
   - EN 62368-1
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+  product_family: smart_home_security
+  product_subfamily: smart_lock
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  - building_access_drive
 - id: smart_light_controller
   label: Smart lighting controller / bridge
   aliases:
@@ -4136,6 +4631,8 @@ products:
   - network_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
 - id: smart_home_panel
   label: Smart home wall panel / controller
   aliases:
@@ -4171,6 +4668,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
 - id: smart_sensor_node
   label: Smart home sensor (environmental)
   aliases:
@@ -4206,6 +4705,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - security_access_iot
 - id: smart_button_remote
   label: Smart button / voice remote
   aliases:
@@ -4235,6 +4737,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - smart_home_iot
+  - security_access_iot
 - id: smartwatch_fitness_tracker
   label: Smartwatch / fitness tracker
   aliases:
@@ -4274,6 +4779,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - wearable_device
 - id: smart_scale
   label: Smart body scale / composition monitor
   aliases:
@@ -4304,6 +4811,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - wellness_borderline_medical
+  - smart_home_iot
 - id: smart_blood_pressure_monitor
   label: Smart blood pressure monitor
   aliases:
@@ -4333,6 +4843,9 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - wellness_borderline_medical
+  - smart_home_iot
 - id: sleep_tracker
   label: Sleep tracker hub / smart sleep device
   aliases:
@@ -4364,6 +4877,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - wearable_device
 - id: solar_inverter_gateway
   label: Home solar inverter / energy gateway
   aliases:
@@ -4397,3 +4912,445 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  genres:
+  - portable_energy
+  - av_ict_device
+- id: electric_scooter
+  label: Electric scooter
+  aliases:
+  - electric scooter
+  - e scooter
+  - e-scooter
+  - electric kick scooter
+  - commuter scooter
+  - foldable electric scooter
+  product_family: micromobility_device
+  product_subfamily: electric_scooter
+  genres:
+  - micromobility
+  implied_traits:
+  - bluetooth
+  - app_control
+  - gnss
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 17128
+- id: hoverboard
+  label: Hoverboard / self-balancing scooter
+  aliases:
+  - hoverboard
+  - self balancing scooter
+  - self-balancing scooter
+  - balance board scooter
+  product_family: micromobility_device
+  product_subfamily: hoverboard
+  genres:
+  - micromobility
+  implied_traits:
+  - bluetooth
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 17128
+- id: electric_skateboard
+  label: Electric skateboard
+  aliases:
+  - electric skateboard
+  - e skateboard
+  - e-skateboard
+  - electric longboard
+  product_family: micromobility_device
+  product_subfamily: electric_skateboard
+  genres:
+  - micromobility
+  implied_traits:
+  - bluetooth
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 17128
+- id: electric_unicycle
+  label: Electric unicycle
+  aliases:
+  - electric unicycle
+  - euc
+  - one wheel electric unicycle
+  product_family: micromobility_device
+  product_subfamily: electric_unicycle
+  genres:
+  - micromobility
+  implied_traits:
+  - bluetooth
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 17128
+- id: consumer_drone
+  label: Consumer camera drone
+  aliases:
+  - drone
+  - camera drone
+  - consumer drone
+  - quadcopter
+  - fpv drone
+  - aerial drone
+  product_family: drone_device
+  product_subfamily: consumer_drone
+  genres:
+  - drone_uas
+  implied_traits:
+  - wifi
+  - bluetooth
+  - camera
+  - gnss
+  functional_classes:
+  - aerial_device
+  - imaging_device
+  likely_standards:
+  - UAS open-category review
+  - EN 62368-1
+- id: drone_controller
+  label: Drone remote controller
+  aliases:
+  - drone controller
+  - drone remote
+  - fpv controller
+  - radio controller for drone
+  product_family: drone_device
+  product_subfamily: drone_controller
+  genres:
+  - drone_uas
+  implied_traits:
+  - display
+  - handheld
+  functional_classes:
+  - aerial_device
+  likely_standards:
+  - UAS open-category review
+  - EN 62368-1
+- id: smart_toy
+  label: Smart connected toy
+  aliases:
+  - smart toy
+  - connected toy
+  - app connected toy
+  - educational robot toy
+  - interactive toy
+  product_family: connected_child_product
+  product_subfamily: smart_toy
+  genres:
+  - connected_toy_childcare
+  - smart_home_iot
+  implied_traits:
+  - wifi
+  - bluetooth
+  - microphone
+  - speaker
+  functional_classes:
+  - toy_product
+  likely_standards:
+  - EN 62115
+  - EN 71 review
+- id: baby_monitor_smart
+  label: Smart baby monitor
+  aliases:
+  - baby monitor
+  - smart baby monitor
+  - wifi baby monitor
+  - nursery camera
+  product_family: childcare_monitoring
+  product_subfamily: baby_monitor_smart
+  genres:
+  - connected_toy_childcare
+  - smart_home_iot
+  - security_access_iot
+  implied_traits:
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  functional_classes:
+  - child_product
+  - imaging_device
+  likely_standards:
+  - EN 62368-1
+  - EN 18031-1
+  - EN 18031-2
+- id: smartwatch
+  label: Smartwatch
+  aliases:
+  - smartwatch
+  - smart watch
+  - fitness watch
+  - connected watch
+  product_family: wearable_device_family
+  product_subfamily: smartwatch
+  genres:
+  - wearable_device
+  implied_traits:
+  - bluetooth
+  - wifi
+  - gnss
+  - health_related
+  functional_classes:
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+- id: smart_ring
+  label: Smart ring
+  aliases:
+  - smart ring
+  - connected ring
+  - fitness ring
+  product_family: wearable_device_family
+  product_subfamily: smart_ring
+  genres:
+  - wearable_device
+  - smart_home_iot
+  implied_traits:
+  - bluetooth
+  - health_related
+  functional_classes:
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+- id: vr_headset
+  label: VR / XR headset
+  aliases:
+  - vr headset
+  - virtual reality headset
+  - ar headset
+  - xr headset
+  - mixed reality headset
+  product_family: immersive_device
+  product_subfamily: vr_headset
+  genres:
+  - xr_immersive
+  - wearable_device
+  - av_ict_device
+  implied_traits:
+  - wifi
+  - bluetooth
+  - camera
+  - microphone
+  - speaker
+  functional_classes:
+  - av_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+- id: video_doorbell
+  label: Video doorbell
+  aliases:
+  - video doorbell
+  - smart doorbell
+  - wifi doorbell
+  - connected doorbell camera
+  product_family: smart_home_security
+  product_subfamily: video_doorbell
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  implied_traits:
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  functional_classes:
+  - connected_device
+  - imaging_device
+  - security_device
+  likely_standards:
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+- id: smart_security_camera
+  label: Smart security camera
+  aliases:
+  - security camera
+  - smart security camera
+  - wifi camera
+  - surveillance camera
+  - indoor camera
+  - outdoor camera
+  product_family: smart_home_security
+  product_subfamily: smart_security_camera
+  genres:
+  - smart_home_iot
+  implied_traits:
+  - wifi
+  - camera
+  - microphone
+  - camera_surveillance
+  - networked_standby
+  functional_classes:
+  - connected_device
+  - imaging_device
+  - security_device
+  likely_standards:
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+- id: gps_pet_tracker
+  label: GPS pet tracker
+  aliases:
+  - pet tracker
+  - gps pet tracker
+  - dog tracker
+  - cat tracker
+  - smart pet collar
+  product_family: pet_technology
+  product_subfamily: gps_pet_tracker
+  genres:
+  - pet_tech
+  - wearable_device
+  implied_traits:
+  - bluetooth
+  - cellular
+  - gnss
+  - location_tracking
+  functional_classes:
+  - pet_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+- id: smart_pet_feeder
+  label: Smart pet feeder
+  aliases:
+  - smart pet feeder
+  - connected pet feeder
+  - wifi pet feeder
+  - automatic pet feeder
+  product_family: pet_technology
+  product_subfamily: smart_pet_feeder
+  genres:
+  - pet_tech
+  - smart_home_iot
+  - kitchen_food_appliance
+  implied_traits:
+  - wifi
+  - app_control
+  - food_contact
+  - motorized
+  functional_classes:
+  - pet_device
+  - connected_device
+  likely_standards:
+  - EN 60335 review
+  - EN 18031-1
+- id: portable_power_station
+  label: Portable power station
+  aliases:
+  - portable power station
+  - power station
+  - solar generator
+  - portable generator battery
+  - backup power station
+  product_family: portable_energy_family
+  product_subfamily: portable_power_station
+  genres:
+  - portable_energy
+  implied_traits:
+  - display
+  - usb_powered
+  - mains_powered
+  functional_classes:
+  - power_device
+  - energy_storage
+  likely_standards:
+  - EN 62133-2
+  - EN 62368-1
+  - UN 38.3 review
+- id: power_bank
+  label: Power bank
+  aliases:
+  - power bank
+  - battery bank
+  - usb battery pack
+  - portable charger
+  - charging pack
+  product_family: portable_energy_family
+  product_subfamily: power_bank
+  genres:
+  - portable_energy
+  implied_traits:
+  - usb_powered
+  - battery_powered
+  - handheld
+  functional_classes:
+  - power_device
+  - energy_storage
+  likely_standards:
+  - EN 62133-2
+  - EN 62368-1
+  - UN 38.3 review
+- id: ems_tens_device
+  label: EMS / TENS wellness device
+  aliases:
+  - ems device
+  - tens device
+  - muscle stimulator
+  - electrical stimulation device
+  - tens unit
+  product_family: wellness_electrostimulation
+  product_subfamily: ems_tens_device
+  genres:
+  - wellness_borderline_medical
+  implied_traits:
+  - handheld
+  - battery_powered
+  - medical_claims
+  functional_classes:
+  - wellness_device
+  likely_standards:
+  - MDR borderline review
+  - EN 60601 review
+- id: red_light_therapy_device
+  label: Red light therapy device
+  aliases:
+  - red light therapy device
+  - led therapy mask
+  - red light mask
+  - phototherapy beauty device
+  product_family: wellness_light_device
+  product_subfamily: red_light_therapy_device
+  genres:
+  - wellness_borderline_medical
+  implied_traits:
+  - battery_powered
+  - display
+  - medical_claims
+  functional_classes:
+  - wellness_device
+  likely_standards:
+  - MDR borderline review
+  - EN 60601 review
+- id: robot_lawn_mower
+  label: Robotic lawn mower
+  aliases:
+  - robot lawn mower
+  - robotic mower
+  - automatic lawn mower
+  - lawn mowing robot
+  product_family: outdoor_robotic_device
+  product_subfamily: robot_lawn_mower
+  genres:
+  - garden_outdoor_power
+  implied_traits:
+  - wifi
+  - bluetooth
+  - traction_motor
+  - garden_use
+  functional_classes:
+  - robotic_device
+  - outdoor_device
+  likely_standards:
+  - EN 50636 review
+  - EN 18031-1

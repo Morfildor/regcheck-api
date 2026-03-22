@@ -4,6 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 import os
 import re
+from typing import Any
 
 import yaml
 
@@ -13,13 +14,14 @@ class KnowledgeBaseError(RuntimeError):
 
 
 BASE_DIR = Path(__file__).resolve().parent
-KB_META_VERSION = "6.0.0"
+KB_META_VERSION = "7.0.0"
 ALLOWED_HARMONIZATION_STATUSES = {"harmonized", "state_of_the_art", "review", "unknown"}
 ALLOWED_FACT_BASIS = {"confirmed", "mixed", "inferred"}
 ALLOWED_TEST_FOCUS = {
     "safety",
     "mechanical",
     "electrical",
+    "emc",
     "emission",
     "immunity",
     "harmonics",
@@ -34,7 +36,16 @@ ALLOWED_TEST_FOCUS = {
     "battery",
     "energy",
 }
+OPTIONAL_EXTENSION_FILES = {
+    "trait_extensions.yaml": "traits",
+    "product_genres.yaml": "genres",
+    "product_extensions.yaml": "products",
+    "legislation_extensions.yaml": "legislations",
+    "standard_extensions.yaml": "standards",
+}
 
+
+# ---------- path helpers ----------
 
 def _candidate_dirs() -> list[Path]:
     dirs: list[Path] = []
@@ -44,7 +55,6 @@ def _candidate_dirs() -> list[Path]:
         dirs.append(Path(env_dir).resolve())
 
     cwd = Path.cwd().resolve()
-
     dirs.extend(
         [
             BASE_DIR,
@@ -71,18 +81,23 @@ def _candidate_dirs() -> list[Path]:
     return unique
 
 
-def _resolve_data_path(filename: str) -> Path:
+def _resolve_data_path(filename: str, *, required: bool = True) -> Path | None:
     for directory in _candidate_dirs():
         candidate = directory / filename
         if candidate.exists() and candidate.is_file():
             return candidate
 
+    if not required:
+        return None
+
     tried = "\n".join(str(directory / filename) for directory in _candidate_dirs())
     raise KnowledgeBaseError(f"Missing knowledge-base file: {filename}. Tried:\n{tried}")
 
 
-def _load_yaml_raw(filename: str) -> dict:
-    path = _resolve_data_path(filename)
+def _load_yaml_raw(filename: str, *, required: bool = True) -> dict[str, Any]:
+    path = _resolve_data_path(filename, required=required)
+    if path is None:
+        return {}
 
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -92,47 +107,137 @@ def _load_yaml_raw(filename: str) -> dict:
     except OSError as exc:
         raise KnowledgeBaseError(f"Could not read knowledge-base file: {path}") from exc
 
+    if data is None:
+        return {}
     if not isinstance(data, dict):
         raise KnowledgeBaseError(f"{path.name} must contain a top-level mapping.")
     return data
 
 
-def _require_list(parent: dict, key: str, filename: str) -> list:
+def _require_list(parent: dict[str, Any], key: str, filename: str) -> list[Any]:
     value = parent.get(key)
     if not isinstance(value, list):
         raise KnowledgeBaseError(f"{filename} must contain a top-level '{key}' list.")
     return value
 
 
-def _validate_traits(data: dict) -> list[dict]:
+def _optional_list(parent: dict[str, Any], key: str) -> list[Any]:
+    value = parent.get(key)
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        raise KnowledgeBaseError(f"Optional key '{key}' must be a list when present.")
+    return value
+
+
+# ---------- low-level merge helpers ----------
+
+def _string_list(value: Any) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, str) and item.strip()]
+
+
+def _dedupe_keep_order(items: list[Any]) -> list[Any]:
+    out: list[Any] = []
+    seen: set[str] = set()
+    for item in items:
+        key = repr(item)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(item)
+    return out
+
+
+def _merge_records(base_rows: list[dict[str, Any]], extra_rows: list[dict[str, Any]], id_key: str) -> list[dict[str, Any]]:
+    merged: dict[str, dict[str, Any]] = {}
+    order: list[str] = []
+
+    def apply(row: dict[str, Any]) -> None:
+        if not isinstance(row, dict):
+            raise KnowledgeBaseError(f"Merged record for '{id_key}' must be a mapping.")
+        key = row.get(id_key)
+        if not isinstance(key, str) or not key.strip():
+            raise KnowledgeBaseError(f"Merged record missing valid '{id_key}'.")
+        key = key.strip()
+        if key not in merged:
+            merged[key] = {}
+            order.append(key)
+        target = merged[key]
+        for field, value in row.items():
+            if field == id_key:
+                target[field] = key
+                continue
+            if isinstance(value, list):
+                target[field] = _dedupe_keep_order(list(target.get(field, [])) + value)
+            elif isinstance(value, dict) and isinstance(target.get(field), dict):
+                tmp = dict(target[field])
+                tmp.update(value)
+                target[field] = tmp
+            else:
+                target[field] = value
+
+    for row in base_rows:
+        apply(row)
+    for row in extra_rows:
+        apply(row)
+
+    return [merged[key] for key in order]
+
+
+# ---------- validation ----------
+
+def _validate_traits(data: dict[str, Any]) -> list[dict[str, Any]]:
     traits = _require_list(data, "traits", "traits.yaml")
     seen: set[str] = set()
 
     for idx, row in enumerate(traits, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"traits.yaml trait #{idx} must be a mapping.")
-
         for field in ("id", "label", "description"):
             value = row.get(field)
             if not isinstance(value, str) or not value.strip():
                 raise KnowledgeBaseError(f"traits.yaml trait #{idx} is missing a valid '{field}'.")
-
         trait_id = row["id"]
         if trait_id in seen:
-            raise KnowledgeBaseError(f"Duplicate trait id in traits.yaml: {trait_id}")
+            raise KnowledgeBaseError(f"Duplicate trait id in merged trait catalog: {trait_id}")
         seen.add(trait_id)
-
     return traits
 
 
-def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
+def _validate_genres(data: dict[str, Any], trait_ids: set[str]) -> list[dict[str, Any]]:
+    genres = _optional_list(data, "genres")
+    seen: set[str] = set()
+    for idx, row in enumerate(genres, start=1):
+        if not isinstance(row, dict):
+            raise KnowledgeBaseError(f"product_genres.yaml genre #{idx} must be a mapping.")
+        for field in ("id", "label"):
+            value = row.get(field)
+            if not isinstance(value, str) or not value.strip():
+                raise KnowledgeBaseError(f"product_genres.yaml genre #{idx} is missing a valid '{field}'.")
+        genre_id = row["id"]
+        if genre_id in seen:
+            raise KnowledgeBaseError(f"Duplicate genre id in product_genres.yaml: {genre_id}")
+        seen.add(genre_id)
+        for key in ("traits", "default_traits"):
+            for trait in _string_list(row.get(key)):
+                if trait not in trait_ids:
+                    raise KnowledgeBaseError(f"Genre '{genre_id}' references unknown trait '{trait}'.")
+        for key in ("keywords", "functional_classes", "likely_standards"):
+            value = row.get(key, [])
+            if value is not None and not isinstance(value, list):
+                raise KnowledgeBaseError(f"Genre '{genre_id}' field '{key}' must be a list when present.")
+    return genres
+
+
+def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
     products = _require_list(data, "products", "products.yaml")
     seen: set[str] = set()
 
     for idx, row in enumerate(products, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"products.yaml product #{idx} must be a mapping.")
-
         for field in ("id", "label"):
             value = row.get(field)
             if not isinstance(value, str) or not value.strip():
@@ -140,7 +245,7 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
 
         pid = row["id"]
         if pid in seen:
-            raise KnowledgeBaseError(f"Duplicate product id in products.yaml: {pid}")
+            raise KnowledgeBaseError(f"Duplicate product id in merged product catalog: {pid}")
         seen.add(pid)
 
         aliases = row.get("aliases", [])
@@ -152,47 +257,33 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
             if value is not None and (not isinstance(value, str) or not value.strip()):
                 raise KnowledgeBaseError(f"Product '{pid}' field '{field}' must be a non-empty string when provided.")
 
-        for key in ("implied_traits", "functional_classes", "likely_standards", "family_keywords"):
-            value = row.get(key, [])
-            if not isinstance(value, list):
-                raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
-            if key == "implied_traits":
-                for trait in value:
-                    if trait not in trait_ids:
-                        raise KnowledgeBaseError(f"Product '{pid}' references unknown trait '{trait}'.")
-            else:
-                for item in value:
-                    if not isinstance(item, str):
-                        raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only strings.")
-
-        for key in ("core_traits", "default_traits"):
-            value = row.get(key, [])
-            if not isinstance(value, list):
-                raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
-            for trait in value:
-                if trait not in trait_ids:
-                    raise KnowledgeBaseError(f"Product '{pid}' field '{key}' references unknown trait '{trait}'.")
-
-        for key in ("required_clues", "preferred_clues", "exclude_clues", "confusable_with"):
+        for key in ("implied_traits", "functional_classes", "likely_standards", "family_keywords", "genres"):
             value = row.get(key, [])
             if not isinstance(value, list):
                 raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
             for item in value:
                 if not isinstance(item, str) or not item.strip():
                     raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only non-empty strings.")
+            if key == "implied_traits":
+                for trait in value:
+                    if trait not in trait_ids:
+                        raise KnowledgeBaseError(f"Product '{pid}' references unknown trait '{trait}'.")
+            if key == "genres":
+                for genre in value:
+                    if genre not in genre_ids:
+                        raise KnowledgeBaseError(f"Product '{pid}' references unknown genre '{genre}'.")
 
-        if row.get("confusable_with") and not (row.get("product_family") and row.get("product_subfamily")):
-            raise KnowledgeBaseError(
-                f"Product '{pid}' with confusable_with entries must define both product_family and product_subfamily."
-            )
-
-        for key in ("family_traits", "subtype_traits"):
+        for key in ("core_traits", "default_traits", "required_clues", "preferred_clues", "exclude_clues", "confusable_with", "family_traits", "subtype_traits"):
             value = row.get(key, [])
             if not isinstance(value, list):
                 raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
-            for trait in value:
-                if trait not in trait_ids:
-                    raise KnowledgeBaseError(f"Product '{pid}' field '{key}' references unknown trait '{trait}'.")
+            for item in value:
+                if not isinstance(item, str) or not item.strip():
+                    raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only non-empty strings.")
+            if key in {"core_traits", "default_traits", "family_traits", "subtype_traits"}:
+                for trait in value:
+                    if trait not in trait_ids:
+                        raise KnowledgeBaseError(f"Product '{pid}' field '{key}' references unknown trait '{trait}'.")
 
     for row in products:
         pid = row["id"]
@@ -203,7 +294,7 @@ def _validate_products(data: dict, trait_ids: set[str]) -> list[dict]:
     return products
 
 
-def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str]) -> list[dict]:
+def _validate_legislations(data: dict[str, Any], product_ids: set[str], trait_ids: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
     legislations = _require_list(data, "legislations", "legislation_catalog.yaml")
     seen_codes: set[str] = set()
     allowed_priorities = {"core", "product_specific", "conditional", "informational"}
@@ -213,7 +304,6 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
     for idx, row in enumerate(legislations, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"legislation_catalog.yaml legislation #{idx} must be a mapping.")
-
         for field in ("code", "title", "family", "directive_key"):
             value = row.get(field)
             if not isinstance(value, str) or not value.strip():
@@ -221,7 +311,7 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
 
         code = row["code"]
         if code in seen_codes:
-            raise KnowledgeBaseError(f"Duplicate legislation code in legislation_catalog.yaml: {code}")
+            raise KnowledgeBaseError(f"Duplicate legislation code in merged legislation catalog: {code}")
         seen_codes.add(code)
 
         if row.get("priority", "conditional") not in allowed_priorities:
@@ -242,6 +332,8 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
             "none_of_functional_classes",
             "any_of_product_types",
             "exclude_product_types",
+            "any_of_genres",
+            "exclude_genres",
         ):
             value = row.get(field, [])
             if not isinstance(value, list):
@@ -257,12 +349,17 @@ def _validate_legislations(data: dict, product_ids: set[str], trait_ids: set[str
                 if pid not in product_ids:
                     raise KnowledgeBaseError(f"Legislation '{code}' references unknown product id '{pid}'.")
 
+        for genre_field in ("any_of_genres", "exclude_genres"):
+            for genre in row.get(genre_field, []):
+                if genre not in genre_ids:
+                    raise KnowledgeBaseError(f"Legislation '{code}' references unknown genre '{genre}'.")
+
     return legislations
 
 
-def _validate_standard_metadata(code: str, row: dict) -> None:
+def _validate_standard_metadata(code: str, row: dict[str, Any]) -> None:
     bool_fields = ("is_harmonized",)
-    list_fields = ("test_focus", "evidence_hint", "keywords")
+    list_fields = ("test_focus", "evidence_hint", "keywords", "applies_if_genres", "exclude_if_genres")
     str_fields = (
         "standard_family",
         "harmonized_under",
@@ -278,14 +375,12 @@ def _validate_standard_metadata(code: str, row: dict) -> None:
     for field in bool_fields:
         if field in row and not isinstance(row[field], bool):
             raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must be boolean.")
-
     for field in list_fields:
         if field in row and not isinstance(row[field], list):
             raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must be a list.")
         for item in row.get(field, []):
             if not isinstance(item, str):
                 raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must contain only strings.")
-
     for field in str_fields:
         if field in row and row[field] is not None and not isinstance(row[field], str):
             raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must be a string or null.")
@@ -317,19 +412,13 @@ def _validate_standard_metadata(code: str, row: dict) -> None:
         raise KnowledgeBaseError(f"Standard '{code}' has harmonization_status='review' but item_type is not 'review'.")
 
 
-def _validate_standards(
-    data: dict,
-    product_ids: set[str],
-    trait_ids: set[str],
-    legislation_keys: set[str],
-) -> list[dict]:
+def _validate_standards(data: dict[str, Any], product_ids: set[str], trait_ids: set[str], legislation_keys: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
     standards = _require_list(data, "standards", "standards.yaml")
     seen: set[str] = set()
 
     for idx, row in enumerate(standards, start=1):
         if not isinstance(row, dict):
             raise KnowledgeBaseError(f"standards.yaml standard #{idx} must be a mapping.")
-
         for field in ("code", "title", "category"):
             value = row.get(field)
             if not isinstance(value, str) or not value.strip():
@@ -337,7 +426,7 @@ def _validate_standards(
 
         code = row["code"]
         if code in seen:
-            raise KnowledgeBaseError(f"Duplicate standard code in standards.yaml: {code}")
+            raise KnowledgeBaseError(f"Duplicate standard code in merged standards catalog: {code}")
         seen.add(code)
 
         directives = row.get("directives", [])
@@ -358,7 +447,6 @@ def _validate_standards(
             value = row.get(field, [])
             if not isinstance(value, list):
                 raise KnowledgeBaseError(f"Standard '{code}' field '{field}' must be a list.")
-
             if field.endswith("_products"):
                 for pid in value:
                     if pid not in product_ids:
@@ -367,6 +455,11 @@ def _validate_standards(
                 for trait in value:
                     if trait not in trait_ids:
                         raise KnowledgeBaseError(f"Standard '{code}' references unknown trait '{trait}'.")
+
+        for genre_field in ("applies_if_genres", "exclude_if_genres"):
+            for genre in row.get(genre_field, []):
+                if genre not in genre_ids:
+                    raise KnowledgeBaseError(f"Standard '{code}' references unknown genre '{genre}'.")
 
         item_type = row.get("item_type")
         if item_type is not None and item_type not in {"standard", "review"}:
@@ -377,6 +470,8 @@ def _validate_standards(
     return standards
 
 
+# ---------- enrich ----------
+
 def _normalize_standard_code(code: str) -> str:
     value = re.sub(r"\s+", " ", (code or "").strip())
     if value.startswith("EN EN "):
@@ -384,7 +479,7 @@ def _normalize_standard_code(code: str) -> str:
     return value
 
 
-def _derive_harmonization_status(row: dict) -> str:
+def _derive_harmonization_status(row: dict[str, Any]) -> str:
     explicit = row.get("harmonization_status")
     if explicit in ALLOWED_HARMONIZATION_STATUSES:
         return explicit
@@ -397,29 +492,18 @@ def _derive_harmonization_status(row: dict) -> str:
     return "unknown"
 
 
-def _enrich_standards(rows: list[dict]) -> list[dict]:
-    out: list[dict] = []
-    seen_normalized_codes: set[str] = set()
-    for row in rows:
-        enriched = dict(row)
-        enriched["code"] = _normalize_standard_code(enriched.get("code", ""))
-        if enriched["code"] in seen_normalized_codes:
-            raise KnowledgeBaseError(f"Duplicate normalized standard code in standards.yaml: {enriched['code']}")
-        seen_normalized_codes.add(enriched["code"])
-        enriched["standard_family"] = enriched.get("standard_family") or enriched["code"].split(":", 1)[0].strip()
-        enriched["harmonization_status"] = _derive_harmonization_status(enriched)
-        enriched.setdefault("test_focus", [])
-        enriched.setdefault("evidence_hint", [])
-        enriched.setdefault("keywords", [])
-        enriched.setdefault("selection_group", None)
-        enriched.setdefault("selection_priority", 0)
-        enriched["required_fact_basis"] = enriched.get("required_fact_basis") or "inferred"
-        out.append(enriched)
-    return out
+def _genre_map(genres: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    return {row["id"]: row for row in genres}
 
 
-def _enrich_products(rows: list[dict]) -> list[dict]:
-    out: list[dict] = []
+def _expand_genre_product_ids(target_genres: list[str], products: list[dict[str, Any]]) -> list[str]:
+    wanted = set(target_genres)
+    return [row["id"] for row in products if wanted & set(_string_list(row.get("genres")))]
+
+
+def _enrich_products(rows: list[dict[str, Any]], genres: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    genre_index = _genre_map(genres)
+    out: list[dict[str, Any]] = []
     for row in rows:
         enriched = dict(row)
         enriched["product_family"] = enriched.get("product_family") or enriched["id"]
@@ -431,6 +515,19 @@ def _enrich_products(rows: list[dict]) -> list[dict]:
         enriched.setdefault("family_traits", [])
         enriched.setdefault("subtype_traits", list(enriched.get("implied_traits", [])))
         enriched.setdefault("family_keywords", [])
+        enriched.setdefault("genres", [])
+
+        for genre_id in enriched["genres"]:
+            genre = genre_index.get(genre_id)
+            if not genre:
+                continue
+            enriched["family_keywords"] = _dedupe_keep_order(_string_list(enriched.get("family_keywords")) + _string_list(genre.get("keywords")))
+            enriched["functional_classes"] = _dedupe_keep_order(_string_list(enriched.get("functional_classes")) + _string_list(genre.get("functional_classes")))
+            enriched["likely_standards"] = _dedupe_keep_order(_string_list(enriched.get("likely_standards")) + _string_list(genre.get("likely_standards")))
+            enriched["family_traits"] = _dedupe_keep_order(_string_list(enriched.get("family_traits")) + _string_list(genre.get("traits")))
+            enriched["default_traits"] = _dedupe_keep_order(_string_list(enriched.get("default_traits")) + _string_list(genre.get("default_traits")))
+            enriched["implied_traits"] = _dedupe_keep_order(_string_list(enriched.get("implied_traits")) + _string_list(genre.get("traits")) + _string_list(genre.get("default_traits")))
+
         core_traits = list(enriched.get("core_traits") or [])
         default_traits = list(enriched.get("default_traits") or [])
         if not core_traits and enriched.get("family_traits"):
@@ -442,27 +539,80 @@ def _enrich_products(rows: list[dict]) -> list[dict]:
         if not default_traits:
             default_traits.extend(list(enriched.get("implied_traits") or []))
         enriched["core_traits"] = list(dict.fromkeys(core_traits))
-        enriched["default_traits"] = [
-            trait for trait in dict.fromkeys(default_traits) if trait not in enriched["core_traits"]
-        ]
+        enriched["default_traits"] = [trait for trait in dict.fromkeys(default_traits) if trait not in enriched["core_traits"]]
         out.append(enriched)
     return out
 
 
-def _post_validate_product_standard_links(products: list[dict], standards: list[dict]) -> None:
+def _enrich_legislations(rows: list[dict[str, Any]], products: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    for row in rows:
+        enriched = dict(row)
+        if enriched.get("any_of_genres"):
+            expanded = _expand_genre_product_ids(_string_list(enriched.get("any_of_genres")), products)
+            enriched["any_of_product_types"] = _dedupe_keep_order(_string_list(enriched.get("any_of_product_types")) + expanded)
+        if enriched.get("exclude_genres"):
+            expanded = _expand_genre_product_ids(_string_list(enriched.get("exclude_genres")), products)
+            enriched["exclude_product_types"] = _dedupe_keep_order(_string_list(enriched.get("exclude_product_types")) + expanded)
+        out.append(enriched)
+    return out
+
+
+def _enrich_standards(rows: list[dict[str, Any]], products: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    seen_normalized_codes: set[str] = set()
+    for row in rows:
+        enriched = dict(row)
+        enriched["code"] = _normalize_standard_code(enriched.get("code", ""))
+        if enriched["code"] in seen_normalized_codes:
+            raise KnowledgeBaseError(f"Duplicate normalized standard code in merged standards catalog: {enriched['code']}")
+        seen_normalized_codes.add(enriched["code"])
+        enriched["standard_family"] = enriched.get("standard_family") or enriched["code"].split(":", 1)[0].strip()
+        enriched["harmonization_status"] = _derive_harmonization_status(enriched)
+        enriched.setdefault("test_focus", [])
+        enriched.setdefault("evidence_hint", [])
+        enriched.setdefault("keywords", [])
+        enriched.setdefault("selection_group", None)
+        enriched.setdefault("selection_priority", 0)
+        enriched["required_fact_basis"] = enriched.get("required_fact_basis") or "inferred"
+        if enriched.get("applies_if_genres"):
+            expanded = _expand_genre_product_ids(_string_list(enriched.get("applies_if_genres")), products)
+            enriched["applies_if_products"] = _dedupe_keep_order(_string_list(enriched.get("applies_if_products")) + expanded)
+        if enriched.get("exclude_if_genres"):
+            expanded = _expand_genre_product_ids(_string_list(enriched.get("exclude_if_genres")), products)
+            enriched["exclude_if_products"] = _dedupe_keep_order(_string_list(enriched.get("exclude_if_products")) + expanded)
+        out.append(enriched)
+    return out
+
+
+def _post_validate_product_standard_links(products: list[dict[str, Any]], standards: list[dict[str, Any]]) -> None:
     standard_codes = {row["code"] for row in standards}
     standard_families = {row.get("standard_family") for row in standards if isinstance(row.get("standard_family"), str)}
+
+    def _matches_reference(reference: str) -> bool:
+        if reference in standard_codes or reference in standard_families:
+            return True
+        if "review" in reference.lower():
+            return True
+        ref_upper = reference.upper()
+        for code in standard_codes:
+            if isinstance(code, str) and code.upper().startswith(ref_upper):
+                return True
+        for family in standard_families:
+            if isinstance(family, str) and family.upper().startswith(ref_upper):
+                return True
+        return False
 
     for product in products:
         pid = product["id"]
         for reference in product.get("likely_standards", []):
-            if reference not in standard_codes and reference not in standard_families:
+            if not _matches_reference(reference):
                 raise KnowledgeBaseError(
                     f"Product '{pid}' references likely_standard '{reference}' that does not match any standard code or family."
                 )
 
 
-def _kb_meta(counts: dict[str, int], standards: list[dict]) -> dict:
+def _kb_meta(counts: dict[str, int], standards: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         **counts,
         "harmonized_standards": sum(1 for row in standards if row.get("harmonization_status") == "harmonized"),
@@ -473,27 +623,72 @@ def _kb_meta(counts: dict[str, int], standards: list[dict]) -> dict:
     }
 
 
+# ---------- public loaders ----------
+
+def _load_traits_catalog() -> list[dict[str, Any]]:
+    base = _load_yaml_raw("traits.yaml")
+    ext = _load_yaml_raw("trait_extensions.yaml", required=False)
+    merged = {"traits": _merge_records(_require_list(base, "traits", "traits.yaml"), _optional_list(ext, "traits"), "id")}
+    return _validate_traits(merged)
+
+
+def _load_genres_catalog(trait_ids: set[str]) -> list[dict[str, Any]]:
+    raw = _load_yaml_raw("product_genres.yaml", required=False)
+    return _validate_genres(raw, trait_ids)
+
+
+def _load_products_catalog(trait_ids: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
+    base = _load_yaml_raw("products.yaml")
+    ext = _load_yaml_raw("product_extensions.yaml", required=False)
+    merged = {"products": _merge_records(_require_list(base, "products", "products.yaml"), _optional_list(ext, "products"), "id")}
+    return _validate_products(merged, trait_ids, genre_ids)
+
+
+def _load_legislations_catalog(product_ids: set[str], trait_ids: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
+    base = _load_yaml_raw("legislation_catalog.yaml")
+    ext = _load_yaml_raw("legislation_extensions.yaml", required=False)
+    merged = {"legislations": _merge_records(_require_list(base, "legislations", "legislation_catalog.yaml"), _optional_list(ext, "legislations"), "code")}
+    return _validate_legislations(merged, product_ids, trait_ids, genre_ids)
+
+
+def _load_standards_catalog(product_ids: set[str], trait_ids: set[str], legislation_keys: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
+    base = _load_yaml_raw("standards.yaml")
+    ext = _load_yaml_raw("standard_extensions.yaml", required=False)
+    merged = {"standards": _merge_records(_require_list(base, "standards", "standards.yaml"), _optional_list(ext, "standards"), "code")}
+    return _validate_standards(merged, product_ids, trait_ids, legislation_keys, genre_ids)
+
+
 @lru_cache(maxsize=1)
-def load_all() -> dict:
-    traits_data = _load_yaml_raw("traits.yaml")
-    traits = _validate_traits(traits_data)
+def load_all() -> dict[str, Any]:
+    traits = _load_traits_catalog()
     trait_ids = {row["id"] for row in traits}
 
-    products_data = _load_yaml_raw("products.yaml")
-    products = _enrich_products(_validate_products(products_data, trait_ids))
+    genres = _load_genres_catalog(trait_ids)
+    genre_ids = {row["id"] for row in genres}
+
+    products = _enrich_products(_load_products_catalog(trait_ids, genre_ids), genres)
     product_ids = {row["id"] for row in products}
 
-    legislations_data = _load_yaml_raw("legislation_catalog.yaml")
-    legislations = _validate_legislations(legislations_data, product_ids, trait_ids)
-    legislation_keys = {row["directive_key"] for row in legislations} | {"CRA", "GDPR", "AI_Act", "ESPR", "OTHER"}
+    legislations = _enrich_legislations(_load_legislations_catalog(product_ids, trait_ids, genre_ids), products)
+    legislation_keys = {row["directive_key"] for row in legislations} | {
+        "CRA",
+        "GDPR",
+        "AI_Act",
+        "ESPR",
+        "OTHER",
+        "GPSR",
+        "WEEE",
+        "TOY",
+        "UAS",
+        "MDR",
+    }
 
-    standards_data = _load_yaml_raw("standards.yaml")
-    standards = _enrich_standards(_validate_standards(standards_data, product_ids, trait_ids, legislation_keys))
-
+    standards = _enrich_standards(_load_standards_catalog(product_ids, trait_ids, legislation_keys, genre_ids), products)
     _post_validate_product_standard_links(products, standards)
 
     counts = {
         "traits": len(traits),
+        "genres": len(genres),
         "products": len(products),
         "legislations": len(legislations),
         "standards": len(standards),
@@ -501,6 +696,7 @@ def load_all() -> dict:
 
     return {
         "traits": traits,
+        "genres": genres,
         "products": products,
         "legislations": legislations,
         "standards": standards,
@@ -509,27 +705,31 @@ def load_all() -> dict:
     }
 
 
-def load_traits() -> list[dict]:
+def load_traits() -> list[dict[str, Any]]:
     return load_all()["traits"]
 
 
-def load_products() -> list[dict]:
+def load_genres() -> list[dict[str, Any]]:
+    return load_all()["genres"]
+
+
+def load_products() -> list[dict[str, Any]]:
     return load_all()["products"]
 
 
-def load_legislations() -> list[dict]:
+def load_legislations() -> list[dict[str, Any]]:
     return load_all()["legislations"]
 
 
-def load_standards() -> list[dict]:
+def load_standards() -> list[dict[str, Any]]:
     return load_all()["standards"]
 
 
-def load_meta() -> dict:
+def load_meta() -> dict[str, Any]:
     return load_all()["meta"]
 
 
-def warmup_knowledge_base() -> dict:
+def warmup_knowledge_base() -> dict[str, Any]:
     return load_all()["meta"]
 
 

@@ -1,0 +1,373 @@
+genres:
+- id: household_appliance
+  label: Household appliance
+  keywords:
+  - household appliance
+  - domestic appliance
+  - home appliance
+  traits:
+  - consumer
+  - household
+  - electrical
+  default_traits:
+  - indoor_use
+  functional_classes:
+  - major_appliance
+  - household_appliance
+  likely_standards:
+  - EN 60335-1
+  - EN 62233
+- id: commercial_appliance
+  label: Commercial appliance
+  keywords:
+  - commercial appliance
+  - professional equipment
+  - horeca
+  traits:
+  - professional
+  - industrial
+  - electrical
+  default_traits:
+  - mains_powered
+  functional_classes:
+  - commercial_equipment
+  likely_standards:
+  - EN 60335-1
+- id: kitchen_food_appliance
+  label: Kitchen / food appliance
+  keywords:
+  - kitchen appliance
+  - food appliance
+  - cooking appliance
+  traits:
+  - food_preparation
+  - food_contact
+  default_traits:
+  - tabletop
+  functional_classes:
+  - kitchen_appliance
+  likely_standards:
+  - EN 60335-2
+  - EN 55014-1
+  - EN 55014-2
+- id: cleaning_laundry_appliance
+  label: Cleaning / laundry appliance
+  keywords:
+  - cleaning appliance
+  - laundry appliance
+  - vacuum
+  - washer
+  traits:
+  - cleaning
+  default_traits:
+  - motorized
+  functional_classes:
+  - cleaning_appliance
+  - laundry_appliance
+  likely_standards:
+  - EN 60335-2
+  - EN 55014-1
+  - EN 55014-2
+- id: hvac_environmental_appliance
+  label: HVAC / environmental appliance
+  keywords:
+  - air treatment
+  - heater
+  - humidifier
+  - dehumidifier
+  - fan
+  traits:
+  - air_treatment
+  default_traits:
+  - indoor_use
+  functional_classes:
+  - comfort_appliance
+  - hvac_appliance
+  likely_standards:
+  - EN 60335-2
+  - EN 55014-1
+  - EN 55014-2
+- id: personal_care_appliance
+  label: Personal care appliance
+  keywords:
+  - personal care
+  - beauty appliance
+  - oral care
+  traits:
+  - personal_care
+  default_traits:
+  - handheld
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2
+  - EN 62233
+- id: garden_outdoor_power
+  label: Garden / outdoor powered equipment
+  keywords:
+  - garden equipment
+  - outdoor powered equipment
+  - lawn care
+  traits:
+  - outdoor_use
+  - motorized
+  default_traits:
+  - consumer
+  functional_classes:
+  - garden_tool
+  - outdoor_device
+  likely_standards:
+  - EN 60335-2
+  - Machinery safety review
+- id: building_access_drive
+  label: Building / access drive
+  keywords:
+  - garage door drive
+  - gate drive
+  - shutter drive
+  - building automation
+  traits:
+  - security_or_barrier
+  - safety_function
+  - motorized
+  default_traits:
+  - fixed_installation
+  functional_classes:
+  - building_automation
+  likely_standards:
+  - Machinery safety review
+- id: av_ict_device
+  label: AV / ICT equipment
+  keywords:
+  - ict equipment
+  - audio visual
+  - consumer electronics
+  - network equipment
+  traits:
+  - electronic
+  - av_ict
+  default_traits:
+  - electrical
+  functional_classes:
+  - av_ict_equipment
+  likely_standards:
+  - EN 62368-1
+  - EN 55032
+  - EN 55035
+- id: smart_home_iot
+  label: Smart home / IoT
+  keywords:
+  - smart home
+  - iot
+  - connected home
+  - home automation
+  traits:
+  - consumer
+  - electronic
+  - app_control
+  - internet_connected
+  default_traits:
+  - cloud
+  - networked_standby
+  functional_classes:
+  - home_device
+  - connected_device
+  likely_standards:
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+- id: security_access_iot
+  label: Security / access IoT
+  keywords:
+  - security camera
+  - doorbell
+  - smart lock
+  - alarm
+  traits:
+  - camera_surveillance
+  - security_or_barrier
+  - electronic
+  default_traits:
+  - internet_connected
+  - app_control
+  functional_classes:
+  - security_device
+  - connected_device
+  likely_standards:
+  - EN 18031-1
+  - EN 303 645 review
+- id: wearable_device
+  label: Wearable device
+  keywords:
+  - wearable
+  - body-worn
+  - smartwatch
+  - smart ring
+  traits:
+  - consumer
+  - electronic
+  - wearable
+  - body_worn_or_applied
+  - battery_powered
+  default_traits:
+  - close_proximity_emf
+  functional_classes:
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  - EN 62209-1528
+- id: connected_toy_childcare
+  label: Connected toy / childcare product
+  keywords:
+  - toy
+  - childcare
+  - educational toy
+  - smart toy
+  traits:
+  - consumer
+  - toy
+  - child_targeted
+  - electronic
+  default_traits:
+  - app_control
+  - radio
+  - internet_connected
+  functional_classes:
+  - toy_product
+  - child_product
+  likely_standards:
+  - EN 71 review
+  - EN 62115
+  - EN 18031-1
+- id: micromobility
+  label: Micromobility
+  keywords:
+  - micromobility
+  - ride-on
+  - electric mobility
+  - personal transporter
+  traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - traction_motor
+  - vehicle_use
+  - light_means_of_transport
+  - outdoor_environment
+  default_traits:
+  - location_tracking
+  functional_classes:
+  - mobility_device
+  - outdoor_device
+  likely_standards:
+  - EN 17128
+  - EN 15194
+  - EN 62133-2
+- id: drone_uas
+  label: Drone / UAS
+  keywords:
+  - drone
+  - unmanned aircraft
+  - quadcopter
+  - fpv
+  traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - radio
+  - drone_flight
+  - outdoor_environment
+  default_traits:
+  - camera
+  - location_tracking
+  functional_classes:
+  - aerial_device
+  - imaging_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62133-2
+  - UAS open-category review
+- id: portable_energy
+  label: Portable energy / charging ecosystem
+  keywords:
+  - power bank
+  - portable power station
+  - charger
+  - battery pack
+  traits:
+  - electrical
+  - battery_powered
+  - battery_pack
+  - portable_energy
+  default_traits:
+  - portable
+  functional_classes:
+  - power_device
+  - charging_device
+  likely_standards:
+  - EN 62133-2
+  - UN 38.3 review
+  - EN 50563
+- id: pet_tech
+  label: Pet tech
+  keywords:
+  - pet tech
+  - pet tracker
+  - pet feeder
+  - pet camera
+  traits:
+  - consumer
+  - pet_use
+  - electronic
+  default_traits:
+  - app_control
+  - internet_connected
+  functional_classes:
+  - pet_device
+  - connected_device
+  likely_standards:
+  - EN 303 645 review
+  - EN 62368-1
+- id: wellness_borderline_medical
+  label: Wellness / borderline medical
+  keywords:
+  - wellness device
+  - health monitor
+  - therapy device
+  traits:
+  - consumer
+  - electronic
+  - health_related
+  default_traits:
+  - medical_claims
+  functional_classes:
+  - health_device
+  likely_standards:
+  - MDR borderline review
+  - EN 60601 review
+  - EN 62479
+- id: xr_immersive
+  label: XR / immersive device
+  keywords:
+  - vr
+  - ar
+  - mixed reality
+  - xr
+  traits:
+  - consumer
+  - electronic
+  - xr
+  - display
+  default_traits:
+  - wearable
+  - body_worn_or_applied
+  functional_classes:
+  - xr_device
+  - av_ict_equipment
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  - EN 62209-1528

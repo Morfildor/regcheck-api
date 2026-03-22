@@ -37,10 +37,15 @@ DIRECTIVE_TITLES: dict[str, tuple[str, str]] = {
     "RED_CYBER": ("RED-DA", "RED delegated cybersecurity requirements"),
     "ROHS": ("RoHS", "RoHS Directive 2011/65/EU"),
     "REACH": ("REACH", "REACH Regulation (EC) No 1907/2006"),
-    "ECO": ("Ecodesign", "Ecodesign / energy efficiency review"),
     "BATTERY": ("Battery", "Battery Regulation (EU) 2023/1542"),
+    "GPSR": ("GPSR", "General Product Safety Regulation (EU) 2023/988"),
+    "WEEE": ("WEEE", "WEEE Directive 2012/19/EU"),
+    "TOY": ("Toy", "Toy Safety Directive 2009/48/EC"),
+    "UAS": ("Drone/UAS", "EU drone / UAS framework review"),
+    "ECO": ("Ecodesign", "Ecodesign / energy efficiency review"),
     "CRA": ("CRA", "Cyber Resilience Act review"),
     "GDPR": ("GDPR", "GDPR review"),
+    "MDR": ("MDR", "Medical Device Regulation borderline review"),
     "OTHER": ("Other", "Additional compliance route"),
 }
 
@@ -52,9 +57,14 @@ DIRECTIVE_ORDER = [
     "ROHS",
     "REACH",
     "BATTERY",
+    "GPSR",
+    "TOY",
+    "UAS",
+    "WEEE",
     "ECO",
     "CRA",
     "GDPR",
+    "MDR",
     "OTHER",
 ]
 
