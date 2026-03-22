@@ -231,9 +231,10 @@ def _validate_genres(data: dict[str, Any], trait_ids: set[str]) -> list[dict[str
     return genres
 
 
-def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
+def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set[str] | None = None) -> list[dict[str, Any]]:
     products = _require_list(data, "products", "products.yaml")
     seen: set[str] = set()
+    genre_ids = genre_ids or set()
 
     for idx, row in enumerate(products, start=1):
         if not isinstance(row, dict):
@@ -256,6 +257,8 @@ def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set
             value = row.get(field)
             if value is not None and (not isinstance(value, str) or not value.strip()):
                 raise KnowledgeBaseError(f"Product '{pid}' field '{field}' must be a non-empty string when provided.")
+        if row.get("confusable_with") and not row.get("product_family"):
+            raise KnowledgeBaseError(f"Product '{pid}' field 'confusable_with' requires product_family to be set.")
 
         for key in ("implied_traits", "functional_classes", "likely_standards", "family_keywords", "genres"):
             value = row.get(key, [])
@@ -516,17 +519,28 @@ def _enrich_products(rows: list[dict[str, Any]], genres: list[dict[str, Any]]) -
         enriched.setdefault("subtype_traits", list(enriched.get("implied_traits", [])))
         enriched.setdefault("family_keywords", [])
         enriched.setdefault("genres", [])
+        enriched.setdefault("genre_keywords", [])
+        enriched.setdefault("genre_traits", [])
+        enriched.setdefault("genre_default_traits", [])
+        enriched.setdefault("genre_functional_classes", [])
+        enriched.setdefault("genre_likely_standards", [])
 
         for genre_id in enriched["genres"]:
             genre = genre_index.get(genre_id)
             if not genre:
                 continue
+            enriched["genre_keywords"] = _dedupe_keep_order(_string_list(enriched.get("genre_keywords")) + _string_list(genre.get("keywords")))
+            enriched["genre_traits"] = _dedupe_keep_order(_string_list(enriched.get("genre_traits")) + _string_list(genre.get("traits")))
+            enriched["genre_default_traits"] = _dedupe_keep_order(_string_list(enriched.get("genre_default_traits")) + _string_list(genre.get("default_traits")))
+            enriched["genre_functional_classes"] = _dedupe_keep_order(
+                _string_list(enriched.get("genre_functional_classes")) + _string_list(genre.get("functional_classes"))
+            )
+            enriched["genre_likely_standards"] = _dedupe_keep_order(
+                _string_list(enriched.get("genre_likely_standards")) + _string_list(genre.get("likely_standards"))
+            )
             enriched["family_keywords"] = _dedupe_keep_order(_string_list(enriched.get("family_keywords")) + _string_list(genre.get("keywords")))
-            enriched["functional_classes"] = _dedupe_keep_order(_string_list(enriched.get("functional_classes")) + _string_list(genre.get("functional_classes")))
-            enriched["likely_standards"] = _dedupe_keep_order(_string_list(enriched.get("likely_standards")) + _string_list(genre.get("likely_standards")))
             enriched["family_traits"] = _dedupe_keep_order(_string_list(enriched.get("family_traits")) + _string_list(genre.get("traits")))
             enriched["default_traits"] = _dedupe_keep_order(_string_list(enriched.get("default_traits")) + _string_list(genre.get("default_traits")))
-            enriched["implied_traits"] = _dedupe_keep_order(_string_list(enriched.get("implied_traits")) + _string_list(genre.get("traits")) + _string_list(genre.get("default_traits")))
 
         core_traits = list(enriched.get("core_traits") or [])
         default_traits = list(enriched.get("default_traits") or [])
@@ -545,17 +559,7 @@ def _enrich_products(rows: list[dict[str, Any]], genres: list[dict[str, Any]]) -
 
 
 def _enrich_legislations(rows: list[dict[str, Any]], products: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    out: list[dict[str, Any]] = []
-    for row in rows:
-        enriched = dict(row)
-        if enriched.get("any_of_genres"):
-            expanded = _expand_genre_product_ids(_string_list(enriched.get("any_of_genres")), products)
-            enriched["any_of_product_types"] = _dedupe_keep_order(_string_list(enriched.get("any_of_product_types")) + expanded)
-        if enriched.get("exclude_genres"):
-            expanded = _expand_genre_product_ids(_string_list(enriched.get("exclude_genres")), products)
-            enriched["exclude_product_types"] = _dedupe_keep_order(_string_list(enriched.get("exclude_product_types")) + expanded)
-        out.append(enriched)
-    return out
+    return [dict(row) for row in rows]
 
 
 def _enrich_standards(rows: list[dict[str, Any]], products: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -575,40 +579,33 @@ def _enrich_standards(rows: list[dict[str, Any]], products: list[dict[str, Any]]
         enriched.setdefault("selection_group", None)
         enriched.setdefault("selection_priority", 0)
         enriched["required_fact_basis"] = enriched.get("required_fact_basis") or "inferred"
-        if enriched.get("applies_if_genres"):
-            expanded = _expand_genre_product_ids(_string_list(enriched.get("applies_if_genres")), products)
-            enriched["applies_if_products"] = _dedupe_keep_order(_string_list(enriched.get("applies_if_products")) + expanded)
-        if enriched.get("exclude_if_genres"):
-            expanded = _expand_genre_product_ids(_string_list(enriched.get("exclude_if_genres")), products)
-            enriched["exclude_if_products"] = _dedupe_keep_order(_string_list(enriched.get("exclude_if_products")) + expanded)
         out.append(enriched)
     return out
 
 
-def _post_validate_product_standard_links(products: list[dict[str, Any]], standards: list[dict[str, Any]]) -> None:
-    standard_codes = {row["code"] for row in standards}
-    standard_families = {row.get("standard_family") for row in standards if isinstance(row.get("standard_family"), str)}
-
-    def _matches_reference(reference: str) -> bool:
-        if reference in standard_codes or reference in standard_families:
-            return True
-        if "review" in reference.lower():
-            return True
-        ref_upper = reference.upper()
-        for code in standard_codes:
-            if isinstance(code, str) and code.upper().startswith(ref_upper):
-                return True
-        for family in standard_families:
-            if isinstance(family, str) and family.upper().startswith(ref_upper):
-                return True
-        return False
+def _post_validate_product_standard_links(
+    products: list[dict[str, Any]],
+    genres: list[dict[str, Any]],
+    standards: list[dict[str, Any]],
+) -> None:
+    known_references = {row["code"] for row in standards} | {
+        row.get("standard_family") for row in standards if isinstance(row.get("standard_family"), str)
+    }
 
     for product in products:
         pid = product["id"]
-        for reference in product.get("likely_standards", []):
-            if not _matches_reference(reference):
+        for reference in _string_list(product.get("likely_standards")):
+            if reference not in known_references:
                 raise KnowledgeBaseError(
                     f"Product '{pid}' references likely_standard '{reference}' that does not match any standard code or family."
+                )
+
+    for genre in genres:
+        gid = genre["id"]
+        for reference in _string_list(genre.get("likely_standards")):
+            if reference not in known_references:
+                raise KnowledgeBaseError(
+                    f"Genre '{gid}' references likely_standard '{reference}' that does not match any standard code or family."
                 )
 
 
@@ -618,7 +615,7 @@ def _kb_meta(counts: dict[str, int], standards: list[dict[str, Any]]) -> dict[st
         "harmonized_standards": sum(1 for row in standards if row.get("harmonization_status") == "harmonized"),
         "state_of_the_art_standards": sum(1 for row in standards if row.get("harmonization_status") == "state_of_the_art"),
         "review_items": sum(1 for row in standards if row.get("item_type") == "review"),
-        "product_gated_standards": sum(1 for row in standards if row.get("applies_if_products")),
+        "product_gated_standards": sum(1 for row in standards if row.get("applies_if_products") or row.get("applies_if_genres")),
         "version": KB_META_VERSION,
     }
 
@@ -684,7 +681,7 @@ def load_all() -> dict[str, Any]:
     }
 
     standards = _enrich_standards(_load_standards_catalog(product_ids, trait_ids, legislation_keys, genre_ids), products)
-    _post_validate_product_standard_links(products, standards)
+    _post_validate_product_standard_links(products, genres, standards)
 
     counts = {
         "traits": len(traits),

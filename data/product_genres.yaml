@@ -16,9 +16,6 @@ genres:
   - household_appliance
   likely_standards:
   - EN 60335-1
-  - EN 60335-2
-  - EN 55014-1
-  - EN 55014-2
   - EN 62233
 - id: commercial_appliance
   label: Commercial appliance
@@ -50,7 +47,6 @@ genres:
   functional_classes:
   - kitchen_appliance
   likely_standards:
-  - EN 60335-2
   - EN 55014-1
   - EN 55014-2
 - id: cleaning_laundry_appliance
@@ -69,7 +65,6 @@ genres:
   - laundry_appliance
   likely_standards:
   - EN 60335-1
-  - EN 60335-2
   - EN 55014-1
   - EN 55014-2
 - id: hvac_environmental_appliance
@@ -88,7 +83,6 @@ genres:
   - comfort_appliance
   - hvac_appliance
   likely_standards:
-  - EN 60335-2
   - EN 55014-1
   - EN 55014-2
 - id: personal_care_appliance
@@ -104,7 +98,6 @@ genres:
   functional_classes:
   - personal_care_appliance
   likely_standards:
-  - EN 60335-2
   - EN 62233
 - id: garden_outdoor_power
   label: Garden / outdoor powered equipment
@@ -121,8 +114,7 @@ genres:
   - garden_tool
   - outdoor_device
   likely_standards:
-  - EN 60335-2
-  - Machinery safety review
+  - EN 50636 review
 - id: building_access_drive
   label: Building / access drive
   keywords:
@@ -138,8 +130,6 @@ genres:
   - fixed_installation
   functional_classes:
   - building_automation
-  likely_standards:
-  - Machinery safety review
 - id: av_ict_device
   label: AV / ICT equipment
   keywords:
@@ -350,7 +340,6 @@ genres:
   functional_classes:
   - health_device
   likely_standards:
-  - MDR borderline review
   - EN 60601 review
   - EN 62479
 - id: xr_immersive

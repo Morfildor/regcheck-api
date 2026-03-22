@@ -30,8 +30,8 @@ DIRECTIVE_ORDER = {
 }
 
 StandardItemType = Literal["standard", "review"]
-ProductHitType = Literal["not_product_gated", "primary_product", "alternate_product"]
-MatchBasis = Literal["product", "alternate_product", "preferred_product", "traits"]
+ProductHitType = Literal["not_product_gated", "primary_product", "alternate_product", "primary_genre"]
+MatchBasis = Literal["product", "alternate_product", "preferred_product", "genre", "traits"]
 FactBasis = Literal["confirmed", "mixed", "inferred"]
 
 
@@ -110,24 +110,36 @@ def _product_hit_type(
     standard: dict[str, Any],
     product_type: str | None,
     matched_products: list[str] | None,
+    product_genres: list[str] | None = None,
 ) -> ProductHitType | None:
     applies_if_products = set(_string_list(standard.get("applies_if_products")))
     exclude_if_products = set(_string_list(standard.get("exclude_if_products")))
+    applies_if_genres = set(_string_list(standard.get("applies_if_genres")))
+    exclude_if_genres = set(_string_list(standard.get("exclude_if_genres")))
     matched_products = matched_products or []
+    product_genres = product_genres or []
 
     if product_type and product_type in exclude_if_products:
         return None
     if any(pid in exclude_if_products for pid in matched_products):
         return None
-
-    if not applies_if_products:
-        return "not_product_gated"
+    if exclude_if_genres & set(product_genres):
+        return None
 
     if product_type and product_type in applies_if_products:
         return "primary_product"
 
     if any(pid in applies_if_products for pid in matched_products):
         return "alternate_product"
+
+    if applies_if_products:
+        return None
+
+    if not applies_if_genres:
+        return "not_product_gated"
+
+    if applies_if_genres & set(product_genres):
+        return "primary_genre"
 
     return None
 
@@ -206,6 +218,7 @@ def _build_reason(
     standard: dict[str, Any],
     product_type: str | None,
     matched_products: list[str],
+    product_genres: list[str],
     product_hit_type: ProductHitType | None,
     gate: TraitGate,
     is_preferred: bool,
@@ -222,6 +235,12 @@ def _build_reason(
         matched_list = ", ".join(pid.replace("_", " ") for pid in alternate_products)
         parts.append(f"matched through alternate detected product candidate: {matched_list}")
         match_basis = "alternate_product"
+    elif product_hit_type == "primary_genre":
+        applies_if_genres = set(_string_list(standard.get("applies_if_genres")))
+        matched_genres = [gid for gid in product_genres if gid in applies_if_genres] or sorted(applies_if_genres)
+        matched_list = ", ".join(gid.replace("_", " ") for gid in matched_genres)
+        parts.append(f"matched genre route: {matched_list}")
+        match_basis = "genre"
     elif is_preferred:
         parts.append("recommended by the matched product knowledge base")
         match_basis = "preferred_product"
@@ -265,6 +284,8 @@ def _score_standard(
         score += 300
     elif product_hit_type == "alternate_product":
         score += 220
+    elif product_hit_type == "primary_genre":
+        score += 150
 
     if is_preferred:
         score += 80
@@ -352,8 +373,12 @@ def _context_bonus_v2(standard: dict[str, Any], context_tags: set[str]) -> int:
     bonus = 0
     if "scope:av_ict" in context_tags and (code == "EN 62368-1" or code in {"EN 55032", "EN 55035"}):
         bonus += 80
+    if "scope:av_ict" in context_tags and (code.startswith("EN 60335-") or code.startswith("EN 55014-")):
+        bonus -= 90
     if "scope:appliance" in context_tags and (code.startswith("EN 60335-") or code.startswith("EN 55014-")):
         bonus += 80
+    if "scope:appliance" in context_tags and (code == "EN 62368-1" or code in {"EN 55032", "EN 55035"}):
+        bonus -= 110
     if "exposure:close_proximity" in context_tags and (
         code.startswith("EN 62209") or code in {"EN 50566", "EN 50663 / EN 62311 review", "EN 50665"}
     ):
@@ -385,6 +410,8 @@ def _score_standard_v2(
         score += 135
     elif product_hit_type == "alternate_product":
         score += 85
+    elif product_hit_type == "primary_genre":
+        score += 55
     if is_preferred:
         score += 65
 
@@ -418,8 +445,9 @@ def _score_standard_v2(
     return score
 
 
-def _selection_sort_key(row: dict[str, Any]) -> tuple[int, int, int, str]:
+def _selection_sort_key(row: dict[str, Any]) -> tuple[int, int, int, int, str]:
     return (
+        1 if row.get("item_type") == "standard" else 0,
         int(row.get("score", 0)),
         int(row.get("selection_priority", 0)),
         FACT_BASIS_RANK[cast(FactBasis, row.get("fact_basis", "inferred"))],
@@ -458,12 +486,14 @@ def find_applicable_items_v1(
     directives: list[str],
     product_type: str | None = None,
     matched_products: list[str] | None = None,
+    product_genres: list[str] | None = None,
     preferred_standard_codes: list[str] | None = None,
     explicit_traits: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
 ) -> ApplicableItems:
     standards = load_standards()
     matched_products = matched_products or []
+    product_genres = product_genres or []
     preferred_codes = set(preferred_standard_codes or [])
     confirmed_traits = confirmed_traits or set(traits)
     explicit_traits = explicit_traits or set(confirmed_traits)
@@ -476,7 +506,7 @@ def find_applicable_items_v1(
             rejections.append({"code": standard.get("code"), "reason": "directive filter mismatch"})
             continue
 
-        product_hit_type = _product_hit_type(standard, product_type, matched_products)
+        product_hit_type = _product_hit_type(standard, product_type, matched_products, product_genres)
         preferred_hit = _is_preferred_standard(standard, preferred_codes)
         allow_soft_any_miss = preferred_hit
         gate = _trait_gate_details(standard, traits, confirmed_traits, allow_soft_any_miss=allow_soft_any_miss)
@@ -489,6 +519,7 @@ def find_applicable_items_v1(
             standard,
             product_type,
             matched_products,
+            product_genres,
             product_hit_type,
             gate,
             preferred_hit,
@@ -529,6 +560,7 @@ def find_applicable_standards_v1(
     directives: list[str],
     product_type: str | None = None,
     matched_products: list[str] | None = None,
+    product_genres: list[str] | None = None,
     preferred_standard_codes: list[str] | None = None,
     explicit_traits: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
@@ -538,6 +570,7 @@ def find_applicable_standards_v1(
         directives=directives,
         product_type=product_type,
         matched_products=matched_products,
+        product_genres=product_genres,
         preferred_standard_codes=preferred_standard_codes,
         explicit_traits=explicit_traits,
         confirmed_traits=confirmed_traits,
@@ -549,6 +582,7 @@ def find_applicable_items_v2(
     directives: list[str],
     product_type: str | None = None,
     matched_products: list[str] | None = None,
+    product_genres: list[str] | None = None,
     preferred_standard_codes: list[str] | None = None,
     explicit_traits: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
@@ -557,6 +591,7 @@ def find_applicable_items_v2(
 ) -> ApplicableItems:
     standards = load_standards()
     matched_products = matched_products or []
+    product_genres = product_genres or []
     preferred_codes = set(preferred_standard_codes or [])
     confirmed_traits = confirmed_traits or set(traits)
     explicit_traits = explicit_traits or set(confirmed_traits)
@@ -570,7 +605,7 @@ def find_applicable_items_v2(
             rejections.append({"code": standard.get("code"), "reason": "directive filter mismatch"})
             continue
 
-        product_hit_type = _product_hit_type(standard, product_type, matched_products)
+        product_hit_type = _product_hit_type(standard, product_type, matched_products, product_genres)
         preferred_hit = _is_preferred_standard(standard, preferred_codes)
         gate = _trait_gate_details(standard, traits, confirmed_traits, allow_soft_any_miss=preferred_hit)
         if product_hit_type is None or not gate["passes"]:
@@ -586,6 +621,7 @@ def find_applicable_items_v2(
             standard,
             product_type,
             matched_products,
+            product_genres,
             product_hit_type,
             gate,
             preferred_hit,
@@ -689,6 +725,7 @@ def find_applicable_standards_v2(
     directives: list[str],
     product_type: str | None = None,
     matched_products: list[str] | None = None,
+    product_genres: list[str] | None = None,
     preferred_standard_codes: list[str] | None = None,
     explicit_traits: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
@@ -700,6 +737,7 @@ def find_applicable_standards_v2(
         directives=directives,
         product_type=product_type,
         matched_products=matched_products,
+        product_genres=product_genres,
         preferred_standard_codes=preferred_standard_codes,
         explicit_traits=explicit_traits,
         confirmed_traits=confirmed_traits,
@@ -713,6 +751,7 @@ def find_applicable_items(
     directives: list[str],
     product_type: str | None = None,
     matched_products: list[str] | None = None,
+    product_genres: list[str] | None = None,
     preferred_standard_codes: list[str] | None = None,
     explicit_traits: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
@@ -724,6 +763,7 @@ def find_applicable_items(
         directives=directives,
         product_type=product_type,
         matched_products=matched_products,
+        product_genres=product_genres,
         preferred_standard_codes=preferred_standard_codes,
         explicit_traits=explicit_traits,
         confirmed_traits=confirmed_traits,
@@ -737,6 +777,7 @@ def find_applicable_standards(
     directives: list[str],
     product_type: str | None = None,
     matched_products: list[str] | None = None,
+    product_genres: list[str] | None = None,
     preferred_standard_codes: list[str] | None = None,
     explicit_traits: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
@@ -748,6 +789,7 @@ def find_applicable_standards(
         directives=directives,
         product_type=product_type,
         matched_products=matched_products,
+        product_genres=product_genres,
         preferred_standard_codes=preferred_standard_codes,
         explicit_traits=explicit_traits,
         confirmed_traits=confirmed_traits,

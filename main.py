@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from knowledge_base import (
     KnowledgeBaseError,
+    load_genres,
     load_legislations,
     load_meta,
     load_products,
@@ -115,30 +116,49 @@ def metadata_options() -> dict:
         raise HTTPException(status_code=503, detail=f"Knowledge base failed to load: {_kb_status['error']}")
 
     traits = load_traits()
+    genres = load_genres()
     products = load_products()
     legislations = load_legislations()
 
     return {
         "traits": [{"id": row["id"], "label": row["label"], "description": row["description"]} for row in traits],
+        "genres": [
+            {
+                "id": row["id"],
+                "label": row["label"],
+                "keywords": row.get("keywords", []),
+                "traits": row.get("traits", []),
+                "default_traits": row.get("default_traits", []),
+                "functional_classes": row.get("functional_classes", []),
+                "likely_standards": row.get("likely_standards", []),
+            }
+            for row in genres
+        ],
         "products": [
             {
                 "id": row["id"],
                 "label": row["label"],
                 "product_family": row.get("product_family"),
                 "product_subfamily": row.get("product_subfamily"),
+                "genres": row.get("genres", []),
                 "aliases": row.get("aliases", []),
                 "family_keywords": row.get("family_keywords", []),
+                "genre_keywords": row.get("genre_keywords", []),
                 "required_clues": row.get("required_clues", []),
                 "preferred_clues": row.get("preferred_clues", []),
                 "exclude_clues": row.get("exclude_clues", []),
                 "confusable_with": row.get("confusable_with", []),
                 "functional_classes": row.get("functional_classes", []),
+                "genre_functional_classes": row.get("genre_functional_classes", []),
                 "family_traits": row.get("family_traits", []),
+                "genre_traits": row.get("genre_traits", []),
+                "genre_default_traits": row.get("genre_default_traits", []),
                 "subtype_traits": row.get("subtype_traits", []),
                 "core_traits": row.get("core_traits", []),
                 "default_traits": row.get("default_traits", []),
                 "implied_traits": row.get("implied_traits", []),
                 "likely_standards": row.get("likely_standards", []),
+                "genre_likely_standards": row.get("genre_likely_standards", []),
             }
             for row in products
         ],
@@ -188,8 +208,10 @@ def metadata_standards() -> dict:
                 "selection_priority": row.get("selection_priority", 0),
                 "required_fact_basis": row.get("required_fact_basis", "inferred"),
                 "applies_if_products": row.get("applies_if_products", []),
+                "applies_if_genres": row.get("applies_if_genres", []),
                 "applies_if_all": row.get("applies_if_all", []),
                 "applies_if_any": row.get("applies_if_any", []),
+                "exclude_if_genres": row.get("exclude_if_genres", []),
             }
             for row in load_standards()
         ],

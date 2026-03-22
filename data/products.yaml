@@ -616,8 +616,6 @@ products:
   likely_standards:
   - EN 60335-2-86
   - EN 60335-2-87
-  genres:
-  - av_ict_device
 - id: electric_frying_pan
   label: Electric frying pan
   aliases:
@@ -875,8 +873,6 @@ products:
   - agricultural_appliance
   likely_standards:
   - EN 60335-2-76
-  genres:
-  - av_ict_device
 - id: floor_treatment_machine
   label: Floor treatment machine
   aliases:
@@ -5183,6 +5179,7 @@ products:
   product_subfamily: smart_security_camera
   genres:
   - smart_home_iot
+  - security_access_iot
   implied_traits:
   - wifi
   - camera

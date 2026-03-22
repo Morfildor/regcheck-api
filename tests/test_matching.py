@@ -56,6 +56,13 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("radio", result["all_traits"])
         self.assertIn("wifi", result["all_traits"])
 
+    def test_product_match_exposes_safe_genres(self) -> None:
+        result = extract_traits("connected espresso machine with wifi app control cloud account OTA updates and display")
+
+        self.assertEqual(result["product_type"], "coffee_machine")
+        self.assertIn("household_appliance", result["product_genres"])
+        self.assertIn("kitchen_food_appliance", result["product_genres"])
+
     def test_new_feature_traits_are_detected_from_text(self) -> None:
         result = extract_traits("Wi-Fi 7 mesh router with WPA3 and voice assistant support")
 
@@ -127,6 +134,16 @@ class MatchingTests(unittest.TestCase):
 
         self.assertIn("EN 62368-1", review_codes)
         self.assertNotIn("EN 62368-1", standard_codes)
+
+    def test_genre_gated_standard_uses_direct_genre_context(self) -> None:
+        items = find_applicable_items(
+            traits={"consumer", "electrical", "electronic", "battery_powered"},
+            directives=["GPSR"],
+            product_genres=["micromobility"],
+        )
+
+        review_codes = {row["code"] for row in items["review_items"]}
+        self.assertIn("EN 17128", review_codes)
 
     def test_analyze_preserves_preferred_standard_review_fallback(self) -> None:
         fake_traits = {
@@ -454,15 +471,20 @@ class MatchingTests(unittest.TestCase):
             standards = main.metadata_standards()
 
         product_row = next(row for row in options["products"] if row["id"] == "smart_speaker")
+        genre_row = next(row for row in options["genres"] if row["id"] == "smart_home_iot")
         standard_row = next(row for row in standards["standards"] if row["code"] == "EN 62368-1")
 
         self.assertIn("product_family", product_row)
+        self.assertIn("genres", product_row)
         self.assertIn("family_keywords", product_row)
         self.assertIn("core_traits", product_row)
         self.assertIn("default_traits", product_row)
+        self.assertIn("id", genre_row)
+        self.assertIn("likely_standards", genre_row)
         self.assertIn("selection_group", standard_row)
         self.assertIn("selection_priority", standard_row)
         self.assertIn("required_fact_basis", standard_row)
+        self.assertIn("applies_if_genres", standard_row)
 
     def test_product_schema_validation_requires_family_for_confusable_products(self) -> None:
         trait_ids = {row["id"] for row in load_traits()}

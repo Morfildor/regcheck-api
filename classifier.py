@@ -52,7 +52,7 @@ RADIO_TRAITS = {
     "lte_m",
     "satellite_connectivity",
 }
-CONNECTED_TRAITS = {"app_control", "cloud", "internet", "ota", "account", "authentication"}
+CONNECTED_TRAITS = {"app_control", "cloud", "internet", "internet_connected", "ota", "account", "authentication"}
 SERVICE_DEPENDENT_TRAITS = CONNECTED_TRAITS | {"personal_data_likely", "monetary_transaction"}
 ENGINE_VERSION = "2.0"
 ELECTRONIC_SIGNAL_TRAITS = RADIO_TRAITS | CONNECTED_TRAITS | {
@@ -456,6 +456,8 @@ def _expand_related_traits(traits: set[str]) -> set[str]:
         expanded.add("monetary_transaction")
     if "matter_bridge" in expanded:
         expanded.add("matter")
+    if expanded & {"internet", "internet_connected"}:
+        expanded.update({"internet", "internet_connected"})
     if expanded & {"wireless_charging_rx", "wireless_charging_tx", "usb_pd", "poe_powered", "poe_supply", "backup_battery", "energy_monitoring", "smart_grid_ready", "vehicle_supply", "ev_charging", "solar_powered"}:
         expanded.add("electrical")
     if expanded & {
@@ -1183,6 +1185,7 @@ def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dic
         "label": product.get("label", product["id"]),
         "family": _product_family(product),
         "subtype": _product_subfamily(product),
+        "genres": _string_list(product.get("genres")),
         "product": product,
         "matched_alias": best_alias,
         "alias_hits": [best_alias] if best_alias else [],
@@ -1235,6 +1238,7 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> dict[s
             "confirmed_products": [],
             "product_core_traits": set(),
             "product_default_traits": set(),
+            "product_genres": set(),
             "preferred_standard_codes": [],
             "functional_classes": set(),
             "confirmed_functional_classes": set(),
@@ -1306,9 +1310,11 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> dict[s
     common_standards = _common_strings(subtype_band, "likely_standards")
     common_core_traits = _common_sets(subtype_band, "core_traits")
     common_default_traits = _common_sets(subtype_band, "default_traits")
+    common_genres = _common_sets(subtype_band, "genres")
 
     product_core_traits = set(_string_list(top_row.get("core_traits")))
     product_default_traits = set(_string_list(top_row.get("default_traits")))
+    product_genres = set(_string_list(top_row.get("genres")))
     functional_classes = set(_string_list(top_row.get("functional_classes")))
     confirmed_functional_classes: set[str] = set()
     preferred_standard_codes: list[str] = []
@@ -1324,11 +1330,13 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> dict[s
         functional_classes = set()
         product_core_traits = set()
         product_default_traits = set()
+        product_genres = set()
         product_match_confidence = "low"
     elif family_stage == "family":
         functional_classes = set(common_classes)
         product_core_traits = set(common_core_traits)
         product_default_traits = set(common_default_traits)
+        product_genres = set(common_genres)
         preferred_standard_codes = common_standards
         product_match_confidence = "medium" if family_confidence == "high" else family_confidence
         if family_confidence == "high":
@@ -1397,6 +1405,7 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> dict[s
         "confirmed_products": confirmed_products,
         "product_core_traits": product_core_traits,
         "product_default_traits": product_default_traits,
+        "product_genres": product_genres,
         "preferred_standard_codes": preferred_standard_codes,
         "functional_classes": functional_classes,
         "confirmed_functional_classes": confirmed_functional_classes,
@@ -1434,6 +1443,7 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
     product_match_stage = match["product_match_stage"]
     product_core_traits = _expand_related_traits(set(match.get("product_core_traits") or set()))
     product_default_traits = _expand_related_traits(set(match.get("product_default_traits") or set()))
+    product_genres = {item for item in (match.get("product_genres") or set()) if isinstance(item, str) and item}
 
     functional_classes.update(match["functional_classes"])
     confirmed_functional_classes.update(match["confirmed_functional_classes"])
@@ -1457,9 +1467,17 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
         and product_subtype_confidence == "medium"
         and bool(top_candidate.get("matched_alias") or top_candidate.get("positive_clues"))
     )
+    decisive_subtype = (
+        product_match_stage == "subtype"
+        and bool(
+            top_candidate.get("matched_alias")
+            or top_candidate.get("positive_clues")
+            or top_candidate.get("family_keyword_hits")
+        )
+    )
     if product_family_confidence == "high":
         confirmed_traits.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
-    if product_match_stage == "subtype" and (product_subtype_confidence == "high" or decisive_medium):
+    if product_match_stage == "subtype" and (product_subtype_confidence == "high" or decisive_medium or decisive_subtype):
         confirmed_traits.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
 
     corroborated_default = {trait for trait in product_default_traits if trait in explicit_traits}
@@ -1491,6 +1509,7 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
     diagnostics.append("matched_products=" + ",".join(matched_products))
     diagnostics.append("routing_matched_products=" + ",".join(routing_matched_products))
     diagnostics.append("confirmed_products=" + ",".join(confirmed_products))
+    diagnostics.append("product_genres=" + ",".join(sorted(product_genres)))
     diagnostics.append("preferred_standard_codes=" + ",".join(preferred_standard_codes))
     diagnostics.append("explicit_traits=" + ",".join(sorted(explicit_traits)))
     diagnostics.append("confirmed_traits=" + ",".join(sorted(confirmed_traits)))
@@ -1509,6 +1528,7 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
         "matched_products": matched_products,
         "routing_matched_products": routing_matched_products,
         "confirmed_products": confirmed_products,
+        "product_genres": sorted(product_genres),
         "preferred_standard_codes": preferred_standard_codes,
         "product_match_confidence": match.get("product_match_confidence"),
         "product_candidates": product_candidates,

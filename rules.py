@@ -379,6 +379,7 @@ def _legislation_matches(
     functional_classes: set[str],
     product_type: str | None,
     matched_products: set[str],
+    product_genres: set[str],
 ) -> bool:
     all_of_traits = set(_string_list(row.get("all_of_traits")))
     any_of_traits = set(_string_list(row.get("any_of_traits")))
@@ -388,6 +389,8 @@ def _legislation_matches(
     none_of_classes = set(_string_list(row.get("none_of_functional_classes")))
     any_of_products = set(_string_list(row.get("any_of_product_types")))
     exclude_products = set(_string_list(row.get("exclude_product_types")))
+    any_of_genres = set(_string_list(row.get("any_of_genres")))
+    exclude_genres = set(_string_list(row.get("exclude_genres")))
 
     if all_of_traits and not all_of_traits.issubset(traits):
         return False
@@ -407,9 +410,17 @@ def _legislation_matches(
     if product_type:
         candidate_products.add(product_type)
 
+    product_hit = not any_of_products or bool(candidate_products & any_of_products)
+    genre_hit = not any_of_genres or bool(product_genres & any_of_genres)
+
     if candidate_products & exclude_products:
         return False
-    if any_of_products and not (candidate_products & any_of_products):
+    if product_genres & exclude_genres:
+        return False
+    if any_of_products and any_of_genres:
+        if not (product_hit or genre_hit):
+            return False
+    elif not product_hit or not genre_hit:
         return False
 
     return True
@@ -438,9 +449,11 @@ def _pick_legislations(
     product_type: str | None,
     forced_directives: list[str] | None = None,
     matched_products: set[str] | None = None,
+    product_genres: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
 ) -> list[dict[str, Any]]:
     matched_products = matched_products or set()
+    product_genres = product_genres or set()
     confirmed_traits = confirmed_traits or set(traits)
     forced_set = {item for item in (forced_directives or []) if item}
     today = _current_date()
@@ -448,7 +461,7 @@ def _pick_legislations(
     picked: list[dict[str, Any]] = []
     for row in load_legislations():
         directive_key = str(row.get("directive_key") or "OTHER")
-        matched = _legislation_matches(row, traits, functional_classes, product_type, matched_products)
+        matched = _legislation_matches(row, traits, functional_classes, product_type, matched_products, product_genres)
         forced = directive_key in forced_set and row.get("bucket") != "informational"
         if not matched and not forced:
             continue
@@ -740,6 +753,24 @@ def _apply_post_selection_gates_v1(
 
         kept.append(item)
 
+    household_part2_selected = any(
+        str(item.get("code") or "").startswith("EN 60335-2-") and item.get("item_type") == "standard"
+        for item in kept
+    )
+    if household_part2_selected:
+        for item in kept:
+            if str(item.get("code") or "") != "EN 60335-1" or item.get("item_type") != "review":
+                continue
+            item["item_type"] = "standard"
+            item["fact_basis"] = "confirmed"
+            reason = item.get("reason")
+            if isinstance(reason, str):
+                item["reason"] = reason.replace(
+                    ". some routing traits are inferred from product context and still need confirmation",
+                    "",
+                )
+            diagnostics.append("gate=promote_EN60335-1:paired_with_household_part2")
+
     codes = {str(item.get("code") or "") for item in kept}
     if "EN 62233" in codes and "EN 62311" in codes and prefer_62233:
         kept = [item for item in kept if item.get("code") != "EN 62311"]
@@ -907,6 +938,24 @@ def _apply_post_selection_gates(
 
         kept.append(item)
 
+    household_part2_selected = any(
+        str(item.get("code") or "").startswith("EN 60335-2-") and item.get("item_type") == "standard"
+        for item in kept
+    )
+    if household_part2_selected:
+        for item in kept:
+            if str(item.get("code") or "") != "EN 60335-1" or item.get("item_type") != "review":
+                continue
+            item["item_type"] = "standard"
+            item["fact_basis"] = "confirmed"
+            reason = item.get("reason")
+            if isinstance(reason, str):
+                item["reason"] = reason.replace(
+                    ". some routing traits are inferred from product context and still need confirmation",
+                    "",
+                )
+            diagnostics.append("gate=promote_EN60335-1:paired_with_household_part2")
+
     codes = {str(item.get("code") or "") for item in kept}
     if "EN 62233" in codes and "EN 62311" in codes and context["prefer_62233"]:
         kept = [item for item in kept if item.get("code") != "EN 62311"]
@@ -966,6 +1015,7 @@ def _build_legislation_sections(
     functional_classes: set[str],
     product_type: str | None,
     matched_products: set[str],
+    product_genres: set[str],
     confirmed_traits: set[str],
     forced_directives: list[str] | None = None,
 ) -> tuple[list[LegislationItem], list[dict[str, Any]], list[str]]:
@@ -975,6 +1025,7 @@ def _build_legislation_sections(
         product_type=product_type,
         forced_directives=forced_directives,
         matched_products=matched_products,
+        product_genres=product_genres,
         confirmed_traits=confirmed_traits,
     )
 
@@ -1570,6 +1621,7 @@ def analyze_v1(
     diagnostics = list(traits_data.get("diagnostics") or [])
     matched_products = set(traits_data.get("matched_products") or [])
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
+    product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
     product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
     routing_product_type = product_type if product_match_stage == "subtype" else None
@@ -1589,6 +1641,7 @@ def analyze_v1(
         functional_classes=functional_classes,
         product_type=routing_product_type,
         matched_products=routing_matched_products,
+        product_genres=product_genres,
         confirmed_traits=confirmed_traits,
         forced_directives=directives,
     )
@@ -1600,6 +1653,7 @@ def analyze_v1(
         directives=detected_directives,
         product_type=routing_product_type,
         matched_products=sorted(routing_matched_products),
+        product_genres=sorted(product_genres),
         preferred_standard_codes=sorted(likely_standards),
         explicit_traits=set(traits_data.get("explicit_traits") or []),
         confirmed_traits=confirmed_traits,
@@ -1723,6 +1777,7 @@ def analyze_v1(
             "matched_products": sorted(matched_products),
             "routing_matched_products": sorted(routing_matched_products),
             "preferred_standards": sorted(likely_standards),
+            "product_genres": sorted(product_genres),
             "product_family": traits_data.get("product_family"),
             "product_subtype": traits_data.get("product_subtype"),
             "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
@@ -1741,6 +1796,7 @@ def analyze_v1(
             "confidence": traits_data.get("product_match_confidence", "low"),
             "matched_products": sorted(matched_products),
             "product_family": traits_data.get("product_family"),
+            "product_genres": sorted(product_genres),
             "product_subtype": traits_data.get("product_subtype"),
             "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
         },
@@ -1767,6 +1823,7 @@ def analyze(
     diagnostics = list(traits_data.get("diagnostics") or [])
     matched_products = set(traits_data.get("matched_products") or [])
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
+    product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
     product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
     routing_product_type = product_type if product_match_stage == "subtype" else None
@@ -1793,6 +1850,7 @@ def analyze(
         functional_classes=functional_classes,
         product_type=routing_product_type,
         matched_products=routing_matched_products,
+        product_genres=product_genres,
         confirmed_traits=confirmed_traits,
         forced_directives=directives,
     )

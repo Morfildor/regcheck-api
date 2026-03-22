@@ -85,7 +85,7 @@ class StandardItem(BaseModel):
     category: str
     confidence: ConfidenceLevel = "medium"
     item_type: Literal["standard", "review"] = "standard"
-    match_basis: Literal["product", "alternate_product", "preferred_product", "traits"] = "traits"
+    match_basis: Literal["product", "alternate_product", "preferred_product", "genre", "traits"] = "traits"
     fact_basis: FactBasis = "confirmed"
     score: int = 0
     reason: str | None = None
@@ -173,6 +173,7 @@ class AnalysisStats(BaseModel):
 
 class KnowledgeBaseMeta(BaseModel):
     traits: int = 0
+    genres: int = 0
     products: int = 0
     legislations: int = 0
     standards: int = 0

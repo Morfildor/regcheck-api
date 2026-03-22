@@ -3988,10 +3988,10 @@ standards:
   - LVD
   - RED
   legislation_key: BATTERY
-  item_type: review
+  item_type: standard
   standard_family: EN 62133-2
   confidence: medium
-  harmonization_status: review
+  harmonization_status: state_of_the_art
   is_harmonized: false
   harmonized_under: BATTERY
   harmonized_reference: 2023/1542/EU
@@ -4212,7 +4212,13 @@ standards:
   - microphone
   - camera
   - data_storage
-  exclude_if: []
+  exclude_if:
+  - food_contact
+  - water_contact
+  - beverage_preparation
+  - washing
+  - cleaning
+  - air_treatment
   test_focus:
   - safety
   - electrical
