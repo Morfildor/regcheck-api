@@ -202,7 +202,7 @@ class MatchingTests(unittest.TestCase):
             for section in result.standard_sections
             if any(row["code"] == "EN 301 489-1" for row in section["items"])
         }
-        self.assertTrue({"RED", "EMC"}.issubset(section_keys))
+        self.assertEqual(section_keys, {"RED"})
 
     def test_analyze_keeps_genre_gated_iot_review_routes(self) -> None:
         result = analyze("consumer iot smart plug with app control")
@@ -242,6 +242,25 @@ class MatchingTests(unittest.TestCase):
 
         section_keys = {section["key"] for section in result.legislation_sections}
         self.assertIn("informational", section_keys)
+
+    def test_informational_legislation_does_not_create_lvd_route_for_battery_only_household_product(self) -> None:
+        result = analyze("battery-powered oral hygiene appliance")
+
+        self.assertNotIn("LVD", result.directives)
+        self.assertFalse(any(item.directive_key == "LVD" and item.bucket != "informational" for item in result.legislations))
+        self.assertFalse(any(item.code.startswith("EN 60335-") for item in result.standards + result.review_items))
+
+    def test_offline_electronic_appliance_does_not_get_cra_watchlist(self) -> None:
+        result = analyze("electric kettle")
+
+        self.assertNotIn("CRA", result.directives)
+        self.assertNotIn("CRA", {item.directive_key for item in result.future_regimes})
+
+    def test_engine_derived_handheld_trait_is_confirmed_when_stated_in_text(self) -> None:
+        result = analyze("Handheld LTE scanner with display, rechargeable battery, and Wi-Fi")
+
+        self.assertIn("handheld", result.all_traits)
+        self.assertIn("handheld", result.confirmed_traits)
 
     def test_ev_charger_catalog_links_resolve_and_surface_review_route(self) -> None:
         standards = load_standards()

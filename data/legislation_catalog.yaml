@@ -387,8 +387,9 @@ legislations:
   - cybersecurity lifecycle process review
   - vulnerability handling review
   - software bill of materials and technical documentation review
-  any_of_traits:
+  all_of_traits:
   - electronic
+  any_of_traits:
   - app_control
   - cloud
   - internet

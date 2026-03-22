@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import Any, Literal, TypedDict, cast
 
 from knowledge_base import load_standards
@@ -384,9 +385,14 @@ def _keyword_hits(standard: dict[str, Any], normalized_text: str) -> list[str]:
     hits: list[str] = []
     if not normalized_text:
         return hits
+    text_terms = set(normalized_text.split())
     for keyword in _string_list(standard.get("keywords")):
         phrase = " ".join(str(keyword).lower().split())
         if phrase and phrase in normalized_text:
+            hits.append(keyword)
+            continue
+        keyword_terms = [part for part in re.split(r"[^a-z0-9]+", phrase) if part]
+        if len(keyword_terms) > 1 and all(term in text_terms for term in keyword_terms):
             hits.append(keyword)
     return hits
 

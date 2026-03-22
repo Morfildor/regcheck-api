@@ -426,17 +426,22 @@ def _legislation_matches(
     if product_type:
         candidate_products.add(product_type)
 
-    product_hit = not any_of_products or bool(candidate_products & any_of_products)
-    genre_hit = not any_of_genres or bool(product_genres & any_of_genres)
+    product_hit = bool(candidate_products & any_of_products)
+    genre_hit = bool(product_genres & any_of_genres)
 
     if candidate_products & exclude_products:
         return False
     if product_genres & exclude_genres:
         return False
     if any_of_products and any_of_genres:
-        if not (product_hit or genre_hit):
+        if row.get("bucket") == "informational":
+            if not (product_hit and genre_hit):
+                return False
+        elif not (product_hit or genre_hit):
             return False
-    elif not product_hit or not genre_hit:
+    elif any_of_products and not product_hit:
+        return False
+    elif any_of_genres and not genre_hit:
         return False
 
     return True
@@ -453,7 +458,10 @@ def _legislation_sort_key(row: dict[str, Any]) -> tuple[int, int, str]:
 
 def _directive_keys(items: list[LegislationItem]) -> list[str]:
     keys: list[str] = []
+    has_non_informational = {item.directive_key for item in items if item.bucket != "informational"}
     for item in items:
+        if item.directive_key not in has_non_informational:
+            continue
         if item.directive_key not in keys:
             keys.append(item.directive_key)
     return keys
@@ -516,31 +524,42 @@ def _collect_preferred_standard_codes(traits_data: dict[str, Any]) -> set[str]:
     return preferred
 
 
-def _derive_engine_traits(description: str, traits: set[str], matched_products: set[str]) -> tuple[set[str], list[str]]:
+def _derive_engine_traits(
+    description: str,
+    traits: set[str],
+    matched_products: set[str],
+) -> tuple[set[str], set[str], list[str]]:
     text = normalize(description)
     diagnostics: list[str] = []
     derived = set(traits)
+    confirmed: set[str] = set()
 
     if _has_any(text, POWER_EXTERNAL_NEGATION_PATTERNS):
         derived.discard("external_psu")
         derived.add("internal_power_supply")
+        confirmed.add("internal_power_supply")
         diagnostics.append("engine_trait=internal_power_supply")
     elif _has_any(text, POWER_EXTERNAL_PATTERNS):
         derived.add("external_psu")
+        confirmed.add("external_psu")
         diagnostics.append("engine_trait=external_psu")
     elif _has_any(text, POWER_INTERNAL_PATTERNS):
         derived.add("internal_power_supply")
+        confirmed.add("internal_power_supply")
         diagnostics.append("engine_trait=internal_power_supply")
 
     if _has_any(text, WEARABLE_PATTERNS):
         derived.add("wearable")
         derived.add("body_worn_or_applied")
+        confirmed.update({"wearable", "body_worn_or_applied"})
         diagnostics.append("engine_trait=wearable/body_worn_or_applied")
     if _has_any(text, HANDHELD_PATTERNS):
         derived.add("handheld")
+        confirmed.add("handheld")
         diagnostics.append("engine_trait=handheld")
     if _has_any(text, CLOSE_PROXIMITY_PATTERNS):
         derived.add("body_worn_or_applied")
+        confirmed.add("body_worn_or_applied")
         diagnostics.append("engine_trait=close_proximity")
 
     if matched_products & PERSONAL_CARE_PRODUCT_HINTS:
@@ -554,7 +573,7 @@ def _derive_engine_traits(description: str, traits: set[str], matched_products: 
         derived.add("low_power_radio")
         diagnostics.append("engine_trait=low_power_radio")
 
-    return derived, diagnostics
+    return derived, confirmed & derived, diagnostics
 
 
 def _match_standard(
@@ -1218,7 +1237,7 @@ def _build_quick_adds(missing: list[MissingInformationItem]) -> list[dict[str, s
 def _build_standard_sections(items: list[StandardItem]) -> list[dict[str, Any]]:
     grouped: dict[str, list[StandardItem]] = defaultdict(list)
     for item in items:
-        route_keys = [item.directive] if item.category == "safety" else ([key for key in item.directives if key] or [item.directive])
+        route_keys = [item.directive] if item.category in {"safety", "radio_emc"} else ([key for key in item.directives if key] or [item.directive])
         for key in route_keys:
             grouped[key].append(item)
     sections: list[dict[str, Any]] = []
@@ -1660,7 +1679,8 @@ def analyze_v1(
     trait_set = set(traits_data.get("all_traits") or [])
     confirmed_traits = set(traits_data.get("confirmed_traits") or [])
     functional_classes = set(traits_data.get("functional_classes") or [])
-    trait_set, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
+    trait_set, confirmed_engine_traits, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
+    confirmed_traits.update(confirmed_engine_traits)
     diagnostics.extend(extra_diag)
 
     legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
@@ -1860,7 +1880,8 @@ def analyze(
     trait_set = set(base_trait_set)
     confirmed_traits = set(traits_data.get("confirmed_traits") or [])
     functional_classes = set(traits_data.get("functional_classes") or [])
-    trait_set, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
+    trait_set, confirmed_engine_traits, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
+    confirmed_traits.update(confirmed_engine_traits)
     diagnostics.extend(extra_diag)
     engine_added_traits = trait_set - base_trait_set
 
