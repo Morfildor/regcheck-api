@@ -8,10 +8,17 @@ products:
   - air cleaning
   aliases:
   - air cleaner unit
+  - air cleaner
+  - air cleaning appliance
+  - air cleaning device
+  - room air cleaner
+  - home air cleaner
   required_clues: []
   preferred_clues:
   - cleaner
   - air cleaner
+  - air cleaning
+  - room air cleaner
   exclude_clues:
   - purifier
   confusable_with:
@@ -61,12 +68,28 @@ products:
   - connected air purifier
   - wifi air purifier
   - hepa air purifier
+  - room air purifier
+  - hepa purifier
+  - air cleaner purifier
+  - air filtration purifier
+  - desktop air purifier
+  - home air purifier
+  - air sanitizer
+  - air sanitiser
+  - air filtration unit
   required_clues: []
   preferred_clues:
   - purifier
   - hepa
   - air purifier
-  exclude_clues: []
+  - pm2 5
+  - filter
+  - air quality
+  - filtration
+  exclude_clues:
+  - humidifier
+  - dehumidifier
+  - fan heater
   confusable_with:
   - air_cleaner
   family_traits:
@@ -117,6 +140,13 @@ products:
   - EN 60335-2-55
   genres:
   - household_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: barbecue_grill
   label: Electric barbecue grill
   aliases:
@@ -143,6 +173,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: battery_charger
   label: Battery charger
   aliases:
@@ -161,11 +198,33 @@ products:
   - EN 60335-2-29
   genres:
   - portable_energy
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: battery_powered_oral_hygiene
   label: Battery-powered oral hygiene appliance
   aliases:
   - battery toothbrush
   - battery water flosser
+  - cordless water flosser
+  - portable water flosser
+  - rechargeable water flosser
+  - electric flosser
+  - electric floss machine
+  - portable oral irrigator
+  - cordless oral irrigator
+  - dental water flosser
+  - water dental flosser
+  - water flosser pick
+  - teeth cleaning flosser
+  - rechargeable toothbrush
+  - cordless flosser
+  - rechargeable oral irrigator
+  - portable dental irrigator
   implied_traits:
   - consumer
   - household
@@ -183,6 +242,31 @@ products:
   genres:
   - household_appliance
   - personal_care_appliance
+  product_family: oral_hygiene_device
+  product_subfamily: battery_powered_oral_hygiene
+  family_keywords:
+  - oral hygiene
+  - dental cleaning
+  - tooth cleaning
+  - gum care
+  preferred_clues:
+  - battery
+  - cordless
+  - rechargeable
+  - oral irrigator
+  - water flosser
+  - flossing machine
+  exclude_clues:
+  - projector
+  - display
+  - presentation
+  - home cinema
+  confusable_with:
+  - projector
+  - home_projector
+  required_clues: []
+  family_traits: []
+  subtype_traits: []
 - id: beauty_treatment_appliance
   label: Beauty treatment appliance
   aliases:
@@ -205,12 +289,24 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: blender
   label: Blender
   aliases:
   - blender
   - hand blender
   - stick blender
+  - smoothie blender
+  - personal blender
+  - countertop blender
+  - immersion blender
+  - mixer blender
   implied_traits:
   - consumer
   - household
@@ -228,6 +324,16 @@ products:
   genres:
   - household_appliance
   - kitchen_food_appliance
+  preferred_clues:
+  - smoothie
+  - immersion
+  - countertop blender
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: circulator
   label: Circulator
   aliases:
@@ -249,6 +355,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: clock
   label: Clock
   aliases:
@@ -267,6 +380,13 @@ products:
   - EN 60335-2-26
   genres:
   - household_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: coffee_machine
   label: Coffee machine
   aliases:
@@ -291,6 +411,30 @@ products:
   - capsule coffee maker
   - single serve coffee maker
   - single-serve coffee maker
+  - coffee brewer
+  - espresso coffee machine
+  - automatic coffee machine
+  - super automatic espresso machine
+  - bean to cup coffee maker
+  - bean to cup brewer
+  - bean to cup espresso maker
+  - fully automatic coffee machine
+  - capsule espresso machine
+  - k cup coffee maker
+  - k-cup coffee maker
+  - single cup coffee maker
+  - one cup coffee maker
+  - personal coffee maker
+  - espresso coffee maker
+  - coffee pod machine
+  - coffee pod maker
+  - super automatic coffee machine
+  - superautomatic espresso machine
+  - automatic bean to cup coffee machine
+  - automatic coffee maker
+  - americano machine
+  - latte machine
+  - cappuccino machine
   implied_traits:
   - consumer
   - household
@@ -303,6 +447,8 @@ products:
   - beverage_preparation
   - water_heating
   - coffee_brewing
+  - bean_to_cup
+  - capsule_brewing
   functional_classes:
   - beverage_preparation
   - small_domestic_appliance
@@ -312,6 +458,30 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords:
+  - coffee preparation
+  - espresso
+  - bean to cup
+  - single serve brewing
+  preferred_clues:
+  - espresso
+  - bean to cup
+  - single serve
+  - k cup
+  - k-cup
+  - capsule
+  - pod
+  - drip
+  - filter coffee
+  - latte
+  - cappuccino
+  - americano
+  exclude_clues:
+  - grinder only
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_cooking_appliance
   label: Commercial cooking appliance
   aliases:
@@ -338,6 +508,13 @@ products:
   - commercial_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_dispensing_appliance
   label: Commercial dispensing appliance
   aliases:
@@ -360,6 +537,13 @@ products:
   - commercial_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_fryer
   label: Commercial fryer
   aliases:
@@ -380,6 +564,13 @@ products:
   - commercial_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_hood
   label: Commercial hood
   aliases:
@@ -397,6 +588,13 @@ products:
   - EN 60335-2-99
   genres:
   - commercial_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_microwave
   label: Commercial microwave oven
   aliases:
@@ -418,6 +616,13 @@ products:
   - commercial_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_oven
   label: Commercial oven
   aliases:
@@ -440,6 +645,13 @@ products:
   - commercial_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_refrigerator
   label: Commercial refrigerator
   aliases:
@@ -463,6 +675,13 @@ products:
   - commercial_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_washing_machine
   label: Commercial washing machine
   aliases:
@@ -484,6 +703,13 @@ products:
   genres:
   - commercial_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: cooking_range
   label: Cooking range
   aliases:
@@ -506,12 +732,31 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: air_fryer
   label: Air fryer
   aliases:
   - air fryer
   - smart air fryer
   - connected air fryer
+  - airfryer
+  - air fryer oven
+  - air fryer cooker
+  - digital air fryer
+  - basket air fryer
+  - drawer air fryer
+  - airfryer oven
+  - airfryer toaster oven
+  - hot air fryer
+  - oil less fryer
+  - oil-less fryer
+  - air fryer grill
   implied_traits:
   - consumer
   - household
@@ -531,6 +776,24 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords:
+  - countertop cooking
+  - rapid air cooking
+  preferred_clues:
+  - air fryer
+  - airfryer
+  - basket
+  - drawer
+  - crisper
+  - rapid air
+  - hot air fryer
+  exclude_clues:
+  - deep fryer
+  - oil fryer
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: deep_fryer
   label: Deep fryer
   aliases:
@@ -554,6 +817,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: dishwasher
   label: Dishwasher
   aliases:
@@ -562,6 +832,11 @@ products:
   - dish washer
   - built-in dishwasher
   - freestanding dishwasher
+  - dishwasher machine
+  - dish washer machine
+  - countertop dishwasher
+  - tabletop dishwasher
+  - integrated dishwasher
   implied_traits:
   - consumer
   - household
@@ -581,6 +856,16 @@ products:
   - household_appliance
   - cleaning_laundry_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - dishwasher
+  - countertop dishwasher
+  - built in
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_blanket
   label: Electric blanket
   aliases:
@@ -601,6 +886,13 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_fish_stunner
   label: Electric fishing machine / fish stunner
   aliases:
@@ -616,6 +908,14 @@ products:
   likely_standards:
   - EN 60335-2-86
   - EN 60335-2-87
+  genres: []
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_frying_pan
   label: Electric frying pan
   aliases:
@@ -638,6 +938,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_garden_tool
   label: Electric garden tool
   aliases:
@@ -660,6 +967,13 @@ products:
   likely_standards: []
   genres:
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_iron
   label: Electric iron
   aliases:
@@ -668,6 +982,10 @@ products:
   - steam iron
   - dry iron
   - garment steamer iron
+  - clothes iron
+  - steam clothes iron
+  - pressing iron
+  - steam press iron
   implied_traits:
   - consumer
   - household
@@ -687,6 +1005,16 @@ products:
   - household_appliance
   - cleaning_laundry_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - iron
+  - steam iron
+  - pressing
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_kettle
   label: Electric kettle
   aliases:
@@ -696,6 +1024,16 @@ products:
   - water kettle
   - smart kettle
   - jug kettle
+  - tea kettle electric
+  - hot water kettle
+  - hot water boiler kettle
+  - smart tea kettle
+  - variable temperature kettle
+  - electric tea kettle
+  - gooseneck kettle
+  - goose neck kettle
+  - temperature control kettle
+  - electric boiler kettle
   implied_traits:
   - consumer
   - household
@@ -716,6 +1054,25 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords:
+  - water heating
+  - liquid heating
+  - hot water appliance
+  preferred_clues:
+  - kettle
+  - water boiler
+  - jug kettle
+  - variable temperature
+  - gooseneck
+  - tea kettle
+  - temperature control
+  exclude_clues:
+  - boiler room
+  - water heater
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_pump
   label: Electric pump
   aliases:
@@ -738,6 +1095,13 @@ products:
   - EN 60335-2-41
   genres:
   - household_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electrolyser_washing_machine
   label: Detergent-free electrolyser washing machine
   aliases:
@@ -759,6 +1123,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: fan
   label: Fan
   product_family: indoor_air_mover
@@ -775,11 +1146,19 @@ products:
   - pedestal fan
   - standing fan
   - smart fan
+  - cooling fan
+  - air circulator
+  - air circulator fan
+  - table fan
+  - floor fan
+  - oscillating fan
   required_clues: []
   preferred_clues:
   - fan
   - ventilation
   - air circulator
+  - circulator
+  - oscillating
   exclude_clues:
   - heater
   - heating
@@ -873,6 +1252,14 @@ products:
   - agricultural_appliance
   likely_standards:
   - EN 60335-2-76
+  genres: []
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: floor_treatment_machine
   label: Floor treatment machine
   aliases:
@@ -880,6 +1267,17 @@ products:
   - floor polisher
   - buffer
   - scrubber
+  - floor scrubber
+  - hard floor cleaner
+  - steam mop
+  - electric mop
+  - wet mop cleaner
+  - spray mop machine
+  - spin mop machine
+  - floor washer
+  - hard floor washer
+  - floor cleaning machine
+  - floor scrubber dryer
   implied_traits:
   - consumer
   - household
@@ -895,10 +1293,30 @@ products:
   - EN 60335-2-54
   genres:
   - cleaning_laundry_appliance
+  preferred_clues:
+  - scrubber
+  - polisher
+  - steam mop
+  - electric mop
+  - hard floor cleaner
+  - floor washer
+  exclude_clues:
+  - vacuum
+  family_keywords: []
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: food_processor
   label: Food processor
   aliases:
   - food processor
+  - food chopper
+  - kitchen processor
+  - electric food chopper
+  - mini chopper
+  - veggie chopper electric
+  - multi chopper
   implied_traits:
   - consumer
   - household
@@ -915,6 +1333,17 @@ products:
   genres:
   - household_appliance
   - kitchen_food_appliance
+  preferred_clues:
+  - processor
+  - chopper
+  - slice
+  - shred
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: food_waste_disposer
   label: Food waste disposer
   aliases:
@@ -934,6 +1363,13 @@ products:
   - EN 60335-2-16
   genres:
   - household_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: foot_warmer
   label: Foot warmer
   aliases:
@@ -954,6 +1390,13 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: fuel_burning_electrical_appliance
   label: Fuel-burning appliance with electrical connections
   aliases:
@@ -971,6 +1414,13 @@ products:
   - EN 60335-2-102
   genres:
   - household_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: garage_door_drive
   label: Garage door drive
   aliases:
@@ -992,6 +1442,13 @@ products:
   - EN 60335-2-95
   genres:
   - building_access_drive
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: gate_door_window_drive
   label: Drive for gates, doors or windows
   aliases:
@@ -1015,6 +1472,13 @@ products:
   - EN 60335-2-95
   genres:
   - building_access_drive
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: hair_clipper
   label: Hair clipper
   aliases:
@@ -1022,6 +1486,11 @@ products:
   - clipper
   - beard trimmer
   - trimmer
+  - hair trimmer
+  - beard clipper
+  - grooming trimmer
+  - body trimmer
+  - multigroom trimmer
   implied_traits:
   - consumer
   - household
@@ -1039,6 +1508,16 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
+  preferred_clues:
+  - clipper
+  - trimmer
+  - beard
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: heat_pump
   label: Heat pump / air conditioner
   aliases:
@@ -1068,6 +1547,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: heated_carpet
   label: Heated carpet / underfloor heating mat
   aliases:
@@ -1089,6 +1575,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: heating_lamp
   label: Heating lamp
   aliases:
@@ -1105,6 +1598,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: heating_pad
   label: Heating pad / heating blanket
   aliases:
@@ -1127,6 +1627,13 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: high_pressure_cleaner
   label: High-pressure cleaner
   aliases:
@@ -1152,6 +1659,13 @@ products:
   - household_appliance
   - cleaning_laundry_appliance
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: hob
   label: Hob / cooktop
   aliases:
@@ -1179,6 +1693,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: hot_cupboard
   label: Hot cupboard
   aliases:
@@ -1198,6 +1719,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: humidifier
   label: Humidifier
   aliases:
@@ -1206,6 +1734,12 @@ products:
   - mist humidifier
   - smart humidifier
   - connected humidifier
+  - cool mist humidifier
+  - warm mist humidifier
+  - ultrasonic humidifier
+  - room humidifier
+  - home humidifier
+  - mist maker
   implied_traits:
   - consumer
   - household
@@ -1224,6 +1758,17 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - humidifier
+  - mist
+  - ultrasonic
+  exclude_clues:
+  - dehumidifier
+  family_keywords: []
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: immersion_heater
   label: Immersion heater
   aliases:
@@ -1246,6 +1791,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: incubator
   label: Incubator
   aliases:
@@ -1262,6 +1814,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: industrial_charger
   label: Industrial battery charger
   aliases:
@@ -1281,6 +1840,13 @@ products:
   - EN 50563
   genres:
   - portable_energy
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: insect_killer
   label: Insect killer
   aliases:
@@ -1299,6 +1865,13 @@ products:
   - EN 60335-2-59
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: ironer
   label: Ironer
   aliases:
@@ -1321,6 +1894,13 @@ products:
   - household_appliance
   - cleaning_laundry_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: kitchen_extractor_fan
   label: Kitchen extractor fan
   aliases:
@@ -1345,6 +1925,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: kitchen_machine
   label: Kitchen machine
   aliases:
@@ -1370,6 +1957,13 @@ products:
   genres:
   - household_appliance
   - kitchen_food_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: lawn_mower
   label: Electric lawn mower
   aliases:
@@ -1392,6 +1986,13 @@ products:
   - EN 60335-2-77
   genres:
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: liquid_heater
   label: Liquid heater
   aliases:
@@ -1415,6 +2016,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: livestock_heater
   label: Livestock heating appliance
   aliases:
@@ -1433,6 +2041,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: massage_appliance
   label: Massage appliance
   aliases:
@@ -1455,12 +2070,23 @@ products:
   - wellness_borderline_medical
   - household_appliance
   - personal_care_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: microwave_oven
   label: Microwave oven
   aliases:
   - microwave
   - microwave oven
   - combi microwave
+  - countertop microwave
+  - solo microwave
+  - microwave grill
+  - microwave combi oven
   implied_traits:
   - consumer
   - household
@@ -1479,6 +2105,16 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - microwave
+  - combi microwave
+  - countertop
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: motor_compressor
   label: Motor-compressor
   aliases:
@@ -1494,6 +2130,13 @@ products:
   - EN 60335-2-34
   genres:
   - household_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: oral_hygiene_appliance
   label: Oral hygiene appliance
   aliases:
@@ -1501,6 +2144,23 @@ products:
   - oral irrigator
   - water flosser
   - oral hygiene appliance
+  - sonic toothbrush
+  - rechargeable toothbrush
+  - water dental flosser
+  - dental flosser
+  - electric flosser
+  - flossing machine
+  - water pick
+  - waterpik
+  - dental water jet
+  - interdental cleaner
+  - portable oral irrigator
+  - cordless water flosser
+  - oral care device
+  - electric dental cleaner
+  - oral cleaner
+  - water jet flosser
+  - tooth cleaning device
   implied_traits:
   - consumer
   - household
@@ -1517,6 +2177,35 @@ products:
   genres:
   - household_appliance
   - personal_care_appliance
+  product_family: oral_hygiene_device
+  product_subfamily: oral_hygiene_appliance
+  family_keywords:
+  - oral hygiene
+  - dental cleaning
+  - tooth cleaning
+  - gum care
+  preferred_clues:
+  - oral
+  - dental
+  - toothbrush
+  - tooth brush
+  - water flosser
+  - oral irrigator
+  - gum care
+  - flossing
+  - oral care
+  exclude_clues:
+  - projector
+  - display
+  - presentation
+  - home cinema
+  - beamer
+  confusable_with:
+  - projector
+  - home_projector
+  required_clues: []
+  family_traits: []
+  subtype_traits: []
 - id: outdoor_barbecue
   label: Outdoor electric barbecue
   aliases:
@@ -1541,6 +2230,13 @@ products:
   - kitchen_food_appliance
   - hvac_environmental_appliance
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: oven
   label: Oven
   aliases:
@@ -1567,6 +2263,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: patio_heater
   label: Patio heater
   aliases:
@@ -1588,6 +2291,13 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: portable_grill
   label: Portable grill
   aliases:
@@ -1618,6 +2328,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: portable_immersion_heater
   label: Portable immersion heater
   aliases:
@@ -1640,6 +2357,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: range_hood
   label: Range hood
   aliases:
@@ -1672,6 +2396,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: refrigerator_freezer
   label: Refrigerator / freezer
   aliases:
@@ -1698,6 +2429,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: rice_cooker
   label: Rice cooker
   aliases:
@@ -1707,6 +2445,11 @@ products:
   - electric rice cooker
   - multi cooker
   - multi-cooker
+  - rice maker
+  - rice steamer
+  - electric rice pot
+  - rice pot cooker
+  - pressure rice cooker
   implied_traits:
   - consumer
   - household
@@ -1726,6 +2469,16 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - rice
+  - multicooker
+  - rice steamer
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: robotic_lawn_mower
   label: Robotic lawn mower
   aliases:
@@ -1749,6 +2502,13 @@ products:
   - EN 50636-2-107
   genres:
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: rolling_shutter_drive
   label: Drive for rolling shutters, awnings or blinds
   aliases:
@@ -1771,12 +2531,24 @@ products:
   - EN 60335-2-97
   genres:
   - building_access_drive
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: room_dehumidifier
   label: Dehumidifier
   aliases:
   - dehumidifier
   - room dehumidifier
   - smart dehumidifier
+  - dehumidifier machine
+  - moisture absorber electric
+  - home dehumidifier
+  - portable dehumidifier
+  - air dryer dehumidifier
   implied_traits:
   - consumer
   - household
@@ -1796,6 +2568,17 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - dehumidifier
+  - humidity removal
+  - moisture
+  exclude_clues:
+  - humidifier
+  family_keywords: []
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: room_heater
   label: Room heater
   aliases:
@@ -1809,6 +2592,12 @@ products:
   - panel heater
   - oil filled radiator
   - oil-filled radiator
+  - portable space heater
+  - electric space heater
+  - panel radiator
+  - electric radiator
+  - infrared heater
+  - oil radiator
   implied_traits:
   - consumer
   - household
@@ -1825,6 +2614,17 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - space heater
+  - ceramic
+  - panel heater
+  - infrared
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: room_heating_appliance
   label: Room heating appliance
   aliases:
@@ -1848,6 +2648,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: sauna_heater
   label: Sauna heater
   aliases:
@@ -1866,6 +2673,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: sewing_machine
   label: Sewing machine
   aliases:
@@ -1884,6 +2698,13 @@ products:
   - EN 60335-2-28
   genres:
   - cleaning_laundry_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: shaver
   label: Electric shaver
   aliases:
@@ -1906,6 +2727,13 @@ products:
   genres:
   - household_appliance
   - personal_care_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: shower_cabinet
   label: Multifunctional shower cabinet
   aliases:
@@ -1928,6 +2756,13 @@ products:
   - household_appliance
   - cleaning_laundry_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: skin_hair_care_appliance
   label: Skin or hair care appliance
   aliases:
@@ -1941,6 +2776,12 @@ products:
   - styler
   - skin care appliance
   - beauty appliance
+  - hair styling tool
+  - hair styler
+  - straightening iron
+  - curling wand
+  - hot brush
+  - facial brush
   implied_traits:
   - consumer
   - household
@@ -1957,6 +2798,18 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
+  preferred_clues:
+  - hair dryer
+  - straightener
+  - curler
+  - styler
+  - hot brush
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: spin_extractor
   label: Spin extractor
   aliases:
@@ -1977,6 +2830,13 @@ products:
   genres:
   - kitchen_food_appliance
   - cleaning_laundry_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: spray_extraction_machine
   label: Spray extraction machine
   aliases:
@@ -1998,6 +2858,13 @@ products:
   - EN 60335-2-54
   genres:
   - cleaning_laundry_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: storage_water_heater
   label: Storage water heater
   aliases:
@@ -2020,6 +2887,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: toaster
   label: Toaster
   aliases:
@@ -2028,6 +2902,11 @@ products:
   - smart toaster
   - two-slice toaster
   - four-slice toaster
+  - bread toaster
+  - toast maker
+  - slice toaster
+  - bagel toaster
+  - toasting machine
   implied_traits:
   - consumer
   - household
@@ -2046,12 +2925,27 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - toast
+  - bagel
+  - slice toaster
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: tumble_dryer
   label: Tumble dryer
   aliases:
   - tumble dryer
   - dryer
   - clothes dryer
+  - dryer machine
+  - vented dryer
+  - condenser dryer
+  - heat pump dryer
+  - laundry dryer
   implied_traits:
   - consumer
   - household
@@ -2072,6 +2966,16 @@ products:
   - household_appliance
   - cleaning_laundry_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - tumble dryer
+  - condenser
+  - heat pump dryer
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: ultraviolet_appliance
   label: Ultraviolet appliance
   aliases:
@@ -2091,6 +2995,13 @@ products:
   genres:
   - household_appliance
   - personal_care_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: robot_vacuum
   label: Robot vacuum cleaner
   aliases:
@@ -2101,17 +3012,35 @@ products:
   - robotic vacuum
   - robotic vacuum cleaner
   - robovac
+  - robot hoover
+  - robot vacuum mop combo
+  - robot mop vacuum
+  - robot cleaner
+  - floor cleaning robot
+  - auto vacuum robot
+  - self emptying robot vacuum
+  - self-emptying robot vacuum
+  - robot vacuum dock
+  - robot vacuum station
+  - robot mop
+  - robo vacuum
+  - roomba
+  - vacuum robot
+  - mopping robot vacuum
+  - robot floor cleaner
   implied_traits:
   - consumer
   - household
   - electrical
   - electronic
   - battery_powered
-  - mains_power_likely
   - motorized
   - cleaning
   - surface_cleaning
   - portable
+  - docking_station
+  - room_mapping
+  - obstacle_avoidance
   functional_classes:
   - floor_care
   - cleaning_appliance
@@ -2120,7 +3049,32 @@ products:
   genres:
   - household_appliance
   - cleaning_laundry_appliance
-
+  product_family: vacuum_cleaner_family
+  product_subfamily: robot_vacuum
+  family_keywords:
+  - vacuum cleaning
+  - floor cleaning robot
+  - autonomous floor cleaning
+  - robot cleaning
+  - vacuum and mop combo
+  - autonomous vacuum
+  preferred_clues:
+  - robot
+  - dock
+  - mapping
+  - lidar
+  - self empty
+  - self-empty
+  - mop combo
+  - roomba
+  - self emptying
+  exclude_clues:
+  - lawn mower
+  - pool cleaner
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: vacuum_cleaner
   label: Vacuum cleaner
   aliases:
@@ -2136,6 +3090,15 @@ products:
   - cordless vacuum cleaner
   - hand vacuum
   - handheld vacuum
+  - vac cleaner
+  - vacuuming machine
+  - vac
+  - cleaning vacuum
+  - dry vacuum cleaner
+  - vacuum sweeper
+  - hoover
+  - cordless stick vacuum
+  - shop vacuum home
   implied_traits:
   - consumer
   - household
@@ -2153,6 +3116,27 @@ products:
   genres:
   - household_appliance
   - cleaning_laundry_appliance
+  product_family: vacuum_cleaner_family
+  product_subfamily: vacuum_cleaner
+  family_keywords:
+  - vacuum cleaning
+  - floor cleaning
+  - dust extraction
+  preferred_clues:
+  - vacuum
+  - cleaner
+  - suction
+  - dust
+  - hoover
+  - stick vacuum
+  - upright
+  exclude_clues:
+  - robot
+  - projector
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: vaporizer
   label: Vaporizer
   aliases:
@@ -2172,6 +3156,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: vending_machine
   label: Vending machine
   aliases:
@@ -2194,6 +3185,13 @@ products:
   - commercial_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: warming_plate
   label: Warming plate
   aliases:
@@ -2215,6 +3213,13 @@ products:
   - household_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: washing_machine
   label: Washing machine
   aliases:
@@ -2224,6 +3229,11 @@ products:
   - laundry washer
   - front load washing machine
   - top load washing machine
+  - clothes washing machine
+  - laundry machine
+  - washer machine
+  - washer dryer washer
+  - automatic washing machine
   implied_traits:
   - consumer
   - household
@@ -2245,6 +3255,17 @@ products:
   - household_appliance
   - cleaning_laundry_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - washing machine
+  - washer
+  - front load
+  - top load
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: water_bed_heater
   label: Water-bed heater
   aliases:
@@ -2266,6 +3287,13 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: water_suction_cleaner
   label: Water-suction cleaning appliance
   aliases:
@@ -2297,6 +3325,13 @@ products:
   genres:
   - household_appliance
   - cleaning_laundry_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: coffee_grinder
   label: Coffee grinder / coffee mill
   aliases:
@@ -2325,6 +3360,13 @@ products:
   genres:
   - household_appliance
   - kitchen_food_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_kitchen_machine
   label: Commercial kitchen machine
   aliases:
@@ -2350,6 +3392,13 @@ products:
   genres:
   - commercial_appliance
   - kitchen_food_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_plug
   label: Smart plug / smart outlet
   aliases:
@@ -2387,6 +3436,13 @@ products:
   - EN 62368-1
   genres:
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_thermostat
   label: Smart thermostat
   aliases:
@@ -2431,6 +3487,13 @@ products:
   - EN 62368-1
   genres:
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_speaker
   label: Smart speaker
   product_family: smart_assistant_device
@@ -2439,6 +3502,7 @@ products:
   - smart assistant
   - assistant device
   - voice assistant
+  - voice audio
   aliases:
   - smart speaker
   - voice assistant speaker
@@ -2450,16 +3514,32 @@ products:
   - google home
   - apple homepod
   - smart home speaker
+  - voice control speaker
+  - voice hub speaker
+  - assistant speaker
+  - alexa speaker
+  - google assistant speaker
+  - smart audio speaker
+  - voice hub
+  - alexa device
+  - echo speaker
+  - google home speaker
+  - homepod speaker
   required_clues: []
   preferred_clues:
   - speaker
   - audio
   - music
   - voice assistant
+  - alexa
+  - google assistant
+  - echo
+  - homepod
   exclude_clues:
   - screen
   - display
   - camera
+  - touchscreen
   confusable_with:
   - smart_display
   family_traits:
@@ -2539,6 +3619,13 @@ products:
   likely_standards: []
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: hvac_humidifier
   label: Humidifier for HVAC systems
   aliases:
@@ -2562,6 +3649,13 @@ products:
   genres:
   - household_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: projector
   label: Projector
   product_family: projector_device
@@ -2571,12 +3665,23 @@ products:
   - video projector
   - home projector
   - portable projector
+  - business projector
+  - conference projector
+  - presentation projector
+  - office projector
+  - meeting room projector
+  - office beamer
+  - conference room projector
+  - presentation beamer
   required_clues: []
   preferred_clues:
   - video projector
   - conference room
   - presentation
   - business
+  - meeting room
+  - business projector
+  - office
   exclude_clues:
   - smart
   - wifi
@@ -2584,6 +3689,12 @@ products:
   - home cinema
   - laser
   - ultra short throw
+  - oral
+  - dental
+  - flosser
+  - irrigator
+  - toothbrush
+  - gum care
   confusable_with:
   - home_projector
   family_traits:
@@ -2601,12 +3712,14 @@ products:
   - av_ict
   - display
   - mains_power_likely
+  - presentation_use
   functional_classes:
   - home_device
   likely_standards:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
 - id: whirlpool_bath
   label: Whirlpool bath / spa bath
   aliases:
@@ -2628,6 +3741,13 @@ products:
   - EN 60335-2-60
   genres:
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_toilet
   label: Electric toilet / smart toilet
   aliases:
@@ -2651,6 +3771,13 @@ products:
   genres:
   - smart_home_iot
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: heated_gully
   label: Heated gully / roof drainage heater
   aliases:
@@ -2673,6 +3800,13 @@ products:
   - household_appliance
   - hvac_environmental_appliance
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: grass_trimmer
   label: Grass trimmer / lawn edge trimmer
   aliases:
@@ -2696,6 +3830,13 @@ products:
   - EN 60335-2-91
   genres:
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: scarifier_aerator
   label: Lawn scarifier / aerator
   aliases:
@@ -2717,6 +3858,13 @@ products:
   - EN 60335-2-92
   genres:
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: grass_shear
   label: Grass shear
   aliases:
@@ -2739,6 +3887,13 @@ products:
   - EN 60335-2-94
   genres:
   - garden_outdoor_power
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: milking_machine
   label: Milking machine
   aliases:
@@ -2758,6 +3913,13 @@ products:
   - EN 60335-2-70
   genres:
   - commercial_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_floor_treatment_machine
   label: Commercial floor treatment machine
   aliases:
@@ -2783,6 +3945,13 @@ products:
   genres:
   - commercial_appliance
   - cleaning_laundry_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_spray_extraction_machine
   label: Commercial spray extraction machine
   aliases:
@@ -2807,6 +3976,13 @@ products:
   genres:
   - commercial_appliance
   - cleaning_laundry_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_dishwasher
   label: Commercial dishwasher
   aliases:
@@ -2834,6 +4010,13 @@ products:
   - commercial_appliance
   - cleaning_laundry_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: commercial_rinsing_sink
   label: Commercial rinsing sink
   aliases:
@@ -2854,6 +4037,13 @@ products:
   genres:
   - commercial_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: bain_marie
   label: Bain-marie
   aliases:
@@ -2876,6 +4066,13 @@ products:
   - commercial_appliance
   - kitchen_food_appliance
   - hvac_environmental_appliance
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: fabric_steamer
   label: Fabric steamer
   aliases:
@@ -2883,6 +4080,9 @@ products:
   - garment steamer
   - clothes steamer
   - handheld garment steamer
+  - garment steam cleaner
+  - travel garment steamer
+  - upright garment steamer
   implied_traits:
   - consumer
   - household
@@ -2902,6 +4102,16 @@ products:
   - household_appliance
   - cleaning_laundry_appliance
   - hvac_environmental_appliance
+  preferred_clues:
+  - garment steamer
+  - clothes steamer
+  - travel steamer
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_display
   label: Smart display
   product_family: smart_assistant_device
@@ -2910,18 +4120,34 @@ products:
   - smart assistant
   - assistant device
   - voice assistant
+  - display assistant
+  - kitchen display hub
   aliases:
   - smart display
   - display hub
   - assistant display
   - voice assistant display
+  - smart screen
+  - assistant screen
+  - touch display hub
+  - alexa display
+  - google nest hub
+  - smart home display
+  - nest hub
+  - echo show
+  - assistant tablet display
+  - smart assistant hub
   required_clues: []
   preferred_clues:
   - display
   - screen
   - touchscreen
   - camera
-  exclude_clues: []
+  - nest hub
+  - echo show
+  - smart display
+  exclude_clues:
+  - speaker only
   confusable_with:
   - smart_speaker
   family_traits:
@@ -2976,6 +4202,19 @@ products:
   - wifi router
   - wireless router
   - internet router
+  - wi fi router
+  - wi-fi router
+  - home router
+  - broadband router
+  - gigabit router
+  - dual band router
+  - tri band router
+  - home wifi router
+  - broadband wi fi router
+  - internet hub router
+  - gaming router
+  - ax router
+  - wireless broadband router
   required_clues: []
   preferred_clues:
   - router
@@ -2983,9 +4222,17 @@ products:
   - wan
   - nat
   - dhcp
+  - dual band
+  - tri band
+  - gigabit
+  - gaming router
+  - ax router
   exclude_clues:
   - access point
   - mesh
+  - mesh node
+  - modem only
+  - switch
   confusable_with:
   - wireless_access_point
   - mesh_wifi_system
@@ -3008,6 +4255,7 @@ products:
   - radio
   - wifi
   - data_storage
+  - network_gateway
   functional_classes:
   - network_device
   - av_ict_device
@@ -3023,6 +4271,13 @@ products:
   - cable modem
   - dsl modem
   - broadband modem
+  - internet modem
+  - fiber modem
+  - fibre modem
+  - cable gateway modem
+  - dsl router modem
+  - cable internet modem
+  - dsl internet modem
   implied_traits:
   - consumer
   - electrical
@@ -3038,6 +4293,24 @@ products:
   genres:
   - smart_home_iot
   - av_ict_device
+  preferred_clues:
+  - modem
+  - docsis
+  - dsl
+  - cable
+  - fiber
+  - fibre
+  - ont
+  - cable modem
+  - fiber modem
+  exclude_clues:
+  - router only
+  - access point
+  family_keywords: []
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: iot_gateway
   label: IoT gateway / hub
   aliases:
@@ -3045,6 +4318,15 @@ products:
   - smart home gateway
   - smart home hub
   - hub gateway
+  - home hub
+  - smart home controller
+  - zigbee hub
+  - matter hub
+  - thread border router
+  - gateway hub
+  - smart home bridge
+  - automation hub
+  - smart hub
   implied_traits:
   - consumer
   - electrical
@@ -3058,6 +4340,7 @@ products:
   - thread
   - matter
   - data_storage
+  - smart_home_hub
   functional_classes:
   - network_device
   - av_ict_device
@@ -3066,6 +4349,22 @@ products:
   genres:
   - smart_home_iot
   - av_ict_device
+  preferred_clues:
+  - gateway
+  - hub
+  - zigbee
+  - matter
+  - thread border router
+  - bridge
+  exclude_clues:
+  - router
+  - access point
+  - switch
+  family_keywords: []
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: network_switch
   label: Network switch
   aliases:
@@ -3073,6 +4372,14 @@ products:
   - ethernet switch
   - lan switch
   - poe switch
+  - ethernet hub
+  - lan hub
+  - managed switch
+  - unmanaged switch
+  - gigabit switch
+  - poe ethernet switch
+  - ethernet hub switch
+  - network poe switch
   implied_traits:
   - consumer
   - electrical
@@ -3088,6 +4395,22 @@ products:
   genres:
   - smart_home_iot
   - av_ict_device
+  preferred_clues:
+  - switch
+  - ethernet
+  - lan
+  - poe
+  - managed
+  - unmanaged
+  - gigabit
+  exclude_clues:
+  - router
+  - access point
+  family_keywords: []
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: wireless_access_point
   label: Wireless access point
   product_family: wifi_networking
@@ -3100,6 +4423,13 @@ products:
   - access point
   - wireless access point
   - wifi access point
+  - wi fi access point
+  - wi-fi access point
+  - ceiling access point
+  - wall access point
+  - poe access point
+  - wireless ap
+  - wireless network ap
   required_clues:
   - access point
   preferred_clues:
@@ -3107,9 +4437,15 @@ products:
   - wireless access point
   - wifi access point
   - poe
+  - ceiling
+  - wall mount
+  - ssid
+  - ap
+  - ceiling mount
   exclude_clues:
   - router
   - mesh
+  - modem
   confusable_with:
   - router
   - mesh_wifi_system
@@ -3166,6 +4502,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: desktop_pc
   label: Desktop PC
   aliases:
@@ -3187,6 +4530,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: server
   label: Server / NAS
   aliases:
@@ -3208,6 +4558,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: monitor
   label: Monitor
   aliases:
@@ -3228,6 +4585,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_tv
   label: Television / smart TV
   aliases:
@@ -3255,6 +4619,13 @@ products:
   genres:
   - smart_home_iot
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: streaming_device
   label: Streaming device / set-top box
   aliases:
@@ -3280,6 +4651,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: soundbar
   label: Soundbar
   aliases:
@@ -3310,6 +4688,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: home_cinema_system
   label: Home cinema system
   aliases:
@@ -3341,6 +4726,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: wireless_headphones
   label: Wireless headphones / earbuds
   aliases:
@@ -3372,6 +4764,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: bluetooth_speaker
   label: Portable Bluetooth speaker
   aliases:
@@ -3381,6 +4780,11 @@ products:
   - outdoor speaker
   - waterproof speaker
   - party speaker
+  - portable bluetooth speaker
+  - wireless bluetooth speaker
+  - boom box speaker
+  - boombox speaker
+  - party box speaker
   implied_traits:
   - consumer
   - electrical
@@ -3398,6 +4802,16 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  preferred_clues:
+  - bluetooth speaker
+  - portable speaker
+  - party speaker
+  family_keywords: []
+  required_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: digital_audio_player
   label: Digital audio player / DAC
   aliases:
@@ -3423,6 +4837,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: home_projector
   label: Home projector / smart projector
   product_family: projector_device
@@ -3431,6 +4852,9 @@ products:
   - home cinema
   - smart projector
   - projector device
+  - home theater
+  - portable projection
+  - smart projection
   aliases:
   - projector
   - home projector
@@ -3441,6 +4865,13 @@ products:
   - laser projector
   - ultra-short throw projector
   - cinema projector home
+  - smart home projector
+  - google tv projector
+  - android projector
+  - portable mini projector
+  - home cinema projector
+  - movie projector
+  - portable smart projector
   required_clues: []
   preferred_clues:
   - smart
@@ -3451,10 +4882,22 @@ products:
   - ultra short throw
   - android tv
   - netflix
+  - google tv
+  - movie
+  - smart projector
+  - mini projector
+  - pico projector
+  - movie projector
   exclude_clues:
   - conference room
   - presentation
   - business
+  - oral
+  - dental
+  - flosser
+  - irrigator
+  - toothbrush
+  - gum care
   confusable_with:
   - projector
   family_traits:
@@ -3486,6 +4929,7 @@ products:
   - hdmi_interface
   - app_control
   - screen_mirroring
+  - streaming_apps
   functional_classes:
   - av_ict_device
   - home_device
@@ -3521,6 +4965,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_mirror
   label: Smart mirror / interactive mirror
   aliases:
@@ -3551,6 +5002,13 @@ products:
   genres:
   - smart_home_iot
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: tablet
   label: Tablet computer
   aliases:
@@ -3589,6 +5047,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: e_reader
   label: E-reader
   aliases:
@@ -3620,6 +5085,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: docking_station
   label: Docking station / USB-C hub
   aliases:
@@ -3647,6 +5119,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: usb_hub
   label: USB hub
   aliases:
@@ -3671,6 +5150,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: external_storage
   label: External storage (SSD / HDD)
   aliases:
@@ -3697,6 +5183,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: webcam
   label: Webcam / smart camera (USB/IP)
   aliases:
@@ -3723,6 +5216,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: game_console
   label: Game console
   aliases:
@@ -3759,6 +5259,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: vr_ar_headset
   label: VR / AR headset
   aliases:
@@ -3804,6 +5311,13 @@ products:
   - xr_immersive
   - wearable_device
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: mesh_wifi_system
   label: Mesh Wi-Fi system (node)
   product_family: wifi_networking
@@ -3812,6 +5326,9 @@ products:
   - wifi networking
   - whole home wifi
   - mesh network
+  - mesh networking
+  - whole-home networking
+  - wifi coverage system
   aliases:
   - mesh wifi
   - mesh router
@@ -3823,6 +5340,18 @@ products:
   - deco mesh
   - mesh wifi system
   - mesh network router
+  - mesh wi fi
+  - whole-home wifi
+  - whole home wi fi
+  - mesh wifi router
+  - mesh wifi node
+  - mesh extender system
+  - whole home wifi system
+  - mesh wifi router system
+  - mesh network system
+  - wifi mesh system
+  - mesh node router
+  - whole home mesh
   required_clues:
   - mesh
   preferred_clues:
@@ -3833,8 +5362,15 @@ products:
   - eero
   - orbi
   - deco mesh
+  - whole home
+  - whole-home
+  - backhaul
+  - deco
+  - nest wifi
   exclude_clues:
   - access point
+  - access point only
+  - router only
   confusable_with:
   - router
   - wireless_access_point
@@ -3875,6 +5411,7 @@ products:
   - ota
   - wpa3
   - cloud
+  - whole_home_wifi
   functional_classes:
   - network_device
   - av_ict_device
@@ -3921,6 +5458,13 @@ products:
   genres:
   - smart_home_iot
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: voip_dect_phone
   label: VoIP / DECT phone
   aliases:
@@ -3953,6 +5497,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: satellite_terminal
   label: Satellite internet terminal
   aliases:
@@ -3982,6 +5533,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: lora_gateway
   label: LoRa / LoRaWAN gateway
   aliases:
@@ -4010,6 +5568,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_power_strip
   label: Smart power strip / surge protector
   aliases:
@@ -4039,6 +5604,13 @@ products:
   - EN 62368-1
   genres:
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: wireless_charger
   label: Wireless charging pad / stand
   aliases:
@@ -4065,6 +5637,13 @@ products:
   - EN 62368-1
   genres:
   - portable_energy
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: usb_charging_hub
   label: USB charging hub / PD charger
   aliases:
@@ -4092,6 +5671,13 @@ products:
   - EN 62368-1
   genres:
   - portable_energy
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: home_energy_monitor
   label: Home energy monitor
   aliases:
@@ -4124,6 +5710,13 @@ products:
   - EN 62368-1
   genres:
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_meter_display
   label: Smart meter in-home display (IHD)
   aliases:
@@ -4151,6 +5744,13 @@ products:
   - EN 62368-1
   genres:
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: ev_charger_home
   label: Home EV charger (EVSE)
   family_keywords:
@@ -4198,6 +5798,12 @@ products:
   - IEC 61851-1
   genres:
   - portable_energy
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: home_battery_system
   label: Home battery energy storage system
   aliases:
@@ -4231,6 +5837,13 @@ products:
   - EN 62368-1
   genres:
   - portable_energy
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_doorbell
   label: Smart video doorbell
   aliases:
@@ -4241,6 +5854,13 @@ products:
   - connected doorbell
   - ip doorbell
   - camera doorbell
+  - video bell
+  - front door camera bell
+  - door camera bell
+  - doorbell camera
+  - wifi video doorbell
+  - smart bell camera
+  - ring style doorbell
   implied_traits:
   - consumer
   - household
@@ -4273,6 +5893,25 @@ products:
   genres:
   - smart_home_iot
   - security_access_iot
+  product_family: smart_home_security
+  product_subfamily: smart_doorbell
+  family_keywords:
+  - smart entry security
+  - door camera
+  - entry surveillance
+  preferred_clues:
+  - doorbell
+  - camera
+  - visitor
+  - chime
+  - wifi doorbell
+  - video doorbell
+  exclude_clues:
+  - intercom panel
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: ip_camera
   label: IP camera / smart security camera
   family_keywords:
@@ -4322,6 +5961,12 @@ products:
   - EN 62368-1
   genres:
   - security_access_iot
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: security_hub
   label: Smart security alarm hub
   aliases:
@@ -4366,6 +6011,13 @@ products:
   genres:
   - security_access_iot
   - building_access_drive
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_smoke_co_alarm
   label: Smart smoke / CO alarm
   aliases:
@@ -4409,6 +6061,13 @@ products:
   - smart_home_iot
   - security_access_iot
   - building_access_drive
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: baby_monitor
   label: Video baby monitor
   aliases:
@@ -4447,6 +6106,13 @@ products:
   genres:
   - security_access_iot
   - connected_toy_childcare
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: pet_camera
   label: Pet camera / pet monitor
   aliases:
@@ -4484,6 +6150,13 @@ products:
   genres:
   - pet_tech
   - security_access_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: action_camera
   label: Action camera
   aliases:
@@ -4515,6 +6188,13 @@ products:
   - EN 62368-1
   genres:
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: ip_intercom
   label: IP video intercom
   aliases:
@@ -4548,6 +6228,13 @@ products:
   - EN 62368-1
   genres:
   - security_access_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_lock
   label: Smart lock
   aliases:
@@ -4598,6 +6285,13 @@ products:
   - smart_home_iot
   - security_access_iot
   - building_access_drive
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_light_controller
   label: Smart lighting controller / bridge
   aliases:
@@ -4631,6 +6325,13 @@ products:
   - EN 62368-1
   genres:
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_home_panel
   label: Smart home wall panel / controller
   aliases:
@@ -4668,6 +6369,13 @@ products:
   - EN 62368-1
   genres:
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_sensor_node
   label: Smart home sensor (environmental)
   aliases:
@@ -4706,6 +6414,13 @@ products:
   genres:
   - smart_home_iot
   - security_access_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_button_remote
   label: Smart button / voice remote
   aliases:
@@ -4738,6 +6453,13 @@ products:
   genres:
   - smart_home_iot
   - security_access_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smartwatch_fitness_tracker
   label: Smartwatch / fitness tracker
   aliases:
@@ -4779,6 +6501,13 @@ products:
   - EN 62368-1
   genres:
   - wearable_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_scale
   label: Smart body scale / composition monitor
   aliases:
@@ -4812,6 +6541,13 @@ products:
   genres:
   - wellness_borderline_medical
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_blood_pressure_monitor
   label: Smart blood pressure monitor
   aliases:
@@ -4844,6 +6580,13 @@ products:
   genres:
   - wellness_borderline_medical
   - smart_home_iot
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: sleep_tracker
   label: Sleep tracker hub / smart sleep device
   aliases:
@@ -4877,6 +6620,13 @@ products:
   - EN 62368-1
   genres:
   - wearable_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: solar_inverter_gateway
   label: Home solar inverter / energy gateway
   aliases:
@@ -4913,6 +6663,13 @@ products:
   genres:
   - portable_energy
   - av_ict_device
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_scooter
   label: Electric scooter
   aliases:
@@ -4934,6 +6691,13 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: hoverboard
   label: Hoverboard / self-balancing scooter
   aliases:
@@ -4951,6 +6715,13 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_skateboard
   label: Electric skateboard
   aliases:
@@ -4968,6 +6739,13 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: electric_unicycle
   label: Electric unicycle
   aliases:
@@ -4984,6 +6762,13 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: consumer_drone
   label: Consumer camera drone
   aliases:
@@ -5008,6 +6793,13 @@ products:
   likely_standards:
   - UAS open-category review
   - EN 62368-1
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: drone_controller
   label: Drone remote controller
   aliases:
@@ -5027,6 +6819,13 @@ products:
   likely_standards:
   - UAS open-category review
   - EN 62368-1
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_toy
   label: Smart connected toy
   aliases:
@@ -5050,6 +6849,13 @@ products:
   likely_standards:
   - EN 62115
   - EN 71 review
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: baby_monitor_smart
   label: Smart baby monitor
   aliases:
@@ -5076,6 +6882,13 @@ products:
   - EN 62368-1
   - EN 18031-1
   - EN 18031-2
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smartwatch
   label: Smartwatch
   aliases:
@@ -5097,6 +6910,13 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 62479
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_ring
   label: Smart ring
   aliases:
@@ -5116,6 +6936,13 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 62479
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: vr_headset
   label: VR / XR headset
   aliases:
@@ -5142,6 +6969,13 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 62479
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: video_doorbell
   label: Video doorbell
   aliases:
@@ -5149,6 +6983,15 @@ products:
   - smart doorbell
   - wifi doorbell
   - connected doorbell camera
+  - doorbell camera
+  - smart video doorbell
+  - wireless video doorbell
+  - battery video doorbell
+  - wired video doorbell
+  - door bell camera
+  - connected doorbell
+  - front door camera bell
+  - camera doorbell
   product_family: smart_home_security
   product_subfamily: video_doorbell
   genres:
@@ -5168,6 +7011,23 @@ products:
   - EN 18031-1
   - EN 18031-2
   - EN 303 645 review
+  family_keywords:
+  - smart entry security
+  - door camera
+  - entry surveillance
+  preferred_clues:
+  - doorbell
+  - camera
+  - chime
+  - entryway
+  - visitor
+  - front door
+  exclude_clues:
+  - intercom panel
+  required_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_security_camera
   label: Smart security camera
   aliases:
@@ -5196,6 +7056,13 @@ products:
   - EN 18031-1
   - EN 18031-2
   - EN 303 645 review
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: gps_pet_tracker
   label: GPS pet tracker
   aliases:
@@ -5220,7 +7087,13 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 62479
-  
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: smart_pet_feeder
   label: Smart pet feeder
   aliases:
@@ -5245,9 +7118,13 @@ products:
   likely_standards:
   - EN 60335-1
   - EN 18031-1
-
-
-
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: portable_power_station
   label: Portable power station
   aliases:
@@ -5271,6 +7148,13 @@ products:
   - EN 62133-2
   - EN 62368-1
   - UN 38.3 review
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: power_bank
   label: Power bank
   aliases:
@@ -5294,6 +7178,13 @@ products:
   - EN 62133-2
   - EN 62368-1
   - UN 38.3 review
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: ems_tens_device
   label: EMS / TENS wellness device
   aliases:
@@ -5315,6 +7206,13 @@ products:
   likely_standards:
   - MDR borderline review
   - EN 60601 review
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: red_light_therapy_device
   label: Red light therapy device
   aliases:
@@ -5335,6 +7233,13 @@ products:
   likely_standards:
   - MDR borderline review
   - EN 60601 review
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
 - id: robot_lawn_mower
   label: Robotic lawn mower
   aliases:
@@ -5357,3 +7262,323 @@ products:
   likely_standards:
   - EN 50636 review
   - EN 18031-1
+  family_keywords: []
+  required_clues: []
+  preferred_clues: []
+  exclude_clues: []
+  confusable_with: []
+  family_traits: []
+  subtype_traits: []
+- id: water_flosser
+  label: Water flosser / oral irrigator
+  product_family: oral_hygiene_device
+  product_subfamily: water_flosser
+  family_keywords:
+  - oral hygiene
+  - dental cleaning
+  - gum care
+  aliases:
+  - water flosser
+  - water dental flosser
+  - oral irrigator
+  - cordless water flosser
+  - portable water flosser
+  - dental water jet
+  - electric flosser
+  - flossing machine
+  - water pick
+  - waterpik
+  - dental irrigator
+  - water pik
+  - waterpick
+  - water jet flosser
+  - electric water flosser
+  - water flosser teeth cleaner
+  required_clues: []
+  preferred_clues:
+  - water flosser
+  - oral irrigator
+  - flossing machine
+  - dental water jet
+  - gum care
+  - dental irrigator
+  - water pick
+  exclude_clues:
+  - projector
+  - display
+  - presentation
+  - home cinema
+  confusable_with:
+  - projector
+  - home_projector
+  - electric_toothbrush
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - oral_care
+  - personal_care
+  subtype_traits:
+  - battery_powered
+  - portable
+  - water_contact
+  - oral_care
+  - personal_care
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - water_contact
+  - oral_care
+  - personal_care
+  - oral_irrigation
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-52
+  genres:
+  - household_appliance
+  - personal_care_appliance
+- id: electric_toothbrush
+  label: Electric toothbrush
+  product_family: oral_hygiene_device
+  product_subfamily: electric_toothbrush
+  family_keywords:
+  - oral hygiene
+  - dental cleaning
+  - tooth cleaning
+  aliases:
+  - electric toothbrush
+  - sonic toothbrush
+  - rechargeable toothbrush
+  - power toothbrush
+  - battery toothbrush
+  - electric brush for teeth
+  - oscillating toothbrush
+  required_clues: []
+  preferred_clues:
+  - toothbrush
+  - sonic
+  - brush head
+  - oral care
+  - sonic toothbrush
+  - power toothbrush
+  exclude_clues:
+  - projector
+  - display
+  - presentation
+  confusable_with:
+  - water_flosser
+  - projector
+  - home_projector
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - oral_care
+  - personal_care
+  subtype_traits:
+  - battery_powered
+  - portable
+  - oral_care
+  - personal_care
+  - skin_contact
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - oral_care
+  - personal_care
+  - skin_contact
+  - sonic_cleaning
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-52
+  genres:
+  - household_appliance
+  - personal_care_appliance
+- id: handheld_vacuum
+  label: Handheld vacuum cleaner
+  product_family: vacuum_cleaner_family
+  product_subfamily: handheld_vacuum
+  family_keywords:
+  - vacuum cleaning
+  - portable dust removal
+  aliases:
+  - handheld vacuum
+  - hand vacuum
+  - dustbuster
+  - mini vacuum
+  - car vacuum cleaner
+  - hand vac
+  - mini vacuum cleaner
+  - portable vacuum cleaner
+  required_clues: []
+  preferred_clues:
+  - handheld
+  - car vacuum
+  - mini vacuum
+  - dustbuster
+  exclude_clues:
+  - robot
+  confusable_with:
+  - vacuum_cleaner
+  - robot_vacuum
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - surface_cleaning
+  subtype_traits:
+  - battery_powered
+  - portable
+  - handheld
+  - surface_cleaning
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - battery_powered
+  - portable
+  - handheld
+  - cleaning
+  - surface_cleaning
+  functional_classes:
+  - cleaning_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-2
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+- id: wet_dry_vacuum
+  label: Wet and dry vacuum cleaner
+  product_family: vacuum_cleaner_family
+  product_subfamily: wet_dry_vacuum
+  family_keywords:
+  - vacuum cleaning
+  - wet cleaning
+  - water suction cleaning
+  aliases:
+  - wet dry vacuum
+  - wet and dry vacuum
+  - shop vac
+  - wet vacuum cleaner
+  - water suction vacuum
+  - wet dry shop vac
+  - shop vacuum
+  - liquid vacuum cleaner
+  - ash vacuum
+  required_clues: []
+  preferred_clues:
+  - wet dry
+  - water suction
+  - shop vac
+  - liquid pickup
+  exclude_clues:
+  - robot
+  confusable_with:
+  - vacuum_cleaner
+  - robot_vacuum
+  - floor_treatment_machine
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - surface_cleaning
+  subtype_traits:
+  - mains_power_likely
+  - water_contact
+  - surface_cleaning
+  - wet_and_dry_cleaning
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_power_likely
+  - water_contact
+  - cleaning
+  - surface_cleaning
+  - wet_and_dry_cleaning
+  functional_classes:
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-2
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+- id: portable_projector
+  label: Portable projector / pico projector
+  product_family: projector_device
+  product_subfamily: portable_projector
+  family_keywords:
+  - portable projection
+  - mini projection device
+  - battery projection
+  aliases:
+  - portable projector
+  - mini projector
+  - pico projector
+  - travel projector
+  - pocket projector
+  - battery projector
+  - mini beamer
+  - portable mini projector
+  required_clues: []
+  preferred_clues:
+  - portable projector
+  - mini projector
+  - pico projector
+  - battery
+  - travel
+  - portable
+  - travel projector
+  - pocket projector
+  - battery projector
+  exclude_clues:
+  - oral
+  - dental
+  - flosser
+  - irrigator
+  - toothbrush
+  confusable_with:
+  - home_projector
+  - projector
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  subtype_traits:
+  - portable
+  - display
+  - speaker
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - portable
+  - speaker
+  - portable_projection
+  functional_classes:
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device

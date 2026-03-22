@@ -1,7 +1,7 @@
 traits:
 - id: account
-  label: User account
-  description: Requires, supports, or stores a user account or login identity
+  label: User account / profile
+  description: Requires, supports, or stores a user account, customer profile, login identity, or app-bound user record.
 - id: ai_related
   label: AI-related function
   description: Uses AI, ML, or algorithmic inference that may need separate review
@@ -16,14 +16,13 @@ traits:
   description: Intended for animals, aquariums, terrariums, or livestock environments
 - id: app_control
   label: App control
-  description: Can be controlled or configured from a mobile or web application
+  description: Can be controlled, configured, commissioned, monitored, or updated from a mobile or web app.
 - id: authentication
   label: Authentication
-  description: Uses passwords, PINs, tokens, certificates, or similar access controls
+  description: Uses passwords, PINs, passkeys, pairing codes, tokens, certificates, MFA, or similar access-control measures.
 - id: av_ict
   label: AV/ICT equipment
-  description: Audio, video, display, communication, or ICT-style equipment rather than a typical household
-    appliance
+  description: Audio, video, display, communication, or ICT-style equipment rather than a typical household appliance
 - id: battery_powered
   label: Battery powered
   description: Powered by primary or rechargeable batteries
@@ -52,8 +51,8 @@ traits:
   label: Cleaning appliance
   description: Used to clean floors, surfaces, textiles, dishes, or people
 - id: cloud
-  label: Cloud connection
-  description: Connects to remote services, cloud platforms, or vendor backends
+  label: Cloud / backend connection
+  description: Connects to vendor cloud services, remote servers, SaaS backends, or web APIs beyond the local network.
 - id: commercial_food_service
   label: Commercial food service
   description: Intended for catering, horeca, or food-service environments
@@ -89,8 +88,7 @@ traits:
   description: Extracts fumes, vapours, dust, or liquids
 - id: fixed_installation
   label: Fixed installation
-  description: Intended to be fixed, wall mounted, ceiling mounted, built in, or otherwise permanently
-    installed
+  description: Intended to be fixed, wall mounted, ceiling mounted, built in, or otherwise permanently installed
 - id: floor_standing
   label: Floor-standing appliance
   description: Normally positioned on the floor during use
@@ -138,7 +136,7 @@ traits:
   description: Intended for industrial environments or processes
 - id: internet
   label: Internet connectivity
-  description: Connects to the public internet rather than only a local network
+  description: Connects to the public internet or relies on internet-facing services rather than operating only on a local network.
 - id: laser
   label: Laser emission
   description: Includes a laser source, laser engine, scanner, rangefinder, or similar optical emitter
@@ -147,7 +145,7 @@ traits:
   description: Heats liquids such as water, milk, oil, or similar substances
 - id: local_only
   label: Local-only operation
-  description: Operates locally without dependency on cloud or public internet services
+  description: Operates locally without dependency on cloud services or public internet access.
 - id: location
   label: Location data
   description: Uses, stores, or transmits location-related data
@@ -177,7 +175,7 @@ traits:
   description: Used for brushing, irrigating, or otherwise cleaning teeth and mouth
 - id: ota
   label: OTA software updates
-  description: Supports firmware or software updates over the air
+  description: Supports remote firmware, software, or security updates delivered over the network.
 - id: outdoor_use
   label: Outdoor use
   description: Intended or suitable for outdoor environments
@@ -186,7 +184,7 @@ traits:
   description: Used for personal grooming, hygiene, beauty, or body treatment
 - id: personal_data_likely
   label: Likely personal data processing
-  description: Likely to process personal data based on features or intended use
+  description: Likely to process identifiable user, household, profile, voice, image, location, or behavior data.
 - id: portable
   label: Portable appliance
   description: Designed to be moved or repositioned during normal use
@@ -266,9 +264,8 @@ traits:
   label: Zigbee
   description: Uses Zigbee radio technology
 - id: monetary_transaction
-  label: Monetary transaction or value transfer
-  description: Supports payments, subscriptions, orders, wallet functions, money transfer, or similar
-    transfer of monetary value
+  label: Monetary transaction
+  description: Supports payments, subscriptions, ordering, wallet functions, or transfer of monetary value.
 - id: wifi_5ghz
   label: 5 GHz Wi-Fi
   description: Supports 5 GHz Wi-Fi operation, including dual-band Wi-Fi where 5 GHz is present
@@ -292,8 +289,7 @@ traits:
   description: Supplied via an external power supply, charger, or AC/DC adapter.
 - id: uwb
   label: Ultra-Wideband (UWB)
-  description: Uses Ultra-Wideband radio for precise ranging, spatial awareness, or secure device-to-device
-    positioning
+  description: Uses Ultra-Wideband radio for precise ranging, spatial awareness, or secure device-to-device positioning
 - id: z_wave
   label: Z-Wave
   description: Uses Z-Wave radio technology for low-power mesh networking
@@ -314,18 +310,16 @@ traits:
   description: Uses 5G New Radio (NR) cellular technology, including Sub-6GHz and mmWave bands
 - id: satellite_connectivity
   label: Satellite connectivity
-  description: Connects via satellite network (e.g. Starlink, OneWeb, Iridium) for internet or telemetry
-    access
+  description: Connects via satellite network (e.g. Starlink, OneWeb, Iridium) for internet or telemetry access
 - id: esim
   label: eSIM
-  description: Contains an embedded SIM (eSIM) for cellular network provisioning without a physical SIM
-    card
+  description: Contains an embedded SIM (eSIM) for cellular network provisioning without a physical SIM card
 - id: poe_powered
   label: PoE powered
-  description: Receives power over Ethernet (PoE, PoE+, or PoE++) rather than a separate power supply
+  description: Receives operating power over Ethernet, such as 802.3af/at/bt PoE devices.
 - id: poe_supply
-  label: PoE supply
-  description: Provides Power over Ethernet to connected devices (PoE injector or switch function)
+  label: PoE power sourcing
+  description: Supplies power over Ethernet, such as PoE switches, injectors, or power-sourcing equipment.
 - id: wifi_6
   label: Wi-Fi 6 / 6E
   description: Supports Wi-Fi 6 (802.11ax) or Wi-Fi 6E (6 GHz band) operation
@@ -333,12 +327,11 @@ traits:
   label: Wi-Fi 7
   description: Supports Wi-Fi 7 (802.11be) multi-link operation
 - id: tri_band_wifi
-  label: Tri-band Wi-Fi
-  description: Supports simultaneous operation on three Wi-Fi bands (2.4 GHz + 5 GHz + 6 GHz or dual 5
-    GHz)
+  label: Tri-band Wi‑Fi
+  description: Supports tri-band Wi‑Fi operation, often used in higher-end routers and mesh systems.
 - id: mesh_network_node
   label: Mesh network node
-  description: Can act as a node in a Wi-Fi or IoT mesh network, extending coverage
+  description: Works as a mesh Wi‑Fi node, satellite, extender, or whole-home coverage point.
 - id: wpa3
   label: WPA3
   description: Supports WPA3 Wi-Fi security protocol
@@ -350,10 +343,10 @@ traits:
   description: Supports VPN client or server operation (e.g. OpenVPN, WireGuard)
 - id: wireless_charging_rx
   label: Wireless charging receiver
-  description: Receives wireless/inductive charging (Qi, Qi2, MagSafe, or proprietary)
+  description: Can be charged wirelessly by an external charging transmitter.
 - id: wireless_charging_tx
   label: Wireless charging transmitter
-  description: Provides wireless charging to other devices (charging pad or integrated transmitter)
+  description: Acts as a wireless charger, charging pad, or charging stand for another device.
 - id: usb_pd
   label: USB Power Delivery
   description: Supports USB Power Delivery (USB PD) for high-power charging over USB-C
@@ -392,8 +385,7 @@ traits:
   description: Supports HDMI Audio Return Channel (ARC) or Enhanced ARC (eARC)
 - id: lidar
   label: LiDAR sensor
-  description: Uses a LiDAR (light detection and ranging) sensor for distance measurement or obstacle
-    detection
+  description: Uses a LiDAR (light detection and ranging) sensor for distance measurement or obstacle detection
 - id: slam_navigation
   label: SLAM navigation
   description: Uses Simultaneous Localisation and Mapping (SLAM) for autonomous navigation
@@ -446,8 +438,8 @@ traits:
   label: Strobe / visual alarm
   description: Generates a visual alarm (strobe light) for alerting in addition to or instead of sound
 - id: screen_mirroring
-  label: Screen mirroring / casting
-  description: Supports wireless screen mirroring or casting (AirPlay, Chromecast, Miracast, WiDi)
+  label: Screen mirroring
+  description: Supports casting or mirroring technologies such as Chromecast, AirPlay, or Miracast.
 - id: multi_room_audio
   label: Multi-room audio
   description: Participates in a multi-room audio system (e.g. Sonos, WiSA, AirPlay 2, Chromecast Audio)
@@ -465,17 +457,16 @@ traits:
   description: Performs AI or ML inference locally on the device without mandatory cloud dependency
 - id: voice_assistant
   label: Voice assistant
-  description: Integrates a voice assistant (e.g. Alexa, Google Assistant, Siri, Bixby) as a primary interface
+  description: Supports built-in or integrated voice-assistant functions such as Alexa, Google Assistant, Siri, or similar.
 - id: privacy_switch
   label: Hardware privacy switch
-  description: Includes a physical hardware switch that disables the microphone and/or camera at circuit
-    level
+  description: Includes a dedicated mic mute, camera kill, or physical privacy switch.
 - id: parental_controls
   label: Parental controls
   description: Offers parental control or family safety features for content filtering or usage limits
 - id: subscription_dependency
   label: Subscription dependency
-  description: Core functionality requires an active paid subscription or connected service account
+  description: Some core or marketed functions require an ongoing paid subscription or service plan.
 - id: secure_boot
   label: Secure boot
   description: Implements a secure boot chain to verify firmware integrity at startup
@@ -484,19 +475,16 @@ traits:
   description: Contains a hardware security element (SE, TPM, HSM) for key storage and cryptographic operations
 - id: remote_management
   label: Remote management
-  description: Supports remote device management, provisioning, or monitoring by a vendor or fleet operator
+  description: Supports remote provisioning, fleet/device management, admin control, or remote diagnostics.
 - id: matter_bridge
   label: Matter bridge
-  description: Acts as a Matter bridge, translating between non-Matter protocols (Zigbee, Z-Wave, etc.)
-    and Matter
+  description: Acts as a Matter bridge, translating between non-Matter protocols (Zigbee, Z-Wave, etc.) and Matter
 - id: outdoor_rated
   label: Outdoor rated
-  description: Weatherproofed or rated for outdoor installation (IP65 or higher, or equivalent enclosure
-    class)
+  description: Weatherproofed or rated for outdoor installation (IP65 or higher, or equivalent enclosure class)
 - id: fanless
   label: Fanless / passive cooling
-  description: Uses passive cooling only; no active fans, relevant to noise, ingress protection, and reliability
-    ratings
+  description: Uses passive cooling only; no active fans, relevant to noise, ingress protection, and reliability ratings
 - id: rack_mount
   label: Rack mountable
   description: Designed for installation in a standard 19-inch equipment rack
@@ -517,8 +505,7 @@ traits:
   description: Intended to transport a rider or to operate as a ride-on product
 - id: light_means_of_transport
   label: Light means of transport
-  description: Product or battery is intended for e-bikes, e-scooters, e-skateboards, or similar light
-    transport
+  description: Product or battery is intended for e-bikes, e-scooters, e-skateboards, or similar light transport
 - id: drone_flight
   label: Drone flight
   description: Intended to fly as an unmanned aircraft system or to directly control one
@@ -539,8 +526,7 @@ traits:
   description: Portable energy storage, power bank, or power station function is a main intended use
 - id: medical_claims
   label: Medical or diagnostic claims
-  description: Claims diagnosis, treatment, monitoring, or other medical purpose and needs borderline
-    review
+  description: Claims diagnosis, treatment, monitoring, or other medical purpose and needs borderline review
 - id: toy
   label: Toy-like product
   description: Designed or intended for use in play by children or marketed as a toy
@@ -562,3 +548,48 @@ traits:
 - id: close_proximity_emf
   label: Close proximity EMF
   description: Radio transmitter or field source is used close to the body, head, or limbs
+- id: self_emptying
+  label: Self-emptying
+  description: Automatically empties collected debris into a dock, bag, or station.
+- id: docking_station
+  label: Docking station
+  description: Uses a docking, charging, or service station during normal operation.
+- id: room_mapping
+  label: Room mapping
+  description: Builds or uses a map of rooms or spaces for navigation or automation.
+- id: obstacle_avoidance
+  label: Obstacle avoidance
+  description: Detects and avoids furniture, cables, pets, or other obstacles.
+- id: oral_irrigation
+  label: Oral irrigation
+  description: Cleans teeth or gums using a pressurised water jet.
+- id: sonic_cleaning
+  label: Sonic cleaning
+  description: Uses sonic vibration or oscillation as a primary cleaning mechanism.
+- id: bean_to_cup
+  label: Bean-to-cup brewing
+  description: Grinds beans and brews coffee within the same appliance.
+- id: capsule_brewing
+  label: Capsule/pod brewing
+  description: Uses coffee capsules, pods, or similar single-serve inserts.
+- id: whole_home_wifi
+  label: Whole-home Wi‑Fi
+  description: Extends wireless coverage across multiple rooms using a coordinated system.
+- id: network_gateway
+  label: Network gateway
+  description: Routes or gateways traffic between local networks and an upstream internet connection.
+- id: smart_home_hub
+  label: Smart home hub
+  description: Acts as a central controller, bridge, or coordinator for smart-home devices.
+- id: streaming_apps
+  label: Built-in streaming apps
+  description: Runs built-in media or streaming applications as part of normal use.
+- id: mop_function
+  label: Mop function
+  description: Uses a mop pad, wet cleaning head, or similar floor mopping function.
+- id: portable_projection
+  label: Portable projection
+  description: Designed for mobile, travel, pocket, or temporary projection use.
+- id: presentation_use
+  label: Presentation use
+  description: Commonly used for meeting rooms, classrooms, or business presentations.
