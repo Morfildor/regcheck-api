@@ -5218,6 +5218,7 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 62479
+  
 - id: smart_pet_feeder
   label: Smart pet feeder
   aliases:
@@ -5240,8 +5241,11 @@ products:
   - pet_device
   - connected_device
   likely_standards:
-  - EN 60335 review
+  - EN 60335-1
   - EN 18031-1
+
+
+
 - id: portable_power_station
   label: Portable power station
   aliases:
