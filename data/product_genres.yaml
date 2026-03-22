@@ -65,8 +65,10 @@ genres:
   - homedevice
   - home devices
   likely_standard_refs:
-  - EN 60335-1
-  - EN 62233
+  - ref: EN 60335-1
+    kind: unspecified
+  - ref: EN 62233
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer
@@ -137,7 +139,8 @@ genres:
   - commercialdevice
   - commercial devices
   likely_standard_refs:
-  - EN 60335-1
+  - ref: EN 60335-1
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - professional
@@ -210,8 +213,10 @@ genres:
   - smallkitchenappliance
   - small kitchen appliances
   likely_standard_refs:
-  - EN 55014-1
-  - EN 55014-2
+  - ref: EN 55014-1
+    kind: unspecified
+  - ref: EN 55014-2
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - food_preparation
@@ -286,9 +291,12 @@ genres:
   - floorcleaner
   - floor cleaners
   likely_standard_refs:
-  - EN 60335-1
-  - EN 55014-1
-  - EN 55014-2
+  - ref: EN 60335-1
+    kind: unspecified
+  - ref: EN 55014-1
+    kind: unspecified
+  - ref: EN 55014-2
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - cleaning
@@ -359,8 +367,10 @@ genres:
   - environmentalappliance
   - environmental appliances
   likely_standard_refs:
-  - EN 55014-1
-  - EN 55014-2
+  - ref: EN 55014-1
+    kind: unspecified
+  - ref: EN 55014-2
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - air_treatment
@@ -429,7 +439,8 @@ genres:
   - wellnessappliance
   - wellness appliances
   likely_standard_refs:
-  - EN 62233
+  - ref: EN 62233
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - personal_care
@@ -476,7 +487,8 @@ genres:
   - lawn cares
   weak_keywords: []
   likely_standard_refs:
-  - EN 50636 review
+  - ref: EN 50636 review
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - outdoor_use
@@ -635,9 +647,12 @@ genres:
   - mediadevice
   - media devices
   likely_standard_refs:
-  - EN 62368-1
-  - EN 55032
-  - EN 55035
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - electronic
@@ -748,9 +763,12 @@ genres:
   - connectedhomeaccessory
   - connected home accessorys
   likely_standard_refs:
-  - EN 18031-1
-  - EN 18031-2
-  - EN 303 645 review
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
+  - ref: EN 303 645 review
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer
@@ -804,8 +822,10 @@ genres:
   - alarms
   weak_keywords: []
   likely_standard_refs:
-  - EN 18031-1
-  - EN 303 645 review
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 303 645 review
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - camera_surveillance
@@ -857,9 +877,12 @@ genres:
   - smart rings
   weak_keywords: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 62479
-  - EN 62209-1528
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  - ref: EN 62209-1528
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer
@@ -916,9 +939,12 @@ genres:
   - smart toys
   weak_keywords: []
   likely_standard_refs:
-  - EN 71 review
-  - EN 62115
-  - EN 18031-1
+  - ref: EN 71 review
+    kind: unspecified
+  - ref: EN 62115
+    kind: unspecified
+  - ref: EN 18031-1
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer
@@ -980,9 +1006,12 @@ genres:
   weak_keywords:
   - personal transporters
   likely_standard_refs:
-  - EN 17128
-  - EN 15194
-  - EN 62133-2
+  - ref: EN 17128
+    kind: unspecified
+  - ref: EN 15194
+    kind: unspecified
+  - ref: EN 62133-2
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer
@@ -1040,9 +1069,12 @@ genres:
   - fpvs
   weak_keywords: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 62133-2
-  - UAS open-category review
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62133-2
+    kind: unspecified
+  - ref: UAS open-category review
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer
@@ -1136,9 +1168,12 @@ genres:
   - backuppower
   - backup powers
   likely_standard_refs:
-  - EN 62133-2
-  - UN 38.3 review
-  - EN 50563
+  - ref: EN 62133-2
+    kind: unspecified
+  - ref: UN 38.3 review
+    kind: unspecified
+  - ref: EN 50563
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - electrical
@@ -1223,8 +1258,10 @@ genres:
   - petelectronics
   - pet electronic
   likely_standard_refs:
-  - EN 303 645 review
-  - EN 62368-1
+  - ref: EN 303 645 review
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer
@@ -1275,8 +1312,10 @@ genres:
   - therapy devices
   weak_keywords: []
   likely_standard_refs:
-  - EN 60601 review
-  - EN 62479
+  - ref: EN 60601 review
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer
@@ -1326,9 +1365,12 @@ genres:
   - xrs
   weak_keywords: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 62479
-  - EN 62209-1528
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  - ref: EN 62209-1528
+    kind: unspecified
   minimum_match_score: 20
   score_boost_if_traits:
   - consumer

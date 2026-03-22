@@ -85,7 +85,8 @@ products:
   negative_examples:
   - air_purifier
   likely_standard_refs:
-  - EN 60335-2-65
+  - ref: EN 60335-2-65
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -274,7 +275,8 @@ products:
   negative_examples:
   - air_cleaner
   likely_standard_refs:
-  - EN 60335-2-65
+  - ref: EN 60335-2-65
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -343,7 +345,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-55
+  - ref: EN 60335-2-55
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -424,7 +427,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-78
+  - ref: EN 60335-2-78
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -504,7 +508,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-29
+  - ref: EN 60335-2-29
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -688,7 +693,8 @@ products:
   - projector
   - home_projector
   likely_standard_refs:
-  - EN 60335-2-52
+  - ref: EN 60335-2-52
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -757,7 +763,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-23
+  - ref: EN 60335-2-23
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -818,7 +825,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-14
+  - ref: EN 60335-2-14
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -875,7 +883,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-51
+  - ref: EN 60335-2-51
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -929,7 +938,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-26
+  - ref: EN 60335-2-26
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -1175,7 +1185,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-15
+  - ref: EN 60335-2-15
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -1234,13 +1245,20 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-36
-  - EN 60335-2-38
-  - EN 60335-2-39
-  - EN 60335-2-42
-  - EN 60335-2-46
-  - EN 60335-2-47
-  - EN 60335-2-48
+  - ref: EN 60335-2-36
+    kind: unspecified
+  - ref: EN 60335-2-38
+    kind: unspecified
+  - ref: EN 60335-2-39
+    kind: unspecified
+  - ref: EN 60335-2-42
+    kind: unspecified
+  - ref: EN 60335-2-46
+    kind: unspecified
+  - ref: EN 60335-2-47
+    kind: unspecified
+  - ref: EN 60335-2-48
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -1311,7 +1329,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-75
+  - ref: EN 60335-2-75
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -1366,7 +1385,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-37
+  - ref: EN 60335-2-37
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -1415,7 +1435,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-99
+  - ref: EN 60335-2-99
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -1475,7 +1496,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-90
+  - ref: EN 60335-2-90
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -1537,8 +1559,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-36
-  - EN 60335-2-42
+  - ref: EN 60335-2-36
+    kind: unspecified
+  - ref: EN 60335-2-42
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -1600,7 +1624,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-89
+  - ref: EN 60335-2-89
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -1722,7 +1747,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-6
+  - ref: EN 60335-2-6
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -1795,7 +1821,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-13
+  - ref: EN 60335-2-13
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -1856,7 +1883,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-13
+  - ref: EN 60335-2-13
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -1933,7 +1961,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-5
+  - ref: EN 60335-2-5
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -1989,7 +2018,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-17
+  - ref: EN 60335-2-17
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2044,8 +2074,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-86
-  - EN 60335-2-87
+  - ref: EN 60335-2-86
+    kind: unspecified
+  - ref: EN 60335-2-87
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -2098,7 +2130,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-13
+  - ref: EN 60335-2-13
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2250,8 +2283,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-3
-  - EN 60335-2-45
+  - ref: EN 60335-2-3
+    kind: unspecified
+  - ref: EN 60335-2-45
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2337,7 +2372,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-15
+  - ref: EN 60335-2-15
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2408,7 +2444,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-41
+  - ref: EN 60335-2-41
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2472,7 +2509,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-108
+  - ref: EN 60335-2-108
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2600,7 +2638,8 @@ products:
   negative_examples:
   - fan_heater
   likely_standard_refs:
-  - EN 60335-2-80
+  - ref: EN 60335-2-80
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -2684,7 +2723,8 @@ products:
   negative_examples:
   - fan
   likely_standard_refs:
-  - EN 60335-2-30
+  - ref: EN 60335-2-30
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -2739,7 +2779,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-76
+  - ref: EN 60335-2-76
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -2798,8 +2839,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-10
-  - EN 60335-2-54
+  - ref: EN 60335-2-10
+    kind: unspecified
+  - ref: EN 60335-2-54
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2845,7 +2888,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-14
+  - ref: EN 60335-2-14
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2904,7 +2948,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-16
+  - ref: EN 60335-2-16
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -2957,8 +3002,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-17
-  - EN 60335-2-81
+  - ref: EN 60335-2-17
+    kind: unspecified
+  - ref: EN 60335-2-81
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3024,7 +3071,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-102
+  - ref: EN 60335-2-102
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3078,7 +3126,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-95
+  - ref: EN 60335-2-95
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3149,8 +3198,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-103
-  - EN 60335-2-95
+  - ref: EN 60335-2-103
+    kind: unspecified
+  - ref: EN 60335-2-95
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3213,7 +3264,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-8
+  - ref: EN 60335-2-8
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3318,7 +3370,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-40
+  - ref: EN 60335-2-40
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3387,9 +3440,12 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-81
-  - EN 60335-2-96
-  - EN 60335-2-106
+  - ref: EN 60335-2-81
+    kind: unspecified
+  - ref: EN 60335-2-96
+    kind: unspecified
+  - ref: EN 60335-2-106
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3504,8 +3560,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-17
-  - EN 60335-2-96
+  - ref: EN 60335-2-17
+    kind: unspecified
+  - ref: EN 60335-2-96
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3575,7 +3633,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-79
+  - ref: EN 60335-2-79
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3668,7 +3727,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-6
+  - ref: EN 60335-2-6
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3720,7 +3780,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-49
+  - ref: EN 60335-2-49
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -3812,7 +3873,8 @@ products:
   - home cinema
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-98
+  - ref: EN 60335-2-98
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3873,8 +3935,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-35
-  - EN 60335-2-73
+  - ref: EN 60335-2-35
+    kind: unspecified
+  - ref: EN 60335-2-73
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -3975,7 +4039,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 50563
+  - ref: EN 50563
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -4033,7 +4098,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-59
+  - ref: EN 60335-2-59
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4092,7 +4158,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-44
+  - ref: EN 60335-2-44
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4157,7 +4224,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-31
+  - ref: EN 60335-2-31
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4239,7 +4307,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-14
+  - ref: EN 60335-2-14
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4316,7 +4385,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-77
+  - ref: EN 60335-2-77
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4380,7 +4450,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-15
+  - ref: EN 60335-2-15
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4448,7 +4519,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-71
+  - ref: EN 60335-2-71
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -4521,7 +4593,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-32
+  - ref: EN 60335-2-32
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4583,7 +4656,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-25
+  - ref: EN 60335-2-25
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4633,7 +4707,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-34
+  - ref: EN 60335-2-34
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - electrical
@@ -4700,7 +4775,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-52
+  - ref: EN 60335-2-52
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4766,7 +4842,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-78
+  - ref: EN 60335-2-78
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4849,7 +4926,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-6
+  - ref: EN 60335-2-6
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -4910,7 +4988,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-30
+  - ref: EN 60335-2-30
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5021,7 +5100,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-9
+  - ref: EN 60335-2-9
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5076,8 +5156,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-15
-  - EN 60335-2-74
+  - ref: EN 60335-2-15
+    kind: unspecified
+  - ref: EN 60335-2-74
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5195,7 +5277,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-31
+  - ref: EN 60335-2-31
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5271,7 +5354,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-24
+  - ref: EN 60335-2-24
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5348,7 +5432,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-15
+  - ref: EN 60335-2-15
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5420,7 +5505,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 50636-2-107
+  - ref: EN 50636-2-107
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5490,7 +5576,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-97
+  - ref: EN 60335-2-97
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5551,7 +5638,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-40
+  - ref: EN 60335-2-40
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5668,7 +5756,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-30
+  - ref: EN 60335-2-30
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5746,7 +5835,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-61
+  - ref: EN 60335-2-61
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5799,7 +5889,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-53
+  - ref: EN 60335-2-53
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5848,7 +5939,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-28
+  - ref: EN 60335-2-28
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5908,7 +6000,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-8
+  - ref: EN 60335-2-8
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -5970,7 +6063,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-105
+  - ref: EN 60335-2-105
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6088,8 +6182,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-23
-  - EN 60335-2-45
+  - ref: EN 60335-2-23
+    kind: unspecified
+  - ref: EN 60335-2-45
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6151,7 +6247,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-4
+  - ref: EN 60335-2-4
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6220,7 +6317,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-54
+  - ref: EN 60335-2-54
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6278,7 +6376,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-21
+  - ref: EN 60335-2-21
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6358,7 +6457,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-9
+  - ref: EN 60335-2-9
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6422,8 +6522,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-11
-  - EN 60335-2-43
+  - ref: EN 60335-2-11
+    kind: unspecified
+  - ref: EN 60335-2-43
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6490,7 +6592,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-27
+  - ref: EN 60335-2-27
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6630,7 +6733,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-2
+  - ref: EN 60335-2-2
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6755,7 +6859,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-2
+  - ref: EN 60335-2-2
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6804,7 +6909,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-101
+  - ref: EN 60335-2-101
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -6866,7 +6972,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-75
+  - ref: EN 60335-2-75
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -6927,7 +7034,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-12
+  - ref: EN 60335-2-12
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -7014,7 +7122,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-7
+  - ref: EN 60335-2-7
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -7072,8 +7181,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-17
-  - EN 60335-2-66
+  - ref: EN 60335-2-17
+    kind: unspecified
+  - ref: EN 60335-2-66
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -7183,8 +7294,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-2
-  - EN 60335-2-69
+  - ref: EN 60335-2-2
+    kind: unspecified
+  - ref: EN 60335-2-69
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -7290,7 +7403,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-33
+  - ref: EN 60335-2-33
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -7376,7 +7490,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-64
+  - ref: EN 60335-2-64
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -7510,7 +7625,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -7693,7 +7809,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -7902,7 +8019,8 @@ products:
   negative_examples:
   - smart_display
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -8095,7 +8213,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-88
+  - ref: EN 60335-2-88
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -8190,7 +8309,8 @@ products:
   negative_examples:
   - home_projector
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -8272,7 +8392,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-60
+  - ref: EN 60335-2-60
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -8346,7 +8467,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-84
+  - ref: EN 60335-2-84
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -8418,7 +8540,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-83
+  - ref: EN 60335-2-83
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -8503,7 +8626,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-91
+  - ref: EN 60335-2-91
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -8571,7 +8695,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-92
+  - ref: EN 60335-2-92
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -8636,7 +8761,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-94
+  - ref: EN 60335-2-94
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -8695,7 +8821,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-70
+  - ref: EN 60335-2-70
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -8775,8 +8902,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-67
-  - EN 60335-2-72
+  - ref: EN 60335-2-67
+    kind: unspecified
+  - ref: EN 60335-2-72
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -8840,7 +8969,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-68
+  - ref: EN 60335-2-68
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -8910,7 +9040,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-58
+  - ref: EN 60335-2-58
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -8963,7 +9094,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-62
+  - ref: EN 60335-2-62
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -9019,7 +9151,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-50
+  - ref: EN 60335-2-50
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -9092,7 +9225,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-85
+  - ref: EN 60335-2-85
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -9226,7 +9360,8 @@ products:
   negative_examples:
   - smart_speaker
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -9357,7 +9492,8 @@ products:
   - wireless_access_point
   - mesh_wifi_system
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -9426,7 +9562,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -9509,7 +9646,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -9580,7 +9718,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -9680,7 +9819,8 @@ products:
   - router
   - mesh_wifi_system
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -9753,7 +9893,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -9821,7 +9962,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -9893,7 +10035,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -9949,7 +10092,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -10032,7 +10176,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -10127,7 +10272,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -10221,7 +10367,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -10317,7 +10464,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -10436,7 +10584,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -10552,7 +10701,8 @@ products:
   - tv
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -10666,7 +10816,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -10827,7 +10978,8 @@ products:
   negative_examples:
   - projector
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -10926,7 +11078,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11020,7 +11173,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11118,7 +11272,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11209,7 +11364,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11316,7 +11472,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11403,7 +11560,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11505,7 +11663,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11596,7 +11755,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11694,7 +11854,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -11854,7 +12015,8 @@ products:
   - sunglasses
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12044,7 +12206,8 @@ products:
   - router
   - wireless_access_point
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 40
   score_boost_if_traits:
   - consumer
@@ -12172,7 +12335,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12282,7 +12446,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12366,7 +12531,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12456,7 +12622,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12553,7 +12720,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12664,7 +12832,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12781,7 +12950,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12878,7 +13048,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -12976,7 +13147,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13111,8 +13283,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
-  - IEC 61851-1
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: IEC 61851-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13212,7 +13386,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13335,7 +13510,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13486,7 +13662,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13615,7 +13792,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13733,8 +13911,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 14604
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 14604
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13839,7 +14019,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13958,7 +14139,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -14055,7 +14237,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -14158,7 +14341,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -14342,10 +14526,14 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 18031-1
-  - EN 18031-2
-  - EN 303 645 review
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
+  - ref: EN 303 645 review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -14456,7 +14644,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -14557,7 +14746,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -14684,7 +14874,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -14794,7 +14985,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -14909,7 +15101,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -15017,7 +15210,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -15102,7 +15296,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -15199,7 +15394,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -15311,7 +15507,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -15426,7 +15623,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 17128
+  - ref: EN 17128
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -15570,7 +15768,8 @@ products:
   - portable speaker
   negative_examples: []
   likely_standard_refs:
-  - EN 17128
+  - ref: EN 17128
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -15627,7 +15826,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 17128
+  - ref: EN 17128
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -15674,7 +15874,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 17128
+  - ref: EN 17128
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -15754,8 +15955,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - UAS open-category review
-  - EN 62368-1
+  - ref: UAS open-category review
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - wifi
@@ -15828,8 +16031,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - UAS open-category review
-  - EN 62368-1
+  - ref: UAS open-category review
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - display
@@ -15910,8 +16115,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62115
-  - EN 71 review
+  - ref: EN 62115
+    kind: unspecified
+  - ref: EN 71 review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - wifi
@@ -16012,9 +16219,12 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 18031-1
-  - EN 18031-2
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - wifi
@@ -16077,8 +16287,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 62479
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -16137,8 +16349,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 62479
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -16254,8 +16468,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 62479
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - wifi
@@ -16355,9 +16571,12 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 18031-1
-  - EN 18031-2
-  - EN 303 645 review
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
+  - ref: EN 303 645 review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - wifi
@@ -16486,9 +16705,12 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 18031-1
-  - EN 18031-2
-  - EN 303 645 review
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
+  - ref: EN 303 645 review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - wifi
@@ -16567,8 +16789,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
-  - EN 62479
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -16643,8 +16867,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-1
-  - EN 18031-1
+  - ref: EN 60335-1
+    kind: unspecified
+  - ref: EN 18031-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - wifi
@@ -16747,9 +16973,12 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62133-2
-  - EN 62368-1
-  - UN 38.3 review
+  - ref: EN 62133-2
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: UN 38.3 review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - display
@@ -16847,9 +17076,12 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 62133-2
-  - EN 62368-1
-  - UN 38.3 review
+  - ref: EN 62133-2
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: UN 38.3 review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - usb_powered
@@ -16930,8 +17162,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - MDR borderline review
-  - EN 60601 review
+  - ref: MDR borderline review
+    kind: unspecified
+  - ref: EN 60601 review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - handheld
@@ -16995,8 +17229,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - MDR borderline review
-  - EN 60601 review
+  - ref: MDR borderline review
+    kind: unspecified
+  - ref: EN 60601 review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - battery_powered
@@ -17070,8 +17306,10 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - EN 50636 review
-  - EN 18031-1
+  - ref: EN 50636 review
+    kind: unspecified
+  - ref: EN 18031-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - wifi
@@ -17182,7 +17420,8 @@ products:
   - home cinema
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-14
+  - ref: EN 60335-2-14
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -17308,7 +17547,8 @@ products:
   - display
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-23
+  - ref: EN 60335-2-23
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -17569,7 +17809,8 @@ products:
   - headset
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -17677,7 +17918,8 @@ products:
   - camera
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -17787,7 +18029,8 @@ products:
   - remote button
   negative_examples: []
   likely_standard_refs:
-  - EN 62115
+  - ref: EN 62115
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -17886,7 +18129,8 @@ products:
   - remote button
   negative_examples: []
   likely_standard_refs:
-  - EN 62115
+  - ref: EN 62115
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -18055,7 +18299,8 @@ products:
   - solar battery
   negative_examples: []
   likely_standard_refs:
-  - EN 15194
+  - ref: EN 15194
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -18150,7 +18395,8 @@ products:
   - projector
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-1
+  - ref: EN 60335-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -18243,7 +18489,8 @@ products:
   - projector
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-1
+  - ref: EN 60335-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -18352,7 +18599,8 @@ products:
   - display hub
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-1
+  - ref: EN 60335-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -18433,7 +18681,8 @@ products:
   - display hub
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -18644,7 +18893,8 @@ products:
   - projector
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -18723,7 +18973,8 @@ products:
   - router
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -18917,7 +19168,8 @@ products:
   - smart speaker
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -19011,7 +19263,8 @@ products:
   - projector
   negative_examples: []
   likely_standard_refs:
-  - EN 62368-1
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -19109,7 +19362,8 @@ products:
   - gateway
   negative_examples: []
   likely_standard_refs:
-  - EN 60335-2-2
+  - ref: EN 60335-2-2
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
