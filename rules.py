@@ -576,6 +576,60 @@ def _derive_engine_traits(
     return derived, confirmed & derived, diagnostics
 
 
+def _infer_additional_power_traits(
+    traits: set[str],
+    matched_products: set[str],
+    product_type: str | None,
+    product_genres: set[str],
+) -> tuple[set[str], list[str]]:
+    added: set[str] = set()
+    diagnostics: list[str] = []
+
+    if "electrical" not in traits or {"mains_powered", "mains_power_likely"} & traits:
+        return added, diagnostics
+
+    scope_route, _ = _scope_route(traits, matched_products, product_type)
+    candidate_products = set(matched_products)
+    if product_type:
+        candidate_products.add(product_type)
+
+    close_use = bool({"handheld", "wearable", "body_worn_or_applied"} & traits)
+    external_power_signal = bool({"external_psu", "internal_power_supply"} & traits)
+
+    household_appliance_genres = {
+        "household_appliance",
+        "cleaning_laundry_appliance",
+        "kitchen_food_appliance",
+        "hvac_environmental_appliance",
+    }
+
+    infer_household_appliance_mains = bool(
+        scope_route == "appliance"
+        and "consumer" in traits
+        and "household" in traits
+        and bool(APPLIANCE_PRIMARY_TRAITS & traits)
+        and not close_use
+        and (external_power_signal or bool(product_genres & household_appliance_genres))
+    )
+
+    infer_av_ict_mains = bool(
+        scope_route == "av_ict"
+        and "consumer" in traits
+        and bool(candidate_products & AV_ICT_PRODUCT_HINTS)
+        and not close_use
+        and not ("battery_powered" in traits and "portable" in traits and not external_power_signal)
+    )
+
+    if infer_household_appliance_mains:
+        added.add("mains_power_likely")
+        diagnostics.append("engine_trait=mains_power_likely_from_household_route")
+    elif infer_av_ict_mains:
+        added.add("mains_power_likely")
+        diagnostics.append("engine_trait=mains_power_likely_from_av_ict_route")
+
+    return added, diagnostics
+
+
 def _match_standard(
     row: dict[str, Any],
     traits: set[str],
@@ -1694,6 +1748,15 @@ def analyze_v1(
     confirmed_traits.update(confirmed_engine_traits)
     diagnostics.extend(extra_diag)
 
+    added_power_traits, power_diag = _infer_additional_power_traits(
+        trait_set,
+        routing_matched_products,
+        routing_product_type,
+        product_genres,
+    )
+    trait_set.update(added_power_traits)
+    diagnostics.extend(power_diag)
+
     legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
         traits=trait_set,
         functional_classes=functional_classes,
@@ -1894,6 +1957,15 @@ def analyze(
     trait_set, confirmed_engine_traits, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
     confirmed_traits.update(confirmed_engine_traits)
     diagnostics.extend(extra_diag)
+
+    added_power_traits, power_diag = _infer_additional_power_traits(
+        trait_set,
+        routing_matched_products,
+        routing_product_type,
+        product_genres,
+    )
+    trait_set.update(added_power_traits)
+    diagnostics.extend(power_diag)
     engine_added_traits = trait_set - base_trait_set
 
     raw_state_map = _normalize_trait_state_map(traits_data.get("trait_state_map"))
