@@ -1,7 +1,15 @@
 traits:
 - id: account
-  label: User account / profile
-  description: Requires, supports, or stores a user account, customer profile, login identity, or app-bound user record.
+  label: User account
+  description: Requires, supports, or stores a user account or login identity
+  aliases:
+  - user account
+  - login identity
+  - registered profile
+  examples:
+  - user account
+  - login identity
+  - registered profile
 - id: ai_related
   label: AI-related function
   description: Uses AI, ML, or algorithmic inference that may need separate review
@@ -16,22 +24,58 @@ traits:
   description: Intended for animals, aquariums, terrariums, or livestock environments
 - id: app_control
   label: App control
-  description: Can be controlled, configured, commissioned, monitored, or updated from a mobile or web app.
+  description: Can be controlled or configured from a mobile or web application
+  aliases:
+  - mobile app
+  - phone app
+  - companion app
+  - app connected
+  - app controlled
+  examples:
+  - mobile app
+  - phone app
+  - companion app
 - id: authentication
   label: Authentication
-  description: Uses passwords, PINs, passkeys, pairing codes, tokens, certificates, MFA, or similar access-control measures.
+  description: Uses passwords, PINs, tokens, certificates, or similar access controls
+  aliases:
+  - password
+  - pin
+  - passcode
+  - credential
+  - two factor authentication
+  examples:
+  - password
+  - pin
+  - passcode
 - id: av_ict
   label: AV/ICT equipment
   description: Audio, video, display, communication, or ICT-style equipment rather than a typical household appliance
 - id: battery_powered
   label: Battery powered
   description: Powered by primary or rechargeable batteries
+  aliases:
+  - rechargeable
+  - cordless
+  - battery operated
+  examples:
+  - rechargeable
+  - cordless
+  - battery operated
 - id: beverage_preparation
   label: Beverage preparation
   description: Heats, dispenses, brews, or otherwise prepares beverages
 - id: bluetooth
   label: Bluetooth
   description: Uses Bluetooth radio technology
+  aliases:
+  - ble
+  - bt
+  - bluetooth low energy
+  examples:
+  - ble
+  - bt
+  - bluetooth low energy
 - id: body_worn_or_applied
   label: Body worn or body applied
   description: Worn on the body or directly applied to the body during use
@@ -41,18 +85,43 @@ traits:
 - id: camera
   label: Camera
   description: Captures still or video images
+  aliases:
+  - video camera
+  - imaging sensor
+  - surveillance camera
+  examples:
+  - video camera
+  - imaging sensor
+  - surveillance camera
 - id: cellular
   label: Cellular
   description: Uses cellular radio technology
 - id: child_targeted
   label: Child targeted
   description: Intended for or marketed to children
+  aliases:
+  - for children
+  - kids product
+  - baby product
+  examples:
+  - for children
+  - kids product
+  - baby product
 - id: cleaning
   label: Cleaning appliance
   description: Used to clean floors, surfaces, textiles, dishes, or people
 - id: cloud
-  label: Cloud / backend connection
-  description: Connects to vendor cloud services, remote servers, SaaS backends, or web APIs beyond the local network.
+  label: Cloud connection
+  description: Connects to remote services, cloud platforms, or vendor backends
+  aliases:
+  - cloud connected
+  - vendor backend
+  - remote server
+  - online service
+  examples:
+  - cloud connected
+  - vendor backend
+  - remote server
 - id: commercial_food_service
   label: Commercial food service
   description: Intended for catering, horeca, or food-service environments
@@ -65,6 +134,14 @@ traits:
 - id: cooling
   label: Cooling function
   description: Generates cooling or refrigeration as part of intended function
+  aliases:
+  - cools
+  - refrigerates
+  - climate cooling
+  examples:
+  - cools
+  - refrigerates
+  - climate cooling
 - id: data_storage
   label: Data storage
   description: Stores user, device, event, or configuration data
@@ -74,6 +151,14 @@ traits:
 - id: display
   label: Display
   description: Includes a visual display or screen
+  aliases:
+  - screen
+  - touchscreen
+  - display panel
+  examples:
+  - screen
+  - touchscreen
+  - display panel
 - id: drying
   label: Drying function
   description: Used to dry textiles, hands, hair, air, or other items
@@ -95,6 +180,14 @@ traits:
 - id: food_contact
   label: Food contact
   description: Intended to contact food or beverages during normal use
+  aliases:
+  - food path
+  - beverage path
+  - food touching part
+  examples:
+  - food path
+  - beverage path
+  - food touching part
 - id: food_preparation
   label: Food preparation
   description: Prepares, processes, mixes, blends, cuts, or cooks food
@@ -116,6 +209,14 @@ traits:
 - id: heating
   label: Heating function
   description: Generates heat as part of its intended function
+  aliases:
+  - warms
+  - heats
+  - hot surface
+  examples:
+  - warms
+  - heats
+  - hot surface
 - id: heating_personal_environment
   label: Personal environment heating
   description: Used to warm a person, bed, room zone, or local environment
@@ -136,7 +237,15 @@ traits:
   description: Intended for industrial environments or processes
 - id: internet
   label: Internet connectivity
-  description: Connects to the public internet or relies on internet-facing services rather than operating only on a local network.
+  description: Connects to the public internet rather than only a local network
+  aliases:
+  - internet connected
+  - online connected
+  - remote access
+  examples:
+  - internet connected
+  - online connected
+  - remote access
 - id: laser
   label: Laser emission
   description: Includes a laser source, laser engine, scanner, rangefinder, or similar optical emitter
@@ -145,7 +254,7 @@ traits:
   description: Heats liquids such as water, milk, oil, or similar substances
 - id: local_only
   label: Local-only operation
-  description: Operates locally without dependency on cloud services or public internet access.
+  description: Operates locally without dependency on cloud or public internet services
 - id: location
   label: Location data
   description: Uses, stores, or transmits location-related data
@@ -155,6 +264,15 @@ traits:
 - id: mains_powered
   label: Mains powered
   description: Explicitly stated to run from mains power
+  aliases:
+  - plug in
+  - corded
+  - ac powered
+  - wall powered
+  examples:
+  - plug in
+  - corded
+  - ac powered
 - id: matter
   label: Matter
   description: Supports Matter interoperability
@@ -164,6 +282,12 @@ traits:
 - id: microphone
   label: Microphone
   description: Captures voice or sound
+  aliases:
+  - mic
+  - voice input
+  examples:
+  - mic
+  - voice input
 - id: motorized
   label: Motorized
   description: Contains a motor, fan, pump, compressor, or other driven moving parts
@@ -173,18 +297,52 @@ traits:
 - id: oral_care
   label: Oral care
   description: Used for brushing, irrigating, or otherwise cleaning teeth and mouth
+  aliases:
+  - toothbrush
+  - water flosser
+  - oral irrigator
+  - dental cleaning
+  examples:
+  - toothbrush
+  - water flosser
+  - oral irrigator
 - id: ota
   label: OTA software updates
-  description: Supports remote firmware, software, or security updates delivered over the network.
+  description: Supports firmware or software updates over the air
+  aliases:
+  - firmware update
+  - software update
+  - over the air update
+  - remote update
+  examples:
+  - firmware update
+  - software update
+  - over the air update
 - id: outdoor_use
   label: Outdoor use
   description: Intended or suitable for outdoor environments
+  aliases:
+  - for outdoor use
+  - garden use
+  - external environment
+  examples:
+  - for outdoor use
+  - garden use
+  - external environment
 - id: personal_care
   label: Personal care
   description: Used for personal grooming, hygiene, beauty, or body treatment
 - id: personal_data_likely
   label: Likely personal data processing
-  description: Likely to process identifiable user, household, profile, voice, image, location, or behavior data.
+  description: Likely to process personal data based on features or intended use
+  aliases:
+  - user data
+  - personal information
+  - tracking data
+  examples:
+  - user data
+  - personal information
+  - tracking data
 - id: portable
   label: Portable appliance
   description: Designed to be moved or repositioned during normal use
@@ -218,6 +376,12 @@ traits:
 - id: speaker
   label: Speaker
   description: Emits voice, music, alarms, or sounds
+  aliases:
+  - audio output
+  - loudspeaker
+  examples:
+  - audio output
+  - loudspeaker
 - id: steam
   label: Steam generation or use
   description: Generates, contains, or applies steam during operation
@@ -248,6 +412,14 @@ traits:
 - id: water_contact
   label: Water contact
   description: Contains, heats, pumps, or is intended to contact water
+  aliases:
+  - water path
+  - wetted part
+  - water reservoir
+  examples:
+  - water path
+  - wetted part
+  - water reservoir
 - id: water_heating
   label: Water heating
   description: Heats water or another liquid as a primary function
@@ -260,12 +432,31 @@ traits:
 - id: wifi
   label: Wi-Fi
   description: Uses Wi-Fi radio technology
+  aliases:
+  - wi-fi
+  - wireless lan
+  - wlan
+  - '802.11'
+  examples:
+  - wi-fi
+  - wireless lan
+  - wlan
 - id: zigbee
   label: Zigbee
   description: Uses Zigbee radio technology
 - id: monetary_transaction
-  label: Monetary transaction
-  description: Supports payments, subscriptions, ordering, wallet functions, or transfer of monetary value.
+  label: Monetary transaction or value transfer
+  description: Supports payments, subscriptions, orders, wallet functions, money transfer, or similar transfer of monetary
+    value
+  aliases:
+  - payment
+  - subscription
+  - checkout
+  - wallet
+  examples:
+  - payment
+  - subscription
+  - checkout
 - id: wifi_5ghz
   label: 5 GHz Wi-Fi
   description: Supports 5 GHz Wi-Fi operation, including dual-band Wi-Fi where 5 GHz is present
@@ -316,10 +507,10 @@ traits:
   description: Contains an embedded SIM (eSIM) for cellular network provisioning without a physical SIM card
 - id: poe_powered
   label: PoE powered
-  description: Receives operating power over Ethernet, such as 802.3af/at/bt PoE devices.
+  description: Receives power over Ethernet (PoE, PoE+, or PoE++) rather than a separate power supply
 - id: poe_supply
-  label: PoE power sourcing
-  description: Supplies power over Ethernet, such as PoE switches, injectors, or power-sourcing equipment.
+  label: PoE supply
+  description: Provides Power over Ethernet to connected devices (PoE injector or switch function)
 - id: wifi_6
   label: Wi-Fi 6 / 6E
   description: Supports Wi-Fi 6 (802.11ax) or Wi-Fi 6E (6 GHz band) operation
@@ -327,11 +518,11 @@ traits:
   label: Wi-Fi 7
   description: Supports Wi-Fi 7 (802.11be) multi-link operation
 - id: tri_band_wifi
-  label: Tri-band Wi‑Fi
-  description: Supports tri-band Wi‑Fi operation, often used in higher-end routers and mesh systems.
+  label: Tri-band Wi-Fi
+  description: Supports simultaneous operation on three Wi-Fi bands (2.4 GHz + 5 GHz + 6 GHz or dual 5 GHz)
 - id: mesh_network_node
   label: Mesh network node
-  description: Works as a mesh Wi‑Fi node, satellite, extender, or whole-home coverage point.
+  description: Can act as a node in a Wi-Fi or IoT mesh network, extending coverage
 - id: wpa3
   label: WPA3
   description: Supports WPA3 Wi-Fi security protocol
@@ -343,10 +534,10 @@ traits:
   description: Supports VPN client or server operation (e.g. OpenVPN, WireGuard)
 - id: wireless_charging_rx
   label: Wireless charging receiver
-  description: Can be charged wirelessly by an external charging transmitter.
+  description: Receives wireless/inductive charging (Qi, Qi2, MagSafe, or proprietary)
 - id: wireless_charging_tx
   label: Wireless charging transmitter
-  description: Acts as a wireless charger, charging pad, or charging stand for another device.
+  description: Provides wireless charging to other devices (charging pad or integrated transmitter)
 - id: usb_pd
   label: USB Power Delivery
   description: Supports USB Power Delivery (USB PD) for high-power charging over USB-C
@@ -438,8 +629,8 @@ traits:
   label: Strobe / visual alarm
   description: Generates a visual alarm (strobe light) for alerting in addition to or instead of sound
 - id: screen_mirroring
-  label: Screen mirroring
-  description: Supports casting or mirroring technologies such as Chromecast, AirPlay, or Miracast.
+  label: Screen mirroring / casting
+  description: Supports wireless screen mirroring or casting (AirPlay, Chromecast, Miracast, WiDi)
 - id: multi_room_audio
   label: Multi-room audio
   description: Participates in a multi-room audio system (e.g. Sonos, WiSA, AirPlay 2, Chromecast Audio)
@@ -457,16 +648,16 @@ traits:
   description: Performs AI or ML inference locally on the device without mandatory cloud dependency
 - id: voice_assistant
   label: Voice assistant
-  description: Supports built-in or integrated voice-assistant functions such as Alexa, Google Assistant, Siri, or similar.
+  description: Integrates a voice assistant (e.g. Alexa, Google Assistant, Siri, Bixby) as a primary interface
 - id: privacy_switch
   label: Hardware privacy switch
-  description: Includes a dedicated mic mute, camera kill, or physical privacy switch.
+  description: Includes a physical hardware switch that disables the microphone and/or camera at circuit level
 - id: parental_controls
   label: Parental controls
   description: Offers parental control or family safety features for content filtering or usage limits
 - id: subscription_dependency
   label: Subscription dependency
-  description: Some core or marketed functions require an ongoing paid subscription or service plan.
+  description: Core functionality requires an active paid subscription or connected service account
 - id: secure_boot
   label: Secure boot
   description: Implements a secure boot chain to verify firmware integrity at startup
@@ -475,7 +666,7 @@ traits:
   description: Contains a hardware security element (SE, TPM, HSM) for key storage and cryptographic operations
 - id: remote_management
   label: Remote management
-  description: Supports remote provisioning, fleet/device management, admin control, or remote diagnostics.
+  description: Supports remote device management, provisioning, or monitoring by a vendor or fleet operator
 - id: matter_bridge
   label: Matter bridge
   description: Acts as a Matter bridge, translating between non-Matter protocols (Zigbee, Z-Wave, etc.) and Matter
@@ -548,48 +739,3 @@ traits:
 - id: close_proximity_emf
   label: Close proximity EMF
   description: Radio transmitter or field source is used close to the body, head, or limbs
-- id: self_emptying
-  label: Self-emptying
-  description: Automatically empties collected debris into a dock, bag, or station.
-- id: docking_station
-  label: Docking station
-  description: Uses a docking, charging, or service station during normal operation.
-- id: room_mapping
-  label: Room mapping
-  description: Builds or uses a map of rooms or spaces for navigation or automation.
-- id: obstacle_avoidance
-  label: Obstacle avoidance
-  description: Detects and avoids furniture, cables, pets, or other obstacles.
-- id: oral_irrigation
-  label: Oral irrigation
-  description: Cleans teeth or gums using a pressurised water jet.
-- id: sonic_cleaning
-  label: Sonic cleaning
-  description: Uses sonic vibration or oscillation as a primary cleaning mechanism.
-- id: bean_to_cup
-  label: Bean-to-cup brewing
-  description: Grinds beans and brews coffee within the same appliance.
-- id: capsule_brewing
-  label: Capsule/pod brewing
-  description: Uses coffee capsules, pods, or similar single-serve inserts.
-- id: whole_home_wifi
-  label: Whole-home Wi‑Fi
-  description: Extends wireless coverage across multiple rooms using a coordinated system.
-- id: network_gateway
-  label: Network gateway
-  description: Routes or gateways traffic between local networks and an upstream internet connection.
-- id: smart_home_hub
-  label: Smart home hub
-  description: Acts as a central controller, bridge, or coordinator for smart-home devices.
-- id: streaming_apps
-  label: Built-in streaming apps
-  description: Runs built-in media or streaming applications as part of normal use.
-- id: mop_function
-  label: Mop function
-  description: Uses a mop pad, wet cleaning head, or similar floor mopping function.
-- id: portable_projection
-  label: Portable projection
-  description: Designed for mobile, travel, pocket, or temporary projection use.
-- id: presentation_use
-  label: Presentation use
-  description: Commonly used for meeting rooms, classrooms, or business presentations.

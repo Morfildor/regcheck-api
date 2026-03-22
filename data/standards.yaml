@@ -71,8 +71,8 @@ standards:
   - technical documentation mapping
   keywords:
   - cyber security - account, login and authentication controls
-  notes: Current RED delegated-act route where the radio product or companion flow uses account, login,
-    password, PIN, or similar authentication controls.
+  notes: Current RED delegated-act route where the radio product or companion flow uses account, login, password, PIN, or
+    similar authentication controls.
   state_of_the_art_scope: EU
 - code: EN 18031-3
   title: Common cybersecurity requirements for radio equipment - Part 3
@@ -107,13 +107,12 @@ standards:
   - technical documentation mapping
   keywords:
   - cyber security - money transfer, monetary value or virtual currency 3.3f)
-  notes: Current RED delegated-act route where the radio product or companion flow supports payments,
-    subscriptions, orders, wallet functions, or other transfer of monetary value.
+  notes: Current RED delegated-act route where the radio product or companion flow supports payments, subscriptions, orders,
+    wallet functions, or other transfer of monetary value.
   state_of_the_art_scope: EU
 - code: EN 50364
-  title: Limitation of human exposure to electromagnetic fields from devices operating in the frequency
-    range 0 Hz to 300 GHz used in electronic article surveillance, radio frequency identification and
-    similar applications
+  title: Limitation of human exposure to electromagnetic fields from devices operating in the frequency range 0 Hz to 300
+    GHz used in electronic article surveillance, radio frequency identification and similar applications
   region: EU
   category: emf
   directives:
@@ -147,8 +146,8 @@ standards:
   notes: EMF assessment route for RFID, NFC, and similar low-range radio field exposure cases.
   state_of_the_art_scope: EU
 - code: EN 50563
-  title: External a.c.-d.c. and a.c.-a.c. power supplies - Determination of no-load power and average
-    efficiency of active modes
+  title: External a.c.-d.c. and a.c.-a.c. power supplies - Determination of no-load power and average efficiency of active
+    modes
   region: EU
   category: energy
   directives:
@@ -181,8 +180,8 @@ standards:
   keywords:
   - ext power supplies
   - external ac dc adapter
-  notes: Energy-efficiency route for relevant external AC/DC or AC/AC power supplies only; do not trigger
-    merely because the end product is mains-powered.
+  notes: Energy-efficiency route for relevant external AC/DC or AC/AC power supplies only; do not trigger merely because the
+    end product is mains-powered.
   state_of_the_art_scope: EU
   applies_if_genres:
   - portable_energy
@@ -218,13 +217,11 @@ standards:
   - product information review
   keywords:
   - off mode, standby mode, networked standby energy consumption
-  notes: Low-power consumption measurement route for off mode, standby, and networked standby under Regulation
-    2023/826/EU.
+  notes: Low-power consumption measurement route for off mode, standby, and networked standby under Regulation 2023/826/EU.
   state_of_the_art_scope: EU
 - code: EN 50566
-  title: Product standard to demonstrate the compliance of wireless communication devices used in close
-    proximity to the ear with the basic restrictions and exposure limit values related to human exposure
-    to electromagnetic fields
+  title: Product standard to demonstrate the compliance of wireless communication devices used in close proximity to the ear
+    with the basic restrictions and exposure limit values related to human exposure to electromagnetic fields
   region: EU
   category: emf
   directives:
@@ -258,8 +255,7 @@ standards:
   notes: RF exposure route for handheld or body-near radio equipment.
   state_of_the_art_scope: EU
 - code: EN 50636-2-107
-  title: Safety of household and similar appliances - Particular requirements for robotic battery powered
-    electrical lawnmowers
+  title: Safety of household and similar appliances - Particular requirements for robotic battery powered electrical lawnmowers
   region: EU
   category: safety
   directives:
@@ -321,12 +317,10 @@ standards:
   - test report
   keywords:
   - RF exposure assessment
-  notes: Confirm the correct RF exposure assessment route based on power level, use condition, and separation
-    distance.
+  notes: Confirm the correct RF exposure assessment route based on power level, use condition, and separation distance.
   state_of_the_art_scope: EU
 - code: EN 50689
-  title: Safety standard for consumer laser products consisting of solely or including removable laser
-    containing light engine
+  title: Safety standard for consumer laser products consisting of solely or including removable laser containing light engine
   region: EU
   category: safety
   directives:
@@ -360,8 +354,7 @@ standards:
   notes: Safety route for consumer laser products and similar removable laser light-engine applications.
   state_of_the_art_scope: EU
 - code: EN 55014-1
-  title: Electromagnetic compatibility requirements for household appliances, electric tools and similar
-    apparatus - Emission
+  title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Emission
   region: EU
   category: emc
   directives:
@@ -396,11 +389,12 @@ standards:
   - test report
   keywords:
   - emission
+  - household appliance emissions
+  - appliance EMC emission
   notes: Primary EMC emission standard for household appliances, electric tools, and similar apparatus.
   state_of_the_art_scope: EU
 - code: EN 55014-2
-  title: Electromagnetic compatibility requirements for household appliances, electric tools and similar
-    apparatus - Immunity
+  title: Electromagnetic compatibility requirements for household appliances, electric tools and similar apparatus - Immunity
   region: EU
   category: emc
   directives:
@@ -435,6 +429,8 @@ standards:
   - test report
   keywords:
   - immunity
+  - household appliance immunity
+  - appliance EMC immunity
   notes: Primary EMC immunity standard for household appliances, electric tools, and similar apparatus.
   state_of_the_art_scope: EU
 - code: EN 55032
@@ -474,8 +470,10 @@ standards:
   - technical construction file
   keywords:
   - emc (qi /wireless charging & fm)
-  notes: EMC emission route for AV/ICT-style multimedia equipment. Do not use as the primary appliance
-    EMC route for household appliances.
+  - multimedia emissions
+  - AV ICT EMC emissions
+  notes: EMC emission route for AV/ICT-style multimedia equipment. Do not use as the primary appliance EMC route for household
+    appliances.
   state_of_the_art_scope: EU
 - code: EN 55035
   title: Electromagnetic compatibility of multimedia equipment - Immunity requirements
@@ -515,8 +513,9 @@ standards:
   keywords:
   - multimedia immunity
   - av ict immunity
-  notes: EMC immunity route for AV/ICT-style multimedia equipment. Do not use as the primary appliance
-    EMC route for household appliances.
+  - AV ICT EMC immunity
+  notes: EMC immunity route for AV/ICT-style multimedia equipment. Do not use as the primary appliance EMC route for household
+    appliances.
   state_of_the_art_scope: EU
 - code: EN 60335-1
   title: Household and similar electrical appliances - Safety - General requirements
@@ -559,12 +558,15 @@ standards:
   - safety test report
   keywords:
   - household appliances
-  notes: General baseline safety standard for household and similar electrical appliances. The workbook
-    source includes a publication restriction on the clause 20.2 test-probe reference.
+  - household appliance safety
+  - domestic electrical appliance
+  - general appliance safety
+  notes: General baseline safety standard for household and similar electrical appliances. The workbook source includes a
+    publication restriction on the clause 20.2 test-probe reference.
   state_of_the_art_scope: EU
 - code: EN 60335-2-2
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vacuum
-    cleaners and water-suction cleaning appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for vacuum cleaners and water-suction
+    cleaning appliances'
   region: EU
   category: safety
   directives:
@@ -597,15 +599,17 @@ standards:
   - safety test report
   keywords:
   - vacuum cleaners
-  notes: Household vacuum cleaner route, including robot vacuum cleaner cases. Exclude professional or
-    industrial wet-and-dry routes.
+  - vacuum cleaner
+  - robot vacuum
+  - floor cleaning appliance
+  notes: Household vacuum cleaner route, including robot vacuum cleaner cases. Exclude professional or industrial wet-and-dry
+    routes.
   state_of_the_art_scope: EU
   applies_if_genres:
   - cleaning_laundry_appliance
   - household_appliance
 - code: EN 60335-2-3
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric
-    irons'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric irons'
   region: EU
   category: safety
   directives:
@@ -634,6 +638,8 @@ standards:
   - safety test report
   keywords:
   - irons
+  - iron
+  - garment care appliance
   notes: Applies to irons within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
@@ -641,8 +647,7 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-4
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spin
-    extractors'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spin extractors'
   region: EU
   category: safety
   directives:
@@ -703,8 +708,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-6
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary
-    cooking ranges, hobs, ovens and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary cooking ranges,
+    hobs, ovens and similar appliances'
   region: EU
   category: safety
   directives:
@@ -742,8 +747,7 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-7
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for washing
-    machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for washing machines'
   region: EU
   category: safety
   directives:
@@ -774,8 +778,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-8
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for shavers,
-    hair clippers and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for shavers, hair clippers
+    and similar appliances'
   region: EU
   category: safety
   directives:
@@ -806,15 +810,14 @@ standards:
   - safety test report
   keywords:
   - (fabric) shaver
-  notes: Applies to (fabric) shaver within the specific appliance family covered by this Part 2 safety
-    standard.
+  notes: Applies to (fabric) shaver within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - personal_care_appliance
 - code: EN 60335-2-9
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for grills,
-    toasters and similar portable cooking appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for grills, toasters and
+    similar portable cooking appliances'
   region: EU
   category: safety
   directives:
@@ -828,10 +831,8 @@ standards:
   harmonized_under: LVD
   harmonized_reference: 2014/35/EU
   version: EN IEC 60335-2-9:2023 + A11:2023
-  dated_version: EN 60335-2-9:2003 + A1:2004 + A12:2007 + A13:2010 + A13:2010/AC:2011 + A13:2010/AC:2012
-    + A2:2006
-  supersedes: EN 60335-2-9:2003 + A1:2004 + A12:2007 + A13:2010 + A13:2010/AC:2011 + A13:2010/AC:2012
-    + A2:2006
+  dated_version: EN 60335-2-9:2003 + A1:2004 + A12:2007 + A13:2010 + A13:2010/AC:2011 + A13:2010/AC:2012 + A2:2006
+  supersedes: EN 60335-2-9:2003 + A1:2004 + A12:2007 + A13:2010 + A13:2010/AC:2011 + A13:2010/AC:2012 + A2:2006
   applies_if_products:
   - toaster
   - portable_grill
@@ -847,16 +848,19 @@ standards:
   - safety test report
   keywords:
   - grills, toasters
-  notes: Portable cooking appliance route for grills and toasters. The workbook source includes a publication
-    restriction affecting specified ventilation-opening and Table Z101 references.
+  - toaster
+  - portable grill
+  - small cooking appliance
+  notes: Portable cooking appliance route for grills and toasters. The workbook source includes a publication restriction
+    affecting specified ventilation-opening and Table Z101 references.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-10
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor
-    treatment machines and wet scrubbing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment machines
+    and wet scrubbing machines'
   region: EU
   category: safety
   directives:
@@ -885,14 +889,12 @@ standards:
   - safety test report
   keywords:
   - floor treatment/wet
-  notes: Applies to floor treatment/wet within the specific appliance family covered by this Part 2 safety
-    standard.
+  notes: Applies to floor treatment/wet within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - cleaning_laundry_appliance
 - code: EN 60335-2-11
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for tumble
-    dryers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for tumble dryers'
   region: EU
   category: safety
   directives:
@@ -923,8 +925,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-12
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for warming
-    plates and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for warming plates and similar
+    appliances'
   region: EU
   category: safety
   directives:
@@ -953,16 +955,15 @@ standards:
   - safety test report
   keywords:
   - heating plates
-  notes: Applies to heating plates within the specific appliance family covered by this Part 2 safety
-    standard.
+  notes: Applies to heating plates within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-13
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for deep
-    fat fryers, frying pans and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for deep fat fryers, frying
+    pans and similar appliances'
   region: EU
   category: safety
   directives:
@@ -992,6 +993,9 @@ standards:
   - safety test report
   keywords:
   - fryers
+  - deep fryer
+  - frying pan
+  - fat fryer
   notes: Applies to fryers within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
@@ -999,8 +1003,7 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-14
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for kitchen
-    machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for kitchen machines'
   region: EU
   category: safety
   directives:
@@ -1031,15 +1034,19 @@ standards:
   - safety test report
   keywords:
   - kitchen
-  notes: Kitchen machine route kept as state-of-the-art only; the EN 60335-2-14 family is currently non-harmonized
-    in the workbook source and should not be presented as harmonized.
+  - blender
+  - food processor
+  - coffee grinder
+  - kitchen machine
+  notes: Kitchen machine route kept as state-of-the-art only; the EN 60335-2-14 family is currently non-harmonized in the
+    workbook source and should not be presented as harmonized.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-15
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances
-    for heating liquids'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for heating
+    liquids'
   region: EU
   category: safety
   directives:
@@ -1071,15 +1078,16 @@ standards:
   - safety test report
   keywords:
   - coffee, kettles
-  notes: Applies to coffee, kettles within the specific appliance family covered by this Part 2 safety
-    standard.
+  - kettle
+  - beverage heating appliance
+  - rice cooker
+  notes: Applies to coffee, kettles within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-16
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for food
-    waste disposers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for food waste disposers'
   region: EU
   category: safety
   directives:
@@ -1108,8 +1116,8 @@ standards:
   applies_if_genres:
   - household_appliance
 - code: EN 60335-2-17
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for blankets,
-    pads and similar flexible heating appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for blankets, pads and similar
+    flexible heating appliances'
   region: EU
   category: safety
   directives:
@@ -1138,16 +1146,14 @@ standards:
   - electric blanket
   - heating pad
   - foot warmer
-  notes: Applies to the specific Part 2 appliance family, including electric blanket, heating pad, foot
-    warmer.
+  notes: Applies to the specific Part 2 appliance family, including electric blanket, heating pad, foot warmer.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
 - code: EN 60335-2-21
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for storage
-    water heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for storage water heaters'
   region: EU
   category: safety
   directives:
@@ -1177,8 +1183,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-23
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances
-    for skin or hair care'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin or
+    hair care'
   region: EU
   category: safety
   directives:
@@ -1204,16 +1210,19 @@ standards:
   keywords:
   - skin hair care appliance
   - beauty treatment appliance
-  notes: Applies to the specific Part 2 appliance family, including skin hair care appliance, beauty treatment
-    appliance.
+  - personal care appliance
+  - beauty appliance
+  - shaver
+  - clipper
+  notes: Applies to the specific Part 2 appliance family, including skin hair care appliance, beauty treatment appliance.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
   - personal_care_appliance
 - code: EN 60335-2-24
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for refrigerating
-    appliances, ice-cream appliances and ice-makers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for refrigerating appliances,
+    ice-cream appliances and ice-makers'
   region: EU
   category: safety
   directives:
@@ -1238,16 +1247,18 @@ standards:
   keywords:
   - refrigerator freezer
   - commercial refrigerator
-  notes: Household refrigerating appliance route including refrigerators, freezers, and similar household
-    refrigerating appliances.
+  - refrigerator
+  - freezer
+  - fridge freezer
+  notes: Household refrigerating appliance route including refrigerators, freezers, and similar household refrigerating appliances.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-25
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for microwave
-    ovens, including combination microwave ovens'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for microwave ovens, including
+    combination microwave ovens'
   region: EU
   category: safety
   directives:
@@ -1307,8 +1318,8 @@ standards:
   applies_if_genres:
   - household_appliance
 - code: EN 60335-2-27
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances
-    for skin exposure to ultraviolet and infrared radiation'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for skin exposure
+    to ultraviolet and infrared radiation'
   region: EU
   category: safety
   directives:
@@ -1338,8 +1349,7 @@ standards:
   - household_appliance
   - personal_care_appliance
 - code: EN 60335-2-28
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sewing
-    machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sewing machines'
   region: EU
   category: safety
   directives:
@@ -1368,8 +1378,7 @@ standards:
   applies_if_genres:
   - cleaning_laundry_appliance
 - code: EN 60335-2-29
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for battery
-    chargers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for battery chargers'
   region: EU
   category: safety
   directives:
@@ -1398,14 +1407,12 @@ standards:
   - safety test report
   keywords:
   - battery chargers
-  notes: Applies to battery chargers within the specific appliance family covered by this Part 2 safety
-    standard.
+  notes: Applies to battery chargers within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - portable_energy
 - code: EN 60335-2-30
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for room
-    heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for room heaters'
   region: EU
   category: safety
   directives:
@@ -1436,14 +1443,16 @@ standards:
   - safety test report
   keywords:
   - room heaters
+  - space heater
+  - fan heater
+  - room heater
   notes: Applies to room heaters within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-31
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for range
-    hoods'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for range hoods'
   region: EU
   category: safety
   directives:
@@ -1476,8 +1485,7 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-32
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for massage
-    appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for massage appliances'
   region: EU
   category: safety
   directives:
@@ -1508,8 +1516,8 @@ standards:
   - personal_care_appliance
   - wellness_borderline_medical
 - code: EN 60335-2-33
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for coffee
-    mills and coffee grinders'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for coffee mills and coffee
+    grinders'
   region: EU
   category: safety
   directives:
@@ -1568,8 +1576,7 @@ standards:
   applies_if_genres:
   - household_appliance
 - code: EN 60335-2-35
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for instantaneous
-    water heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for instantaneous water heaters'
   region: EU
   category: safety
   directives:
@@ -1599,8 +1606,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-36
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric cooking ranges, ovens, hobs and hob elements'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric cooking
+    ranges, ovens, hobs and hob elements'
   region: EU
   category: safety
   directives:
@@ -1626,16 +1633,15 @@ standards:
   keywords:
   - commercial cooking appliance
   - commercial oven
-  notes: Applies to the specific Part 2 appliance family, including commercial cooking appliance, commercial
-    oven.
+  notes: Applies to the specific Part 2 appliance family, including commercial cooking appliance, commercial oven.
   state_of_the_art_scope: EU
   applies_if_genres:
   - commercial_appliance
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-37
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric deep fat fryers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric deep
+    fat fryers'
   region: EU
   category: safety
   directives:
@@ -1666,8 +1672,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-38
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric griddles and griddle grills'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric griddles
+    and griddle grills'
   region: EU
   category: safety
   directives:
@@ -1698,8 +1704,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-39
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric multi-purpose cooking pans'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric multi-purpose
+    cooking pans'
   region: EU
   category: safety
   directives:
@@ -1730,8 +1736,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-40
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical
-    heat pumps, air-conditioners and dehumidifiers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heat pumps,
+    air-conditioners and dehumidifiers'
   region: EU
   category: safety
   directives:
@@ -1745,10 +1751,8 @@ standards:
   harmonized_under: LVD
   harmonized_reference: 2014/35/EU
   version: EN IEC 60335-2-40:2024 + A11:2024
-  dated_version: EN 60335-2-40:2003 + A11:2004 + A12:2005 + A1:2006 + A13:2012 + A13:2012/AC:2013 + A2:2009
-    + AC:2006 + AC:2010
-  supersedes: EN 60335-2-40:2003 + A11:2004 + A12:2005 + A1:2006 + A13:2012 + A13:2012/AC:2013 + A2:2009
-    + AC:2006 + AC:2010
+  dated_version: EN 60335-2-40:2003 + A11:2004 + A12:2005 + A1:2006 + A13:2012 + A13:2012/AC:2013 + A2:2009 + AC:2006 + AC:2010
+  supersedes: EN 60335-2-40:2003 + A11:2004 + A12:2005 + A1:2006 + A13:2012 + A13:2012/AC:2013 + A2:2009 + AC:2006 + AC:2010
   applies_if_products:
   - heat_pump
   - room_dehumidifier
@@ -1764,8 +1768,7 @@ standards:
   - safety test report
   keywords:
   - a/c
-  notes: Applies to air conditioning within the specific appliance family covered by this Part 2 safety
-    standard.
+  notes: Applies to air conditioning within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
@@ -1800,8 +1803,8 @@ standards:
   applies_if_genres:
   - household_appliance
 - code: EN 60335-2-42
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric forced convection ovens, steam cookers and steam-convection ovens'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric forced
+    convection ovens, steam cookers and steam-convection ovens'
   region: EU
   category: safety
   directives:
@@ -1827,16 +1830,15 @@ standards:
   keywords:
   - commercial oven
   - commercial cooking appliance
-  notes: Applies to the specific Part 2 appliance family, including commercial oven, commercial cooking
-    appliance.
+  notes: Applies to the specific Part 2 appliance family, including commercial oven, commercial cooking appliance.
   state_of_the_art_scope: EU
   applies_if_genres:
   - commercial_appliance
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-43
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances
-    for clothes dryers and towel rails'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for appliances for clothes
+    dryers and towel rails'
   region: EU
   category: safety
   directives:
@@ -1903,8 +1905,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-45
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable
-    heating tools and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable heating tools
+    and similar appliances'
   region: EU
   category: safety
   directives:
@@ -1930,15 +1932,14 @@ standards:
   keywords:
   - skin hair care appliance
   - electric iron
-  notes: Applies to the specific Part 2 appliance family, including skin hair care appliance, electric
-    iron.
+  notes: Applies to the specific Part 2 appliance family, including skin hair care appliance, electric iron.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-46
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric steam cookers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric steam
+    cookers'
   region: EU
   category: safety
   directives:
@@ -1969,8 +1970,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-47
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric boiling pans'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric boiling
+    pans'
   region: EU
   category: safety
   directives:
@@ -2001,8 +2002,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-48
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric grillers and toasters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric grillers
+    and toasters'
   region: EU
   category: safety
   directives:
@@ -2033,8 +2034,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-49
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric hot cupboards'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hot
+    cupboards'
   region: EU
   category: safety
   directives:
@@ -2065,8 +2066,7 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-50
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric bains-marie'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric bains-marie'
   region: EU
   category: safety
   directives:
@@ -2097,8 +2097,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-51
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary
-    circulation pumps for heating and service water installations'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for stationary circulation
+    pumps for heating and service water installations'
   region: EU
   category: safety
   directives:
@@ -2128,8 +2128,7 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-52
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for oral
-    hygiene appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for oral hygiene appliances'
   region: EU
   category: safety
   directives:
@@ -2155,15 +2154,13 @@ standards:
   keywords:
   - oral hygiene appliance
   - battery powered oral hygiene
-  notes: Applies to the specific Part 2 appliance family, including oral hygiene appliance, battery powered
-    oral hygiene.
+  notes: Applies to the specific Part 2 appliance family, including oral hygiene appliance, battery powered oral hygiene.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - personal_care_appliance
 - code: EN 60335-2-53
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sauna
-    heating appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for sauna heating appliances'
   region: EU
   category: safety
   directives:
@@ -2193,8 +2190,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-54
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for surface-cleaning
-    appliances for household use employing liquids or steam'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for surface-cleaning appliances
+    for household use employing liquids or steam'
   region: EU
   category: safety
   directives:
@@ -2224,14 +2221,13 @@ standards:
   - safety test report
   keywords:
   - surface (steam) cleaners
-  notes: Applies to surface (steam) cleaners within the specific appliance family covered by this Part
-    2 safety standard.
+  notes: Applies to surface (steam) cleaners within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - cleaning_laundry_appliance
 - code: EN 60335-2-55
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical
-    appliances for use with aquariums and garden ponds'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical appliances
+    for use with aquariums and garden ponds'
   region: EU
   category: safety
   directives:
@@ -2260,8 +2256,8 @@ standards:
   applies_if_genres:
   - household_appliance
 - code: EN 60335-2-56
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for projectors
-    and similar appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for projectors and similar
+    appliances'
   region: EU
   category: safety
   directives:
@@ -2290,8 +2286,8 @@ standards:
   applies_if_genres:
   - av_ict_device
 - code: EN 60335-2-58
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric dishwashing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric dishwashing
+    machines'
   region: EU
   category: safety
   directives:
@@ -2322,8 +2318,7 @@ standards:
   - commercial_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-59
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for insect
-    killers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for insect killers'
   region: EU
   category: safety
   directives:
@@ -2352,8 +2347,8 @@ standards:
   applies_if_genres:
   - av_ict_device
 - code: EN 60335-2-60
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for whirlpool
-    baths and whirlpool spas'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for whirlpool baths and whirlpool
+    spas'
   region: EU
   category: safety
   directives:
@@ -2384,8 +2379,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-61
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for thermal-storage
-    room heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for thermal-storage room
+    heaters'
   region: EU
   category: safety
   directives:
@@ -2415,8 +2410,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-62
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric rinsing sinks'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric rinsing
+    sinks'
   region: EU
   category: safety
   directives:
@@ -2446,8 +2441,8 @@ standards:
   - commercial_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-64
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric kitchen machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric kitchen
+    machines'
   region: EU
   category: safety
   directives:
@@ -2478,8 +2473,7 @@ standards:
   - commercial_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-65
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for air-cleaning
-    appliances'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for air-cleaning appliances'
   region: EU
   category: safety
   directives:
@@ -2510,14 +2504,15 @@ standards:
   - safety test report
   keywords:
   - aircleaners
+  - air purifier
+  - air cleaner
   notes: Applies to aircleaners within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-66
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for water-bed
-    heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for water-bed heaters'
   region: EU
   category: safety
   directives:
@@ -2548,8 +2543,8 @@ standards:
   - hvac_environmental_appliance
   - personal_care_appliance
 - code: EN 60335-2-67
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor
-    treatment and floor cleaning machines for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for floor treatment and floor
+    cleaning machines for industrial and commercial use'
   region: EU
   category: safety
   directives:
@@ -2573,14 +2568,16 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - floor treatment machine
+  - scrubber
+  - polisher
   notes: Floor treatment and floor cleaning machines for industrial and commercial use.
   state_of_the_art_scope: EU
   applies_if_genres:
   - cleaning_laundry_appliance
   - commercial_appliance
 - code: EN 60335-2-68
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spray
-    extraction appliances for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for spray extraction appliances
+    for industrial and commercial use'
   region: EU
   category: safety
   directives:
@@ -2610,8 +2607,8 @@ standards:
   - cleaning_laundry_appliance
   - commercial_appliance
 - code: EN 60335-2-69
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for wet
-    and dry vacuum cleaners, including power brush, for industrial and commercial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for wet and dry vacuum cleaners,
+    including power brush, for industrial and commercial use'
   region: EU
   category: safety
   directives:
@@ -2637,15 +2634,16 @@ standards:
   keywords:
   - vacuum cleaner
   - water suction cleaner
-  notes: Industrial or commercial wet-and-dry vacuum route. Do not use for ordinary household vacuum cleaner
-    cases.
+  - wet vacuum
+  - dry vacuum
+  - commercial vacuum
+  notes: Industrial or commercial wet-and-dry vacuum route. Do not use for ordinary household vacuum cleaner cases.
   state_of_the_art_scope: EU
   applies_if_genres:
   - cleaning_laundry_appliance
   - household_appliance
 - code: EN 60335-2-70
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for milking
-    machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for milking machines'
   region: EU
   category: safety
   directives:
@@ -2674,8 +2672,8 @@ standards:
   applies_if_genres:
   - commercial_appliance
 - code: EN 60335-2-71
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical
-    heating appliances for breeding and rearing animals'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical heating appliances
+    for breeding and rearing animals'
   region: EU
   category: safety
   directives:
@@ -2705,8 +2703,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-72
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for automatic
-    machines for floor treatment for commercial and industrial use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for automatic machines for
+    floor treatment for commercial and industrial use'
   region: EU
   category: safety
   directives:
@@ -2736,8 +2734,7 @@ standards:
   - cleaning_laundry_appliance
   - commercial_appliance
 - code: EN 60335-2-73
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fixed
-    immersion heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fixed immersion heaters'
   region: EU
   category: safety
   directives:
@@ -2767,8 +2764,7 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-74
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable
-    immersion heaters'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for portable immersion heaters'
   region: EU
   category: safety
   directives:
@@ -2798,8 +2794,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-75
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    dispensing appliances and vending machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial dispensing
+    appliances and vending machines'
   region: EU
   category: safety
   directives:
@@ -2830,16 +2826,14 @@ standards:
   - safety test report
   keywords:
   - vending mach (beer)
-  notes: Applies to vending mach (beer) within the specific appliance family covered by this Part 2 safety
-    standard.
+  notes: Applies to vending mach (beer) within the specific appliance family covered by this Part 2 safety standard.
   state_of_the_art_scope: EU
   applies_if_genres:
   - commercial_appliance
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-76
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric
-    fence energizers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fence energizers'
   region: EU
   category: safety
   directives:
@@ -2898,8 +2892,7 @@ standards:
   applies_if_genres:
   - garden_outdoor_power
 - code: EN 60335-2-78
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for outdoor
-    barbecues'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for outdoor barbecues'
   region: EU
   category: safety
   directives:
@@ -2931,8 +2924,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-79
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for high
-    pressure cleaners and steam cleaners'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for high pressure cleaners
+    and steam cleaners'
   region: EU
   category: safety
   directives:
@@ -2956,6 +2949,7 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - high pressure cleaner
+  - pressure washer
   notes: Applies to the specific Part 2 appliance family, including high pressure cleaner.
   state_of_the_art_scope: EU
   applies_if_genres:
@@ -2999,8 +2993,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-81
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for foot
-    warmers and heating mats'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for foot warmers and heating
+    mats'
   region: EU
   category: safety
   directives:
@@ -3032,8 +3026,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-82
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for amusement
-    machines and personal service machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for amusement machines and
+    personal service machines'
   region: EU
   category: safety
   directives:
@@ -3064,8 +3058,8 @@ standards:
   - hvac_environmental_appliance
   - personal_care_appliance
 - code: EN 60335-2-83
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated
-    gullies for roof drainage'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated gullies for roof
+    drainage'
   region: EU
   category: safety
   directives:
@@ -3126,8 +3120,7 @@ standards:
   - hvac_environmental_appliance
   - smart_home_iot
 - code: EN 60335-2-85
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fabric
-    steamers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for fabric steamers'
   region: EU
   category: safety
   directives:
@@ -3163,8 +3156,7 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-86
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric
-    fishing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electric fishing machines'
   region: EU
   category: safety
   directives:
@@ -3193,8 +3185,8 @@ standards:
   applies_if_genres:
   - av_ict_device
 - code: EN 60335-2-87
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical
-    animal-stunning equipment'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for electrical animal-stunning
+    equipment'
   region: EU
   category: safety
   directives:
@@ -3223,8 +3215,8 @@ standards:
   applies_if_genres:
   - av_ict_device
 - code: EN 60335-2-88
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers
-    intended for use with heating, ventilation or air-conditioning systems'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for humidifiers intended
+    for use with heating, ventilation or air-conditioning systems'
   region: EU
   category: safety
   directives:
@@ -3255,8 +3247,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-89
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    refrigerating appliances with an incorporated or remote refrigerant condensing unit or compressor'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial refrigerating
+    appliances with an incorporated or remote refrigerant condensing unit or compressor'
   region: EU
   category: safety
   directives:
@@ -3287,8 +3279,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-90
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    microwave ovens'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial microwave
+    ovens'
   region: EU
   category: safety
   directives:
@@ -3319,8 +3311,8 @@ standards:
   - hvac_environmental_appliance
   - kitchen_food_appliance
 - code: EN 60335-2-91
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for walk-behind
-    and hand-held lawn trimmers and lawn edge trimmers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for walk-behind and hand-held
+    lawn trimmers and lawn edge trimmers'
   region: EU
   category: safety
   directives:
@@ -3379,8 +3371,7 @@ standards:
   applies_if_genres:
   - garden_outdoor_power
 - code: EN 60335-2-94
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for scissors
-    type grass shears'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for scissors type grass shears'
   region: EU
   category: safety
   directives:
@@ -3409,8 +3400,8 @@ standards:
   applies_if_genres:
   - garden_outdoor_power
 - code: EN 60335-2-95
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drivers
-    for vertically moving garage doors for residential use'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drivers for vertically
+    moving garage doors for residential use'
   region: EU
   category: safety
   directives:
@@ -3436,14 +3427,13 @@ standards:
   keywords:
   - gate door window drive
   - garage door drive
-  notes: Applies to the specific Part 2 appliance family, including gate door window drive, garage door
-    drive.
+  notes: Applies to the specific Part 2 appliance family, including gate door window drive, garage door drive.
   state_of_the_art_scope: EU
   applies_if_genres:
   - building_access_drive
 - code: EN 60335-2-96
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for flexible
-    sheet heating elements for room heating'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for flexible sheet heating
+    elements for room heating'
   region: EU
   category: safety
   directives:
@@ -3475,8 +3465,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-97
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives
-    for rolling shutters, awnings, blinds and similar equipment'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for rolling shutters,
+    awnings, blinds and similar equipment'
   region: EU
   category: safety
   directives:
@@ -3540,8 +3530,7 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-99
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial
-    electric hoods'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric hoods'
   region: EU
   category: safety
   directives:
@@ -3600,8 +3589,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-102
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for gas,
-    oil and solid-fuel burning appliances having electrical connections'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for gas, oil and solid-fuel
+    burning appliances having electrical connections'
   region: EU
   category: safety
   directives:
@@ -3630,8 +3619,8 @@ standards:
   applies_if_genres:
   - household_appliance
 - code: EN 60335-2-103
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives
-    for gates, doors and windows'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for drives for gates, doors
+    and windows'
   region: EU
   category: safety
   directives:
@@ -3660,8 +3649,8 @@ standards:
   applies_if_genres:
   - building_access_drive
 - code: EN 60335-2-105
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for multifunctional
-    shower cabinets'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for multifunctional shower
+    cabinets'
   region: EU
   category: safety
   directives:
@@ -3692,8 +3681,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-106
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated
-    carpets and heating units for room heating installed under removable floor coverings'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for heated carpets and heating
+    units for room heating installed under removable floor coverings'
   region: EU
   category: safety
   directives:
@@ -3723,8 +3712,8 @@ standards:
   - household_appliance
   - hvac_environmental_appliance
 - code: EN 60335-2-107
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for robotic
-    battery powered electrical lawn mowers'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for robotic battery powered
+    electrical lawn mowers'
   region: EU
   category: safety
   directives:
@@ -3748,14 +3737,14 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - robotic lawn mower
-  notes: State-of-the-art IEC-aligned robotic lawn mower route; do not present as the harmonized Machinery
-    Directive reference when EN 50636-2-107 is the harmonized route in the workbook source.
+  notes: State-of-the-art IEC-aligned robotic lawn mower route; do not present as the harmonized Machinery Directive reference
+    when EN 50636-2-107 is the harmonized route in the workbook source.
   state_of_the_art_scope: EU
   applies_if_genres:
   - garden_outdoor_power
 - code: EN 60335-2-108
-  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for detergent
-    free electrolyser washing machines'
+  title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for detergent free electrolyser
+    washing machines'
   region: EU
   category: safety
   directives:
@@ -3854,8 +3843,8 @@ standards:
   - test report
   keywords:
   - harmonics
-  notes: Typically considered for mains-powered equipment depending on product characteristics and scope.
-    harmonics Keep under EMC listing / other EMC standards.
+  notes: Typically considered for mains-powered equipment depending on product characteristics and scope. harmonics Keep under
+    EMC listing / other EMC standards.
   state_of_the_art_scope: EU
 - code: EN 61000-3-3
   title: Electromagnetic compatibility - Limitation of voltage changes, voltage fluctuations and flicker
@@ -3892,12 +3881,10 @@ standards:
   - test report
   keywords:
   - flicker
-  notes: Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker
-    effects. flicker.
+  notes: Commonly reviewed for mains-powered equipment that may create voltage fluctuation or flicker effects. flicker.
   state_of_the_art_scope: EU
 - code: EN 61558-1
-  title: Safety of transformers, reactors, power supply units and combinations thereof - General requirements
-    and tests
+  title: Safety of transformers, reactors, power supply units and combinations thereof - General requirements and tests
   region: EU
   category: safety
   directives:
@@ -3937,8 +3924,8 @@ standards:
   applies_if_genres:
   - portable_energy
 - code: EN 61558-2-16
-  title: Safety of transformers, reactors, power supply units and combinations thereof - Particular requirements
-    for switch mode power supply units and transformers for switch mode power supply units
+  title: Safety of transformers, reactors, power supply units and combinations thereof - Particular requirements for switch
+    mode power supply units and transformers for switch mode power supply units
   region: EU
   category: safety
   directives:
@@ -3979,8 +3966,8 @@ standards:
   applies_if_genres:
   - portable_energy
 - code: EN 62133-2
-  title: Secondary cells and batteries containing alkaline or other non-acid electrolytes - Safety requirements
-    for portable sealed secondary lithium cells and for batteries made from them
+  title: Secondary cells and batteries containing alkaline or other non-acid electrolytes - Safety requirements for portable
+    sealed secondary lithium cells and for batteries made from them
   region: EU
   category: battery
   directives:
@@ -4027,8 +4014,8 @@ standards:
   state_of_the_art_scope: EU
   required_fact_basis: confirmed
 - code: EN 62209-2
-  title: Human exposure to radio frequency fields from hand-held and body-mounted wireless communication
-    devices - Human models, instrumentation, and procedures - Part 2
+  title: Human exposure to radio frequency fields from hand-held and body-mounted wireless communication devices - Human models,
+    instrumentation, and procedures - Part 2
   region: EU
   category: emf
   directives:
@@ -4063,8 +4050,8 @@ standards:
   notes: EMF hand held appliance.
   state_of_the_art_scope: EU
 - code: EN 62209-1528
-  title: Measurement procedure for the assessment of specific absorption rate of human exposure to radio
-    frequency fields from hand-held and body-mounted wireless communication devices
+  title: Measurement procedure for the assessment of specific absorption rate of human exposure to radio frequency fields
+    from hand-held and body-mounted wireless communication devices
   region: EU
   category: emf
   directives:
@@ -4094,12 +4081,11 @@ standards:
   - technical construction file
   keywords:
   - emf measurment short distance (sar for handheld &body mounted devices)
-  notes: SAR route for handheld, body-near, or cellular radio equipment; typically not the default route
-    for countertop appliances.
+  notes: SAR route for handheld, body-near, or cellular radio equipment; typically not the default route for countertop appliances.
   state_of_the_art_scope: EU
 - code: EN 62233
-  title: Measurement methods for electromagnetic fields of household appliances and similar apparatus
-    with regard to human exposure
+  title: Measurement methods for electromagnetic fields of household appliances and similar apparatus with regard to human
+    exposure
   region: EU
   category: emf
   directives:
@@ -4136,12 +4122,13 @@ standards:
   - safety test report
   keywords:
   - emf measurement household appliance
-  notes: Default LVD EMF route for ordinary household and similar appliances. Prefer this over EN 62311
-    for countertop or floor-care appliances unless the use case is close to the body.
+  - household appliance emf
+  - appliance magnetic field
+  notes: Default LVD EMF route for ordinary household and similar appliances. Prefer this over EN 62311 for countertop or
+    floor-care appliances unless the use case is close to the body.
   state_of_the_art_scope: EU
 - code: EN 62311
-  title: Assessment of electronic and electrical equipment related to human exposure restrictions for
-    electromagnetic fields
+  title: Assessment of electronic and electrical equipment related to human exposure restrictions for electromagnetic fields
   region: EU
   category: emf
   directives:
@@ -4177,8 +4164,10 @@ standards:
   keywords:
   - emf assessment
   - rf exposure
-  notes: General EMF assessment route for equipment that is handheld, wearable, body-near, or otherwise
-    better assessed under the general exposure framework than EN 62233.
+  - near field exposure
+  - wireless equipment exposure
+  notes: General EMF assessment route for equipment that is handheld, wearable, body-near, or otherwise better assessed under
+    the general exposure framework than EN 62233.
   state_of_the_art_scope: EU
 - code: EN 62368-1
   title: Audio/video, information and communication technology equipment - Safety requirements
@@ -4227,8 +4216,13 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - audio/video, ict
-  notes: Primary safety route for AV/ICT equipment. Do not use for household appliances whose primary
-    function is heating, cleaning, cooking, pumping, or similar appliance operation.
+  - AV ICT safety
+  - consumer electronics safety
+  - network equipment safety
+  - audio video equipment safety
+  - IT equipment safety
+  notes: Primary safety route for AV/ICT equipment. Do not use for household appliances whose primary function is heating,
+    cleaning, cooking, pumping, or similar appliance operation.
   state_of_the_art_scope: EU
 - code: IEC 61851-1
   title: 'Electric vehicle conductive charging system - Part 1: General requirements'
@@ -4264,8 +4258,8 @@ standards:
   - ev charger
   - wallbox
   - evse
-  notes: Review route for EV charging equipment so product-linked EVSE references in the catalog stay
-    connected to an actionable backend route.
+  notes: Review route for EV charging equipment so product-linked EVSE references in the catalog stay connected to an actionable
+    backend route.
   state_of_the_art_scope: EU
   applies_if_genres:
   - portable_energy
@@ -4303,8 +4297,8 @@ standards:
   - smoke alarm
   - connected smoke detector
   - safety alarm
-  notes: Review route for smoke alarm product families so the catalog can keep specific life-safety references
-    connected without breaking the main standards engine.
+  notes: Review route for smoke alarm product families so the catalog can keep specific life-safety references connected without
+    breaking the main standards engine.
   state_of_the_art_scope: EU
   applies_if_genres:
   - building_access_drive
@@ -4345,8 +4339,8 @@ standards:
   notes: Photobio. Safety.
   state_of_the_art_scope: EU
 - code: EN 62479
-  title: Assessment of the compliance of low power electronic and electrical equipment with the basic
-    restrictions related to human exposure to electromagnetic fields
+  title: Assessment of the compliance of low power electronic and electrical equipment with the basic restrictions related
+    to human exposure to electromagnetic fields
   region: EU
   category: emf
   directives:
@@ -4382,11 +4376,13 @@ standards:
   - test report
   keywords:
   - emf assessment low power rf devices (10mhz to 300ghz)
+  - low power radio exposure
+  - wearable RF exposure
   notes: Common EMF assessment route for certain low-power radio products.
   state_of_the_art_scope: EU
 - code: EN 63000
-  title: Technical documentation for the assessment of electrical and electronic products with respect
-    to the restriction of hazardous substances
+  title: Technical documentation for the assessment of electrical and electronic products with respect to the restriction
+    of hazardous substances
   region: EU
   category: substances
   directives:
@@ -4446,8 +4442,7 @@ standards:
   keywords:
   - short-range radio
   - EN 300 220 series
-  notes: Select the applicable short-range radio standard based on band, channel plan, duty cycle, and
-    radio implementation.
+  notes: Select the applicable short-range radio standard based on band, channel plan, duty cycle, and radio implementation.
   state_of_the_art_scope: EU
 - code: EN 300 328
   title: Wideband transmission systems; Data transmission equipment operating in the 2.4 GHz band
@@ -4482,8 +4477,11 @@ standards:
   - test report
   keywords:
   - rf spectrum 2.4 ghz wifi
-  notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi, Bluetooth, Thread,
-    or Matter over 2.4 GHz.
+  - 2.4 GHz radio
+  - bluetooth radio
+  - wifi 2.4 GHz
+  notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi, Bluetooth, Thread, or Matter over
+    2.4 GHz.
   state_of_the_art_scope: EU
 - code: EN 301 489-1
   title: EMC standard for radio equipment and services - Common technical requirements
@@ -4524,6 +4522,8 @@ standards:
   keywords:
   - emc radio equipm.
   - general emc requirements for radio equipments
+  - radio EMC
+  - wireless EMC
   notes: Common EMC framework standard for radio equipment.
   state_of_the_art_scope: EU
 - code: EN 301 489-3
@@ -4560,13 +4560,12 @@ standards:
   - technical construction file
   keywords:
   - emc radio equipm.
-  - specific emc requirements for srd operating between 9khz and 246 ghz (rfid, nfc, qi/wireless charging
-    & fm)
+  - specific emc requirements for srd operating between 9khz and 246 ghz (rfid, nfc, qi/wireless charging & fm)
   notes: Specific EMC conditions for short-range radio devices such as NFC, RFID, and similar SRD technologies.
   state_of_the_art_scope: EU
 - code: EN 301 489-6
-  title: EMC standard for radio equipment and services - Specific conditions for digital enhanced cordless
-    telecommunications equipment
+  title: EMC standard for radio equipment and services - Specific conditions for digital enhanced cordless telecommunications
+    equipment
   region: EU
   category: radio_emc
   directives:
@@ -4601,8 +4600,7 @@ standards:
   notes: Specific EMC conditions for DECT equipment; verify only where DECT is present.
   state_of_the_art_scope: EU
 - code: EN 301 489-17
-  title: EMC standard for radio equipment and services - Specific conditions for broadband data transmission
-    systems
+  title: EMC standard for radio equipment and services - Specific conditions for broadband data transmission systems
   region: EU
   category: radio_emc
   directives:
@@ -4638,11 +4636,12 @@ standards:
   keywords:
   - emc data transm.
   - specific emc requirements for broadband data transmissions (bt, wifi)
+  - wifi bluetooth EMC
+  - 2.4 GHz EMC
   notes: Specific EMC conditions for broadband data transmission radio equipment such as Wi-Fi and Bluetooth.
   state_of_the_art_scope: EU
 - code: EN 301 489-52
-  title: EMC standard for radio equipment and services - Specific conditions for cellular communications
-    user equipment
+  title: EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
   region: EU
   category: radio_emc
   directives:
@@ -4675,8 +4674,7 @@ standards:
   - test report
   - technical construction file
   keywords:
-  - EMC standard for radio equipment and services - Specific conditions for cellular communications user
-    equipment
+  - EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
   notes: Specific EMC conditions for cellular communications user equipment.
   state_of_the_art_scope: EU
 - code: EN 301 511
@@ -4802,8 +4800,7 @@ standards:
   - technical documentation mapping
   keywords:
   - AI system assessment
-  notes: Check whether the product includes AI functionality that triggers separate AI Act classification
-    or obligations.
+  notes: Check whether the product includes AI functionality that triggers separate AI Act classification or obligations.
   state_of_the_art_scope: EU
 - code: Battery safety review
   title: Battery safety and transport review required
@@ -4868,8 +4865,7 @@ standards:
   - technical documentation mapping
   keywords:
   - Cyber Resilience Act assessment required
-  notes: Review whether the product with digital elements falls into the Cyber Resilience Act route and
-    lifecycle obligations.
+  notes: Review whether the product with digital elements falls into the Cyber Resilience Act route and lifecycle obligations.
   state_of_the_art_scope: EU
 - code: Charger / external PSU review
   title: External power supply and charger route review required
@@ -4901,9 +4897,8 @@ standards:
   keywords:
   - external power supply review
   - charger architecture review
-  notes: Review whether a supplied external AC/DC adapter, charging dock, or charger creates additional
-    safety or ecodesign obligations. Do not trigger for ordinary direct-mains products with internal power
-    conversion only.
+  notes: Review whether a supplied external AC/DC adapter, charging dock, or charger creates additional safety or ecodesign
+    obligations. Do not trigger for ordinary direct-mains products with internal power conversion only.
   state_of_the_art_scope: EU
 - code: GDPR review
   title: GDPR assessment required
@@ -4938,13 +4933,11 @@ standards:
   - privacy documentation review
   keywords:
   - personal data processing
-  notes: Review whether product features, services, or accounts involve personal-data processing that
-    triggers GDPR obligations.
+  notes: Review whether product features, services, or accounts involve personal-data processing that triggers GDPR obligations.
   state_of_the_art_scope: EU
 - code: EN 17128
-  title: Light motorized vehicles for the transportation of persons and goods and related facilities -
-    Personal light electric vehicles not subject to type-approval for use on public roads - Safety requirements
-    and test methods
+  title: Light motorized vehicles for the transportation of persons and goods and related facilities - Personal light electric
+    vehicles not subject to type-approval for use on public roads - Safety requirements and test methods
   region: EU
   category: safety
   directives:
@@ -4975,8 +4968,8 @@ standards:
   - electric scooter
   - hoverboard
   - personal light electric vehicle
-  notes: Review route for personal light electric vehicles such as e-scooters, hoverboards, e-skateboards,
-    and similar micromobility products.
+  notes: Review route for personal light electric vehicles such as e-scooters, hoverboards, e-skateboards, and similar micromobility
+    products.
   exclude_if_genres:
   - garden_outdoor_power
 - code: EN 15194
@@ -5049,8 +5042,8 @@ standards:
   - iot security
   - consumer iot
   - smart device
-  notes: Useful baseline cybersecurity review item for connected consumer IoT, even where legal presumption
-    route is still evolving.
+  notes: Useful baseline cybersecurity review item for connected consumer IoT, even where legal presumption route is still
+    evolving.
 - code: EN 62115
   title: Electric toys - Safety
   region: EU
@@ -5172,8 +5165,8 @@ standards:
   - medical claims
   - wellness device
   - diagnostic
-  notes: Review item to stop consumer wellness products from being treated as ordinary household or AV/ICT
-    products when medical claims are present.
+  notes: Review item to stop consumer wellness products from being treated as ordinary household or AV/ICT products when medical
+    claims are present.
 - code: EN 60601 review
   title: Medical electrical equipment standards-suite review
   region: EU
@@ -5263,5 +5256,5 @@ standards:
   keywords:
   - robotic mower
   - garden equipment
-  notes: Use as a review family for outdoor robotic products such as robot lawn mowers, pending precise
-    product-specific route confirmation.
+  notes: Use as a review family for outdoor robotic products such as robot lawn mowers, pending precise product-specific route
+    confirmation.

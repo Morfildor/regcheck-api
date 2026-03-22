@@ -532,13 +532,10 @@ def _alias_score(text: str, alias: str) -> int:
         return score
 
     tokens = alias_norm.split()
-    if len(tokens) >= 2 and all(token in text.split() for token in tokens):
-        return 45 + len(tokens) * 12
-
     if len(tokens) >= 2:
         gap_pattern = r"\b" + r"\b(?:\s+\w+){0,2}\s+\b".join(re.escape(t) for t in tokens) + r"\b"
         if re.search(gap_pattern, text):
-            return 35 + len(tokens) * 10
+            return 42 + len(tokens) * 12
 
     return 0
 

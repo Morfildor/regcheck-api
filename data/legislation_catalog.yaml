@@ -7,11 +7,12 @@ legislations:
   directive_key: LVD
   bucket: ce
   applicability: applicable
-  reason: Likely applicable to mains-powered electrical equipment within the Low Voltage Directive voltage
-    scope.
+  reason: Likely applicable to mains-powered electrical equipment within the Low Voltage Directive voltage scope.
   triggers:
   - electrical product
   - mains powered or likely mains powered
+  - plug-in electrical equipment
+  - mains-powered consumer or professional equipment
   doc_impacts:
   - EU Declaration of Conformity
   - technical documentation
@@ -22,6 +23,9 @@ legislations:
   any_of_traits:
   - mains_powered
   - mains_power_likely
+  keywords:
+  - electrical safety
+  - low voltage electrical equipment
 - code: 2014/30/EU
   title: EMC Directive
   family: Electromagnetic compatibility
@@ -33,6 +37,7 @@ legislations:
   reason: Likely applicable where the product can generate or be affected by electromagnetic disturbance.
   triggers:
   - electrical or electronic product
+  - product containing motors, electronics, switching circuits, displays, or radios
   doc_impacts:
   - EU Declaration of Conformity
   - EMC assessment
@@ -41,6 +46,9 @@ legislations:
   any_of_traits:
   - electrical
   - electronic
+  keywords:
+  - electromagnetic compatibility
+  - emissions and immunity
 - code: 2014/53/EU
   title: Radio Equipment Directive
   family: Radio
@@ -53,6 +61,8 @@ legislations:
   triggers:
   - radio functionality
   - Wi-Fi, Bluetooth, Zigbee, Thread, Matter, NFC, or cellular connectivity
+  - wireless functionality
+  - Wi-Fi, Bluetooth, Zigbee, Thread, Matter, NFC, DECT, or cellular
   doc_impacts:
   - EU Declaration of Conformity
   - radio test evidence
@@ -60,6 +70,10 @@ legislations:
   - RF exposure assessment
   all_of_traits:
   - radio
+  keywords:
+  - radio equipment
+  - wireless device
+  - RF function
 - code: 2022/30/EU
   title: RED DA Cybersecurity
   family: Cybersecurity for radio equipment
@@ -69,21 +83,23 @@ legislations:
   bucket: ce
   applicability: applicable
   applicable_from: '2025-08-01'
-  reason: Review under the RED delegated cybersecurity regime where radio equipment is internet-connected,
-    app-connected, uses networked software features, requires account or authentication controls, or supports
-    monetary transactions.
+  reason: Review under the RED delegated cybersecurity regime where radio equipment is internet-connected, app-connected,
+    uses networked software features, requires account or authentication controls, or supports monetary transactions.
   triggers:
   - internet-connected radio equipment
   - radio equipment with OTA, cloud, or other networked software functions
   - radio equipment with account, login, password, PIN, or authentication controls
   - radio equipment supporting payments, subscriptions, ordering, or other monetary-value transfer
+  - radio product with companion app
+  - radio product with cloud account
+  - radio product with update mechanism
   doc_impacts:
   - EU Declaration of Conformity
   - cybersecurity evidence
   - EN 18031 part mapping
   - technical documentation
-  notes: Treat separately from CRA. Map current RED delegated-act scope to EN 18031-1, -2, and -3 based
-    on network, authentication, and monetary-function features.
+  notes: Treat separately from CRA. Map current RED delegated-act scope to EN 18031-1, -2, and -3 based on network, authentication,
+    and monetary-function features.
   all_of_traits:
   - radio
   any_of_traits:
@@ -96,6 +112,10 @@ legislations:
   - account
   - authentication
   - monetary_transaction
+  keywords:
+  - RED cybersecurity
+  - EN 18031
+  - connected radio equipment
 - code: 2009/125/EC
   title: Ecodesign Directive framework
   family: Energy / ecodesign
@@ -104,8 +124,8 @@ legislations:
   directive_key: ECO
   bucket: framework
   applicability: conditional
-  reason: Framework-level ecodesign review for energy-related products. Substantive obligations normally
-    apply only where a product-specific implementing measure exists.
+  reason: Framework-level ecodesign review for energy-related products. Substantive obligations normally apply only where
+    a product-specific implementing measure exists.
   triggers:
   - energy-related product
   - possible product-specific ecodesign implementing regulation
@@ -128,8 +148,8 @@ legislations:
   bucket: framework
   applicability: conditional
   applicable_from: '2024-07-18'
-  reason: Framework-level review may be needed where the product family is likely to fall under current
-    or future ecodesign measures.
+  reason: Framework-level review may be needed where the product family is likely to fall under current or future ecodesign
+    measures.
   triggers:
   - energy-related or otherwise potentially in-scope product family
   doc_impacts:
@@ -208,13 +228,15 @@ legislations:
   directive_key: BATTERY
   bucket: non_ce
   applicability: conditional
-  reason: Battery Regulation obligations should be reviewed where the product contains, is supplied with,
-    or relies on batteries. The detailed obligation set depends on battery category such as portable,
-    LMT, SLI, industrial, or EV battery.
+  reason: Battery Regulation obligations should be reviewed where the product contains, is supplied with, or relies on batteries.
+    The detailed obligation set depends on battery category such as portable, LMT, SLI, industrial, or EV battery.
   triggers:
   - battery-powered product
   - product supplied with batteries
   - battery sold as a standalone product
+  - rechargeable device
+  - portable battery product
+  - battery pack supplied with product
   doc_impacts:
   - battery labelling review
   - battery documentation review
@@ -223,11 +245,16 @@ legislations:
   - end-of-life and EPR review
   any_of_traits:
   - battery_powered
-  notes: Handle battery-as-component separately from battery-as-product. Portable consumer products will
-    usually trigger portable-battery review; e-bikes and e-scooters may trigger LMT review; larger stationary
-    or traction packs may move to industrial or EV categories.
+  notes: Handle battery-as-component separately from battery-as-product. Portable consumer products will usually trigger portable-battery
+    review; e-bikes and e-scooters may trigger LMT review; larger stationary or traction packs may move to industrial or EV
+    categories.
   none_of_traits:
   - fixed_installation
+  keywords:
+  - battery regulation
+  - portable battery
+  - LMT battery
+  - battery removability
 - code: 2006/42/EC
   title: Machinery Directive
   family: Machinery safety
@@ -238,9 +265,9 @@ legislations:
   applicability: conditional
   applicable_until: '2027-01-19'
   replaced_by: 2023/1230/EU
-  reason: Machinery Directive review is typically needed for machinery-style products such as powered
-    garden machinery and powered drives for doors, gates, shutters, or similar movement systems. Domestic
-    household appliances are generally excluded and should remain on the LVD / EMC / GPSR route instead.
+  reason: Machinery Directive review is typically needed for machinery-style products such as powered garden machinery and
+    powered drives for doors, gates, shutters, or similar movement systems. Domestic household appliances are generally excluded
+    and should remain on the LVD / EMC / GPSR route instead.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -291,10 +318,9 @@ legislations:
   bucket: future
   applicability: conditional
   applicable_from: '2027-01-20'
-  reason: Future Machinery Regulation review from 20 January 2027 for machinery-style products such as
-    powered garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
-    Domestic household appliances are generally excluded and should remain on the LVD / EMC / GPSR route
-    instead.
+  reason: Future Machinery Regulation review from 20 January 2027 for machinery-style products such as powered garden machinery
+    and powered drives for doors, gates, shutters, or similar movement systems. Domestic household appliances are generally
+    excluded and should remain on the LVD / EMC / GPSR route instead.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -343,8 +369,7 @@ legislations:
   directive_key: FCM
   bucket: non_ce
   applicability: applicable
-  reason: Food-contact materials compliance should be reviewed where food or beverage contact is part
-    of intended use.
+  reason: Food-contact materials compliance should be reviewed where food or beverage contact is part of intended use.
   triggers:
   - food or beverage contact
   doc_impacts:
@@ -379,8 +404,7 @@ legislations:
   bucket: future
   applicability: conditional
   applicable_from: '2027-12-11'
-  reason: Future Cyber Resilience Act obligations should be tracked separately for products with digital
-    elements.
+  reason: Future Cyber Resilience Act obligations should be tracked separately for products with digital elements.
   triggers:
   - electronic or connected product with software
   doc_impacts:
@@ -403,8 +427,7 @@ legislations:
   directive_key: GDPR
   bucket: non_ce
   applicability: conditional
-  reason: Data-protection obligations should be reviewed where personal data is processed outside the
-    core CE route.
+  reason: Data-protection obligations should be reviewed where personal data is processed outside the core CE route.
   triggers:
   - personal data processing
   doc_impacts:
@@ -446,8 +469,7 @@ legislations:
   directive_key: LVD
   bucket: informational
   applicability: conditional
-  reason: Relevant only when relying on EN 60335-2-9 for grills, toasters, or similar portable cooking
-    appliances.
+  reason: Relevant only when relying on EN 60335-2-9 for grills, toasters, or similar portable cooking appliances.
   triggers:
   - toaster, grill, or similar portable cooking appliance
   doc_impacts:
@@ -469,18 +491,24 @@ legislations:
   bucket: non_ce
   applicability: applicable
   applicable_from: '2024-12-13'
-  reason: Residual consumer-safety review for products not fully covered by harmonised sector legislation,
-    and horizontal safety obligations for consumer products placed on the EU market.
+  reason: Residual consumer-safety review for products not fully covered by harmonised sector legislation, and horizontal
+    safety obligations for consumer products placed on the EU market.
   triggers:
   - consumer product safety review
   - online sales and traceability review
   - residual hazards outside sector-specific conformity routes
+  - consumer product sold online
+  - traceability and safety information review
   doc_impacts:
   - safety information and warnings
   - traceability data
   - post-market surveillance inputs
   all_of_traits:
   - consumer
+  keywords:
+  - GPSR
+  - consumer product safety
+  - online marketplace compliance
 - code: 2012/19/EU
   title: WEEE Directive
   family: Waste electrical and electronic equipment
@@ -489,13 +517,16 @@ legislations:
   directive_key: WEEE
   bucket: non_ce
   applicability: applicable
-  reason: Review collection, marking, producer-responsibility, and end-of-life obligations for finished
-    electrical and electronic equipment. Since August 2018, WEEE follows an open-scope model unless a
-    specific exclusion applies.
+  reason: Review collection, marking, producer-responsibility, and end-of-life obligations for finished electrical and electronic
+    equipment. Since August 2018, WEEE follows an open-scope model unless a specific exclusion applies.
   triggers:
   - electrical or electronic equipment
   - finished EEE placed on the EU market
   - crossed-out wheeled bin marking and producer obligations
+  - electrical appliance
+  - electronic device
+  - crossed-out wheeled bin marking
+  - EEE category review
   doc_impacts:
   - product marking review
   - EPR / registration review
@@ -504,14 +535,18 @@ legislations:
   any_of_traits:
   - electrical
   - electronic
-  notes: Treat WEEE as a parallel end-of-life and producer-responsibility layer, not as a CE marking route.
-    Exclude obvious fixed-installation and industrial-infrastructure cases from automatic consumer-style
-    WEEE matching.
+  notes: Treat WEEE as a parallel end-of-life and producer-responsibility layer, not as a CE marking route. Exclude obvious
+    fixed-installation and industrial-infrastructure cases from automatic consumer-style WEEE matching.
   none_of_traits:
   - fixed_installation
   - industrial
   exclude_genres:
   - micromobility
+  keywords:
+  - waste electrical and electronic equipment
+  - producer responsibility
+  - end-of-life electrical equipment
+  - WEEE marking
 - code: 2009/48/EC
   title: Toy Safety Directive
   family: Toy safety
@@ -520,8 +555,8 @@ legislations:
   directive_key: TOY
   bucket: ce
   applicability: applicable
-  reason: Applicable where the product is designed or intended, whether or not exclusively, for use in
-    play by children under 14 years of age.
+  reason: Applicable where the product is designed or intended, whether or not exclusively, for use in play by children under
+    14 years of age.
   triggers:
   - toy or play value
   - child-targeted connected product
@@ -536,8 +571,8 @@ legislations:
   - child_targeted
   any_of_genres:
   - connected_toy_childcare
-  notes: Use intended play value and child-targeting as the primary fork. Decorative, collector, transport,
-    and non-play products should not fall into this route merely because they look toy-like.
+  notes: Use intended play value and child-targeting as the primary fork. Decorative, collector, transport, and non-play products
+    should not fall into this route merely because they look toy-like.
 - code: 2019/945+2019/947
   title: EU drone / UAS framework review
   family: Unmanned aircraft systems
@@ -546,8 +581,8 @@ legislations:
   directive_key: UAS
   bucket: non_ce
   applicability: applicable
-  reason: Dedicated drone framework review for unmanned aircraft systems and related classes, in parallel
-    with product legislation such as RED, EMC, RoHS, and battery rules.
+  reason: Dedicated drone framework review for unmanned aircraft systems and related classes, in parallel with product legislation
+    such as RED, EMC, RoHS, and battery rules.
   triggers:
   - consumer or prosumer drone
   - UAS class / open-category review
@@ -567,8 +602,8 @@ legislations:
   directive_key: MDR
   bucket: framework
   applicability: conditional
-  reason: Borderline review needed where a consumer product makes medical, diagnostic, monitoring, or
-    treatment claims that may move it into MDR scope.
+  reason: Borderline review needed where a consumer product makes medical, diagnostic, monitoring, or treatment claims that
+    may move it into MDR scope.
   triggers:
   - medical or diagnostic claims
   - wellness versus medical intended-purpose review

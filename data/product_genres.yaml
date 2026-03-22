@@ -2,9 +2,20 @@ genres:
 - id: household_appliance
   label: Household appliance
   keywords:
+  - electric household appliance
   - household appliance
+  - electric domestic appliance
   - domestic appliance
+  - electric home appliance
   - home appliance
+  - electric white goods
+  - white goods
+  - electric domestic equipment
+  - domestic equipment
+  - electric consumer appliance
+  - consumer appliance
+  - electric appliance for home use
+  - appliance for home use
   traits:
   - consumer
   - household
@@ -21,8 +32,21 @@ genres:
   label: Commercial appliance
   keywords:
   - commercial appliance
+  - electric commercial appliance
+  - electric professional equipment
   - professional equipment
+  - electric horeca
   - horeca
+  - electric catering equipment
+  - catering equipment
+  - horeca equipment
+  - electric horeca equipment
+  - food service equipment
+  - foodservice equipment
+  - electric food-service equipment
+  - food-service equipment
+  - commercial machine
+  - electric commercial machine
   traits:
   - professional
   - industrial
@@ -36,9 +60,22 @@ genres:
 - id: kitchen_food_appliance
   label: Kitchen / food appliance
   keywords:
+  - electric kitchen appliance
   - kitchen appliance
+  - electric food appliance
   - food appliance
   - cooking appliance
+  - electric cooking appliance
+  - food preparation device
+  - electric food preparation device
+  - kitchen machine
+  - electric kitchen machine
+  - electric cooking device
+  - cooking device
+  - small kitchen appliance
+  - electric small kitchen appliance
+  - electric countertop cooking appliance
+  - countertop cooking appliance
   traits:
   - food_preparation
   - food_contact
@@ -52,10 +89,27 @@ genres:
 - id: cleaning_laundry_appliance
   label: Cleaning / laundry appliance
   keywords:
+  - electric cleaning appliance
   - cleaning appliance
+  - electric laundry appliance
   - laundry appliance
   - vacuum
+  - vacuum cleaner
+  - electric vacuum
   - washer
+  - electric washer
+  - floorcare
+  - electric floorcare
+  - vacuum cleaner cleaner
+  - electric vacuum cleaner
+  - washing appliance
+  - electric washing appliance
+  - fabric care appliance
+  - electric fabric care appliance
+  - electric wet cleaner
+  - wet cleaner
+  - surface cleaner
+  - electric surface cleaner
   traits:
   - cleaning
   default_traits:
@@ -71,10 +125,30 @@ genres:
   label: HVAC / environmental appliance
   keywords:
   - air treatment
+  - electric air treatment
+  - electric heater
   - heater
   - humidifier
+  - electric humidifier
+  - air humidifier
+  - electric dehumidifier
   - dehumidifier
+  - deair humidifier
+  - air dehumidifier
+  - electric fan
   - fan
+  - air purifier
+  - electric air purifier
+  - air cleaner
+  - electric air cleaner
+  - electric air treatment device
+  - air treatment device
+  - electric climate appliance
+  - climate appliance
+  - electric space heater
+  - space heater
+  - environmental appliance
+  - electric environmental appliance
   traits:
   - air_treatment
   default_traits:
@@ -89,8 +163,21 @@ genres:
   label: Personal care appliance
   keywords:
   - personal care
+  - electric personal care
+  - electric beauty appliance
   - beauty appliance
   - oral care
+  - electric oral care
+  - electric grooming appliance
+  - grooming appliance
+  - beauty device
+  - electric beauty device
+  - body care appliance
+  - electric body care appliance
+  - electric oral care device
+  - oral care device
+  - electric hair care appliance
+  - hair care appliance
   traits:
   - personal_care
   default_traits:
@@ -103,8 +190,19 @@ genres:
   label: Garden / outdoor powered equipment
   keywords:
   - garden equipment
+  - electric garden equipment
   - outdoor powered equipment
+  - electric outdoor powered equipment
+  - electric lawn care
   - lawn care
+  - garden power tool
+  - electric garden power tool
+  - outdoor power equipment
+  - electric outdoor power equipment
+  - lawn care equipment
+  - electric lawn care equipment
+  - powered gardening equipment
+  - electric powered gardening equipment
   traits:
   - outdoor_use
   - motorized
@@ -119,9 +217,23 @@ genres:
   label: Building / access drive
   keywords:
   - garage door drive
+  - electric garage door drive
   - gate drive
+  - electric gate drive
   - shutter drive
+  - electric shutter drive
+  - electric building automation
   - building automation
+  - electric door operator
+  - door operator
+  - electric gate operator
+  - gate operator
+  - electric garage opener
+  - garage opener
+  - rolling shutter motor
+  - electric rolling shutter motor
+  - electric building drive
+  - building drive
   traits:
   - security_or_barrier
   - safety_function
@@ -134,9 +246,28 @@ genres:
   label: AV / ICT equipment
   keywords:
   - ict equipment
+  - electric ict equipment
   - audio visual
+  - electric audio visual
+  - electric consumer electronics
   - consumer electronics
+  - electric network equipment
   - network equipment
+  - it equipment
+  - electric it equipment
+  - networking device
+  - electric networking device
+  - monitor device
+  - electric display device
+  - display device
+  - electric computer peripheral
+  - computer peripheral
+  - home entertainment device
+  - electric home entertainment device
+  - audio device
+  - electric audio device
+  - video device
+  - electric video device
   traits:
   - electronic
   - av_ict
@@ -152,9 +283,35 @@ genres:
   label: Smart home / IoT
   keywords:
   - smart home
-  - iot
+  - electric smart home
+  - home
   - connected home
+  - iot
+  - electric iot
+  - electric connected home
   - home automation
+  - electric home automation
+  - connected device
+  - electric connected device
+  - connected appliance
+  - electric connected appliance
+  - electric app connected
+  - app connected
+  - wifi enabled
+  - electric wifi enabled
+  - wi-fi enabled
+  - electric works with app
+  - works with app
+  - voice assistant compatible
+  - electric voice assistant compatible
+  - alexa compatible
+  - electric alexa compatible
+  - electric google home compatible
+  - google home compatible
+  - matter device
+  - electric matter device
+  - connected home device
+  - electric connected home device
   traits:
   - consumer
   - electronic
@@ -173,10 +330,28 @@ genres:
 - id: security_access_iot
   label: Security / access IoT
   keywords:
+  - electric security camera
   - security camera
   - doorbell
+  - electric doorbell
+  - video doorbell
   - smart lock
+  - electric smart lock
+  - connected lock
+  - lock
   - alarm
+  - electric alarm
+  - electric video doorbell
+  - video video doorbell
+  - connected alarm
+  - smart alarm
+  - electric smart alarm
+  - electric connected camera
+  - connected camera
+  - access control device
+  - electric access control device
+  - electric connected security device
+  - connected security device
   traits:
   - camera_surveillance
   - security_or_barrier
@@ -194,9 +369,25 @@ genres:
   label: Wearable device
   keywords:
   - wearable
+  - electric wearable
   - body-worn
+  - body worn
+  - electric body-worn
+  - bodyworn
   - smartwatch
+  - electric smartwatch
   - smart ring
+  - ring
+  - electric smart ring
+  - connected ring
+  - wearable tech
+  - electric wearable tech
+  - fitness wearable
+  - electric fitness wearable
+  - electric body worn electronics
+  - body worn electronics
+  - health wearable
+  - electric health wearable
   traits:
   - consumer
   - electronic
@@ -215,9 +406,23 @@ genres:
   label: Connected toy / childcare product
   keywords:
   - toy
+  - electric toy
+  - electric childcare
   - childcare
   - educational toy
+  - electric educational toy
+  - connected toy
+  - electric smart toy
   - smart toy
+  - smart baby device
+  - baby device
+  - connected baby device
+  - electric smart baby device
+  - electric connected toy
+  - interactive learning toy
+  - electric interactive learning toy
+  - nursery device
+  - electric nursery device
   traits:
   - consumer
   - toy
@@ -238,9 +443,25 @@ genres:
   label: Micromobility
   keywords:
   - micromobility
+  - electric micromobility
   - ride-on
+  - ride on
+  - rideon
+  - electric ride-on
   - electric mobility
+  - mobility
+  - electric personal transporter
   - personal transporter
+  - electric e mobility
+  - e mobility
+  - electric personal electric transport
+  - personal electric transport
+  - electric light electric vehicle
+  - light electric vehicle
+  - electric last mile mobility
+  - last mile mobility
+  - rideable electric device
+  - electric rideable electric device
   traits:
   - consumer
   - electrical
@@ -263,8 +484,12 @@ genres:
   label: Drone / UAS
   keywords:
   - drone
+  - electric drone
   - unmanned aircraft
+  - electric unmanned aircraft
+  - electric quadcopter
   - quadcopter
+  - electric fpv
   - fpv
   traits:
   - consumer
@@ -287,10 +512,28 @@ genres:
 - id: portable_energy
   label: Portable energy / charging ecosystem
   keywords:
+  - portable charger
   - power bank
+  - electric power bank
+  - solar generator
   - portable power station
+  - electric portable power station
+  - electric charger
   - charger
   - battery pack
+  - electric battery pack
+  - portable charging
+  - electric portable charging
+  - battery backup
+  - electric battery backup
+  - power storage
+  - electric power storage
+  - electric charging accessory
+  - charging accessory
+  - electric off-grid power
+  - offgrid power
+  - off grid power
+  - off-grid power
   traits:
   - electrical
   - battery_powered
@@ -309,9 +552,23 @@ genres:
   label: Pet tech
   keywords:
   - pet tech
+  - electric pet tech
   - pet tracker
+  - electric pet tracker
+  - electric pet feeder
   - pet feeder
   - pet camera
+  - electric pet camera
+  - electric pet device
+  - pet device
+  - connected pet product
+  - electric connected pet product
+  - animal tech
+  - electric animal tech
+  - electric smart pet care
+  - pet care
+  - connected pet care
+  - smart pet care
   traits:
   - consumer
   - pet_use
@@ -329,8 +586,12 @@ genres:
   label: Wellness / borderline medical
   keywords:
   - wellness device
+  - electric wellness device
+  - electric health monitor
   - health monitor
+  - health display
   - therapy device
+  - electric therapy device
   traits:
   - consumer
   - electronic
@@ -345,10 +606,11 @@ genres:
 - id: xr_immersive
   label: XR / immersive device
   keywords:
-  - vr
-  - ar
+  - electric vr
+  - electric ar
   - mixed reality
-  - xr
+  - electric mixed reality
+  - electric xr
   traits:
   - consumer
   - electronic
