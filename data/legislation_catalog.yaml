@@ -96,6 +96,29 @@ legislations:
   - account
   - authentication
   - monetary_transaction
+- code: 2009/125/EC
+  title: Ecodesign Directive framework
+  family: Energy / ecodesign
+  legal_form: Directive
+  priority: conditional
+  directive_key: ECO
+  bucket: framework
+  applicability: conditional
+  reason: Framework-level ecodesign review for energy-related products. Substantive obligations normally
+    apply only where a product-specific implementing measure exists.
+  triggers:
+  - energy-related product
+  - possible product-specific ecodesign implementing regulation
+  doc_impacts:
+  - implementing-regulation scoping review
+  - product parameter review
+  - technical file inputs
+  any_of_traits:
+  - electrical
+  - electronic
+  - heating
+  - cooling
+  - motorized
 - code: 2024/1781
   title: Ecodesign for Sustainable Products Regulation framework
   family: Energy / ecodesign
@@ -186,16 +209,25 @@ legislations:
   bucket: non_ce
   applicability: conditional
   reason: Battery Regulation obligations should be reviewed where the product contains, is supplied with,
-    or relies on portable batteries or rechargeable battery packs.
+    or relies on batteries. The detailed obligation set depends on battery category such as portable,
+    LMT, SLI, industrial, or EV battery.
   triggers:
   - battery-powered product
   - product supplied with batteries
+  - battery sold as a standalone product
   doc_impacts:
   - battery labelling review
   - battery documentation review
-  - removability and information checks
+  - removability and replaceability review where relevant
+  - category classification review
+  - end-of-life and EPR review
   any_of_traits:
   - battery_powered
+  notes: Handle battery-as-component separately from battery-as-product. Portable consumer products will
+    usually trigger portable-battery review; e-bikes and e-scooters may trigger LMT review; larger stationary
+    or traction packs may move to industrial or EV categories.
+  none_of_traits:
+  - fixed_installation
 - code: 2006/42/EC
   title: Machinery Directive
   family: Machinery safety
@@ -204,10 +236,11 @@ legislations:
   directive_key: MD
   bucket: ce
   applicability: conditional
-  applicable_until: '2027-01-13'
+  applicable_until: '2027-01-19'
   replaced_by: 2023/1230/EU
   reason: Machinery Directive review is typically needed for machinery-style products such as powered
-    garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
+    garden machinery and powered drives for doors, gates, shutters, or similar movement systems. Domestic
+    household appliances are generally excluded and should remain on the LVD / EMC / GPSR route instead.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -238,7 +271,17 @@ legislations:
   - grass_shear
   - milking_machine
   any_of_genres:
+  - building_access_drive
   - garden_outdoor_power
+  exclude_genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  - av_ict_device
+  - smart_home_iot
+  - connected_toy_childcare
 - code: 2023/1230
   title: Machinery Regulation
   family: Machinery safety
@@ -247,9 +290,11 @@ legislations:
   directive_key: MACH_REG
   bucket: future
   applicability: conditional
-  applicable_from: '2027-01-14'
-  reason: Future Machinery Regulation review from 14 January 2027 for machinery-style products such as
+  applicable_from: '2027-01-20'
+  reason: Future Machinery Regulation review from 20 January 2027 for machinery-style products such as
     powered garden machinery and powered drives for doors, gates, shutters, or similar movement systems.
+    Domestic household appliances are generally excluded and should remain on the LVD / EMC / GPSR route
+    instead.
   triggers:
   - motorized drive
   - machinery-style mechanism
@@ -279,7 +324,17 @@ legislations:
   - grass_shear
   - milking_machine
   any_of_genres:
+  - building_access_drive
   - garden_outdoor_power
+  exclude_genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  - av_ict_device
+  - smart_home_iot
+  - connected_toy_childcare
 - code: 1935/2004
   title: Framework Regulation on food contact materials
   family: Food contact
@@ -433,18 +488,29 @@ legislations:
   directive_key: WEEE
   bucket: non_ce
   applicability: applicable
-  reason: Review collection, marking, producer-responsibility, and end-of-life obligations for electrical
-    and electronic equipment.
+  reason: Review collection, marking, producer-responsibility, and end-of-life obligations for finished
+    electrical and electronic equipment. Since August 2018, WEEE follows an open-scope model unless a
+    specific exclusion applies.
   triggers:
   - electrical or electronic equipment
+  - finished EEE placed on the EU market
   - crossed-out wheeled bin marking and producer obligations
   doc_impacts:
   - product marking review
   - EPR / registration review
   - user information review
+  - Annex III category review
   any_of_traits:
   - electrical
   - electronic
+  notes: Treat WEEE as a parallel end-of-life and producer-responsibility layer, not as a CE marking route.
+    Exclude obvious fixed-installation and industrial-infrastructure cases from automatic consumer-style
+    WEEE matching.
+  none_of_traits:
+  - fixed_installation
+  - industrial
+  exclude_genres:
+  - micromobility
 - code: 2009/48/EC
   title: Toy Safety Directive
   family: Toy safety
@@ -458,15 +524,19 @@ legislations:
   triggers:
   - toy or play value
   - child-targeted connected product
+  - designed or intended for play by children under 14
   doc_impacts:
   - toy safety assessment
   - warnings and age grading review
   - chemical / mechanical / electrical toy evidence
+  - EN 71 and EN 62115 route review
   any_of_traits:
   - toy
   - child_targeted
   any_of_genres:
   - connected_toy_childcare
+  notes: Use intended play value and child-targeting as the primary fork. Decorative, collector, transport,
+    and non-play products should not fall into this route merely because they look toy-like.
 - code: 2019/945+2019/947
   title: EU drone / UAS framework review
   family: Unmanned aircraft systems
