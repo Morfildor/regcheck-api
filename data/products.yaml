@@ -529,6 +529,8 @@ products:
   label: Battery-powered oral hygiene appliance
   aliases:
   - battery toothbrush
+  - smart toothbrush
+  - connected toothbrush
   - battery water flosser
   - cordless water flosser
   - portable water flosser
@@ -645,6 +647,8 @@ products:
   required_clues: []
   strong_aliases:
   - battery toothbrush
+  - smart toothbrush
+  - connected toothbrush
   - battery water flosser
   - cordless water flosser
   - portable water flosser
@@ -5452,8 +5456,11 @@ products:
   label: Robotic lawn mower
   aliases:
   - robotic lawn mower
+  - robot lawn mower
   - robot mower
   - robotic mower
+  - automatic lawn mower
+  - lawn mowing robot
   - robotic grass cutter
   - robotic-lawn-mower
   - roboticlawnmower
@@ -5481,12 +5488,16 @@ products:
   - outdoor_appliance
   likely_standards:
   - EN 50636-2-107
+  - EN 60335-2-107
   genres:
   - garden_outdoor_power
   strong_aliases:
   - robotic lawn mower
+  - robot lawn mower
   - robot mower
   - robotic mower
+  - automatic lawn mower
+  - lawn mowing robot
   - robotic grass cutter
   weak_aliases:
   - robotic-lawn-mower
@@ -5506,6 +5517,8 @@ products:
   negative_examples: []
   likely_standard_refs:
   - ref: EN 50636-2-107
+    kind: unspecified
+  - ref: EN 60335-2-107
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
@@ -17020,6 +17033,7 @@ products:
   implied_traits:
   - usb_powered
   - battery_powered
+  - electronic
   - handheld
   functional_classes:
   - power_device
@@ -17238,84 +17252,6 @@ products:
   - battery_powered
   - display
   - medical_claims
-  score_penalty_if_traits: []
-  required_any_traits: []
-  forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
-- id: robot_lawn_mower
-  label: Robotic lawn mower
-  aliases:
-  - robot lawn mower
-  - robotic mower
-  - automatic lawn mower
-  - lawn mowing robot
-  - robot-lawn-mower
-  - robotlawnmower
-  - robot lawn mowers
-  - robotic-mower
-  - roboticmower
-  - robotic mowers
-  - automatic-lawn-mower
-  - automaticlawnmower
-  - automatic lawn mowers
-  - lawn-mowing-robot
-  - lawnmowingrobot
-  - lawn mowing robots
-  - robotic lawn mower
-  - robotic-lawn-mower
-  - roboticlawnmower
-  - robotic lawn mowers
-  product_family: outdoor_robotic_device
-  product_subfamily: robot_lawn_mower
-  genres:
-  - garden_outdoor_power
-  implied_traits:
-  - wifi
-  - bluetooth
-  - traction_motor
-  - garden_use
-  functional_classes:
-  - robotic_device
-  - outdoor_device
-  likely_standards:
-  - EN 50636 review
-  - EN 18031-1
-  strong_aliases:
-  - robot lawn mower
-  - robotic mower
-  - automatic lawn mower
-  - lawn mowing robot
-  weak_aliases:
-  - robot-lawn-mower
-  - robotlawnmower
-  - robot lawn mowers
-  - robotic-mower
-  - roboticmower
-  - robotic mowers
-  - automatic-lawn-mower
-  - automaticlawnmower
-  - automatic lawn mowers
-  - lawn-mowing-robot
-  - lawnmowingrobot
-  - lawn mowing robots
-  - robotic lawn mower
-  - robotic-lawn-mower
-  - roboticlawnmower
-  - robotic lawn mowers
-  marketplace_aliases: []
-  not_when_text_contains: []
-  negative_examples: []
-  likely_standard_refs:
-  - ref: EN 50636 review
-    kind: unspecified
-  - ref: EN 18031-1
-    kind: unspecified
-  minimum_match_score: 25
-  score_boost_if_traits:
-  - wifi
-  - bluetooth
-  - traction_motor
-  - garden_use
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []

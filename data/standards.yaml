@@ -6166,8 +6166,7 @@ standards:
   dated_version: EN 17128:2020
   applies_if_genres:
   - micromobility
-  exclude_if_products:
-  - robot_lawn_mower
+  exclude_if_products: []
   test_focus:
   - safety
   - mechanical

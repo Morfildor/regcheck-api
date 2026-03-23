@@ -186,6 +186,27 @@ def _is_preferred_standard(standard: dict[str, Any], preferred_standard_codes: s
     )
 
 
+def _has_household_part2_preference(preferred_standard_codes: set[str]) -> bool:
+    return any(str(code).upper().startswith("EN 60335-2-") for code in preferred_standard_codes)
+
+
+def _directive_review_fallback_allowed(
+    standard: dict[str, Any],
+    preferred_standard_codes: set[str],
+    product_hit_type: ProductHitType | None,
+) -> bool:
+    code = str(standard.get("code", "")).upper()
+    category = str(standard.get("category", "")).lower()
+
+    if category != "safety":
+        return False
+    if code == "EN 60335-1" and _has_household_part2_preference(preferred_standard_codes):
+        return True
+    if _is_preferred_standard(standard, preferred_standard_codes):
+        return True
+    return product_hit_type in {"primary_product", "alternate_product", "primary_genre"} and code.startswith("EN 60335-2-")
+
+
 def _trait_gate_details(
     standard: dict[str, Any],
     traits: set[str],
@@ -603,14 +624,16 @@ def find_applicable_items_v1(
     rejections: list[dict[str, Any]] = []
     for standard in standards:
         standard_directives = _string_list(standard.get("directives"))
-        if directives and standard_directives and not any(d in directives for d in standard_directives):
-            rejections.append({"code": standard.get("code"), "reason": "directive filter mismatch"})
-            continue
-
         product_hit_type = _product_hit_type(standard, product_type, matched_products, product_genres)
         preferred_hit = _is_preferred_standard(standard, preferred_codes)
         allow_soft_any_miss = preferred_hit
         gate = _trait_gate_details(standard, traits, confirmed_traits, allow_soft_any_miss=allow_soft_any_miss)
+        directive_review_fallback = False
+        if directives and standard_directives and not any(d in directives for d in standard_directives):
+            if not _directive_review_fallback_allowed(standard, preferred_codes, product_hit_type):
+                rejections.append({"code": standard.get("code"), "reason": "directive filter mismatch"})
+                continue
+            directive_review_fallback = True
         if product_hit_type is None or not gate["passes"]:
             rejections.append({"code": standard.get("code"), "reason": _rejection_reason(product_hit_type, gate)})
             continue
@@ -625,11 +648,16 @@ def find_applicable_items_v1(
             gate,
             preferred_hit,
         )
+        if directive_review_fallback:
+            reason += ". retained as a review route because the primary directive path is not currently selected"
         needs_review = gate["soft_missing_any"] or gate["soft_inferred_match"]
         enriched["reason"] = reason
         enriched["match_basis"] = match_basis
         enriched["fact_basis"] = gate["fact_basis"]
-        enriched["item_type"] = "review" if needs_review else _standard_item_type(standard)
+        enriched["item_type"] = "review" if needs_review or directive_review_fallback else _standard_item_type(standard)
+        if directive_review_fallback:
+            enriched["directive"] = "OTHER"
+            enriched["legislation_key"] = "OTHER"
         enriched["score"] = _score_standard(standard, gate, product_hit_type, preferred_hit)
         enriched["matched_traits_all"] = gate["matched_traits_all"]
         enriched["matched_traits_any"] = gate["matched_traits_any"]
@@ -703,13 +731,15 @@ def find_applicable_items_v2(
     rejections: list[dict[str, Any]] = []
     for standard in standards:
         standard_directives = _string_list(standard.get("directives"))
-        if directives and standard_directives and not any(d in directives for d in standard_directives):
-            rejections.append({"code": standard.get("code"), "reason": "directive filter mismatch"})
-            continue
-
         product_hit_type = _product_hit_type(standard, product_type, matched_products, product_genres)
         preferred_hit = _is_preferred_standard(standard, preferred_codes)
         gate = _trait_gate_details(standard, traits, effective_confirmed_traits, allow_soft_any_miss=preferred_hit)
+        directive_review_fallback = False
+        if directives and standard_directives and not any(d in directives for d in standard_directives):
+            if not _directive_review_fallback_allowed(standard, preferred_codes, product_hit_type):
+                rejections.append({"code": standard.get("code"), "reason": "directive filter mismatch"})
+                continue
+            directive_review_fallback = True
         if product_hit_type is None or not gate["passes"]:
             rejections.append({"code": standard.get("code"), "reason": _rejection_reason(product_hit_type, gate)})
             continue
@@ -732,13 +762,18 @@ def find_applicable_items_v2(
             reason += ". keyword evidence: " + ", ".join(keyword_hits)
         if not sufficient_fact_basis:
             reason += f". requires {required_fact_basis} evidence before the route can be treated as fully selected"
+        if directive_review_fallback:
+            reason += ". retained as a review route because the primary directive path is not currently selected"
 
-        needs_review = gate["soft_missing_any"] or gate["soft_inferred_match"] or not sufficient_fact_basis
+        needs_review = gate["soft_missing_any"] or gate["soft_inferred_match"] or not sufficient_fact_basis or directive_review_fallback
         enriched["reason"] = reason
         enriched["match_basis"] = match_basis
         enriched["fact_basis"] = gate["fact_basis"]
         enriched["required_fact_basis"] = required_fact_basis
         enriched["item_type"] = "review" if needs_review else _standard_item_type(standard)
+        if directive_review_fallback:
+            enriched["directive"] = "OTHER"
+            enriched["legislation_key"] = "OTHER"
         enriched["score"] = _score_standard_v2(standard, gate, product_hit_type, preferred_hit, keyword_hits, context_tags)
         enriched["matched_traits_all"] = gate["matched_traits_all"]
         enriched["matched_traits_any"] = gate["matched_traits_any"]

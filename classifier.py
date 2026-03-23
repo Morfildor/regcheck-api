@@ -77,6 +77,8 @@ NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
     (r"\bmulti[ -]?cooker\b", "multicooker"),
     (r"\bbean[ -]?to[ -]?cup\b", "bean to cup"),
     (r"\bair[ -]?conditioning\b", "air conditioner"),
+    (r"\btooth[ -]?brushes\b", "toothbrushes"),
+    (r"\btooth[ -]?brush\b", "toothbrush"),
     (r"\bsmart home\b", "smart_home"),
     (r"\be[ -]?ink\b", "eink"),
     (r"\be[ -]?paper\b", "epaper"),
