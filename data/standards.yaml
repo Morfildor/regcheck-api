@@ -1441,6 +1441,7 @@ standards:
   applies_if_products:
   - skin_hair_care_appliance
   - beauty_treatment_appliance
+  - hair_curler
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -1454,7 +1455,9 @@ standards:
   keywords:
   - skin hair care appliance
   - beauty treatment appliance
-  notes: Applies to the specific Part 2 appliance family, including skin hair care appliance, beauty treatment appliance.
+  - hair curler
+  notes: Applies to the specific Part 2 appliance family, including skin hair care appliance, beauty treatment appliance,
+    hair curler.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
@@ -2354,7 +2357,6 @@ standards:
   confidence: high
   harmonization_status: unknown
   applies_if_products:
-  - skin_hair_care_appliance
   - electric_iron
   exclude_if_products: []
   applies_if_all: []
@@ -2367,9 +2369,8 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   keywords:
-  - skin hair care appliance
   - electric iron
-  notes: Applies to the specific Part 2 appliance family, including skin hair care appliance, electric iron.
+  notes: Applies to the specific Part 2 appliance family, including electric iron.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
@@ -2380,7 +2381,6 @@ standards:
   evidence_keywords:
   - safety test report
   - CB report or equivalent technical evidence
-  - skin hair care appliance
   - electric iron
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
 - code: EN 60335-2-46

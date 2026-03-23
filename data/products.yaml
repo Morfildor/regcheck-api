@@ -6146,7 +6146,6 @@ products:
   - personal_care_appliance
   likely_standards:
   - EN 60335-2-23
-  - EN 60335-2-45
   genres:
   - household_appliance
   - hvac_environmental_appliance
@@ -15071,6 +15070,31 @@ products:
   - data_storage
   - personal_data_likely
   - wireless_charging_rx
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - wifi
+  - display
+  default_traits:
+  - microphone
+  - speaker
+  - nfc
+  - gnss
+  - motion_detection
+  - health_related
+  - account
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - wireless_charging_rx
   functional_classes:
   - wearable_device
   - av_ict_device
@@ -15078,6 +15102,7 @@ products:
   - EN 62368-1
   genres:
   - wearable_device
+  - av_ict_device
   strong_aliases:
   - smartwatch
   - fitness tracker
@@ -16271,13 +16296,39 @@ products:
   product_subfamily: smartwatch
   genres:
   - wearable_device
+  - av_ict_device
   implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
   - bluetooth
   - wifi
+  - display
+  - gnss
+  - health_related
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - wifi
+  - display
+  default_traits:
   - gnss
   - health_related
   functional_classes:
   - wearable_device
+  - av_ict_device
   likely_standards:
   - EN 62368-1
   - EN 62479
@@ -16306,6 +16357,12 @@ products:
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
   - bluetooth
   - wifi
   - gnss
@@ -16335,12 +16392,34 @@ products:
   product_subfamily: smart_ring
   genres:
   - wearable_device
+  - av_ict_device
   - smart_home_iot
   implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
   - bluetooth
+  - health_related
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  default_traits:
   - health_related
   functional_classes:
   - wearable_device
+  - av_ict_device
   likely_standards:
   - EN 62368-1
   - EN 62479
@@ -16368,6 +16447,11 @@ products:
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
   - bluetooth
   - health_related
   score_penalty_if_traits: []

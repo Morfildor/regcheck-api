@@ -1008,9 +1008,25 @@ def _apply_post_selection_gates(
             item["directive"] = "ECO"
             item["legislation_key"] = "ECO"
 
-        if code == "EN 62368-1" and "radio" in traits and "RED" in allowed_directives and "LVD" not in allowed_directives:
-            item["directive"] = "RED"
-            item["legislation_key"] = "RED"
+        if code == "EN 62368-1":
+            if context["scope_route"] == "appliance":
+                diagnostics.append("gate=drop_EN62368-1:appliance_primary")
+                continue
+            if "radio" in traits and "RED" in allowed_directives and "LVD" not in allowed_directives:
+                item["directive"] = "RED"
+                item["legislation_key"] = "RED"
+
+        if code.startswith("EN 60335-") and context["scope_route"] == "av_ict":
+            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
+            continue
+
+        if code in {"EN 55032", "EN 55035"} and context["scope_route"] == "appliance":
+            diagnostics.append(f"gate=drop_{code}:appliance_primary")
+            continue
+
+        if code.startswith("EN 55014-") and context["scope_route"] == "av_ict":
+            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
+            continue
 
         if code == "EN 62311":
             if context["prefer_62233"] and not ("radio" in traits and ({"wearable", "handheld", "body_worn_or_applied"} & traits)):

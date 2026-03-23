@@ -49,6 +49,59 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertNotIn("LVD", result.directives)
         self.assertIn("EN 62368-1", {item.code for item in result.review_items})
 
+    def test_smart_watch_prefers_av_ict_routes_over_appliance_emc(self) -> None:
+        result = analyze("smart watch")
+
+        standard_codes = {item.code for item in result.standards}
+        review_codes = {item.code for item in result.review_items}
+        all_codes = standard_codes | review_codes
+
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertNotIn("EN 55014-1", all_codes)
+        self.assertNotIn("EN 55014-2", all_codes)
+
+    def test_fitness_tracker_prefers_av_ict_routes_over_appliance_emc(self) -> None:
+        result = analyze("fitness tracker")
+
+        standard_codes = {item.code for item in result.standards}
+        review_codes = {item.code for item in result.review_items}
+        all_codes = standard_codes | review_codes
+
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertNotIn("EN 55014-1", all_codes)
+        self.assertNotIn("EN 55014-2", all_codes)
+
+    def test_smart_ring_prefers_av_ict_routes_over_appliance_emc(self) -> None:
+        result = analyze("smart ring")
+
+        standard_codes = {item.code for item in result.standards}
+        review_codes = {item.code for item in result.review_items}
+        all_codes = standard_codes | review_codes
+
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertNotIn("EN 55014-1", all_codes)
+        self.assertNotIn("EN 55014-2", all_codes)
+
+    def test_hair_dryer_no_longer_selects_conflicting_part2_routes(self) -> None:
+        result = analyze("hair dryer")
+
+        codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+        self.assertIn("EN 60335-1", {item.code for item in result.standards})
+        self.assertIn("EN 60335-2-23", {item.code for item in result.standards})
+        self.assertNotIn("EN 60335-2-45", codes)
+
+    def test_curling_iron_reaches_the_hair_care_part2_route(self) -> None:
+        result = analyze("curling iron")
+
+        self.assertIn("EN 60335-1", {item.code for item in result.standards})
+        self.assertIn("EN 60335-2-23", {item.code for item in result.standards})
+
 
 if __name__ == "__main__":
     unittest.main()
