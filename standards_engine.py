@@ -423,6 +423,7 @@ ELECTRICAL_EXPLICIT_TRAITS = {
 }
 ELECTRONIC_EXPLICIT_TRAITS = {
     "electronic",
+    "av_ict",
     "radio",
     "camera",
     "display",

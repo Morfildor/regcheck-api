@@ -512,16 +512,39 @@ def _confidence_from_score(score: int) -> ConfidenceLevel:
 
 def _collect_preferred_standard_codes(traits_data: dict[str, Any]) -> set[str]:
     preferred: set[str] = set(traits_data.get("preferred_standard_codes") or [])
-    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    matched_products = set(traits_data.get("matched_products") or [])
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
-
-    if product_match_stage != "subtype":
-        return preferred
+    product_type = traits_data.get("product_type")
+    product_family = traits_data.get("product_family")
 
     for candidate in traits_data.get("product_candidates") or []:
-        if candidate.get("id") in routing_matched_products:
+        candidate_id = candidate.get("id")
+        candidate_family = candidate.get("family")
+        candidate_confidence = str(candidate.get("confidence") or "low")
+        if candidate_id in routing_matched_products:
             preferred.update(candidate.get("likely_standards") or [])
+            continue
+        if candidate_id == product_type or candidate_id in matched_products:
+            preferred.update(candidate.get("likely_standards") or [])
+            continue
+        if candidate_family and candidate_family == product_family and candidate_confidence in {"high", "medium"}:
+            preferred.update(candidate.get("likely_standards") or [])
+
     return preferred
+
+
+def _resolve_routing_product_type(traits_data: dict[str, Any]) -> str | None:
+    product_type = traits_data.get("product_type")
+    if not product_type:
+        return None
+
+    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    product_match_confidence = str(traits_data.get("product_match_confidence") or "low")
+    if product_match_stage == "subtype":
+        return product_type
+    if product_match_stage == "family" and product_match_confidence in {"high", "medium"}:
+        return product_type
+    return None
 
 
 def _derive_engine_traits(
@@ -972,6 +995,85 @@ def _standard_context(
         "prefer_62233": prefer_62233,
         "prefer_62311": prefer_62311,
     }
+
+
+def _ensure_primary_safety_backfill(
+    selected: list[dict[str, Any]],
+    traits: set[str],
+    matched_products: set[str],
+    allowed_directives: set[str],
+    product_type: str | None,
+    confirmed_traits: set[str] | None,
+    description: str,
+    preferred_standard_codes: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    confirmed_traits = confirmed_traits or set()
+    preferred_standard_codes = preferred_standard_codes or set()
+    context = _standard_context(traits, matched_products, product_type, confirmed_traits, description)
+    codes = {str(item.get("code") or "") for item in selected}
+
+    base_code: str | None = None
+    reasons: list[str] = []
+
+    if not any(code.startswith("EN 60335-") for code in codes):
+        appliance_signal = bool(
+            context["scope_route"] == "appliance"
+            or product_type in PERSONAL_CARE_PRODUCT_HINTS
+            or any(str(code).startswith("EN 60335-") for code in preferred_standard_codes)
+        )
+        if appliance_signal:
+            base_code = "EN 60335-1"
+            reasons.append("appliance_scope")
+
+    if base_code is None and "EN 62368-1" not in codes:
+        av_ict_signal = bool(
+            context["scope_route"] in {"av_ict", "convergent"}
+            or product_type in AV_ICT_PRODUCT_HINTS
+            or "EN 62368-1" in preferred_standard_codes
+            or bool({"av_ict", "display", "speaker", "microphone", "camera", "data_storage"} & traits)
+        )
+        if av_ict_signal:
+            base_code = "EN 62368-1"
+            reasons.append("av_ict_scope")
+
+    if base_code is None:
+        return selected
+
+    standard_rows = load_meta()  # cache warm-up side effect kept cheap
+    del standard_rows
+    from knowledge_base import load_standards
+
+    base_row = next((row for row in load_standards() if str(row.get("code") or "") == base_code), None)
+    if not base_row:
+        return selected
+
+    backfill = dict(base_row)
+    fact_basis: FactBasis = "confirmed" if set(_string_list(base_row.get("applies_if_all"))).issubset(confirmed_traits) else "mixed"
+    in_primary_directive = any(d in allowed_directives for d in _string_list(base_row.get("directives")))
+    backfill["directive"] = _standard_primary_directive(base_row, traits) if in_primary_directive else "OTHER"
+    backfill["legislation_key"] = backfill["directive"]
+    backfill["item_type"] = "standard" if in_primary_directive else "review"
+    backfill["fact_basis"] = fact_basis
+    backfill["required_fact_basis"] = base_row.get("required_fact_basis", "inferred")
+    backfill["score"] = 999
+    backfill["matched_traits_all"] = sorted(set(_string_list(base_row.get("applies_if_all"))) & traits)
+    backfill["matched_traits_any"] = sorted(set(_string_list(base_row.get("applies_if_any"))) & traits)
+    backfill["missing_required_traits"] = sorted(set(_string_list(base_row.get("applies_if_all"))) - traits)
+    backfill["excluded_by_traits"] = sorted(set(_string_list(base_row.get("exclude_if"))) & traits)
+    backfill["product_match_type"] = "preferred_product" if base_code in preferred_standard_codes else "not_product_gated"
+    backfill["keyword_hits"] = []
+    backfill["selection_group"] = backfill.get("selection_group")
+    backfill["selection_priority"] = int(backfill.get("selection_priority") or 0)
+    reason_bits = ["base safety route backfill"]
+    if reasons:
+        reason_bits.append("signals: " + ", ".join(reasons))
+    if base_code in preferred_standard_codes:
+        reason_bits.append("product candidate knowledge explicitly points to this base standard")
+    if not in_primary_directive:
+        reason_bits.append("kept as a review route because the primary directive was not confidently selected")
+    backfill["reason"] = ". ".join(reason_bits)
+
+    return selected + [backfill]
 
 
 def _apply_post_selection_gates(
@@ -1754,7 +1856,7 @@ def analyze_v1(
     product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
     product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
-    routing_product_type = product_type if product_match_stage == "subtype" else None
+    routing_product_type = _resolve_routing_product_type(traits_data)
     likely_standards = _collect_preferred_standard_codes(traits_data)
 
     trait_set = set(traits_data.get("all_traits") or [])
@@ -1805,6 +1907,16 @@ def analyze_v1(
         product_type=routing_product_type,
         confirmed_traits=confirmed_traits,
         description=description,
+    )
+    selected_rows = _ensure_primary_safety_backfill(
+        selected_rows,
+        trait_set,
+        routing_matched_products,
+        allowed_directives,
+        routing_product_type,
+        confirmed_traits,
+        description,
+        likely_standards,
     )
 
     dedup: dict[str, dict[str, Any]] = {}
@@ -1963,7 +2075,7 @@ def analyze(
     product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
     product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
-    routing_product_type = product_type if product_match_stage == "subtype" else None
+    routing_product_type = _resolve_routing_product_type(traits_data)
     likely_standards = _collect_preferred_standard_codes(traits_data)
 
     base_trait_set = set(traits_data.get("all_traits") or [])
@@ -2023,6 +2135,16 @@ def analyze(
         product_type=routing_product_type,
         confirmed_traits=confirmed_traits,
         description=description,
+    )
+    selected_rows = _ensure_primary_safety_backfill(
+        selected_rows,
+        trait_set,
+        routing_matched_products,
+        allowed_directives,
+        routing_product_type,
+        confirmed_traits,
+        description,
+        likely_standards,
     )
 
     dedup: dict[str, dict[str, Any]] = {}

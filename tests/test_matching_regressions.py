@@ -102,6 +102,26 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertIn("EN 60335-1", {item.code for item in result.standards})
         self.assertIn("EN 60335-2-23", {item.code for item in result.standards})
 
+    def test_family_level_projector_keeps_62368_route(self) -> None:
+        result = analyze("portable projector")
+
+        standard_codes = {item.code for item in result.standards}
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+
+    def test_ambiguous_security_camera_still_surfaces_62368_review(self) -> None:
+        result = analyze("security camera")
+
+        codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+        self.assertIn("EN 62368-1", codes)
+
+    def test_video_doorbell_surfaces_62368_review_from_product_candidates(self) -> None:
+        result = analyze("video doorbell")
+
+        review_codes = {item.code for item in result.review_items}
+        self.assertIn("EN 62368-1", review_codes)
+
 
 if __name__ == "__main__":
     unittest.main()
