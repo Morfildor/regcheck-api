@@ -274,7 +274,7 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "https://rulegrid.net",
         "https://www.rulegrid.net",
-        "https://your-project-name.vercel.app",
+        "https://regcheck-frontend.vercel.app/",
     ],
     allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
