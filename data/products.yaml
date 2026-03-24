@@ -99,7 +99,8 @@ products:
   - purifier
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: air_purifier
   label: Air purifier
   product_family: air_treatment_cleaner
@@ -271,6 +272,10 @@ products:
   - hepa-air-purifier
   - hepaairpurifier
   - hepa air purifiers
+  - wifi purifier
+  - app purifier
+  - alexa purifier
+  - smart purifier wifi
   not_when_text_contains: []
   negative_examples:
   - air_cleaner
@@ -291,7 +296,8 @@ products:
   - electronic
   forbidden_traits:
   - water_contact
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: aquarium_appliance
   label: Aquarium appliance
   aliases:
@@ -359,7 +365,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: barbecue_grill
   label: Electric barbecue grill
   aliases:
@@ -440,7 +447,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: battery_charger
   label: Battery charger
   aliases:
@@ -524,7 +532,8 @@ products:
   - electronic
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: battery_powered_oral_hygiene
   label: Battery-powered oral hygiene appliance
   aliases:
@@ -627,6 +636,9 @@ products:
   - oral irrigator
   - water flosser
   - flossing machine
+  - toothbrush
+  - smart toothbrush
+  - waterpik
   exclude_clues:
   - projector
   - display
@@ -687,7 +699,11 @@ products:
   - electric-floss-machine
   - electricflossmachine
   - electric floss machines
-  marketplace_aliases: []
+  marketplace_aliases:
+  - smart toothbrush
+  - connected toothbrush
+  - waterpik flosser
+  - smart water flosser
   not_when_text_contains:
   - projector
   - display
@@ -717,7 +733,8 @@ products:
   - electronic
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: beauty_treatment_appliance
   label: Beauty treatment appliance
   aliases:
@@ -782,7 +799,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: blender
   label: Blender
   aliases:
@@ -842,7 +860,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: circulator
   label: Circulator
   aliases:
@@ -900,7 +919,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: clock
   label: Clock
   aliases:
@@ -954,7 +974,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: coffee_machine
   label: Coffee machine
   aliases:
@@ -1202,7 +1223,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_cooking_appliance
   label: Commercial cooking appliance
   aliases:
@@ -1275,7 +1297,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_dispensing_appliance
   label: Commercial dispensing appliance
   aliases:
@@ -1348,7 +1371,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_fryer
   label: Commercial fryer
   aliases:
@@ -1401,7 +1425,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_hood
   label: Commercial hood
   aliases:
@@ -1450,7 +1475,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_microwave
   label: Commercial microwave oven
   aliases:
@@ -1513,7 +1539,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_oven
   label: Commercial oven
   aliases:
@@ -1577,7 +1604,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_refrigerator
   label: Commercial refrigerator
   aliases:
@@ -1641,7 +1669,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_washing_machine
   label: Commercial washing machine
   aliases:
@@ -1701,7 +1730,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: cooking_range
   label: Cooking range
   aliases:
@@ -1764,7 +1794,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: air_fryer
   label: Air fryer
   aliases:
@@ -1821,7 +1852,12 @@ products:
   - connected-air-fryer
   - connectedairfryer
   - connected air fryers
-  marketplace_aliases: []
+  marketplace_aliases:
+  - airfryer
+  - smart airfryer
+  - wifi air fryer
+  - connected airfryer
+  - dual basket air fryer
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
@@ -1840,7 +1876,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: deep_fryer
   label: Deep fryer
   aliases:
@@ -1900,7 +1937,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: dishwasher
   label: Dishwasher
   aliases:
@@ -1978,7 +2016,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_blanket
   label: Electric blanket
   aliases:
@@ -2034,7 +2073,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_fish_stunner
   label: Electric fishing machine / fish stunner
   aliases:
@@ -2091,7 +2131,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_frying_pan
   label: Electric frying pan
   aliases:
@@ -2147,7 +2188,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_garden_tool
   label: Electric garden tool
   aliases:
@@ -2222,7 +2264,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_iron
   label: Electric iron
   aliases:
@@ -2302,7 +2345,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_kettle
   label: Electric kettle
   aliases:
@@ -2372,7 +2416,10 @@ products:
   - jug-kettle
   - jugkettle
   - jug kettles
-  marketplace_aliases: []
+  marketplace_aliases:
+  - smart temperature kettle
+  - wifi kettle
+  - app kettle
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
@@ -2391,7 +2438,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_pump
   label: Electric pump
   aliases:
@@ -2461,7 +2509,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electrolyser_washing_machine
   label: Detergent-free electrolyser washing machine
   aliases:
@@ -2526,7 +2575,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: fan
   label: Fan
   product_family: indoor_air_mover
@@ -2635,7 +2685,11 @@ products:
   - smart-fan
   - smartfan
   - smart fans
-  marketplace_aliases: []
+  marketplace_aliases:
+  - smart fan
+  - wifi fan
+  - app fan
+  - smart tower fan
   not_when_text_contains:
   - heater
   - heating
@@ -2659,7 +2713,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: fan_heater
   label: Fan heater
   product_family: indoor_air_mover
@@ -2740,7 +2795,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: fence_energizer
   label: Electric fence energizer
   aliases:
@@ -2794,7 +2850,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: floor_treatment_machine
   label: Floor treatment machine
   aliases:
@@ -2858,7 +2915,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: food_processor
   label: Food processor
   aliases:
@@ -2905,7 +2963,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: food_waste_disposer
   label: Food waste disposer
   aliases:
@@ -2965,7 +3024,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: foot_warmer
   label: Foot warmer
   aliases:
@@ -3020,7 +3080,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: fuel_burning_electrical_appliance
   label: Fuel-burning appliance with electrical connections
   aliases:
@@ -3088,7 +3149,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: garage_door_drive
   label: Garage door drive
   aliases:
@@ -3143,7 +3205,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: gate_door_window_drive
   label: Drive for gates, doors or windows
   aliases:
@@ -3217,7 +3280,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: hair_clipper
   label: Hair clipper
   aliases:
@@ -3281,7 +3345,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: heat_pump
   label: Heat pump / air conditioner
   aliases:
@@ -3387,7 +3452,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: heated_carpet
   label: Heated carpet / underfloor heating mat
   aliases:
@@ -3460,7 +3526,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: heating_lamp
   label: Heating lamp
   aliases:
@@ -3506,7 +3573,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: heating_pad
   label: Heating pad / heating blanket
   aliases:
@@ -3578,7 +3646,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: high_pressure_cleaner
   label: High-pressure cleaner
   aliases:
@@ -3650,7 +3719,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: hob
   label: Hob / cooktop
   aliases:
@@ -3744,7 +3814,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: hot_cupboard
   label: Hot cupboard
   aliases:
@@ -3796,7 +3867,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: humidifier
   label: Humidifier
   aliases:
@@ -3869,7 +3941,10 @@ products:
   - connected-humidifier
   - connectedhumidifier
   - connected humidifiers
-  marketplace_aliases: []
+  marketplace_aliases:
+  - smart humidifier
+  - wifi humidifier
+  - app humidifier
   not_when_text_contains:
   - dehumidifier
   - projector
@@ -3896,7 +3971,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: immersion_heater
   label: Immersion heater
   aliases:
@@ -3954,7 +4030,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: incubator
   label: Incubator
   aliases:
@@ -3996,7 +4073,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: industrial_charger
   label: Industrial battery charger
   aliases:
@@ -4056,7 +4134,8 @@ products:
   required_any_traits:
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: insect_killer
   label: Insect killer
   aliases:
@@ -4116,7 +4195,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: ironer
   label: Ironer
   aliases:
@@ -4175,7 +4255,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: kitchen_extractor_fan
   label: Kitchen extractor fan
   aliases:
@@ -4241,7 +4322,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: kitchen_machine
   label: Kitchen machine
   aliases:
@@ -4324,7 +4406,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: lawn_mower
   label: Electric lawn mower
   aliases:
@@ -4403,7 +4486,8 @@ products:
   required_any_traits:
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: liquid_heater
   label: Liquid heater
   aliases:
@@ -4469,7 +4553,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: livestock_heater
   label: Livestock heating appliance
   aliases:
@@ -4536,7 +4621,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: massage_appliance
   label: Massage appliance
   aliases:
@@ -4612,7 +4698,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: microwave_oven
   label: Microwave oven
   aliases:
@@ -4673,7 +4760,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: motor_compressor
   label: Motor-compressor
   aliases:
@@ -4721,7 +4809,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: oral_hygiene_appliance
   label: Oral hygiene appliance
   aliases:
@@ -4794,7 +4883,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: outdoor_barbecue
   label: Outdoor electric barbecue
   aliases:
@@ -4859,7 +4949,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: oven
   label: Oven
   aliases:
@@ -4943,7 +5034,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: patio_heater
   label: Patio heater
   aliases:
@@ -5004,7 +5096,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: portable_grill
   label: Portable grill
   aliases:
@@ -5117,7 +5210,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: portable_immersion_heater
   label: Portable immersion heater
   aliases:
@@ -5175,7 +5269,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: range_hood
   label: Range hood
   aliases:
@@ -5294,7 +5389,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: refrigerator_freezer
   label: Refrigerator / freezer
   aliases:
@@ -5371,7 +5467,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: rice_cooker
   label: Rice cooker
   aliases:
@@ -5451,7 +5548,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: robotic_lawn_mower
   label: Robotic lawn mower
   aliases:
@@ -5531,7 +5629,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: rolling_shutter_drive
   label: Drive for rolling shutters, awnings or blinds
   aliases:
@@ -5602,7 +5701,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: room_dehumidifier
   label: Dehumidifier
   aliases:
@@ -5647,7 +5747,10 @@ products:
   - smart-dehumidifier
   - smartdehumidifier
   - smart dehumidifiers
-  marketplace_aliases: []
+  marketplace_aliases:
+  - smart dehumidifier
+  - wifi dehumidifier
+  - app dehumidifier
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
@@ -5666,7 +5769,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: room_heater
   label: Room heater
   aliases:
@@ -5782,7 +5886,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: room_heating_appliance
   label: Room heating appliance
   aliases:
@@ -5863,7 +5968,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: sauna_heater
   label: Sauna heater
   aliases:
@@ -5914,7 +6020,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: sewing_machine
   label: Sewing machine
   aliases:
@@ -5964,7 +6071,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: shaver
   label: Electric shaver
   aliases:
@@ -6026,7 +6134,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: shower_cabinet
   label: Multifunctional shower cabinet
   aliases:
@@ -6089,7 +6198,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: skin_hair_care_appliance
   label: Skin or hair care appliance
   aliases:
@@ -6211,7 +6321,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: spin_extractor
   label: Spin extractor
   aliases:
@@ -6272,7 +6383,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: spray_extraction_machine
   label: Spray extraction machine
   aliases:
@@ -6342,7 +6454,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: storage_water_heater
   label: Storage water heater
   aliases:
@@ -6401,7 +6514,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: toaster
   label: Toaster
   aliases:
@@ -6484,7 +6598,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: tumble_dryer
   label: Tumble dryer
   aliases:
@@ -6549,7 +6664,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: ultraviolet_appliance
   label: Ultraviolet appliance
   aliases:
@@ -6618,7 +6734,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: robot_vacuum
   label: Robot vacuum cleaner
   aliases:
@@ -6742,6 +6859,17 @@ products:
   - robotic vacuum cleaners
   - robovac
   - robovacs
+  - self empty robot vacuum
+  - self-empty robot vacuum
+  - auto empty robovac
+  - self empty robovac
+  - lidar robot vacuum
+  - laser robot vacuum
+  - mapping robot vacuum
+  - vacuum mop robot
+  - robot mop vacuum
+  - mop station robot vacuum
+  - vacuuming robot
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
@@ -6760,7 +6888,12 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
+  preferred_clues:
+  - self empty
+  - lidar
+  - mapping
 - id: vacuum_cleaner
   label: Vacuum cleaner
   aliases:
@@ -6885,7 +7018,8 @@ products:
   required_any_traits:
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: vaporizer
   label: Vaporizer
   aliases:
@@ -6934,7 +7068,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: vending_machine
   label: Vending machine
   aliases:
@@ -6997,7 +7132,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: warming_plate
   label: Warming plate
   aliases:
@@ -7059,7 +7195,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: washing_machine
   label: Washing machine
   aliases:
@@ -7147,7 +7284,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: water_bed_heater
   label: Water-bed heater
   aliases:
@@ -7208,7 +7346,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: water_suction_cleaner
   label: Water-suction cleaning appliance
   aliases:
@@ -7323,7 +7462,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: coffee_grinder
   label: Coffee grinder / coffee mill
   aliases:
@@ -7428,7 +7568,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_kitchen_machine
   label: Commercial kitchen machine
   aliases:
@@ -7515,7 +7656,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_plug
   label: Smart plug / smart outlet
   aliases:
@@ -7652,7 +7794,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_thermostat
   label: Smart thermostat
   aliases:
@@ -7836,7 +7979,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_speaker
   label: Smart speaker
   product_family: smart_assistant_device
@@ -8057,7 +8201,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: bluetooth_tracker
   label: Bluetooth tracker
   aliases:
@@ -8159,7 +8304,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: hvac_humidifier
   label: Humidifier for HVAC systems
   aliases:
@@ -8238,7 +8384,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: projector
   label: Projector
   product_family: projector_device
@@ -8340,7 +8487,8 @@ products:
   - ultra short throw
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: whirlpool_bath
   label: Whirlpool bath / spa bath
   aliases:
@@ -8417,7 +8565,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_toilet
   label: Electric toilet / smart toilet
   aliases:
@@ -8448,6 +8597,12 @@ products:
   - heating
   - mains_powered
   - wet_environment
+  - radio
+  - wifi
+  - app_control
+  - cloud
+  - internet
+  - ota
   functional_classes:
   - bathroom_appliance
   likely_standards:
@@ -8475,7 +8630,11 @@ products:
   - electric-toilet-smart-toilet
   - electrictoiletsmarttoilet
   - electric toilet smart toilets
-  marketplace_aliases: []
+  marketplace_aliases:
+  - smart wc
+  - smart toilet seat
+  - washlet
+  - bidet smart toilet
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
@@ -8494,7 +8653,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: heated_gully
   label: Heated gully / roof drainage heater
   aliases:
@@ -8565,7 +8725,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: grass_trimmer
   label: Grass trimmer / lawn edge trimmer
   aliases:
@@ -8651,7 +8812,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: scarifier_aerator
   label: Lawn scarifier / aerator
   aliases:
@@ -8720,7 +8882,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: grass_shear
   label: Grass shear
   aliases:
@@ -8786,7 +8949,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: milking_machine
   label: Milking machine
   aliases:
@@ -8846,7 +9010,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_floor_treatment_machine
   label: Commercial floor treatment machine
   aliases:
@@ -8929,7 +9094,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_spray_extraction_machine
   label: Commercial spray extraction machine
   aliases:
@@ -8994,7 +9160,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_dishwasher
   label: Commercial dishwasher
   aliases:
@@ -9065,7 +9232,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: commercial_rinsing_sink
   label: Commercial rinsing sink
   aliases:
@@ -9119,7 +9287,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: bain_marie
   label: Bain-marie
   aliases:
@@ -9176,7 +9345,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: fabric_steamer
   label: Fabric steamer
   aliases:
@@ -9250,7 +9420,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_display
   label: Smart display
   product_family: smart_assistant_device
@@ -9387,7 +9558,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: router
   label: Router
   product_family: wifi_networking
@@ -9521,7 +9693,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: modem
   label: Modem
   aliases:
@@ -9587,7 +9760,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: iot_gateway
   label: IoT gateway / hub
   aliases:
@@ -9673,7 +9847,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: network_switch
   label: Network switch
   aliases:
@@ -9743,7 +9918,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: wireless_access_point
   label: Wireless access point
   product_family: wifi_networking
@@ -9848,7 +10024,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: laptop
   label: Laptop
   aliases:
@@ -9918,7 +10095,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: desktop_pc
   label: Desktop PC
   aliases:
@@ -9987,7 +10165,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: server
   label: Server / NAS
   aliases:
@@ -10060,7 +10239,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: monitor
   label: Monitor
   aliases:
@@ -10118,7 +10298,8 @@ products:
   required_any_traits:
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_tv
   label: Television / smart TV
   aliases:
@@ -10203,7 +10384,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: streaming_device
   label: Streaming device / set-top box
   aliases:
@@ -10297,7 +10479,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: soundbar
   label: Soundbar
   aliases:
@@ -10394,7 +10577,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: home_cinema_system
   label: Home cinema system
   aliases:
@@ -10489,7 +10673,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: wireless_headphones
   label: Wireless headphones / earbuds
   aliases:
@@ -10611,7 +10796,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: bluetooth_speaker
   label: Portable Bluetooth speaker
   aliases:
@@ -10737,7 +10923,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: digital_audio_player
   label: Digital audio player / DAC
   aliases:
@@ -10841,7 +11028,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: home_projector
   label: Home projector / smart projector
   product_family: projector_device
@@ -11008,7 +11196,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: digital_photo_frame
   label: Smart digital photo frame
   aliases:
@@ -11105,7 +11294,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_mirror
   label: Smart mirror / interactive mirror
   aliases:
@@ -11200,7 +11390,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: tablet
   label: Tablet computer
   aliases:
@@ -11297,7 +11488,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: e_reader
   label: E-reader
   aliases:
@@ -11389,7 +11581,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: docking_station
   label: Docking station / USB-C hub
   aliases:
@@ -11497,7 +11690,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: usb_hub
   label: USB hub
   aliases:
@@ -11585,7 +11779,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: external_storage
   label: External storage (SSD / HDD)
   aliases:
@@ -11688,7 +11883,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: webcam
   label: Webcam / smart camera (USB/IP)
   aliases:
@@ -11782,7 +11978,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: game_console
   label: Game console
   aliases:
@@ -11879,7 +12076,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: vr_ar_headset
   label: VR / AR headset
   aliases:
@@ -12049,7 +12247,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: mesh_wifi_system
   label: Mesh Wi-Fi system (node)
   product_family: wifi_networking
@@ -12234,7 +12433,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: 5g_home_gateway
   label: 5G home gateway / CPE
   aliases:
@@ -12362,7 +12562,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: voip_dect_phone
   label: VoIP / DECT phone
   aliases:
@@ -12472,7 +12673,8 @@ products:
   required_any_traits:
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: satellite_terminal
   label: Satellite internet terminal
   aliases:
@@ -12556,7 +12758,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: lora_gateway
   label: LoRa / LoRaWAN gateway
   aliases:
@@ -12649,7 +12852,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_power_strip
   label: Smart power strip / surge protector
   aliases:
@@ -12747,7 +12951,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: wireless_charger
   label: Wireless charging pad / stand
   aliases:
@@ -12857,7 +13062,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: usb_charging_hub
   label: USB charging hub / PD charger
   aliases:
@@ -12975,7 +13181,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: home_energy_monitor
   label: Home energy monitor
   aliases:
@@ -13075,7 +13282,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_meter_display
   label: Smart meter in-home display (IHD)
   aliases:
@@ -13174,7 +13382,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: ev_charger_home
   label: Home EV charger (EVSE)
   family_keywords:
@@ -13312,7 +13521,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: home_battery_system
   label: Home battery energy storage system
   aliases:
@@ -13412,7 +13622,8 @@ products:
   required_any_traits:
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_doorbell
   label: Smart video doorbell
   aliases:
@@ -13537,7 +13748,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: ip_camera
   label: IP camera / smart security camera
   family_keywords:
@@ -13689,7 +13901,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: security_hub
   label: Smart security alarm hub
   aliases:
@@ -13819,7 +14032,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_smoke_co_alarm
   label: Smart smoke / CO alarm
   aliases:
@@ -13940,7 +14154,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: baby_monitor
   label: Video baby monitor
   aliases:
@@ -14046,7 +14261,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: pet_camera
   label: Pet camera / pet monitor
   aliases:
@@ -14166,7 +14382,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: action_camera
   label: Action camera
   aliases:
@@ -14263,7 +14480,8 @@ products:
   required_any_traits:
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: ip_intercom
   label: IP video intercom
   aliases:
@@ -14366,7 +14584,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_lock
   label: Smart lock
   aliases:
@@ -14559,7 +14778,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_light_controller
   label: Smart lighting controller / bridge
   aliases:
@@ -14671,7 +14891,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_home_panel
   label: Smart home wall panel / controller
   aliases:
@@ -14773,7 +14994,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_sensor_node
   label: Smart home sensor (environmental)
   aliases:
@@ -14901,7 +15123,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_button_remote
   label: Smart button / voice remote
   aliases:
@@ -14951,6 +15174,7 @@ products:
   - radio
   - remote_control
   - app_control
+  - matter
   functional_classes:
   - home_device
   - av_ict_device
@@ -15012,7 +15236,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smartwatch_fitness_tracker
   label: Smartwatch / fitness tracker
   aliases:
@@ -15154,7 +15379,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_scale
   label: Smart body scale / composition monitor
   aliases:
@@ -15263,7 +15489,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_blood_pressure_monitor
   label: Smart blood pressure monitor
   aliases:
@@ -15349,7 +15576,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: sleep_tracker
   label: Sleep tracker hub / smart sleep device
   aliases:
@@ -15447,7 +15675,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: solar_inverter_gateway
   label: Home solar inverter / energy gateway
   aliases:
@@ -15559,7 +15788,8 @@ products:
   required_any_traits:
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_scooter
   label: Electric scooter
   aliases:
@@ -15671,7 +15901,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: hoverboard
   label: Hoverboard / self-balancing scooter
   aliases:
@@ -15818,7 +16049,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_skateboard
   label: Electric skateboard
   aliases:
@@ -15872,7 +16104,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_unicycle
   label: Electric unicycle
   aliases:
@@ -15920,7 +16153,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: consumer_drone
   label: Consumer camera drone
   aliases:
@@ -16007,7 +16241,8 @@ products:
   required_any_traits:
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: drone_controller
   label: Drone remote controller
   aliases:
@@ -16080,7 +16315,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_toy
   label: Smart connected toy
   aliases:
@@ -16118,6 +16354,11 @@ products:
   - bluetooth
   - microphone
   - speaker
+  - radio
+  - app_control
+  - cloud
+  - internet
+  - ota
   functional_classes:
   - toy_product
   likely_standards:
@@ -16168,7 +16409,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: baby_monitor_smart
   label: Smart baby monitor
   aliases:
@@ -16275,7 +16517,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smartwatch
   label: Smartwatch
   aliases:
@@ -16372,7 +16615,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_ring
   label: Smart ring
   aliases:
@@ -16459,7 +16703,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: vr_headset
   label: VR / XR headset
   aliases:
@@ -16579,7 +16824,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: video_doorbell
   label: Video doorbell
   aliases:
@@ -16686,7 +16932,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_security_camera
   label: Smart security camera
   aliases:
@@ -16820,7 +17067,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: gps_pet_tracker
   label: GPS pet tracker
   aliases:
@@ -16901,7 +17149,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_pet_feeder
   label: Smart pet feeder
   aliases:
@@ -16934,6 +17183,10 @@ products:
   - app_control
   - food_contact
   - motorized
+  - radio
+  - cloud
+  - internet
+  - ota
   functional_classes:
   - pet_device
   - connected_device
@@ -16979,7 +17232,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: portable_power_station
   label: Portable power station
   aliases:
@@ -17085,7 +17339,8 @@ products:
   required_any_traits:
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: power_bank
   label: Power bank
   aliases:
@@ -17189,7 +17444,8 @@ products:
   required_any_traits:
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: ems_tens_device
   label: EMS / TENS wellness device
   aliases:
@@ -17272,7 +17528,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: red_light_therapy_device
   label: Red light therapy device
   aliases:
@@ -17339,7 +17596,8 @@ products:
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: juicer
   label: Juicer
   aliases:
@@ -17457,7 +17715,8 @@ products:
   - home cinema
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: hair_curler
   label: Hair curler / curling iron
   aliases:
@@ -17583,7 +17842,8 @@ products:
   - display
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: led_shoes
   label: LED shoes / light-up footwear
   aliases:
@@ -17627,6 +17887,9 @@ products:
   - wearable
   - body_worn_or_applied
   - portable
+  - bluetooth
+  - radio
+  - app_control
   functional_classes:
   - wearable_device
   likely_standards: []
@@ -17695,7 +17958,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: audio_glasses
   label: Audio glasses / smart audio eyewear
   aliases:
@@ -17849,7 +18113,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: soil_moisture_sensor
   label: Soil moisture sensor / plant monitor
   aliases:
@@ -17955,7 +18220,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: rc_car
   label: RC car / remote-controlled toy vehicle
   aliases:
@@ -18065,7 +18331,8 @@ products:
   - remote button
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: rc_boat
   label: RC boat / remote-controlled toy boat
   aliases:
@@ -18164,7 +18431,8 @@ products:
   - remote button
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_bicycle
   label: Electric bicycle / e-bike
   aliases:
@@ -18335,7 +18603,8 @@ products:
   - solar battery
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_treadmill
   label: Treadmill / smart treadmill
   aliases:
@@ -18370,6 +18639,12 @@ products:
   - mains_powered
   - display
   - app_control
+  - radio
+  - wifi
+  - cloud
+  - internet
+  - ota
+  - data_storage
   functional_classes:
   - fitness_device
   likely_standards:
@@ -18408,7 +18683,10 @@ products:
   - treadmill-smart-treadmill
   - treadmillsmarttreadmill
   - treadmill smart treadmills
-  marketplace_aliases: []
+  marketplace_aliases:
+  - connected treadmill
+  - wifi treadmill
+  - app treadmill
   not_when_text_contains:
   - display hub
   - smart display
@@ -18433,7 +18711,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: elliptical_trainer
   label: Elliptical trainer / cross trainer
   aliases:
@@ -18503,7 +18782,9 @@ products:
   - elliptical-trainer-cross-trainer
   - ellipticaltrainercrosstrainer
   - elliptical trainer cross trainers
-  marketplace_aliases: []
+  marketplace_aliases:
+  - connected elliptical
+  - smart cross trainer
   not_when_text_contains:
   - display hub
   - projector
@@ -18526,7 +18807,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: exercise_bike
   label: Exercise bike / stationary bike
   aliases:
@@ -18613,7 +18895,10 @@ products:
   - exercise-bike-stationary-bike
   - exercisebikestationarybike
   - exercise bike stationary bikes
-  marketplace_aliases: []
+  marketplace_aliases:
+  - smart exercise bike
+  - connected bike trainer
+  - app exercise bike
   not_when_text_contains:
   - projector
   - display hub
@@ -18636,7 +18921,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: smart_jump_rope
   label: Smart jump rope
   aliases:
@@ -18664,6 +18950,9 @@ products:
   - portable
   - display
   - bluetooth
+  - radio
+  - app_control
+  - data_storage
   functional_classes:
   - fitness_device
   - wearable_device
@@ -18718,7 +19007,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: cordless_power_drill
   label: Cordless power drill / drill driver
   aliases:
@@ -18827,7 +19117,8 @@ products:
   required_any_traits:
   - battery_powered
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: printer_3d
   label: 3D printer
   aliases:
@@ -18929,7 +19220,8 @@ products:
   - projector
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: pen_3d
   label: 3D printing pen
   aliases:
@@ -19008,7 +19300,8 @@ products:
   - router
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: solar_panel_module
   label: Solar panel / PV module
   aliases:
@@ -19100,7 +19393,8 @@ products:
   - energy monitor
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: digital_piano
   label: Digital piano / electronic keyboard
   aliases:
@@ -19203,7 +19497,8 @@ products:
   - smart speaker
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: electric_guitar
   label: Electric guitar / instrument amplifier ecosystem
   aliases:
@@ -19298,7 +19593,8 @@ products:
   - projector
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: robot_mop
   label: Robot mop / robotic floor mop
   aliases:
@@ -19397,4 +19693,5 @@ products:
   - gateway
   required_any_traits: []
   forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.

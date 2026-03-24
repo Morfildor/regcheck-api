@@ -55,6 +55,25 @@ RADIO_TRAITS = {
 CONNECTED_TRAITS = {"app_control", "cloud", "internet", "internet_connected", "ota", "account", "authentication"}
 SERVICE_DEPENDENT_TRAITS = CONNECTED_TRAITS | {"personal_data_likely", "monetary_transaction"}
 ENGINE_VERSION = "2.0"
+SMART_CONNECTED_PATTERNS = [
+    r"\bsmart\b",
+    r"\bconnected\b",
+    r"\bapp[ -]?connected\b",
+    r"\bworks[ -]?with[ -]?alexa\b",
+    r"\bgoogle[ -]?home\b",
+    r"\bapple[ -]?home\b",
+    r"\bhomekit\b",
+    r"\bsmartthings\b",
+    r"\btuya\b",
+]
+WIRED_NETWORK_PATTERNS = [
+    r"\bethernet\b",
+    r"\brj45\b",
+    r"\blan\b",
+    r"\bpoe\b",
+    r"\bcat[ -]?[56]\b",
+    r"\bwired[ -]?network\b",
+]
 ELECTRONIC_SIGNAL_TRAITS = RADIO_TRAITS | CONNECTED_TRAITS | {
     "av_ict",
     "camera",
@@ -77,8 +96,6 @@ NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
     (r"\bmulti[ -]?cooker\b", "multicooker"),
     (r"\bbean[ -]?to[ -]?cup\b", "bean to cup"),
     (r"\bair[ -]?conditioning\b", "air conditioner"),
-    (r"\btooth[ -]?brushes\b", "toothbrushes"),
-    (r"\btooth[ -]?brush\b", "toothbrush"),
     (r"\bsmart home\b", "smart_home"),
     (r"\be[ -]?ink\b", "eink"),
     (r"\be[ -]?paper\b", "epaper"),
@@ -143,8 +160,16 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bsmartphone app\b",
         r"\bapp control\b",
         r"\bapp controlled\b",
+        r"\bapp enabled\b",
+        r"\bapp connected\b",
         r"\bcontrol(?:led)? via app\b",
         r"\bworks with app\b",
+        r"\bworks with alexa\b",
+        r"\bgoogle home\b",
+        r"\bapple home\b",
+        r"\bhomekit\b",
+        r"\bsmartthings\b",
+        r"\btuya\b",
     ],
     "cloud": [
         r"\bcloud\b",
@@ -153,6 +178,9 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bremote server\b",
         r"\bbackend api\b",
         r"\bweb service\b",
+        r"\bout of home\b",
+        r"\bremote monitoring\b",
+        r"\bremote diagnostics\b",
     ],
     "internet": [
         r"\binternet\b",
@@ -160,6 +188,10 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bonline service\b",
         r"\bremote access\b",
         r"\bweb portal\b",
+        r"\biot\b",
+        r"\binternet of things\b",
+        r"\bconnected device\b",
+        r"\bconnected product\b",
     ],
     "local_only": [r"\boffline\b", r"\bno cloud\b", r"\bno internet\b", r"\blocal only\b", r"\blan only\b"],
     "ota": [
@@ -169,8 +201,21 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bremote firmware update\b",
         r"\bsecurity patch\b",
         r"\bsoftware update over\b",
+        r"\bautomatic updates?\b",
+        r"\bsecurity updates?\b",
+        r"\bsoftware security updates?\b",
     ],
-    "account": [r"\baccount\b", r"\blogin\b", r"\blog in\b", r"\bsign in\b", r"\buser account\b", r"\buser profile\b"],
+    "account": [
+        r"\baccount\b",
+        r"\blogin\b",
+        r"\blog in\b",
+        r"\bsign in\b",
+        r"\buser account\b",
+        r"\buser profile\b",
+        r"\baccount required\b",
+        r"\bcreate account\b",
+        r"\bsign up\b",
+    ],
     "authentication": [
         r"\bauthentication\b",
         r"\bpassword\b",
@@ -181,6 +226,8 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bpairing code\b",
         r"\btwo factor\b",
         r"\bmfa\b",
+        r"\b2fa\b",
+        r"\bpasskey\b",
     ],
     "av_ict": [
         r"\brouter\b",
@@ -224,6 +271,7 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bvirtual currency\b",
         r"\bin app purchase\b",
         r"\bplace order\b",
+        r"\bpaid plan\b",
     ],
     "camera": [r"\bcamera\b"],
     "microphone": [r"\bmicrophone\b", r"\bmic\b", r"\bvoice assistant\b", r"\bvoice control\b", r"\bvoice command\b"],
@@ -236,10 +284,23 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "screen_mirroring": [r"\bscreen mirroring\b", r"\bchromecast\b", r"\bairplay\b", r"\bmiracast\b"],
     "multi_room_audio": [r"\bmulti room audio\b", r"\bmultiroom audio\b"],
     "spatial_audio": [r"\bspatial audio\b", r"\bdolby atmos\b", r"\bdts x\b", r"\b3d audio\b"],
-    "voice_assistant": [r"\bvoice assistant\b", r"\balexa\b", r"\bgoogle assistant\b", r"\bsiri\b", r"\bbixby\b"],
+    "voice_assistant": [
+        r"\bvoice assistant\b",
+        r"\balexa\b",
+        r"\bgoogle assistant\b",
+        r"\bsiri\b",
+        r"\bbixby\b",
+        r"\bworks with alexa\b",
+    ],
     "privacy_switch": [r"\bprivacy switch\b", r"\bmic mute switch\b", r"\bcamera kill switch\b"],
     "parental_controls": [r"\bparental control\b", r"\bfamily safety\b", r"\bcontent filter\b"],
-    "subscription_dependency": [r"\bsubscription required\b", r"\brequires subscription\b", r"\bpaid subscription\b"],
+    "subscription_dependency": [
+        r"\bsubscription required\b",
+        r"\brequires subscription\b",
+        r"\bpaid subscription\b",
+        r"\bsubscription plan\b",
+        r"\bservice plan\b",
+    ],
     "laser": [r"\blaser\b", r"\blidar\b", r"\blaser scanner\b", r"\brangefinder\b"],
     "location": [r"\bgps\b", r"\bgnss\b", r"\bgeolocation\b", r"\blocation tracking\b"],
     "battery_powered": [
@@ -296,7 +357,13 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "cooling": [r"\bcooling\b", r"\brefrigerat\b", r"\bfreezer\b", r"\bice\b", r"\bchill\b"],
     "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bdrive\b"],
     "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
-    "remote_management": [r"\bremote management\b", r"\bdevice management\b", r"\bremote provisioning\b"],
+    "remote_management": [
+        r"\bremote management\b",
+        r"\bdevice management\b",
+        r"\bremote provisioning\b",
+        r"\bfleet management\b",
+        r"\bremote diagnostics\b",
+    ],
     "secure_boot": [r"\bsecure boot\b"],
     "hardware_security_element": [r"\bsecurity element\b", r"\btpm\b", r"\bhsm\b", r"\bsecure enclave\b"],
     "ai_related": [r"\bai\b", r"\bmachine learning\b", r"\bneural\b", r"\bllm\b"],
@@ -433,6 +500,68 @@ def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
         inferred.add("portable")
     if "food_contact" in explicit_traits and "consumer" not in explicit_traits:
         inferred.add("consumer")
+
+    return inferred
+
+
+def _infer_connected_traits(text: str, signal_traits: set[str]) -> set[str]:
+    inferred: set[str] = set()
+
+    local_only = "local_only" in signal_traits or _has_any_regex(text, [r"\blocal only\b", r"\boffline only\b", r"\blan only\b"])
+    wired_only = _has_any_regex(text, WIRED_NETWORK_PATTERNS)
+    smartish = _has_any_regex(text, SMART_CONNECTED_PATTERNS)
+    consumerish = bool({"consumer", "household", "personal_care", "wearable", "pet_use"} & signal_traits) or _has_any_regex(
+        text, [r"\bhousehold\b", r"\bconsumer\b", r"\bdomestic\b", r"\bappliance\b", r"\bhome device\b"]
+    )
+    applianceish = bool({"heating", "motorized", "food_contact", "household"} & signal_traits)
+    portable_app_first = bool({"battery_powered", "portable", "wearable", "body_worn_or_applied", "personal_care", "oral_care"} & signal_traits)
+    body_near = bool({"wearable", "body_worn_or_applied", "personal_care", "oral_care"} & signal_traits)
+    voiceish = "voice_assistant" in signal_traits
+    serviceish = bool({"cloud", "internet", "app_control", "ota", "account", "authentication", "subscription_dependency", "remote_management"} & signal_traits)
+
+    if voiceish:
+        inferred.update({"app_control", "microphone"})
+        if consumerish:
+            inferred.add("speaker")
+
+    if "subscription_dependency" in signal_traits:
+        inferred.add("monetary_transaction")
+
+    if local_only:
+        if "app_control" in signal_traits and portable_app_first and not (RADIO_TRAITS & signal_traits):
+            inferred.update({"bluetooth", "radio"})
+        if {"wifi", "bluetooth", "zigbee", "thread", "matter", "cellular"} & signal_traits:
+            inferred.add("radio")
+        return inferred
+
+    if "ota" in signal_traits:
+        inferred.update({"internet", "internet_connected"})
+
+    if smartish or voiceish:
+        inferred.add("app_control")
+
+    if voiceish or smartish or {"cloud", "account", "authentication", "remote_management", "subscription_dependency"} & signal_traits:
+        inferred.update({"internet", "internet_connected"})
+        if consumerish:
+            inferred.add("cloud")
+
+    if "cloud" in signal_traits:
+        inferred.update({"internet", "internet_connected"})
+
+    if not wired_only and consumerish and (smartish or serviceish):
+        if not (RADIO_TRAITS & (signal_traits | inferred)):
+            if body_near or (portable_app_first and not applianceish):
+                inferred.update({"bluetooth", "radio"})
+            else:
+                inferred.update({"wifi", "radio"})
+
+    if smartish and consumerish and {"wifi", "bluetooth", "radio", "cloud", "internet"} & (signal_traits | inferred):
+        inferred.add("ota")
+
+    if {"wifi", "cloud", "internet", "ota"} & (signal_traits | inferred):
+        inferred.add("internet_connected")
+    if {"account", "authentication"} & (signal_traits | inferred):
+        inferred.add("personal_data_likely")
 
     return inferred
 
@@ -633,26 +762,43 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     return score, reasons
 
 
+ALIAS_FIELD_BONUS: dict[str, int] = {
+    "strong_aliases": 12,
+    "aliases": 0,
+    "marketplace_aliases": 6,
+    "weak_aliases": -4,
+}
+
+
 def _best_alias_match(text: str, product: dict[str, Any]) -> tuple[str | None, int, list[str]]:
     best_alias = None
     best_score = 0
     best_reasons: list[str] = []
+    seen_aliases: set[str] = set()
 
-    for alias in product.get("aliases", []):
-        score = _alias_score(text, alias)
-        if score <= 0:
-            continue
+    for field, field_bonus in ALIAS_FIELD_BONUS.items():
+        for alias in _string_list(product.get(field)):
+            if alias in seen_aliases:
+                continue
+            seen_aliases.add(alias)
 
-        reasons = [f"matched alias '{alias}'"]
-        alias_bonus = _alias_specificity_bonus(alias)
-        if alias_bonus:
-            score += alias_bonus
-            reasons.append(f"alias specificity {alias_bonus:+d}")
+            score = _alias_score(text, alias)
+            if score <= 0:
+                continue
 
-        if best_alias is None or score > best_score:
-            best_alias = alias
-            best_score = score
-            best_reasons = reasons
+            reasons = [f"matched {field.replace('_', ' ')[:-1]} '{alias}'"]
+            alias_bonus = _alias_specificity_bonus(alias)
+            if alias_bonus:
+                score += alias_bonus
+                reasons.append(f"alias specificity {alias_bonus:+d}")
+            if field_bonus:
+                score += field_bonus
+                reasons.append(f"{field} bonus {field_bonus:+d}")
+
+            if best_alias is None or score > best_score:
+                best_alias = alias
+                best_score = score
+                best_reasons = reasons
 
     return best_alias, best_score, best_reasons
 
@@ -1106,6 +1252,11 @@ def _collect_text_trait_signals(text: str) -> tuple[set[str], set[str], dict[str
     if inferred_traits:
         _record_trait_state(state_map, "text_inferred", inferred_traits, "text:baseline_inference")
 
+    connected_inferred = _expand_related_traits(_infer_connected_traits(text, explicit_traits | inferred_traits)) - explicit_traits - inferred_traits
+    if connected_inferred:
+        inferred_traits |= connected_inferred
+        _record_trait_state(state_map, "text_inferred", connected_inferred, "text:connected_inference")
+
     return explicit_traits, inferred_traits, state_map, negations
 
 
@@ -1481,6 +1632,13 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
 
     corroborated_default = {trait for trait in product_default_traits if trait in explicit_traits}
     confirmed_traits.update(corroborated_default - SERVICE_DEPENDENT_TRAITS)
+
+    engine_derived_traits = _expand_related_traits(
+        _infer_connected_traits(text, explicit_traits | inferred_traits | product_core_traits | product_default_traits)
+    ) - explicit_traits - inferred_traits
+    if engine_derived_traits:
+        inferred_traits |= engine_derived_traits
+        _record_trait_state(state_map, "engine_derived", engine_derived_traits, "engine:connectivity_inference")
 
     diagnostics.extend(match["diagnostics"])
     if product_candidates:

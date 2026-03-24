@@ -1,21 +1,30 @@
 traits:
 - id: account
   label: User account / profile
-  description: Requires, supports, or stores a user account, customer profile, login identity, or app-bound user record.
+  description: Requires, supports, or stores a user account, customer profile, login
+    identity, or app-bound user record.
   aliases:
   - account
   - login account
   - user profile
   - sign in
+  - account required
+  - create account
+  - sign up
   examples:
   - login account
   - user profile
   - sign in
+  - account required
+  - create account
   regex:
   - \baccount\b
   - \blogin[ -]?account\b
   - \buser[ -]?profile\b
   - \bsign[ -]?in\b
+  - \baccount[ -]?required\b
+  - \bcreate[ -]?account\b
+  - \bsign[ -]?up\b
   normalized_to: account
   normalization_priority: 0
 - id: ai_related
@@ -40,7 +49,8 @@ traits:
   normalization_priority: 0
 - id: air_treatment
   label: Air treatment
-  description: Purifies, humidifies, dehumidifies, cools, heats, or otherwise treats air
+  description: Purifies, humidifies, dehumidifies, cools, heats, or otherwise treats
+    air
   aliases:
   - air treatment
   examples: []
@@ -60,28 +70,49 @@ traits:
   normalization_priority: 0
 - id: app_control
   label: App control
-  description: Can be controlled, configured, commissioned, monitored, or updated from a mobile or web app.
+  description: Can be controlled, configured, commissioned, monitored, or updated
+    from a mobile or web app.
   aliases:
   - app control
   - app controlled
   - mobile app
   - smartphone app
   - companion app
+  - app enabled
+  - app connected
+  - works with alexa
+  - google home
+  - apple home
+  - homekit
+  - smartthings
+  - tuya
   examples:
   - app controlled
   - mobile app
   - smartphone app
+  - app connected
+  - works with alexa
+  - google home
   regex:
   - \bapp[ -]?control\b
   - \bapp[ -]?controlled\b
   - \bmobile[ -]?app\b
   - \bsmartphone[ -]?app\b
   - \bcompanion[ -]?app\b
+  - \bapp[ -]?enabled\b
+  - \bapp[ -]?connected\b
+  - \bworks[ -]?with[ -]?alexa\b
+  - \bgoogle[ -]?home\b
+  - \bapple[ -]?home\b
+  - \bhomekit\b
+  - \bsmartthings\b
+  - \btuya\b
   normalized_to: app_control
   normalization_priority: 0
 - id: authentication
   label: Authentication
-  description: Uses passwords, PINs, passkeys, pairing codes, tokens, certificates, MFA, or similar access-control measures.
+  description: Uses passwords, PINs, passkeys, pairing codes, tokens, certificates,
+    MFA, or similar access-control measures.
   aliases:
   - authentication
   - password
@@ -89,10 +120,16 @@ traits:
   - passcode
   - credential
   - mfa
+  - log in
+  - passkey
+  - 2fa
   examples:
   - password
   - pin
   - passcode
+  - log in
+  - passkey
+  - 2fa
   regex:
   - \bauthentication\b
   - \bpassword\b
@@ -100,11 +137,15 @@ traits:
   - \bpasscode\b
   - \bcredential\b
   - \bmfa\b
+  - \blog[ -]?in\b
+  - \bpasskey\b
+  - \b2fa\b
   normalized_to: authentication
   normalization_priority: 0
 - id: av_ict
   label: AV/ICT equipment
-  description: Audio, video, display, communication, or ICT-style equipment rather than a typical household appliance
+  description: Audio, video, display, communication, or ICT-style equipment rather
+    than a typical household appliance
   aliases:
   - av ict
   examples: []
@@ -169,7 +210,8 @@ traits:
   normalization_priority: 0
 - id: built_in
   label: Built-in appliance
-  description: Designed to be integrated into furniture, cabinetry, or a built-in installation
+  description: Designed to be integrated into furniture, cabinetry, or a built-in
+    installation
   aliases:
   - built in
   examples: []
@@ -237,23 +279,32 @@ traits:
   normalization_priority: 0
 - id: cloud
   label: Cloud / backend connection
-  description: Connects to vendor cloud services, remote servers, SaaS backends, or web APIs beyond the local network.
+  description: Connects to vendor cloud services, remote servers, SaaS backends, or
+    web APIs beyond the local network.
   aliases:
   - cloud
   - cloud service
   - backend service
   - remote server
   - vendor cloud
+  - out of home control
+  - remote monitoring
+  - remote diagnostics
   examples:
   - cloud service
   - backend service
   - remote server
+  - out of home control
+  - remote monitoring
   regex:
   - \bcloud\b
   - \bcloud[ -]?service\b
   - \bbackend[ -]?service\b
   - \bremote[ -]?server\b
   - \bvendor[ -]?cloud\b
+  - \bout[ -]?of[ -]?home\b
+  - \bremote[ -]?monitoring\b
+  - \bremote[ -]?diagnostics\b
   normalized_to: cloud
   normalization_priority: 0
 - id: commercial_food_service
@@ -383,7 +434,8 @@ traits:
   normalization_priority: 0
 - id: fixed_installation
   label: Fixed installation
-  description: Intended to be fixed, wall mounted, ceiling mounted, built in, or otherwise permanently installed
+  description: Intended to be fixed, wall mounted, ceiling mounted, built in, or otherwise
+    permanently installed
   aliases:
   - fixed installation
   examples: []
@@ -549,29 +601,40 @@ traits:
   normalization_priority: 0
 - id: internet
   label: Internet connectivity
-  description: Connects to the public internet or relies on internet-facing services rather than operating only on a local
-    network.
+  description: Connects to the public internet or relies on internet-facing services
+    rather than operating only on a local network.
   aliases:
   - internet
   - online
   - web connected
   - remote access
   - internet connected
+  - iot
+  - internet of things
+  - connected device
+  - connected product
   examples:
   - online
   - web connected
   - remote access
+  - iot
+  - connected device
   regex:
   - \binternet\b
   - \bonline\b
   - \bweb[ -]?connected\b
   - \bremote[ -]?access\b
   - \binternet[ -]?connected\b
+  - \biot\b
+  - \binternet[ -]?of[ -]?things\b
+  - \bconnected[ -]?device\b
+  - \bconnected[ -]?product\b
   normalized_to: internet
   normalization_priority: 0
 - id: laser
   label: Laser emission
-  description: Includes a laser source, laser engine, scanner, rangefinder, or similar optical emitter
+  description: Includes a laser source, laser engine, scanner, rangefinder, or similar
+    optical emitter
   aliases:
   - laser
   examples: []
@@ -591,7 +654,8 @@ traits:
   normalization_priority: 0
 - id: local_only
   label: Local-only operation
-  description: Operates locally without dependency on cloud services or public internet access.
+  description: Operates locally without dependency on cloud services or public internet
+    access.
   aliases:
   - local only
   examples: []
@@ -717,23 +781,32 @@ traits:
   normalization_priority: 0
 - id: ota
   label: OTA software updates
-  description: Supports remote firmware, software, or security updates delivered over the network.
+  description: Supports remote firmware, software, or security updates delivered over
+    the network.
   aliases:
   - ota
   - over the air
   - firmware update
   - remote update
   - software update
+  - automatic update
+  - security update
+  - software security update
   examples:
   - over the air
   - firmware update
   - remote update
+  - automatic update
+  - security update
   regex:
   - \bota\b
   - \bover[ -]?the[ -]?air\b
   - \bfirmware[ -]?update\b
   - \bremote[ -]?update\b
   - \bsoftware[ -]?update\b
+  - \bautomatic[ -]?updates?\b
+  - \bsecurity[ -]?updates?\b
+  - \bsoftware[ -]?security[ -]?updates?\b
   normalized_to: ota
   normalization_priority: 0
 - id: outdoor_use
@@ -758,7 +831,8 @@ traits:
   normalization_priority: 0
 - id: personal_data_likely
   label: Likely personal data processing
-  description: Likely to process identifiable user, household, profile, voice, image, location, or behavior data.
+  description: Likely to process identifiable user, household, profile, voice, image,
+    location, or behavior data.
   aliases:
   - personal data likely
   - personal data
@@ -932,7 +1006,8 @@ traits:
   normalization_priority: 0
 - id: textile_care
   label: Textile care
-  description: Used to wash, dry, iron, steam, or otherwise care for garments and textiles
+  description: Used to wash, dry, iron, steam, or otherwise care for garments and
+    textiles
   aliases:
   - textile care
   examples: []
@@ -1039,16 +1114,22 @@ traits:
   - wlan
   - wireless lan
   - '802.11'
+  - wifi enabled
+  - wifi connected
   examples:
   - wi fi
   - wlan
   - wireless lan
+  - wifi enabled
+  - wifi connected
   regex:
   - \bwifi\b
   - \bwi[ -]?fi\b
   - \bwlan\b
   - \bwireless[ -]?lan\b
   - \b802\.11\b
+  - \bwi[ -]?fi[ -]?enabled\b
+  - \bwi[ -]?fi[ -]?connected\b
   normalized_to: wifi
   normalization_priority: 0
 - id: zigbee
@@ -1063,17 +1144,27 @@ traits:
   normalization_priority: 0
 - id: monetary_transaction
   label: Monetary transaction
-  description: Supports payments, subscriptions, ordering, wallet functions, or transfer of monetary value.
+  description: Supports payments, subscriptions, ordering, wallet functions, or transfer
+    of monetary value.
   aliases:
   - monetary transaction
-  examples: []
+  - subscription payment
+  - in app purchase
+  - paid plan
+  examples:
+  - in app purchase
+  - paid plan
   regex:
   - \bmonetary[ -]?transaction\b
+  - \bsubscription[ -]?payment\b
+  - \bin[ -]?app[ -]?purchase\b
+  - \bpaid[ -]?plan\b
   normalized_to: monetary_transaction
   normalization_priority: 0
 - id: wifi_5ghz
   label: 5 GHz Wi-Fi
-  description: Supports 5 GHz Wi-Fi operation, including dual-band Wi-Fi where 5 GHz is present
+  description: Supports 5 GHz Wi-Fi operation, including dual-band Wi-Fi where 5 GHz
+    is present
   aliases:
   - wifi 5ghz
   examples: []
@@ -1154,7 +1245,8 @@ traits:
   normalization_priority: 0
 - id: uwb
   label: Ultra-Wideband (UWB)
-  description: Uses Ultra-Wideband radio for precise ranging, spatial awareness, or secure device-to-device positioning
+  description: Uses Ultra-Wideband radio for precise ranging, spatial awareness, or
+    secure device-to-device positioning
   aliases:
   - uwb
   examples: []
@@ -1174,7 +1266,8 @@ traits:
   normalization_priority: 0
 - id: lora
   label: LoRa radio
-  description: Uses LoRa spread-spectrum radio modulation for long-range, low-power communication
+  description: Uses LoRa spread-spectrum radio modulation for long-range, low-power
+    communication
   aliases:
   - lora
   examples: []
@@ -1214,7 +1307,8 @@ traits:
   normalization_priority: 0
 - id: 5g_nr
   label: 5G NR
-  description: Uses 5G New Radio (NR) cellular technology, including Sub-6GHz and mmWave bands
+  description: Uses 5G New Radio (NR) cellular technology, including Sub-6GHz and
+    mmWave bands
   aliases:
   - 5g nr
   examples: []
@@ -1224,7 +1318,8 @@ traits:
   normalization_priority: 0
 - id: satellite_connectivity
   label: Satellite connectivity
-  description: Connects via satellite network (e.g. Starlink, OneWeb, Iridium) for internet or telemetry access
+  description: Connects via satellite network (e.g. Starlink, OneWeb, Iridium) for
+    internet or telemetry access
   aliases:
   - satellite connectivity
   examples: []
@@ -1234,7 +1329,8 @@ traits:
   normalization_priority: 0
 - id: esim
   label: eSIM
-  description: Contains an embedded SIM (eSIM) for cellular network provisioning without a physical SIM card
+  description: Contains an embedded SIM (eSIM) for cellular network provisioning without
+    a physical SIM card
   aliases:
   - esim
   examples: []
@@ -1254,7 +1350,8 @@ traits:
   normalization_priority: 0
 - id: poe_supply
   label: PoE power sourcing
-  description: Supplies power over Ethernet, such as PoE switches, injectors, or power-sourcing equipment.
+  description: Supplies power over Ethernet, such as PoE switches, injectors, or power-sourcing
+    equipment.
   aliases:
   - poe supply
   examples: []
@@ -1284,7 +1381,8 @@ traits:
   normalization_priority: 0
 - id: tri_band_wifi
   label: Tri-band Wi‑Fi
-  description: Supports tri-band Wi‑Fi operation, often used in higher-end routers and mesh systems.
+  description: Supports tri-band Wi‑Fi operation, often used in higher-end routers
+    and mesh systems.
   aliases:
   - tri band wifi
   examples: []
@@ -1294,7 +1392,8 @@ traits:
   normalization_priority: 0
 - id: mesh_network_node
   label: Mesh network node
-  description: Works as a mesh Wi‑Fi node, satellite, extender, or whole-home coverage point.
+  description: Works as a mesh Wi‑Fi node, satellite, extender, or whole-home coverage
+    point.
   aliases:
   - mesh network node
   examples: []
@@ -1344,7 +1443,8 @@ traits:
   normalization_priority: 0
 - id: wireless_charging_tx
   label: Wireless charging transmitter
-  description: Acts as a wireless charger, charging pad, or charging stand for another device.
+  description: Acts as a wireless charger, charging pad, or charging stand for another
+    device.
   aliases:
   - wireless charging tx
   examples: []
@@ -1364,7 +1464,8 @@ traits:
   normalization_priority: 0
 - id: backup_battery
   label: Backup battery
-  description: Contains a backup battery to maintain operation or alarm during mains power outage
+  description: Contains a backup battery to maintain operation or alarm during mains
+    power outage
   aliases:
   - backup battery
   examples: []
@@ -1374,7 +1475,8 @@ traits:
   normalization_priority: 0
 - id: ev_charging
   label: EV charging
-  description: Provides electric vehicle charging (EVSE function); relevant to IEC 61851 and related standards
+  description: Provides electric vehicle charging (EVSE function); relevant to IEC
+    61851 and related standards
   aliases:
   - ev charging
   examples: []
@@ -1404,7 +1506,8 @@ traits:
   normalization_priority: 0
 - id: smart_grid_ready
   label: Smart grid / demand response
-  description: Supports smart grid demand response, dynamic load management, or grid-interactive operation
+  description: Supports smart grid demand response, dynamic load management, or grid-interactive
+    operation
   aliases:
   - smart grid ready
   examples: []
@@ -1474,7 +1577,8 @@ traits:
   normalization_priority: 0
 - id: lidar
   label: LiDAR sensor
-  description: Uses a LiDAR (light detection and ranging) sensor for distance measurement or obstacle detection
+  description: Uses a LiDAR (light detection and ranging) sensor for distance measurement
+    or obstacle detection
   aliases:
   - lidar
   examples: []
@@ -1494,7 +1598,8 @@ traits:
   normalization_priority: 0
 - id: mapping_capable
   label: Mapping capable
-  description: Creates, stores, or transmits maps of the physical environment (floor plans, room maps)
+  description: Creates, stores, or transmits maps of the physical environment (floor
+    plans, room maps)
   aliases:
   - mapping capable
   examples: []
@@ -1594,7 +1699,8 @@ traits:
   normalization_priority: 0
 - id: flood_detection
   label: Flood / water leak detection
-  description: Detects the presence of water or flooding via a contact or capacitive sensor
+  description: Detects the presence of water or flooding via a contact or capacitive
+    sensor
   aliases:
   - flood detection
   examples: []
@@ -1604,7 +1710,8 @@ traits:
   normalization_priority: 0
 - id: vibration_sensor
   label: Vibration / shock sensor
-  description: Detects vibration, shock, or impact, typically for security or structural monitoring
+  description: Detects vibration, shock, or impact, typically for security or structural
+    monitoring
   aliases:
   - vibration sensor
   examples: []
@@ -1644,7 +1751,8 @@ traits:
   normalization_priority: 0
 - id: strobe_output
   label: Strobe / visual alarm
-  description: Generates a visual alarm (strobe light) for alerting in addition to or instead of sound
+  description: Generates a visual alarm (strobe light) for alerting in addition to
+    or instead of sound
   aliases:
   - strobe output
   examples: []
@@ -1654,7 +1762,8 @@ traits:
   normalization_priority: 0
 - id: screen_mirroring
   label: Screen mirroring
-  description: Supports casting or mirroring technologies such as Chromecast, AirPlay, or Miracast.
+  description: Supports casting or mirroring technologies such as Chromecast, AirPlay,
+    or Miracast.
   aliases:
   - screen mirroring
   examples: []
@@ -1664,7 +1773,8 @@ traits:
   normalization_priority: 0
 - id: multi_room_audio
   label: Multi-room audio
-  description: Participates in a multi-room audio system (e.g. Sonos, WiSA, AirPlay 2, Chromecast Audio)
+  description: Participates in a multi-room audio system (e.g. Sonos, WiSA, AirPlay
+    2, Chromecast Audio)
   aliases:
   - multi room audio
   examples: []
@@ -1674,7 +1784,8 @@ traits:
   normalization_priority: 0
 - id: spatial_audio
   label: Spatial audio
-  description: Supports spatial or 3D audio output (Dolby Atmos, DTS:X, Sony 360 Reality Audio)
+  description: Supports spatial or 3D audio output (Dolby Atmos, DTS:X, Sony 360 Reality
+    Audio)
   aliases:
   - spatial audio
   examples: []
@@ -1684,7 +1795,8 @@ traits:
   normalization_priority: 0
 - id: hdr_display
   label: HDR display
-  description: Display supports High Dynamic Range (HDR10, HDR10+, Dolby Vision, or HLG)
+  description: Display supports High Dynamic Range (HDR10, HDR10+, Dolby Vision, or
+    HLG)
   aliases:
   - hdr display
   examples: []
@@ -1694,7 +1806,8 @@ traits:
   normalization_priority: 0
 - id: high_refresh_display
   label: High refresh rate display
-  description: Display supports refresh rates above 60 Hz (90 Hz, 120 Hz, 144 Hz, or higher)
+  description: Display supports refresh rates above 60 Hz (90 Hz, 120 Hz, 144 Hz,
+    or higher)
   aliases:
   - high refresh display
   examples: []
@@ -1704,7 +1817,8 @@ traits:
   normalization_priority: 0
 - id: edge_ai
   label: Edge AI / on-device inference
-  description: Performs AI or ML inference locally on the device without mandatory cloud dependency
+  description: Performs AI or ML inference locally on the device without mandatory
+    cloud dependency
   aliases:
   - edge ai
   examples: []
@@ -1714,12 +1828,24 @@ traits:
   normalization_priority: 0
 - id: voice_assistant
   label: Voice assistant
-  description: Supports built-in or integrated voice-assistant functions such as Alexa, Google Assistant, Siri, or similar.
+  description: Supports built-in or integrated voice-assistant functions such as Alexa,
+    Google Assistant, Siri, or similar.
   aliases:
   - voice assistant
-  examples: []
+  - alexa
+  - google assistant
+  - siri
+  - works with alexa
+  examples:
+  - alexa
+  - google assistant
+  - siri
   regex:
   - \bvoice[ -]?assistant\b
+  - \balexa\b
+  - \bgoogle[ -]?assistant\b
+  - \bsiri\b
+  - \bworks[ -]?with[ -]?alexa\b
   normalized_to: voice_assistant
   normalization_priority: 0
 - id: privacy_switch
@@ -1734,7 +1860,8 @@ traits:
   normalization_priority: 0
 - id: parental_controls
   label: Parental controls
-  description: Offers parental control or family safety features for content filtering or usage limits
+  description: Offers parental control or family safety features for content filtering
+    or usage limits
   aliases:
   - parental controls
   examples: []
@@ -1744,12 +1871,21 @@ traits:
   normalization_priority: 0
 - id: subscription_dependency
   label: Subscription dependency
-  description: Some core or marketed functions require an ongoing paid subscription or service plan.
+  description: Some core or marketed functions require an ongoing paid subscription
+    or service plan.
   aliases:
   - subscription dependency
-  examples: []
+  - subscription required
+  - requires subscription
+  - paid subscription
+  examples:
+  - subscription required
+  - requires subscription
   regex:
   - \bsubscription[ -]?dependency\b
+  - \bsubscription[ -]?required\b
+  - \brequires[ -]?subscription\b
+  - \bpaid[ -]?subscription\b
   normalized_to: subscription_dependency
   normalization_priority: 0
 - id: secure_boot
@@ -1764,7 +1900,8 @@ traits:
   normalization_priority: 0
 - id: hardware_security_element
   label: Hardware security element
-  description: Contains a hardware security element (SE, TPM, HSM) for key storage and cryptographic operations
+  description: Contains a hardware security element (SE, TPM, HSM) for key storage
+    and cryptographic operations
   aliases:
   - hardware security element
   examples: []
@@ -1774,17 +1911,29 @@ traits:
   normalization_priority: 0
 - id: remote_management
   label: Remote management
-  description: Supports remote provisioning, fleet/device management, admin control, or remote diagnostics.
+  description: Supports remote provisioning, fleet/device management, admin control,
+    or remote diagnostics.
   aliases:
   - remote management
-  examples: []
+  - remote provisioning
+  - fleet management
+  - device management
+  - remote diagnostics
+  examples:
+  - device management
+  - remote diagnostics
   regex:
   - \bremote[ -]?management\b
+  - \bremote[ -]?provisioning\b
+  - \bfleet[ -]?management\b
+  - \bdevice[ -]?management\b
+  - \bremote[ -]?diagnostics\b
   normalized_to: remote_management
   normalization_priority: 0
 - id: matter_bridge
   label: Matter bridge
-  description: Acts as a Matter bridge, translating between non-Matter protocols (Zigbee, Z-Wave, etc.) and Matter
+  description: Acts as a Matter bridge, translating between non-Matter protocols (Zigbee,
+    Z-Wave, etc.) and Matter
   aliases:
   - matter bridge
   examples: []
@@ -1794,7 +1943,8 @@ traits:
   normalization_priority: 0
 - id: outdoor_rated
   label: Outdoor rated
-  description: Weatherproofed or rated for outdoor installation (IP65 or higher, or equivalent enclosure class)
+  description: Weatherproofed or rated for outdoor installation (IP65 or higher, or
+    equivalent enclosure class)
   aliases:
   - outdoor rated
   examples: []
@@ -1804,7 +1954,8 @@ traits:
   normalization_priority: 0
 - id: fanless
   label: Fanless / passive cooling
-  description: Uses passive cooling only; no active fans, relevant to noise, ingress protection, and reliability ratings
+  description: Uses passive cooling only; no active fans, relevant to noise, ingress
+    protection, and reliability ratings
   aliases:
   - fanless
   examples: []
@@ -1824,7 +1975,8 @@ traits:
   normalization_priority: 0
 - id: din_rail_mount
   label: DIN rail mount
-  description: Designed for installation on a DIN rail in a distribution board or control cabinet
+  description: Designed for installation on a DIN rail in a distribution board or
+    control cabinet
   aliases:
   - din rail mount
   examples: []
@@ -1854,7 +2006,8 @@ traits:
   normalization_priority: 0
 - id: traction_motor
   label: Traction motor
-  description: Uses an electric drive motor to propel a rider, vehicle, or mobile platform
+  description: Uses an electric drive motor to propel a rider, vehicle, or mobile
+    platform
   aliases:
   - traction motor
   examples: []
@@ -1874,7 +2027,8 @@ traits:
   normalization_priority: 0
 - id: light_means_of_transport
   label: Light means of transport
-  description: Product or battery is intended for e-bikes, e-scooters, e-skateboards, or similar light transport
+  description: Product or battery is intended for e-bikes, e-scooters, e-skateboards,
+    or similar light transport
   aliases:
   - light means of transport
   examples: []
@@ -1884,7 +2038,8 @@ traits:
   normalization_priority: 0
 - id: drone_flight
   label: Drone flight
-  description: Intended to fly as an unmanned aircraft system or to directly control one
+  description: Intended to fly as an unmanned aircraft system or to directly control
+    one
   aliases:
   - drone flight
   examples: []
@@ -1914,7 +2069,8 @@ traits:
   normalization_priority: 0
 - id: location_tracking
   label: Location tracking
-  description: Tracks a person, animal, vehicle, or object using GNSS or other positioning data
+  description: Tracks a person, animal, vehicle, or object using GNSS or other positioning
+    data
   aliases:
   - location tracking
   examples: []
@@ -1924,7 +2080,8 @@ traits:
   normalization_priority: 0
 - id: battery_pack
   label: Battery pack or power station
-  description: Stores electrical energy for later use, charging, backup, or power delivery
+  description: Stores electrical energy for later use, charging, backup, or power
+    delivery
   aliases:
   - battery pack
   examples: []
@@ -1934,7 +2091,8 @@ traits:
   normalization_priority: 0
 - id: portable_energy
   label: Portable energy product
-  description: Portable energy storage, power bank, or power station function is a main intended use
+  description: Portable energy storage, power bank, or power station function is a
+    main intended use
   aliases:
   - portable energy
   examples: []
@@ -1944,7 +2102,8 @@ traits:
   normalization_priority: 0
 - id: medical_claims
   label: Medical or diagnostic claims
-  description: Claims diagnosis, treatment, monitoring, or other medical purpose and needs borderline review
+  description: Claims diagnosis, treatment, monitoring, or other medical purpose and
+    needs borderline review
   aliases:
   - medical claims
   examples: []
@@ -1984,7 +2143,8 @@ traits:
   normalization_priority: 0
 - id: networked_standby
   label: Networked standby
-  description: Maintains network connectivity or remote-response function while in standby
+  description: Maintains network connectivity or remote-response function while in
+    standby
   aliases:
   - networked standby
   examples: []
@@ -1994,26 +2154,33 @@ traits:
   normalization_priority: 0
 - id: internet_connected
   label: Internet connected
-  description: Directly or indirectly connects to the internet or remote services during normal use
+  description: Directly or indirectly connects to the internet or remote services
+    during normal use
   aliases:
   - internet connected
   - connected to internet
   - internet enabled
   - online connected
+  - cloud connected
+  - remote connected
   examples:
   - connected to internet
   - internet enabled
   - online connected
+  - cloud connected
   regex:
   - \binternet[ -]?connected\b
   - \bconnected[ -]?to[ -]?internet\b
   - \binternet[ -]?enabled\b
   - \bonline[ -]?connected\b
+  - \bcloud[ -]?connected\b
+  - \bremote[ -]?connected\b
   normalized_to: internet
   normalization_priority: 2
 - id: xr
   label: XR / AR / VR device
-  description: Augmented reality, mixed reality, or virtual reality function is part of intended use
+  description: Augmented reality, mixed reality, or virtual reality function is part
+    of intended use
   aliases:
   - xr
   examples: []
@@ -2023,7 +2190,8 @@ traits:
   normalization_priority: 0
 - id: close_proximity_emf
   label: Close proximity EMF
-  description: Radio transmitter or field source is used close to the body, head, or limbs
+  description: Radio transmitter or field source is used close to the body, head,
+    or limbs
   aliases:
   - close proximity emf
   examples: []
@@ -2113,7 +2281,8 @@ traits:
   normalization_priority: 0
 - id: whole_home_wifi
   label: Whole-home Wi‑Fi
-  description: Extends wireless coverage across multiple rooms using a coordinated system.
+  description: Extends wireless coverage across multiple rooms using a coordinated
+    system.
   aliases:
   - whole home wifi
   examples: []
@@ -2123,7 +2292,8 @@ traits:
   normalization_priority: 0
 - id: network_gateway
   label: Network gateway
-  description: Routes or gateways traffic between local networks and an upstream internet connection.
+  description: Routes or gateways traffic between local networks and an upstream internet
+    connection.
   aliases:
   - network gateway
   examples: []
@@ -2133,7 +2303,8 @@ traits:
   normalization_priority: 0
 - id: smart_home_hub
   label: Smart home hub
-  description: Acts as a central controller, bridge, or coordinator for smart-home devices.
+  description: Acts as a central controller, bridge, or coordinator for smart-home
+    devices.
   aliases:
   - smart home hub
   examples: []

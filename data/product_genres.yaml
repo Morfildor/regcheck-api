@@ -593,6 +593,11 @@ genres:
   - media-device
   - mediadevice
   - media devices
+  - smart display
+  - touch panel
+  - voice assistant device
+  - connected controller
+  - smart hub
   traits:
   - electronic
   - av_ict
@@ -658,6 +663,14 @@ genres:
   - electronic
   - av_ict
   - electrical
+  - wifi
+  - bluetooth
+  - thread
+  - zigbee
+  - matter
+  - ota
+  - cloud
+  - internet
   score_penalty_if_traits:
   - water_contact
   - food_contact
@@ -705,6 +718,15 @@ genres:
   - connected-home-accessory
   - connectedhomeaccessory
   - connected home accessorys
+  - works with google home
+  - homekit device
+  - apple home device
+  - smartthings device
+  - tuya device
+  - remote monitoring device
+  - wifi connected appliance
+  - app enabled appliance
+  - connected appliance
   traits:
   - consumer
   - electronic
@@ -713,6 +735,8 @@ genres:
   default_traits:
   - cloud
   - networked_standby
+  - radio
+  - wifi
   functional_classes:
   - home_device
   - connected_device
@@ -777,6 +801,12 @@ genres:
   - internet_connected
   - cloud
   - networked_standby
+  - radio
+  - wifi
+  - ota
+  - internet
+  - account
+  - authentication
   score_penalty_if_traits: []
   negative_examples: []
 - id: security_access_iot
@@ -794,6 +824,12 @@ genres:
   - smartlock
   - smart locks
   - alarms
+  - video doorbell
+  - wifi camera
+  - connected alarm
+  - smart security sensor
+  - works with alexa
+  - google home security
   traits:
   - camera_surveillance
   - security_or_barrier
@@ -801,6 +837,9 @@ genres:
   default_traits:
   - internet_connected
   - app_control
+  - radio
+  - wifi
+  - cloud
   functional_classes:
   - security_device
   - connected_device
@@ -833,6 +872,12 @@ genres:
   - electronic
   - internet_connected
   - app_control
+  - radio
+  - wifi
+  - cloud
+  - ota
+  - camera
+  - microphone
   score_penalty_if_traits: []
   negative_examples: []
 - id: wearable_device
