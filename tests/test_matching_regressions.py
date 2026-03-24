@@ -33,6 +33,14 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertIn("EN 60335-2-52", codes)
         self.assertNotIn("EN 62368-1", codes)
 
+    def test_dental_flosser_prefers_oral_hygiene_over_battery_charger(self) -> None:
+        result = analyze("electric dental flosser with rechargeable battery, charging dock, bathroom use, app connectivity, bluetooth radio")
+
+        self.assertIn(result.product_type, {"battery_powered_oral_hygiene", "oral_hygiene_appliance"})
+        self.assertNotEqual(result.product_type, "battery_charger")
+        codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+        self.assertIn("EN 60335-2-52", codes)
+
     def test_robot_lawn_mower_aliases_share_the_same_safety_route(self) -> None:
         robot = analyze("robot lawn mower")
         robotic = analyze("robotic lawn mower")

@@ -534,6 +534,13 @@ products:
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
     classification.
+  exclude_clues:
+  - toothbrush
+  - flosser
+  - oral irrigator
+  - dental
+  - gum care
+  - water flosser
 - id: battery_powered_oral_hygiene
   label: Battery-powered oral hygiene appliance
   aliases:
@@ -612,6 +619,9 @@ products:
   - battery-powered-oral-hygiene-appliance
   - battery-poweredoralhygieneappliance
   - battery-powered oral hygiene appliances
+  - dental flosser
+  - oral flosser
+  - waterpik
   implied_traits:
   - consumer
   - household
@@ -639,6 +649,8 @@ products:
   - toothbrush
   - smart toothbrush
   - waterpik
+  - dental flosser
+  - oral flosser
   exclude_clues:
   - projector
   - display
@@ -668,6 +680,9 @@ products:
   - electric flosser
   - electric floss machine
   - portable oral irrigator
+  - dental flosser
+  - oral flosser
+  - waterpik
   weak_aliases:
   - cordless oral irrigator
   - dental water flosser
@@ -704,6 +719,9 @@ products:
   - connected toothbrush
   - waterpik flosser
   - smart water flosser
+  - dental flosser
+  - oral flosser
+  - waterpik
   not_when_text_contains:
   - projector
   - display
