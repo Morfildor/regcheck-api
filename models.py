@@ -98,6 +98,8 @@ class StandardItem(BaseModel):
     excluded_by_traits: list[str] = Field(default_factory=list)
     applies_if_products: list[str] = Field(default_factory=list)
     exclude_if_products: list[str] = Field(default_factory=list)
+    applies_if_genres: list[str] = Field(default_factory=list)
+    exclude_if_genres: list[str] = Field(default_factory=list)
     product_match_type: str | None = None
     standard_family: str | None = None
     is_harmonized: bool | None = None
@@ -110,6 +112,7 @@ class StandardItem(BaseModel):
     test_focus: list[str] = Field(default_factory=list)
     evidence_hint: list[str] = Field(default_factory=list)
     keywords: list[str] = Field(default_factory=list)
+    keyword_hits: list[str] = Field(default_factory=list)
     selection_group: str | None = None
     selection_priority: int = 0
     required_fact_basis: FactBasis = "inferred"

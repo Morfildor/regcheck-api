@@ -561,8 +561,6 @@ def _enrich_products(rows: list[dict[str, Any]], genres: list[dict[str, Any]]) -
             default_traits.extend(list(enriched.get("implied_traits") or []))
         enriched["core_traits"] = list(dict.fromkeys(core_traits))
         enriched["default_traits"] = [trait for trait in dict.fromkeys(default_traits) if trait not in enriched["core_traits"]]
-        enriched["likely_standard_refs"] = _normalize_likely_standard_refs(enriched, f"Genre '{enriched['id']}'") if "id" in enriched else []
-        enriched["likely_standards"] = [item["ref"] for item in enriched["likely_standard_refs"]]
         enriched["likely_standard_refs"] = _normalize_likely_standard_refs(enriched, f"Product '{enriched['id']}'") if "id" in enriched else []
         enriched["likely_standards"] = [item["ref"] for item in enriched["likely_standard_refs"]]
         out.append(enriched)

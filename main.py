@@ -49,12 +49,15 @@ app = FastAPI(title="RegCheck API", version=APP_VERSION, lifespan=lifespan)
 
 DEFAULT_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "https://rulegrid.net",
     "https://www.rulegrid.net",
+    "https://regcheck-frontend.vercel.app",
     "https://regcheck-frontend-kutrb6fg3-morfildors-projects.vercel.app",
     "https://regcheck-frontend-git-main-morfildors-projects.vercel.app",
     "https://regcheck-frontend-gxo61fmnd-morfildors-projects.vercel.app",
 ]
+VERCEL_ALLOWED_ORIGIN_REGEX = r"https://.*\.vercel\.app"
 
 extra_origins = [origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin.strip()]
 allow_origins = sorted(set(DEFAULT_ALLOWED_ORIGINS + extra_origins))
@@ -62,6 +65,8 @@ allow_origins = sorted(set(DEFAULT_ALLOWED_ORIGINS + extra_origins))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allow_origins,
+    allow_origin_regex=VERCEL_ALLOWED_ORIGIN_REGEX,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -262,22 +267,3 @@ def run_analysis(product: ProductInput) -> AnalysisResult:
     except Exception as exc:
         logger.exception("Analysis failed")
         raise HTTPException(status_code=500, detail="Analysis failed") from exc
-
-from fastapi.middleware.cors import CORSMiddleware
-
-from fastapi.middleware.cors import CORSMiddleware
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://rulegrid.net",
-        "https://www.rulegrid.net",
-        "https://regcheck-frontend.vercel.app/",
-    ],
-    allow_origin_regex=r"https://.*\.vercel\.app",
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)

@@ -11,7 +11,7 @@ from env_config import init_env
 init_env()
 
 from classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, extract_traits, extract_traits_v1, normalize
-from knowledge_base import load_legislations, load_meta
+from knowledge_base import load_legislations, load_meta, load_standards
 from models import (
     AnalysisResult,
     AnalysisStats,
@@ -1011,37 +1011,43 @@ def _ensure_primary_safety_backfill(
     preferred_standard_codes = preferred_standard_codes or set()
     context = _standard_context(traits, matched_products, product_type, confirmed_traits, description)
     codes = {str(item.get("code") or "") for item in selected}
+    scope_route = str(context["scope_route"])
+    has_appliance_safety = any(code.startswith("EN 60335-") for code in codes)
+    has_av_ict_safety = "EN 62368-1" in codes
+    preferred_appliance_safety = any(str(code).startswith("EN 60335-") for code in preferred_standard_codes)
+    preferred_av_ict_safety = "EN 62368-1" in preferred_standard_codes
 
     base_code: str | None = None
     reasons: list[str] = []
 
-    if not any(code.startswith("EN 60335-") for code in codes):
-        appliance_signal = bool(
-            context["scope_route"] == "appliance"
-            or product_type in PERSONAL_CARE_PRODUCT_HINTS
-            or any(str(code).startswith("EN 60335-") for code in preferred_standard_codes)
-        )
-        if appliance_signal:
+    if scope_route == "appliance":
+        if not has_appliance_safety and (
+            product_type in PERSONAL_CARE_PRODUCT_HINTS or preferred_appliance_safety or scope_route == "appliance"
+        ):
             base_code = "EN 60335-1"
             reasons.append("appliance_scope")
-
-    if base_code is None and "EN 62368-1" not in codes:
-        av_ict_signal = bool(
-            context["scope_route"] in {"av_ict", "convergent"}
-            or product_type in AV_ICT_PRODUCT_HINTS
-            or "EN 62368-1" in preferred_standard_codes
+            if preferred_appliance_safety:
+                reasons.append("preferred_appliance_safety")
+    elif scope_route == "av_ict":
+        if not has_av_ict_safety and (
+            product_type in AV_ICT_PRODUCT_HINTS
+            or preferred_av_ict_safety
+            or scope_route == "av_ict"
             or bool({"av_ict", "display", "speaker", "microphone", "camera", "data_storage"} & traits)
-        )
-        if av_ict_signal:
+        ):
             base_code = "EN 62368-1"
             reasons.append("av_ict_scope")
+            if preferred_av_ict_safety:
+                reasons.append("preferred_av_ict_safety")
+    elif not has_appliance_safety and preferred_appliance_safety and not preferred_av_ict_safety:
+        base_code = "EN 60335-1"
+        reasons.append("preferred_appliance_safety")
+    elif not has_av_ict_safety and preferred_av_ict_safety:
+        base_code = "EN 62368-1"
+        reasons.append("preferred_av_ict_safety")
 
     if base_code is None:
         return selected
-
-    standard_rows = load_meta()  # cache warm-up side effect kept cheap
-    del standard_rows
-    from knowledge_base import load_standards
 
     base_row = next((row for row in load_standards() if str(row.get("code") or "") == base_code), None)
     if not base_row:
@@ -1725,6 +1731,8 @@ def _standard_item_from_row(
         excluded_by_traits=row.get("excluded_by_traits", []),
         applies_if_products=row.get("applies_if_products", []),
         exclude_if_products=row.get("exclude_if_products", []),
+        applies_if_genres=row.get("applies_if_genres", []),
+        exclude_if_genres=row.get("exclude_if_genres", []),
         product_match_type=row.get("product_match_type"),
         standard_family=row.get("standard_family"),
         is_harmonized=row.get("is_harmonized"),
@@ -1737,10 +1745,15 @@ def _standard_item_from_row(
         test_focus=row.get("test_focus", []),
         evidence_hint=row.get("evidence_hint", []),
         keywords=row.get("keywords", []),
+        keyword_hits=row.get("keyword_hits", []),
         selection_group=row.get("selection_group"),
         selection_priority=int(row.get("selection_priority", 0)),
         required_fact_basis=row.get("required_fact_basis", "inferred"),
     )
+
+
+def _is_product_gated_standard_item(item: StandardItem) -> bool:
+    return bool(item.applies_if_products or item.applies_if_genres)
 
 
 def _normalize_trait_state_map(raw: Any) -> dict[str, dict[str, list[str]]]:
@@ -1965,7 +1978,7 @@ def analyze_v1(
         future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
         harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
         state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
-        product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
+        product_gated_standards_count=len([x for x in all_standard_items if _is_product_gated_standard_item(x)]),
         ambiguity_flag_count=1 if traits_data.get("contradictions") else 0,
         missing_information_count=len(missing_items),
     )
@@ -2193,7 +2206,7 @@ def analyze(
         future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
         harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
         state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
-        product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
+        product_gated_standards_count=len([x for x in all_standard_items if _is_product_gated_standard_item(x)]),
         ambiguity_flag_count=1 if traits_data.get("contradictions") else 0,
         missing_information_count=len(missing_items),
     )
@@ -2248,7 +2261,7 @@ def analyze(
                     "fact_basis": item.fact_basis,
                     "selection_group": item.selection_group,
                     "selection_priority": item.selection_priority,
-                    "keyword_hits": item.keywords,
+                    "keyword_hits": item.keyword_hits,
                     "reason": item.reason,
                 }
                 for item in standard_items
@@ -2263,7 +2276,7 @@ def analyze(
                     "fact_basis": item.fact_basis,
                     "selection_group": item.selection_group,
                     "selection_priority": item.selection_priority,
-                    "keyword_hits": item.keywords,
+                    "keyword_hits": item.keyword_hits,
                     "reason": item.reason,
                 }
                 for item in review_items
@@ -2315,6 +2328,7 @@ def analyze(
             "matched_products": sorted(matched_products),
             "routing_matched_products": sorted(routing_matched_products),
             "preferred_standards": sorted(likely_standards),
+            "product_genres": sorted(product_genres),
             "product_family": traits_data.get("product_family"),
             "product_subtype": traits_data.get("product_subtype"),
             "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
@@ -2339,6 +2353,7 @@ def analyze(
             "confidence": traits_data.get("product_match_confidence", "low"),
             "matched_products": sorted(matched_products),
             "product_family": traits_data.get("product_family"),
+            "product_genres": sorted(product_genres),
             "product_subtype": traits_data.get("product_subtype"),
             "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
         },
