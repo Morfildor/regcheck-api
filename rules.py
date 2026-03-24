@@ -11,7 +11,7 @@ from env_config import init_env
 init_env()
 
 from classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, extract_traits, extract_traits_v1, normalize
-from knowledge_base import load_legislations, load_meta, load_standards
+from knowledge_base import load_legislations, load_meta
 from models import (
     AnalysisResult,
     AnalysisStats,
@@ -198,6 +198,59 @@ PHOTOBIOLOGICAL_SOURCE_PATTERNS = [
 PHOTOBIO_PRODUCT_HINTS = {
     "projector",
     "heating_lamp",
+}
+
+WIFI_5GHZ_EXPLICIT_PATTERNS = [
+    r"\b5 ?ghz\b",
+    r"\b5ghz\b",
+    r"\b5 g hz\b",
+    r"\bdual band\b",
+    r"\bdual-band\b",
+    r"\btri band\b",
+    r"\btri-band\b",
+    r"\b802\.11a\b",
+    r"\b802 11a\b",
+    r"\b802\.11ac\b",
+    r"\b802 11ac\b",
+    r"\b802\.11ax\b",
+    r"\b802 11ax\b",
+    r"\bwifi 5\b",
+    r"\bwifi 6\b",
+    r"\bwifi 6e\b",
+    r"\bwifi 7\b",
+]
+
+WIFI_24_ONLY_PATTERNS = [
+    r"\b2\.4 ?ghz only\b",
+    r"\b2 4 ?ghz only\b",
+    r"\b2\.4ghz only\b",
+    r"\b2 4ghz only\b",
+    r"\bonly 2\.4 ?ghz\b",
+    r"\bonly 2 4 ?ghz\b",
+    r"\bonly 2\.4ghz\b",
+    r"\bonly 2 4ghz\b",
+    r"\b2\.4 ?ghz wifi only\b",
+    r"\b2 4 ?ghz wifi only\b",
+    r"\bsingle band wifi\b",
+    r"\bsingle-band wifi\b",
+]
+
+WIFI_5GHZ_DEFAULT_PRODUCT_HINTS = {
+    "air_conditioner",
+    "air_fryer",
+    "air_purifier",
+    "coffee_machine",
+    "dishwasher",
+    "home_projector",
+    "projector",
+    "refrigerator",
+    "robot_lawn_mower",
+    "robot_vacuum",
+    "smart_display",
+    "smart_plug",
+    "smart_speaker",
+    "smart_tv",
+    "washing_machine",
 }
 
 PERSONAL_CARE_PRODUCT_HINTS = {
@@ -512,39 +565,46 @@ def _confidence_from_score(score: int) -> ConfidenceLevel:
 
 def _collect_preferred_standard_codes(traits_data: dict[str, Any]) -> set[str]:
     preferred: set[str] = set(traits_data.get("preferred_standard_codes") or [])
-    matched_products = set(traits_data.get("matched_products") or [])
+    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
-    product_type = traits_data.get("product_type")
-    product_family = traits_data.get("product_family")
+
+    if product_match_stage != "subtype":
+        return preferred
 
     for candidate in traits_data.get("product_candidates") or []:
-        candidate_id = candidate.get("id")
-        candidate_family = candidate.get("family")
-        candidate_confidence = str(candidate.get("confidence") or "low")
-        if candidate_id in routing_matched_products:
+        if candidate.get("id") in routing_matched_products:
             preferred.update(candidate.get("likely_standards") or [])
-            continue
-        if candidate_id == product_type or candidate_id in matched_products:
-            preferred.update(candidate.get("likely_standards") or [])
-            continue
-        if candidate_family and candidate_family == product_family and candidate_confidence in {"high", "medium"}:
-            preferred.update(candidate.get("likely_standards") or [])
-
     return preferred
 
 
-def _resolve_routing_product_type(traits_data: dict[str, Any]) -> str | None:
-    product_type = traits_data.get("product_type")
-    if not product_type:
-        return None
+def _infer_forced_directives(
+    traits: set[str],
+    matched_products: set[str],
+    product_type: str | None,
+    confirmed_traits: set[str],
+    preferred_standard_codes: set[str] | None = None,
+) -> set[str]:
+    preferred_standard_codes = preferred_standard_codes or set()
+    normalized_codes = {
+        str(code or "").upper().replace("IEC", "EN").replace("  ", " ").strip()
+        for code in preferred_standard_codes
+        if str(code or "").strip()
+    }
 
-    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
-    product_match_confidence = str(traits_data.get("product_match_confidence") or "low")
-    if product_match_stage == "subtype":
-        return product_type
-    if product_match_stage == "family" and product_match_confidence in {"high", "medium"}:
-        return product_type
-    return None
+    inferred: set[str] = set()
+    scope_route, _ = _scope_route(traits, matched_products, product_type, confirmed_traits)
+    has_household_safety_preference = any(code.startswith("EN 60335-") for code in normalized_codes)
+    has_avict_safety_preference = any(code.startswith("EN 62368-1") for code in normalized_codes)
+
+    if "electrical" in traits and (
+        has_household_safety_preference
+        or has_avict_safety_preference
+        or scope_route in {"appliance", "av_ict"}
+        or bool(matched_products & (AV_ICT_PRODUCT_HINTS | PERSONAL_CARE_PRODUCT_HINTS | WIFI_5GHZ_DEFAULT_PRODUCT_HINTS))
+    ):
+        inferred.add("LVD")
+
+    return inferred
 
 
 def _derive_engine_traits(
@@ -589,6 +649,20 @@ def _derive_engine_traits(
         derived.add("handheld")
         diagnostics.append("engine_trait=handheld_from_product")
 
+    if _has_any(text, WIFI_5GHZ_EXPLICIT_PATTERNS):
+        derived.update({"wifi", "wifi_5ghz"})
+        confirmed.add("wifi_5ghz")
+        diagnostics.append("engine_trait=wifi_5ghz:explicit")
+    elif "wifi" in derived and "wifi_5ghz" not in derived and not _has_any(text, WIFI_24_ONLY_PATTERNS):
+        smart_wifi_default = bool(
+            matched_products & (AV_ICT_PRODUCT_HINTS | WIFI_5GHZ_DEFAULT_PRODUCT_HINTS)
+            or {"internet", "ota", "cloud", "app_control", "mains_powered", "mains_power_likely", "av_ict"} & derived
+        )
+        if smart_wifi_default:
+            derived.add("wifi_5ghz")
+            confirmed.add("wifi_5ghz")
+            diagnostics.append("engine_trait=wifi_5ghz:smart_wifi_default")
+
     if "radio" in derived and ({"wearable", "handheld", "body_worn_or_applied"} & derived):
         derived.add("close_proximity_emf")
         diagnostics.append("engine_trait=close_proximity_emf")
@@ -597,60 +671,6 @@ def _derive_engine_traits(
         diagnostics.append("engine_trait=low_power_radio")
 
     return derived, confirmed & derived, diagnostics
-
-
-def _infer_additional_power_traits(
-    traits: set[str],
-    matched_products: set[str],
-    product_type: str | None,
-    product_genres: set[str],
-) -> tuple[set[str], list[str]]:
-    added: set[str] = set()
-    diagnostics: list[str] = []
-
-    if "electrical" not in traits or {"mains_powered", "mains_power_likely"} & traits:
-        return added, diagnostics
-
-    scope_route, _ = _scope_route(traits, matched_products, product_type)
-    candidate_products = set(matched_products)
-    if product_type:
-        candidate_products.add(product_type)
-
-    close_use = bool({"handheld", "wearable", "body_worn_or_applied"} & traits)
-    external_power_signal = bool({"external_psu", "internal_power_supply"} & traits)
-
-    household_appliance_genres = {
-        "household_appliance",
-        "cleaning_laundry_appliance",
-        "kitchen_food_appliance",
-        "hvac_environmental_appliance",
-    }
-
-    infer_household_appliance_mains = bool(
-        scope_route == "appliance"
-        and "consumer" in traits
-        and "household" in traits
-        and bool(APPLIANCE_PRIMARY_TRAITS & traits)
-        and not close_use
-        and (external_power_signal or bool(product_genres & household_appliance_genres))
-    )
-
-    infer_av_ict_mains = bool(
-        scope_route == "av_ict"
-        and "consumer" in traits
-        and bool(candidate_products & AV_ICT_PRODUCT_HINTS)
-        and not close_use
-        and not ("battery_powered" in traits and "portable" in traits and not external_power_signal)
-    )
-
-    if infer_household_appliance_mains:
-        added.add("mains_power_likely")
-        diagnostics.append("engine_trait=mains_power_likely_from_household_route")
-    elif infer_av_ict_mains:
-        added.add("mains_power_likely")
-        diagnostics.append("engine_trait=mains_power_likely_from_av_ict_route")
-
-    return added, diagnostics
 
 
 def _match_standard(
@@ -997,91 +1017,6 @@ def _standard_context(
     }
 
 
-def _ensure_primary_safety_backfill(
-    selected: list[dict[str, Any]],
-    traits: set[str],
-    matched_products: set[str],
-    allowed_directives: set[str],
-    product_type: str | None,
-    confirmed_traits: set[str] | None,
-    description: str,
-    preferred_standard_codes: set[str] | None = None,
-) -> list[dict[str, Any]]:
-    confirmed_traits = confirmed_traits or set()
-    preferred_standard_codes = preferred_standard_codes or set()
-    context = _standard_context(traits, matched_products, product_type, confirmed_traits, description)
-    codes = {str(item.get("code") or "") for item in selected}
-    scope_route = str(context["scope_route"])
-    has_appliance_safety = any(code.startswith("EN 60335-") for code in codes)
-    has_av_ict_safety = "EN 62368-1" in codes
-    preferred_appliance_safety = any(str(code).startswith("EN 60335-") for code in preferred_standard_codes)
-    preferred_av_ict_safety = "EN 62368-1" in preferred_standard_codes
-
-    base_code: str | None = None
-    reasons: list[str] = []
-
-    if scope_route == "appliance":
-        if not has_appliance_safety and (
-            product_type in PERSONAL_CARE_PRODUCT_HINTS or preferred_appliance_safety or scope_route == "appliance"
-        ):
-            base_code = "EN 60335-1"
-            reasons.append("appliance_scope")
-            if preferred_appliance_safety:
-                reasons.append("preferred_appliance_safety")
-    elif scope_route == "av_ict":
-        if not has_av_ict_safety and (
-            product_type in AV_ICT_PRODUCT_HINTS
-            or preferred_av_ict_safety
-            or scope_route == "av_ict"
-            or bool({"av_ict", "display", "speaker", "microphone", "camera", "data_storage"} & traits)
-        ):
-            base_code = "EN 62368-1"
-            reasons.append("av_ict_scope")
-            if preferred_av_ict_safety:
-                reasons.append("preferred_av_ict_safety")
-    elif not has_appliance_safety and preferred_appliance_safety and not preferred_av_ict_safety:
-        base_code = "EN 60335-1"
-        reasons.append("preferred_appliance_safety")
-    elif not has_av_ict_safety and preferred_av_ict_safety:
-        base_code = "EN 62368-1"
-        reasons.append("preferred_av_ict_safety")
-
-    if base_code is None:
-        return selected
-
-    base_row = next((row for row in load_standards() if str(row.get("code") or "") == base_code), None)
-    if not base_row:
-        return selected
-
-    backfill = dict(base_row)
-    fact_basis: FactBasis = "confirmed" if set(_string_list(base_row.get("applies_if_all"))).issubset(confirmed_traits) else "mixed"
-    in_primary_directive = any(d in allowed_directives for d in _string_list(base_row.get("directives")))
-    backfill["directive"] = _standard_primary_directive(base_row, traits) if in_primary_directive else "OTHER"
-    backfill["legislation_key"] = backfill["directive"]
-    backfill["item_type"] = "standard" if in_primary_directive else "review"
-    backfill["fact_basis"] = fact_basis
-    backfill["required_fact_basis"] = base_row.get("required_fact_basis", "inferred")
-    backfill["score"] = 999
-    backfill["matched_traits_all"] = sorted(set(_string_list(base_row.get("applies_if_all"))) & traits)
-    backfill["matched_traits_any"] = sorted(set(_string_list(base_row.get("applies_if_any"))) & traits)
-    backfill["missing_required_traits"] = sorted(set(_string_list(base_row.get("applies_if_all"))) - traits)
-    backfill["excluded_by_traits"] = sorted(set(_string_list(base_row.get("exclude_if"))) & traits)
-    backfill["product_match_type"] = "preferred_product" if base_code in preferred_standard_codes else "not_product_gated"
-    backfill["keyword_hits"] = []
-    backfill["selection_group"] = backfill.get("selection_group")
-    backfill["selection_priority"] = int(backfill.get("selection_priority") or 0)
-    reason_bits = ["base safety route backfill"]
-    if reasons:
-        reason_bits.append("signals: " + ", ".join(reasons))
-    if base_code in preferred_standard_codes:
-        reason_bits.append("product candidate knowledge explicitly points to this base standard")
-    if not in_primary_directive:
-        reason_bits.append("kept as a review route because the primary directive was not confidently selected")
-    backfill["reason"] = ". ".join(reason_bits)
-
-    return selected + [backfill]
-
-
 def _apply_post_selection_gates(
     selected: list[dict[str, Any]],
     traits: set[str],
@@ -1116,25 +1051,9 @@ def _apply_post_selection_gates(
             item["directive"] = "ECO"
             item["legislation_key"] = "ECO"
 
-        if code == "EN 62368-1":
-            if context["scope_route"] == "appliance":
-                diagnostics.append("gate=drop_EN62368-1:appliance_primary")
-                continue
-            if "radio" in traits and "RED" in allowed_directives and "LVD" not in allowed_directives:
-                item["directive"] = "RED"
-                item["legislation_key"] = "RED"
-
-        if code.startswith("EN 60335-") and context["scope_route"] == "av_ict":
-            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
-            continue
-
-        if code in {"EN 55032", "EN 55035"} and context["scope_route"] == "appliance":
-            diagnostics.append(f"gate=drop_{code}:appliance_primary")
-            continue
-
-        if code.startswith("EN 55014-") and context["scope_route"] == "av_ict":
-            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
-            continue
+        if code == "EN 62368-1" and "radio" in traits and "RED" in allowed_directives and "LVD" not in allowed_directives:
+            item["directive"] = "RED"
+            item["legislation_key"] = "RED"
 
         if code == "EN 62311":
             if context["prefer_62233"] and not ("radio" in traits and ({"wearable", "handheld", "body_worn_or_applied"} & traits)):
@@ -1731,8 +1650,6 @@ def _standard_item_from_row(
         excluded_by_traits=row.get("excluded_by_traits", []),
         applies_if_products=row.get("applies_if_products", []),
         exclude_if_products=row.get("exclude_if_products", []),
-        applies_if_genres=row.get("applies_if_genres", []),
-        exclude_if_genres=row.get("exclude_if_genres", []),
         product_match_type=row.get("product_match_type"),
         standard_family=row.get("standard_family"),
         is_harmonized=row.get("is_harmonized"),
@@ -1745,15 +1662,10 @@ def _standard_item_from_row(
         test_focus=row.get("test_focus", []),
         evidence_hint=row.get("evidence_hint", []),
         keywords=row.get("keywords", []),
-        keyword_hits=row.get("keyword_hits", []),
         selection_group=row.get("selection_group"),
         selection_priority=int(row.get("selection_priority", 0)),
         required_fact_basis=row.get("required_fact_basis", "inferred"),
     )
-
-
-def _is_product_gated_standard_item(item: StandardItem) -> bool:
-    return bool(item.applies_if_products or item.applies_if_genres)
 
 
 def _normalize_trait_state_map(raw: Any) -> dict[str, dict[str, list[str]]]:
@@ -1869,7 +1781,7 @@ def analyze_v1(
     product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
     product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
-    routing_product_type = _resolve_routing_product_type(traits_data)
+    routing_product_type = product_type if product_match_stage == "subtype" else None
     likely_standards = _collect_preferred_standard_codes(traits_data)
 
     trait_set = set(traits_data.get("all_traits") or [])
@@ -1878,15 +1790,6 @@ def analyze_v1(
     trait_set, confirmed_engine_traits, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
     confirmed_traits.update(confirmed_engine_traits)
     diagnostics.extend(extra_diag)
-
-    added_power_traits, power_diag = _infer_additional_power_traits(
-        trait_set,
-        routing_matched_products,
-        routing_product_type,
-        product_genres,
-    )
-    trait_set.update(added_power_traits)
-    diagnostics.extend(power_diag)
 
     legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
         traits=trait_set,
@@ -1897,6 +1800,24 @@ def analyze_v1(
         confirmed_traits=confirmed_traits,
         forced_directives=directives,
     )
+    inferred_directive_hints = _infer_forced_directives(
+        trait_set,
+        routing_matched_products,
+        routing_product_type,
+        confirmed_traits,
+        likely_standards,
+    )
+    if inferred_directive_hints - set(detected_directives):
+        diagnostics.append("directive_hints=" + ",".join(sorted(inferred_directive_hints - set(detected_directives))))
+        legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
+            traits=trait_set,
+            functional_classes=functional_classes,
+            product_type=routing_product_type,
+            matched_products=routing_matched_products,
+            product_genres=product_genres,
+            confirmed_traits=confirmed_traits,
+            forced_directives=sorted({item for item in (directives or []) if item} | inferred_directive_hints),
+        )
     legislation_by_directive = _primary_legislation_by_directive(legislation_items)
     allowed_directives = set(detected_directives)
 
@@ -1920,16 +1841,6 @@ def analyze_v1(
         product_type=routing_product_type,
         confirmed_traits=confirmed_traits,
         description=description,
-    )
-    selected_rows = _ensure_primary_safety_backfill(
-        selected_rows,
-        trait_set,
-        routing_matched_products,
-        allowed_directives,
-        routing_product_type,
-        confirmed_traits,
-        description,
-        likely_standards,
     )
 
     dedup: dict[str, dict[str, Any]] = {}
@@ -1978,7 +1889,7 @@ def analyze_v1(
         future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
         harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
         state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
-        product_gated_standards_count=len([x for x in all_standard_items if _is_product_gated_standard_item(x)]),
+        product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
         ambiguity_flag_count=1 if traits_data.get("contradictions") else 0,
         missing_information_count=len(missing_items),
     )
@@ -2088,7 +1999,7 @@ def analyze(
     product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
     product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
-    routing_product_type = _resolve_routing_product_type(traits_data)
+    routing_product_type = product_type if product_match_stage == "subtype" else None
     likely_standards = _collect_preferred_standard_codes(traits_data)
 
     base_trait_set = set(traits_data.get("all_traits") or [])
@@ -2098,15 +2009,6 @@ def analyze(
     trait_set, confirmed_engine_traits, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
     confirmed_traits.update(confirmed_engine_traits)
     diagnostics.extend(extra_diag)
-
-    added_power_traits, power_diag = _infer_additional_power_traits(
-        trait_set,
-        routing_matched_products,
-        routing_product_type,
-        product_genres,
-    )
-    trait_set.update(added_power_traits)
-    diagnostics.extend(power_diag)
     engine_added_traits = trait_set - base_trait_set
 
     raw_state_map = _normalize_trait_state_map(traits_data.get("trait_state_map"))
@@ -2123,6 +2025,24 @@ def analyze(
         confirmed_traits=confirmed_traits,
         forced_directives=directives,
     )
+    inferred_directive_hints = _infer_forced_directives(
+        trait_set,
+        routing_matched_products,
+        routing_product_type,
+        confirmed_traits,
+        likely_standards,
+    )
+    if inferred_directive_hints - set(detected_directives):
+        diagnostics.append("directive_hints=" + ",".join(sorted(inferred_directive_hints - set(detected_directives))))
+        legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
+            traits=trait_set,
+            functional_classes=functional_classes,
+            product_type=routing_product_type,
+            matched_products=routing_matched_products,
+            product_genres=product_genres,
+            confirmed_traits=confirmed_traits,
+            forced_directives=sorted({item for item in (directives or []) if item} | inferred_directive_hints),
+        )
     legislation_by_directive = _primary_legislation_by_directive(legislation_items)
     allowed_directives = set(detected_directives)
 
@@ -2148,16 +2068,6 @@ def analyze(
         product_type=routing_product_type,
         confirmed_traits=confirmed_traits,
         description=description,
-    )
-    selected_rows = _ensure_primary_safety_backfill(
-        selected_rows,
-        trait_set,
-        routing_matched_products,
-        allowed_directives,
-        routing_product_type,
-        confirmed_traits,
-        description,
-        likely_standards,
     )
 
     dedup: dict[str, dict[str, Any]] = {}
@@ -2206,7 +2116,7 @@ def analyze(
         future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
         harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
         state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
-        product_gated_standards_count=len([x for x in all_standard_items if _is_product_gated_standard_item(x)]),
+        product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
         ambiguity_flag_count=1 if traits_data.get("contradictions") else 0,
         missing_information_count=len(missing_items),
     )
@@ -2261,7 +2171,7 @@ def analyze(
                     "fact_basis": item.fact_basis,
                     "selection_group": item.selection_group,
                     "selection_priority": item.selection_priority,
-                    "keyword_hits": item.keyword_hits,
+                    "keyword_hits": item.keywords,
                     "reason": item.reason,
                 }
                 for item in standard_items
@@ -2276,7 +2186,7 @@ def analyze(
                     "fact_basis": item.fact_basis,
                     "selection_group": item.selection_group,
                     "selection_priority": item.selection_priority,
-                    "keyword_hits": item.keyword_hits,
+                    "keyword_hits": item.keywords,
                     "reason": item.reason,
                 }
                 for item in review_items
@@ -2328,7 +2238,6 @@ def analyze(
             "matched_products": sorted(matched_products),
             "routing_matched_products": sorted(routing_matched_products),
             "preferred_standards": sorted(likely_standards),
-            "product_genres": sorted(product_genres),
             "product_family": traits_data.get("product_family"),
             "product_subtype": traits_data.get("product_subtype"),
             "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
@@ -2353,7 +2262,6 @@ def analyze(
             "confidence": traits_data.get("product_match_confidence", "low"),
             "matched_products": sorted(matched_products),
             "product_family": traits_data.get("product_family"),
-            "product_genres": sorted(product_genres),
             "product_subtype": traits_data.get("product_subtype"),
             "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
         },
