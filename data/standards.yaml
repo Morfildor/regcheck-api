@@ -5784,9 +5784,9 @@ standards:
   is_harmonized: true
   harmonized_under: RED
   harmonized_reference: 2014/53/EU
-  version: EN 301 893 V2.2.1:2024
-  dated_version: EN 301 893 V2.1.1:2017
-  supersedes: EN 301 893 V2.1.1:2017
+  version: EN 301 489-52 V1.3.1:2024
+  dated_version: EN 301 489-52 V1.3.1:2024
+  supersedes: EN 301 489-52 V1.1.2:2020
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
@@ -5829,9 +5829,9 @@ standards:
   is_harmonized: true
   harmonized_under: RED
   harmonized_reference: 2014/53/EU
-  version: EN 301 893 V2.2.1:2024
-  dated_version: EN 301 893 V2.1.1:2017
-  supersedes: EN 301 893 V2.1.1:2017
+  version: EN 301 511 V12.5.1:2017
+  dated_version: EN 301 511 V12.5.1:2017
+  supersedes: EN 301 511 V12.1.1:2015
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:

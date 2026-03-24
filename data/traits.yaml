@@ -1162,14 +1162,38 @@ traits:
   normalized_to: monetary_transaction
   normalization_priority: 0
 - id: wifi_5ghz
-  label: 5 GHz Wi-Fi
-  description: Supports 5 GHz Wi-Fi operation, including dual-band Wi-Fi where 5 GHz
-    is present
+  label: 5 GHz Wi-Fi / dual-band Wi-Fi
+  description: Supports 5 GHz Wi-Fi operation, including dual-band, tri-band, Wi-Fi 5,
+    Wi-Fi 6/6E, and Wi-Fi 7 implementations where 5 GHz is present
   aliases:
   - wifi 5ghz
+  - wifi 5 ghz
+  - 5 ghz wifi
+  - dual band wifi
+  - dual-band wifi
+  - tri band wifi
+  - tri-band wifi
+  - wifi 5
+  - wifi 6
+  - wifi 6e
+  - wifi 7
+  - 802.11a
+  - 802.11ac
+  - 802.11ax
+  - 802.11be
   examples: []
   regex:
-  - \bwifi[ -]?5ghz\b
+  - \bwifi[ -]?5[ -]?ghz\b
+  - \b5[ -]?ghz[ -]?wifi\b
+  - \bdual[ -]?band(?:[ -]?wifi)?\b
+  - \btri[ -]?band(?:[ -]?wifi)?\b
+  - \bwifi[ -]?5\b
+  - \bwifi[ -]?6(?:e)?\b
+  - \bwifi[ -]?7\b
+  - \b802\.11a\b
+  - \b802\.11ac\b
+  - \b802\.11ax\b
+  - \b802\.11be\b
   normalized_to: wifi_5ghz
   normalization_priority: 0
 - id: coffee_brewing
@@ -1364,9 +1388,12 @@ traits:
   description: Supports Wi-Fi 6 (802.11ax) or Wi-Fi 6E (6 GHz band) operation
   aliases:
   - wifi 6
+  - wifi 6e
+  - 802.11ax
   examples: []
   regex:
-  - \bwifi[ -]?6\b
+  - \bwifi[ -]?6(?:e)?\b
+  - \b802\.11ax\b
   normalized_to: wifi_6
   normalization_priority: 0
 - id: wifi_7
@@ -1374,9 +1401,11 @@ traits:
   description: Supports Wi-Fi 7 (802.11be) multi-link operation
   aliases:
   - wifi 7
+  - 802.11be
   examples: []
   regex:
   - \bwifi[ -]?7\b
+  - \b802\.11be\b
   normalized_to: wifi_7
   normalization_priority: 0
 - id: tri_band_wifi
@@ -1385,9 +1414,12 @@ traits:
     and mesh systems.
   aliases:
   - tri band wifi
+  - tri-band wifi
+  - tri band
+  - tri-band
   examples: []
   regex:
-  - \btri[ -]?band[ -]?wifi\b
+  - \btri[ -]?band(?:[ -]?wifi)?\b
   normalized_to: tri_band_wifi
   normalization_priority: 0
 - id: mesh_network_node

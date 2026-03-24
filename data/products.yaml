@@ -12337,6 +12337,7 @@ products:
   - data_storage
   subtype_traits:
   - wifi_6
+  - wifi_5ghz
   - tri_band_wifi
   - mesh_network_node
   - bluetooth
@@ -12353,6 +12354,7 @@ products:
   - mains_power_likely
   - radio
   - wifi
+  - wifi_5ghz
   - wifi_6
   - tri_band_wifi
   - mesh_network_node
@@ -12485,6 +12487,7 @@ products:
   - mains_powered
   - radio
   - wifi
+  - wifi_5ghz
   - wifi_6
   - 5g_nr
   - cellular

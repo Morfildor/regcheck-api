@@ -124,15 +124,24 @@ NEGATIONS: dict[str, list[str]] = {
 TRAIT_PATTERNS: dict[str, list[str]] = {
     "radio": [r"\bradio\b"],
     "bluetooth": [r"\bbluetooth\b"],
-    "wifi": [r"\bwifi\b", r"\b802 11\b"],
+    "wifi": [r"\bwifi\b", r"\bwi fi\b", r"\bwlan\b", r"\bwireless lan\b", r"\b802 11\b"],
     "wifi_5ghz": [
         r"\b5ghz\b",
+        r"\b5 ghz\b",
+        r"\b5ghz wifi\b",
+        r"\b5 ghz wifi\b",
         r"\bdual band\b",
+        r"\bdual-band\b",
+        r"\btri band\b",
+        r"\btri-band\b",
         r"\b802 11a\b",
         r"\b802 11ac\b",
         r"\b802 11ax\b",
+        r"\b802 11be\b",
+        r"\bwifi 5\b",
         r"\bwifi 6\b",
         r"\bwifi 6e\b",
+        r"\bwifi 7\b",
     ],
     "wifi_6": [r"\bwifi 6\b", r"\bwifi 6e\b", r"\b802 11ax\b"],
     "wifi_7": [r"\bwifi 7\b", r"\b802 11be\b"],
@@ -573,6 +582,8 @@ def _expand_related_traits(traits: set[str]) -> set[str]:
         expanded.add("radio")
     if expanded & {"wifi_5ghz", "wifi_6", "wifi_7", "tri_band_wifi", "mesh_network_node", "wpa3"}:
         expanded.add("wifi")
+    if expanded & {"wifi_6", "wifi_7", "tri_band_wifi"}:
+        expanded.add("wifi_5ghz")
     if expanded & {"gsm", "lte_m", "5g_nr"}:
         expanded.add("cellular")
     if "lorawan" in expanded:
