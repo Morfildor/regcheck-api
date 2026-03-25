@@ -4634,10 +4634,10 @@ standards:
   directives:
   - LVD
   legislation_key: LVD
-  item_type: standard
+  item_type: review
   standard_family: EN 60335-2-107
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: review
   applies_if_products:
   - robotic_lawn_mower
   exclude_if_products: []

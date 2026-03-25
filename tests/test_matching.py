@@ -243,22 +243,23 @@ class MatchingTests(unittest.TestCase):
         section_keys = {section["key"] for section in result.legislation_sections}
         self.assertIn("informational", section_keys)
 
-    def test_battery_powered_household_product_can_still_surface_primary_safety_route(self) -> None:
+    def test_battery_powered_household_product_surfaces_review_safety_route_without_lvd(self) -> None:
         result = analyze("battery-powered oral hygiene appliance")
 
-        self.assertIn("LVD", result.directives)
-        self.assertTrue(any(item.directive_key == "LVD" and item.bucket != "informational" for item in result.legislations))
-        standard_codes = {item.code for item in result.standards}
-        self.assertIn("EN 60335-1", standard_codes)
-        self.assertTrue(any(code.startswith("EN 60335-2-") for code in standard_codes))
+        self.assertNotIn("LVD", result.directives)
+        review_codes = {item.code for item in result.review_items}
+        self.assertIn("EN 60335-1", review_codes)
+        self.assertTrue(any(code.startswith("EN 60335-2-") for code in review_codes))
 
-    def test_robot_vacuum_keeps_primary_household_safety_route(self) -> None:
+    def test_robot_vacuum_surfaces_household_safety_reviews_without_lvd(self) -> None:
         result = analyze("robot vacuum cleaner")
 
-        standard_codes = {item.code for item in result.standards}
-        self.assertIn("EN 60335-1", standard_codes)
-        self.assertIn("EN 60335-2-2", standard_codes)
-        self.assertNotIn("EN 62368-1", standard_codes)
+        self.assertNotIn("LVD", result.directives)
+        review_codes = {item.code for item in result.review_items}
+        all_codes = {item.code for item in result.standards} | review_codes
+        self.assertIn("EN 60335-1", review_codes)
+        self.assertIn("EN 60335-2-2", review_codes)
+        self.assertNotIn("EN 62368-1", all_codes)
 
     def test_smart_wifi_appliance_surfaces_5ghz_rlan_standard_by_default(self) -> None:
         result = analyze("smart refrigerator with wifi, app control, and OTA updates")
@@ -494,6 +495,10 @@ class MatchingTests(unittest.TestCase):
 
         self.assertIn("EN 62368-1", standard_codes)
         self.assertNotIn("EN 62368-1", review_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertNotIn("EN 55014-1", standard_codes | review_codes)
+        self.assertNotIn("EN 55014-2", standard_codes | review_codes)
 
     def test_cellular_handheld_routes_to_specific_red_emf_standards_not_en_62479(self) -> None:
         result = analyze("Handheld LTE scanner with display, rechargeable battery, and Wi-Fi")

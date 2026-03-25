@@ -264,6 +264,10 @@ PERSONAL_CARE_PRODUCT_HINTS = {
 AV_ICT_PRODUCT_HINTS = {
     "smart_speaker",
     "smart_display",
+    "smart_doorbell",
+    "video_doorbell",
+    "smart_security_camera",
+    "ip_camera",
     "router",
     "modem",
     "iot_gateway",
@@ -595,8 +599,9 @@ def _infer_forced_directives(
     scope_route, _ = _scope_route(traits, matched_products, product_type, confirmed_traits)
     has_household_safety_preference = any(code.startswith("EN 60335-") for code in normalized_codes)
     has_avict_safety_preference = any(code.startswith("EN 62368-1") for code in normalized_codes)
+    has_lvd_voltage_signal = bool({"mains_powered", "mains_power_likely"} & traits)
 
-    if "electrical" in traits and (
+    if "electrical" in traits and has_lvd_voltage_signal and (
         has_household_safety_preference
         or has_avict_safety_preference
         or scope_route in {"appliance", "av_ict"}
@@ -1037,6 +1042,14 @@ def _apply_post_selection_gates(
     for item in selected:
         code = str(item.get("code") or "")
         route = str(item.get("directive") or item.get("legislation_key") or "OTHER")
+
+        if code in {"EN 55032", "EN 55035"} and context["scope_route"] == "appliance":
+            diagnostics.append(f"gate=drop_{code}:appliance_primary")
+            continue
+
+        if code.startswith("EN 55014-") and context["scope_route"] == "av_ict":
+            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
+            continue
 
         if code == "Charger / external PSU review":
             if not context["has_external_psu"]:

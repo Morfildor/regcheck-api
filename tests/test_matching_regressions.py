@@ -124,11 +124,30 @@ class MatchingRegressionTests(unittest.TestCase):
         codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
         self.assertIn("EN 62368-1", codes)
 
-    def test_video_doorbell_surfaces_62368_review_from_product_candidates(self) -> None:
+    def test_video_doorbell_family_match_prefers_av_ict_route(self) -> None:
         result = analyze("video doorbell")
 
-        review_codes = {item.code for item in result.review_items}
-        self.assertIn("EN 62368-1", review_codes)
+        standard_codes = {item.code for item in result.standards}
+        all_codes = standard_codes | {item.code for item in result.review_items}
+
+        self.assertEqual(result.product_match_stage, "family")
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertNotIn("EN 55014-1", all_codes)
+        self.assertNotIn("EN 55014-2", all_codes)
+
+    def test_smart_doorbell_prefers_av_ict_routes_over_appliance_emc(self) -> None:
+        result = analyze("smart doorbell")
+
+        standard_codes = {item.code for item in result.standards}
+        all_codes = standard_codes | {item.code for item in result.review_items}
+
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertNotIn("EN 55014-1", all_codes)
+        self.assertNotIn("EN 55014-2", all_codes)
 
 
 if __name__ == "__main__":

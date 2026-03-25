@@ -13647,6 +13647,8 @@ products:
     classification.
 - id: smart_doorbell
   label: Smart video doorbell
+  product_family: smart_home_security
+  product_subfamily: smart_doorbell
   aliases:
   - smart doorbell
   - video doorbell
@@ -13684,12 +13686,9 @@ products:
   - smart video doorbells
   implied_traits:
   - consumer
-  - household
   - electrical
   - electronic
   - av_ict
-  - mains_power_likely
-  - battery_powered
   - radio
   - wifi
   - camera
@@ -13709,8 +13708,29 @@ products:
   - security_device
   - av_ict_device
   - home_device
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  - security_or_barrier
+  default_traits:
+  - cloud
+  - networked_standby
+  - radio
+  - wifi
+  - app_control
+  - internet_connected
+  - fixed_installation
   likely_standards:
   - EN 62368-1
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
   genres:
   - smart_home_iot
   - security_access_iot
@@ -16876,6 +16896,11 @@ products:
   - smart_home_iot
   - security_access_iot
   implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - radio
   - wifi
   - camera
   - microphone
@@ -16885,7 +16910,26 @@ products:
   - connected_device
   - imaging_device
   - security_device
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  - security_or_barrier
+  default_traits:
+  - cloud
+  - networked_standby
+  - radio
+  - wifi
+  - app_control
+  - internet_connected
+  - fixed_installation
   likely_standards:
+  - EN 62368-1
   - EN 18031-1
   - EN 18031-2
   - EN 303 645 review
@@ -16993,6 +17037,11 @@ products:
   - smart_home_iot
   - security_access_iot
   implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - radio
   - wifi
   - camera
   - microphone
@@ -17002,7 +17051,24 @@ products:
   - connected_device
   - imaging_device
   - security_device
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - camera
+  - microphone
+  - camera_surveillance
+  - security_or_barrier
+  default_traits:
+  - cloud
+  - networked_standby
+  - radio
+  - wifi
+  - app_control
+  - internet_connected
   likely_standards:
+  - EN 62368-1
   - EN 18031-1
   - EN 18031-2
   - EN 303 645 review

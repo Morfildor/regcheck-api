@@ -202,6 +202,8 @@ def _directive_review_fallback_allowed(
         return False
     if code == "EN 60335-1" and _has_household_part2_preference(preferred_standard_codes):
         return True
+    if code == "EN 62368-1":
+        return True
     if _is_preferred_standard(standard, preferred_standard_codes):
         return True
     return product_hit_type in {"primary_product", "alternate_product", "primary_genre"} and code.startswith("EN 60335-2-")
