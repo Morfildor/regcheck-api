@@ -5275,6 +5275,7 @@ standards:
   dated_version: IEC 61851-1
   applies_if_products:
   - ev_charger_home
+  - portable_ev_charger
   exclude_if_products: []
   applies_if_all:
   - electrical
@@ -5294,8 +5295,11 @@ standards:
   - wallbox
   - evse
   - general requirements
-  notes: Review route for EV charging equipment so product-linked EVSE references in the catalog stay connected to an actionable
-    backend route.
+  - portable ev charger
+  - mode 2 charger
+  - granny charger
+  notes: General EVSE review route also used for portable mode 2 EV charging products where the product is clearly charger-side
+    equipment.
   state_of_the_art_scope: EU
   applies_if_genres:
   - portable_energy
@@ -5310,6 +5314,168 @@ standards:
   - wallbox
   - evse
   - general requirements
+  - portable ev charger
+  - mode 2 charger
+  - granny charger
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: IEC 61851-21-2
+  title: 'Electric vehicle conductive charging system - Part 21-2: EMC requirements for off-board electric vehicle charging systems'
+  region: EU
+  category: emc
+  directives:
+  - EMC
+  legislation_key: EMC
+  item_type: review
+  standard_family: IEC 61851-21-2
+  confidence: medium
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  version: IEC 61851-21-2
+  dated_version: IEC 61851-21-2
+  applies_if_products:
+  - ev_charger_home
+  - portable_ev_charger
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - ev_charging
+  - vehicle_supply
+  exclude_if: []
+  test_focus:
+  - emc
+  - emission
+  - immunity
+  evidence_hint:
+  - EVSE EMC test plan
+  - conductive charging interface description
+  - off-board charging architecture
+  keywords:
+  - ev charger emc
+  - wallbox emc
+  - off-board charging system
+  - conductive charging emc
+  notes: Review route for conductive EV charging equipment where product-specific EMC evidence is needed beyond generic household
+    or AV/ICT assumptions.
+  state_of_the_art_scope: EU
+  standard_ref: IEC 61851-21-2
+  selection_group: IEC 61851-21-2
+  selection_priority: 5
+  evidence_keywords:
+  - EVSE EMC test plan
+  - conductive charging interface description
+  - off-board charging architecture
+  - ev charger emc
+  - wallbox emc
+  - off-board charging system
+  - conductive charging emc
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: IEC 62196-2
+  title: 'Plugs, socket-outlets, vehicle connectors and vehicle inlets - Conductive charging of electric vehicles - Part 2'
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: review
+  standard_family: IEC 62196-2
+  confidence: medium
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  version: IEC 62196-2
+  dated_version: IEC 62196-2
+  applies_if_products:
+  - ev_charger_home
+  - portable_ev_charger
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - ev_charging
+  - vehicle_supply
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  - mechanical
+  evidence_hint:
+  - connector interface description
+  - charging cable or socket specification
+  - interface drawings or photos
+  keywords:
+  - type 2 connector
+  - vehicle connector
+  - charging plug
+  - charging socket
+  notes: Review route for EV charging connectors, sockets, tethered cables, and related AC interface hardware used with home
+    or portable EVSE.
+  state_of_the_art_scope: EU
+  standard_ref: IEC 62196-2
+  selection_group: IEC 62196-2
+  selection_priority: 5
+  evidence_keywords:
+  - connector interface description
+  - charging cable or socket specification
+  - interface drawings or photos
+  - type 2 connector
+  - vehicle connector
+  - charging plug
+  - charging socket
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: IEC 62752
+  title: In-cable control and protection device for mode 2 charging of electric road vehicles
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: review
+  standard_family: IEC 62752
+  confidence: medium
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  version: IEC 62752
+  dated_version: IEC 62752
+  applies_if_products:
+  - portable_ev_charger
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  - portable
+  applies_if_any:
+  - ev_charging
+  - vehicle_supply
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - IC-CPD function description
+  - cable set and protection architecture
+  - leakage and protective-device evidence
+  keywords:
+  - mode 2 charger
+  - granny charger
+  - iccpd
+  - ic-cpd
+  - in-cable control and protection device
+  notes: Review route for portable mode 2 EV charging equipment with an in-cable control and protection device.
+  state_of_the_art_scope: EU
+  standard_ref: IEC 62752
+  selection_group: IEC 62752
+  selection_priority: 10
+  evidence_keywords:
+  - IC-CPD function description
+  - cable set and protection architecture
+  - leakage and protective-device evidence
+  - mode 2 charger
+  - granny charger
+  - iccpd
+  - ic-cpd
+  - in-cable control and protection device
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
 - code: EN 14604
   title: Smoke alarm devices
@@ -6200,6 +6366,62 @@ standards:
   - e-bike
   - electric bicycle
   - epac
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 50604-1
+  title: 'Secondary lithium batteries for light EV applications - Part 1: General safety requirements and test methods'
+  region: EU
+  category: battery
+  directives:
+  - BATTERY
+  legislation_key: BATTERY
+  item_type: review
+  standard_family: EN 50604-1
+  confidence: medium
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  version: EN 50604-1
+  dated_version: EN 50604-1
+  applies_if_products:
+  - electric_scooter
+  - hoverboard
+  - electric_skateboard
+  - electric_unicycle
+  - electric_bicycle
+  exclude_if_products: []
+  applies_if_all:
+  - light_means_of_transport
+  applies_if_any:
+  - traction_motor
+  - battery_powered
+  exclude_if: []
+  test_focus:
+  - battery
+  - safety
+  - electrical
+  evidence_hint:
+  - traction battery specification
+  - battery-pack architecture
+  - light-EV battery safety evidence
+  keywords:
+  - traction battery
+  - light ev battery
+  - scooter battery
+  - e-bike battery
+  notes: Review route for lithium traction batteries and integrated packs used in light electric transport products such as e-bikes,
+    e-scooters, hoverboards, e-skateboards, and electric unicycles.
+  state_of_the_art_scope: EU
+  standard_ref: EN 50604-1
+  selection_group: EN 50604-1
+  selection_priority: 5
+  evidence_keywords:
+  - traction battery specification
+  - battery-pack architecture
+  - light-EV battery safety evidence
+  - traction battery
+  - light ev battery
+  - scooter battery
+  - e-bike battery
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
 - code: EN 303 645 review
   title: Consumer IoT cybersecurity baseline review

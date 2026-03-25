@@ -13407,8 +13407,11 @@ products:
     classification.
 - id: ev_charger_home
   label: Home EV charger (EVSE)
+  product_family: ev_charging_equipment
+  product_subfamily: ev_charger_home
   family_keywords:
   - ev charging
+  - evse
   - vehicle charging
   - electric vehicle charging
   aliases:
@@ -13479,6 +13482,8 @@ products:
   likely_standards:
   - EN 62368-1
   - IEC 61851-1
+  - IEC 61851-21-2
+  - IEC 62196-2
   genres:
   - portable_energy
   strong_aliases:
@@ -13529,6 +13534,10 @@ products:
     kind: unspecified
   - ref: IEC 61851-1
     kind: unspecified
+  - ref: IEC 61851-21-2
+    kind: unspecified
+  - ref: IEC 62196-2
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -13542,6 +13551,94 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
+- id: portable_ev_charger
+  label: Portable EV charger / mode 2 EVSE
+  product_family: ev_charging_equipment
+  product_subfamily: portable_ev_charger
+  family_keywords:
+  - ev charging
+  - evse
+  - vehicle charging
+  aliases:
+  - portable ev charger
+  - portable electric vehicle charger
+  - mode 2 charger
+  - mode 2 ev charger
+  - mode 2 evse
+  - granny charger
+  - ev travel charger
+  - portable wallbox
+  - iccpd
+  - ic-cpd
+  - in cable control and protection device
+  - in-cable control and protection device
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - portable
+  - ev_charging
+  - vehicle_supply
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - IEC 61851-1
+  - IEC 61851-21-2
+  - IEC 62196-2
+  - IEC 62752
+  strong_aliases:
+  - portable ev charger
+  - portable electric vehicle charger
+  - mode 2 charger
+  - mode 2 ev charger
+  - granny charger
+  - ev travel charger
+  - iccpd
+  - ic-cpd
+  weak_aliases:
+  - mode 2 evse
+  - portable wallbox
+  - in cable control and protection device
+  - in-cable control and protection device
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: IEC 61851-1
+    kind: unspecified
+  - ref: IEC 61851-21-2
+    kind: unspecified
+  - ref: IEC 62196-2
+    kind: unspecified
+  - ref: IEC 62752
+    kind: unspecified
+  required_clues: []
+  preferred_clues:
+  - portable
+  - mode 2
+  - granny
+  - travel charger
+  exclude_clues:
+  - wall mount
+  - fixed installation
+  genres: []
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - mains_powered
+  - portable
+  - ev_charging
+  - vehicle_supply
+  score_penalty_if_traits:
+  - fixed_installation
+  required_any_traits:
+  - electrical
+  forbidden_traits:
+  - fixed_installation
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
     classification.
 - id: home_battery_system
@@ -15868,6 +15965,7 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  - EN 50604-1
   family_traits:
   - consumer
   - electrical
@@ -15934,6 +16032,8 @@ products:
   likely_standard_refs:
   - ref: EN 17128
     kind: unspecified
+  - ref: EN 50604-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -15988,6 +16088,7 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  - EN 50604-1
   preferred_clues:
   - hoverboard
   - self balancing
@@ -16080,6 +16181,8 @@ products:
   likely_standard_refs:
   - ref: EN 17128
     kind: unspecified
+  - ref: EN 50604-1
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - bluetooth
@@ -16118,6 +16221,7 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  - EN 50604-1
   strong_aliases:
   - electric skateboard
   - e skateboard
@@ -16138,6 +16242,8 @@ products:
   negative_examples: []
   likely_standard_refs:
   - ref: EN 17128
+    kind: unspecified
+  - ref: EN 50604-1
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
@@ -16170,6 +16276,7 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  - EN 50604-1
   strong_aliases:
   - electric unicycle
   - euc
@@ -16187,6 +16294,8 @@ products:
   negative_examples: []
   likely_standard_refs:
   - ref: EN 17128
+    kind: unspecified
+  - ref: EN 50604-1
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
@@ -18576,6 +18685,7 @@ products:
   - mobility_device
   likely_standards:
   - EN 15194
+  - EN 50604-1
   genres:
   - micromobility
   preferred_clues:
@@ -18675,6 +18785,8 @@ products:
   negative_examples: []
   likely_standard_refs:
   - ref: EN 15194
+    kind: unspecified
+  - ref: EN 50604-1
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:

@@ -149,6 +149,29 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertNotIn("EN 55014-1", all_codes)
         self.assertNotIn("EN 55014-2", all_codes)
 
+    def test_portable_ev_charger_alias_surfaces_mode_2_review_routes(self) -> None:
+        result = analyze("portable EV charger with mode 2 cable and in-cable protection device")
+
+        self.assertEqual(result.product_type, "portable_ev_charger")
+        review_codes = {item.code for item in result.review_items}
+
+        self.assertIn("IEC 61851-1", review_codes)
+        self.assertIn("IEC 61851-21-2", review_codes)
+        self.assertIn("IEC 62196-2", review_codes)
+        self.assertIn("IEC 62752", review_codes)
+
+    def test_granny_charger_alias_beats_generic_battery_charger(self) -> None:
+        result = analyze("granny charger for electric car")
+
+        self.assertEqual(result.product_type, "portable_ev_charger")
+        self.assertIn("IEC 62752", {item.code for item in result.review_items})
+
+    def test_micromobility_products_surface_traction_battery_review_route(self) -> None:
+        result = analyze("electric scooter with bluetooth app")
+
+        self.assertEqual(result.product_type, "electric_scooter")
+        self.assertIn("EN 50604-1", {item.code for item in result.review_items})
+
 
 if __name__ == "__main__":
     unittest.main()

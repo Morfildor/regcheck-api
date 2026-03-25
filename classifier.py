@@ -101,6 +101,11 @@ NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
     (r"\be[ -]?paper\b", "epaper"),
     (r"\bpower over ethernet\b", "poe"),
 ]
+_COMPILED_NORMALIZATION: list[tuple[re.Pattern, str]] = [
+    (re.compile(p), r) for p, r in NORMALIZATION_REPLACEMENTS
+]
+_COMPILED_CLEANUP1 = re.compile(r"[^a-z0-9_]+")
+_COMPILED_CLEANUP2 = re.compile(r"\s+")
 
 NEGATIONS: dict[str, list[str]] = {
     "radio": [r"\bno radio\b", r"\bwithout radio\b"],
@@ -119,6 +124,10 @@ NEGATIONS: dict[str, list[str]] = {
         r"\bwithout subscription\b",
         r"\bno wallet\b",
     ],
+}
+_COMPILED_NEGATIONS: dict[str, list[re.Pattern]] = {
+    trait: [re.compile(p) for p in pats]
+    for trait, pats in NEGATIONS.items()
 }
 
 TRAIT_PATTERNS: dict[str, list[str]] = {
@@ -410,14 +419,61 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "door_window_sensor": [r"\bdoor sensor\b", r"\bwindow sensor\b", r"\bcontact sensor\b"],
     "strobe_output": [r"\bstrobe\b", r"\bvisual alarm\b", r"\bflashing alarm\b"],
 }
+_COMPILED_TRAIT_PATTERNS: dict[str, list[re.Pattern]] = {
+    trait: [re.compile(p) for p in pats]
+    for trait, pats in TRAIT_PATTERNS.items()
+}
+_COMPILED_SMART_CONNECTED = [re.compile(p) for p in SMART_CONNECTED_PATTERNS]
+_COMPILED_WIRED_NETWORK = [re.compile(p) for p in WIRED_NETWORK_PATTERNS]
+_COMPILED_ELECTRICAL_CUES = [
+    re.compile(r"\belectric(?:al)?\b"),
+    re.compile(r"\belectronic\b"),
+    re.compile(r"\bpowered\b"),
+    re.compile(r"\bvoltage\b"),
+    re.compile(r"\bcharger\b"),
+    re.compile(r"\badapter\b"),
+    re.compile(r"\bplug\b"),
+    re.compile(r"\bsocket\b"),
+    re.compile(r"\bdevice\b"),
+    re.compile(r"\bequipment\b"),
+    re.compile(r"\bappliance\b"),
+]
+_COMPILED_ELECTRONIC_CUES = [
+    re.compile(r"\belectronic\b"),
+    re.compile(r"\bdigital\b"),
+    re.compile(r"\bfirmware\b"),
+    re.compile(r"\bsoftware\b"),
+    re.compile(r"\bpcb\b"),
+    re.compile(r"\bcircuit\b"),
+    re.compile(r"\bsensor\b"),
+    re.compile(r"\bsmart\b"),
+    re.compile(r"\bconnected\b"),
+]
+_COMPILED_LOCAL_ONLY_CUES = [
+    re.compile(r"\blocal only\b"),
+    re.compile(r"\boffline only\b"),
+    re.compile(r"\blan only\b"),
+]
+_COMPILED_CONSUMERISH_CUES = [
+    re.compile(r"\bhousehold\b"),
+    re.compile(r"\bconsumer\b"),
+    re.compile(r"\bdomestic\b"),
+    re.compile(r"\bappliance\b"),
+    re.compile(r"\bhome device\b"),
+]
+_COMPILED_COMMERCIAL_CUES = re.compile(r"\b(?:commercial|professional|industrial|horeca)\b")
+_COMPILED_HOUSEHOLD_CUES = re.compile(r"\b(?:household|domestic|home use|consumer)\b")
+_PHRASE_PATTERN_CACHE: dict[str, re.Pattern] = {}
+_ALIAS_PATTERN_CACHE: dict[str, tuple[re.Pattern, re.Pattern | None]] = {}
+_PRODUCT_TRAIT_BUCKET_CACHE: dict[str, tuple[set[str], set[str]]] = {}
 
 
 def normalize(text: str) -> str:
     text = (text or "").lower()
-    for pattern, replacement in NORMALIZATION_REPLACEMENTS:
-        text = re.sub(pattern, replacement, text)
-    text = re.sub(r"[^a-z0-9_]+", " ", text)
-    return re.sub(r"\s+", " ", text).strip()
+    for pattern, replacement in _COMPILED_NORMALIZATION:
+        text = pattern.sub(replacement, text)
+    text = _COMPILED_CLEANUP1.sub(" ", text)
+    return _COMPILED_CLEANUP2.sub(" ", text).strip()
 
 
 def _known_trait_ids() -> set[str]:
@@ -430,21 +486,24 @@ def _known_trait_ids() -> set[str]:
 def reset_classifier_cache() -> None:
     global TRAIT_IDS_CACHE
     TRAIT_IDS_CACHE = None
+    _PHRASE_PATTERN_CACHE.clear()
+    _ALIAS_PATTERN_CACHE.clear()
+    _PRODUCT_TRAIT_BUCKET_CACHE.clear()
 
 
-def _has_any_regex(text: str, patterns: list[str]) -> bool:
-    return any(re.search(pattern, text) for pattern in patterns)
+def _has_any_compiled(text: str, patterns: list[re.Pattern]) -> bool:
+    return any(p.search(text) for p in patterns)
 
 
 def _trait_is_negated(text: str, trait: str) -> bool:
-    return _has_any_regex(text, NEGATIONS.get(trait, []))
+    return _has_any_compiled(text, _COMPILED_NEGATIONS.get(trait, []))
 
 
 def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
-    for trait, regexes in TRAIT_PATTERNS.items():
+    for trait, patterns in _COMPILED_TRAIT_PATTERNS.items():
         if _trait_is_negated(text, trait):
             continue
-        if _has_any_regex(text, regexes):
+        if _has_any_compiled(text, patterns):
             explicit_traits.add(trait)
 
     if RADIO_TRAITS & explicit_traits:
@@ -479,34 +538,9 @@ def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
     }
     electronic_signals = ELECTRONIC_SIGNAL_TRAITS | {"radio", "electronic"}
 
-    electrical_cues = [
-        r"\belectric(?:al)?\b",
-        r"\belectronic\b",
-        r"\bpowered\b",
-        r"\bvoltage\b",
-        r"\bcharger\b",
-        r"\badapter\b",
-        r"\bplug\b",
-        r"\bsocket\b",
-        r"\bdevice\b",
-        r"\bequipment\b",
-        r"\bappliance\b",
-    ]
-    electronic_cues = [
-        r"\belectronic\b",
-        r"\bdigital\b",
-        r"\bfirmware\b",
-        r"\bsoftware\b",
-        r"\bpcb\b",
-        r"\bcircuit\b",
-        r"\bsensor\b",
-        r"\bsmart\b",
-        r"\bconnected\b",
-    ]
-
-    if (electrical_signals & explicit_traits) or _has_any_regex(text, electrical_cues):
+    if (electrical_signals & explicit_traits) or _has_any_compiled(text, _COMPILED_ELECTRICAL_CUES):
         inferred.add("electrical")
-    if (electronic_signals & explicit_traits) or _has_any_regex(text, electronic_cues):
+    if (electronic_signals & explicit_traits) or _has_any_compiled(text, _COMPILED_ELECTRONIC_CUES):
         inferred.add("electronic")
     if "electronic" in inferred and not ({"electrical"} & (explicit_traits | inferred)):
         inferred.add("electrical")
@@ -526,11 +560,11 @@ def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
 def _infer_connected_traits(text: str, signal_traits: set[str]) -> set[str]:
     inferred: set[str] = set()
 
-    local_only = "local_only" in signal_traits or _has_any_regex(text, [r"\blocal only\b", r"\boffline only\b", r"\blan only\b"])
-    wired_only = _has_any_regex(text, WIRED_NETWORK_PATTERNS)
-    smartish = _has_any_regex(text, SMART_CONNECTED_PATTERNS)
-    consumerish = bool({"consumer", "household", "personal_care", "wearable", "pet_use"} & signal_traits) or _has_any_regex(
-        text, [r"\bhousehold\b", r"\bconsumer\b", r"\bdomestic\b", r"\bappliance\b", r"\bhome device\b"]
+    local_only = "local_only" in signal_traits or _has_any_compiled(text, _COMPILED_LOCAL_ONLY_CUES)
+    wired_only = _has_any_compiled(text, _COMPILED_WIRED_NETWORK)
+    smartish = _has_any_compiled(text, _COMPILED_SMART_CONNECTED)
+    consumerish = bool({"consumer", "household", "personal_care", "wearable", "pet_use"} & signal_traits) or _has_any_compiled(
+        text, _COMPILED_CONSUMERISH_CUES
     )
     applianceish = bool({"heating", "motorized", "food_contact", "household"} & signal_traits)
     portable_app_first = bool({"battery_powered", "portable", "wearable", "body_worn_or_applied", "personal_care", "oral_care"} & signal_traits)
@@ -676,18 +710,27 @@ def _alias_score(text: str, alias: str) -> int:
     if not alias_norm:
         return 0
 
-    exact_pattern = rf"(?<!\w){re.escape(alias_norm)}(?!\w)"
-    if re.search(exact_pattern, text):
+    cached = _ALIAS_PATTERN_CACHE.get(alias_norm)
+    if cached is None:
+        exact_pat = re.compile(rf"(?<!\w){re.escape(alias_norm)}(?!\w)")
+        tokens = alias_norm.split()
+        gap_pat = (
+            re.compile(r"\b" + r"\b(?:\s+\w+){0,2}\s+\b".join(re.escape(t) for t in tokens) + r"\b")
+            if len(tokens) >= 2
+            else None
+        )
+        cached = (exact_pat, gap_pat)
+        _ALIAS_PATTERN_CACHE[alias_norm] = cached
+
+    exact_pat, gap_pat = cached
+    if exact_pat.search(text):
         score = 100 + len(alias_norm) * 3 + len(alias_norm.split()) * 22
         if alias_norm == text:
             score += 80
         return score
 
-    tokens = alias_norm.split()
-    if len(tokens) >= 2:
-        gap_pattern = r"\b" + r"\b(?:\s+\w+){0,2}\s+\b".join(re.escape(t) for t in tokens) + r"\b"
-        if re.search(gap_pattern, text):
-            return 42 + len(tokens) * 12
+    if gap_pat is not None and gap_pat.search(text):
+        return 42 + len(alias_norm.split()) * 12
 
     return 0
 
@@ -725,7 +768,11 @@ def _phrase_present(text: str, phrase: str) -> bool:
     norm = normalize(phrase)
     if not norm:
         return False
-    return re.search(rf"(?<!\w){re.escape(norm)}(?!\w)", text) is not None
+    pattern = _PHRASE_PATTERN_CACHE.get(norm)
+    if pattern is None:
+        pattern = re.compile(rf"(?<!\w){re.escape(norm)}(?!\w)")
+        _PHRASE_PATTERN_CACHE[norm] = pattern
+    return pattern.search(text) is not None
 
 
 def _matching_clues(text: str, clues: list[str]) -> list[str]:
@@ -742,7 +789,7 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     pid = product["id"]
     traits = set(_string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")))
 
-    if any(re.search(rf"\b{term}\b", text) for term in ["commercial", "professional", "industrial", "horeca"]):
+    if _COMPILED_COMMERCIAL_CUES.search(text):
         if "professional" in traits or "commercial_food_service" in traits:
             score += 20
             reasons.append("commercial/professional context fits")
@@ -750,7 +797,7 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
             score -= 16
             reasons.append("consumer product conflicts with commercial wording")
 
-    if any(re.search(rf"\b{term}\b", text) for term in ["household", "domestic", "home use", "consumer"]):
+    if _COMPILED_HOUSEHOLD_CUES.search(text):
         if "consumer" in traits or "household" in traits:
             score += 16
             reasons.append("household context fits")
@@ -1257,10 +1304,10 @@ def _collect_text_trait_signals(text: str) -> tuple[set[str], set[str], dict[str
     negations = sorted(trait for trait in TRAIT_PATTERNS if _trait_is_negated(text, trait))
     state_map = _empty_trait_state_map()
 
-    for trait, regexes in TRAIT_PATTERNS.items():
+    for trait, patterns in _COMPILED_TRAIT_PATTERNS.items():
         if trait in negations:
             continue
-        if _has_any_regex(text, regexes):
+        if _has_any_compiled(text, patterns):
             explicit_direct.add(trait)
             _record_trait_state(state_map, "text_explicit", {trait}, f"text:{trait}")
 
@@ -1290,6 +1337,11 @@ def _product_family_keywords(product: dict[str, Any]) -> list[str]:
 
 
 def _product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]:
+    pid = product["id"]
+    cached = _PRODUCT_TRAIT_BUCKET_CACHE.get(pid)
+    if cached is not None:
+        return cached
+
     implied_traits = set(_string_list(product.get("implied_traits")))
     family_traits = set(_string_list(product.get("family_traits")))
     subtype_traits = set(_string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")))
@@ -1307,7 +1359,9 @@ def _product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]
 
     core_traits = _expand_related_traits(raw_core)
     default_traits = _expand_related_traits(raw_default) - core_traits
-    return core_traits, default_traits
+    result = (core_traits, default_traits)
+    _PRODUCT_TRAIT_BUCKET_CACHE[pid] = result
+    return result
 
 
 def _candidate_confidence_v2(candidate: dict[str, Any], next_candidate: dict[str, Any] | None = None) -> str:
