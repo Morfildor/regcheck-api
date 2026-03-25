@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E '\\\\.\\(md|json|yml|yaml|txt\\)$')",
+      "Bash(wc -l /c/Users/tuncb/Desktop/regcheck/*.py /c/Users/tuncb/Desktop/regcheck/data/*.yaml)",
+      "Bash(python -m pytest tests/ -x -q)",
+      "Bash(venv/Scripts/python.exe -c \":*)",
+      "Bash(venv/Scripts/python.exe -m unittest discover -s tests -v)"
+    ]
+  }
+}

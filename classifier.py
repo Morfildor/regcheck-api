@@ -97,7 +97,6 @@ NORMALIZATION_REPLACEMENTS: list[tuple[str, str]] = [
     (r"\bbean[ -]?to[ -]?cup\b", "bean to cup"),
     (r"\bair[ -]?conditioning\b", "air conditioner"),
     (r"\btooth[ -]?brush\b", "toothbrush"),
-    (r"\bsmart home\b", "smart_home"),
     (r"\be[ -]?ink\b", "eink"),
     (r"\be[ -]?paper\b", "epaper"),
     (r"\bpower over ethernet\b", "poe"),
@@ -151,7 +150,7 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "matter": [r"\bmatter\b"],
     "matter_bridge": [r"\bmatter bridge\b"],
     "nfc": [r"\bnfc\b", r"\brfid\b"],
-    "cellular": [r"\bcellular\b", r"\blte\b", r"\b4g\b", r"\b5g\b", r"\bgsm\b", r"\bsim\b"],
+    "cellular": [r"\bcellular\b", r"\blte\b", r"\b4g\b", r"\b5g cellular\b", r"\b5g mobile\b", r"\bgsm\b", r"\bsim\b"],
     "dect": [r"\bdect\b"],
     "gsm": [r"\bgsm\b"],
     "sigfox": [r"\bsigfox\b"],
@@ -320,7 +319,10 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bcordless\b",
         r"\bli ion\b",
         r"\blithium\b",
-        r"\bbattery\b",
+        r"\bbattery pack\b",
+        r"\bbattery cell\b",
+        r"\bbattery powered device\b",
+        r"\bon battery\b",
     ],
     "external_psu": [
         r"\bexternal psu\b",
@@ -365,7 +367,7 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     ],
     "heating": [r"\bheating\b", r"\bheater\b", r"\bhot\b", r"\bboil\b", r"\bbrew\b", r"\bsteam\b"],
     "cooling": [r"\bcooling\b", r"\brefrigerat\b", r"\bfreezer\b", r"\bice\b", r"\bchill\b"],
-    "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bdrive\b"],
+    "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bmotor drive\b", r"\bdrive unit\b", r"\bgear drive\b", r"\bchain drive\b", r"\bbelt drive\b"],
     "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
     "remote_management": [
         r"\bremote management\b",
@@ -385,8 +387,15 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     ],
     "food_contact": [
         r"\bfood contact\b",
-        r"\bfood\b",
-        r"\bdrink\b",
+        r"\bfood safe\b",
+        r"\bfood grade\b",
+        r"\bfood prep\b",
+        r"\bfood processing\b",
+        r"\bfood processor\b",
+        r"\bfood handling\b",
+        r"\bbeverage dispenser\b",
+        r"\bdrink dispenser\b",
+        r"\bdrinking water\b",
         r"\bbrew path\b",
         r"\bcook\b",
         r"\bwater tank\b",
@@ -733,7 +742,7 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     pid = product["id"]
     traits = set(_string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")))
 
-    if any(term in text for term in ["commercial", "professional", "industrial", "horeca"]):
+    if any(re.search(rf"\b{term}\b", text) for term in ["commercial", "professional", "industrial", "horeca"]):
         if "professional" in traits or "commercial_food_service" in traits:
             score += 20
             reasons.append("commercial/professional context fits")
@@ -741,7 +750,7 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
             score -= 16
             reasons.append("consumer product conflicts with commercial wording")
 
-    if any(term in text for term in ["household", "domestic", "home use", "consumer"]):
+    if any(re.search(rf"\b{term}\b", text) for term in ["household", "domestic", "home use", "consumer"]):
         if "consumer" in traits or "household" in traits:
             score += 16
             reasons.append("household context fits")
@@ -1354,7 +1363,7 @@ def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dic
         "family_keyword_hits": family_keyword_hits,
         "positive_clues": positive_clues,
         "negative_clues": negative_clues,
-        "decisive": decisive or bool(best_alias) or bool(family_keyword_hits),
+        "decisive": decisive or (best_alias is not None and alias_score >= 115) or bool(family_keyword_hits),
         "score": score,
         "direct_signal_count": direct_signal_count,
         "reasons": reasons,
