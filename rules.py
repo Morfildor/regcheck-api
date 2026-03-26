@@ -857,9 +857,6 @@ def _apply_post_selection_gates_v1(
             if scope_route == "appliance":
                 diagnostics.append("gate=drop_EN62368-1:appliance_primary")
                 continue
-            if "radio" in traits and "RED" in allowed_directives and "LVD" not in allowed_directives:
-                item["directive"] = "RED"
-                item["legislation_key"] = "RED"
 
         if code.startswith("EN 60335-") and scope_route == "av_ict":
             diagnostics.append(f"gate=drop_{code}:av_ict_primary")
@@ -1048,6 +1045,14 @@ def _apply_post_selection_gates(
             diagnostics.append(f"gate=drop_{code}:appliance_primary")
             continue
 
+        if code == "EN 62368-1" and context["scope_route"] == "appliance":
+            diagnostics.append("gate=drop_EN62368-1:appliance_primary")
+            continue
+
+        if code.startswith("EN 60335-") and context["scope_route"] == "av_ict":
+            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
+            continue
+
         if code.startswith("EN 55014-") and context["scope_route"] == "av_ict":
             diagnostics.append(f"gate=drop_{code}:av_ict_primary")
             continue
@@ -1064,10 +1069,6 @@ def _apply_post_selection_gates(
                 continue
             item["directive"] = "ECO"
             item["legislation_key"] = "ECO"
-
-        if code == "EN 62368-1" and "radio" in traits and "RED" in allowed_directives and "LVD" not in allowed_directives:
-            item["directive"] = "RED"
-            item["legislation_key"] = "RED"
 
         if code == "EN 62311":
             if context["prefer_62233"] and not ("radio" in traits and ({"wearable", "handheld", "body_worn_or_applied"} & traits)):
@@ -1102,7 +1103,7 @@ def _apply_post_selection_gates(
             diagnostics.append("gate=drop_external_psu_from_emc")
             continue
 
-        route = str(item.get("directive") or item.get("legislation_key") or "OTHER")
+        route = str(item.get("directive") or "OTHER")
         if route not in allowed_directives and route != "OTHER":
             diagnostics.append(f"gate=drop_{code}:directive_{route}_not_selected")
             continue

@@ -144,7 +144,6 @@ standards:
   category: emf
   directives:
   - RED
-  - LVD
   legislation_key: RED
   item_type: standard
   standard_family: EN 50364

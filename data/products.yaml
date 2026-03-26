@@ -17354,6 +17354,7 @@ products:
   - connected pet feeder
   - wifi pet feeder
   - automatic pet feeder
+  - pet feeder
   - smart-pet-feeder
   - smartpetfeeder
   - smart pet feeders
@@ -17368,6 +17369,9 @@ products:
   - automatic-pet-feeder
   - automaticpetfeeder
   - automatic pet feeders
+  - pet-feeder
+  - petfeeder
+  - pet feeders
   product_family: pet_technology
   product_subfamily: smart_pet_feeder
   genres:
@@ -17375,6 +17379,9 @@ products:
   - smart_home_iot
   - kitchen_food_appliance
   implied_traits:
+  - consumer
+  - household
+  - mains_power_likely
   - wifi
   - app_control
   - food_contact
@@ -17394,6 +17401,7 @@ products:
   - connected pet feeder
   - wifi pet feeder
   - automatic pet feeder
+  - pet feeder
   weak_aliases:
   - smart-pet-feeder
   - smartpetfeeder
@@ -17409,7 +17417,12 @@ products:
   - automatic-pet-feeder
   - automaticpetfeeder
   - automatic pet feeders
-  marketplace_aliases: []
+  - pet-feeder
+  - petfeeder
+  - pet feeders
+  marketplace_aliases:
+  - pet feeder
+  - automatic pet feeder
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
