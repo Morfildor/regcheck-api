@@ -172,6 +172,60 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertEqual(result.product_type, "electric_scooter")
         self.assertIn("EN 50604-1", {item.code for item in result.review_items})
 
+    def test_industrial_power_tool_prefers_tool_taxonomy_over_unrelated_appliances(self) -> None:
+        result = analyze("industrial power tool")
+
+        self.assertEqual(result.product_type, "industrial_power_tool")
+        self.assertEqual(result.product_family, "industrial_power_equipment")
+        self.assertFalse(result.classification_is_ambiguous)
+        self.assertFalse(result.classification_confidence_below_threshold)
+        self.assertNotIn("electric_fish_stunner", {item.id for item in result.product_candidates})
+        self.assertNotIn("bain_marie", {item.id for item in result.product_candidates})
+        md_section = next(section for section in result.standards_by_directive if section["directive_key"] == "MD")
+        self.assertIn("Power tool safety review", {item["code"] for item in md_section["items"]})
+
+    def test_generic_industrial_tool_falls_back_to_ambiguous_match(self) -> None:
+        result = analyze("generic industrial tool")
+
+        self.assertIsNone(result.product_type)
+        self.assertTrue(result.classification_is_ambiguous)
+        self.assertTrue(result.classification_confidence_below_threshold)
+        self.assertEqual(result.product_candidates, [])
+        self.assertIn("Confirm whether the product is mains-powered, battery-powered, or both.", result.suggested_questions)
+
+    def test_professional_electric_drill_routes_to_industrial_power_drill(self) -> None:
+        result = analyze("professional electric drill")
+
+        self.assertEqual(result.product_type, "corded_power_drill")
+        self.assertFalse(result.classification_is_ambiguous)
+        md_section = next(section for section in result.standards_by_directive if section["directive_key"] == "MD")
+        md_codes = {item["code"] for item in md_section["items"]}
+        self.assertIn("Power tool safety review", md_codes)
+        self.assertTrue(any(item["triggered_by_directive"] == "MD" for item in md_section["items"]))
+
+    def test_industrial_air_compressor_generates_pressure_specific_follow_ups(self) -> None:
+        result = analyze("industrial air compressor")
+
+        self.assertEqual(result.product_type, "industrial_air_compressor")
+        self.assertIn("Confirm the compressor maximum working pressure and receiver volume.", result.suggested_questions)
+        self.assertIn(
+            "Confirm whether the compressor is oil-free or lubricated, and whether it is continuous-duty or intermittent-duty.",
+            result.suggested_questions,
+        )
+        self.assertIn("high_energy", {item.key for item in result.risk_reasons})
+
+    def test_connected_products_return_storage_and_update_questions(self) -> None:
+        result = analyze("smart security camera with wifi and app control")
+
+        self.assertIn(
+            "Confirm whether the product stores user, event, diagnostic, or media data locally, in the cloud, or not at all.",
+            result.suggested_questions,
+        )
+        self.assertIn(
+            "Confirm whether firmware or software updates are supported, and whether they are OTA, app-driven, local-only, or unavailable.",
+            result.suggested_questions,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -159,6 +159,14 @@ class MissingInformationItem(BaseModel):
     route_impact: list[str] = Field(default_factory=list)
 
 
+class RiskReason(BaseModel):
+    key: str
+    scope: Literal["overall", "current", "future"] = "overall"
+    level: RiskLevel = "MEDIUM"
+    title: str
+    detail: str
+
+
 class AnalysisStats(BaseModel):
     legislation_count: int = 0
     current_legislation_count: int = 0
@@ -201,6 +209,8 @@ class AnalysisResult(BaseModel):
     product_subtype_confidence: ConfidenceLevel = "low"
     product_match_stage: ProductMatchStage = "ambiguous"
     product_match_confidence: ConfidenceLevel = "low"
+    classification_is_ambiguous: bool = True
+    classification_confidence_below_threshold: bool = True
     product_candidates: list[ProductCandidate] = Field(default_factory=list)
     functional_classes: list[str] = Field(default_factory=list)
     confirmed_functional_classes: list[str] = Field(default_factory=list)
@@ -235,7 +245,10 @@ class AnalysisResult(BaseModel):
     standard_match_audit: StandardMatchAudit | None = None
 
     standard_sections: list[dict[str, Any]] = Field(default_factory=list)
+    standards_by_directive: list[dict[str, Any]] = Field(default_factory=list)
     legislation_sections: list[dict[str, Any]] = Field(default_factory=list)
+    risk_reasons: list[RiskReason] = Field(default_factory=list)
+    risk_summary: dict[str, Any] = Field(default_factory=dict)
     hero_summary: dict[str, Any] = Field(default_factory=dict)
     confidence_panel: dict[str, Any] = Field(default_factory=dict)
     input_gaps_panel: dict[str, Any] = Field(default_factory=dict)

@@ -400,6 +400,10 @@ legislations:
   - scarifier_aerator
   - grass_shear
   - milking_machine
+  - industrial_power_tool
+  - corded_power_drill
+  - portable_power_saw
+  - industrial_air_compressor
   any_of_genres:
   - building_access_drive
   - garden_outdoor_power
@@ -468,6 +472,10 @@ legislations:
   - scarifier_aerator
   - grass_shear
   - milking_machine
+  - industrial_power_tool
+  - corded_power_drill
+  - portable_power_saw
+  - industrial_air_compressor
   any_of_genres:
   - building_access_drive
   - garden_outdoor_power

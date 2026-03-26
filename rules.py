@@ -23,6 +23,7 @@ from models import (
     MissingInformationItem,
     ProductMatchAudit,
     RiskLevel,
+    RiskReason,
     StandardAuditItem,
     StandardMatchAudit,
     StandardItem,
@@ -1238,13 +1239,55 @@ def _build_legislation_sections(
     return items, sections, _directive_keys(items)
 
 
+def _has_battery_chemistry_detail(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:li[ -]?ion|lithium(?:[ -](?:ion|iron phosphate))?|lifepo4|nimh|ni[ -]?mh|nicd|ni[ -]?cd|lead[ -]?acid|alkaline)\b",
+            text,
+        )
+    )
+
+
+def _has_battery_capacity_detail(text: str) -> bool:
+    return bool(re.search(r"\b\d+(?:\.\d+)?\s*(?:mah|ah|wh|v)\b", text))
+
+
+def _has_data_storage_detail(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:data storage|local storage|cloud storage|sd card|event history|recording|logs?|telemetry|retention|video storage)\b",
+            text,
+        )
+    )
+
+
+def _has_update_route_detail(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:ota|over the air|firmware update|software update|manual update|usb update|no updates?|security updates?)\b",
+            text,
+        )
+    )
+
+
+def _has_pressure_detail(text: str) -> bool:
+    return bool(re.search(r"\b\d+(?:\.\d+)?\s*(?:bar|psi|mpa|kpa|l|litre|liter|gallon)\b", text))
+
+
+def _has_installation_detail(text: str) -> bool:
+    return bool(re.search(r"\b(?:portable|handheld|bench(?:top)?|stationary|fixed(?:[ -]?installation)?|floor[ -]?standing)\b", text))
+
+
 def _missing_information(
     traits: set[str],
     matched_products: set[str],
     description: str,
+    product_type: str | None = None,
+    product_match_stage: str = "ambiguous",
 ) -> list[MissingInformationItem]:
     text = normalize(description)
     items: list[MissingInformationItem] = []
+    seen_keys: set[str] = set()
 
     def add(
         key: str,
@@ -1254,6 +1297,9 @@ def _missing_information(
         related: list[str] | None = None,
         route_impact: list[str] | None = None,
     ) -> None:
+        if key in seen_keys:
+            return
+        seen_keys.add(key)
         items.append(
             MissingInformationItem(
                 key=key,
@@ -1263,6 +1309,30 @@ def _missing_information(
                 related_traits=related or [],
                 route_impact=route_impact or [],
             )
+        )
+
+    tool_signal = bool(
+        matched_products
+        & {"industrial_power_tool", "corded_power_drill", "cordless_power_drill", "portable_power_saw", "industrial_air_compressor"}
+    ) or bool(re.search(r"\b(?:power tool|drill|saw|compressor)\b", text))
+    smart_signal = bool({"cloud", "app_control", "ota", "wifi", "bluetooth", "radio", "internet"} & traits) or bool(
+        re.search(r"\b(?:smart|connected|app|wireless|ota)\b", text)
+    )
+    battery_signal = bool({"battery_powered", "backup_battery"} & traits) or bool(
+        re.search(r"\b(?:battery|rechargeable|cordless|cell pack|battery pack)\b", text)
+    )
+    compressor_signal = bool(matched_products & {"industrial_air_compressor"}) or bool(
+        re.search(r"\b(?:air compressor|compressed air|pneumatic compressor|workshop compressor)\b", text)
+    )
+
+    if product_match_stage != "subtype" and tool_signal:
+        add(
+            "tool_type",
+            "Specify the exact equipment type, such as drill, saw, grinder, sander, or compressor.",
+            "high",
+            ["corded drill", "circular saw", "portable air compressor"],
+            ["motorized"],
+            ["MD", "MACH_REG", "LVD", "BATTERY"],
         )
 
     if "mains_powered" not in traits and "mains_power_likely" not in traits and "battery_powered" not in traits:
@@ -1328,6 +1398,87 @@ def _missing_information(
             ["cloud", "app_control", "ota"],
             ["RED_CYBER", "CRA", "GDPR"],
         )
+    if battery_signal and not _has_battery_chemistry_detail(text):
+        add(
+            "battery_chemistry",
+            "Confirm the battery chemistry or cell type.",
+            "high",
+            ["lithium-ion pack", "LiFePO4 pack", "NiMH cells", "sealed lead-acid battery"],
+            ["battery_powered"],
+            ["BATTERY", "WEEE", "GPSR"],
+        )
+    if battery_signal and not _has_battery_capacity_detail(text):
+        add(
+            "battery_capacity",
+            "Confirm battery voltage and capacity or energy rating.",
+            "medium",
+            ["18 V 5 Ah pack", "36 V 4 Ah battery", "54 Wh integrated battery"],
+            ["battery_powered"],
+            ["BATTERY", "RED"],
+        )
+    if battery_signal and not re.search(r"\b(?:integrated battery|built in battery|removable battery|replaceable battery|battery pack supplied)\b", text):
+        add(
+            "battery_pack_format",
+            "Confirm whether the battery is integrated, removable, or supplied as a separate pack.",
+            "medium",
+            ["integrated battery", "removable battery pack", "tool sold without battery pack"],
+            ["battery_powered"],
+            ["BATTERY", "WEEE"],
+        )
+    if smart_signal and not _has_data_storage_detail(text):
+        add(
+            "data_storage_scope",
+            "Confirm whether the product stores user, event, diagnostic, or media data locally, in the cloud, or not at all.",
+            "high",
+            ["local event log only", "cloud video history", "no user or event data retained"],
+            ["data_storage", "personal_data_likely"],
+            ["GDPR", "CRA", "RED_CYBER"],
+        )
+    if smart_signal and not _has_update_route_detail(text):
+        add(
+            "software_update_route",
+            "Confirm whether firmware or software updates are supported, and whether they are OTA, app-driven, local-only, or unavailable.",
+            "high",
+            ["OTA firmware updates", "USB-only local update", "no field updates supported"],
+            ["ota"],
+            ["CRA", "RED_CYBER"],
+        )
+    if smart_signal and not re.search(r"\b(?:account|login|pairing|authentication|offline|local only|cloud only)\b", text):
+        add(
+            "smart_access_model",
+            "Confirm whether the smart features require an account, pairing flow, local-only control, or permanent cloud access.",
+            "medium",
+            ["local pairing without account", "vendor account required", "LAN-only operation"],
+            ["account", "authentication", "local_only", "cloud"],
+            ["GDPR", "CRA", "RED_CYBER"],
+        )
+    if tool_signal and not _has_installation_detail(text):
+        add(
+            "tool_form_factor",
+            "Confirm whether the equipment is handheld / portable or stationary / fixed-installation.",
+            "medium",
+            ["handheld power tool", "portable workshop unit", "stationary bench machine"],
+            ["handheld", "portable", "fixed_installation"],
+            ["MD", "MACH_REG", "LVD"],
+        )
+    if compressor_signal and not _has_pressure_detail(text):
+        add(
+            "pressure_rating",
+            "Confirm the compressor maximum working pressure and receiver volume.",
+            "high",
+            ["8 bar with 24 L receiver", "10 bar oil-free compressor", "16 bar line pressure"],
+            ["pressure"],
+            ["MD", "MACH_REG"],
+        )
+    if compressor_signal and not re.search(r"\b(?:oil free|lubricated|duty cycle|continuous duty|intermittent duty)\b", text):
+        add(
+            "compressor_duty",
+            "Confirm whether the compressor is oil-free or lubricated, and whether it is continuous-duty or intermittent-duty.",
+            "medium",
+            ["oil-free portable compressor", "lubricated workshop compressor", "continuous-duty installation"],
+            ["pressure", "motorized"],
+            ["MD", "MACH_REG"],
+        )
     if "av_ict" in traits and (APPLIANCE_PRIMARY_TRAITS & traits):
         add(
             "primary_function_boundary",
@@ -1364,12 +1515,24 @@ def _build_standard_sections(items: list[StandardItem]) -> list[dict[str, Any]]:
     sections: list[dict[str, Any]] = []
     for key in sorted(grouped.keys(), key=_directive_rank):
         route_items = _sort_standard_items(grouped[key])
+        directive_label, directive_title = DIRECTIVE_TITLES.get(key, (key, key))
         sections.append(
             {
                 "key": key,
+                "directive_key": key,
+                "directive_label": directive_label,
+                "directive_title": directive_title,
                 "title": _route_title(key),
                 "count": len(route_items),
-                "items": [item.model_dump() for item in route_items],
+                "items": [
+                    {
+                        **item.model_dump(),
+                        "triggered_by_directive": key,
+                        "triggered_by_label": directive_label,
+                        "triggered_by_title": directive_title,
+                    }
+                    for item in route_items
+                ],
             }
         )
     return sections
@@ -1393,6 +1556,110 @@ def _build_summary(directives: list[str], standards: list[StandardItem], review_
 
 def _directive_label(key: str) -> str:
     return DIRECTIVE_TITLES.get(key, (key, key))[0]
+
+
+def _risk_reasons(
+    *,
+    overall_risk: RiskLevel,
+    current_risk: RiskLevel,
+    future_risk: RiskLevel,
+    traits: set[str],
+    directives: list[str],
+    product_confidence: str,
+    contradictions: list[str],
+    review_items: list[StandardItem],
+    missing_items: list[MissingInformationItem],
+) -> list[RiskReason]:
+    reasons: list[RiskReason] = []
+    seen: set[tuple[str, str]] = set()
+
+    def add(key: str, scope: Literal["overall", "current", "future"], level: RiskLevel, title: str, detail: str) -> None:
+        dedupe_key = (scope, key)
+        if dedupe_key in seen:
+            return
+        seen.add(dedupe_key)
+        reasons.append(RiskReason(key=key, scope=scope, level=level, title=title, detail=detail))
+
+    if product_confidence == "low":
+        add(
+            "low_confidence_classification",
+            "current",
+            "HIGH",
+            "Low classification confidence",
+            "The product description does not provide enough product-specific evidence to trust the automatic category match.",
+        )
+        add(
+            "low_confidence_classification",
+            "overall",
+            "HIGH",
+            "Low classification confidence",
+            "The route should be treated as provisional until the product type is clarified.",
+        )
+
+    if contradictions:
+        detail = "Conflicting signals were detected: " + _join_readable(contradictions, 2) + "."
+        add("contradictions", "current", "HIGH", "Conflicting product signals", detail)
+        add("contradictions", "overall", "HIGH", "Conflicting product signals", detail)
+
+    high_missing = [item for item in missing_items if item.importance == "high"]
+    if high_missing:
+        detail = "Route-critical inputs are still missing: " + _join_readable([item.message for item in high_missing], 2) + "."
+        add("missing_information", "current", "HIGH", "Missing route-critical information", detail)
+        add("missing_information", "overall", "HIGH", "Missing route-critical information", detail)
+    elif missing_items:
+        detail = "Some compliance inputs still need clarification: " + _join_readable([item.message for item in missing_items], 2) + "."
+        add("missing_information", "current", "MEDIUM", "Missing supporting detail", detail)
+
+    if review_items:
+        detail = f"{len(review_items)} standards remain review-dependent rather than fully confirmed."
+        add("review_items", "current", "MEDIUM", "Review-dependent standards remain", detail)
+        add("review_items", "overall", "MEDIUM", "Review-dependent standards remain", detail)
+
+    if {"radio", "wifi", "bluetooth", "cellular", "thread", "zigbee", "nfc"} & traits:
+        detail = "Radio functionality introduces RED evidence, RF exposure, EMC, and cybersecurity scoping questions."
+        add("radio", "overall", "MEDIUM", "Radio transmitter or receiver present", detail)
+        if {"CRA", "RED_CYBER"} & set(directives):
+            add("radio", "future", "HIGH" if future_risk == "HIGH" else "MEDIUM", "Connected radio security exposure", detail)
+
+    if {"mains_powered", "mains_power_likely", "motorized", "pressure"} & traits:
+        detail = "Moving parts, mains energy, or pressurized components increase the safety assessment burden."
+        add("high_energy", "overall", "MEDIUM", "High-energy or moving components", detail)
+        add("high_energy", "current", "MEDIUM", "High-energy or moving components", detail)
+
+    if "food_contact" in traits:
+        detail = "Food-contact surfaces can trigger additional materials and hygiene evidence expectations."
+        add("food_contact", "overall", "MEDIUM", "Food-contact surfaces", detail)
+        add("food_contact", "current", "MEDIUM", "Food-contact surfaces", detail)
+
+    if {"battery_powered", "backup_battery"} & traits:
+        detail = "Battery chemistry, capacity, removability, and transport classification can change the obligations profile."
+        add("battery", "overall", "MEDIUM", "Battery-powered architecture", detail)
+        add("battery", "current", "MEDIUM", "Battery-powered architecture", detail)
+
+    if {"cloud", "app_control", "ota", "internet", "account", "authentication"} & traits:
+        detail = "Connected software and account features can expand cybersecurity and data-governance obligations."
+        add("connected_software", "overall", "MEDIUM", "Connected software surface", detail)
+        if {"CRA", "RED_CYBER", "GDPR"} & set(directives):
+            add("connected_software", "future", "HIGH" if future_risk == "HIGH" else "MEDIUM", "Connected software surface", detail)
+
+    if "MACH_REG" in directives:
+        add(
+            "machinery_future",
+            "future",
+            "MEDIUM",
+            "Future machinery regime",
+            "The Machinery Regulation becomes relevant from 20 January 2027 for machinery-style equipment.",
+        )
+    if "AI_Act" in directives:
+        add(
+            "ai_future",
+            "future",
+            "MEDIUM",
+            "Future AI review",
+            "AI functionality can trigger additional classification and documentation obligations under the AI Act.",
+        )
+
+    return reasons
 
 
 def _join_readable(values: list[str], limit: int = 3) -> str:
@@ -1875,7 +2142,13 @@ def analyze_v1(
     review_items = _sort_standard_items(review_items)
     all_standard_items = _sort_standard_items(standard_items + review_items)
     current_review_items = [item for item in review_items if item.timing_status == "current"]
-    missing_items = _missing_information(trait_set, routing_matched_products, description)
+    missing_items = _missing_information(
+        trait_set,
+        routing_matched_products,
+        description,
+        product_type=product_type,
+        product_match_stage=product_match_stage,
+    )
     standard_sections = _build_standard_sections(all_standard_items)
     primary_regimes = [section["key"] for section in standard_sections[:4]]
 
@@ -1891,6 +2164,24 @@ def analyze_v1(
         overall_risk = "HIGH"
     elif current_risk == "MEDIUM" or future_risk == "MEDIUM":
         overall_risk = "MEDIUM"
+    classification_confidence_below_threshold = str(traits_data.get("product_match_confidence") or "low") == "low"
+    classification_is_ambiguous = classification_confidence_below_threshold or product_match_stage != "subtype"
+    risk_reasons = _risk_reasons(
+        overall_risk=overall_risk,
+        current_risk=current_risk,
+        future_risk=future_risk,
+        traits=trait_set,
+        directives=detected_directives,
+        product_confidence=str(traits_data.get("product_match_confidence") or "low"),
+        contradictions=traits_data.get("contradictions") or [],
+        review_items=review_items,
+        missing_items=missing_items,
+    )
+    risk_summary = {
+        "overall": {"level": overall_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "overall"]},
+        "current": {"level": current_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "current"]},
+        "future": {"level": future_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "future"]},
+    }
 
     stats = AnalysisStats(
         legislation_count=len(legislation_items),
@@ -1903,7 +2194,7 @@ def analyze_v1(
         harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
         state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
         product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
-        ambiguity_flag_count=1 if traits_data.get("contradictions") else 0,
+        ambiguity_flag_count=1 if (traits_data.get("contradictions") or classification_is_ambiguous) else 0,
         missing_information_count=len(missing_items),
     )
 
@@ -1934,6 +2225,8 @@ def analyze_v1(
         product_subtype_confidence=traits_data.get("product_subtype_confidence", "low"),
         product_match_stage=traits_data.get("product_match_stage", "ambiguous"),
         product_match_confidence=traits_data.get("product_match_confidence", "low"),
+        classification_is_ambiguous=classification_is_ambiguous,
+        classification_confidence_below_threshold=classification_confidence_below_threshold,
         product_candidates=traits_data.get("product_candidates") or [],
         functional_classes=traits_data.get("functional_classes") or [],
         confirmed_functional_classes=traits_data.get("confirmed_functional_classes") or [],
@@ -1967,10 +2260,15 @@ def analyze_v1(
             "product_family": traits_data.get("product_family"),
             "product_subtype": traits_data.get("product_subtype"),
             "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
+            "classification_is_ambiguous": classification_is_ambiguous,
+            "classification_confidence_below_threshold": classification_confidence_below_threshold,
             "depth": depth,
         },
         standard_sections=standard_sections,
+        standards_by_directive=standard_sections,
         legislation_sections=legislation_sections,
+        risk_reasons=risk_reasons,
+        risk_summary=risk_summary,
         hero_summary={
             "title": "RuleGrid Regulatory Scoping",
             "subtitle": "Describe the product clearly to generate the standards route and the applicable legislation path.",
@@ -1980,6 +2278,8 @@ def analyze_v1(
         },
         confidence_panel={
             "confidence": traits_data.get("product_match_confidence", "low"),
+            "classification_is_ambiguous": classification_is_ambiguous,
+            "classification_confidence_below_threshold": classification_confidence_below_threshold,
             "matched_products": sorted(matched_products),
             "product_family": traits_data.get("product_family"),
             "product_genres": sorted(product_genres),
@@ -2102,7 +2402,13 @@ def analyze(
     review_items = _sort_standard_items(review_items)
     all_standard_items = _sort_standard_items(standard_items + review_items)
     current_review_items = [item for item in review_items if item.timing_status == "current"]
-    missing_items = _missing_information(trait_set, routing_matched_products, description)
+    missing_items = _missing_information(
+        trait_set,
+        routing_matched_products,
+        description,
+        product_type=product_type,
+        product_match_stage=product_match_stage,
+    )
     standard_sections = _build_standard_sections(all_standard_items)
     primary_regimes = [section["key"] for section in standard_sections[:4]]
 
@@ -2118,6 +2424,24 @@ def analyze(
         overall_risk = "HIGH"
     elif current_risk == "MEDIUM" or future_risk == "MEDIUM":
         overall_risk = "MEDIUM"
+    classification_confidence_below_threshold = str(traits_data.get("product_match_confidence") or "low") == "low"
+    classification_is_ambiguous = classification_confidence_below_threshold or product_match_stage != "subtype"
+    risk_reasons = _risk_reasons(
+        overall_risk=overall_risk,
+        current_risk=current_risk,
+        future_risk=future_risk,
+        traits=trait_set,
+        directives=detected_directives,
+        product_confidence=str(traits_data.get("product_match_confidence") or "low"),
+        contradictions=traits_data.get("contradictions") or [],
+        review_items=review_items,
+        missing_items=missing_items,
+    )
+    risk_summary = {
+        "overall": {"level": overall_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "overall"]},
+        "current": {"level": current_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "current"]},
+        "future": {"level": future_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "future"]},
+    }
 
     stats = AnalysisStats(
         legislation_count=len(legislation_items),
@@ -2130,7 +2454,7 @@ def analyze(
         harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
         state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
         product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
-        ambiguity_flag_count=1 if traits_data.get("contradictions") else 0,
+        ambiguity_flag_count=1 if (traits_data.get("contradictions") or classification_is_ambiguous) else 0,
         missing_information_count=len(missing_items),
     )
 
@@ -2222,6 +2546,8 @@ def analyze(
         product_subtype_confidence=traits_data.get("product_subtype_confidence", "low"),
         product_match_stage=traits_data.get("product_match_stage", "ambiguous"),
         product_match_confidence=traits_data.get("product_match_confidence", "low"),
+        classification_is_ambiguous=classification_is_ambiguous,
+        classification_confidence_below_threshold=classification_confidence_below_threshold,
         product_candidates=traits_data.get("product_candidates") or [],
         functional_classes=traits_data.get("functional_classes") or [],
         confirmed_functional_classes=traits_data.get("confirmed_functional_classes") or [],
@@ -2254,6 +2580,8 @@ def analyze(
             "product_family": traits_data.get("product_family"),
             "product_subtype": traits_data.get("product_subtype"),
             "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
+            "classification_is_ambiguous": classification_is_ambiguous,
+            "classification_confidence_below_threshold": classification_confidence_below_threshold,
             "depth": depth,
             "engine_version": ENGINE_VERSION,
             "context_tags": sorted(context["context_tags"]),
@@ -2263,7 +2591,10 @@ def analyze(
         product_match_audit=product_match_audit,
         standard_match_audit=standard_match_audit,
         standard_sections=standard_sections,
+        standards_by_directive=standard_sections,
         legislation_sections=legislation_sections,
+        risk_reasons=risk_reasons,
+        risk_summary=risk_summary,
         hero_summary={
             "title": "RuleGrid Regulatory Scoping",
             "subtitle": "Describe the product clearly to generate the standards route and the applicable legislation path.",
@@ -2273,6 +2604,8 @@ def analyze(
         },
         confidence_panel={
             "confidence": traits_data.get("product_match_confidence", "low"),
+            "classification_is_ambiguous": classification_is_ambiguous,
+            "classification_confidence_below_threshold": classification_confidence_below_threshold,
             "matched_products": sorted(matched_products),
             "product_family": traits_data.get("product_family"),
             "product_subtype": traits_data.get("product_subtype"),

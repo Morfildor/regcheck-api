@@ -376,7 +376,24 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     ],
     "heating": [r"\bheating\b", r"\bheater\b", r"\bhot\b", r"\bboil\b", r"\bbrew\b", r"\bsteam\b"],
     "cooling": [r"\bcooling\b", r"\brefrigerat\b", r"\bfreezer\b", r"\bice\b", r"\bchill\b"],
-    "motorized": [r"\bmotor\b", r"\bfan\b", r"\bpump\b", r"\bcompressor\b", r"\bmotor drive\b", r"\bdrive unit\b", r"\bgear drive\b", r"\bchain drive\b", r"\bbelt drive\b"],
+    "motorized": [
+        r"\bmotor\b",
+        r"\bfan\b",
+        r"\bpump\b",
+        r"\bcompressor\b",
+        r"\bmotor drive\b",
+        r"\bdrive unit\b",
+        r"\bgear drive\b",
+        r"\bchain drive\b",
+        r"\bbelt drive\b",
+        r"\bpower tool\b",
+        r"\bdrill\b",
+        r"\bsaw\b",
+        r"\bgrinder\b",
+        r"\bsander\b",
+        r"\bimpact driver\b",
+        r"\brotary hammer\b",
+    ],
     "remote_control": [r"\bremote control\b", r"\bremote start\b", r"\bremote operation\b"],
     "remote_management": [
         r"\bremote management\b",
@@ -1378,6 +1395,12 @@ def _candidate_confidence_v2(candidate: dict[str, Any], next_candidate: dict[str
 
 
 def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dict[str, Any]) -> dict[str, Any] | None:
+    blocked_phrases = _matching_clues(text, _string_list(product.get("not_when_text_contains")))
+
+    forbidden_traits = set(_string_list(product.get("forbidden_traits")))
+    if forbidden_traits & signal_traits:
+        return None
+
     best_alias, alias_score, alias_reasons = _best_alias_match(text, product)
     family_keyword_hits = _matching_clues(text, _product_family_keywords(product))
     clue_score, clue_reasons, positive_clues, negative_clues, decisive = _clue_score(text, product)
@@ -1391,7 +1414,24 @@ def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dic
     score += len(family_keyword_hits) * 24
 
     direct_signal_count = int(bool(best_alias)) + len(positive_clues) + len(family_keyword_hits)
-    if not direct_signal_count and score < 28:
+    score_boost_traits = set(_string_list(product.get("score_boost_if_traits")))
+    score_penalty_traits = set(_string_list(product.get("score_penalty_if_traits")))
+    boost_hits = sorted(score_boost_traits & signal_traits)
+    penalty_hits = sorted(score_penalty_traits & signal_traits)
+    required_any_traits = set(_string_list(product.get("required_any_traits")))
+    required_any_missing = bool(required_any_traits and not (required_any_traits & signal_traits))
+    score += len(boost_hits) * 6
+    score -= len(penalty_hits) * 8
+    score -= len(blocked_phrases) * 18
+    if required_any_missing:
+        score -= 18
+
+    minimum_match_score = int(product.get("minimum_match_score", 0) or 0)
+    if direct_signal_count == 0:
+        return None
+    if required_any_missing and best_alias is None:
+        return None
+    if score < minimum_match_score:
         return None
 
     reasons = list(alias_reasons)
@@ -1403,6 +1443,11 @@ def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dic
         reasons.append(f"product core overlap +{core_overlap}")
     if default_overlap:
         reasons.append(f"product default overlap +{default_overlap}")
+    reasons.extend(f"blocked phrase '{phrase}'" for phrase in blocked_phrases)
+    reasons.extend(f"metadata boost '{trait}'" for trait in boost_hits)
+    reasons.extend(f"metadata penalty '{trait}'" for trait in penalty_hits)
+    if required_any_missing:
+        reasons.append("missing required routing traits")
     reasons.extend(bonus_reasons)
 
     return {
