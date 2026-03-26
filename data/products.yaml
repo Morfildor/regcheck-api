@@ -19208,7 +19208,461 @@ products:
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
     classification.
+- id: industrial_power_tool
+  product_family: industrial_power_equipment
+  product_subfamily: generic_power_tool
+  label: Industrial / professional power tool
+  aliases:
+  - industrial power tool
+  - professional power tool
+  - electric power tool
+  - power tool
+  - industrial-power-tool
+  - industrialpowertool
+  - industrial power tools
+  - professional-power-tool
+  - professionalpowertool
+  - professional power tools
+  - electric-power-tool
+  - electricpowertool
+  - electric power tools
+  - power-tool
+  - powertool
+  - power tools
+  implied_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  subtype_traits:
+  - handheld
+  - portable
+  core_traits:
+  - electrical
+  - motorized
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres: []
+  family_keywords:
+  - industrial power tool
+  - professional power tool
+  - electric power tool
+  - power tool
+  - handheld power tool
+  preferred_clues:
+  - power tool
+  - handheld power tool
+  - workshop tool
+  - jobsite tool
+  exclude_clues:
+  - fish stunner
+  - fishing machine
+  - bain marie
+  - dishwasher
+  strong_aliases:
+  - industrial power tool
+  - professional power tool
+  - electric power tool
+  - power tool
+  weak_aliases:
+  - industrial-power-tool
+  - industrialpowertool
+  - industrial power tools
+  - professional-power-tool
+  - professionalpowertool
+  - professional power tools
+  - electric-power-tool
+  - electricpowertool
+  - electric power tools
+  - power-tool
+  - powertool
+  - power tools
+  marketplace_aliases: []
+  not_when_text_contains:
+  - fish stunner
+  - fishing machine
+  - commercial kitchen appliance
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - food_contact
+  - water_contact
+  required_any_traits:
+  - electrical
+  - motorized
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
+- id: corded_power_drill
+  product_family: industrial_power_equipment
+  product_subfamily: power_drill
+  label: Corded / electric power drill
+  aliases:
+  - electric drill
+  - corded drill
+  - mains drill
+  - corded power drill
+  - electric power drill
+  - electric-drill
+  - electricdrill
+  - electric drills
+  - corded-drill
+  - cordeddrill
+  - corded drills
+  - mains-drill
+  - mainsdrill
+  - mains drills
+  - corded-power-drill
+  - cordedpowerdrill
+  - corded power drills
+  - electric-power-drill
+  - electricpowerdrill
+  - electric power drills
+  implied_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - mains_power_likely
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - professional
+  - industrial
+  - mains_power_likely
+  core_traits:
+  - electrical
+  - motorized
+  - mains_power_likely
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres: []
+  family_keywords:
+  - drill
+  - power drill
+  - electric drill
+  - corded drill
+  preferred_clues:
+  - drill
+  - power drill
+  - hammer drill
+  - impact drill
+  - rotary hammer
+  exclude_clues:
+  - cordless
+  - battery drill
+  - battery-powered
+  strong_aliases:
+  - electric drill
+  - corded drill
+  - mains drill
+  - corded power drill
+  - electric power drill
+  weak_aliases:
+  - electric-drill
+  - electricdrill
+  - electric drills
+  - corded-drill
+  - cordeddrill
+  - corded drills
+  - mains-drill
+  - mainsdrill
+  - mains drills
+  - corded-power-drill
+  - cordedpowerdrill
+  - corded power drills
+  - electric-power-drill
+  - electricpowerdrill
+  - electric power drills
+  marketplace_aliases: []
+  not_when_text_contains:
+  - cordless
+  - battery drill
+  - rechargeable
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - mains_powered
+  - mains_power_likely
+  score_penalty_if_traits:
+  - battery_powered
+  required_any_traits:
+  - electrical
+  - mains_powered
+  - mains_power_likely
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
+- id: portable_power_saw
+  product_family: industrial_power_equipment
+  product_subfamily: power_saw
+  label: Electric / portable power saw
+  aliases:
+  - power saw
+  - electric saw
+  - circular saw
+  - jigsaw
+  - reciprocating saw
+  - mitre saw
+  - miter saw
+  - power-saw
+  - powersaw
+  - power saws
+  - electric-saw
+  - electricsaw
+  - electric saws
+  - circular-saw
+  - circularsaw
+  - circular saws
+  - reciprocating-saw
+  - reciprocatingsaw
+  - reciprocating saws
+  implied_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - mains_power_likely
+  family_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  subtype_traits:
+  - handheld
+  - portable
+  - mains_power_likely
+  core_traits:
+  - electrical
+  - motorized
+  - mains_power_likely
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres: []
+  family_keywords:
+  - saw
+  - power saw
+  - circular saw
+  - jigsaw
+  - reciprocating saw
+  preferred_clues:
+  - saw
+  - circular saw
+  - jigsaw
+  - reciprocating saw
+  - mitre saw
+  - miter saw
+  exclude_clues:
+  - chainsaw
+  - chain saw
+  - surgical saw
+  strong_aliases:
+  - power saw
+  - electric saw
+  - circular saw
+  - jigsaw
+  - reciprocating saw
+  - mitre saw
+  - miter saw
+  weak_aliases:
+  - power-saw
+  - powersaw
+  - power saws
+  - electric-saw
+  - electricsaw
+  - electric saws
+  - circular-saw
+  - circularsaw
+  - circular saws
+  - reciprocating-saw
+  - reciprocatingsaw
+  - reciprocating saws
+  marketplace_aliases: []
+  not_when_text_contains:
+  - chainsaw
+  - chain saw
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  score_penalty_if_traits:
+  - garden_use
+  required_any_traits:
+  - electrical
+  - motorized
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
+- id: industrial_air_compressor
+  product_family: industrial_power_equipment
+  product_subfamily: air_compressor
+  label: Industrial / professional air compressor
+  aliases:
+  - air compressor
+  - industrial air compressor
+  - professional air compressor
+  - workshop compressor
+  - compressed air compressor
+  - pneumatic compressor
+  - air-compressor
+  - aircompressor
+  - air compressors
+  - workshop-compressor
+  - workshopcompressor
+  - workshop compressors
+  implied_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - pressure
+  - mains_power_likely
+  family_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  subtype_traits:
+  - pressure
+  - mains_power_likely
+  core_traits:
+  - electrical
+  - motorized
+  - mains_power_likely
+  functional_classes:
+  - industrial_equipment
+  likely_standards:
+  - Air compressor safety review
+  genres: []
+  family_keywords:
+  - air compressor
+  - compressor
+  - workshop compressor
+  - pneumatic compressor
+  preferred_clues:
+  - air compressor
+  - compressed air
+  - pneumatic
+  - pressure
+  exclude_clues:
+  - motor compressor
+  - refrigerant
+  - condensing unit
+  - fridge
+  - freezer
+  strong_aliases:
+  - air compressor
+  - industrial air compressor
+  - professional air compressor
+  - workshop compressor
+  - compressed air compressor
+  - pneumatic compressor
+  weak_aliases:
+  - air-compressor
+  - aircompressor
+  - air compressors
+  - workshop-compressor
+  - workshopcompressor
+  - workshop compressors
+  marketplace_aliases: []
+  not_when_text_contains:
+  - motor compressor
+  - refrigerant
+  - condensing unit
+  - fridge
+  - freezer
+  - air conditioner compressor
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Air compressor safety review
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - pressure
+  - mains_powered
+  - mains_power_likely
+  score_penalty_if_traits:
+  - food_contact
+  required_any_traits:
+  - motorized
+  - pressure
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
+    classification.
 - id: cordless_power_drill
+  product_family: industrial_power_equipment
+  product_subfamily: power_drill
+  family_keywords:
+  - drill
+  - power drill
+  - drill driver
+  - electric drill
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - battery_powered
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  core_traits:
+  - electrical
+  - motorized
+  - battery_powered
   label: Cordless power drill / drill driver
   aliases:
   - cordless drill
@@ -19253,6 +19707,7 @@ products:
   - portable
   functional_classes:
   - tool_device
+  - industrial_equipment
   likely_standards: []
   genres: []
   preferred_clues:

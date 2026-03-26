@@ -4769,16 +4769,14 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-  - mains_powered
-  applies_if_any:
-  - household
-  - consumer
   - electrical
+  applies_if_any:
+  - mains_powered
+  - mains_power_likely
   exclude_if:
   - battery_powered
   test_focus:
   - emission
-  - immunity
   evidence_hint:
   - technical construction file
   - test report
@@ -4815,16 +4813,14 @@ standards:
   applies_if_products: []
   exclude_if_products: []
   applies_if_all:
-  - mains_powered
-  applies_if_any:
-  - household
-  - consumer
   - electrical
+  applies_if_any:
+  - mains_powered
+  - mains_power_likely
   exclude_if:
   - battery_powered
   test_focus:
   - emission
-  - immunity
   evidence_hint:
   - technical construction file
   - test report
@@ -6767,4 +6763,95 @@ standards:
   - garden equipment
   - garden equipment robotic
   - outdoor safety review
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: Power tool safety review
+  title: Hand-held and transportable electric power tool standards-suite review
+  region: EU
+  category: safety
+  directives:
+  - MD
+  - MACH_REG
+  legislation_key: MD
+  item_type: review
+  standard_family: Power tool safety
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  version: Power tool standards-suite review
+  dated_version: Power tool standards-suite review
+  applies_if_products:
+  - industrial_power_tool
+  - corded_power_drill
+  - cordless_power_drill
+  - portable_power_saw
+  test_focus:
+  - safety
+  - mechanical
+  - electrical
+  evidence_hint:
+  - tool architecture and guarding review
+  - power source and control specification
+  - moving-part and overload protection review
+  keywords:
+  - power tool
+  - electric drill
+  - circular saw
+  - transportable tool
+  notes: Use as a conservative machinery-route review family for professional electric power tools until the exact product-part
+    standard is confirmed.
+  standard_ref: Power tool safety review
+  selection_group: Power tool safety
+  selection_priority: 0
+  evidence_keywords:
+  - tool architecture and guarding review
+  - power source and control specification
+  - moving-part and overload protection review
+  - power tool
+  - electric drill
+  - circular saw
+  - transportable tool
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: Air compressor safety review
+  title: Air compressor and pressure equipment standards-suite review
+  region: EU
+  category: safety
+  directives:
+  - MD
+  - MACH_REG
+  legislation_key: MD
+  item_type: review
+  standard_family: Air compressor safety
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  version: Air compressor standards-suite review
+  dated_version: Air compressor standards-suite review
+  applies_if_products:
+  - industrial_air_compressor
+  test_focus:
+  - safety
+  - mechanical
+  - electrical
+  evidence_hint:
+  - maximum pressure and receiver volume
+  - duty cycle and installation review
+  - compressor safety control review
+  keywords:
+  - air compressor
+  - compressed air
+  - pneumatic compressor
+  notes: Use as a review family for professional air compressors where the pressure and machinery route needs a product-specific
+    standards confirmation.
+  standard_ref: Air compressor safety review
+  selection_group: Air compressor safety
+  selection_priority: 0
+  evidence_keywords:
+  - maximum pressure and receiver volume
+  - duty cycle and installation review
+  - compressor safety control review
+  - air compressor
+  - compressed air
+  - pneumatic compressor
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
