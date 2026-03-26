@@ -68,29 +68,36 @@ standards:
   applies_if_all:
   - radio
   applies_if_any:
-  - account
-  - authentication
+  - personal_data_likely
+  - location
+  - wearable
+  - child_targeted
+  - toy
   exclude_if: []
   test_focus:
   - cybersecurity
   - software
   evidence_hint:
   - cybersecurity assessment
-  - authentication and access-control description
+  - personal data and privacy protection description
   - technical documentation mapping
   keywords:
-  - cyber security - account, login and authentication controls
-  notes: Current RED delegated-act route where the radio product or companion flow uses account, login, password, PIN, or
-    similar authentication controls.
+  - cyber security - personal data and privacy protection (3.3e)
+  - personal data
+  - location data
+  notes: RED Article 3.3(e) route. Applies to internet-connected radio equipment, childcare devices,
+    toys, and wearables that process personal data, traffic data, or location data.
   state_of_the_art_scope: EU
   standard_ref: EN 18031-2
   selection_group: EN 18031-2
   selection_priority: 0
   evidence_keywords:
   - cybersecurity assessment
-  - authentication and access-control description
+  - personal data and privacy protection description
   - technical documentation mapping
-  - cyber security - account, login and authentication controls
+  - cyber security - personal data and privacy protection (3.3e)
+  - personal data
+  - location data
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
 - code: EN 18031-3
   title: Common cybersecurity requirements for radio equipment - Part 3

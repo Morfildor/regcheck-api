@@ -1780,6 +1780,11 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
 
     known_traits = _known_trait_ids()
     explicit_traits = {trait for trait in _expand_related_traits(explicit_traits) if trait in known_traits}
+    # If battery_powered is explicitly detected from text, suppress mains_power_likely that may
+    # have been injected by a product's default traits (e.g. vacuum_cleaner implies mains_power_likely,
+    # but a cordless/lithium model should not inherit that).
+    if "battery_powered" in explicit_traits and "mains_powered" not in explicit_traits:
+        product_default_traits = product_default_traits - {"mains_power_likely"}
     inferred_traits = {trait for trait in _expand_related_traits(inferred_traits | product_core_traits | product_default_traits) if trait in known_traits}
     confirmed_traits = {trait for trait in _expand_related_traits(confirmed_traits) if trait in known_traits}
 
