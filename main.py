@@ -8,6 +8,7 @@ from time import perf_counter
 from typing import Annotated, Any
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -35,6 +36,35 @@ ADMIN_RELOAD_TOKEN_ENV = "REGCHECK_ADMIN_RELOAD_TOKEN"
 EXPOSE_HEALTH_DETAILS = os.getenv("REGCHECK_EXPOSE_HEALTH_DETAILS", "false").strip().lower() in {"1", "true", "yes", "on"}
 
 logger = logging.getLogger(__name__)
+
+DEFAULT_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://rulegrid.net",
+    "https://www.rulegrid.net",
+]
+DEFAULT_ALLOWED_ORIGIN_REGEX = r"https://regcheck-frontend(?:-[a-z0-9-]+)?\.vercel\.app"
+
+
+def _csv_env_list(name: str) -> list[str]:
+    return [item.strip() for item in os.getenv(name, "").split(",") if item.strip()]
+
+
+def _combine_origin_regex(parts: list[str]) -> str | None:
+    cleaned = [part.strip() for part in parts if part and part.strip()]
+    if not cleaned:
+        return None
+    if len(cleaned) == 1:
+        return cleaned[0]
+    return "|".join(f"(?:{part})" for part in cleaned)
+
+
+def _cors_configuration() -> tuple[list[str], str | None]:
+    allow_origins = sorted(set(DEFAULT_ALLOWED_ORIGINS + _csv_env_list("CORS_ALLOWED_ORIGINS")))
+    allow_origin_regex = _combine_origin_regex(
+        [DEFAULT_ALLOWED_ORIGIN_REGEX, os.getenv("CORS_ALLOWED_ORIGIN_REGEX", "").strip()]
+    )
+    return allow_origins, allow_origin_regex
 
 
 def _build_warmup_snapshot(result: KnowledgeBaseWarmupResult) -> KnowledgeBaseWarmupSnapshot:
@@ -106,20 +136,7 @@ async def lifespan(target_app: FastAPI):
 app = FastAPI(title="RegCheck API", version=APP_VERSION, lifespan=lifespan)
 app.state.runtime_state = AppRuntimeState()
 
-DEFAULT_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://rulegrid.net",
-    "https://www.rulegrid.net",
-    "https://regcheck-frontend.vercel.app",
-    "https://regcheck-frontend-kutrb6fg3-morfildors-projects.vercel.app",
-    "https://regcheck-frontend-git-main-morfildors-projects.vercel.app",
-    "https://regcheck-frontend-gxo61fmnd-morfildors-projects.vercel.app",
-]
-
-extra_origins = [origin.strip() for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if origin.strip()]
-allow_origins = sorted(set(DEFAULT_ALLOWED_ORIGINS + extra_origins))
-allow_origin_regex = os.getenv("CORS_ALLOWED_ORIGIN_REGEX", "").strip() or None
+allow_origins, allow_origin_regex = _cors_configuration()
 
 app.add_middleware(
     CORSMiddleware,
@@ -159,6 +176,17 @@ def _normalize_error_detail(detail: Any, *, default_code: str) -> tuple[str, str
     return default_code, "Request failed"
 
 
+def _validation_error_message(exc: RequestValidationError) -> str:
+    details: list[str] = []
+    for error in exc.errors():
+        location = ".".join(str(part) for part in error.get("loc", []) if part != "body")
+        message = str(error.get("msg") or "Invalid value")
+        details.append(f"{location}: {message}" if location else message)
+    if not details:
+        return "Request validation failed"
+    return "Request validation failed: " + "; ".join(details)
+
+
 def _request_id(request: Request | None) -> str | None:
     if request is None:
         return None
@@ -193,6 +221,18 @@ async def http_exception_handler(request: Request, exc: HTTPException) -> JSONRe
     code, message = _normalize_error_detail(exc.detail, default_code="http_error")
     payload = ErrorResponse(error=ErrorInfo(code=code, message=message, request_id=_request_id(request)))
     return JSONResponse(status_code=exc.status_code, content=payload.model_dump())
+
+
+@app.exception_handler(RequestValidationError)
+async def request_validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+    payload = ErrorResponse(
+        error=ErrorInfo(
+            code="request_validation_failed",
+            message=_validation_error_message(exc),
+            request_id=_request_id(request),
+        )
+    )
+    return JSONResponse(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, content=payload.model_dump())
 
 
 @app.exception_handler(Exception)

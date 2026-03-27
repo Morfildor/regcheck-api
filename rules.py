@@ -355,6 +355,90 @@ AV_ICT_SUPPORTING_TRAITS = {
     "microphone",
     "speaker",
 }
+TEXT_EVIDENCE_STATES = ("text_explicit", "text_inferred")
+RADIO_ROUTE_TRAITS = {
+    "radio",
+    "wifi",
+    "wifi_5ghz",
+    "wifi_6",
+    "wifi_7",
+    "bluetooth",
+    "zigbee",
+    "thread",
+    "matter",
+    "nfc",
+    "cellular",
+    "dect",
+    "gsm",
+    "uwb",
+    "5g_nr",
+    "lora",
+    "lorawan",
+    "sigfox",
+    "lte_m",
+    "satellite_connectivity",
+}
+CONNECTED_ROUTE_TRAITS = {
+    "app_control",
+    "cloud",
+    "internet",
+    "internet_connected",
+    "ota",
+    "account",
+    "authentication",
+    "monetary_transaction",
+}
+SENSITIVE_ROUTE_TRAITS = RADIO_ROUTE_TRAITS | CONNECTED_ROUTE_TRAITS
+DEFAULT_CONNECTED_ROUTE_GENRES = {
+    "smart_home_iot",
+    "security_access_iot",
+    "connected_toy_childcare",
+    "pet_tech",
+}
+
+
+@dataclass(slots=True)
+class PreparedAnalysis:
+    depth: str
+    normalized_description: str
+    traits_data: dict[str, Any]
+    diagnostics: list[str]
+    degraded_reasons: list[str]
+    warnings: list[str]
+    matched_products: set[str]
+    routing_matched_products: set[str]
+    product_genres: set[str]
+    product_type: str | None
+    product_match_stage: str
+    routing_product_type: str | None
+    likely_standards: set[str]
+    trait_set: set[str]
+    route_traits: set[str]
+    confirmed_traits: set[str]
+    functional_classes: set[str]
+    raw_state_map: dict[str, dict[str, list[str]]]
+
+
+@dataclass(slots=True)
+class LegislationSelection:
+    items: list[LegislationItem]
+    sections: list[LegislationSection]
+    detected_directives: list[str]
+    forced_directives: list[str]
+    allowed_directives: set[str]
+    legislation_by_directive: dict[str, LegislationItem]
+
+
+@dataclass(slots=True)
+class StandardsSelection:
+    context: dict[str, Any]
+    standard_items: list[StandardItem]
+    review_items: list[StandardItem]
+    current_review_items: list[StandardItem]
+    missing_items: list[MissingInformationItem]
+    standard_sections: list[StandardSection]
+    items_audit: dict[str, Any]
+    rejections: list[dict[str, Any]]
 
 
 def _scope_route(
@@ -2373,6 +2457,279 @@ def _trait_evidence_from_state_map(
     return items
 
 
+def _text_evidenced_traits(state_map: dict[str, dict[str, list[str]]]) -> set[str]:
+    evidenced: set[str] = set()
+    for state in TEXT_EVIDENCE_STATES:
+        evidenced.update(state_map.get(state, {}).keys())
+
+    if evidenced & (RADIO_ROUTE_TRAITS - {"radio"}):
+        evidenced.add("radio")
+    if evidenced & {"wifi_5ghz", "wifi_6", "wifi_7"}:
+        evidenced.add("wifi")
+    if evidenced & {"gsm", "lte_m", "5g_nr"}:
+        evidenced.add("cellular")
+    if "lorawan" in evidenced:
+        evidenced.add("lora")
+    if evidenced & {"cloud", "ota", "internet_connected"}:
+        evidenced.update({"internet", "internet_connected"})
+    return evidenced
+
+
+def _route_selection_traits(
+    traits: set[str],
+    confirmed_traits: set[str],
+    state_map: dict[str, dict[str, list[str]]],
+    product_genres: set[str],
+) -> tuple[set[str], list[str]]:
+    if product_genres & DEFAULT_CONNECTED_ROUTE_GENRES:
+        return set(traits), []
+
+    route_traits = set(traits)
+    backed_traits = confirmed_traits | _text_evidenced_traits(state_map)
+
+    suppressed = sorted((route_traits & SENSITIVE_ROUTE_TRAITS) - backed_traits)
+    route_traits.difference_update(suppressed)
+
+    if not (route_traits & (RADIO_ROUTE_TRAITS - {"radio"})):
+        route_traits.discard("radio")
+
+    return route_traits, suppressed
+
+
+def _prepare_analysis(
+    description: str,
+    category: str,
+    depth: str,
+) -> PreparedAnalysis:
+    normalized_description = normalize(f"{category} {description}")
+    traits_data = extract_traits(description=description, category=category)
+    diagnostics = list(traits_data.get("diagnostics") or [])
+    matched_products = set(traits_data.get("matched_products") or [])
+    routing_matched_products = set(traits_data.get("routing_matched_products") or [])
+    product_genres = set(traits_data.get("product_genres") or [])
+    product_type = traits_data.get("product_type")
+    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    routing_product_type = product_type if product_match_stage == "subtype" else None
+    likely_standards = _collect_preferred_standard_codes(traits_data)
+
+    base_trait_set = set(traits_data.get("all_traits") or [])
+    trait_set = set(base_trait_set)
+    confirmed_traits = set(traits_data.get("confirmed_traits") or [])
+    functional_classes = set(traits_data.get("functional_classes") or [])
+    trait_set, confirmed_engine_traits, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
+    confirmed_traits.update(confirmed_engine_traits)
+    diagnostics.extend(extra_diag)
+
+    raw_state_map = _normalize_trait_state_map(traits_data.get("trait_state_map"))
+    for trait in sorted(trait_set - base_trait_set):
+        raw_state_map["engine_derived"].setdefault(trait, []).append("engine:derived")
+
+    route_traits, suppressed_traits = _route_selection_traits(trait_set, confirmed_traits, raw_state_map, product_genres)
+    if suppressed_traits:
+        diagnostics.append("route_trait_suppressed=" + ",".join(suppressed_traits))
+
+    return PreparedAnalysis(
+        depth=depth,
+        normalized_description=normalized_description,
+        traits_data=traits_data,
+        diagnostics=diagnostics,
+        degraded_reasons=[],
+        warnings=[],
+        matched_products=matched_products,
+        routing_matched_products=routing_matched_products,
+        product_genres=product_genres,
+        product_type=product_type,
+        product_match_stage=product_match_stage,
+        routing_product_type=routing_product_type,
+        likely_standards=likely_standards,
+        trait_set=trait_set,
+        route_traits=route_traits,
+        confirmed_traits=confirmed_traits,
+        functional_classes=functional_classes,
+        raw_state_map=raw_state_map,
+    )
+
+
+def _select_legislation_routes(
+    prepared: PreparedAnalysis,
+    directives: list[str] | None,
+) -> LegislationSelection:
+    forced_directives = [item for item in dict.fromkeys(directives or []) if item]
+    legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
+        traits=prepared.route_traits,
+        functional_classes=prepared.functional_classes,
+        product_type=prepared.routing_product_type,
+        matched_products=prepared.routing_matched_products,
+        product_genres=prepared.product_genres,
+        confirmed_traits=prepared.confirmed_traits,
+        forced_directives=forced_directives,
+    )
+    inferred_directive_hints = _infer_forced_directives(
+        prepared.route_traits,
+        prepared.routing_matched_products,
+        prepared.routing_product_type,
+        prepared.confirmed_traits,
+        prepared.likely_standards,
+    )
+    if inferred_directive_hints - set(detected_directives):
+        prepared.diagnostics.append("directive_hints=" + ",".join(sorted(inferred_directive_hints - set(detected_directives))))
+        legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
+            traits=prepared.route_traits,
+            functional_classes=prepared.functional_classes,
+            product_type=prepared.routing_product_type,
+            matched_products=prepared.routing_matched_products,
+            product_genres=prepared.product_genres,
+            confirmed_traits=prepared.confirmed_traits,
+            forced_directives=sorted(set(forced_directives) | inferred_directive_hints),
+        )
+    return LegislationSelection(
+        items=legislation_items,
+        sections=legislation_sections,
+        detected_directives=detected_directives,
+        forced_directives=forced_directives,
+        allowed_directives=set(detected_directives),
+        legislation_by_directive=_primary_legislation_by_directive(legislation_items),
+    )
+
+
+def _select_standards(
+    prepared: PreparedAnalysis,
+    routes: LegislationSelection,
+    description: str,
+) -> StandardsSelection:
+    context = _standard_context(
+        prepared.route_traits,
+        prepared.routing_matched_products,
+        prepared.routing_product_type,
+        prepared.confirmed_traits,
+        description,
+    )
+
+    try:
+        items = find_applicable_items(
+            traits=prepared.route_traits,
+            directives=routes.detected_directives,
+            product_type=prepared.routing_product_type,
+            matched_products=sorted(prepared.routing_matched_products),
+            product_genres=sorted(prepared.product_genres),
+            preferred_standard_codes=sorted(prepared.likely_standards),
+            explicit_traits=set(prepared.traits_data.get("explicit_traits") or []),
+            confirmed_traits=prepared.confirmed_traits,
+            normalized_text=normalize(description),
+            context_tags=context["context_tags"],
+        )
+    except Exception:
+        logger.exception("analysis_degraded step=standards_enrichment")
+        prepared.degraded_reasons.append("standards_enrichment_failed")
+        prepared.warnings.append("Standards enrichment failed; returning classification and legislation without standards.")
+        items = {"standards": [], "review_items": [], "audit": {}, "rejections": []}
+
+    selected_rows = list(items.get("standards", [])) + list(items.get("review_items", []))
+    try:
+        selected_rows = _apply_post_selection_gates(
+            selected_rows,
+            prepared.route_traits,
+            prepared.routing_matched_products,
+            prepared.diagnostics,
+            routes.allowed_directives,
+            product_type=prepared.routing_product_type,
+            confirmed_traits=prepared.confirmed_traits,
+            description=description,
+        )
+    except Exception:
+        logger.exception("analysis_degraded step=post_selection_gates")
+        prepared.degraded_reasons.append("post_selection_gates_failed")
+        prepared.warnings.append("Standards post-selection filtering failed; returning the pre-filter standard candidates.")
+
+    dedup: dict[str, dict[str, Any]] = {}
+    for row in selected_rows:
+        key = str(row.get("code") or "")
+        if key not in dedup or int(row.get("score", 0)) > int(dedup[key].get("score", 0)):
+            dedup[key] = row
+
+    standard_items: list[StandardItem] = []
+    review_items: list[StandardItem] = []
+    for row in dedup.values():
+        item = _standard_item_from_row(row, routes.legislation_by_directive, prepared.route_traits)
+        if item.item_type == "review":
+            review_items.append(item)
+        else:
+            standard_items.append(item)
+
+    standard_items = _sort_standard_items(standard_items)
+    review_items = _sort_standard_items(review_items)
+    current_review_items = [item for item in review_items if item.timing_status == "current"]
+    missing_items = _missing_information(
+        prepared.route_traits,
+        prepared.routing_matched_products,
+        description,
+        product_type=prepared.product_type,
+        product_match_stage=prepared.product_match_stage,
+    )
+
+    try:
+        standard_sections = _build_standard_sections(_sort_standard_items(standard_items + review_items))
+    except Exception:
+        logger.exception("analysis_degraded step=standard_sections")
+        prepared.degraded_reasons.append("standard_sections_failed")
+        prepared.warnings.append("Standards sections could not be assembled; standards remain available as a flat list.")
+        standard_sections = []
+
+    return StandardsSelection(
+        context=context,
+        standard_items=standard_items,
+        review_items=review_items,
+        current_review_items=current_review_items,
+        missing_items=missing_items,
+        standard_sections=standard_sections,
+        items_audit=dict(items.get("audit", {})),
+        rejections=list(items.get("rejections", [])),
+    )
+
+
+def _compute_risk_profile(
+    prepared: PreparedAnalysis,
+    routes: LegislationSelection,
+    standards: StandardsSelection,
+) -> tuple[RiskLevel, RiskLevel, RiskLevel, list[RiskReason], RiskSummary]:
+    current_risk = _current_risk(
+        product_confidence=str(prepared.traits_data.get("product_match_confidence") or "low"),
+        contradiction_severity=str(prepared.traits_data.get("contradiction_severity") or "none"),
+        review_items=standards.current_review_items,
+        missing_items=standards.missing_items,
+    )
+    future_risk = _future_risk(routes.detected_directives, prepared.route_traits)
+    overall_risk: RiskLevel = "LOW"
+    if current_risk == "HIGH" or future_risk == "HIGH":
+        overall_risk = "HIGH"
+    elif current_risk == "MEDIUM" or future_risk == "MEDIUM":
+        overall_risk = "MEDIUM"
+
+    risk_reasons = _risk_reasons(
+        overall_risk=overall_risk,
+        current_risk=current_risk,
+        future_risk=future_risk,
+        traits=prepared.route_traits,
+        directives=routes.detected_directives,
+        product_confidence=str(prepared.traits_data.get("product_match_confidence") or "low"),
+        contradictions=prepared.traits_data.get("contradictions") or [],
+        review_items=standards.review_items,
+        missing_items=standards.missing_items,
+    )
+    return (
+        overall_risk,
+        current_risk,
+        future_risk,
+        risk_reasons,
+        _make_risk_summary(
+            overall_risk=overall_risk,
+            current_risk=current_risk,
+            future_risk=future_risk,
+            risk_reasons=risk_reasons,
+        ),
+    )
+
+
 def _build_standard_match_audit(items_audit: dict[str, Any], context_tags: set[str]) -> StandardMatchAudit:
     return StandardMatchAudit(
         engine_version=ENGINE_VERSION,
@@ -2859,200 +3216,49 @@ def analyze(
     depth: str = "standard",
 ) -> AnalysisResult:
     depth = _analysis_depth(depth)
-    traits_data = extract_traits(description=description, category=category)
-    degraded_reasons: list[str] = []
-    warnings: list[str] = []
-    diagnostics = list(traits_data.get("diagnostics") or [])
-    matched_products = set(traits_data.get("matched_products") or [])
-    routing_matched_products = set(traits_data.get("routing_matched_products") or [])
-    product_genres = set(traits_data.get("product_genres") or [])
-    product_type = traits_data.get("product_type")
-    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
-    routing_product_type = product_type if product_match_stage == "subtype" else None
-    likely_standards = _collect_preferred_standard_codes(traits_data)
-
-    base_trait_set = set(traits_data.get("all_traits") or [])
-    trait_set = set(base_trait_set)
-    confirmed_traits = set(traits_data.get("confirmed_traits") or [])
-    functional_classes = set(traits_data.get("functional_classes") or [])
-    trait_set, confirmed_engine_traits, extra_diag = _derive_engine_traits(description, trait_set, routing_matched_products)
-    confirmed_traits.update(confirmed_engine_traits)
-    diagnostics.extend(extra_diag)
-    engine_added_traits = trait_set - base_trait_set
-
-    raw_state_map = _normalize_trait_state_map(traits_data.get("trait_state_map"))
-    for trait in sorted(engine_added_traits):
-        raw_state_map["engine_derived"].setdefault(trait, []).append("engine:derived")
-
-    context = _standard_context(trait_set, routing_matched_products, routing_product_type, confirmed_traits, description)
-    legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
-        traits=trait_set,
-        functional_classes=functional_classes,
-        product_type=routing_product_type,
-        matched_products=routing_matched_products,
-        product_genres=product_genres,
-        confirmed_traits=confirmed_traits,
-        forced_directives=directives,
-    )
-    inferred_directive_hints = _infer_forced_directives(
-        trait_set,
-        routing_matched_products,
-        routing_product_type,
-        confirmed_traits,
-        likely_standards,
-    )
-    if inferred_directive_hints - set(detected_directives):
-        diagnostics.append("directive_hints=" + ",".join(sorted(inferred_directive_hints - set(detected_directives))))
-        legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
-            traits=trait_set,
-            functional_classes=functional_classes,
-            product_type=routing_product_type,
-            matched_products=routing_matched_products,
-            product_genres=product_genres,
-            confirmed_traits=confirmed_traits,
-            forced_directives=sorted({item for item in (directives or []) if item} | inferred_directive_hints),
-        )
-    legislation_by_directive = _primary_legislation_by_directive(legislation_items)
-    allowed_directives = set(detected_directives)
+    prepared = _prepare_analysis(description, category, depth)
+    routes = _select_legislation_routes(prepared, directives)
+    standards = _select_standards(prepared, routes, description)
+    overall_risk, current_risk, future_risk, risk_reasons, risk_summary = _compute_risk_profile(prepared, routes, standards)
 
     try:
-        items = find_applicable_items(
-            traits=trait_set,
-            directives=detected_directives,
-            product_type=routing_product_type,
-            matched_products=sorted(routing_matched_products),
-            product_genres=sorted(product_genres),
-            preferred_standard_codes=sorted(likely_standards),
-            explicit_traits=set(traits_data.get("explicit_traits") or []),
-            confirmed_traits=confirmed_traits,
-            normalized_text=normalize(description),
-            context_tags=context["context_tags"],
-        )
-    except Exception:
-        logger.exception("analysis_degraded step=standards_enrichment")
-        degraded_reasons.append("standards_enrichment_failed")
-        warnings.append("Standards enrichment failed; returning classification and legislation without standards.")
-        items = {"standards": [], "review_items": [], "audit": {}, "rejections": []}
-
-    selected_rows = list(items.get("standards", [])) + list(items.get("review_items", []))
-    try:
-        selected_rows = _apply_post_selection_gates(
-            selected_rows,
-            trait_set,
-            routing_matched_products,
-            diagnostics,
-            allowed_directives,
-            product_type=routing_product_type,
-            confirmed_traits=confirmed_traits,
-            description=description,
-        )
-    except Exception:
-        logger.exception("analysis_degraded step=post_selection_gates")
-        degraded_reasons.append("post_selection_gates_failed")
-        warnings.append("Standards post-selection filtering failed; returning the pre-filter standard candidates.")
-
-    dedup: dict[str, dict[str, Any]] = {}
-    for row in selected_rows:
-        key = str(row.get("code") or "")
-        if key not in dedup or int(row.get("score", 0)) > int(dedup[key].get("score", 0)):
-            dedup[key] = row
-
-    standard_items: list[StandardItem] = []
-    review_items: list[StandardItem] = []
-    for row in dedup.values():
-        item = _standard_item_from_row(row, legislation_by_directive, trait_set)
-        if item.item_type == "review":
-            review_items.append(item)
-        else:
-            standard_items.append(item)
-
-    standard_items = _sort_standard_items(standard_items)
-    review_items = _sort_standard_items(review_items)
-    all_standard_items = _sort_standard_items(standard_items + review_items)
-    current_review_items = [item for item in review_items if item.timing_status == "current"]
-    missing_items = _missing_information(
-        trait_set,
-        routing_matched_products,
-        description,
-        product_type=product_type,
-        product_match_stage=product_match_stage,
-    )
-    try:
-        standard_sections = _build_standard_sections(all_standard_items)
-    except Exception:
-        logger.exception("analysis_degraded step=standard_sections")
-        degraded_reasons.append("standard_sections_failed")
-        warnings.append("Standards sections could not be assembled; standards remain available as a flat list.")
-        standard_sections = []
-
-    current_risk = _current_risk(
-        product_confidence=str(traits_data.get("product_match_confidence") or "low"),
-        contradiction_severity=str(traits_data.get("contradiction_severity") or "none"),
-        review_items=current_review_items,
-        missing_items=missing_items,
-    )
-    future_risk = _future_risk(detected_directives, trait_set)
-    overall_risk: RiskLevel = "LOW"
-    if current_risk == "HIGH" or future_risk == "HIGH":
-        overall_risk = "HIGH"
-    elif current_risk == "MEDIUM" or future_risk == "MEDIUM":
-        overall_risk = "MEDIUM"
-    risk_reasons = _risk_reasons(
-        overall_risk=overall_risk,
-        current_risk=current_risk,
-        future_risk=future_risk,
-        traits=trait_set,
-        directives=detected_directives,
-        product_confidence=str(traits_data.get("product_match_confidence") or "low"),
-        contradictions=traits_data.get("contradictions") or [],
-        review_items=review_items,
-        missing_items=missing_items,
-    )
-    risk_summary = _make_risk_summary(
-        overall_risk=overall_risk,
-        current_risk=current_risk,
-        future_risk=future_risk,
-        risk_reasons=risk_reasons,
-    )
-
-    try:
-        summary = _build_summary(detected_directives, standard_items, review_items, trait_set)
+        summary = _build_summary(routes.detected_directives, standards.standard_items, standards.review_items, prepared.route_traits)
     except Exception:
         logger.exception("analysis_degraded step=summary")
-        degraded_reasons.append("summary_failed")
-        warnings.append("The narrative summary could not be assembled; returning a compact fallback summary.")
+        prepared.degraded_reasons.append("summary_failed")
+        prepared.warnings.append("The narrative summary could not be assembled; returning a compact fallback summary.")
         summary = (
-            f"{len(detected_directives)} legislation routes, {len(standard_items)} standards, "
-            f"and {len(review_items)} review items identified."
+            f"{len(routes.detected_directives)} legislation routes, {len(standards.standard_items)} standards, "
+            f"and {len(standards.review_items)} review items identified."
         )
 
     try:
         findings = _build_findings(
             depth=depth,
-            legislation_items=legislation_items,
-            standards=standard_items,
-            review_items=review_items,
-            missing_items=missing_items,
-            contradictions=traits_data.get("contradictions") or [],
-            contradiction_severity=traits_data.get("contradiction_severity", "none"),
+            legislation_items=routes.items,
+            standards=standards.standard_items,
+            review_items=standards.review_items,
+            missing_items=standards.missing_items,
+            contradictions=prepared.traits_data.get("contradictions") or [],
+            contradiction_severity=prepared.traits_data.get("contradiction_severity", "none"),
         )
     except Exception:
         logger.exception("analysis_degraded step=findings")
-        degraded_reasons.append("findings_failed")
-        warnings.append("Actionable findings could not be assembled; the route output remains available.")
+        prepared.degraded_reasons.append("findings_failed")
+        prepared.warnings.append("Actionable findings could not be assembled; the route output remains available.")
         findings = []
 
     try:
         known_facts = _build_known_facts(description)
     except Exception:
         logger.exception("analysis_degraded step=known_facts")
-        degraded_reasons.append("known_facts_failed")
-        warnings.append("Known-fact extraction could not be completed; the core analysis remains available.")
+        prepared.degraded_reasons.append("known_facts_failed")
+        prepared.warnings.append("Known-fact extraction could not be completed; the core analysis remains available.")
         known_facts = []
 
-    trait_evidence = _trait_evidence_from_state_map(raw_state_map, confirmed_traits)
-    product_match_audit = _safe_product_match_audit(traits_data, normalize(f"{category} {description}"))
-    rejected_audit_rows = list(items.get("audit", {}).get("rejected", []))
+    trait_evidence = _trait_evidence_from_state_map(prepared.raw_state_map, prepared.confirmed_traits)
+    product_match_audit = _safe_product_match_audit(prepared.traits_data, prepared.normalized_description)
+    rejected_audit_rows = list(standards.items_audit.get("rejected", []))
     rejected_audit_rows.extend(
         {
             "code": row.get("code"),
@@ -3066,8 +3272,8 @@ def analyze(
             "keyword_hits": [],
             "reason": row.get("reason"),
         }
-        for row in items.get("rejections", [])
-        if row.get("code") not in {item.code for item in standard_items + review_items}
+        for row in standards.rejections
+        if row.get("code") not in {item.code for item in standards.standard_items + standards.review_items}
     )
     try:
         standard_match_audit = _build_standard_match_audit(
@@ -3085,7 +3291,7 @@ def analyze(
                         "keyword_hits": item.keywords,
                         "reason": item.reason,
                     }
-                    for item in standard_items
+                    for item in standards.standard_items
                 ],
                 "review": [
                     {
@@ -3100,38 +3306,41 @@ def analyze(
                         "keyword_hits": item.keywords,
                         "reason": item.reason,
                     }
-                    for item in review_items
+                    for item in standards.review_items
                 ],
                 "rejected": rejected_audit_rows,
             },
-            context["context_tags"],
+            standards.context["context_tags"],
         )
     except Exception:
         logger.exception("analysis_degraded step=standard_match_audit")
-        degraded_reasons.append("standard_match_audit_failed")
-        warnings.append("Standard audit details could not be assembled; returning the selected routes without full audit detail.")
-        standard_match_audit = StandardMatchAudit(engine_version=ENGINE_VERSION, context_tags=sorted(context["context_tags"]))
+        prepared.degraded_reasons.append("standard_match_audit_failed")
+        prepared.warnings.append("Standard audit details could not be assembled; returning the selected routes without full audit detail.")
+        standard_match_audit = StandardMatchAudit(
+            engine_version=ENGINE_VERSION,
+            context_tags=sorted(standards.context["context_tags"]),
+        )
 
     result = _build_analysis_result(
         description=description,
         depth=depth,
-        normalized_description=normalize(f"{category} {description}"),
-        traits_data=traits_data,
-        diagnostics=diagnostics,
-        matched_products=matched_products,
-        routing_matched_products=routing_matched_products,
-        product_genres=product_genres,
-        likely_standards=likely_standards,
-        trait_set=trait_set,
-        confirmed_traits=confirmed_traits,
-        detected_directives=detected_directives,
-        forced_directives=[item for item in dict.fromkeys(directives or []) if item],
-        legislation_items=legislation_items,
-        legislation_sections=legislation_sections,
-        standard_items=standard_items,
-        review_items=review_items,
-        missing_items=missing_items,
-        standard_sections=standard_sections,
+        normalized_description=prepared.normalized_description,
+        traits_data=prepared.traits_data,
+        diagnostics=prepared.diagnostics,
+        matched_products=prepared.matched_products,
+        routing_matched_products=prepared.routing_matched_products,
+        product_genres=prepared.product_genres,
+        likely_standards=prepared.likely_standards,
+        trait_set=prepared.trait_set,
+        confirmed_traits=prepared.confirmed_traits,
+        detected_directives=routes.detected_directives,
+        forced_directives=routes.forced_directives,
+        legislation_items=routes.items,
+        legislation_sections=routes.sections,
+        standard_items=standards.standard_items,
+        review_items=standards.review_items,
+        missing_items=standards.missing_items,
+        standard_sections=standards.standard_sections,
         risk_reasons=risk_reasons,
         risk_summary=risk_summary,
         summary=summary,
@@ -3140,12 +3349,12 @@ def analyze(
         trait_evidence=trait_evidence,
         product_match_audit=product_match_audit,
         standard_match_audit=standard_match_audit,
-        route_context=_route_context_summary(context, known_facts),
+        route_context=_route_context_summary(standards.context, known_facts),
         overall_risk=overall_risk,
         current_risk=current_risk,
         future_risk=future_risk,
-        degraded_reasons=degraded_reasons,
-        warnings=warnings,
+        degraded_reasons=prepared.degraded_reasons,
+        warnings=prepared.warnings,
     )
 
     if ENABLE_ENGINE_V2_SHADOW:
@@ -3154,10 +3363,10 @@ def analyze(
             result.analysis_audit.shadow_diff = _shadow_diff(legacy, result)
         except Exception:
             logger.exception("analysis_degraded step=shadow_diff")
-            degraded_reasons.append("shadow_diff_failed")
-            warnings.append("Shadow comparison could not be computed; the primary analysis remains available.")
+            prepared.degraded_reasons.append("shadow_diff_failed")
+            prepared.warnings.append("Shadow comparison could not be computed; the primary analysis remains available.")
             result.degraded_mode = True
-            result.degraded_reasons = degraded_reasons
-            result.warnings = warnings
+            result.degraded_reasons = prepared.degraded_reasons
+            result.warnings = prepared.warnings
 
     return result

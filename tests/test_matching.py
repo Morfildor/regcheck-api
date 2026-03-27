@@ -667,8 +667,9 @@ class MatchingTests(unittest.TestCase):
             _validate_standard_metadata("TEST", {"required_fact_basis": "unsupported"})
 
     def test_admin_reload_is_disabled_without_token(self) -> None:
-        with self.assertRaises(HTTPException) as ctx:
-            main._require_admin_reload_token()
+        with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": ""}):
+            with self.assertRaises(HTTPException) as ctx:
+                main._require_admin_reload_token()
 
         self.assertEqual(ctx.exception.status_code, 503)
         self.assertIn("disabled", ctx.exception.detail["message"])

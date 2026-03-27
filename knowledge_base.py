@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import lru_cache
+import hashlib
+import logging
 from pathlib import Path
 import os
 import re
@@ -27,7 +29,23 @@ class KnowledgeBaseWarmupResult:
 
 
 BASE_DIR = Path(__file__).resolve().parent
-KB_META_VERSION = "7.0.0"
+PACKAGE_DATA_DIR = BASE_DIR / "data"
+CATALOG_VERSION_ENV = "REGCHECK_CATALOG_VERSION"
+BUILD_METADATA_ENV = "REGCHECK_BUILD_METADATA"
+REQUIRED_DATA_FILES = (
+    "traits.yaml",
+    "products.yaml",
+    "legislation_catalog.yaml",
+    "standards.yaml",
+)
+OPTIONAL_DATA_FILES = (
+    "trait_extensions.yaml",
+    "product_genres.yaml",
+    "product_extensions.yaml",
+    "legislation_extensions.yaml",
+    "standard_extensions.yaml",
+)
+ALL_DATA_FILES = REQUIRED_DATA_FILES + OPTIONAL_DATA_FILES
 ALLOWED_HARMONIZATION_STATUSES = {"harmonized", "state_of_the_art", "review", "unknown"}
 ALLOWED_FACT_BASIS = {"confirmed", "mixed", "inferred"}
 ALLOWED_TEST_FOCUS = {
@@ -49,61 +67,60 @@ ALLOWED_TEST_FOCUS = {
     "battery",
     "energy",
 }
-OPTIONAL_EXTENSION_FILES = {
-    "trait_extensions.yaml": "traits",
-    "product_genres.yaml": "genres",
-    "product_extensions.yaml": "products",
-    "legislation_extensions.yaml": "legislations",
-    "standard_extensions.yaml": "standards",
-}
+
+logger = logging.getLogger(__name__)
 
 
 # ---------- path helpers ----------
 
-def _candidate_dirs() -> list[Path]:
-    dirs: list[Path] = []
+def _data_dir_candidates() -> list[Path]:
+    candidates: list[Path] = []
 
-    env_dir = os.getenv("REGCHECK_DATA_DIR")
+    env_dir = os.getenv("REGCHECK_DATA_DIR", "").strip()
     if env_dir:
-        dirs.append(Path(env_dir).resolve())
+        candidates.append(Path(env_dir).expanduser().resolve())
 
-    cwd = Path.cwd().resolve()
-    dirs.extend(
-        [
-            BASE_DIR,
-            BASE_DIR / "data",
-            BASE_DIR.parent,
-            BASE_DIR.parent / "data",
-            cwd,
-            cwd / "data",
-            cwd / "app",
-            cwd / "app" / "data",
-            cwd / "backend",
-            cwd / "backend" / "data",
-        ]
-    )
+    candidates.append(PACKAGE_DATA_DIR.resolve())
 
     unique: list[Path] = []
     seen: set[str] = set()
-    for d in dirs:
-        key = str(d)
-        if key not in seen:
-            seen.add(key)
-            unique.append(d)
-
+    for candidate in candidates:
+        key = str(candidate)
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(candidate)
     return unique
 
 
+@lru_cache(maxsize=1)
+def _resolved_data_paths() -> dict[str, Path | None]:
+    resolved: dict[str, Path | None] = {}
+    candidates = _data_dir_candidates()
+    for filename in ALL_DATA_FILES:
+        path: Path | None = None
+        for directory in candidates:
+            candidate = directory / filename
+            if candidate.exists() and candidate.is_file():
+                path = candidate
+                break
+        resolved[filename] = path
+    return resolved
+
+
+def _resolved_data_paths_for_logging() -> dict[str, str]:
+    return {name: (str(path) if path is not None else "<missing optional>") for name, path in _resolved_data_paths().items()}
+
+
 def _resolve_data_path(filename: str, *, required: bool = True) -> Path | None:
-    for directory in _candidate_dirs():
-        candidate = directory / filename
-        if candidate.exists() and candidate.is_file():
-            return candidate
+    path = _resolved_data_paths().get(filename)
+    if path is not None:
+        return path
 
     if not required:
         return None
 
-    tried = "\n".join(str(directory / filename) for directory in _candidate_dirs())
+    tried = "\n".join(str(directory / filename) for directory in _data_dir_candidates())
     raise KnowledgeBaseError(f"Missing knowledge-base file: {filename}. Tried:\n{tried}")
 
 
@@ -653,6 +670,32 @@ def _post_validate_product_standard_links(
                 )
 
 
+def _catalog_version() -> str:
+    explicit_version = os.getenv(CATALOG_VERSION_ENV, "").strip()
+    if explicit_version:
+        return explicit_version
+
+    build_metadata = os.getenv(BUILD_METADATA_ENV, "").strip()
+    if build_metadata:
+        return f"build:{build_metadata}"
+
+    digest = hashlib.sha256()
+    for filename in ALL_DATA_FILES:
+        path = _resolve_data_path(filename, required=False)
+        digest.update(filename.encode("utf-8"))
+        digest.update(b"\0")
+        if path is None:
+            digest.update(b"<missing>")
+            digest.update(b"\0")
+            continue
+        try:
+            digest.update(path.read_bytes())
+        except OSError as exc:
+            raise KnowledgeBaseError(f"Could not read knowledge-base file: {path}") from exc
+        digest.update(b"\0")
+    return f"sha256:{digest.hexdigest()[:12]}"
+
+
 def _kb_meta(counts: dict[str, int], standards: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         **counts,
@@ -660,7 +703,7 @@ def _kb_meta(counts: dict[str, int], standards: list[dict[str, Any]]) -> dict[st
         "state_of_the_art_standards": sum(1 for row in standards if row.get("harmonization_status") == "state_of_the_art"),
         "review_items": sum(1 for row in standards if row.get("item_type") == "review"),
         "product_gated_standards": sum(1 for row in standards if row.get("applies_if_products") or row.get("applies_if_genres")),
-        "version": KB_META_VERSION,
+        "version": _catalog_version(),
     }
 
 
@@ -774,6 +817,12 @@ def warmup_knowledge_base() -> KnowledgeBaseWarmupResult:
     started = perf_counter()
     data = load_all()
     duration_ms = int((perf_counter() - started) * 1000)
+    logger.info(
+        "knowledge_base_warmup files=%s version=%s duration_ms=%s",
+        _resolved_data_paths_for_logging(),
+        data["meta"].get("version"),
+        duration_ms,
+    )
     return KnowledgeBaseWarmupResult(
         counts=dict(data["counts"]),
         meta=dict(data["meta"]),
@@ -783,6 +832,7 @@ def warmup_knowledge_base() -> KnowledgeBaseWarmupResult:
 
 def reset_cache() -> None:
     load_all.cache_clear()
+    _resolved_data_paths.cache_clear()
     from classifier import reset_classifier_cache
 
     reset_classifier_cache()

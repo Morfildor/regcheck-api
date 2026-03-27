@@ -118,6 +118,22 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertIn("EN 55032", standard_codes)
         self.assertIn("EN 55035", standard_codes)
 
+    def test_plain_home_cinema_projector_does_not_surface_radio_or_cyber_routes_without_connectivity_text(self) -> None:
+        result = analyze("video projector for home cinema")
+
+        all_codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+
+        self.assertNotIn("RED", result.directives)
+        self.assertNotIn("RED_CYBER", result.directives)
+        self.assertNotIn("CRA", result.directives)
+        self.assertNotIn("EN 300 328", all_codes)
+        self.assertNotIn("EN 301 489-1", all_codes)
+        self.assertNotIn("EN 301 489-17", all_codes)
+        self.assertNotIn("EN 301 893", all_codes)
+        self.assertNotIn("EN 18031-1", all_codes)
+        self.assertNotIn("CRA review", all_codes)
+        self.assertNotIn("cyber:connected_radio", result.route_context.context_tags)
+
     def test_ambiguous_security_camera_still_surfaces_62368_review(self) -> None:
         result = analyze("security camera")
 

@@ -1,0 +1,7 @@
+.env export-ignore
+.git export-ignore
+.pytest_cache export-ignore
+__pycache__ export-ignore
+venv export-ignore
+.venv export-ignore
+package-lock.json export-ignore

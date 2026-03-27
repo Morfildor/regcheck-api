@@ -1,10 +1,13 @@
 import unittest
+from pathlib import Path
+import shutil
+import tempfile
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
 import main
-from knowledge_base import KnowledgeBaseError, KnowledgeBaseWarmupResult, reset_cache
+from knowledge_base import KnowledgeBaseError, KnowledgeBaseWarmupResult, load_meta, reset_cache
 from runtime_state import KnowledgeBaseWarmupSnapshot
 from rules import analyze
 
@@ -82,6 +85,18 @@ class ApiContractTests(unittest.TestCase):
         self.assertFalse(body["ok"])
         self.assertEqual(body["error"]["code"], "knowledge_base_not_ready")
 
+    def test_validation_errors_use_normalized_error_response(self) -> None:
+        with TestClient(main.app) as client:
+            response = client.post("/analyze", json={"description": "   "}, headers={"X-Request-Id": "req-123"})
+
+        self.assertEqual(response.status_code, 422)
+        body = response.json()
+        self.assertFalse(body["ok"])
+        self.assertEqual(body["error"]["code"], "request_validation_failed")
+        self.assertEqual(body["error"]["request_id"], "req-123")
+        self.assertIn("description", body["error"]["message"])
+        self.assertNotIn("detail", body)
+
     def test_degraded_mode_response_when_standards_fail(self) -> None:
         with patch("rules.find_applicable_items", side_effect=RuntimeError("boom")):
             result = analyze("smart speaker with wifi and bluetooth")
@@ -156,12 +171,61 @@ class ApiContractTests(unittest.TestCase):
         self.assertFalse(body["ok"])
         self.assertEqual(body["error"]["code"], "knowledge_base_reload_failed")
 
+    def test_admin_reload_forbidden_without_matching_token(self) -> None:
+        with TestClient(main.app) as client:
+            with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": "secret"}):
+                response = client.post("/admin/reload")
+
+        self.assertEqual(response.status_code, 403)
+        body = response.json()
+        self.assertFalse(body["ok"])
+        self.assertEqual(body["error"]["code"], "forbidden")
+
+    def test_admin_reload_disabled_when_env_token_missing(self) -> None:
+        with TestClient(main.app) as client:
+            with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": ""}):
+                response = client.post("/admin/reload")
+
+        self.assertEqual(response.status_code, 503)
+        body = response.json()
+        self.assertFalse(body["ok"])
+        self.assertEqual(body["error"]["code"], "admin_reload_disabled")
+
+    def test_metadata_endpoints_work_when_ready(self) -> None:
+        with TestClient(main.app) as client:
+            self._mark_ready()
+            options = client.get("/metadata/options")
+            standards = client.get("/metadata/standards")
+
+        self.assertEqual(options.status_code, 200)
+        self.assertEqual(standards.status_code, 200)
+        self.assertIn("knowledge_base_meta", options.json())
+        self.assertIn("knowledge_base_meta", standards.json())
+        self.assertTrue(options.json()["products"])
+        self.assertTrue(standards.json()["standards"])
+
     def test_analysis_response_includes_version_fields(self) -> None:
         result = analyze("smart speaker with wifi and bluetooth")
 
         self.assertEqual(result.api_version, "1.0")
         self.assertEqual(result.engine_version, "2.0")
         self.assertTrue(result.catalog_version)
+
+    def test_catalog_version_changes_when_yaml_content_changes(self) -> None:
+        source_dir = Path(main.__file__).resolve().parent / "data"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            temp_data_dir = Path(tmpdir) / "data"
+            shutil.copytree(source_dir, temp_data_dir)
+            with patch.dict("os.environ", {"REGCHECK_DATA_DIR": str(temp_data_dir)}):
+                reset_cache()
+                version_before = load_meta()["version"]
+                products_path = temp_data_dir / "products.yaml"
+                products_path.write_text(products_path.read_text(encoding="utf-8") + "\n# test catalog change\n", encoding="utf-8")
+                reset_cache()
+                version_after = load_meta()["version"]
+
+        reset_cache()
+        self.assertNotEqual(version_before, version_after)
 
     def test_shadow_diff_present_when_enabled(self) -> None:
         with patch("rules.ENABLE_ENGINE_V2_SHADOW", True):
