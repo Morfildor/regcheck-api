@@ -5189,6 +5189,7 @@ standards:
   keywords:
   - emf assessment
   - rf exposure
+  - sar
   notes: General EMF assessment route for equipment that is handheld, wearable, body-near, or otherwise better assessed under
     the general exposure framework than EN 62233.
   state_of_the_art_scope: EU
@@ -5207,7 +5208,6 @@ standards:
   category: safety
   directives:
   - LVD
-  - RED
   legislation_key: LVD
   item_type: standard
   standard_family: EN 62368-1
