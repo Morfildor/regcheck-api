@@ -21,6 +21,7 @@ from models import (
     AnalysisStats,
     ConfidenceLevel,
     ConfidencePanel,
+    ContradictionSeverity,
     FactBasis,
     Finding,
     HeroSummary,
@@ -31,6 +32,7 @@ from models import (
     LegislationSection,
     MissingInformationItem,
     ProductMatchAudit,
+    ProductMatchStage,
     QuickAddItem,
     RiskLevel,
     RiskBucketSummary,
@@ -49,6 +51,7 @@ from models import (
 from runtime_state import API_VERSION
 from standards_engine import find_applicable_items, find_applicable_items_v1
 
+AnalysisDepth = Literal["quick", "standard", "deep"]
 LegislationBucket = Literal["ce", "non_ce", "framework", "future", "informational"]
 MissingImportance = Literal["high", "medium", "low"]
 
@@ -431,7 +434,7 @@ SMALL_SMART_62368_GENRES = {
 
 @dataclass(slots=True)
 class PreparedAnalysis:
-    depth: str
+    depth: AnalysisDepth
     normalized_description: str
     traits_data: dict[str, Any]
     diagnostics: list[str]
@@ -441,7 +444,7 @@ class PreparedAnalysis:
     routing_matched_products: set[str]
     product_genres: set[str]
     product_type: str | None
-    product_match_stage: str
+    product_match_stage: ProductMatchStage
     routing_product_type: str | None
     likely_standards: set[str]
     trait_set: set[str]
@@ -553,8 +556,40 @@ def _route_title(key: str) -> str:
     }.get(key, "Additional route")
 
 
-def _analysis_depth(depth: str) -> str:
-    return depth if depth in {"quick", "standard", "deep"} else "standard"
+def _analysis_depth(depth: str) -> AnalysisDepth:
+    if depth == "quick":
+        return "quick"
+    if depth == "deep":
+        return "deep"
+    return "standard"
+
+
+def _confidence_level(value: Any, default: ConfidenceLevel = "medium") -> ConfidenceLevel:
+    if value == "low":
+        return "low"
+    if value == "high":
+        return "high"
+    if value == "medium":
+        return "medium"
+    return default
+
+
+def _contradiction_severity(value: Any) -> ContradictionSeverity:
+    if value == "low":
+        return "low"
+    if value == "medium":
+        return "medium"
+    if value == "high":
+        return "high"
+    return "none"
+
+
+def _product_match_stage(value: Any) -> ProductMatchStage:
+    if value == "family":
+        return "family"
+    if value == "subtype":
+        return "subtype"
+    return "ambiguous"
 
 
 def _current_date() -> date:
@@ -746,7 +781,7 @@ def _confidence_from_score(score: int) -> ConfidenceLevel:
 
 def _collect_preferred_standard_codes(traits_data: dict[str, Any]) -> set[str]:
     preferred: set[str] = set(traits_data.get("preferred_standard_codes") or [])
-    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    product_match_stage = _product_match_stage(traits_data.get("product_match_stage"))
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
 
     if product_match_stage != "subtype":
@@ -1679,7 +1714,7 @@ def _missing_information(
     matched_products: set[str],
     description: str,
     product_type: str | None = None,
-    product_match_stage: str = "ambiguous",
+    product_match_stage: ProductMatchStage = "ambiguous",
 ) -> list[MissingInformationItem]:
     text = normalize(description)
     items: list[MissingInformationItem] = []
@@ -2222,13 +2257,13 @@ def _finding_action_from_standard(item: StandardItem) -> str | None:
 
 def _build_findings(
     *,
-    depth: str,
+    depth: AnalysisDepth,
     legislation_items: list[LegislationItem],
     standards: list[StandardItem],
     review_items: list[StandardItem],
     missing_items: list[MissingInformationItem],
     contradictions: list[str],
-    contradiction_severity: str,
+    contradiction_severity: ContradictionSeverity,
 ) -> list[Finding]:
     depth = _analysis_depth(depth)
     limits = {
@@ -2396,8 +2431,8 @@ def _build_findings(
 
 
 def _current_risk(
-    product_confidence: str,
-    contradiction_severity: str,
+    product_confidence: ConfidenceLevel,
+    contradiction_severity: ContradictionSeverity,
     review_items: list[StandardItem],
     missing_items: list[MissingInformationItem],
 ) -> RiskLevel:
@@ -2589,7 +2624,7 @@ def _route_selection_traits(
 def _prepare_analysis(
     description: str,
     category: str,
-    depth: str,
+    depth: AnalysisDepth,
 ) -> PreparedAnalysis:
     normalized_description = normalize(f"{category} {description}")
     traits_data = extract_traits(description=description, category=category)
@@ -2598,7 +2633,7 @@ def _prepare_analysis(
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
     product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
-    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    product_match_stage = _product_match_stage(traits_data.get("product_match_stage"))
     routing_product_type = product_type if product_match_stage == "subtype" else None
     likely_standards = _collect_preferred_standard_codes(traits_data)
 
@@ -2774,8 +2809,8 @@ def _compute_risk_profile(
     standards: StandardsSelection,
 ) -> tuple[RiskLevel, RiskLevel, RiskLevel, list[RiskReason], RiskSummary]:
     current_risk = _current_risk(
-        product_confidence=str(prepared.traits_data.get("product_match_confidence") or "low"),
-        contradiction_severity=str(prepared.traits_data.get("contradiction_severity") or "none"),
+        product_confidence=_confidence_level(prepared.traits_data.get("product_match_confidence"), default="low"),
+        contradiction_severity=_contradiction_severity(prepared.traits_data.get("contradiction_severity")),
         review_items=standards.current_review_items,
         missing_items=standards.missing_items,
     )
@@ -2843,8 +2878,8 @@ def _classification_summary(
     product_type: str | None,
     product_family: str | None,
     product_subtype: str | None,
-    product_match_stage: str,
-    product_match_confidence: str,
+    product_match_stage: ProductMatchStage,
+    product_match_confidence: ConfidenceLevel,
     classification_is_ambiguous: bool,
 ) -> str:
     if product_match_stage == "subtype" and product_subtype:
@@ -2927,7 +2962,7 @@ def _maybe_attach_shadow_diff(
     description: str,
     category: str,
     directives: list[str] | None,
-    depth: str,
+    depth: AnalysisDepth,
     prepared: PreparedAnalysis,
 ) -> AnalysisResult:
     if not ENABLE_ENGINE_V2_SHADOW:
@@ -2950,7 +2985,7 @@ def _maybe_attach_shadow_diff(
 def _build_analysis_result(
     *,
     description: str,
-    depth: str,
+    depth: AnalysisDepth,
     normalized_description: str,
     traits_data: dict[str, Any],
     diagnostics: list[str],
@@ -2983,12 +3018,12 @@ def _build_analysis_result(
     degraded_reasons: list[str],
     warnings: list[str],
 ) -> AnalysisResult:
-    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
-    product_match_confidence = str(traits_data.get("product_match_confidence") or "low")
+    product_match_stage = _product_match_stage(traits_data.get("product_match_stage"))
+    product_match_confidence = _confidence_level(traits_data.get("product_match_confidence"), default="low")
     classification_confidence_below_threshold = product_match_confidence == "low"
     classification_is_ambiguous = classification_confidence_below_threshold or product_match_stage != "subtype"
     contradictions = list(traits_data.get("contradictions") or [])
-    contradiction_severity = str(traits_data.get("contradiction_severity") or "none")
+    contradiction_severity = _contradiction_severity(traits_data.get("contradiction_severity"))
     inferred_traits = sorted(set(traits_data.get("inferred_traits") or []) | (trait_set - set(traits_data.get("explicit_traits") or [])))
     top_actions_limit = {"quick": 2, "standard": 3, "deep": 5}[depth]
     suggested_questions_limit = {"quick": 2, "standard": 6, "deep": 8}[depth]
@@ -3140,14 +3175,14 @@ def analyze_v1(
     directives: list[str] | None = None,
     depth: str = "standard",
 ) -> AnalysisResult:
-    depth = _analysis_depth(depth)
+    analysis_depth = _analysis_depth(depth)
     traits_data = extract_traits_v1(description=description, category=category)
     diagnostics = list(traits_data.get("diagnostics") or [])
     matched_products = set(traits_data.get("matched_products") or [])
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
     product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
-    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    product_match_stage = _product_match_stage(traits_data.get("product_match_stage"))
     routing_product_type = product_type if product_match_stage == "subtype" else None
     likely_standards = _collect_preferred_standard_codes(traits_data)
 
@@ -3239,8 +3274,8 @@ def analyze_v1(
     standard_sections = _build_standard_sections(all_standard_items)
 
     current_risk = _current_risk(
-        product_confidence=str(traits_data.get("product_match_confidence") or "low"),
-        contradiction_severity=str(traits_data.get("contradiction_severity") or "none"),
+        product_confidence=_confidence_level(traits_data.get("product_match_confidence"), default="low"),
+        contradiction_severity=_contradiction_severity(traits_data.get("contradiction_severity")),
         review_items=current_review_items,
         missing_items=missing_items,
     )
@@ -3270,18 +3305,18 @@ def analyze_v1(
 
     summary = _build_summary(detected_directives, standard_items, review_items, trait_set, description)
     findings = _build_findings(
-        depth=depth,
+        depth=analysis_depth,
         legislation_items=legislation_items,
         standards=standard_items,
         review_items=review_items,
         missing_items=missing_items,
         contradictions=traits_data.get("contradictions") or [],
-        contradiction_severity=traits_data.get("contradiction_severity", "none"),
+        contradiction_severity=_contradiction_severity(traits_data.get("contradiction_severity")),
     )
     known_facts = _build_known_facts(description)
     return _build_analysis_result(
         description=description,
-        depth=depth,
+        depth=analysis_depth,
         normalized_description=normalize(f"{category} {description}"),
         traits_data=traits_data,
         diagnostics=diagnostics,
@@ -3323,9 +3358,9 @@ def analyze(
     depth: str = "standard",
     trace: AnalysisTrace | None = None,
 ) -> AnalysisResult:
-    depth = _analysis_depth(depth)
+    analysis_depth = _analysis_depth(depth)
     stage_started = perf_counter()
-    prepared = _prepare_analysis(description, category, depth)
+    prepared = _prepare_analysis(description, category, analysis_depth)
     if trace is not None:
         trace.record_stage("classification", stage_started)
 
@@ -3361,13 +3396,13 @@ def analyze(
 
     try:
         findings = _build_findings(
-            depth=depth,
+            depth=analysis_depth,
             legislation_items=routes.items,
             standards=standards.standard_items,
             review_items=standards.review_items,
             missing_items=standards.missing_items,
             contradictions=prepared.traits_data.get("contradictions") or [],
-            contradiction_severity=prepared.traits_data.get("contradiction_severity", "none"),
+            contradiction_severity=_contradiction_severity(prepared.traits_data.get("contradiction_severity")),
         )
     except Exception:
         logger.exception("analysis_degraded step=findings")
@@ -3457,7 +3492,7 @@ def analyze(
 
     result = _build_analysis_result(
         description=description,
-        depth=depth,
+        depth=analysis_depth,
         normalized_description=prepared.normalized_description,
         traits_data=prepared.traits_data,
         diagnostics=prepared.diagnostics,
@@ -3498,6 +3533,6 @@ def analyze(
         description=description,
         category=category,
         directives=directives,
-        depth=depth,
+        depth=analysis_depth,
         prepared=prepared,
     )

@@ -32,6 +32,7 @@ DIRECTIVE_ORDER = {
 
 StandardItemType = Literal["standard", "review"]
 ProductHitType = Literal["not_product_gated", "primary_product", "alternate_product", "primary_genre"]
+StandardAuditOutcome = Literal["selected", "review", "rejected"]
 
 MatchBasis = Literal["product", "alternate_product", "preferred_product", "genre", "traits"]
 FactBasis = Literal["confirmed", "mixed", "inferred"]
@@ -674,7 +675,7 @@ def _selection_group_winners(rows: list[dict[str, Any]]) -> tuple[list[dict[str,
     return winners, losers
 
 
-def _audit_item_from_row(row: dict[str, Any], outcome: StandardItemType | Literal["rejected"]) -> dict[str, Any]:
+def _audit_item_from_row(row: dict[str, Any], outcome: StandardAuditOutcome) -> dict[str, Any]:
     return {
         "code": row.get("code"),
         "title": row.get("title", row.get("code")),

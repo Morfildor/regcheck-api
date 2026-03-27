@@ -1681,6 +1681,15 @@ def _compile_phrase(raw: str) -> CompiledPhrase | None:
     )
 
 
+def _compile_phrases(raw_values: list[str]) -> tuple[CompiledPhrase, ...]:
+    phrases: list[CompiledPhrase] = []
+    for raw in raw_values:
+        compiled_phrase = _compile_phrase(raw)
+        if compiled_phrase is not None:
+            phrases.append(compiled_phrase)
+    return tuple(phrases)
+
+
 def _compile_alias(raw: str, field: str, field_bonus: int) -> CompiledAlias | None:
     normalized = normalize(raw)
     if not normalized:
@@ -1728,26 +1737,10 @@ def build_product_matching_snapshot(
                 aliases.append(compiled_alias)
                 alias_terms.update(compiled_alias.token_terms)
 
-        family_keywords = tuple(
-            compiled_phrase
-            for keyword in _product_family_keywords(product)
-            if (compiled_phrase := _compile_phrase(keyword)) is not None
-        )
-        required_clues = tuple(
-            compiled_phrase
-            for clue in _string_list(product.get("required_clues"))
-            if (compiled_phrase := _compile_phrase(clue)) is not None
-        )
-        preferred_clues = tuple(
-            compiled_phrase
-            for clue in _string_list(product.get("preferred_clues"))
-            if (compiled_phrase := _compile_phrase(clue)) is not None
-        )
-        exclude_clues = tuple(
-            compiled_phrase
-            for clue in _string_list(product.get("exclude_clues"))
-            if (compiled_phrase := _compile_phrase(clue)) is not None
-        )
+        family_keywords = _compile_phrases(_product_family_keywords(product))
+        required_clues = _compile_phrases(_string_list(product.get("required_clues")))
+        preferred_clues = _compile_phrases(_string_list(product.get("preferred_clues")))
+        exclude_clues = _compile_phrases(_string_list(product.get("exclude_clues")))
 
         family_keyword_terms = {term for phrase in family_keywords for term in phrase.token_terms}
         clue_terms = {
