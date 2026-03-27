@@ -287,6 +287,32 @@ WIFI_5GHZ_DEFAULT_PRODUCT_HINTS = {
     "washing_machine",
 }
 
+WIRELESS_FACT_PATTERNS = [
+    r"\bwi[ -]?fi\b",
+    r"\bwlan\b",
+    r"\bbluetooth\b",
+    r"\bble\b",
+    r"\bzigbee\b",
+    r"\bthread\b",
+    r"\bmatter\b",
+    r"\bnfc\b",
+    r"\brfid\b",
+    r"\bcellular\b",
+    r"\blte\b",
+    r"\b4g\b",
+    r"\b5g\b",
+    r"\bgsm\b",
+    r"\bdect\b",
+    r"\buwb\b",
+    r"\blora\b",
+    r"\blorawan\b",
+    r"\bsigfox\b",
+    r"\bsatellite connectivity\b",
+    r"\bradio\b",
+    r"\brf\b",
+    r"\bwireless\b",
+]
+
 PERSONAL_CARE_PRODUCT_HINTS = {
     "shaver",
     "hair_clipper",
@@ -489,6 +515,10 @@ def _scope_route(
 
 def _has_any(text: str, patterns: list[str]) -> bool:
     return any(re.search(pattern, text) for pattern in patterns)
+
+
+def _has_wireless_fact_signal(text: str) -> bool:
+    return _has_any(text, WIRELESS_FACT_PATTERNS)
 
 
 def _directive_rank(key: str) -> int:
@@ -718,6 +748,17 @@ def _collect_preferred_standard_codes(traits_data: dict[str, Any]) -> set[str]:
     return preferred
 
 
+def _has_small_avict_lvd_power_signal(traits: set[str], matched_products: set[str], product_type: str | None) -> bool:
+    if "electrical" not in traits or "av_ict" not in traits:
+        return False
+    avict_product_hit = bool(matched_products & AV_ICT_PRODUCT_HINTS) or (product_type in AV_ICT_PRODUCT_HINTS if product_type else False)
+    power_signal = bool({"usb_powered", "external_psu", "poe_powered", "mains_powered", "mains_power_likely"} & traits)
+    compact_avict_signal = bool(
+        {"wearable", "body_worn_or_applied", "camera", "display", "microphone", "data_storage", "fixed_installation"} & traits
+    )
+    return power_signal or avict_product_hit or compact_avict_signal
+
+
 def _infer_forced_directives(
     traits: set[str],
     matched_products: set[str],
@@ -737,8 +778,9 @@ def _infer_forced_directives(
     has_household_safety_preference = any(code.startswith("EN 60335-") for code in normalized_codes)
     has_avict_safety_preference = any(code.startswith("EN 62368-1") for code in normalized_codes)
     has_lvd_voltage_signal = bool({"mains_powered", "mains_power_likely"} & traits)
+    has_small_avict_lvd_signal = _has_small_avict_lvd_power_signal(traits, matched_products, product_type)
 
-    if "electrical" in traits and has_lvd_voltage_signal and (
+    if "electrical" in traits and (has_lvd_voltage_signal or has_small_avict_lvd_signal) and (
         has_household_safety_preference
         or has_avict_safety_preference
         or scope_route in {"appliance", "av_ict"}
@@ -890,6 +932,8 @@ def _derive_directives(traits: set[str], forced_directives: list[str] | None = N
     )
 
     if "electrical" in traits and ({"mains_powered", "mains_power_likely"} & traits):
+        directives.append("LVD")
+    elif _has_small_avict_lvd_power_signal(traits, set(), None):
         directives.append("LVD")
     elif appliance_lvd_signal:
         directives.append("LVD")
@@ -1512,6 +1556,9 @@ def _build_known_facts(description: str) -> list[KnownFactItem]:
         text,
     ):
         add("boundary.possible_medical", "Possible medical boundary", "Medical, clinical, or physiological monitoring wording is explicitly stated.", ["possible_medical_boundary"])
+    if not _has_wireless_fact_signal(text):
+        add("connectivity.no_wifi", "No Wi-Fi stated", "No Wi-Fi is stated in the description.", [])
+        add("connectivity.no_radio", "No radio stated", "No radio or wireless connectivity is stated in the description.", [])
 
     return facts
 
@@ -1983,7 +2030,13 @@ def _build_standard_sections(items: list[StandardItem]) -> list[StandardSection]
     return sections
 
 
-def _build_summary(directives: list[str], standards: list[StandardItem], review_items: list[StandardItem], traits: set[str]) -> str:
+def _build_summary(
+    directives: list[str],
+    standards: list[StandardItem],
+    review_items: list[StandardItem],
+    traits: set[str],
+    description: str = "",
+) -> str:
     parts: list[str] = []
     if standards:
         parts.append(f"{len(standards)} standard routes identified")
@@ -1996,6 +2049,8 @@ def _build_summary(directives: list[str], standards: list[StandardItem], review_
         parts.append("RED cybersecurity gating is active because connected radio functionality was detected")
     if "external_psu" in traits:
         parts.append("external power supply route retained because adapter or charger evidence was explicitly detected")
+    if description and not _has_wireless_fact_signal(normalize(description)) and not (RADIO_ROUTE_TRAITS & traits):
+        parts.append("no Wi-Fi or radio connectivity was stated in the description")
     return ". ".join(parts).strip().rstrip(".") + "."
 
 
@@ -3187,7 +3242,7 @@ def analyze_v1(
         risk_reasons=risk_reasons,
     )
 
-    summary = _build_summary(detected_directives, standard_items, review_items, trait_set)
+    summary = _build_summary(detected_directives, standard_items, review_items, trait_set, description)
     findings = _build_findings(
         depth=depth,
         legislation_items=legislation_items,
@@ -3248,7 +3303,13 @@ def analyze(
     overall_risk, current_risk, future_risk, risk_reasons, risk_summary = _compute_risk_profile(prepared, routes, standards)
 
     try:
-        summary = _build_summary(routes.detected_directives, standards.standard_items, standards.review_items, prepared.route_traits)
+        summary = _build_summary(
+            routes.detected_directives,
+            standards.standard_items,
+            standards.review_items,
+            prepared.route_traits,
+            description,
+        )
     except Exception:
         logger.exception("analysis_degraded step=summary")
         prepared.degraded_reasons.append("summary_failed")

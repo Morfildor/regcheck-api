@@ -50,12 +50,12 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual(result["product_match_stage"], "subtype")
         self.assertIn("EN 62368-1", result["preferred_standard_codes"])
 
-    def test_product_implied_wireless_traits_expand_to_radio(self) -> None:
+    def test_product_match_does_not_infer_wireless_without_wireless_text(self) -> None:
         result = extract_traits("smart smoke alarm")
 
         self.assertEqual(result["product_type"], "smart_smoke_co_alarm")
-        self.assertIn("radio", result["all_traits"])
-        self.assertIn("wifi", result["all_traits"])
+        self.assertNotIn("radio", result["all_traits"])
+        self.assertNotIn("wifi", result["all_traits"])
 
     def test_product_match_exposes_safe_genres(self) -> None:
         result = extract_traits("connected espresso machine with wifi app control cloud account OTA updates and display")
@@ -389,7 +389,7 @@ class MatchingTests(unittest.TestCase):
 
         self.assertTrue(result.findings)
         self.assertTrue(any(item.article == "Legislation route" for item in result.findings))
-        self.assertTrue(any(item.article == "Standard route" for item in result.findings))
+        self.assertTrue(any(item.article in {"Standard route", "Standard review"} for item in result.findings))
         self.assertTrue(any(item.directive == "INPUT" for item in result.findings))
 
     def test_analysis_depth_changes_findings_and_question_volume(self) -> None:
@@ -568,6 +568,33 @@ class MatchingTests(unittest.TestCase):
             result.suggested_questions,
         )
 
+    def test_app_control_does_not_infer_radio_without_wireless_text(self) -> None:
+        result = analyze("coffee machine with app control")
+
+        self.assertNotIn("radio", result.all_traits)
+        self.assertNotIn("wifi", result.all_traits)
+        self.assertNotIn("RED", result.directives)
+        self.assertNotIn("radio", {item.key for item in result.risk_reasons})
+        self.assertIn("connectivity.no_wifi", result.known_fact_keys)
+        self.assertIn("connectivity.no_radio", result.known_fact_keys)
+        self.assertIn("no Wi-Fi or radio connectivity was stated", result.summary)
+
+    def test_home_projector_apps_do_not_infer_radio_without_wireless_text(self) -> None:
+        result = analyze("video projector with home cinema apps")
+
+        self.assertNotIn("radio", result.all_traits)
+        self.assertNotIn("wifi", result.all_traits)
+        self.assertNotIn("RED", result.directives)
+        self.assertIn("connectivity.no_wifi", result.known_fact_keys)
+        self.assertIn("connectivity.no_radio", result.known_fact_keys)
+
+    def test_usb_webcam_surfaces_lvd_and_primary_62368_route(self) -> None:
+        result = analyze("usb webcam")
+
+        self.assertIn("LVD", result.directives)
+        self.assertIn("EN 62368-1", {item.code for item in result.standards})
+        self.assertNotIn("EN 62368-1", {item.code for item in result.review_items})
+
     def test_connected_personal_care_device_surfaces_known_facts_and_next_actions(self) -> None:
         result = analyze("cordless hair trimmer with battery + Bluetooth app")
 
@@ -583,9 +610,10 @@ class MatchingTests(unittest.TestCase):
 
         self.assertIn(result.product_type, {"baby_monitor", "baby_monitor_smart"})
         self.assertIn("GDPR", result.directives)
-        self.assertIn("RED_CYBER", result.directives)
+        self.assertNotIn("RED_CYBER", result.directives)
         self.assertIn("service.cloud_dependency", result.known_fact_keys)
-        self.assertIn("cyber:connected_radio", result.route_context.context_tags)
+        self.assertIn("connectivity.no_radio", result.known_fact_keys)
+        self.assertNotIn("cyber:connected_radio", result.route_context.context_tags)
         self.assertNotIn(
             "Confirm whether the smart features require cloud dependency or can operate locally.",
             result.suggested_questions,

@@ -278,6 +278,18 @@ class MatchingRegressionTests(unittest.TestCase):
                 review_codes = {item.code for item in result.review_items}
                 self.assertIn("EN 62368-1", review_codes)
 
+    def test_small_smart_products_do_not_assume_radio_without_wireless_text(self) -> None:
+        for description in [
+            "smart air sensor",
+            "smart smoke alarm",
+        ]:
+            with self.subTest(description=description):
+                result = analyze(description)
+                self.assertNotIn("radio", result.all_traits)
+                self.assertNotIn("wifi", result.all_traits)
+                self.assertNotIn("RED", result.directives)
+                self.assertIn("connectivity.no_radio", result.known_fact_keys)
+
 
 if __name__ == "__main__":
     unittest.main()

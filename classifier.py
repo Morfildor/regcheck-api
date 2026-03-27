@@ -569,6 +569,32 @@ _COMPILED_TRAIT_PATTERNS: dict[str, list[re.Pattern]] = {
 }
 _COMPILED_SMART_CONNECTED = [re.compile(p) for p in SMART_CONNECTED_PATTERNS]
 _COMPILED_WIRED_NETWORK = [re.compile(p) for p in WIRED_NETWORK_PATTERNS]
+WIRELESS_MENTION_PATTERNS = [
+    r"\bwi[ -]?fi\b",
+    r"\bwlan\b",
+    r"\bbluetooth\b",
+    r"\bble\b",
+    r"\bzigbee\b",
+    r"\bthread\b",
+    r"\bmatter\b",
+    r"\bnfc\b",
+    r"\brfid\b",
+    r"\bcellular\b",
+    r"\blte\b",
+    r"\b4g\b",
+    r"\b5g\b",
+    r"\bgsm\b",
+    r"\bdect\b",
+    r"\buwb\b",
+    r"\blora\b",
+    r"\blorawan\b",
+    r"\bsigfox\b",
+    r"\bsatellite connectivity\b",
+    r"\bradio\b",
+    r"\brf\b",
+    r"\bwireless\b",
+]
+_COMPILED_WIRELESS_MENTIONS = [re.compile(p) for p in WIRELESS_MENTION_PATTERNS]
 _COMPILED_ELECTRICAL_CUES = [
     re.compile(r"\belectric(?:al)?\b"),
     re.compile(r"\belectronic\b"),
@@ -746,8 +772,6 @@ def _infer_connected_traits(text: str, signal_traits: set[str]) -> set[str]:
         inferred.add("monetary_transaction")
 
     if local_only:
-        if "app_control" in signal_traits and portable_app_first and not (RADIO_TRAITS & signal_traits):
-            inferred.update({"bluetooth", "radio"})
         if {"wifi", "bluetooth", "zigbee", "thread", "matter", "cellular"} & signal_traits:
             inferred.add("radio")
         return inferred
@@ -766,13 +790,6 @@ def _infer_connected_traits(text: str, signal_traits: set[str]) -> set[str]:
     if "cloud" in signal_traits:
         inferred.update({"internet", "internet_connected"})
 
-    if not wired_only and consumerish and (smartish or serviceish):
-        if not (RADIO_TRAITS & (signal_traits | inferred)):
-            if body_near or (portable_app_first and not applianceish):
-                inferred.update({"bluetooth", "radio"})
-            else:
-                inferred.update({"wifi", "radio"})
-
     if smartish and consumerish and {"wifi", "bluetooth", "radio", "cloud", "internet"} & (signal_traits | inferred):
         inferred.add("ota")
 
@@ -782,6 +799,25 @@ def _infer_connected_traits(text: str, signal_traits: set[str]) -> set[str]:
         inferred.add("personal_data_likely")
 
     return inferred
+
+
+def _has_wireless_mention(text: str, matched_aliases: list[str] | None = None) -> bool:
+    candidates = [text]
+    candidates.extend(alias for alias in (matched_aliases or []) if isinstance(alias, str) and alias)
+    return any(_has_any_compiled(candidate, _COMPILED_WIRELESS_MENTIONS) for candidate in candidates)
+
+
+def _suppress_unmentioned_product_wireless_traits(
+    text: str,
+    traits: set[str],
+    explicit_traits: set[str],
+    matched_aliases: list[str] | None = None,
+) -> set[str]:
+    if explicit_traits & (RADIO_TRAITS | {"radio"}):
+        return set(traits)
+    if _has_wireless_mention(text, matched_aliases):
+        return set(traits)
+    return set(traits) - (RADIO_TRAITS | {"radio"})
 
 
 def _expand_related_traits(traits: set[str]) -> set[str]:
@@ -1881,8 +1917,19 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
     product_family_confidence = match["product_family_confidence"]
     product_subtype_confidence = match["product_subtype_confidence"]
     product_match_stage = match["product_match_stage"]
-    product_core_traits = _expand_related_traits(set(match.get("product_core_traits") or set()))
-    product_default_traits = _expand_related_traits(set(match.get("product_default_traits") or set()))
+    matched_aliases = [candidate.get("matched_alias") for candidate in product_candidates if candidate.get("matched_alias")]
+    product_core_traits = _suppress_unmentioned_product_wireless_traits(
+        text,
+        _expand_related_traits(set(match.get("product_core_traits") or set())),
+        explicit_traits,
+        matched_aliases,
+    )
+    product_default_traits = _suppress_unmentioned_product_wireless_traits(
+        text,
+        _expand_related_traits(set(match.get("product_default_traits") or set())),
+        explicit_traits,
+        matched_aliases,
+    )
     product_genres = {item for item in (match.get("product_genres") or set()) if isinstance(item, str) and item}
 
     functional_classes.update(match["functional_classes"])
@@ -2032,15 +2079,44 @@ def extract_traits_v1(description: str, category: str = "") -> dict:
     product_subtype = match["product_subtype"]
     product_subtype_confidence = match["product_subtype_confidence"]
     product_match_stage = match["product_match_stage"]
+    matched_aliases = [candidate.get("matched_alias") for candidate in product_candidates if candidate.get("matched_alias")]
 
-    inferred_traits.update(match["family_traits"])
-    inferred_traits.update(match["subtype_traits"])
+    inferred_traits.update(
+        _suppress_unmentioned_product_wireless_traits(
+            text,
+            _expand_related_traits(set(match["family_traits"])),
+            explicit_traits,
+            matched_aliases,
+        )
+    )
+    inferred_traits.update(
+        _suppress_unmentioned_product_wireless_traits(
+            text,
+            _expand_related_traits(set(match["subtype_traits"])),
+            explicit_traits,
+            matched_aliases,
+        )
+    )
     functional_classes.update(match["functional_classes"])
     confirmed_functional_classes.update(match["confirmed_functional_classes"])
     if product_family_confidence == "high":
-        confirmed_traits.update(match["family_traits"])
+        confirmed_traits.update(
+            _suppress_unmentioned_product_wireless_traits(
+                text,
+                _expand_related_traits(set(match["family_traits"])),
+                explicit_traits,
+                matched_aliases,
+            )
+        )
     if product_match_stage == "subtype" and product_subtype_confidence == "high":
-        confirmed_traits.update(match["subtype_traits"])
+        confirmed_traits.update(
+            _suppress_unmentioned_product_wireless_traits(
+                text,
+                _expand_related_traits(set(match["subtype_traits"])),
+                explicit_traits,
+                matched_aliases,
+            )
+        )
 
     diagnostics.extend(match["diagnostics"])
     if product_candidates:
