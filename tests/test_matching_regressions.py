@@ -265,6 +265,19 @@ class MatchingRegressionTests(unittest.TestCase):
             result.suggested_questions,
         )
 
+    def test_small_smart_products_keep_62368_review_even_with_appliance_adjacent_traits(self) -> None:
+        for description in [
+            "smart air sensor",
+            "smart radiator valve",
+            "smart irrigation controller",
+            "smart smoke alarm",
+            "smart water bottle",
+        ]:
+            with self.subTest(description=description):
+                result = analyze(description)
+                review_codes = {item.code for item in result.review_items}
+                self.assertIn("EN 62368-1", review_codes)
+
 
 if __name__ == "__main__":
     unittest.main()

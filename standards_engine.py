@@ -445,6 +445,17 @@ ELECTRONIC_EXPLICIT_TRAITS = {
     "dect",
 }
 
+SMALL_SMART_DEVICE_GENRES = {
+    "smart_home_iot",
+    "security_access_iot",
+    "pet_tech",
+}
+
+EN62368_FALLBACK_EXCLUDED_TRAITS = {
+    "air_treatment",
+    "water_contact",
+}
+
 
 def _baseline_confirmed_traits(explicit_traits: set[str]) -> set[str]:
     confirmed: set[str] = set()
@@ -463,6 +474,53 @@ def _baseline_confirmed_traits(explicit_traits: set[str]) -> set[str]:
     if "food_contact" in explicit_traits:
         confirmed.add("consumer")
     return confirmed
+
+
+def _has_small_smart_62368_preference(preferred_standard_codes: set[str], product_genres: list[str]) -> bool:
+    if "EN 62368-1" not in preferred_standard_codes:
+        return False
+    return bool(set(product_genres) & SMALL_SMART_DEVICE_GENRES)
+
+
+def _soften_preferred_62368_gate(
+    standard: dict[str, Any],
+    gate: TraitGate,
+    preferred_standard_codes: set[str],
+    product_genres: list[str],
+) -> tuple[TraitGate, str | None]:
+    code = str(standard.get("code", ""))
+    excluded_by_traits = set(gate["excluded_by_traits"])
+    if code != "EN 62368-1":
+        return gate, None
+    if gate["passes"]:
+        return gate, None
+    if not _has_small_smart_62368_preference(preferred_standard_codes, product_genres):
+        return gate, None
+    if not excluded_by_traits or not excluded_by_traits.issubset(EN62368_FALLBACK_EXCLUDED_TRAITS):
+        return gate, None
+
+    softened_gate = dict(gate)
+    softened_gate["passes"] = True
+    softened_gate["excluded_by_traits"] = []
+    softened_gate["soft_inferred_match"] = True
+    softened_gate["fact_basis"] = "inferred"
+    reason = (
+        "retained as a review route because EN 62368-1 is explicitly preferred for a small smart-device "
+        "product and the blocking trait is appliance-adjacent"
+    )
+    return cast(TraitGate, softened_gate), reason
+
+
+def _recover_preferred_62368_group_loser(
+    row: dict[str, Any],
+    preferred_standard_codes: set[str],
+    product_genres: list[str],
+) -> bool:
+    if str(row.get("code", "")) != "EN 62368-1":
+        return False
+    if str(row.get("selection_group", "")) != "lvd_primary_safety":
+        return False
+    return _has_small_smart_62368_preference(preferred_standard_codes, product_genres)
 
 
 def _fact_basis_satisfies(required: FactBasis, actual: FactBasis) -> bool:
@@ -747,6 +805,12 @@ def find_applicable_items_v2(
         product_hit_type = _product_hit_type(standard, product_type, matched_products, product_genres)
         preferred_hit = _is_preferred_standard(standard, preferred_codes)
         gate = _trait_gate_details(standard, traits, effective_confirmed_traits, allow_soft_any_miss=preferred_hit)
+        gate, preferred_62368_fallback_reason = _soften_preferred_62368_gate(
+            standard,
+            gate,
+            preferred_codes,
+            product_genres,
+        )
         directive_review_fallback = False
         if directives and standard_directives and not any(d in directives for d in standard_directives):
             if not _directive_review_fallback_allowed(standard, preferred_codes, product_hit_type):
@@ -773,12 +837,20 @@ def find_applicable_items_v2(
         )
         if keyword_hits:
             reason += ". keyword evidence: " + ", ".join(keyword_hits)
+        if preferred_62368_fallback_reason:
+            reason += ". " + preferred_62368_fallback_reason
         if not sufficient_fact_basis:
             reason += f". requires {required_fact_basis} evidence before the route can be treated as fully selected"
         if directive_review_fallback:
             reason += ". retained as a review route because the primary directive path is not currently selected"
 
-        needs_review = gate["soft_missing_any"] or gate["soft_inferred_match"] or not sufficient_fact_basis or directive_review_fallback
+        needs_review = (
+            gate["soft_missing_any"]
+            or gate["soft_inferred_match"]
+            or not sufficient_fact_basis
+            or directive_review_fallback
+            or preferred_62368_fallback_reason is not None
+        )
         enriched["reason"] = reason
         enriched["match_basis"] = match_basis
         enriched["fact_basis"] = gate["fact_basis"]
@@ -799,8 +871,23 @@ def find_applicable_items_v2(
         candidates.append(enriched)
 
     winners, group_losers = _selection_group_winners(candidates)
+    recovered_group_losers: list[dict[str, Any]] = []
+    rejected_group_losers: list[dict[str, Any]] = []
     for loser in group_losers:
+        if _recover_preferred_62368_group_loser(loser, preferred_codes, product_genres):
+            recovered = dict(loser)
+            recovered["item_type"] = "review"
+            recovered["reason"] = (
+                (str(recovered.get("reason", "")) + ". " if recovered.get("reason") else "")
+                + "retained as a review route because EN 62368-1 is explicitly preferred for a small smart-device "
+                + "product even though another LVD safety standard scored higher"
+            )
+            recovered_group_losers.append(recovered)
+            continue
+        rejected_group_losers.append(loser)
         rejections.append({"code": loser.get("code"), "reason": loser.get("rejection_reason")})
+
+    winners.extend(recovered_group_losers)
 
     deduped: dict[str, dict[str, Any]] = {}
     for row in winners:
@@ -845,7 +932,7 @@ def find_applicable_items_v2(
             }
             for row in review_rows
         ],
-        "rejected": [
+                "rejected": [
             {
                 "code": row.get("code"),
                 "title": row.get("title", row.get("code")),
@@ -858,7 +945,7 @@ def find_applicable_items_v2(
                 "keyword_hits": row.get("keyword_hits", []),
                 "reason": row.get("reason") or row.get("rejection_reason"),
             }
-            for row in group_losers
+            for row in rejected_group_losers
         ],
     }
 

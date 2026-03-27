@@ -395,6 +395,11 @@ DEFAULT_CONNECTED_ROUTE_GENRES = {
     "connected_toy_childcare",
     "pet_tech",
 }
+SMALL_SMART_62368_GENRES = {
+    "smart_home_iot",
+    "security_access_iot",
+    "pet_tech",
+}
 
 
 @dataclass(slots=True)
@@ -520,6 +525,20 @@ def _string_list(value: Any) -> list[str]:
     if not isinstance(value, list):
         return []
     return [item for item in value if isinstance(item, str) and item]
+
+
+def _keep_preferred_62368_review_in_appliance_scope(
+    item: dict[str, Any],
+    product_genres: set[str] | None,
+    preferred_standard_codes: set[str] | None,
+) -> bool:
+    if str(item.get("code") or "") != "EN 62368-1":
+        return False
+    if str(item.get("item_type") or "standard") != "review":
+        return False
+    preferred_standard_codes = preferred_standard_codes or set()
+    product_genres = product_genres or set()
+    return "EN 62368-1" in preferred_standard_codes and bool(product_genres & SMALL_SMART_62368_GENRES)
 
 
 def _parse_date(value: Any) -> date | None:
@@ -1177,6 +1196,8 @@ def _apply_post_selection_gates(
     product_type: str | None = None,
     confirmed_traits: set[str] | None = None,
     description: str = "",
+    product_genres: set[str] | None = None,
+    preferred_standard_codes: set[str] | None = None,
 ) -> list[dict[str, Any]]:
     kept: list[dict[str, Any]] = []
     context = _standard_context(traits, matched_products, product_type, confirmed_traits, description)
@@ -1194,8 +1215,11 @@ def _apply_post_selection_gates(
             continue
 
         if code == "EN 62368-1" and context["scope_route"] == "appliance":
-            diagnostics.append("gate=drop_EN62368-1:appliance_primary")
-            continue
+            if _keep_preferred_62368_review_in_appliance_scope(item, product_genres, preferred_standard_codes):
+                diagnostics.append("gate=keep_EN62368-1:preferred_small_smart_review")
+            else:
+                diagnostics.append("gate=drop_EN62368-1:appliance_primary")
+                continue
 
         if code.startswith("EN 60335-") and context["scope_route"] == "av_ict":
             diagnostics.append(f"gate=drop_{code}:av_ict_primary")
@@ -2635,6 +2659,8 @@ def _select_standards(
             product_type=prepared.routing_product_type,
             confirmed_traits=prepared.confirmed_traits,
             description=description,
+            product_genres=prepared.product_genres,
+            preferred_standard_codes=prepared.likely_standards,
         )
     except Exception:
         logger.exception("analysis_degraded step=post_selection_gates")
