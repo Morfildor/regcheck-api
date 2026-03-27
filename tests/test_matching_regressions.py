@@ -181,8 +181,8 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertFalse(result.classification_confidence_below_threshold)
         self.assertNotIn("electric_fish_stunner", {item.id for item in result.product_candidates})
         self.assertNotIn("bain_marie", {item.id for item in result.product_candidates})
-        md_section = next(section for section in result.standards_by_directive if section["directive_key"] == "MD")
-        self.assertIn("Power tool safety review", {item["code"] for item in md_section["items"]})
+        md_section = next(section for section in result.standards_by_directive if section.directive_key == "MD")
+        self.assertIn("Power tool safety review", {item.code for item in md_section.items})
 
     def test_generic_industrial_tool_falls_back_to_ambiguous_match(self) -> None:
         result = analyze("generic industrial tool")
@@ -198,10 +198,10 @@ class MatchingRegressionTests(unittest.TestCase):
 
         self.assertEqual(result.product_type, "corded_power_drill")
         self.assertFalse(result.classification_is_ambiguous)
-        md_section = next(section for section in result.standards_by_directive if section["directive_key"] == "MD")
-        md_codes = {item["code"] for item in md_section["items"]}
+        md_section = next(section for section in result.standards_by_directive if section.directive_key == "MD")
+        md_codes = {item.code for item in md_section.items}
         self.assertIn("Power tool safety review", md_codes)
-        self.assertTrue(any(item["triggered_by_directive"] == "MD" for item in md_section["items"]))
+        self.assertTrue(any(item.triggered_by_directive == "MD" for item in md_section.items))
 
     def test_industrial_air_compressor_generates_pressure_specific_follow_ups(self) -> None:
         result = analyze("industrial air compressor")

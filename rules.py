@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import logging
 import re
 from collections import defaultdict
 from datetime import date
 import os
-from typing import Any, Literal
+from dataclasses import dataclass, field
+from typing import Any, Callable, Literal
 
 from env_config import init_env
 
@@ -13,24 +15,37 @@ init_env()
 from classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, extract_traits, extract_traits_v1, normalize
 from knowledge_base import load_legislations, load_meta
 from models import (
+    AnalysisAudit,
     AnalysisResult,
     AnalysisStats,
     ConfidenceLevel,
+    ConfidencePanel,
     FactBasis,
     Finding,
+    HeroSummary,
+    InputGapsPanel,
     KnownFactItem,
     KnowledgeBaseMeta,
     LegislationItem,
+    LegislationSection,
     MissingInformationItem,
     ProductMatchAudit,
+    QuickAddItem,
     RiskLevel,
+    RiskBucketSummary,
     RiskReason,
+    RiskSummary,
+    RouteContext,
+    ShadowDiffItem,
     StandardAuditItem,
     StandardMatchAudit,
+    StandardSection,
+    StandardSectionItem,
     StandardItem,
     TraitEvidenceItem,
     TraitEvidenceState,
 )
+from runtime_state import API_VERSION
 from standards_engine import find_applicable_items, find_applicable_items_v1
 
 LegislationBucket = Literal["ce", "non_ce", "framework", "future", "informational"]
@@ -88,6 +103,8 @@ DIRECTIVE_ORDER = [
 
 ENGINE_VERSION = CLASSIFIER_ENGINE_VERSION
 ENABLE_ENGINE_V2_SHADOW = os.getenv("REGCHECK_ENGINE_V2_SHADOW", "false").strip().lower() in {"1", "true", "yes", "on"}
+
+logger = logging.getLogger(__name__)
 
 POWER_EXTERNAL_PATTERNS = [
     r"\bexternal power supply\b",
@@ -1264,7 +1281,7 @@ def _build_legislation_sections(
     product_genres: set[str],
     confirmed_traits: set[str],
     forced_directives: list[str] | None = None,
-) -> tuple[list[LegislationItem], list[dict[str, Any]], list[str]]:
+) -> tuple[list[LegislationItem], list[LegislationSection], list[str]]:
     picked_rows = _pick_legislations(
         traits=traits,
         functional_classes=functional_classes,
@@ -1311,8 +1328,17 @@ def _build_legislation_sections(
         "informational": {"key": "informational", "title": "Informational notices", "items": []},
     }
     for item in items:
-        sections_dict[item.bucket]["items"].append(item.model_dump())
-    sections = [value for value in sections_dict.values() if value["items"]]
+        sections_dict[item.bucket]["items"].append(item)
+    sections = [
+        LegislationSection(
+            key=value["key"],
+            title=value["title"],
+            count=len(value["items"]),
+            items=value["items"],
+        )
+        for value in sections_dict.values()
+        if value["items"]
+    ]
 
     return items, sections, _directive_keys(items)
 
@@ -1778,15 +1804,15 @@ def _missing_information(
     return items[:8]
 
 
-def _build_quick_adds(missing: list[MissingInformationItem]) -> list[dict[str, str]]:
-    out: list[dict[str, str]] = []
+def _build_quick_adds(missing: list[MissingInformationItem]) -> list[QuickAddItem]:
+    out: list[QuickAddItem] = []
     seen: set[str] = set()
     for item in missing:
         for example in item.examples[:2]:
             if example in seen:
                 continue
             seen.add(example)
-            out.append({"label": item.key.replace("_", " "), "text": example})
+            out.append(QuickAddItem(label=item.key.replace("_", " "), text=example))
     return out[:10]
 
 
@@ -1804,44 +1830,47 @@ def _top_actions_from_missing(missing: list[MissingInformationItem], limit: int)
     return actions[:limit]
 
 
-def _route_context_summary(context: dict[str, Any], known_facts: list[KnownFactItem]) -> dict[str, Any]:
-    return {
-        "scope_route": context.get("scope_route"),
-        "scope_reasons": context.get("scope_reasons", []),
-        "context_tags": sorted(context.get("context_tags", [])),
-        "known_fact_keys": [item.key for item in known_facts],
-        "jurisdiction": "EU",
-    }
+def _route_context_summary(context: dict[str, Any], known_facts: list[KnownFactItem]) -> RouteContext:
+    scope_reasons = [reason for reason in context.get("scope_reasons", []) if isinstance(reason, str)]
+    return RouteContext(
+        scope_route=str(context.get("scope_route") or "generic"),
+        scope_reasons=scope_reasons,
+        context_tags=sorted(context.get("context_tags", [])),
+        known_fact_keys=[item.key for item in known_facts],
+        jurisdiction="EU",
+        route_trigger_reasons=scope_reasons,
+    )
 
 
-def _build_standard_sections(items: list[StandardItem]) -> list[dict[str, Any]]:
+def _build_standard_sections(items: list[StandardItem]) -> list[StandardSection]:
     grouped: dict[str, list[StandardItem]] = defaultdict(list)
     for item in items:
         route_keys = [item.directive] if item.category in {"safety", "radio_emc"} else ([key for key in item.directives if key] or [item.directive])
         for key in route_keys:
             grouped[key].append(item)
-    sections: list[dict[str, Any]] = []
+    sections: list[StandardSection] = []
     for key in sorted(grouped.keys(), key=_directive_rank):
         route_items = _sort_standard_items(grouped[key])
         directive_label, directive_title = DIRECTIVE_TITLES.get(key, (key, key))
+        section_items = [
+            StandardSectionItem(
+                **item.model_dump(),
+                triggered_by_directive=key,
+                triggered_by_label=directive_label,
+                triggered_by_title=directive_title,
+            )
+            for item in route_items
+        ]
         sections.append(
-            {
-                "key": key,
-                "directive_key": key,
-                "directive_label": directive_label,
-                "directive_title": directive_title,
-                "title": _route_title(key),
-                "count": len(route_items),
-                "items": [
-                    {
-                        **item.model_dump(),
-                        "triggered_by_directive": key,
-                        "triggered_by_label": directive_label,
-                        "triggered_by_title": directive_title,
-                    }
-                    for item in route_items
-                ],
-            }
+            StandardSection(
+                key=key,
+                directive_key=key,
+                directive_label=directive_label,
+                directive_title=directive_title,
+                title=_route_title(key),
+                count=len(section_items),
+                items=section_items,
+            )
         )
     return sections
 
@@ -2354,35 +2383,291 @@ def _build_standard_match_audit(items_audit: dict[str, Any], context_tags: set[s
     )
 
 
-def _shadow_diff(v1: AnalysisResult, v2: AnalysisResult) -> list[dict[str, Any]]:
+def _shadow_diff(v1: AnalysisResult, v2: AnalysisResult) -> list[ShadowDiffItem]:
     v1_traits = set(v1.confirmed_traits)
     v2_traits = set(v2.confirmed_traits)
     v1_standards = {item.code for item in v1.standards}
     v2_standards = {item.code for item in v2.standards}
     trait_evidence = {item.trait for item in v2.trait_evidence if item.confirmed}
-    audited_standard_codes = set()
-    if v2.standard_match_audit:
-        audited_standard_codes.update(item.code for item in v2.standard_match_audit.selected)
-        audited_standard_codes.update(item.code for item in v2.standard_match_audit.review)
+    audited_standard_codes = {item.code for item in v2.standard_match_audit.selected}
+    audited_standard_codes.update(item.code for item in v2.standard_match_audit.review)
 
-    diff: list[dict[str, Any]] = []
+    diff: list[ShadowDiffItem] = []
     for trait in sorted(v2_traits - v1_traits):
-        diff.append(
-            {
-                "kind": "trait",
-                "key": trait,
-                "has_evidence": trait in trait_evidence,
-            }
-        )
+        diff.append(ShadowDiffItem(kind="trait", key=trait, has_evidence=trait in trait_evidence))
     for code in sorted(v2_standards - v1_standards):
-        diff.append(
-            {
-                "kind": "standard",
-                "key": code,
-                "has_evidence": code in audited_standard_codes,
-            }
-        )
+        diff.append(ShadowDiffItem(kind="standard", key=code, has_evidence=code in audited_standard_codes))
     return diff
+
+
+def _classification_summary(
+    *,
+    product_type: str | None,
+    product_family: str | None,
+    product_subtype: str | None,
+    product_match_stage: str,
+    product_match_confidence: str,
+    classification_is_ambiguous: bool,
+) -> str:
+    if product_match_stage == "subtype" and product_subtype:
+        return f"Classified as {product_subtype} with {product_match_confidence} confidence."
+    if product_match_stage == "family" and product_family:
+        return f"Matched to the {product_family} family with {product_match_confidence} confidence; subtype remains unresolved."
+    if product_type:
+        return f"Detected product signal leans toward {product_type}, but the result remains provisional."
+    if classification_is_ambiguous:
+        return "The description does not provide enough product-specific evidence for a stable product match."
+    return "Classification completed."
+
+
+def _primary_uncertainties(
+    contradictions: list[str],
+    missing_items: list[MissingInformationItem],
+    degraded_reasons: list[str],
+    warnings: list[str],
+) -> list[str]:
+    items: list[str] = []
+    seen: set[str] = set()
+    for value in contradictions:
+        if value and value not in seen:
+            seen.add(value)
+            items.append(value)
+    for item in missing_items:
+        if item.message and item.message not in seen:
+            seen.add(item.message)
+            items.append(item.message)
+    for value in warnings + degraded_reasons:
+        if value and value not in seen:
+            seen.add(value)
+            items.append(value)
+    return items[:8]
+
+
+def _safe_product_match_audit(traits_data: dict[str, Any], normalized_description: str) -> ProductMatchAudit:
+    raw = traits_data.get("product_match_audit") or traits_data.get("audit")
+    if isinstance(raw, dict):
+        try:
+            return ProductMatchAudit.model_validate(raw)
+        except Exception:
+            logger.exception("analysis_degraded step=product_match_audit")
+    return ProductMatchAudit(engine_version=ENGINE_VERSION, normalized_text=normalized_description)
+
+
+def _make_risk_summary(
+    *,
+    overall_risk: RiskLevel,
+    current_risk: RiskLevel,
+    future_risk: RiskLevel,
+    risk_reasons: list[RiskReason],
+) -> RiskSummary:
+    return RiskSummary(
+        overall=RiskBucketSummary(level=overall_risk, reasons=[item for item in risk_reasons if item.scope == "overall"]),
+        current=RiskBucketSummary(level=current_risk, reasons=[item for item in risk_reasons if item.scope == "current"]),
+        future=RiskBucketSummary(level=future_risk, reasons=[item for item in risk_reasons if item.scope == "future"]),
+    )
+
+
+def _safe_knowledge_base_meta(
+    degraded_reasons: list[str],
+    warnings: list[str],
+) -> KnowledgeBaseMeta:
+    try:
+        return KnowledgeBaseMeta(**load_meta())
+    except Exception:
+        logger.exception("analysis_degraded step=knowledge_base_meta")
+        if "knowledge_base_meta_unavailable" not in degraded_reasons:
+            degraded_reasons.append("knowledge_base_meta_unavailable")
+        warning = "Catalog metadata could not be loaded during result assembly; core analysis remains available."
+        if warning not in warnings:
+            warnings.append(warning)
+        return KnowledgeBaseMeta()
+
+
+def _build_analysis_result(
+    *,
+    description: str,
+    depth: str,
+    normalized_description: str,
+    traits_data: dict[str, Any],
+    diagnostics: list[str],
+    matched_products: set[str],
+    routing_matched_products: set[str],
+    product_genres: set[str],
+    likely_standards: set[str],
+    trait_set: set[str],
+    confirmed_traits: set[str],
+    detected_directives: list[str],
+    forced_directives: list[str],
+    legislation_items: list[LegislationItem],
+    legislation_sections: list[LegislationSection],
+    standard_items: list[StandardItem],
+    review_items: list[StandardItem],
+    missing_items: list[MissingInformationItem],
+    standard_sections: list[StandardSection],
+    risk_reasons: list[RiskReason],
+    risk_summary: RiskSummary,
+    summary: str,
+    findings: list[Finding],
+    known_facts: list[KnownFactItem],
+    trait_evidence: list[TraitEvidenceItem],
+    product_match_audit: ProductMatchAudit,
+    standard_match_audit: StandardMatchAudit,
+    route_context: RouteContext,
+    overall_risk: RiskLevel,
+    current_risk: RiskLevel,
+    future_risk: RiskLevel,
+    degraded_reasons: list[str],
+    warnings: list[str],
+) -> AnalysisResult:
+    product_match_stage = str(traits_data.get("product_match_stage") or "ambiguous")
+    product_match_confidence = str(traits_data.get("product_match_confidence") or "low")
+    classification_confidence_below_threshold = product_match_confidence == "low"
+    classification_is_ambiguous = classification_confidence_below_threshold or product_match_stage != "subtype"
+    contradictions = list(traits_data.get("contradictions") or [])
+    contradiction_severity = str(traits_data.get("contradiction_severity") or "none")
+    inferred_traits = sorted(set(traits_data.get("inferred_traits") or []) | (trait_set - set(traits_data.get("explicit_traits") or [])))
+    top_actions_limit = {"quick": 2, "standard": 3, "deep": 5}[depth]
+    suggested_questions_limit = {"quick": 2, "standard": 6, "deep": 8}[depth]
+    quick_adds_limit = {"quick": 4, "standard": 8, "deep": 10}[depth]
+    top_actions = _top_actions_from_missing(missing_items, top_actions_limit)
+    knowledge_base_meta = _safe_knowledge_base_meta(degraded_reasons, warnings)
+    primary_regimes = [section.key for section in standard_sections[:4]]
+
+    stats = AnalysisStats(
+        legislation_count=len(legislation_items),
+        current_legislation_count=len([x for x in legislation_items if x.timing_status == "current"]),
+        future_legislation_count=len([x for x in legislation_items if x.timing_status == "future"]),
+        standards_count=len(standard_items),
+        review_items_count=len(review_items),
+        current_review_items_count=len([x for x in review_items if x.timing_status == "current"]),
+        future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
+        harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
+        state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
+        product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
+        ambiguity_flag_count=1 if (contradictions or classification_is_ambiguous) else 0,
+        missing_information_count=len(missing_items),
+    )
+
+    analysis_audit = AnalysisAudit(
+        allowed_directives=detected_directives,
+        matched_products=sorted(matched_products),
+        routing_matched_products=sorted(routing_matched_products),
+        preferred_standards=sorted(likely_standards),
+        product_genres=sorted(product_genres),
+        product_family=traits_data.get("product_family"),
+        product_subtype=traits_data.get("product_subtype"),
+        product_match_stage=product_match_stage,
+        classification_is_ambiguous=classification_is_ambiguous,
+        classification_confidence_below_threshold=classification_confidence_below_threshold,
+        depth=depth,
+        engine_version=ENGINE_VERSION,
+        normalized_description=normalized_description,
+        context_tags=route_context.context_tags,
+    )
+
+    return AnalysisResult(
+        product_summary=description.strip(),
+        overall_risk=overall_risk,
+        current_compliance_risk=current_risk,
+        future_watchlist_risk=future_risk,
+        summary=summary,
+        analyzed_description=description.strip(),
+        normalized_description=normalized_description,
+        product_type=traits_data.get("product_type"),
+        product_family=traits_data.get("product_family"),
+        product_family_confidence=traits_data.get("product_family_confidence", "low"),
+        product_subtype=traits_data.get("product_subtype"),
+        product_subtype_confidence=traits_data.get("product_subtype_confidence", "low"),
+        product_match_stage=product_match_stage,
+        product_match_confidence=product_match_confidence,
+        classification_is_ambiguous=classification_is_ambiguous,
+        classification_confidence_below_threshold=classification_confidence_below_threshold,
+        classification_summary=_classification_summary(
+            product_type=traits_data.get("product_type"),
+            product_family=traits_data.get("product_family"),
+            product_subtype=traits_data.get("product_subtype"),
+            product_match_stage=product_match_stage,
+            product_match_confidence=product_match_confidence,
+            classification_is_ambiguous=classification_is_ambiguous,
+        ),
+        primary_uncertainties=_primary_uncertainties(contradictions, missing_items, degraded_reasons, warnings),
+        route_trigger_reasons=route_context.route_trigger_reasons,
+        triggered_routes=detected_directives,
+        product_candidates=traits_data.get("product_candidates") or [],
+        functional_classes=traits_data.get("functional_classes") or [],
+        confirmed_functional_classes=traits_data.get("confirmed_functional_classes") or [],
+        explicit_traits=traits_data.get("explicit_traits") or [],
+        confirmed_traits=sorted(confirmed_traits),
+        inferred_traits=inferred_traits,
+        assumptions_or_inferred_traits=inferred_traits,
+        all_traits=sorted(trait_set),
+        directives=detected_directives,
+        forced_directives=forced_directives,
+        legislations=legislation_items,
+        ce_legislations=[x for x in legislation_items if x.bucket == "ce"],
+        non_ce_obligations=[x for x in legislation_items if x.bucket == "non_ce"],
+        framework_regimes=[x for x in legislation_items if x.bucket == "framework"],
+        future_regimes=[x for x in legislation_items if x.bucket == "future"],
+        informational_items=[x for x in legislation_items if x.bucket == "informational"],
+        standards=standard_items,
+        review_items=review_items,
+        missing_information=[item.message for item in missing_items],
+        missing_information_items=missing_items,
+        contradictions=contradictions,
+        contradiction_severity=contradiction_severity,
+        diagnostics=diagnostics,
+        warnings=warnings,
+        degraded_mode=bool(degraded_reasons),
+        degraded_reasons=degraded_reasons,
+        stats=stats,
+        knowledge_base_meta=knowledge_base_meta,
+        analysis_audit=analysis_audit,
+        api_version=API_VERSION,
+        engine_version=ENGINE_VERSION,
+        catalog_version=knowledge_base_meta.version,
+        trait_evidence=trait_evidence,
+        product_match_audit=product_match_audit,
+        standard_match_audit=standard_match_audit,
+        standard_sections=standard_sections,
+        standards_by_directive=standard_sections,
+        legislation_sections=legislation_sections,
+        risk_reasons=risk_reasons,
+        risk_summary=risk_summary,
+        hero_summary=HeroSummary(
+            title="RuleGrid Regulatory Scoping",
+            subtitle="Describe the product clearly to generate the standards route and the applicable legislation path.",
+            primary_regimes=primary_regimes,
+            confidence=product_match_confidence,
+            depth=depth,
+        ),
+        confidence_panel=ConfidencePanel(
+            confidence=product_match_confidence,
+            classification_is_ambiguous=classification_is_ambiguous,
+            classification_confidence_below_threshold=classification_confidence_below_threshold,
+            matched_products=sorted(matched_products),
+            product_family=traits_data.get("product_family"),
+            product_genres=sorted(product_genres),
+            product_subtype=traits_data.get("product_subtype"),
+            product_match_stage=product_match_stage,
+        ),
+        input_gaps_panel=InputGapsPanel(
+            items=missing_items,
+            next_actions=top_actions,
+            high_importance_count=len([item for item in missing_items if item.importance == "high"]),
+        ),
+        top_actions=top_actions,
+        next_actions=top_actions,
+        current_path=[section.title for section in standard_sections],
+        future_watchlist=[item.title for item in legislation_items if item.bucket == "future"],
+        suggested_questions=[item.message for item in missing_items[:suggested_questions_limit]],
+        suggested_quick_adds=_build_quick_adds(missing_items)[:quick_adds_limit],
+        known_facts=known_facts,
+        known_fact_keys=[item.key for item in known_facts],
+        route_context=route_context,
+        primary_jurisdiction="EU",
+        supported_jurisdictions=["EU"],
+        findings=findings,
+    )
 
 
 def analyze_v1(
@@ -2488,7 +2773,6 @@ def analyze_v1(
         product_match_stage=product_match_stage,
     )
     standard_sections = _build_standard_sections(all_standard_items)
-    primary_regimes = [section["key"] for section in standard_sections[:4]]
 
     current_risk = _current_risk(
         product_confidence=str(traits_data.get("product_match_confidence") or "low"),
@@ -2502,8 +2786,6 @@ def analyze_v1(
         overall_risk = "HIGH"
     elif current_risk == "MEDIUM" or future_risk == "MEDIUM":
         overall_risk = "MEDIUM"
-    classification_confidence_below_threshold = str(traits_data.get("product_match_confidence") or "low") == "low"
-    classification_is_ambiguous = classification_confidence_below_threshold or product_match_stage != "subtype"
     risk_reasons = _risk_reasons(
         overall_risk=overall_risk,
         current_risk=current_risk,
@@ -2515,25 +2797,11 @@ def analyze_v1(
         review_items=review_items,
         missing_items=missing_items,
     )
-    risk_summary = {
-        "overall": {"level": overall_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "overall"]},
-        "current": {"level": current_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "current"]},
-        "future": {"level": future_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "future"]},
-    }
-
-    stats = AnalysisStats(
-        legislation_count=len(legislation_items),
-        current_legislation_count=len([x for x in legislation_items if x.timing_status == "current"]),
-        future_legislation_count=len([x for x in legislation_items if x.timing_status == "future"]),
-        standards_count=len(standard_items),
-        review_items_count=len(review_items),
-        current_review_items_count=len([x for x in review_items if x.timing_status == "current"]),
-        future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
-        harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
-        state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
-        product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
-        ambiguity_flag_count=1 if (traits_data.get("contradictions") or classification_is_ambiguous) else 0,
-        missing_information_count=len(missing_items),
+    risk_summary = _make_risk_summary(
+        overall_risk=overall_risk,
+        current_risk=current_risk,
+        future_risk=future_risk,
+        risk_reasons=risk_reasons,
     )
 
     summary = _build_summary(detected_directives, standard_items, review_items, trait_set)
@@ -2546,98 +2814,41 @@ def analyze_v1(
         contradictions=traits_data.get("contradictions") or [],
         contradiction_severity=traits_data.get("contradiction_severity", "none"),
     )
-    top_actions_limit = {"quick": 2, "standard": 3, "deep": 5}[depth]
-    suggested_questions_limit = {"quick": 2, "standard": 6, "deep": 8}[depth]
-    quick_adds_limit = {"quick": 4, "standard": 8, "deep": 10}[depth]
     known_facts = _build_known_facts(description)
-
-    return AnalysisResult(
-        product_summary=description.strip(),
-        overall_risk=overall_risk,
-        current_compliance_risk=current_risk,
-        future_watchlist_risk=future_risk,
-        summary=summary,
-        product_type=traits_data.get("product_type"),
-        product_family=traits_data.get("product_family"),
-        product_family_confidence=traits_data.get("product_family_confidence", "low"),
-        product_subtype=traits_data.get("product_subtype"),
-        product_subtype_confidence=traits_data.get("product_subtype_confidence", "low"),
-        product_match_stage=traits_data.get("product_match_stage", "ambiguous"),
-        product_match_confidence=traits_data.get("product_match_confidence", "low"),
-        classification_is_ambiguous=classification_is_ambiguous,
-        classification_confidence_below_threshold=classification_confidence_below_threshold,
-        product_candidates=traits_data.get("product_candidates") or [],
-        functional_classes=traits_data.get("functional_classes") or [],
-        confirmed_functional_classes=traits_data.get("confirmed_functional_classes") or [],
-        explicit_traits=traits_data.get("explicit_traits") or [],
-        confirmed_traits=sorted(confirmed_traits),
-        inferred_traits=sorted(set(traits_data.get("inferred_traits") or []) | (trait_set - set(traits_data.get("explicit_traits") or []))),
-        all_traits=sorted(trait_set),
-        directives=detected_directives,
-        forced_directives=[item for item in dict.fromkeys(directives or []) if item],
-        legislations=legislation_items,
-        ce_legislations=[x for x in legislation_items if x.bucket == "ce"],
-        non_ce_obligations=[x for x in legislation_items if x.bucket == "non_ce"],
-        framework_regimes=[x for x in legislation_items if x.bucket == "framework"],
-        future_regimes=[x for x in legislation_items if x.bucket == "future"],
-        informational_items=[x for x in legislation_items if x.bucket == "informational"],
-        standards=standard_items,
-        review_items=review_items,
-        missing_information=[item.message for item in missing_items],
-        missing_information_items=missing_items,
-        contradictions=traits_data.get("contradictions") or [],
-        contradiction_severity=traits_data.get("contradiction_severity", "none"),
+    return _build_analysis_result(
+        description=description,
+        depth=depth,
+        normalized_description=normalize(f"{category} {description}"),
+        traits_data=traits_data,
         diagnostics=diagnostics,
-        stats=stats,
-        knowledge_base_meta=KnowledgeBaseMeta(**load_meta()),
-        analysis_audit={
-            "allowed_directives": detected_directives,
-            "matched_products": sorted(matched_products),
-            "routing_matched_products": sorted(routing_matched_products),
-            "preferred_standards": sorted(likely_standards),
-            "product_genres": sorted(product_genres),
-            "product_family": traits_data.get("product_family"),
-            "product_subtype": traits_data.get("product_subtype"),
-            "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
-            "classification_is_ambiguous": classification_is_ambiguous,
-            "classification_confidence_below_threshold": classification_confidence_below_threshold,
-            "depth": depth,
-        },
-        standard_sections=standard_sections,
-        standards_by_directive=standard_sections,
+        matched_products=matched_products,
+        routing_matched_products=routing_matched_products,
+        product_genres=product_genres,
+        likely_standards=likely_standards,
+        trait_set=trait_set,
+        confirmed_traits=confirmed_traits,
+        detected_directives=detected_directives,
+        forced_directives=[item for item in dict.fromkeys(directives or []) if item],
+        legislation_items=legislation_items,
         legislation_sections=legislation_sections,
+        standard_items=standard_items,
+        review_items=review_items,
+        missing_items=missing_items,
+        standard_sections=standard_sections,
         risk_reasons=risk_reasons,
         risk_summary=risk_summary,
-        hero_summary={
-            "title": "RuleGrid Regulatory Scoping",
-            "subtitle": "Describe the product clearly to generate the standards route and the applicable legislation path.",
-            "primary_regimes": primary_regimes,
-            "confidence": traits_data.get("product_match_confidence", "low"),
-            "depth": depth,
-        },
-        confidence_panel={
-            "confidence": traits_data.get("product_match_confidence", "low"),
-            "classification_is_ambiguous": classification_is_ambiguous,
-            "classification_confidence_below_threshold": classification_confidence_below_threshold,
-            "matched_products": sorted(matched_products),
-            "product_family": traits_data.get("product_family"),
-            "product_genres": sorted(product_genres),
-            "product_subtype": traits_data.get("product_subtype"),
-            "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
-        },
-        input_gaps_panel={
-            "items": [item.model_dump() for item in missing_items],
-        },
-        top_actions=_top_actions_from_missing(missing_items, top_actions_limit),
-        current_path=[section["title"] for section in standard_sections],
-        future_watchlist=[item.title for item in legislation_items if item.bucket == "future"],
-        suggested_questions=[item.message for item in missing_items[:suggested_questions_limit]],
-        suggested_quick_adds=_build_quick_adds(missing_items)[:quick_adds_limit],
-        known_facts=known_facts,
-        known_fact_keys=[item.key for item in known_facts],
-        primary_jurisdiction="EU",
-        supported_jurisdictions=["EU"],
+        summary=summary,
         findings=findings,
+        known_facts=known_facts,
+        trait_evidence=[],
+        product_match_audit=_safe_product_match_audit(traits_data, normalize(f"{category} {description}")),
+        standard_match_audit=StandardMatchAudit(engine_version=ENGINE_VERSION),
+        route_context=RouteContext(known_fact_keys=[item.key for item in known_facts], jurisdiction="EU"),
+        overall_risk=overall_risk,
+        current_risk=current_risk,
+        future_risk=future_risk,
+        degraded_reasons=[],
+        warnings=[],
     )
 
 
@@ -2649,6 +2860,8 @@ def analyze(
 ) -> AnalysisResult:
     depth = _analysis_depth(depth)
     traits_data = extract_traits(description=description, category=category)
+    degraded_reasons: list[str] = []
+    warnings: list[str] = []
     diagnostics = list(traits_data.get("diagnostics") or [])
     matched_products = set(traits_data.get("matched_products") or [])
     routing_matched_products = set(traits_data.get("routing_matched_products") or [])
@@ -2702,29 +2915,41 @@ def analyze(
     legislation_by_directive = _primary_legislation_by_directive(legislation_items)
     allowed_directives = set(detected_directives)
 
-    items = find_applicable_items(
-        traits=trait_set,
-        directives=detected_directives,
-        product_type=routing_product_type,
-        matched_products=sorted(routing_matched_products),
-        product_genres=sorted(product_genres),
-        preferred_standard_codes=sorted(likely_standards),
-        explicit_traits=set(traits_data.get("explicit_traits") or []),
-        confirmed_traits=confirmed_traits,
-        normalized_text=normalize(description),
-        context_tags=context["context_tags"],
-    )
-    selected_rows = list(items["standards"]) + list(items["review_items"])
-    selected_rows = _apply_post_selection_gates(
-        selected_rows,
-        trait_set,
-        routing_matched_products,
-        diagnostics,
-        allowed_directives,
-        product_type=routing_product_type,
-        confirmed_traits=confirmed_traits,
-        description=description,
-    )
+    try:
+        items = find_applicable_items(
+            traits=trait_set,
+            directives=detected_directives,
+            product_type=routing_product_type,
+            matched_products=sorted(routing_matched_products),
+            product_genres=sorted(product_genres),
+            preferred_standard_codes=sorted(likely_standards),
+            explicit_traits=set(traits_data.get("explicit_traits") or []),
+            confirmed_traits=confirmed_traits,
+            normalized_text=normalize(description),
+            context_tags=context["context_tags"],
+        )
+    except Exception:
+        logger.exception("analysis_degraded step=standards_enrichment")
+        degraded_reasons.append("standards_enrichment_failed")
+        warnings.append("Standards enrichment failed; returning classification and legislation without standards.")
+        items = {"standards": [], "review_items": [], "audit": {}, "rejections": []}
+
+    selected_rows = list(items.get("standards", [])) + list(items.get("review_items", []))
+    try:
+        selected_rows = _apply_post_selection_gates(
+            selected_rows,
+            trait_set,
+            routing_matched_products,
+            diagnostics,
+            allowed_directives,
+            product_type=routing_product_type,
+            confirmed_traits=confirmed_traits,
+            description=description,
+        )
+    except Exception:
+        logger.exception("analysis_degraded step=post_selection_gates")
+        degraded_reasons.append("post_selection_gates_failed")
+        warnings.append("Standards post-selection filtering failed; returning the pre-filter standard candidates.")
 
     dedup: dict[str, dict[str, Any]] = {}
     for row in selected_rows:
@@ -2752,8 +2977,13 @@ def analyze(
         product_type=product_type,
         product_match_stage=product_match_stage,
     )
-    standard_sections = _build_standard_sections(all_standard_items)
-    primary_regimes = [section["key"] for section in standard_sections[:4]]
+    try:
+        standard_sections = _build_standard_sections(all_standard_items)
+    except Exception:
+        logger.exception("analysis_degraded step=standard_sections")
+        degraded_reasons.append("standard_sections_failed")
+        warnings.append("Standards sections could not be assembled; standards remain available as a flat list.")
+        standard_sections = []
 
     current_risk = _current_risk(
         product_confidence=str(traits_data.get("product_match_confidence") or "low"),
@@ -2767,8 +2997,6 @@ def analyze(
         overall_risk = "HIGH"
     elif current_risk == "MEDIUM" or future_risk == "MEDIUM":
         overall_risk = "MEDIUM"
-    classification_confidence_below_threshold = str(traits_data.get("product_match_confidence") or "low") == "low"
-    classification_is_ambiguous = classification_confidence_below_threshold or product_match_stage != "subtype"
     risk_reasons = _risk_reasons(
         overall_risk=overall_risk,
         current_risk=current_risk,
@@ -2780,49 +3008,50 @@ def analyze(
         review_items=review_items,
         missing_items=missing_items,
     )
-    risk_summary = {
-        "overall": {"level": overall_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "overall"]},
-        "current": {"level": current_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "current"]},
-        "future": {"level": future_risk, "reasons": [item.model_dump() for item in risk_reasons if item.scope == "future"]},
-    }
-
-    stats = AnalysisStats(
-        legislation_count=len(legislation_items),
-        current_legislation_count=len([x for x in legislation_items if x.timing_status == "current"]),
-        future_legislation_count=len([x for x in legislation_items if x.timing_status == "future"]),
-        standards_count=len(standard_items),
-        review_items_count=len(review_items),
-        current_review_items_count=len([x for x in review_items if x.timing_status == "current"]),
-        future_review_items_count=len([x for x in review_items if x.timing_status == "future"]),
-        harmonized_standards_count=len([x for x in standard_items if x.harmonization_status == "harmonized"]),
-        state_of_the_art_standards_count=len([x for x in standard_items if x.harmonization_status == "state_of_the_art"]),
-        product_gated_standards_count=len([x for x in standard_items if x.applies_if_products]),
-        ambiguity_flag_count=1 if (traits_data.get("contradictions") or classification_is_ambiguous) else 0,
-        missing_information_count=len(missing_items),
+    risk_summary = _make_risk_summary(
+        overall_risk=overall_risk,
+        current_risk=current_risk,
+        future_risk=future_risk,
+        risk_reasons=risk_reasons,
     )
 
-    summary = _build_summary(detected_directives, standard_items, review_items, trait_set)
-    findings = _build_findings(
-        depth=depth,
-        legislation_items=legislation_items,
-        standards=standard_items,
-        review_items=review_items,
-        missing_items=missing_items,
-        contradictions=traits_data.get("contradictions") or [],
-        contradiction_severity=traits_data.get("contradiction_severity", "none"),
-    )
-    top_actions_limit = {"quick": 2, "standard": 3, "deep": 5}[depth]
-    suggested_questions_limit = {"quick": 2, "standard": 6, "deep": 8}[depth]
-    quick_adds_limit = {"quick": 4, "standard": 8, "deep": 10}[depth]
-    known_facts = _build_known_facts(description)
+    try:
+        summary = _build_summary(detected_directives, standard_items, review_items, trait_set)
+    except Exception:
+        logger.exception("analysis_degraded step=summary")
+        degraded_reasons.append("summary_failed")
+        warnings.append("The narrative summary could not be assembled; returning a compact fallback summary.")
+        summary = (
+            f"{len(detected_directives)} legislation routes, {len(standard_items)} standards, "
+            f"and {len(review_items)} review items identified."
+        )
+
+    try:
+        findings = _build_findings(
+            depth=depth,
+            legislation_items=legislation_items,
+            standards=standard_items,
+            review_items=review_items,
+            missing_items=missing_items,
+            contradictions=traits_data.get("contradictions") or [],
+            contradiction_severity=traits_data.get("contradiction_severity", "none"),
+        )
+    except Exception:
+        logger.exception("analysis_degraded step=findings")
+        degraded_reasons.append("findings_failed")
+        warnings.append("Actionable findings could not be assembled; the route output remains available.")
+        findings = []
+
+    try:
+        known_facts = _build_known_facts(description)
+    except Exception:
+        logger.exception("analysis_degraded step=known_facts")
+        degraded_reasons.append("known_facts_failed")
+        warnings.append("Known-fact extraction could not be completed; the core analysis remains available.")
+        known_facts = []
 
     trait_evidence = _trait_evidence_from_state_map(raw_state_map, confirmed_traits)
-    product_match_audit_raw = traits_data.get("product_match_audit")
-    product_match_audit = (
-        ProductMatchAudit.model_validate(product_match_audit_raw)
-        if isinstance(product_match_audit_raw, dict)
-        else None
-    )
+    product_match_audit = _safe_product_match_audit(traits_data, normalize(f"{category} {description}"))
     rejected_audit_rows = list(items.get("audit", {}).get("rejected", []))
     rejected_audit_rows.extend(
         {
@@ -2840,139 +3069,95 @@ def analyze(
         for row in items.get("rejections", [])
         if row.get("code") not in {item.code for item in standard_items + review_items}
     )
-    standard_match_audit = _build_standard_match_audit(
-        {
-            "selected": [
-                {
-                    "code": item.code,
-                    "title": item.title,
-                    "outcome": "selected",
-                    "score": item.score,
-                    "confidence": item.confidence,
-                    "fact_basis": item.fact_basis,
-                    "selection_group": item.selection_group,
-                    "selection_priority": item.selection_priority,
-                    "keyword_hits": item.keywords,
-                    "reason": item.reason,
-                }
-                for item in standard_items
-            ],
-            "review": [
-                {
-                    "code": item.code,
-                    "title": item.title,
-                    "outcome": "review",
-                    "score": item.score,
-                    "confidence": item.confidence,
-                    "fact_basis": item.fact_basis,
-                    "selection_group": item.selection_group,
-                    "selection_priority": item.selection_priority,
-                    "keyword_hits": item.keywords,
-                    "reason": item.reason,
-                }
-                for item in review_items
-            ],
-            "rejected": rejected_audit_rows,
-        },
-        context["context_tags"],
-    )
+    try:
+        standard_match_audit = _build_standard_match_audit(
+            {
+                "selected": [
+                    {
+                        "code": item.code,
+                        "title": item.title,
+                        "outcome": "selected",
+                        "score": item.score,
+                        "confidence": item.confidence,
+                        "fact_basis": item.fact_basis,
+                        "selection_group": item.selection_group,
+                        "selection_priority": item.selection_priority,
+                        "keyword_hits": item.keywords,
+                        "reason": item.reason,
+                    }
+                    for item in standard_items
+                ],
+                "review": [
+                    {
+                        "code": item.code,
+                        "title": item.title,
+                        "outcome": "review",
+                        "score": item.score,
+                        "confidence": item.confidence,
+                        "fact_basis": item.fact_basis,
+                        "selection_group": item.selection_group,
+                        "selection_priority": item.selection_priority,
+                        "keyword_hits": item.keywords,
+                        "reason": item.reason,
+                    }
+                    for item in review_items
+                ],
+                "rejected": rejected_audit_rows,
+            },
+            context["context_tags"],
+        )
+    except Exception:
+        logger.exception("analysis_degraded step=standard_match_audit")
+        degraded_reasons.append("standard_match_audit_failed")
+        warnings.append("Standard audit details could not be assembled; returning the selected routes without full audit detail.")
+        standard_match_audit = StandardMatchAudit(engine_version=ENGINE_VERSION, context_tags=sorted(context["context_tags"]))
 
-    result = AnalysisResult(
-        product_summary=description.strip(),
-        overall_risk=overall_risk,
-        current_compliance_risk=current_risk,
-        future_watchlist_risk=future_risk,
-        summary=summary,
-        product_type=traits_data.get("product_type"),
-        product_family=traits_data.get("product_family"),
-        product_family_confidence=traits_data.get("product_family_confidence", "low"),
-        product_subtype=traits_data.get("product_subtype"),
-        product_subtype_confidence=traits_data.get("product_subtype_confidence", "low"),
-        product_match_stage=traits_data.get("product_match_stage", "ambiguous"),
-        product_match_confidence=traits_data.get("product_match_confidence", "low"),
-        classification_is_ambiguous=classification_is_ambiguous,
-        classification_confidence_below_threshold=classification_confidence_below_threshold,
-        product_candidates=traits_data.get("product_candidates") or [],
-        functional_classes=traits_data.get("functional_classes") or [],
-        confirmed_functional_classes=traits_data.get("confirmed_functional_classes") or [],
-        explicit_traits=traits_data.get("explicit_traits") or [],
-        confirmed_traits=sorted(confirmed_traits),
-        inferred_traits=sorted(set(traits_data.get("inferred_traits") or []) | (trait_set - set(traits_data.get("explicit_traits") or []))),
-        all_traits=sorted(trait_set),
-        directives=detected_directives,
-        forced_directives=[item for item in dict.fromkeys(directives or []) if item],
-        legislations=legislation_items,
-        ce_legislations=[x for x in legislation_items if x.bucket == "ce"],
-        non_ce_obligations=[x for x in legislation_items if x.bucket == "non_ce"],
-        framework_regimes=[x for x in legislation_items if x.bucket == "framework"],
-        future_regimes=[x for x in legislation_items if x.bucket == "future"],
-        informational_items=[x for x in legislation_items if x.bucket == "informational"],
-        standards=standard_items,
-        review_items=review_items,
-        missing_information=[item.message for item in missing_items],
-        missing_information_items=missing_items,
-        contradictions=traits_data.get("contradictions") or [],
-        contradiction_severity=traits_data.get("contradiction_severity", "none"),
+    result = _build_analysis_result(
+        description=description,
+        depth=depth,
+        normalized_description=normalize(f"{category} {description}"),
+        traits_data=traits_data,
         diagnostics=diagnostics,
-        stats=stats,
-        knowledge_base_meta=KnowledgeBaseMeta(**load_meta()),
-        analysis_audit={
-            "allowed_directives": detected_directives,
-            "matched_products": sorted(matched_products),
-            "routing_matched_products": sorted(routing_matched_products),
-            "preferred_standards": sorted(likely_standards),
-            "product_family": traits_data.get("product_family"),
-            "product_subtype": traits_data.get("product_subtype"),
-            "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
-            "classification_is_ambiguous": classification_is_ambiguous,
-            "classification_confidence_below_threshold": classification_confidence_below_threshold,
-            "depth": depth,
-            "engine_version": ENGINE_VERSION,
-            "context_tags": sorted(context["context_tags"]),
-        },
-        engine_version=ENGINE_VERSION,
+        matched_products=matched_products,
+        routing_matched_products=routing_matched_products,
+        product_genres=product_genres,
+        likely_standards=likely_standards,
+        trait_set=trait_set,
+        confirmed_traits=confirmed_traits,
+        detected_directives=detected_directives,
+        forced_directives=[item for item in dict.fromkeys(directives or []) if item],
+        legislation_items=legislation_items,
+        legislation_sections=legislation_sections,
+        standard_items=standard_items,
+        review_items=review_items,
+        missing_items=missing_items,
+        standard_sections=standard_sections,
+        risk_reasons=risk_reasons,
+        risk_summary=risk_summary,
+        summary=summary,
+        findings=findings,
+        known_facts=known_facts,
         trait_evidence=trait_evidence,
         product_match_audit=product_match_audit,
         standard_match_audit=standard_match_audit,
-        standard_sections=standard_sections,
-        standards_by_directive=standard_sections,
-        legislation_sections=legislation_sections,
-        risk_reasons=risk_reasons,
-        risk_summary=risk_summary,
-        hero_summary={
-            "title": "RuleGrid Regulatory Scoping",
-            "subtitle": "Describe the product clearly to generate the standards route and the applicable legislation path.",
-            "primary_regimes": primary_regimes,
-            "confidence": traits_data.get("product_match_confidence", "low"),
-            "depth": depth,
-        },
-        confidence_panel={
-            "confidence": traits_data.get("product_match_confidence", "low"),
-            "classification_is_ambiguous": classification_is_ambiguous,
-            "classification_confidence_below_threshold": classification_confidence_below_threshold,
-            "matched_products": sorted(matched_products),
-            "product_family": traits_data.get("product_family"),
-            "product_subtype": traits_data.get("product_subtype"),
-            "product_match_stage": traits_data.get("product_match_stage", "ambiguous"),
-        },
-        input_gaps_panel={
-            "items": [item.model_dump() for item in missing_items],
-        },
-        top_actions=_top_actions_from_missing(missing_items, top_actions_limit),
-        current_path=[section["title"] for section in standard_sections],
-        future_watchlist=[item.title for item in legislation_items if item.bucket == "future"],
-        suggested_questions=[item.message for item in missing_items[:suggested_questions_limit]],
-        suggested_quick_adds=_build_quick_adds(missing_items)[:quick_adds_limit],
-        known_facts=known_facts,
-        known_fact_keys=[item.key for item in known_facts],
         route_context=_route_context_summary(context, known_facts),
-        primary_jurisdiction="EU",
-        supported_jurisdictions=["EU"],
-        findings=findings,
+        overall_risk=overall_risk,
+        current_risk=current_risk,
+        future_risk=future_risk,
+        degraded_reasons=degraded_reasons,
+        warnings=warnings,
     )
 
     if ENABLE_ENGINE_V2_SHADOW:
-        legacy = analyze_v1(description=description, category=category, directives=directives, depth=depth)
-        result.analysis_audit["shadow_diff"] = _shadow_diff(legacy, result)
+        try:
+            legacy = analyze_v1(description=description, category=category, directives=directives, depth=depth)
+            result.analysis_audit.shadow_diff = _shadow_diff(legacy, result)
+        except Exception:
+            logger.exception("analysis_degraded step=shadow_diff")
+            degraded_reasons.append("shadow_diff_failed")
+            warnings.append("Shadow comparison could not be computed; the primary analysis remains available.")
+            result.degraded_mode = True
+            result.degraded_reasons = degraded_reasons
+            result.warnings = warnings
 
     return result

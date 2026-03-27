@@ -16,6 +16,7 @@ from knowledge_base import (
 import main
 from models import ProductInput
 from models import LegislationItem
+from runtime_state import KnowledgeBaseWarmupSnapshot
 from rules import _pick_legislations, analyze
 from standards_engine import _keyword_hits, find_applicable_items
 
@@ -198,9 +199,9 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual(set(en_301_489_1.directives), {"RED", "EMC"})
 
         section_keys = {
-            section["key"]
+            section.key
             for section in result.standard_sections
-            if any(row["code"] == "EN 301 489-1" for row in section["items"])
+            if any(row.code == "EN 301 489-1" for row in section.items)
         }
         self.assertEqual(section_keys, {"RED"})
 
@@ -240,7 +241,7 @@ class MatchingTests(unittest.TestCase):
         info_codes = {item.code for item in result.informational_items}
         self.assertIn("2017/1357", info_codes)
 
-        section_keys = {section["key"] for section in result.legislation_sections}
+        section_keys = {section.key for section in result.legislation_sections}
         self.assertIn("informational", section_keys)
 
     def test_battery_powered_household_product_surfaces_review_safety_route_without_lvd(self) -> None:
@@ -394,10 +395,10 @@ class MatchingTests(unittest.TestCase):
         self.assertLessEqual(len(quick.suggested_questions), len(deep.suggested_questions))
         self.assertFalse(any(item.directive == "AI_Act" for item in quick.findings))
         self.assertTrue(any(item.directive == "AI_Act" for item in deep.findings))
-        self.assertEqual(quick.analysis_audit["depth"], "quick")
-        self.assertEqual(deep.analysis_audit["depth"], "deep")
-        self.assertEqual(quick.hero_summary["depth"], "quick")
-        self.assertEqual(deep.hero_summary["depth"], "deep")
+        self.assertEqual(quick.analysis_audit.depth, "quick")
+        self.assertEqual(deep.analysis_audit.depth, "deep")
+        self.assertEqual(quick.hero_summary.depth, "quick")
+        self.assertEqual(deep.hero_summary.depth, "deep")
 
     def test_family_stage_product_match_does_not_inject_subtype_specific_fan_standard(self) -> None:
         result = analyze("smart speaker with screen and wifi")
@@ -544,7 +545,7 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("MDR borderline review", {item.code for item in result.review_items})
         self.assertNotIn("EN 60601 review", {item.code for item in result.review_items})
         self.assertIn("boundary.possible_medical", result.known_fact_keys)
-        self.assertIn("contact:skin", result.route_context["context_tags"])
+        self.assertIn("contact:skin", result.route_context.context_tags)
 
     def test_explicit_connectivity_facts_are_exposed_and_not_reasked(self) -> None:
         result = analyze("connected espresso machine with wifi app control cloud account OTA updates and display")
@@ -577,7 +578,7 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("GDPR", result.directives)
         self.assertIn("RED_CYBER", result.directives)
         self.assertIn("service.cloud_dependency", result.known_fact_keys)
-        self.assertIn("cyber:connected_radio", result.route_context["context_tags"])
+        self.assertIn("cyber:connected_radio", result.route_context.context_tags)
         self.assertNotIn(
             "Confirm whether the smart features require cloud dependency or can operate locally.",
             result.suggested_questions,
@@ -591,7 +592,7 @@ class MatchingTests(unittest.TestCase):
         self.assertFalse(result.classification_is_ambiguous)
         self.assertIn("connectivity.wifi", result.known_fact_keys)
         self.assertIn("use.professional", result.known_fact_keys)
-        self.assertIn("scope:av_ict", result.route_context["context_tags"])
+        self.assertIn("scope:av_ict", result.route_context.context_tags)
 
     def test_smart_watch_does_not_auto_trigger_mdr_from_health_defaults(self) -> None:
         result = analyze("smart watch")
@@ -600,9 +601,22 @@ class MatchingTests(unittest.TestCase):
         self.assertNotIn("possible_medical_boundary", result.all_traits)
 
     def test_metadata_endpoints_expose_v2_fields(self) -> None:
-        with patch.dict(main._kb_status, {"ok": True, "error": None, "counts": {}}):
+        runtime_state = main.get_runtime_state()
+        original = (
+            runtime_state.startup_state,
+            runtime_state.knowledge_base_loaded,
+            dict(runtime_state.warmup_meta),
+            dict(runtime_state.warmup_counts),
+        )
+        runtime_state.mark_ready(KnowledgeBaseWarmupSnapshot(counts={}, meta={"version": "test-catalog"}))
+        try:
             options = main.metadata_options()
             standards = main.metadata_standards()
+        finally:
+            runtime_state.startup_state = original[0]
+            runtime_state.knowledge_base_loaded = original[1]
+            runtime_state.warmup_meta = original[2]
+            runtime_state.warmup_counts = original[3]
 
         product_row = next(row for row in options["products"] if row["id"] == "smart_speaker")
         genre_row = next(row for row in options["genres"] if row["id"] == "smart_home_iot")
@@ -657,7 +671,7 @@ class MatchingTests(unittest.TestCase):
             main._require_admin_reload_token()
 
         self.assertEqual(ctx.exception.status_code, 503)
-        self.assertIn("disabled", ctx.exception.detail)
+        self.assertIn("disabled", ctx.exception.detail["message"])
 
     def test_admin_reload_accepts_valid_token(self) -> None:
         with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": "secret"}):
@@ -665,16 +679,30 @@ class MatchingTests(unittest.TestCase):
             response = main.admin_reload(None)
 
         self.assertTrue(response["ok"])
+        self.assertTrue(response["knowledge_base_loaded"])
 
     def test_analyze_hides_internal_exceptions(self) -> None:
-        with patch.dict(main._kb_status, {"ok": True, "error": None, "counts": {}}):
+        runtime_state = main.get_runtime_state()
+        original = (
+            runtime_state.startup_state,
+            runtime_state.knowledge_base_loaded,
+            dict(runtime_state.warmup_meta),
+            dict(runtime_state.warmup_counts),
+        )
+        runtime_state.mark_ready(KnowledgeBaseWarmupSnapshot(counts={}, meta={"version": "test-catalog"}))
+        try:
             with patch("main.analyze", side_effect=RuntimeError("boom")):
                 with patch.object(main.logger, "exception"):
                     with self.assertRaises(HTTPException) as ctx:
                         main.run_analysis(ProductInput(description="test product"))
+        finally:
+            runtime_state.startup_state = original[0]
+            runtime_state.knowledge_base_loaded = original[1]
+            runtime_state.warmup_meta = original[2]
+            runtime_state.warmup_counts = original[3]
 
         self.assertEqual(ctx.exception.status_code, 500)
-        self.assertEqual(ctx.exception.detail, "Analysis failed")
+        self.assertEqual(ctx.exception.detail["message"], "Analysis failed")
 
 
 if __name__ == "__main__":

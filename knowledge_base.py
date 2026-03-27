@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 import os
 import re
+from time import perf_counter
 from typing import Any
 
 import yaml
@@ -15,6 +17,13 @@ init_env()
 
 class KnowledgeBaseError(RuntimeError):
     pass
+
+
+@dataclass(frozen=True, slots=True)
+class KnowledgeBaseWarmupResult:
+    counts: dict[str, int]
+    meta: dict[str, Any]
+    duration_ms: int
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -761,8 +770,15 @@ def load_meta() -> dict[str, Any]:
     return load_all()["meta"]
 
 
-def warmup_knowledge_base() -> dict[str, Any]:
-    return load_all()["meta"]
+def warmup_knowledge_base() -> KnowledgeBaseWarmupResult:
+    started = perf_counter()
+    data = load_all()
+    duration_ms = int((perf_counter() - started) * 1000)
+    return KnowledgeBaseWarmupResult(
+        counts=dict(data["counts"]),
+        meta=dict(data["meta"]),
+        duration_ms=duration_ms,
+    )
 
 
 def reset_cache() -> None:
