@@ -219,6 +219,29 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertIn("Power tool safety review", md_codes)
         self.assertTrue(any(item.triggered_by_directive == "MD" for item in md_section.items))
 
+    def test_cordless_screwdriver_prefers_power_tool_route_over_oral_hygiene(self) -> None:
+        result = analyze("cordless screwdriver")
+
+        self.assertEqual(result.product_type, "cordless_screwdriver")
+        self.assertEqual(result.product_family, "industrial_power_equipment")
+        self.assertFalse(result.classification_is_ambiguous)
+        self.assertNotIn("battery_powered_oral_hygiene", {item.id for item in result.product_candidates})
+        self.assertIn("Power tool safety review", {item.code for item in result.review_items})
+
+    def test_angle_grinder_surfaces_power_tool_review_route(self) -> None:
+        result = analyze("angle grinder")
+
+        self.assertEqual(result.product_type, "angle_grinder")
+        self.assertFalse(result.classification_is_ambiguous)
+        self.assertIn("Power tool safety review", {item.code for item in result.review_items})
+
+    def test_rotary_hammer_drill_resolves_to_rotary_hammer_route(self) -> None:
+        result = analyze("rotary hammer drill")
+
+        self.assertEqual(result.product_type, "rotary_hammer")
+        self.assertFalse(result.classification_is_ambiguous)
+        self.assertIn("Power tool safety review", {item.code for item in result.review_items})
+
     def test_industrial_air_compressor_generates_pressure_specific_follow_ups(self) -> None:
         result = analyze("industrial air compressor")
 

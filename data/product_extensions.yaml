@@ -81,3 +81,510 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Industrial handheld barcode and inventory scanners. Keeps professional AV/ICT routing without collapsing into consumer projector matches.
+- id: industrial_power_tool
+  genres:
+  - electric_power_tool
+- id: corded_power_drill
+  genres:
+  - electric_power_tool
+- id: portable_power_saw
+  genres:
+  - electric_power_tool
+- id: cordless_power_drill
+  genres:
+  - electric_power_tool
+  likely_standards:
+  - Power tool safety review
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+- id: cordless_screwdriver
+  label: Cordless screwdriver / electric screwdriver
+  product_family: industrial_power_equipment
+  product_subfamily: power_screwdriver
+  aliases:
+  - cordless screwdriver
+  - electric screwdriver
+  - battery screwdriver
+  - rechargeable screwdriver
+  - power screwdriver
+  - cordless electric screwdriver
+  - cordless-screwdriver
+  - cordlessscrewdriver
+  - cordless screwdrivers
+  - electric-screwdriver
+  - electricscrewdriver
+  - electric screwdrivers
+  - battery-screwdriver
+  - batteryscrewdriver
+  - battery screwdrivers
+  - rechargeable-screwdriver
+  - rechargeablescrewdriver
+  - rechargeable screwdrivers
+  implied_traits:
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - battery_powered
+  - electrical
+  - motorized
+  core_traits:
+  - electrical
+  - motorized
+  - battery_powered
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - screwdriver
+  - electric screwdriver
+  - cordless screwdriver
+  preferred_clues:
+  - screwdriver
+  - power screwdriver
+  - assembly driver
+  exclude_clues:
+  - manual screwdriver
+  - precision screwdriver
+  - toothbrush
+  strong_aliases:
+  - cordless screwdriver
+  - electric screwdriver
+  - battery screwdriver
+  - rechargeable screwdriver
+  - power screwdriver
+  - cordless electric screwdriver
+  weak_aliases:
+  - cordless-screwdriver
+  - cordlessscrewdriver
+  - cordless screwdrivers
+  - electric-screwdriver
+  - electricscrewdriver
+  - electric screwdrivers
+  - battery-screwdriver
+  - batteryscrewdriver
+  - battery screwdrivers
+  - rechargeable-screwdriver
+  - rechargeablescrewdriver
+  - rechargeable screwdrivers
+  marketplace_aliases:
+  - cordless driver
+  - electric driver screwdriver
+  not_when_text_contains:
+  - manual screwdriver
+  - precision screwdriver
+  - screwdriver bit
+  - toothbrush
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - oral_care
+  - personal_care
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Battery-powered screwdrivers and compact assembly drivers.
+- id: impact_driver
+  label: Impact driver
+  product_family: industrial_power_equipment
+  product_subfamily: impact_driver
+  aliases:
+  - impact driver
+  - cordless impact driver
+  - brushless impact driver
+  - electric impact driver
+  - hex impact driver
+  - impact-driver
+  - impactdriver
+  - impact drivers
+  - cordless-impact-driver
+  - cordlessimpactdriver
+  - cordless impact drivers
+  - brushless-impact-driver
+  - brushlessimpactdriver
+  - brushless impact drivers
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - impact driver
+  - driver tool
+  preferred_clues:
+  - impact driver
+  - hex driver
+  exclude_clues:
+  - driver bit
+  - device driver
+  - software driver
+  strong_aliases:
+  - impact driver
+  - cordless impact driver
+  - brushless impact driver
+  - electric impact driver
+  - hex impact driver
+  weak_aliases:
+  - impact-driver
+  - impactdriver
+  - impact drivers
+  - cordless-impact-driver
+  - cordlessimpactdriver
+  - cordless impact drivers
+  - brushless-impact-driver
+  - brushlessimpactdriver
+  - brushless impact drivers
+  marketplace_aliases:
+  - compact impact driver
+  not_when_text_contains:
+  - driver bit
+  - device driver
+  - software driver
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - battery_powered
+  score_penalty_if_traits:
+  - av_ict
+  required_any_traits:
+  - electrical
+  - motorized
+  forbidden_traits: []
+  matching_notes: Impact-driver route for fastening tools that should land in machinery review rather than generic appliance routing.
+- id: angle_grinder
+  label: Angle grinder
+  product_family: industrial_power_equipment
+  product_subfamily: power_grinder
+  aliases:
+  - angle grinder
+  - electric angle grinder
+  - cordless angle grinder
+  - disc grinder
+  - cut-off grinder
+  - cutoff grinder
+  - angle-grinder
+  - anglegrinder
+  - angle grinders
+  - electric-angle-grinder
+  - electricanglegrinder
+  - electric angle grinders
+  - disc-grinder
+  - discgrinder
+  - disc grinders
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - angle grinder
+  - disc grinder
+  - cut-off grinder
+  preferred_clues:
+  - angle grinder
+  - disc grinder
+  - cut-off grinder
+  exclude_clues:
+  - coffee grinder
+  - spice grinder
+  - meat grinder
+  strong_aliases:
+  - angle grinder
+  - electric angle grinder
+  - cordless angle grinder
+  - disc grinder
+  - cut-off grinder
+  - cutoff grinder
+  weak_aliases:
+  - angle-grinder
+  - anglegrinder
+  - angle grinders
+  - electric-angle-grinder
+  - electricanglegrinder
+  - electric angle grinders
+  - disc-grinder
+  - discgrinder
+  - disc grinders
+  marketplace_aliases:
+  - grinder tool
+  - cutting grinder
+  not_when_text_contains:
+  - coffee grinder
+  - spice grinder
+  - herb grinder
+  - meat grinder
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - food_contact
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Angle grinder and abrasive cutting/grinding tool coverage.
+- id: orbital_sander
+  label: Orbital sander
+  product_family: industrial_power_equipment
+  product_subfamily: power_sander
+  aliases:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  - finishing sander
+  - sheet sander
+  - orbital-sander
+  - orbitalsander
+  - orbital sanders
+  - random-orbital-sander
+  - randomorbitalsander
+  - random orbital sanders
+  - palm-sander
+  - palmsander
+  - palm sanders
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  preferred_clues:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  exclude_clues:
+  - nail file
+  - pedicure
+  - manicure
+  strong_aliases:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  - finishing sander
+  - sheet sander
+  weak_aliases:
+  - orbital-sander
+  - orbitalsander
+  - orbital sanders
+  - random-orbital-sander
+  - randomorbitalsander
+  - random orbital sanders
+  - palm-sander
+  - palmsander
+  - palm sanders
+  marketplace_aliases:
+  - electric sander
+  - finishing tool sander
+  not_when_text_contains:
+  - nail file
+  - pedicure
+  - manicure
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - personal_care
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Electric orbital and finishing sander coverage for workshop tools.
+- id: rotary_hammer
+  label: Rotary hammer / SDS drill
+  product_family: industrial_power_equipment
+  product_subfamily: rotary_hammer
+  aliases:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  - sds plus drill
+  - demolition hammer
+  - combination hammer
+  - rotary-hammer
+  - rotaryhammer
+  - rotary hammers
+  - rotary-hammer-drill
+  - rotaryhammerdrill
+  - rotary hammer drills
+  - sds-drill
+  - sdsdrill
+  - sds drills
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - rotary hammer
+  - sds drill
+  - demolition hammer
+  preferred_clues:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  exclude_clues:
+  - massage gun
+  - toy hammer
+  - dental drill
+  strong_aliases:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  - sds plus drill
+  - demolition hammer
+  - combination hammer
+  weak_aliases:
+  - rotary-hammer
+  - rotaryhammer
+  - rotary hammers
+  - rotary-hammer-drill
+  - rotaryhammerdrill
+  - rotary hammer drills
+  - sds-drill
+  - sdsdrill
+  - sds drills
+  marketplace_aliases:
+  - sds plus hammer drill
+  - combi hammer
+  not_when_text_contains:
+  - massage gun
+  - toy hammer
+  - dental drill
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - personal_care
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Rotary hammer and SDS drilling tool coverage.

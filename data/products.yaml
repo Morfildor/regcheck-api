@@ -641,7 +641,6 @@ products:
   - personal_care_appliance
   preferred_clues:
   - battery
-  - cordless
   - rechargeable
   - oral irrigator
   - water flosser

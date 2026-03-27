@@ -39,3 +39,18 @@ standards:
   - irritation / sensitization screening
   - skin contact
   - body contact
+- code: Power tool safety review
+  applies_if_products:
+  - cordless_screwdriver
+  - impact_driver
+  - angle_grinder
+  - orbital_sander
+  - rotary_hammer
+  applies_if_genres:
+  - electric_power_tool
+  keywords:
+  - angle grinder
+  - orbital sander
+  - impact driver
+  - rotary hammer
+  - electric screwdriver

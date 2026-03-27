@@ -1531,3 +1531,53 @@ genres:
   - body_worn_or_applied
   score_penalty_if_traits: []
   negative_examples: []
+- id: electric_power_tool
+  label: Electric power tool
+  keywords:
+  - power tool
+  - electric power tool
+  - cordless drill
+  - circular saw
+  - angle grinder
+  - orbital sander
+  - impact driver
+  - rotary hammer
+  traits:
+  - electrical
+  - motorized
+  - handheld
+  default_traits:
+  - portable
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  strong_keywords:
+  - power tool
+  - electric power tool
+  - cordless drill
+  - circular saw
+  - angle grinder
+  - orbital sander
+  - impact driver
+  - rotary hammer
+  weak_keywords:
+  - workshop tool
+  - jobsite tool
+  - transportable tool
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - food_contact
+  - water_contact
+  negative_examples:
+  - coffee grinder
+  - oral irrigator

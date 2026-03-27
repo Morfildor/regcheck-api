@@ -64,6 +64,13 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("household_appliance", result["product_genres"])
         self.assertIn("kitchen_food_appliance", result["product_genres"])
 
+    def test_angle_grinder_exposes_power_tool_genre_and_review_preference(self) -> None:
+        result = extract_traits("angle grinder")
+
+        self.assertEqual(result["product_type"], "angle_grinder")
+        self.assertIn("electric_power_tool", result["product_genres"])
+        self.assertEqual(result["preferred_standard_codes"], ["Power tool safety review"])
+
     def test_new_feature_traits_are_detected_from_text(self) -> None:
         result = extract_traits("Wi-Fi 7 mesh router with WPA3 and voice assistant support")
 
