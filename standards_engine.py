@@ -674,6 +674,174 @@ def _selection_group_winners(rows: list[dict[str, Any]]) -> tuple[list[dict[str,
     return winners, losers
 
 
+def _audit_item_from_row(row: dict[str, Any], outcome: StandardItemType | Literal["rejected"]) -> dict[str, Any]:
+    return {
+        "code": row.get("code"),
+        "title": row.get("title", row.get("code")),
+        "outcome": outcome,
+        "score": int(row.get("score", 0)),
+        "confidence": row.get("confidence", "medium"),
+        "fact_basis": row.get("fact_basis", "inferred" if outcome == "rejected" else "confirmed"),
+        "selection_group": row.get("selection_group"),
+        "selection_priority": int(row.get("selection_priority", 0)),
+        "keyword_hits": list(row.get("keyword_hits", [])),
+        "reason": row.get("reason") or row.get("rejection_reason"),
+    }
+
+
+def _reject_selected_row(
+    row: dict[str, Any],
+    reason: str,
+    rejected_rows: list[dict[str, Any]],
+    rejections: list[dict[str, Any]],
+) -> None:
+    rejected_row = dict(row)
+    rejected_row["rejection_reason"] = reason
+    rejected_rows.append(rejected_row)
+    rejections.append({"code": row.get("code"), "title": row.get("title", row.get("code")), "reason": reason})
+
+
+def _finalize_selected_rows_v2(
+    selected_rows: list[dict[str, Any]],
+    *,
+    traits: set[str],
+    allowed_directives: set[str] | None,
+    selection_context: dict[str, Any] | None,
+    rejections: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    if not selected_rows:
+        return [], []
+
+    context = selection_context or {}
+    allowed_directives = allowed_directives or set()
+    rejected_rows: list[dict[str, Any]] = []
+    kept: list[dict[str, Any]] = []
+    scope_route = str(context.get("scope_route") or "generic")
+    has_external_psu = bool(context.get("has_external_psu"))
+    has_laser_source = bool(context.get("has_laser_source"))
+    has_photobiological_source = bool(context.get("has_photobiological_source"))
+    prefer_specific_red_emf = bool(context.get("prefer_specific_red_emf"))
+    prefer_62233 = bool(context.get("prefer_62233"))
+    prefer_62311 = bool(context.get("prefer_62311"))
+
+    for original_row in selected_rows:
+        row = dict(original_row)
+        code = str(row.get("code") or "")
+        route = str(row.get("directive") or row.get("legislation_key") or "OTHER")
+
+        if code in {"EN 55032", "EN 55035"} and scope_route == "appliance":
+            _reject_selected_row(row, f"scope route '{scope_route}' prefers appliance EMC standards", rejected_rows, rejections)
+            continue
+
+        if code == "EN 62368-1" and scope_route == "appliance":
+            if row.get("item_type") != "review":
+                _reject_selected_row(row, f"scope route '{scope_route}' prefers household safety standards", rejected_rows, rejections)
+                continue
+
+        if code.startswith("EN 60335-") and scope_route == "av_ict":
+            _reject_selected_row(row, f"scope route '{scope_route}' prefers AV/ICT safety standards", rejected_rows, rejections)
+            continue
+
+        if code.startswith("EN 55014-") and scope_route == "av_ict":
+            _reject_selected_row(row, f"scope route '{scope_route}' prefers AV/ICT EMC standards", rejected_rows, rejections)
+            continue
+
+        if code == "Charger / external PSU review":
+            if not has_external_psu:
+                _reject_selected_row(row, "external PSU signal missing", rejected_rows, rejections)
+                continue
+            row["directive"] = "LVD"
+            row["legislation_key"] = "LVD"
+        elif code == "EN 50563":
+            if not has_external_psu:
+                _reject_selected_row(row, "external PSU signal missing", rejected_rows, rejections)
+                continue
+            row["directive"] = "ECO"
+            row["legislation_key"] = "ECO"
+
+        if code == "EN 62311":
+            if prefer_62233 and not ("radio" in traits and ({"wearable", "handheld", "body_worn_or_applied"} & traits)):
+                _reject_selected_row(row, "EN 62233 takes precedence for the detected household EMF route", rejected_rows, rejections)
+                continue
+            row["directive"] = "RED" if "radio" in traits else "LVD"
+            row["legislation_key"] = row["directive"]
+
+        if code == "EN 60825-1" and not has_laser_source:
+            _reject_selected_row(row, "laser source signal missing", rejected_rows, rejections)
+            continue
+
+        if code == "EN 62471" and not has_photobiological_source:
+            _reject_selected_row(row, "photobiological source signal missing", rejected_rows, rejections)
+            continue
+
+        if code == "EN 62479":
+            if "radio" not in traits:
+                _reject_selected_row(row, "radio signal missing", rejected_rows, rejections)
+                continue
+            if prefer_specific_red_emf:
+                _reject_selected_row(row, "a more specific RED EMF route takes precedence", rejected_rows, rejections)
+                continue
+
+        if code.startswith("EN 62209") and not (
+            "radio" in traits and ({"wearable", "handheld", "body_worn_or_applied", "cellular"} & traits)
+        ):
+            _reject_selected_row(row, "close-proximity radio signal missing", rejected_rows, rejections)
+            continue
+
+        route = str(row.get("directive") or "OTHER")
+        if allowed_directives and route not in allowed_directives and route != "OTHER":
+            _reject_selected_row(row, f"directive '{route}' was not selected", rejected_rows, rejections)
+            continue
+
+        kept.append(row)
+
+    household_part2_selected = any(
+        str(row.get("code") or "").startswith("EN 60335-2-") and row.get("item_type") == "standard"
+        for row in kept
+    )
+    if household_part2_selected:
+        for row in kept:
+            if str(row.get("code") or "") != "EN 60335-1" or row.get("item_type") != "review":
+                continue
+            row["item_type"] = "standard"
+            row["fact_basis"] = "confirmed"
+            reason = row.get("reason")
+            if isinstance(reason, str):
+                row["reason"] = reason.replace(
+                    ". some routing traits are inferred from product context and still need confirmation",
+                    "",
+                )
+
+    codes = {str(row.get("code") or "") for row in kept}
+    if "EN 62233" in codes and "EN 62311" in codes and prefer_62233:
+        for row in list(kept):
+            if row.get("code") != "EN 62311":
+                continue
+            kept.remove(row)
+            _reject_selected_row(row, "EN 62233 takes precedence for the detected household EMF route", rejected_rows, rejections)
+    elif "EN 62233" in codes and "EN 62311" in codes and prefer_62311:
+        for row in list(kept):
+            if row.get("code") != "EN 62233":
+                continue
+            kept.remove(row)
+            _reject_selected_row(row, "EN 62311 takes precedence for the detected AV/ICT or close-proximity EMF route", rejected_rows, rejections)
+
+    codes = {str(row.get("code") or "") for row in kept}
+    if (
+        "Battery safety review" in codes
+        and "EN 62133-2" in codes
+        and scope_route == "av_ict"
+        and not ({"wearable", "handheld", "body_worn_or_applied", "replaceable_battery"} & traits)
+    ):
+        for row in list(kept):
+            if row.get("code") != "Battery safety review":
+                continue
+            kept.remove(row)
+            _reject_selected_row(row, "EN 62133-2 already covers the detected AV/ICT battery route", rejected_rows, rejections)
+
+    return kept, rejected_rows
+
+
 def find_applicable_items_v1(
     traits: set[str],
     directives: list[str],
@@ -788,6 +956,8 @@ def find_applicable_items_v2(
     confirmed_traits: set[str] | None = None,
     normalized_text: str = "",
     context_tags: set[str] | None = None,
+    allowed_directives: set[str] | None = None,
+    selection_context: dict[str, Any] | None = None,
 ) -> ApplicableItems:
     standards = load_standards()
     matched_products = matched_products or []
@@ -800,6 +970,7 @@ def find_applicable_items_v2(
 
     candidates: list[dict[str, Any]] = []
     rejections: list[dict[str, Any]] = []
+    rejected_rows: list[dict[str, Any]] = []
     for standard in standards:
         standard_directives = _string_list(standard.get("directives"))
         product_hit_type = _product_hit_type(standard, product_type, matched_products, product_genres)
@@ -814,11 +985,19 @@ def find_applicable_items_v2(
         directive_review_fallback = False
         if directives and standard_directives and not any(d in directives for d in standard_directives):
             if not _directive_review_fallback_allowed(standard, preferred_codes, product_hit_type):
-                rejections.append({"code": standard.get("code"), "reason": "directive filter mismatch"})
+                rejected_row = dict(standard)
+                rejected_row["rejection_reason"] = "directive filter mismatch"
+                rejected_rows.append(rejected_row)
+                rejections.append({"code": standard.get("code"), "title": standard.get("title"), "reason": "directive filter mismatch"})
                 continue
             directive_review_fallback = True
         if product_hit_type is None or not gate["passes"]:
-            rejections.append({"code": standard.get("code"), "reason": _rejection_reason(product_hit_type, gate)})
+            rejected_row = dict(standard)
+            rejected_row["rejection_reason"] = _rejection_reason(product_hit_type, gate)
+            rejected_rows.append(rejected_row)
+            rejections.append(
+                {"code": standard.get("code"), "title": standard.get("title"), "reason": rejected_row["rejection_reason"]}
+            )
             continue
 
         keyword_hits = _keyword_hits(standard, normalized_text)
@@ -885,7 +1064,7 @@ def find_applicable_items_v2(
             recovered_group_losers.append(recovered)
             continue
         rejected_group_losers.append(loser)
-        rejections.append({"code": loser.get("code"), "reason": loser.get("rejection_reason")})
+        rejections.append({"code": loser.get("code"), "title": loser.get("title"), "reason": loser.get("rejection_reason")})
 
     winners.extend(recovered_group_losers)
 
@@ -897,56 +1076,24 @@ def find_applicable_items_v2(
             deduped[code] = row
 
     final = list(deduped.values())
+    finalized_rows, finalized_rejections = _finalize_selected_rows_v2(
+        final,
+        traits=traits,
+        allowed_directives=allowed_directives,
+        selection_context=selection_context,
+        rejections=rejections,
+    )
+    rejected_rows.extend(rejected_group_losers)
+    rejected_rows.extend(finalized_rejections)
+    final = finalized_rows
     final.sort(key=lambda row: (-cast(int, row["score"]), -int(row.get("selection_priority", 0)), *_directive_sort_key(row)))
 
     standards_rows = [row for row in final if row["item_type"] == "standard"]
     review_rows = [row for row in final if row["item_type"] == "review"]
     audit = {
-        "selected": [
-            {
-                "code": row.get("code"),
-                "title": row.get("title"),
-                "outcome": "selected",
-                "score": int(row.get("score", 0)),
-                "confidence": row.get("confidence", "medium"),
-                "fact_basis": row.get("fact_basis", "confirmed"),
-                "selection_group": row.get("selection_group"),
-                "selection_priority": int(row.get("selection_priority", 0)),
-                "keyword_hits": row.get("keyword_hits", []),
-                "reason": row.get("reason"),
-            }
-            for row in standards_rows
-        ],
-        "review": [
-            {
-                "code": row.get("code"),
-                "title": row.get("title"),
-                "outcome": "review",
-                "score": int(row.get("score", 0)),
-                "confidence": row.get("confidence", "medium"),
-                "fact_basis": row.get("fact_basis", "confirmed"),
-                "selection_group": row.get("selection_group"),
-                "selection_priority": int(row.get("selection_priority", 0)),
-                "keyword_hits": row.get("keyword_hits", []),
-                "reason": row.get("reason"),
-            }
-            for row in review_rows
-        ],
-                "rejected": [
-            {
-                "code": row.get("code"),
-                "title": row.get("title", row.get("code")),
-                "outcome": "rejected",
-                "score": int(row.get("score", 0)),
-                "confidence": row.get("confidence", "medium"),
-                "fact_basis": row.get("fact_basis", "inferred"),
-                "selection_group": row.get("selection_group"),
-                "selection_priority": int(row.get("selection_priority", 0)),
-                "keyword_hits": row.get("keyword_hits", []),
-                "reason": row.get("reason") or row.get("rejection_reason"),
-            }
-            for row in rejected_group_losers
-        ],
+        "selected": [_audit_item_from_row(row, "selected") for row in standards_rows],
+        "review": [_audit_item_from_row(row, "review") for row in review_rows],
+        "rejected": [_audit_item_from_row(row, "rejected") for row in rejected_rows],
     }
 
     return {
@@ -968,6 +1115,8 @@ def find_applicable_standards_v2(
     confirmed_traits: set[str] | None = None,
     normalized_text: str = "",
     context_tags: set[str] | None = None,
+    allowed_directives: set[str] | None = None,
+    selection_context: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     return find_applicable_items_v2(
         traits=traits,
@@ -980,6 +1129,8 @@ def find_applicable_standards_v2(
         confirmed_traits=confirmed_traits,
         normalized_text=normalized_text,
         context_tags=context_tags,
+        allowed_directives=allowed_directives,
+        selection_context=selection_context,
     )["standards"]
 
 
@@ -994,6 +1145,8 @@ def find_applicable_items(
     confirmed_traits: set[str] | None = None,
     normalized_text: str = "",
     context_tags: set[str] | None = None,
+    allowed_directives: set[str] | None = None,
+    selection_context: dict[str, Any] | None = None,
 ) -> ApplicableItems:
     return find_applicable_items_v2(
         traits=traits,
@@ -1006,6 +1159,8 @@ def find_applicable_items(
         confirmed_traits=confirmed_traits,
         normalized_text=normalized_text,
         context_tags=context_tags,
+        allowed_directives=allowed_directives,
+        selection_context=selection_context,
     )
 
 
@@ -1020,6 +1175,8 @@ def find_applicable_standards(
     confirmed_traits: set[str] | None = None,
     normalized_text: str = "",
     context_tags: set[str] | None = None,
+    allowed_directives: set[str] | None = None,
+    selection_context: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     return find_applicable_items(
         traits=traits,
@@ -1032,4 +1189,6 @@ def find_applicable_standards(
         confirmed_traits=confirmed_traits,
         normalized_text=normalized_text,
         context_tags=context_tags,
+        allowed_directives=allowed_directives,
+        selection_context=selection_context,
     )["standards"]

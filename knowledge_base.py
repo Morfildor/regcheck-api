@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 import hashlib
 import logging
@@ -8,6 +8,7 @@ from pathlib import Path
 import os
 import re
 from time import perf_counter
+from threading import RLock
 from typing import Any
 
 import yaml
@@ -26,6 +27,19 @@ class KnowledgeBaseWarmupResult:
     counts: dict[str, int]
     meta: dict[str, Any]
     duration_ms: int
+
+
+@dataclass(frozen=True, slots=True)
+class KnowledgeBaseSnapshot:
+    traits: list[dict[str, Any]]
+    genres: list[dict[str, Any]]
+    products: list[dict[str, Any]]
+    legislations: list[dict[str, Any]]
+    standards: list[dict[str, Any]]
+    counts: dict[str, int]
+    meta: dict[str, Any]
+    metadata_payloads: dict[str, dict[str, Any]] = field(default_factory=dict)
+    classifier_runtime: Any = None
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -63,6 +77,9 @@ ALLOWED_TEST_FOCUS = {
 }
 
 logger = logging.getLogger(__name__)
+
+_SNAPSHOT_LOCK = RLock()
+_ACTIVE_SNAPSHOT: KnowledgeBaseSnapshot | None = None
 
 
 # ---------- path helpers ----------
@@ -701,6 +718,135 @@ def _kb_meta(counts: dict[str, int], standards: list[dict[str, Any]]) -> dict[st
     }
 
 
+def _build_metadata_options_payload(
+    traits: list[dict[str, Any]],
+    genres: list[dict[str, Any]],
+    products: list[dict[str, Any]],
+    legislations: list[dict[str, Any]],
+    meta: dict[str, Any],
+) -> dict[str, Any]:
+    return {
+        "traits": [{"id": row["id"], "label": row["label"], "description": row["description"]} for row in traits],
+        "genres": [
+            {
+                "id": row["id"],
+                "label": row["label"],
+                "keywords": row.get("keywords", []),
+                "traits": row.get("traits", []),
+                "default_traits": row.get("default_traits", []),
+                "functional_classes": row.get("functional_classes", []),
+                "likely_standards": row.get("likely_standards", []),
+            }
+            for row in genres
+        ],
+        "products": [
+            {
+                "id": row["id"],
+                "label": row["label"],
+                "product_family": row.get("product_family"),
+                "product_subfamily": row.get("product_subfamily"),
+                "genres": row.get("genres", []),
+                "aliases": row.get("aliases", []),
+                "family_keywords": row.get("family_keywords", []),
+                "genre_keywords": row.get("genre_keywords", []),
+                "required_clues": row.get("required_clues", []),
+                "preferred_clues": row.get("preferred_clues", []),
+                "exclude_clues": row.get("exclude_clues", []),
+                "confusable_with": row.get("confusable_with", []),
+                "functional_classes": row.get("functional_classes", []),
+                "genre_functional_classes": row.get("genre_functional_classes", []),
+                "family_traits": row.get("family_traits", []),
+                "genre_traits": row.get("genre_traits", []),
+                "genre_default_traits": row.get("genre_default_traits", []),
+                "subtype_traits": row.get("subtype_traits", []),
+                "core_traits": row.get("core_traits", []),
+                "default_traits": row.get("default_traits", []),
+                "implied_traits": row.get("implied_traits", []),
+                "likely_standards": row.get("likely_standards", []),
+                "genre_likely_standards": row.get("genre_likely_standards", []),
+            }
+            for row in products
+        ],
+        "legislations": [
+            {
+                "code": row["code"],
+                "title": row["title"],
+                "directive_key": row["directive_key"],
+                "family": row["family"],
+                "priority": row.get("priority", "conditional"),
+                "bucket": row.get("bucket", "non_ce"),
+            }
+            for row in legislations
+        ],
+        "knowledge_base_meta": dict(meta),
+    }
+
+
+def _standard_directives(row: dict[str, Any]) -> list[str]:
+    directives = row.get("directives")
+    if isinstance(directives, list):
+        values = [item for item in directives if isinstance(item, str) and item]
+        if values:
+            return values
+
+    legislation_key = row.get("legislation_key")
+    if isinstance(legislation_key, str) and legislation_key:
+        return [legislation_key]
+
+    return ["OTHER"]
+
+
+def _build_metadata_standards_payload(standards: list[dict[str, Any]], meta: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "knowledge_base_meta": dict(meta),
+        "standards": [
+            {
+                "directive": _standard_directives(row)[0],
+                "directives": _standard_directives(row),
+                "code": row["code"],
+                "title": row["title"],
+                "category": row["category"],
+                "legislation_key": row.get("legislation_key"),
+                "item_type": row.get("item_type", "standard"),
+                "standard_family": row.get("standard_family"),
+                "harmonization_status": row.get("harmonization_status", "unknown"),
+                "is_harmonized": row.get("is_harmonized"),
+                "harmonized_under": row.get("harmonized_under"),
+                "harmonized_reference": row.get("harmonized_reference"),
+                "version": row.get("version"),
+                "dated_version": row.get("dated_version"),
+                "supersedes": row.get("supersedes"),
+                "test_focus": row.get("test_focus", []),
+                "evidence_hint": row.get("evidence_hint", []),
+                "keywords": row.get("keywords", []),
+                "selection_group": row.get("selection_group"),
+                "selection_priority": row.get("selection_priority", 0),
+                "required_fact_basis": row.get("required_fact_basis", "inferred"),
+                "applies_if_products": row.get("applies_if_products", []),
+                "applies_if_genres": row.get("applies_if_genres", []),
+                "applies_if_all": row.get("applies_if_all", []),
+                "applies_if_any": row.get("applies_if_any", []),
+                "exclude_if_genres": row.get("exclude_if_genres", []),
+            }
+            for row in standards
+        ],
+    }
+
+
+def _build_classifier_runtime_snapshot(
+    products: list[dict[str, Any]],
+    traits: list[dict[str, Any]],
+    catalog_version: str | None,
+) -> Any:
+    from classifier import build_product_matching_snapshot
+
+    return build_product_matching_snapshot(
+        products=products,
+        trait_ids={row["id"] for row in traits},
+        catalog_version=catalog_version,
+    )
+
+
 # ---------- public loaders ----------
 
 def _load_traits_catalog() -> list[dict[str, Any]]:
@@ -728,8 +874,10 @@ def _load_standards_catalog(product_ids: set[str], trait_ids: set[str], legislat
     return _validate_standards(base, product_ids, trait_ids, legislation_keys, genre_ids)
 
 
-@lru_cache(maxsize=1)
-def load_all() -> dict[str, Any]:
+def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBaseSnapshot:
+    if refresh_paths:
+        _resolved_data_paths.cache_clear()
+
     traits = _load_traits_catalog()
     trait_ids = {row["id"] for row in traits}
 
@@ -764,14 +912,54 @@ def load_all() -> dict[str, Any]:
         "standards": len(standards),
     }
 
+    meta = _kb_meta(counts, standards)
+
+    return KnowledgeBaseSnapshot(
+        traits=traits,
+        genres=genres,
+        products=products,
+        legislations=legislations,
+        standards=standards,
+        counts=counts,
+        meta=meta,
+        metadata_payloads={
+            "options": _build_metadata_options_payload(traits, genres, products, legislations, meta),
+            "standards": _build_metadata_standards_payload(standards, meta),
+        },
+        classifier_runtime=_build_classifier_runtime_snapshot(products, traits, meta.get("version")),
+    )
+
+
+def activate_knowledge_base_snapshot(snapshot: KnowledgeBaseSnapshot) -> None:
+    global _ACTIVE_SNAPSHOT
+    with _SNAPSHOT_LOCK:
+        _ACTIVE_SNAPSHOT = snapshot
+
+
+def get_knowledge_base_snapshot() -> KnowledgeBaseSnapshot:
+    global _ACTIVE_SNAPSHOT
+    snapshot = _ACTIVE_SNAPSHOT
+    if snapshot is not None:
+        return snapshot
+
+    with _SNAPSHOT_LOCK:
+        snapshot = _ACTIVE_SNAPSHOT
+        if snapshot is None:
+            snapshot = build_knowledge_base_snapshot()
+            _ACTIVE_SNAPSHOT = snapshot
+        return snapshot
+
+
+def load_all() -> dict[str, Any]:
+    snapshot = get_knowledge_base_snapshot()
     return {
-        "traits": traits,
-        "genres": genres,
-        "products": products,
-        "legislations": legislations,
-        "standards": standards,
-        "counts": counts,
-        "meta": _kb_meta(counts, standards),
+        "traits": snapshot.traits,
+        "genres": snapshot.genres,
+        "products": snapshot.products,
+        "legislations": snapshot.legislations,
+        "standards": snapshot.standards,
+        "counts": snapshot.counts,
+        "meta": snapshot.meta,
     }
 
 
@@ -799,25 +987,31 @@ def load_meta() -> dict[str, Any]:
     return load_all()["meta"]
 
 
-def warmup_knowledge_base() -> KnowledgeBaseWarmupResult:
+def load_metadata_payload(name: str) -> dict[str, Any]:
+    return get_knowledge_base_snapshot().metadata_payloads.get(name, {})
+
+
+def warmup_knowledge_base(*, refresh_paths: bool = False) -> KnowledgeBaseWarmupResult:
     started = perf_counter()
-    data = load_all()
+    snapshot = build_knowledge_base_snapshot(refresh_paths=refresh_paths)
+    activate_knowledge_base_snapshot(snapshot)
     duration_ms = int((perf_counter() - started) * 1000)
     logger.info(
         "knowledge_base_warmup files=%s version=%s duration_ms=%s",
         _resolved_data_paths_for_logging(),
-        data["meta"].get("version"),
+        snapshot.meta.get("version"),
         duration_ms,
     )
     return KnowledgeBaseWarmupResult(
-        counts=dict(data["counts"]),
-        meta=dict(data["meta"]),
+        counts=dict(snapshot.counts),
+        meta=dict(snapshot.meta),
         duration_ms=duration_ms,
     )
 
 
 def reset_cache() -> None:
-    load_all.cache_clear()
+    global _ACTIVE_SNAPSHOT
+    _ACTIVE_SNAPSHOT = None
     _resolved_data_paths.cache_clear()
     from classifier import reset_classifier_cache
 

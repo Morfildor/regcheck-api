@@ -6,6 +6,7 @@ from collections import defaultdict
 from datetime import date
 import os
 from dataclasses import dataclass, field
+from time import perf_counter
 from typing import Any, Callable, Literal
 
 from env_config import init_env
@@ -470,6 +471,15 @@ class StandardsSelection:
     standard_sections: list[StandardSection]
     items_audit: dict[str, Any]
     rejections: list[dict[str, Any]]
+
+
+@dataclass(slots=True)
+class AnalysisTrace:
+    request_id: str | None = None
+    stage_timings_ms: dict[str, int] = field(default_factory=dict)
+
+    def record_stage(self, stage: str, started_at: float) -> None:
+        self.stage_timings_ms[stage] = int((perf_counter() - started_at) * 1000)
 
 
 def _scope_route(
@@ -2469,6 +2479,7 @@ def _standard_item_from_row(
         test_focus=row.get("test_focus", []),
         evidence_hint=row.get("evidence_hint", []),
         keywords=row.get("keywords", []),
+        keyword_hits=row.get("keyword_hits", []),
         selection_group=row.get("selection_group"),
         selection_priority=int(row.get("selection_priority", 0)),
         required_fact_basis=row.get("required_fact_basis", "inferred"),
@@ -2683,6 +2694,10 @@ def _select_standards(
         prepared.confirmed_traits,
         description,
     )
+    prepared.diagnostics.append("scope_route=" + context["scope_route"])
+    if context["scope_reasons"]:
+        prepared.diagnostics.append("scope_route_reasons=" + ";".join(context["scope_reasons"]))
+    prepared.diagnostics.append("standard_context_tags=" + ",".join(sorted(context["context_tags"])))
 
     try:
         items = find_applicable_items(
@@ -2696,6 +2711,8 @@ def _select_standards(
             confirmed_traits=prepared.confirmed_traits,
             normalized_text=normalize(description),
             context_tags=context["context_tags"],
+            allowed_directives=routes.allowed_directives,
+            selection_context=context,
         )
     except Exception:
         logger.exception("analysis_degraded step=standards_enrichment")
@@ -2704,23 +2721,6 @@ def _select_standards(
         items = {"standards": [], "review_items": [], "audit": {}, "rejections": []}
 
     selected_rows = list(items.get("standards", [])) + list(items.get("review_items", []))
-    try:
-        selected_rows = _apply_post_selection_gates(
-            selected_rows,
-            prepared.route_traits,
-            prepared.routing_matched_products,
-            prepared.diagnostics,
-            routes.allowed_directives,
-            product_type=prepared.routing_product_type,
-            confirmed_traits=prepared.confirmed_traits,
-            description=description,
-            product_genres=prepared.product_genres,
-            preferred_standard_codes=prepared.likely_standards,
-        )
-    except Exception:
-        logger.exception("analysis_degraded step=post_selection_gates")
-        prepared.degraded_reasons.append("post_selection_gates_failed")
-        prepared.warnings.append("Standards post-selection filtering failed; returning the pre-filter standard candidates.")
 
     dedup: dict[str, dict[str, Any]] = {}
     for row in selected_rows:
@@ -2919,6 +2919,32 @@ def _safe_knowledge_base_meta(
         if warning not in warnings:
             warnings.append(warning)
         return KnowledgeBaseMeta()
+
+
+def _maybe_attach_shadow_diff(
+    result: AnalysisResult,
+    *,
+    description: str,
+    category: str,
+    directives: list[str] | None,
+    depth: str,
+    prepared: PreparedAnalysis,
+) -> AnalysisResult:
+    if not ENABLE_ENGINE_V2_SHADOW:
+        return result
+
+    try:
+        legacy = analyze_v1(description=description, category=category, directives=directives, depth=depth)
+        result.analysis_audit.shadow_diff = _shadow_diff(legacy, result)
+    except Exception:
+        logger.exception("analysis_degraded step=shadow_diff")
+        prepared.degraded_reasons.append("shadow_diff_failed")
+        prepared.warnings.append("Shadow comparison could not be computed; the primary analysis remains available.")
+        result.degraded_mode = True
+        result.degraded_reasons = prepared.degraded_reasons
+        result.warnings = prepared.warnings
+
+    return result
 
 
 def _build_analysis_result(
@@ -3295,13 +3321,27 @@ def analyze(
     category: str = "",
     directives: list[str] | None = None,
     depth: str = "standard",
+    trace: AnalysisTrace | None = None,
 ) -> AnalysisResult:
     depth = _analysis_depth(depth)
+    stage_started = perf_counter()
     prepared = _prepare_analysis(description, category, depth)
+    if trace is not None:
+        trace.record_stage("classification", stage_started)
+
+    stage_started = perf_counter()
     routes = _select_legislation_routes(prepared, directives)
+    if trace is not None:
+        trace.record_stage("legislation_routing", stage_started)
+
+    stage_started = perf_counter()
     standards = _select_standards(prepared, routes, description)
+    if trace is not None:
+        trace.record_stage("standards_selection", stage_started)
+
     overall_risk, current_risk, future_risk, risk_reasons, risk_summary = _compute_risk_profile(prepared, routes, standards)
 
+    stage_started = perf_counter()
     try:
         summary = _build_summary(
             routes.detected_directives,
@@ -3346,55 +3386,62 @@ def analyze(
     trait_evidence = _trait_evidence_from_state_map(prepared.raw_state_map, prepared.confirmed_traits)
     product_match_audit = _safe_product_match_audit(prepared.traits_data, prepared.normalized_description)
     rejected_audit_rows = list(standards.items_audit.get("rejected", []))
+    selected_audit_rows = list(standards.items_audit.get("selected", []))
+    review_audit_rows = list(standards.items_audit.get("review", []))
+    audited_rejected_codes = {str(row.get("code") or "") for row in rejected_audit_rows}
     rejected_audit_rows.extend(
         {
             "code": row.get("code"),
-            "title": row.get("code"),
+            "title": row.get("title", row.get("code")),
             "outcome": "rejected",
             "score": 0,
             "confidence": "low",
             "fact_basis": "inferred",
             "selection_group": None,
             "selection_priority": 0,
-            "keyword_hits": [],
-            "reason": row.get("reason"),
+            "keyword_hits": row.get("keyword_hits", []),
+            "reason": row.get("reason") or row.get("rejection_reason"),
         }
         for row in standards.rejections
-        if row.get("code") not in {item.code for item in standards.standard_items + standards.review_items}
+        if str(row.get("code") or "") not in audited_rejected_codes
     )
     try:
+        if not selected_audit_rows:
+            selected_audit_rows = [
+                {
+                    "code": item.code,
+                    "title": item.title,
+                    "outcome": "selected",
+                    "score": item.score,
+                    "confidence": item.confidence,
+                    "fact_basis": item.fact_basis,
+                    "selection_group": item.selection_group,
+                    "selection_priority": item.selection_priority,
+                    "keyword_hits": item.keyword_hits,
+                    "reason": item.reason,
+                }
+                for item in standards.standard_items
+            ]
+        if not review_audit_rows:
+            review_audit_rows = [
+                {
+                    "code": item.code,
+                    "title": item.title,
+                    "outcome": "review",
+                    "score": item.score,
+                    "confidence": item.confidence,
+                    "fact_basis": item.fact_basis,
+                    "selection_group": item.selection_group,
+                    "selection_priority": item.selection_priority,
+                    "keyword_hits": item.keyword_hits,
+                    "reason": item.reason,
+                }
+                for item in standards.review_items
+            ]
         standard_match_audit = _build_standard_match_audit(
             {
-                "selected": [
-                    {
-                        "code": item.code,
-                        "title": item.title,
-                        "outcome": "selected",
-                        "score": item.score,
-                        "confidence": item.confidence,
-                        "fact_basis": item.fact_basis,
-                        "selection_group": item.selection_group,
-                        "selection_priority": item.selection_priority,
-                        "keyword_hits": item.keywords,
-                        "reason": item.reason,
-                    }
-                    for item in standards.standard_items
-                ],
-                "review": [
-                    {
-                        "code": item.code,
-                        "title": item.title,
-                        "outcome": "review",
-                        "score": item.score,
-                        "confidence": item.confidence,
-                        "fact_basis": item.fact_basis,
-                        "selection_group": item.selection_group,
-                        "selection_priority": item.selection_priority,
-                        "keyword_hits": item.keywords,
-                        "reason": item.reason,
-                    }
-                    for item in standards.review_items
-                ],
+                "selected": selected_audit_rows,
+                "review": review_audit_rows,
                 "rejected": rejected_audit_rows,
             },
             standards.context["context_tags"],
@@ -3443,17 +3490,14 @@ def analyze(
         degraded_reasons=prepared.degraded_reasons,
         warnings=prepared.warnings,
     )
+    if trace is not None:
+        trace.record_stage("response_assembly", stage_started)
 
-    if ENABLE_ENGINE_V2_SHADOW:
-        try:
-            legacy = analyze_v1(description=description, category=category, directives=directives, depth=depth)
-            result.analysis_audit.shadow_diff = _shadow_diff(legacy, result)
-        except Exception:
-            logger.exception("analysis_degraded step=shadow_diff")
-            prepared.degraded_reasons.append("shadow_diff_failed")
-            prepared.warnings.append("Shadow comparison could not be computed; the primary analysis remains available.")
-            result.degraded_mode = True
-            result.degraded_reasons = prepared.degraded_reasons
-            result.warnings = prepared.warnings
-
-    return result
+    return _maybe_attach_shadow_diff(
+        result,
+        description=description,
+        category=category,
+        directives=directives,
+        depth=depth,
+        prepared=prepared,
+    )

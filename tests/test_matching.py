@@ -542,6 +542,99 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual(result.product_match_audit.engine_version, "2.0")
         self.assertIn("scope:av_ict", result.standard_match_audit.context_tags)
 
+    def test_standard_match_audit_uses_matched_keyword_hits_not_full_catalog_keywords(self) -> None:
+        fake_traits = {
+            "product_type": "smart_speaker",
+            "product_family": "smart_assistant_device",
+            "product_subtype": "smart_speaker",
+            "product_match_stage": "subtype",
+            "matched_products": ["smart_speaker"],
+            "routing_matched_products": ["smart_speaker"],
+            "confirmed_products": ["smart_speaker"],
+            "product_genres": ["av_ict_device"],
+            "preferred_standard_codes": ["EN 62368-1"],
+            "product_match_confidence": "high",
+            "product_candidates": [{"id": "smart_speaker", "label": "Smart speaker", "score": 180, "confidence": "high"}],
+            "functional_classes": ["home_device"],
+            "confirmed_functional_classes": ["home_device"],
+            "explicit_traits": ["electrical", "electronic", "av_ict", "wifi"],
+            "confirmed_traits": ["electrical", "electronic", "av_ict", "wifi"],
+            "inferred_traits": [],
+            "all_traits": ["electrical", "electronic", "av_ict", "wifi"],
+            "contradictions": [],
+            "contradiction_severity": "none",
+            "diagnostics": [],
+            "trait_state_map": {},
+        }
+        legislation = LegislationItem(
+            code="2014/35/EU",
+            title="Low Voltage Directive",
+            family="electrical safety",
+            directive_key="LVD",
+            bucket="ce",
+            timing_status="current",
+            applicability="applicable",
+        )
+        standard_row = {
+            "code": "EN 62368-1",
+            "title": "Audio/video, information and communication technology equipment - Part 1",
+            "directive": "LVD",
+            "directives": ["LVD"],
+            "legislation_key": "LVD",
+            "category": "safety",
+            "item_type": "standard",
+            "score": 180,
+            "confidence": "high",
+            "fact_basis": "confirmed",
+            "match_basis": "preferred_product",
+            "keyword_hits": ["audio/video, ict"],
+            "keywords": ["audio/video, ict", "server equipment", "telephone handset"],
+            "reason": "keyword evidence: audio/video, ict",
+        }
+        audit_payload = {
+            "selected": [
+                {
+                    "code": "EN 62368-1",
+                    "title": standard_row["title"],
+                    "outcome": "selected",
+                    "score": 180,
+                    "confidence": "high",
+                    "fact_basis": "confirmed",
+                    "selection_group": None,
+                    "selection_priority": 0,
+                    "keyword_hits": ["audio/video, ict"],
+                    "reason": standard_row["reason"],
+                }
+            ],
+            "review": [],
+            "rejected": [],
+        }
+
+        with patch("rules.extract_traits", return_value=fake_traits):
+            with patch("rules._build_legislation_sections", return_value=([legislation], [], ["LVD"])):
+                with patch(
+                    "rules.find_applicable_items",
+                    return_value={"standards": [standard_row], "review_items": [], "audit": audit_payload, "rejections": []},
+                ):
+                    result = analyze("synthetic av ict equipment")
+
+        audit_item = next(item for item in result.standard_match_audit.selected if item.code == "EN 62368-1")
+        standard_item = next(item for item in result.standards if item.code == "EN 62368-1")
+        self.assertEqual(audit_item.keyword_hits, ["audio/video, ict"])
+        self.assertEqual(standard_item.keyword_hits, ["audio/video, ict"])
+        self.assertNotEqual(audit_item.keyword_hits, standard_item.keywords)
+
+    def test_product_shortlist_reduces_deep_candidate_pool_for_typical_query(self) -> None:
+        text = classifier.normalize("smart speaker with wifi and bluetooth")
+        shortlisted, shortlist_scores = classifier._shortlist_product_matchers_v2(
+            text,
+            {"electrical", "electronic", "radio", "wifi", "bluetooth"},
+        )
+
+        self.assertLess(len(shortlisted), len(load_products()))
+        self.assertIn("smart_speaker", {row.id for row in shortlisted})
+        self.assertGreater(shortlist_scores["smart_speaker"], 0)
+
     def test_wearable_health_monitor_surfaces_boundary_signal_without_default_medical_claims(self) -> None:
         result = analyze("wearable heart-rate monitor with Bluetooth/app/body-contact")
 

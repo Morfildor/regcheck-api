@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 import re
 from typing import Any
 
-from knowledge_base import load_products, load_traits
+from knowledge_base import get_knowledge_base_snapshot, load_products, load_traits
 
 TRAIT_IDS_CACHE: set[str] | None = None
 
@@ -641,6 +642,53 @@ _ALIAS_PATTERN_CACHE: dict[str, tuple[re.Pattern, re.Pattern | None]] = {}
 _PRODUCT_TRAIT_BUCKET_CACHE: dict[str, tuple[set[str], set[str]]] = {}
 
 
+@dataclass(frozen=True, slots=True)
+class CompiledPhrase:
+    raw: str
+    normalized: str
+    pattern: re.Pattern
+    token_terms: frozenset[str]
+
+
+@dataclass(frozen=True, slots=True)
+class CompiledAlias:
+    raw: str
+    normalized: str
+    field: str
+    field_bonus: int
+    exact_pattern: re.Pattern
+    gap_pattern: re.Pattern | None
+    specificity_bonus: int
+    token_terms: frozenset[str]
+
+
+@dataclass(frozen=True, slots=True)
+class CompiledProductMatcher:
+    id: str
+    family: str
+    subtype: str
+    product: dict[str, Any]
+    aliases: tuple[CompiledAlias, ...]
+    family_keywords: tuple[CompiledPhrase, ...]
+    required_clues: tuple[CompiledPhrase, ...]
+    preferred_clues: tuple[CompiledPhrase, ...]
+    exclude_clues: tuple[CompiledPhrase, ...]
+    alias_terms: frozenset[str]
+    family_keyword_terms: frozenset[str]
+    clue_terms: frozenset[str]
+    shortlist_traits: frozenset[str]
+    core_traits: frozenset[str]
+    default_traits: frozenset[str]
+    family_traits: frozenset[str]
+
+
+@dataclass(frozen=True, slots=True)
+class ProductMatchingSnapshot:
+    catalog_version: str | None
+    products: tuple[CompiledProductMatcher, ...]
+    by_id: dict[str, CompiledProductMatcher]
+
+
 def normalize(text: str) -> str:
     text = (text or "").lower()
     for pattern, replacement in _COMPILED_NORMALIZATION:
@@ -1094,6 +1142,45 @@ def _best_alias_match(text: str, product: dict[str, Any]) -> tuple[str | None, i
     return best_alias, best_score, best_reasons
 
 
+def _compiled_alias_score(text: str, alias: CompiledAlias) -> int:
+    if alias.exact_pattern.search(text):
+        score = 100 + len(alias.normalized) * 3 + len(alias.normalized.split()) * 22
+        if alias.normalized == text:
+            score += 80
+        return score
+
+    if alias.gap_pattern is not None and alias.gap_pattern.search(text):
+        return 42 + len(alias.normalized.split()) * 12
+
+    return 0
+
+
+def _best_alias_match_v2(text: str, compiled: CompiledProductMatcher) -> tuple[str | None, int, list[str]]:
+    best_alias = None
+    best_score = 0
+    best_reasons: list[str] = []
+
+    for alias in compiled.aliases:
+        score = _compiled_alias_score(text, alias)
+        if score <= 0:
+            continue
+
+        reasons = [f"matched {alias.field.replace('_', ' ')[:-1]} '{alias.raw}'"]
+        if alias.specificity_bonus:
+            score += alias.specificity_bonus
+            reasons.append(f"alias specificity {alias.specificity_bonus:+d}")
+        if alias.field_bonus:
+            score += alias.field_bonus
+            reasons.append(f"{alias.field} bonus {alias.field_bonus:+d}")
+
+        if best_alias is None or score > best_score:
+            best_alias = alias.raw
+            best_score = score
+            best_reasons = reasons
+
+    return best_alias, best_score, best_reasons
+
+
 def _family_seed_candidates(text: str, explicit_traits: set[str]) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
     for product in load_products():
@@ -1156,6 +1243,29 @@ def _clue_score(text: str, product: dict[str, Any]) -> tuple[int, list[str], lis
 
     required_clues = _string_list(product.get("required_clues"))
     if required_clues and not required_hits:
+        score -= 18
+        reasons.append("missing required subtype clues")
+
+    decisive = bool(required_hits or len(preferred_hits) >= 2)
+    positive_clues = required_hits + preferred_hits
+    negative_clues = exclude_hits
+    return score, reasons, positive_clues, negative_clues, decisive
+
+
+def _compiled_clue_score(
+    text: str,
+    compiled: CompiledProductMatcher,
+) -> tuple[int, list[str], list[str], list[str], bool]:
+    required_hits = _compiled_phrase_hits(text, compiled.required_clues)
+    preferred_hits = _compiled_phrase_hits(text, compiled.preferred_clues)
+    exclude_hits = _compiled_phrase_hits(text, compiled.exclude_clues)
+
+    score = len(required_hits) * 26 + len(preferred_hits) * 14 - len(exclude_hits) * 34
+    reasons = [f"required clue '{clue}'" for clue in required_hits]
+    reasons.extend(f"preferred clue '{clue}'" for clue in preferred_hits)
+    reasons.extend(f"exclude clue '{clue}'" for clue in exclude_hits)
+
+    if compiled.required_clues and not required_hits:
         score -= 18
         reasons.append("missing required subtype clues")
 
@@ -1559,12 +1669,177 @@ def _product_family_keywords(product: dict[str, Any]) -> list[str]:
     return keywords
 
 
-def _product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]:
-    pid = product["id"]
-    cached = _PRODUCT_TRAIT_BUCKET_CACHE.get(pid)
-    if cached is not None:
-        return cached
+def _compile_phrase(raw: str) -> CompiledPhrase | None:
+    normalized = normalize(raw)
+    if not normalized:
+        return None
+    return CompiledPhrase(
+        raw=raw,
+        normalized=normalized,
+        pattern=re.compile(rf"(?<!\w){re.escape(normalized)}(?!\w)"),
+        token_terms=frozenset(normalized.split()),
+    )
 
+
+def _compile_alias(raw: str, field: str, field_bonus: int) -> CompiledAlias | None:
+    normalized = normalize(raw)
+    if not normalized:
+        return None
+    tokens = normalized.split()
+    gap_pattern = (
+        re.compile(r"\b" + r"\b(?:\s+\w+){0,2}\s+\b".join(re.escape(token) for token in tokens) + r"\b")
+        if len(tokens) >= 2
+        else None
+    )
+    return CompiledAlias(
+        raw=raw,
+        normalized=normalized,
+        field=field,
+        field_bonus=field_bonus,
+        exact_pattern=re.compile(rf"(?<!\w){re.escape(normalized)}(?!\w)"),
+        gap_pattern=gap_pattern,
+        specificity_bonus=_alias_specificity_bonus(raw),
+        token_terms=frozenset(tokens),
+    )
+
+
+def _compiled_phrase_hits(text: str, phrases: tuple[CompiledPhrase, ...]) -> list[str]:
+    return [phrase.raw for phrase in phrases if phrase.pattern.search(text)]
+
+
+def build_product_matching_snapshot(
+    products: list[dict[str, Any]],
+    trait_ids: set[str],
+    catalog_version: str | None = None,
+) -> ProductMatchingSnapshot:
+    compiled_products: list[CompiledProductMatcher] = []
+    compiled_by_id: dict[str, CompiledProductMatcher] = {}
+
+    for product in products:
+        aliases: list[CompiledAlias] = []
+        alias_terms: set[str] = set()
+        seen_aliases: set[str] = set()
+        for field, field_bonus in ALIAS_FIELD_BONUS.items():
+            for alias in _string_list(product.get(field)):
+                compiled_alias = _compile_alias(alias, field, field_bonus)
+                if compiled_alias is None or compiled_alias.normalized in seen_aliases:
+                    continue
+                seen_aliases.add(compiled_alias.normalized)
+                aliases.append(compiled_alias)
+                alias_terms.update(compiled_alias.token_terms)
+
+        family_keywords = tuple(
+            compiled_phrase
+            for keyword in _product_family_keywords(product)
+            if (compiled_phrase := _compile_phrase(keyword)) is not None
+        )
+        required_clues = tuple(
+            compiled_phrase
+            for clue in _string_list(product.get("required_clues"))
+            if (compiled_phrase := _compile_phrase(clue)) is not None
+        )
+        preferred_clues = tuple(
+            compiled_phrase
+            for clue in _string_list(product.get("preferred_clues"))
+            if (compiled_phrase := _compile_phrase(clue)) is not None
+        )
+        exclude_clues = tuple(
+            compiled_phrase
+            for clue in _string_list(product.get("exclude_clues"))
+            if (compiled_phrase := _compile_phrase(clue)) is not None
+        )
+
+        family_keyword_terms = {term for phrase in family_keywords for term in phrase.token_terms}
+        clue_terms = {
+            term
+            for phrase in required_clues + preferred_clues + exclude_clues
+            for term in phrase.token_terms
+        }
+        core_traits, default_traits = _compute_product_trait_buckets(product)
+        family_traits = set(_string_list(product.get("family_traits"))) or set(core_traits)
+
+        compiled = CompiledProductMatcher(
+            id=product["id"],
+            family=_product_family(product),
+            subtype=_product_subfamily(product),
+            product=product,
+            aliases=tuple(aliases),
+            family_keywords=family_keywords,
+            required_clues=required_clues,
+            preferred_clues=preferred_clues,
+            exclude_clues=exclude_clues,
+            alias_terms=frozenset(alias_terms),
+            family_keyword_terms=frozenset(family_keyword_terms),
+            clue_terms=frozenset(clue_terms),
+            shortlist_traits=frozenset((core_traits | default_traits | family_traits) & trait_ids),
+            core_traits=frozenset(core_traits),
+            default_traits=frozenset(default_traits),
+            family_traits=frozenset(family_traits),
+        )
+        compiled_products.append(compiled)
+        compiled_by_id[compiled.id] = compiled
+
+    return ProductMatchingSnapshot(
+        catalog_version=catalog_version,
+        products=tuple(compiled_products),
+        by_id=compiled_by_id,
+    )
+
+
+def _product_matching_snapshot() -> ProductMatchingSnapshot:
+    snapshot = get_knowledge_base_snapshot()
+    compiled = snapshot.classifier_runtime
+    if isinstance(compiled, ProductMatchingSnapshot):
+        return compiled
+    return build_product_matching_snapshot(
+        products=snapshot.products,
+        trait_ids={row["id"] for row in snapshot.traits},
+        catalog_version=snapshot.meta.get("version"),
+    )
+
+
+def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[tuple[CompiledProductMatcher, ...], dict[str, int]]:
+    snapshot = _product_matching_snapshot()
+    text_terms = set(text.split())
+    shortlist_scoring: dict[str, int] = {}
+    shortlisted: list[CompiledProductMatcher] = []
+
+    for compiled in snapshot.products:
+        alias_term_hits = len(compiled.alias_terms & text_terms)
+        family_term_hits = len(compiled.family_keyword_terms & text_terms)
+        clue_term_hits = len(compiled.clue_terms & text_terms)
+        trait_hits = len(compiled.shortlist_traits & signal_traits)
+
+        cheap_score = alias_term_hits * 5 + family_term_hits * 4 + clue_term_hits * 3 + min(trait_hits, 4)
+        if cheap_score <= 0:
+            continue
+
+        shortlist_scoring[compiled.id] = cheap_score
+        shortlisted.append(compiled)
+
+    if not shortlisted:
+        fallback = tuple(snapshot.products)
+        return fallback, {compiled.id: 0 for compiled in fallback}
+
+    shortlisted.sort(
+        key=lambda compiled: (
+            -shortlist_scoring[compiled.id],
+            -len(compiled.alias_terms & text_terms),
+            -len(compiled.family_keyword_terms & text_terms),
+            -len(compiled.shortlist_traits & signal_traits),
+            compiled.id,
+        )
+    )
+
+    max_candidates = 120
+    if len(shortlisted) > max_candidates:
+        shortlisted = shortlisted[:max_candidates]
+        shortlist_scoring = {compiled.id: shortlist_scoring[compiled.id] for compiled in shortlisted}
+
+    return tuple(shortlisted), shortlist_scoring
+
+
+def _compute_product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]:
     implied_traits = set(_string_list(product.get("implied_traits")))
     family_traits = set(_string_list(product.get("family_traits")))
     subtype_traits = set(_string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")))
@@ -1582,7 +1857,16 @@ def _product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]
 
     core_traits = _expand_related_traits(raw_core)
     default_traits = _expand_related_traits(raw_default) - core_traits
-    result = (core_traits, default_traits)
+    return core_traits, default_traits
+
+
+def _product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]:
+    pid = product["id"]
+    cached = _PRODUCT_TRAIT_BUCKET_CACHE.get(pid)
+    if cached is not None:
+        return cached
+
+    result = _compute_product_trait_buckets(product)
     _PRODUCT_TRAIT_BUCKET_CACHE[pid] = result
     return result
 
@@ -1600,18 +1884,25 @@ def _candidate_confidence_v2(candidate: dict[str, Any], next_candidate: dict[str
     return "low"
 
 
-def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dict[str, Any]) -> dict[str, Any] | None:
+def _build_product_candidate_v2(
+    text: str,
+    signal_traits: set[str],
+    compiled: CompiledProductMatcher,
+) -> dict[str, Any] | None:
+    product = compiled.product
     blocked_phrases = _matching_clues(text, _string_list(product.get("not_when_text_contains")))
 
     forbidden_traits = set(_string_list(product.get("forbidden_traits")))
     if forbidden_traits & signal_traits:
         return None
 
-    best_alias, alias_score, alias_reasons = _best_alias_match(text, product)
-    family_keyword_hits = _matching_clues(text, _product_family_keywords(product))
-    clue_score, clue_reasons, positive_clues, negative_clues, decisive = _clue_score(text, product)
-    core_traits, default_traits = _product_trait_buckets(product)
-    family_overlap = _trait_overlap_score(signal_traits, set(_string_list(product.get("family_traits"))) or core_traits, weight=4)
+    best_alias, alias_score, alias_reasons = _best_alias_match_v2(text, compiled)
+    family_keyword_hits = _compiled_phrase_hits(text, compiled.family_keywords)
+    clue_score, clue_reasons, positive_clues, negative_clues, decisive = _compiled_clue_score(text, compiled)
+    core_traits = set(compiled.core_traits)
+    default_traits = set(compiled.default_traits)
+    family_traits = set(compiled.family_traits) or core_traits
+    family_overlap = _trait_overlap_score(signal_traits, family_traits, weight=4)
     core_overlap = _trait_overlap_score(signal_traits, core_traits, weight=6)
     default_overlap = _trait_overlap_score(signal_traits, default_traits, weight=3)
     bonus, bonus_reasons = _context_bonus(text, product, signal_traits)
@@ -1659,8 +1950,8 @@ def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dic
     return {
         "id": product["id"],
         "label": product.get("label", product["id"]),
-        "family": _product_family(product),
-        "subtype": _product_subfamily(product),
+        "family": compiled.family,
+        "subtype": compiled.subtype,
         "genres": _string_list(product.get("genres")),
         "product": product,
         "matched_alias": best_alias,
@@ -1674,7 +1965,7 @@ def _build_product_candidate_v2(text: str, signal_traits: set[str], product: dic
         "reasons": reasons,
         "core_traits": sorted(core_traits),
         "default_traits": sorted(default_traits),
-        "family_traits": _string_list(product.get("family_traits")),
+        "family_traits": sorted(family_traits),
         "subtype_traits": _string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")),
         "functional_classes": _string_list(product.get("functional_classes")),
         "likely_standards": _string_list(product.get("likely_standards")),
@@ -1692,10 +1983,11 @@ def _common_sets(rows: list[dict[str, Any]], field: str) -> set[str]:
 
 
 def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> dict[str, Any]:
+    shortlisted_matchers, shortlist_scoring = _shortlist_product_matchers_v2(text, signal_traits)
     candidates = [
         candidate
-        for product in load_products()
-        if (candidate := _build_product_candidate_v2(text, signal_traits, product)) is not None
+        for matcher in shortlisted_matchers
+        if (candidate := _build_product_candidate_v2(text, signal_traits, matcher)) is not None
     ]
     candidates.sort(key=lambda row: (-int(row["score"]), row["id"]))
 
@@ -1718,7 +2010,11 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> dict[s
             "preferred_standard_codes": [],
             "functional_classes": set(),
             "confirmed_functional_classes": set(),
-            "diagnostics": ["product_winner=none"],
+            "diagnostics": [
+                "product_shortlist_candidates=0",
+                f"product_shortlist_catalog={len(_product_matching_snapshot().products)}",
+                "product_winner=none",
+            ],
             "contradictions": [],
             "audit": {
                 "engine_version": ENGINE_VERSION,
@@ -1860,12 +2156,20 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> dict[s
     clue_hits = sorted({hit for row in audit_rows for hit in row.get("positive_clues", []) if hit})
 
     diagnostics = [
+        f"product_shortlist_candidates={len(shortlisted_matchers)}",
+        f"product_shortlist_catalog={len(_product_matching_snapshot().products)}",
         f"product_family={top_family['family']}",
         f"product_family_confidence={family_confidence}",
         f"product_subtype_candidate={top_row['id']}",
         f"product_subtype_confidence={subtype_confidence}",
         f"product_match_stage={family_stage}",
     ]
+    top_shortlist = sorted(shortlist_scoring.items(), key=lambda item: (-item[1], item[0]))[:5]
+    if top_shortlist:
+        diagnostics.append(
+            "product_shortlist_top="
+            + ",".join(f"{product_id}:{score}" for product_id, score in top_shortlist)
+        )
 
     return {
         "product_family": top_family["family"],

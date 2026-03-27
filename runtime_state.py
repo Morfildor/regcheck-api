@@ -32,6 +32,7 @@ class AppRuntimeState:
     startup_state: StartupState = "starting"
     knowledge_base_loaded: bool = False
     warmup_error: str | None = None
+    last_reload_error: str | None = None
     warmup_counts: dict[str, int] = field(default_factory=dict)
     warmup_meta: dict[str, Any] = field(default_factory=dict)
     warmup_duration_ms: int | None = None
@@ -46,17 +47,23 @@ class AppRuntimeState:
 
     @property
     def is_ready(self) -> bool:
-        return self.startup_state == "ready" and self.knowledge_base_loaded and bool(self.catalog_version)
+        return self.startup_state in {"ready", "reloading"} and self.knowledge_base_loaded and bool(self.catalog_version)
 
-    def mark_warming(self, state: StartupState = "warming_up") -> None:
+    def mark_warming(self, state: StartupState = "warming_up", *, preserve_snapshot: bool = False) -> None:
         self.startup_state = state
-        self.knowledge_base_loaded = False
         self.warmup_error = None
+        if not preserve_snapshot:
+            self.knowledge_base_loaded = False
+            self.warmup_counts = {}
+            self.warmup_meta = {}
+            self.warmup_duration_ms = None
+            self.ready_timestamp = None
 
     def mark_ready(self, snapshot: KnowledgeBaseWarmupSnapshot, *, reloaded: bool = False) -> None:
         self.startup_state = "ready"
         self.knowledge_base_loaded = True
         self.warmup_error = None
+        self.last_reload_error = None
         self.warmup_counts = dict(snapshot.counts)
         self.warmup_meta = dict(snapshot.meta)
         self.warmup_duration_ms = snapshot.duration_ms
@@ -68,6 +75,7 @@ class AppRuntimeState:
         self.startup_state = state
         self.knowledge_base_loaded = False
         self.warmup_error = error
+        self.last_reload_error = error if reloaded else self.last_reload_error
         self.warmup_counts = {}
         self.warmup_meta = {}
         self.warmup_duration_ms = None
@@ -75,3 +83,9 @@ class AppRuntimeState:
         if reloaded:
             self.last_reload_timestamp = utc_now_iso()
 
+    def mark_reload_failed(self, error: str) -> None:
+        self.startup_state = "ready" if self.catalog_version else "failed"
+        self.knowledge_base_loaded = bool(self.catalog_version)
+        self.warmup_error = None if self.catalog_version else error
+        self.last_reload_error = error
+        self.last_reload_timestamp = utc_now_iso()

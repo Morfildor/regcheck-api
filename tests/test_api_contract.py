@@ -7,7 +7,14 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 import main
-from knowledge_base import KnowledgeBaseError, KnowledgeBaseWarmupResult, load_meta, reset_cache
+from knowledge_base import (
+    KnowledgeBaseError,
+    KnowledgeBaseWarmupResult,
+    load_meta,
+    load_metadata_payload,
+    reset_cache,
+    warmup_knowledge_base,
+)
 from runtime_state import KnowledgeBaseWarmupSnapshot
 from rules import analyze
 
@@ -22,6 +29,9 @@ class ApiContractTests(unittest.TestCase):
             dict(self.runtime_state.warmup_meta),
             dict(self.runtime_state.warmup_counts),
             self.runtime_state.warmup_error,
+            self.runtime_state.last_reload_error,
+            self.runtime_state.ready_timestamp,
+            self.runtime_state.last_reload_timestamp,
         )
 
     def tearDown(self) -> None:
@@ -30,6 +40,9 @@ class ApiContractTests(unittest.TestCase):
         self.runtime_state.warmup_meta = self.original_state[2]
         self.runtime_state.warmup_counts = self.original_state[3]
         self.runtime_state.warmup_error = self.original_state[4]
+        self.runtime_state.last_reload_error = self.original_state[5]
+        self.runtime_state.ready_timestamp = self.original_state[6]
+        self.runtime_state.last_reload_timestamp = self.original_state[7]
 
     def _mark_ready(self) -> None:
         self.runtime_state.mark_ready(
@@ -96,6 +109,15 @@ class ApiContractTests(unittest.TestCase):
         self.assertEqual(body["error"]["request_id"], "req-123")
         self.assertIn("description", body["error"]["message"])
         self.assertNotIn("detail", body)
+
+    def test_validation_errors_generate_request_id_when_missing(self) -> None:
+        with TestClient(main.app) as client:
+            response = client.post("/analyze", json={"description": "   "})
+
+        self.assertEqual(response.status_code, 422)
+        body = response.json()
+        self.assertTrue(body["error"]["request_id"])
+        self.assertEqual(body["error"]["request_id"], response.headers["X-Request-Id"])
 
     def test_degraded_mode_response_when_standards_fail(self) -> None:
         with patch("rules.find_applicable_items", side_effect=RuntimeError("boom")):
@@ -171,6 +193,37 @@ class ApiContractTests(unittest.TestCase):
         self.assertFalse(body["ok"])
         self.assertEqual(body["error"]["code"], "knowledge_base_reload_failed")
 
+    def test_startup_warmup_success_marks_runtime_ready(self) -> None:
+        warmup = KnowledgeBaseWarmupResult(
+            counts={"products": 1, "standards": 2},
+            meta={"version": "startup-catalog"},
+            duration_ms=5,
+        )
+        with patch("main.warmup_knowledge_base", return_value=warmup):
+            with TestClient(main.app):
+                runtime_state = main.get_runtime_state()
+                self.assertTrue(runtime_state.is_ready)
+                self.assertEqual(runtime_state.catalog_version, "startup-catalog")
+                self.assertTrue(runtime_state.knowledge_base_loaded)
+
+    def test_reload_failure_preserves_prior_healthy_runtime_state(self) -> None:
+        with TestClient(main.app) as client:
+            self.runtime_state.mark_ready(
+                KnowledgeBaseWarmupSnapshot(
+                    counts={"products": 3, "standards": 4},
+                    meta={"version": "healthy-catalog"},
+                )
+            )
+            with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": "secret"}):
+                with patch("main.warmup_knowledge_base", side_effect=KnowledgeBaseError("reload failed")):
+                    response = client.post("/admin/reload", headers={"X-Admin-Token": "secret"})
+
+        self.assertEqual(response.status_code, 503)
+        self.assertTrue(self.runtime_state.is_ready)
+        self.assertEqual(self.runtime_state.startup_state, "ready")
+        self.assertEqual(self.runtime_state.catalog_version, "healthy-catalog")
+        self.assertEqual(self.runtime_state.last_reload_error, "reload failed")
+
     def test_admin_reload_forbidden_without_matching_token(self) -> None:
         with TestClient(main.app) as client:
             with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": "secret"}):
@@ -226,6 +279,46 @@ class ApiContractTests(unittest.TestCase):
 
         reset_cache()
         self.assertNotEqual(version_before, version_after)
+
+    def test_failed_warmup_keeps_last_known_good_snapshot_active(self) -> None:
+        source_dir = Path(main.__file__).resolve().parent / "data"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            temp_data_dir = Path(tmpdir) / "data"
+            shutil.copytree(source_dir, temp_data_dir)
+            with patch.dict("os.environ", {"REGCHECK_DATA_DIR": str(temp_data_dir)}):
+                reset_cache()
+                warmup_knowledge_base(refresh_paths=True)
+                version_before = load_meta()["version"]
+                products_path = temp_data_dir / "products.yaml"
+                products_path.write_text("products: [\n  invalid", encoding="utf-8")
+
+                with self.assertRaises(KnowledgeBaseError):
+                    warmup_knowledge_base(refresh_paths=True)
+
+                self.assertEqual(load_meta()["version"], version_before)
+
+    def test_metadata_payload_cache_refreshes_on_successful_reload(self) -> None:
+        source_dir = Path(main.__file__).resolve().parent / "data"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            temp_data_dir = Path(tmpdir) / "data"
+            shutil.copytree(source_dir, temp_data_dir)
+            with patch.dict("os.environ", {"REGCHECK_DATA_DIR": str(temp_data_dir)}):
+                reset_cache()
+                warmup_knowledge_base(refresh_paths=True)
+                options_before = load_metadata_payload("options")
+                version_before = options_before["knowledge_base_meta"]["version"]
+                products_path = temp_data_dir / "products.yaml"
+                products_path.write_text(
+                    products_path.read_text(encoding="utf-8") + "\n# metadata cache refresh\n",
+                    encoding="utf-8",
+                )
+
+                warmup_knowledge_base(refresh_paths=True)
+                options_after = load_metadata_payload("options")
+
+        reset_cache()
+        self.assertNotEqual(version_before, options_after["knowledge_base_meta"]["version"])
+        self.assertIsNot(options_before, options_after)
 
     def test_shadow_diff_present_when_enabled(self) -> None:
         with patch("rules.ENABLE_ENGINE_V2_SHADOW", True):

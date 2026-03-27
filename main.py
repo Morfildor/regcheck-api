@@ -19,17 +19,12 @@ init_env()
 from knowledge_base import (
     KnowledgeBaseError,
     KnowledgeBaseWarmupResult,
-    load_genres,
-    load_legislations,
-    load_meta,
-    load_products,
-    load_standards,
-    load_traits,
+    load_metadata_payload,
     reset_cache,
     warmup_knowledge_base,
 )
 from models import AnalysisResult, ErrorInfo, ErrorResponse, ProductInput
-from rules import ENGINE_VERSION, analyze
+from rules import AnalysisTrace, ENGINE_VERSION, analyze
 from runtime_state import APP_VERSION, AppRuntimeState, KnowledgeBaseWarmupSnapshot
 
 ADMIN_RELOAD_TOKEN_ENV = "REGCHECK_ADMIN_RELOAD_TOKEN"
@@ -98,6 +93,7 @@ def _readiness_payload(runtime_state: AppRuntimeState) -> dict[str, Any]:
             {
                 "warmup_duration_ms": runtime_state.warmup_duration_ms,
                 "ready_timestamp": runtime_state.ready_timestamp,
+                "last_reload_error": runtime_state.last_reload_error,
             }
         )
     return payload
@@ -110,6 +106,9 @@ def _update_runtime_state_after_warmup(target_app: FastAPI, result: KnowledgeBas
 
 def _update_runtime_state_after_failure(target_app: FastAPI, error: str, *, state: str = "failed", reloaded: bool = False) -> None:
     runtime_state = get_runtime_state(target_app)
+    if reloaded and runtime_state.catalog_version:
+        runtime_state.mark_reload_failed(error)
+        return
     runtime_state.mark_failed(error, state=state, reloaded=reloaded)
 
 
@@ -118,7 +117,7 @@ async def lifespan(target_app: FastAPI):
     runtime_state = get_runtime_state(target_app)
     runtime_state.mark_warming("warming_up")
     try:
-        result = warmup_knowledge_base()
+        result = warmup_knowledge_base(refresh_paths=True)
         _update_runtime_state_after_warmup(target_app, result)
         logger.info(
             "startup_warmup_success startup_state=%s knowledge_base_loaded=%s duration_ms=%s catalog_version=%s",
@@ -147,19 +146,14 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "X-Admin-Token", "X-Request-Id"],
 )
 
-
-def _standard_directives(row: dict[str, Any]) -> list[str]:
-    directives = row.get("directives")
-    if isinstance(directives, list):
-        values = [item for item in directives if isinstance(item, str) and item]
-        if values:
-            return values
-
-    legislation_key = row.get("legislation_key")
-    if isinstance(legislation_key, str) and legislation_key:
-        return [legislation_key]
-
-    return ["OTHER"]
+@app.middleware("http")
+async def request_context_middleware(request: Request, call_next):
+    request_id = request.headers.get("x-request-id")
+    normalized_request_id = request_id.strip() if request_id and request_id.strip() else secrets.token_hex(8)
+    request.state.request_id = normalized_request_id
+    response = await call_next(request)
+    response.headers["X-Request-Id"] = normalized_request_id
+    return response
 
 
 def _http_error(status_code: int, code: str, message: str) -> HTTPException:
@@ -190,8 +184,11 @@ def _validation_error_message(exc: RequestValidationError) -> str:
 def _request_id(request: Request | None) -> str | None:
     if request is None:
         return None
-    request_id = request.headers.get("x-request-id")
-    return request_id.strip() if request_id else None
+    request_id = getattr(request.state, "request_id", None)
+    if isinstance(request_id, str) and request_id:
+        return request_id
+    header_value = request.headers.get("x-request-id")
+    return header_value.strip() if header_value else None
 
 
 def _analyzer_ready_or_raise() -> AppRuntimeState:
@@ -270,116 +267,21 @@ def health() -> JSONResponse:
 @app.get("/metadata/options")
 def metadata_options() -> dict[str, Any]:
     _analyzer_ready_or_raise()
-
-    traits = load_traits()
-    genres = load_genres()
-    products = load_products()
-    legislations = load_legislations()
-
-    return {
-        "traits": [{"id": row["id"], "label": row["label"], "description": row["description"]} for row in traits],
-        "genres": [
-            {
-                "id": row["id"],
-                "label": row["label"],
-                "keywords": row.get("keywords", []),
-                "traits": row.get("traits", []),
-                "default_traits": row.get("default_traits", []),
-                "functional_classes": row.get("functional_classes", []),
-                "likely_standards": row.get("likely_standards", []),
-            }
-            for row in genres
-        ],
-        "products": [
-            {
-                "id": row["id"],
-                "label": row["label"],
-                "product_family": row.get("product_family"),
-                "product_subfamily": row.get("product_subfamily"),
-                "genres": row.get("genres", []),
-                "aliases": row.get("aliases", []),
-                "family_keywords": row.get("family_keywords", []),
-                "genre_keywords": row.get("genre_keywords", []),
-                "required_clues": row.get("required_clues", []),
-                "preferred_clues": row.get("preferred_clues", []),
-                "exclude_clues": row.get("exclude_clues", []),
-                "confusable_with": row.get("confusable_with", []),
-                "functional_classes": row.get("functional_classes", []),
-                "genre_functional_classes": row.get("genre_functional_classes", []),
-                "family_traits": row.get("family_traits", []),
-                "genre_traits": row.get("genre_traits", []),
-                "genre_default_traits": row.get("genre_default_traits", []),
-                "subtype_traits": row.get("subtype_traits", []),
-                "core_traits": row.get("core_traits", []),
-                "default_traits": row.get("default_traits", []),
-                "implied_traits": row.get("implied_traits", []),
-                "likely_standards": row.get("likely_standards", []),
-                "genre_likely_standards": row.get("genre_likely_standards", []),
-            }
-            for row in products
-        ],
-        "legislations": [
-            {
-                "code": row["code"],
-                "title": row["title"],
-                "directive_key": row["directive_key"],
-                "family": row["family"],
-                "priority": row.get("priority", "conditional"),
-                "bucket": row.get("bucket", "non_ce"),
-            }
-            for row in legislations
-        ],
-        "knowledge_base_meta": load_meta(),
-    }
+    return load_metadata_payload("options")
 
 
 @app.get("/metadata/standards")
 def metadata_standards() -> dict[str, Any]:
     _analyzer_ready_or_raise()
-
-    return {
-        "knowledge_base_meta": load_meta(),
-        "standards": [
-            {
-                "directive": _standard_directives(row)[0],
-                "directives": _standard_directives(row),
-                "code": row["code"],
-                "title": row["title"],
-                "category": row["category"],
-                "legislation_key": row.get("legislation_key"),
-                "item_type": row.get("item_type", "standard"),
-                "standard_family": row.get("standard_family"),
-                "harmonization_status": row.get("harmonization_status", "unknown"),
-                "is_harmonized": row.get("is_harmonized"),
-                "harmonized_under": row.get("harmonized_under"),
-                "harmonized_reference": row.get("harmonized_reference"),
-                "version": row.get("version"),
-                "dated_version": row.get("dated_version"),
-                "supersedes": row.get("supersedes"),
-                "test_focus": row.get("test_focus", []),
-                "evidence_hint": row.get("evidence_hint", []),
-                "keywords": row.get("keywords", []),
-                "selection_group": row.get("selection_group"),
-                "selection_priority": row.get("selection_priority", 0),
-                "required_fact_basis": row.get("required_fact_basis", "inferred"),
-                "applies_if_products": row.get("applies_if_products", []),
-                "applies_if_genres": row.get("applies_if_genres", []),
-                "applies_if_all": row.get("applies_if_all", []),
-                "applies_if_any": row.get("applies_if_any", []),
-                "exclude_if_genres": row.get("exclude_if_genres", []),
-            }
-            for row in load_standards()
-        ],
-    }
+    return load_metadata_payload("standards")
 
 
 @app.post("/admin/reload")
 def admin_reload(_: None = Depends(_require_admin_reload_token)) -> dict[str, Any]:
     runtime_state = get_runtime_state()
-    runtime_state.mark_warming("reloading")
+    runtime_state.mark_warming("reloading", preserve_snapshot=True)
     try:
-        reset_cache()
-        result = warmup_knowledge_base()
+        result = warmup_knowledge_base(refresh_paths=True)
         _update_runtime_state_after_warmup(app, result, reloaded=True)
         logger.info(
             "admin_reload_success startup_state=%s duration_ms=%s catalog_version=%s",
@@ -407,6 +309,7 @@ def run_analysis(product: ProductInput, request: Request | None = None) -> Analy
 
     request_id = _request_id(request)
     started = perf_counter()
+    trace = AnalysisTrace(request_id=request_id)
     try:
         logger.info(
             "analysis_request request_id=%s chars=%s category=%s directives=%s depth=%s",
@@ -421,6 +324,7 @@ def run_analysis(product: ProductInput, request: Request | None = None) -> Analy
             category=product.category,
             directives=product.directives,
             depth=product.depth,
+            trace=trace,
         )
     except KnowledgeBaseError as exc:
         logger.warning("analysis_service_unavailable request_id=%s detail=%s", request_id or "", str(exc))
@@ -433,9 +337,13 @@ def run_analysis(product: ProductInput, request: Request | None = None) -> Analy
 
     latency_ms = int((perf_counter() - started) * 1000)
     logger.info(
-        "analysis_completed request_id=%s latency_ms=%s depth=%s product_type=%s ambiguity=%s degraded_mode=%s",
+        "analysis_completed request_id=%s latency_ms=%s classification_ms=%s legislation_routing_ms=%s standards_selection_ms=%s response_assembly_ms=%s depth=%s product_type=%s ambiguity=%s degraded_mode=%s",
         request_id or "",
         latency_ms,
+        trace.stage_timings_ms.get("classification", 0),
+        trace.stage_timings_ms.get("legislation_routing", 0),
+        trace.stage_timings_ms.get("standards_selection", 0),
+        trace.stage_timings_ms.get("response_assembly", 0),
         product.depth,
         result.product_type or "",
         result.classification_is_ambiguous,
