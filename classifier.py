@@ -176,10 +176,19 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bmobile app\b",
         r"\bcompanion app\b",
         r"\bsmartphone app\b",
+        r"\bmobile application\b",
         r"\bapp control\b",
         r"\bapp controlled\b",
         r"\bapp enabled\b",
         r"\bapp connected\b",
+        r"\bapp sync(?:ed)?\b",
+        r"\bapp synced\b",
+        r"\bsyncs? with (?:the )?(?:mobile )?app\b",
+        r"\bsyncs? to (?:the )?(?:mobile )?app\b",
+        r"\bvia (?:the )?(?:mobile )?app\b",
+        r"\bapp monitoring\b",
+        r"\bbluetooth app\b",
+        r"\bwifi app\b",
         r"\bcontrol(?:led)? via app\b",
         r"\bworks with app\b",
         r"\bworks with alexa\b",
@@ -192,7 +201,12 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "cloud": [
         r"\bcloud\b",
         r"\bcloud account\b",
+        r"\bcloud account required\b",
         r"\bcloud service\b",
+        r"\bcloud required\b",
+        r"\brequires cloud\b",
+        r"\bcloud dependent\b",
+        r"\bcloud dependency\b",
         r"\bremote server\b",
         r"\bbackend api\b",
         r"\bweb service\b",
@@ -214,11 +228,15 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "local_only": [r"\boffline\b", r"\bno cloud\b", r"\bno internet\b", r"\blocal only\b", r"\blan only\b"],
     "ota": [
         r"\bota\b",
+        r"\bota updates?\b",
         r"\bfirmware update\b",
+        r"\bfirmware updates?\b",
         r"\bover the air\b",
         r"\bremote firmware update\b",
+        r"\bwireless firmware update\b",
         r"\bsecurity patch\b",
         r"\bsoftware update over\b",
+        r"\bsoftware updates?\b",
         r"\bautomatic updates?\b",
         r"\bsecurity updates?\b",
         r"\bsoftware security updates?\b",
@@ -324,10 +342,14 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "battery_powered": [
         r"\bbattery powered\b",
         r"\bbattery operated\b",
+        r"\brechargeable battery\b",
         r"\brechargeable\b",
         r"\bcordless\b",
         r"\bli ion\b",
+        r"\bli-ion\b",
+        r"\blithium ion\b",
         r"\blithium\b",
+        r"\blithium battery\b",
         r"\bbattery pack\b",
         r"\bbattery cell\b",
         r"\bbattery powered device\b",
@@ -354,9 +376,22 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
     "energy_monitoring": [r"\benergy monitoring\b", r"\bpower monitoring\b", r"\benergy meter\b", r"\bpower consumption\b"],
     "smart_grid_ready": [r"\bsmart grid\b", r"\bdemand response\b", r"\bdynamic load management\b"],
     "mains_powered": [r"\bmains\b", r"\b230v\b", r"\b220v\b", r"\b240v\b", r"\bac power\b", r"\bplug in\b", r"\bplugged in\b"],
-    "professional": [r"\bprofessional\b", r"\bcommercial\b", r"\bindustrial\b", r"\bcatering\b", r"\bhoreca\b"],
-    "consumer": [r"\bconsumer\b", r"\bdomestic\b", r"\bhousehold\b", r"\bhome use\b"],
+    "professional": [
+        r"\bprofessional\b",
+        r"\bprofessional use\b",
+        r"\bfor professional use\b",
+        r"\bcommercial\b",
+        r"\bcommercial use\b",
+        r"\bindustrial\b",
+        r"\bindustrial use\b",
+        r"\bwarehouse\b",
+        r"\benterprise\b",
+        r"\bcatering\b",
+        r"\bhoreca\b",
+    ],
+    "consumer": [r"\bconsumer\b", r"\bconsumer use\b", r"\bdomestic\b", r"\bhousehold\b", r"\bhome use\b", r"\bpersonal use\b"],
     "household": [r"\bhousehold\b", r"\bdomestic\b", r"\bhome use\b"],
+    "indoor_use": [r"\bindoor\b", r"\bindoor use\b", r"\bindoors\b"],
     "outdoor_use": [r"\boutdoor\b", r"\bgarden\b", r"\blawn\b"],
     "fixed_installation": [r"\bbuilt in\b", r"\bfixed\b", r"\bwall mounted\b", r"\bceiling mounted\b", r"\bpermanently installed\b"],
     "wall_mount": [r"\bwall mounted\b", r"\bwall mount\b"],
@@ -427,7 +462,99 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bwater tank\b",
     ],
     "wet_environment": [r"\bwet environment\b", r"\bbathroom\b", r"\bshower\b", r"\bsplash\b"],
-    "body_worn_or_applied": [r"\bbody worn\b", r"\bbody worn use\b", r"\bon body\b", r"\bon skin\b"],
+    "wearable": [
+        r"\bwearable\b",
+        r"\bfitness tracker\b",
+        r"\bsmart band\b",
+        r"\bsmart watch\b",
+        r"\bsmartwatch\b",
+        r"\bactivity tracker\b",
+        r"\bfitness watch\b",
+        r"\bhealth watch\b",
+        r"\bsmart ring\b",
+        r"\bwrist worn\b",
+        r"\bwristband\b",
+        r"\bbody worn\b",
+    ],
+    "body_worn_or_applied": [
+        r"\bbody worn\b",
+        r"\bbody worn use\b",
+        r"\bbody contact\b",
+        r"\bskin contact\b",
+        r"\bon body\b",
+        r"\bon skin\b",
+        r"\bchest strap\b",
+        r"\bwrist worn\b",
+        r"\bwristband\b",
+        r"\barmband\b",
+        r"\bfinger worn\b",
+        r"\bwearable patch\b",
+        r"\bsensor patch\b",
+        r"\bclip on body\b",
+    ],
+    "hair_care": [r"\bhair care\b", r"\bhair trimmer\b", r"\bhair clipper\b", r"\bbeard trimmer\b", r"\bclipper\b"],
+    "oral_care": [r"\boral care\b", r"\btoothbrush\b", r"\bdental flosser\b", r"\bwater flosser\b"],
+    "personal_care": [r"\bpersonal care\b", r"\bgrooming\b", r"\bbeauty device\b", r"\btrimmer\b", r"\bshaver\b", r"\bepilator\b"],
+    "biometric": [
+        r"\bbiometric\b",
+        r"\bphysiological\b",
+        r"\bheart rate\b",
+        r"\bpulse\b",
+        r"\bspo2\b",
+        r"\boxygen saturation\b",
+        r"\bblood oxygen\b",
+        r"\becg\b",
+        r"\bekg\b",
+    ],
+    "health_related": [
+        r"\bhealth monitor\b",
+        r"\bwellness monitor\b",
+        r"\bwellness device\b",
+        r"\bconnected health device\b",
+        r"\bhealth device\b",
+        r"\bhealth tracking\b",
+        r"\bphysiological monitoring\b",
+        r"\bbiometric monitoring\b",
+        r"\bheart rate monitor\b",
+        r"\bpulse monitor\b",
+        r"\bpulse oximeter\b",
+        r"\bspo2 monitor\b",
+        r"\becg monitor\b",
+        r"\bekg monitor\b",
+        r"\bblood oxygen monitor\b",
+    ],
+    "medical_context": [
+        r"\bmedical use\b",
+        r"\bpatient use\b",
+        r"\bpatient monitoring\b",
+        r"\bclinical use\b",
+        r"\bclinical setting\b",
+        r"\bhospital use\b",
+        r"\bhealthcare use\b",
+    ],
+    "medical_claims": [
+        r"\bdiagnos(?:e|is|tic)\b",
+        r"\btreat(?:ment|s|ing)?\b",
+        r"\btherap(?:y|eutic)\b",
+        r"\bdisease monitoring\b",
+        r"\bmedical claims?\b",
+        r"\bmedical grade\b",
+    ],
+    "possible_medical_boundary": [
+        r"\bdiagnos(?:e|is|tic)\b",
+        r"\btreat(?:ment|s|ing)?\b",
+        r"\bdisease monitoring\b",
+        r"\bpatient monitoring\b",
+        r"\bclinical use\b",
+        r"\bmedical claims?\b",
+        r"\bmedical grade\b",
+        r"\bphysiological monitoring\b",
+        r"\bheart rate monitor\b",
+        r"\bpulse oximeter\b",
+        r"\becg monitor\b",
+        r"\bekg monitor\b",
+        r"\bwellness monitor\b",
+    ],
     "child_targeted": [r"\bchild targeted\b", r"\bfor children\b", r"\bkids mode\b"],
     "ambient_light_sensor": [r"\bambient light sensor\b", r"\blight sensor\b", r"\bauto brightness\b"],
     "occupancy_detection": [r"\boccupancy detection\b", r"\boccupancy sensor\b", r"\bpresence detection\b"],
@@ -477,8 +604,11 @@ _COMPILED_CONSUMERISH_CUES = [
     re.compile(r"\bdomestic\b"),
     re.compile(r"\bappliance\b"),
     re.compile(r"\bhome device\b"),
+    re.compile(r"\bpersonal care\b"),
+    re.compile(r"\bwearable\b"),
+    re.compile(r"\bwellness\b"),
 ]
-_COMPILED_COMMERCIAL_CUES = re.compile(r"\b(?:commercial|professional|industrial|horeca)\b")
+_COMPILED_COMMERCIAL_CUES = re.compile(r"\b(?:commercial|professional|industrial|horeca|warehouse|enterprise)\b")
 _COMPILED_HOUSEHOLD_CUES = re.compile(r"\b(?:household|domestic|home use|consumer)\b")
 _PHRASE_PATTERN_CACHE: dict[str, re.Pattern] = {}
 _ALIAS_PATTERN_CACHE: dict[str, tuple[re.Pattern, re.Pattern | None]] = {}
@@ -536,7 +666,17 @@ def _add_regex_trait(text: str, explicit_traits: set[str]) -> None:
         {"cloud", "ota", "app_control", "wifi", "cellular", "internet"} & explicit_traits
     ):
         explicit_traits.add("internet")
-    if {"account", "authentication", "camera", "microphone", "location"} & explicit_traits:
+    if "wearable" in explicit_traits:
+        explicit_traits.add("body_worn_or_applied")
+    if "biometric" in explicit_traits:
+        explicit_traits.update({"health_related", "personal_data_likely"})
+    if {"medical_context", "possible_medical_boundary", "medical_claims"} & explicit_traits:
+        explicit_traits.add("health_related")
+    if {"account", "authentication", "camera", "microphone", "location", "biometric"} & explicit_traits:
+        explicit_traits.add("personal_data_likely")
+    if "health_related" in explicit_traits and (
+        {"app_control", "cloud", "account", "authentication", "data_storage", "wifi", "bluetooth", "internet"} & explicit_traits
+    ):
         explicit_traits.add("personal_data_likely")
 
 
@@ -570,6 +710,14 @@ def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
         inferred.add("portable")
     if "food_contact" in explicit_traits and "consumer" not in explicit_traits:
         inferred.add("consumer")
+    if "wearable" in explicit_traits and "body_worn_or_applied" not in explicit_traits:
+        inferred.add("body_worn_or_applied")
+    if "biometric" in explicit_traits and "health_related" not in explicit_traits:
+        inferred.add("health_related")
+    if "health_related" in explicit_traits and (
+        {"app_control", "cloud", "account", "authentication", "data_storage", "wifi", "bluetooth", "internet"} & explicit_traits
+    ):
+        inferred.add("personal_data_likely")
 
     return inferred
 
@@ -641,6 +789,8 @@ def _expand_related_traits(traits: set[str]) -> set[str]:
 
     if expanded & RADIO_TRAITS:
         expanded.add("radio")
+    if "wearable" in expanded:
+        expanded.add("body_worn_or_applied")
     if expanded & {"wifi_5ghz", "wifi_6", "wifi_7", "tri_band_wifi", "mesh_network_node", "wpa3"}:
         expanded.add("wifi")
     if expanded & {"wifi_6", "wifi_7", "tri_band_wifi"}:
@@ -653,6 +803,10 @@ def _expand_related_traits(traits: set[str]) -> set[str]:
         expanded.add("display")
     if expanded & {"voice_assistant", "privacy_switch"}:
         expanded.update({"microphone", "speaker", "personal_data_likely"})
+    if expanded & {"biometric"}:
+        expanded.update({"health_related", "personal_data_likely"})
+    if expanded & {"medical_context", "medical_claims", "possible_medical_boundary"}:
+        expanded.add("health_related")
     if expanded & {"parental_controls", "subscription_dependency"}:
         expanded.add("account")
     if "subscription_dependency" in expanded:
@@ -661,6 +815,10 @@ def _expand_related_traits(traits: set[str]) -> set[str]:
         expanded.add("matter")
     if expanded & {"internet", "internet_connected"}:
         expanded.update({"internet", "internet_connected"})
+    if "health_related" in expanded and (
+        {"app_control", "cloud", "account", "authentication", "data_storage", "wifi", "bluetooth", "internet", "location"} & expanded
+    ):
+        expanded.add("personal_data_likely")
     if expanded & {"wireless_charging_rx", "wireless_charging_tx", "usb_pd", "poe_powered", "poe_supply", "backup_battery", "energy_monitoring", "smart_grid_ready", "vehicle_supply", "ev_charging", "solar_powered"}:
         expanded.add("electrical")
     if expanded & {
@@ -837,12 +995,24 @@ def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]
     if "portable" in text and "portable" in traits:
         score += 6
         reasons.append("portable wording fits")
+    if ({"wearable", "body_worn_or_applied"} & explicit_traits) and ({"wearable", "body_worn_or_applied"} & traits):
+        score += 10
+        reasons.append("body-contact wording fits")
+    if ({"health_related", "biometric"} & explicit_traits) and ({"health_related", "biometric"} & traits):
+        score += 10
+        reasons.append("health or biometric wording fits")
+    if "scanner" in text and {"professional", "handheld", "av_ict"} & traits:
+        score += 8
+        reasons.append("scanner wording fits")
     if "robot" in text and "robot" in pid:
         score += 10
         reasons.append("robot wording fits")
     if ({"cloud", "app_control", "ota"} & explicit_traits) and ({"wifi", "bluetooth", "thread", "zigbee", "matter", "radio"} & traits):
         score += 10
         reasons.append("connected context fits")
+    if ({"app_control", "cloud", "bluetooth", "wifi"} & explicit_traits) and ({"personal_care", "hair_care", "oral_care"} & traits):
+        score += 8
+        reasons.append("connected personal-care context fits")
 
     return score, reasons
 

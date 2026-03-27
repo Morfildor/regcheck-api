@@ -1,0 +1,41 @@
+standards:
+- code: Biocompatibility / skin-contact review
+  title: Skin-contact biocompatibility and materials review
+  region: EU
+  category: safety
+  directives:
+  - GPSR
+  legislation_key: GPSR
+  item_type: review
+  standard_family: ISO 10993 review
+  confidence: medium
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_any:
+  - wearable
+  - body_worn_or_applied
+  - personal_care
+  exclude_if: []
+  test_focus:
+  - safety
+  - materials
+  evidence_hint:
+  - material composition review
+  - skin-contact duration and area review
+  - irritation / sensitization screening
+  keywords:
+  - skin contact
+  - body contact
+  - wearable
+  - personal care
+  notes: Review item for wearables, body-contact devices, and connected personal-care products where skin-contact material and biocompatibility questions may matter.
+  standard_ref: Biocompatibility / skin-contact review
+  selection_group: BIOCOMPATIBILITY REVIEW
+  selection_priority: 0
+  evidence_keywords:
+  - material composition review
+  - skin-contact duration and area review
+  - irritation / sensitization screening
+  - skin contact
+  - body contact

@@ -534,6 +534,71 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual(result.product_match_audit.engine_version, "2.0")
         self.assertIn("scope:av_ict", result.standard_match_audit.context_tags)
 
+    def test_wearable_health_monitor_surfaces_boundary_signal_without_default_medical_claims(self) -> None:
+        result = analyze("wearable heart-rate monitor with Bluetooth/app/body-contact")
+
+        self.assertEqual(result.product_type, "heart_rate_monitor")
+        self.assertIn("possible_medical_boundary", result.all_traits)
+        self.assertNotIn("medical_claims", result.all_traits)
+        self.assertIn("MDR", result.directives)
+        self.assertIn("MDR borderline review", {item.code for item in result.review_items})
+        self.assertNotIn("EN 60601 review", {item.code for item in result.review_items})
+        self.assertIn("boundary.possible_medical", result.known_fact_keys)
+        self.assertIn("contact:skin", result.route_context["context_tags"])
+
+    def test_explicit_connectivity_facts_are_exposed_and_not_reasked(self) -> None:
+        result = analyze("connected espresso machine with wifi app control cloud account OTA updates and display")
+
+        for key in ("connectivity.wifi", "service.app_control", "service.cloud_account_required", "software.ota_updates"):
+            self.assertIn(key, result.known_fact_keys)
+        self.assertNotIn(
+            "Confirm whether the smart features require cloud dependency or can operate locally.",
+            result.suggested_questions,
+        )
+        self.assertNotIn(
+            "Confirm whether firmware or software updates are supported, and whether they are OTA, app-driven, local-only, or unavailable.",
+            result.suggested_questions,
+        )
+
+    def test_connected_personal_care_device_surfaces_known_facts_and_next_actions(self) -> None:
+        result = analyze("cordless hair trimmer with battery + Bluetooth app")
+
+        self.assertEqual(result.product_type, "hair_clipper")
+        self.assertIn("service.app_control", result.known_fact_keys)
+        self.assertIn("power.rechargeable_battery", result.known_fact_keys)
+        self.assertIn("RED_CYBER", result.directives)
+        self.assertTrue(any(item.key == "radio_rf_detail" and item.next_actions for item in result.missing_information_items))
+        self.assertIn("Biocompatibility / skin-contact review", {item.code for item in result.review_items})
+
+    def test_smart_baby_monitor_keeps_privacy_and_connected_radio_context(self) -> None:
+        result = analyze("smart baby monitor with camera/mic/cloud")
+
+        self.assertIn(result.product_type, {"baby_monitor", "baby_monitor_smart"})
+        self.assertIn("GDPR", result.directives)
+        self.assertIn("RED_CYBER", result.directives)
+        self.assertIn("service.cloud_dependency", result.known_fact_keys)
+        self.assertIn("cyber:connected_radio", result.route_context["context_tags"])
+        self.assertNotIn(
+            "Confirm whether the smart features require cloud dependency or can operate locally.",
+            result.suggested_questions,
+        )
+
+    def test_industrial_handheld_scanner_prefers_professional_avict_route(self) -> None:
+        result = analyze("industrial handheld scanner with Wi-Fi/Bluetooth/professional use")
+
+        self.assertEqual(result.product_type, "industrial_handheld_scanner")
+        self.assertEqual(result.product_match_stage, "subtype")
+        self.assertFalse(result.classification_is_ambiguous)
+        self.assertIn("connectivity.wifi", result.known_fact_keys)
+        self.assertIn("use.professional", result.known_fact_keys)
+        self.assertIn("scope:av_ict", result.route_context["context_tags"])
+
+    def test_smart_watch_does_not_auto_trigger_mdr_from_health_defaults(self) -> None:
+        result = analyze("smart watch")
+
+        self.assertNotIn("MDR", result.directives)
+        self.assertNotIn("possible_medical_boundary", result.all_traits)
+
     def test_metadata_endpoints_expose_v2_fields(self) -> None:
         with patch.dict(main._kb_status, {"ok": True, "error": None, "counts": {}}):
             options = main.metadata_options()

@@ -172,6 +172,25 @@ traits:
   - \brechargeable\b
   normalized_to: battery_powered
   normalization_priority: 0
+- id: biometric
+  label: Biometric sensing
+  description: Measures or processes biometric or physiological signals from the body
+  aliases:
+  - biometric
+  - physiological
+  - heart rate
+  - pulse
+  examples:
+  - biometric
+  - heart rate
+  - pulse
+  regex:
+  - \bbiometric\b
+  - \bphysiological\b
+  - \bheart[ -]?rate\b
+  - \bpulse\b
+  normalized_to: biometric
+  normalization_priority: 0
 - id: beverage_preparation
   label: Beverage preparation
   description: Heats, dispenses, brews, or otherwise prepares beverages
@@ -642,6 +661,22 @@ traits:
   - \blaser\b
   normalized_to: laser
   normalization_priority: 0
+- id: lighting
+  label: Lighting / illumination
+  description: Emits visible light for illumination, growth, curing, or related functions
+  aliases:
+  - lighting
+  - light
+  - grow light
+  examples:
+  - lighting
+  - grow light
+  regex:
+  - \blighting\b
+  - \blight\b
+  - \bgrow[ -]?light\b
+  normalized_to: lighting
+  normalization_priority: 0
 - id: liquid_heating
   label: Liquid heating
   description: Heats liquids such as water, milk, oil, or similar substances
@@ -848,6 +883,39 @@ traits:
   - \buser[ -]?data\b
   - \bdevice[ -]?telemetry\b
   normalized_to: personal_data_likely
+  normalization_priority: 0
+- id: possible_medical_boundary
+  label: Possible medical / wellness boundary
+  description: Text suggests diagnosis, treatment, disease monitoring, clinical use, or physiological monitoring that may require medical-device borderline review
+  aliases:
+  - possible medical boundary
+  - wellness medical boundary
+  - clinical review
+  examples:
+  - patient monitoring
+  - clinical use
+  - treatment claims
+  regex:
+  - \bpossible[ -]?medical[ -]?boundary\b
+  - \bwellness[ -]?medical[ -]?boundary\b
+  - \bclinical[ -]?review\b
+  normalized_to: possible_medical_boundary
+  normalization_priority: 0
+- id: uv_emitting
+  label: UV-emitting source
+  description: Emits ultraviolet radiation or uses UV-C or UV-A illumination as part of the function
+  aliases:
+  - uv
+  - uv-c
+  - ultraviolet
+  examples:
+  - uv-c
+  - ultraviolet
+  regex:
+  - \buv\b
+  - \buv[ -]?[ac]\b
+  - \bultraviolet\b
+  normalized_to: uv_emitting
   normalization_priority: 0
 - id: portable
   label: Portable appliance

@@ -18,6 +18,7 @@ from models import (
     ConfidenceLevel,
     FactBasis,
     Finding,
+    KnownFactItem,
     KnowledgeBaseMeta,
     LegislationItem,
     MissingInformationItem,
@@ -131,6 +132,11 @@ WEARABLE_PATTERNS = [
     r"\bwearable\b",
     r"\bwrist\b",
     r"\bwatch\b",
+    r"\bsmart watch\b",
+    r"\bsmartwatch\b",
+    r"\bfitness tracker\b",
+    r"\bsmart band\b",
+    r"\bactivity tracker\b",
     r"\bring\b",
     r"\bheadset\b",
     r"\bearbud",
@@ -141,6 +147,10 @@ WEARABLE_PATTERNS = [
     r"\bon the body\b",
     r"\bon skin\b",
     r"\bskin contact\b",
+    r"\bbody contact\b",
+    r"\bchest strap\b",
+    r"\bwrist worn\b",
+    r"\bwristband\b",
     r"\bclip on\b",
 ]
 
@@ -149,6 +159,8 @@ HANDHELD_PATTERNS = [
     r"\bhand held\b",
     r"\bportable\b",
     r"\bheld in hand\b",
+    r"\bbarcode scanner\b",
+    r"\bhandheld scanner\b",
     r"\bshaver\b",
     r"\btrimmer\b",
     r"\btoothbrush\b",
@@ -161,6 +173,10 @@ CLOSE_PROXIMITY_PATTERNS = [
     r"\bused on the body\b",
     r"\bbody worn\b",
     r"\bbody mounted\b",
+    r"\bbody contact\b",
+    r"\bskin contact\b",
+    r"\bchest strap\b",
+    r"\bwrist worn\b",
     r"\bhead\b",
     r"\bear\b",
     r"\bface\b",
@@ -962,6 +978,7 @@ def _standard_context(
     scope_route, scope_reasons = _scope_route(traits, matched_products, product_type, confirmed_traits)
     text = normalize(description)
     has_external_psu = "external_psu" in traits or bool(matched_products & {"battery_charger", "industrial_charger"})
+    has_portable_battery = bool({"battery_powered", "backup_battery"} & traits)
     has_laser_source = "laser" in traits or _has_any(text, LASER_SOURCE_PATTERNS)
     has_photobiological_source = (
         has_laser_source
@@ -969,6 +986,17 @@ def _standard_context(
         or (product_type in PHOTOBIO_PRODUCT_HINTS if product_type else False)
         or _has_any(text, PHOTOBIOLOGICAL_SOURCE_PATTERNS)
     )
+    has_body_contact = bool({"wearable", "body_worn_or_applied", "personal_care"} & traits) or bool(
+        re.search(r"\b(?:body contact|skin contact|body worn|on body|on skin|chest strap|sensor patch|wearable patch|armband)\b", text)
+    )
+    has_skin_contact = bool(re.search(r"\b(?:skin contact|on skin|chest strap|sensor patch|wearable patch)\b", text))
+    has_personal_or_health_data = bool(
+        {"personal_data_likely", "health_related", "biometric", "account", "camera", "microphone", "location"} & traits
+    )
+    has_connected_radio = bool(
+        "radio" in traits and ({"wifi", "bluetooth", "cellular", "app_control", "cloud", "ota", "internet", "account", "authentication"} & traits)
+    )
+    has_medical_boundary = bool({"possible_medical_boundary", "medical_context", "medical_claims"} & traits)
     prefer_specific_red_emf = bool(
         "radio" in traits and ({"cellular", "wearable", "handheld", "body_worn_or_applied", "close_proximity_emf"} & traits)
     )
@@ -997,6 +1025,8 @@ def _standard_context(
     context_tags: set[str] = {f"scope:{scope_route}"}
     if has_external_psu:
         context_tags.add("power:external_psu")
+    if has_portable_battery:
+        context_tags.add("power:portable_battery")
     if has_laser_source:
         context_tags.add("optical:laser")
     if has_photobiological_source:
@@ -1005,6 +1035,18 @@ def _standard_context(
         context_tags.add("exposure:close_proximity")
     if prefer_62233:
         context_tags.add("exposure:household_emf")
+    if has_body_contact:
+        context_tags.add("contact:body")
+    if has_skin_contact or has_body_contact:
+        context_tags.add("contact:skin")
+    if has_personal_or_health_data:
+        context_tags.add("data:personal_or_health")
+    if {"health_related", "biometric"} & traits:
+        context_tags.add("data:health")
+    if has_connected_radio:
+        context_tags.add("cyber:connected_radio")
+    if has_medical_boundary:
+        context_tags.add("boundary:medical_wellness")
 
     return {
         "scope_route": scope_route,
@@ -1012,8 +1054,13 @@ def _standard_context(
         "text": text,
         "context_tags": context_tags,
         "has_external_psu": has_external_psu,
+        "has_portable_battery": has_portable_battery,
         "has_laser_source": has_laser_source,
         "has_photobiological_source": has_photobiological_source,
+        "has_body_contact": has_body_contact,
+        "has_personal_or_health_data": has_personal_or_health_data,
+        "has_connected_radio": has_connected_radio,
+        "has_medical_boundary": has_medical_boundary,
         "prefer_specific_red_emf": prefer_specific_red_emf,
         "prefer_62233": prefer_62233,
         "prefer_62311": prefer_62311,
@@ -1182,6 +1229,33 @@ def _sort_standard_items(items: list[StandardItem]) -> list[StandardItem]:
     return sorted(items, key=key)
 
 
+def _route_condition_hint(row: dict[str, Any]) -> str | None:
+    route_traits = set(_string_list(row.get("all_of_traits"))) | set(_string_list(row.get("any_of_traits")))
+    if {"medical_claims", "medical_context", "possible_medical_boundary"} & route_traits:
+        return "conditional on claim / medical-use context"
+    if {"personal_data_likely", "health_related", "account", "authentication", "camera", "microphone", "location"} & route_traits:
+        return "conditional on data handling"
+    if route_traits:
+        return "conditional on product function"
+    return None
+
+
+def _legislation_applicability_state(row: dict[str, Any]) -> str:
+    if row.get("timing_status") == "future":
+        return "upcoming"
+    if row.get("applicability") == "conditional":
+        return "conditional"
+    return "current"
+
+
+def _standard_applicability_state(row: dict[str, Any], timing_status: str) -> str:
+    if timing_status == "future":
+        return "upcoming"
+    if row.get("item_type") == "review":
+        return "review-dependent"
+    return "current"
+
+
 def _build_legislation_sections(
     traits: set[str],
     functional_classes: set[str],
@@ -1223,6 +1297,9 @@ def _build_legislation_sections(
                 replaced_by=row.get("replaced_by"),
                 evidence_strength=row.get("evidence_strength", "confirmed"),
                 is_forced=bool(row.get("is_forced")),
+                jurisdiction="EU",
+                applicability_state=_legislation_applicability_state(row),
+                applicability_hint=_route_condition_hint(row),
             )
         )
 
@@ -1240,6 +1317,71 @@ def _build_legislation_sections(
     return items, sections, _directive_keys(items)
 
 
+def _build_known_facts(description: str) -> list[KnownFactItem]:
+    text = normalize(description)
+    facts: list[KnownFactItem] = []
+    seen: set[str] = set()
+
+    def add(key: str, label: str, value: str, related_traits: list[str]) -> None:
+        if key in seen:
+            return
+        seen.add(key)
+        facts.append(
+            KnownFactItem(
+                key=key,
+                label=label,
+                value=value,
+                source="parsed",
+                related_traits=related_traits,
+            )
+        )
+
+    if re.search(r"\b(?:bluetooth|ble|bluetooth low energy)\b", text):
+        add("connectivity.bluetooth", "Bluetooth", "Bluetooth is explicitly stated.", ["bluetooth", "radio"])
+    if re.search(r"\b(?:wifi|wi fi|wlan|802 11)\b", text):
+        add("connectivity.wifi", "Wi-Fi", "Wi-Fi is explicitly stated.", ["wifi", "radio"])
+    if re.search(r"\bnfc\b", text):
+        add("connectivity.nfc", "NFC", "NFC is explicitly stated.", ["nfc", "radio"])
+    if re.search(
+        r"\b(?:mobile app|smartphone app|companion app|app control|app controlled|app connected|app sync(?:ed)?|syncs? with (?:the )?(?:mobile )?app|via (?:the )?(?:mobile )?app|bluetooth app|wifi app)\b",
+        text,
+    ):
+        add("service.app_control", "App control", "App control or app sync is explicitly stated.", ["app_control"])
+    if re.search(r"\b(?:cloud account required|cloud account|account required|requires account|vendor account|cloud login)\b", text):
+        add("service.cloud_account_required", "Cloud/account requirement", "A cloud or account requirement is explicitly stated.", ["cloud", "account"])
+    elif re.search(r"\b(?:cloud|cloud service|cloud required|requires cloud|cloud dependency|cloud dependent)\b", text):
+        add("service.cloud_dependency", "Cloud connectivity", "Cloud connectivity is explicitly stated.", ["cloud"])
+    if re.search(r"\b(?:local only|offline only|no cloud|cloud free|lan only)\b", text):
+        add("service.local_only", "Local-only operation", "Local-only or no-cloud operation is explicitly stated.", ["local_only"])
+    if re.search(r"\b(?:ota|ota updates?|firmware updates?|firmware update|over the air|software updates?|wireless firmware update)\b", text):
+        add("software.ota_updates", "OTA / firmware updates", "OTA or firmware updates are explicitly stated.", ["ota"])
+    if re.search(r"\b(?:rechargeable battery|rechargeable|battery powered|battery operated|cordless|battery pack|battery cell)\b", text):
+        add("power.rechargeable_battery", "Rechargeable / battery power", "Battery-powered or rechargeable operation is explicitly stated.", ["battery_powered"])
+    if re.search(r"\b(?:li[ -]?ion|lithium ion|lithium battery|li ion)\b", text):
+        add("power.lithium_ion", "Lithium-ion battery", "Lithium-ion battery chemistry is explicitly stated.", ["battery_powered"])
+    if re.search(r"\b(?:consumer use|consumer|domestic|household|home use|personal use)\b", text):
+        add("use.consumer", "Consumer use", "Consumer or household use is explicitly stated.", ["consumer", "household"])
+    if re.search(r"\b(?:professional use|for professional use|professional|commercial use|commercial|industrial use|industrial|warehouse|enterprise)\b", text):
+        add("use.professional", "Professional use", "Professional, commercial, or industrial use is explicitly stated.", ["professional"])
+    if re.search(r"\b(?:indoor|indoor use|indoors)\b", text):
+        add("environment.indoor", "Indoor use", "Indoor use is explicitly stated.", ["indoor_use"])
+    if re.search(r"\b(?:outdoor|outdoor use|garden|lawn)\b", text):
+        add("environment.outdoor", "Outdoor use", "Outdoor use is explicitly stated.", ["outdoor_use"])
+    if re.search(r"\b(?:wearable|fitness tracker|smart band|smart watch|smartwatch|activity tracker|smart ring|wrist worn|wristband)\b", text):
+        add("contact.wearable", "Wearable use", "Wearable or body-worn use is explicitly stated.", ["wearable", "body_worn_or_applied"])
+    if re.search(r"\b(?:body contact|skin contact|body worn|on body|on skin|chest strap|sensor patch|wearable patch|armband)\b", text):
+        add("contact.body_contact", "Body contact", "Body-contact or skin-contact use is explicitly stated.", ["body_worn_or_applied"])
+    if re.search(r"\b(?:heart rate|pulse|spo2|blood oxygen|oxygen saturation|ecg|ekg|biometric|physiological)\b", text):
+        add("data.health_related", "Health / biometric data", "Health, biometric, or physiological monitoring wording is explicitly stated.", ["health_related", "biometric"])
+    if re.search(
+        r"\b(?:diagnos(?:e|is|tic)|treat(?:ment|s|ing)?|therapy|therapeutic|disease monitoring|patient monitoring|clinical use|medical claims?|medical grade|wellness monitor|physiological monitoring|heart rate monitor|pulse oximeter|ecg monitor|ekg monitor)\b",
+        text,
+    ):
+        add("boundary.possible_medical", "Possible medical boundary", "Medical, clinical, or physiological monitoring wording is explicitly stated.", ["possible_medical_boundary"])
+
+    return facts
+
+
 def _has_battery_chemistry_detail(text: str) -> bool:
     return bool(
         re.search(
@@ -1251,6 +1393,10 @@ def _has_battery_chemistry_detail(text: str) -> bool:
 
 def _has_battery_capacity_detail(text: str) -> bool:
     return bool(re.search(r"\b\d+(?:\.\d+)?\s*(?:mah|ah|wh|v)\b", text))
+
+
+def _has_battery_pack_format_detail(text: str) -> bool:
+    return bool(re.search(r"\b(?:integrated battery|built in battery|removable battery|replaceable battery|battery pack supplied)\b", text))
 
 
 def _has_data_storage_detail(text: str) -> bool:
@@ -1271,12 +1417,70 @@ def _has_update_route_detail(text: str) -> bool:
     )
 
 
+def _has_cloud_dependency_detail(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:cloud|cloud required|requires cloud|cloud dependency|cloud account|required account|account required|local only|offline only|cloud free|no cloud)\b",
+            text,
+        )
+    )
+
+
+def _has_access_model_detail(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:account|login|log in|sign in|pairing|pairing code|authentication|password|pin|guest mode|local only|cloud only|offline only)\b",
+            text,
+        )
+    )
+
+
+def _has_data_category_detail(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:personal data|health data|biometric|heart rate|pulse|spo2|blood oxygen|oxygen saturation|location data|video|audio|camera|microphone|voice|diagnostic data|telemetry|user profile)\b",
+            text,
+        )
+    )
+
+
+def _has_radio_band_detail(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:2\.4 ?ghz|5 ?ghz|6 ?ghz|868 ?mhz|915 ?mhz|433 ?mhz|13\.56 ?mhz|ble|bluetooth le|wifi 6|wifi 7|802\.11|802 11)\b",
+            text,
+        )
+    )
+
+
+def _has_radio_power_detail(text: str) -> bool:
+    return bool(re.search(r"\b(?:eirp|dbm|mw|output power|transmit power|tx power)\b", text))
+
+
 def _has_pressure_detail(text: str) -> bool:
     return bool(re.search(r"\b\d+(?:\.\d+)?\s*(?:bar|psi|mpa|kpa|l|litre|liter|gallon)\b", text))
 
 
 def _has_installation_detail(text: str) -> bool:
     return bool(re.search(r"\b(?:portable|handheld|bench(?:top)?|stationary|fixed(?:[ -]?installation)?|floor[ -]?standing)\b", text))
+
+
+def _has_body_contact_material_detail(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:silicone|tpu|stainless steel|polycarbonate|skin contact material|biocompatib|irritation|sensitization|contact duration)\b",
+            text,
+        )
+    )
+
+
+def _has_medical_boundary_resolution(text: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:not a medical device|wellness only|fitness only|clinical use|patient use|diagnosis|treatment|therapeutic|medical grade)\b",
+            text,
+        )
+    )
 
 
 def _missing_information(
@@ -1297,6 +1501,7 @@ def _missing_information(
         examples: list[str] | None = None,
         related: list[str] | None = None,
         route_impact: list[str] | None = None,
+        next_actions: list[str] | None = None,
     ) -> None:
         if key in seen_keys:
             return
@@ -1309,9 +1514,11 @@ def _missing_information(
                 examples=examples or [],
                 related_traits=related or [],
                 route_impact=route_impact or [],
+                next_actions=next_actions or [],
             )
         )
 
+    known_fact_keys = {item.key for item in _build_known_facts(description)}
     tool_signal = bool(
         matched_products
         & {"industrial_power_tool", "corded_power_drill", "cordless_power_drill", "portable_power_saw", "industrial_air_compressor"}
@@ -1325,6 +1532,22 @@ def _missing_information(
     compressor_signal = bool(matched_products & {"industrial_air_compressor"}) or bool(
         re.search(r"\b(?:air compressor|compressed air|pneumatic compressor|workshop compressor)\b", text)
     )
+    body_contact_signal = bool({"wearable", "body_worn_or_applied", "personal_care"} & traits) or bool(
+        {"contact.wearable", "contact.body_contact"} & known_fact_keys
+    )
+    health_data_signal = bool({"health_related", "biometric", "personal_data_likely"} & traits) or "data.health_related" in known_fact_keys
+    medical_boundary_signal = bool({"possible_medical_boundary", "medical_context", "medical_claims"} & traits) or (
+        "boundary.possible_medical" in known_fact_keys
+    )
+    cloud_detail_known = _has_cloud_dependency_detail(text) or bool(
+        {"service.cloud_dependency", "service.cloud_account_required", "service.local_only"} & known_fact_keys
+    )
+    access_detail_known = _has_access_model_detail(text) or "service.cloud_account_required" in known_fact_keys
+    update_detail_known = _has_update_route_detail(text) or "software.ota_updates" in known_fact_keys
+    battery_pack_detail_known = _has_battery_pack_format_detail(text)
+    radio_band_known = _has_radio_band_detail(text)
+    radio_power_known = _has_radio_power_detail(text)
+    data_category_known = _has_data_category_detail(text) or "data.health_related" in known_fact_keys
 
     if product_match_stage != "subtype" and tool_signal:
         add(
@@ -1334,6 +1557,7 @@ def _missing_information(
             ["corded drill", "circular saw", "portable air compressor"],
             ["motorized"],
             ["MD", "MACH_REG", "LVD", "BATTERY"],
+            ["Confirm the exact equipment family before relying on machinery or tool routes."],
         )
 
     if "mains_powered" not in traits and "mains_power_likely" not in traits and "battery_powered" not in traits:
@@ -1344,6 +1568,7 @@ def _missing_information(
             ["230 V mains powered", "rechargeable lithium battery", "mains plus battery backup"],
             ["mains_powered", "battery_powered"],
             ["LVD", "BATTERY", "ECO"],
+            ["Confirm the power architecture and whether the product is mains-powered, battery-powered, or both."],
         )
     if "radio" in traits and not any(t in traits for t in ["wifi", "bluetooth", "cellular", "zigbee", "thread", "nfc"]):
         add(
@@ -1353,6 +1578,17 @@ def _missing_information(
             ["Wi-Fi radio", "Bluetooth LE radio", "NFC radio"],
             ["radio"],
             ["RED", "RED_CYBER"],
+            ["Confirm the actual radio technology used by the product."],
+        )
+    if "radio" in traits and (not radio_band_known or not radio_power_known):
+        add(
+            "radio_rf_detail",
+            "Confirm the radio bands and declared output power.",
+            "medium",
+            ["Bluetooth LE 2.4 GHz", "Wi-Fi 2.4/5 GHz", "maximum output power 10 dBm"],
+            ["radio", "wifi", "bluetooth", "cellular", "nfc"],
+            ["RED", "RED_CYBER"],
+            ["Confirm radio bands, channel families, and declared output power / EIRP."],
         )
     if "wifi" in traits and "wifi_5ghz" not in traits:
         add(
@@ -1362,6 +1598,7 @@ def _missing_information(
             ["2.4 GHz only", "dual-band 2.4/5 GHz"],
             ["wifi", "wifi_5ghz"],
             ["RED"],
+            ["Confirm whether Wi-Fi is limited to 2.4 GHz or also uses 5 GHz / 6 GHz bands."],
         )
     if ({"usb_powered", "external_psu"} & traits or "adapter" in text) and "external_psu" not in traits and not _has_any(text, POWER_EXTERNAL_NEGATION_PATTERNS):
         add(
@@ -1371,6 +1608,7 @@ def _missing_information(
             ["external AC/DC adapter included", "USB-C PD power adapter included", "internal PSU only"],
             ["external_psu"],
             ["LVD", "ECO"],
+            ["Confirm whether the shipped product includes an external PSU, adapter, dock, or charger."],
         )
     if "radio" in traits and not ({"wearable", "handheld", "body_worn_or_applied"} & traits) and bool(matched_products & PERSONAL_CARE_PRODUCT_HINTS):
         add(
@@ -1380,6 +1618,7 @@ def _missing_information(
             ["body-worn use", "handheld close to face", "countertop use only"],
             ["wearable", "handheld", "body_worn_or_applied"],
             ["RED"],
+            ["Confirm whether the radio is used on-body, handheld near the face, or only at separation distance."],
         )
     if "radio" in traits and ({"portable", "battery_powered", "cellular"} & traits or bool(matched_products & PERSONAL_CARE_PRODUCT_HINTS)) and not ({"handheld", "wearable", "body_worn_or_applied"} & traits):
         add(
@@ -1389,15 +1628,27 @@ def _missing_information(
             ["handheld use", "body-worn wearable use", "desktop use with separation distance"],
             ["handheld", "wearable", "body_worn_or_applied"],
             ["RED"],
+            ["Confirm the RF exposure form factor used in normal operation."],
         )
-    if "cloud" in traits or "app_control" in traits or "ota" in traits:
+    if smart_signal and not cloud_detail_known:
         add(
-            "connectivity_architecture",
-            "Confirm cloud dependency, authentication, and software update route.",
+            "cloud_dependency",
+            "Confirm whether the smart features require cloud dependency or can operate locally.",
             "high",
             ["cloud account required", "local LAN control without cloud dependency", "OTA firmware updates"],
             ["cloud", "app_control", "ota"],
             ["RED_CYBER", "CRA", "GDPR"],
+            ["Confirm cloud dependency, account requirement, and whether core functions still work without cloud access."],
+        )
+    if medical_boundary_signal and not _has_medical_boundary_resolution(text):
+        add(
+            "medical_wellness_boundary",
+            "Confirm whether the intended purpose stays in wellness scope or crosses into medical diagnosis, treatment, disease monitoring, or patient use.",
+            "high",
+            ["wellness-only activity tracking", "patient monitoring / clinical use", "diagnosis or treatment claim"],
+            ["possible_medical_boundary", "medical_claims", "medical_context"],
+            ["MDR", "GDPR", "GPSR"],
+            ["Confirm the medical / wellness claim boundary and intended-use statement."],
         )
     if battery_signal and not _has_battery_chemistry_detail(text):
         add(
@@ -1407,6 +1658,7 @@ def _missing_information(
             ["lithium-ion pack", "LiFePO4 pack", "NiMH cells", "sealed lead-acid battery"],
             ["battery_powered"],
             ["BATTERY", "WEEE", "GPSR"],
+            ["Confirm the battery chemistry or cell type used in the product."],
         )
     if battery_signal and not _has_battery_capacity_detail(text):
         add(
@@ -1416,8 +1668,9 @@ def _missing_information(
             ["18 V 5 Ah pack", "36 V 4 Ah battery", "54 Wh integrated battery"],
             ["battery_powered"],
             ["BATTERY", "RED"],
+            ["Confirm nominal voltage and capacity / energy rating for the battery pack."],
         )
-    if battery_signal and not re.search(r"\b(?:integrated battery|built in battery|removable battery|replaceable battery|battery pack supplied)\b", text):
+    if battery_signal and not battery_pack_detail_known:
         add(
             "battery_pack_format",
             "Confirm whether the battery is integrated, removable, or supplied as a separate pack.",
@@ -1425,17 +1678,31 @@ def _missing_information(
             ["integrated battery", "removable battery pack", "tool sold without battery pack"],
             ["battery_powered"],
             ["BATTERY", "WEEE"],
+            ["Confirm battery chemistry and removability, including whether the pack is integrated or user-removable."],
         )
     if smart_signal and not _has_data_storage_detail(text):
         add(
             "data_storage_scope",
-            "Confirm whether the product stores user, event, diagnostic, or media data locally, in the cloud, or not at all.",
+            (
+                "Confirm where the stated personal or health-related data are stored, retained, and sent, including any cloud or app transfer."
+                if health_data_signal and data_category_known
+                else "Confirm which personal or health-related data categories are processed and whether they are stored locally, in the app, in the cloud, or not retained."
+                if health_data_signal
+                else "Confirm whether the product stores user, event, diagnostic, or media data locally, in the cloud, or not at all."
+            ),
             "high",
-            ["local event log only", "cloud video history", "no user or event data retained"],
-            ["data_storage", "personal_data_likely"],
+            (
+                ["heart rate data stored only in mobile app", "cloud account retains activity history", "no personal or health data retained"]
+                if health_data_signal and data_category_known
+                else ["heart rate and activity data in app account", "cloud video history", "no personal or health data retained"]
+                if health_data_signal
+                else ["local event log only", "cloud video history", "no user or event data retained"]
+            ),
+            ["data_storage", "personal_data_likely", "health_related"],
             ["GDPR", "CRA", "RED_CYBER"],
+            ["Confirm personal / health data categories, storage locations, retention, and cloud transfer scope."],
         )
-    if smart_signal and not _has_update_route_detail(text):
+    if smart_signal and not update_detail_known:
         add(
             "software_update_route",
             "Confirm whether firmware or software updates are supported, and whether they are OTA, app-driven, local-only, or unavailable.",
@@ -1443,8 +1710,9 @@ def _missing_information(
             ["OTA firmware updates", "USB-only local update", "no field updates supported"],
             ["ota"],
             ["CRA", "RED_CYBER"],
+            ["Confirm whether updates are OTA, app-driven, local-only, or unavailable in the field."],
         )
-    if smart_signal and not re.search(r"\b(?:account|login|pairing|authentication|offline|local only|cloud only)\b", text):
+    if smart_signal and not access_detail_known:
         add(
             "smart_access_model",
             "Confirm whether the smart features require an account, pairing flow, local-only control, or permanent cloud access.",
@@ -1452,6 +1720,17 @@ def _missing_information(
             ["local pairing without account", "vendor account required", "LAN-only operation"],
             ["account", "authentication", "local_only", "cloud"],
             ["GDPR", "CRA", "RED_CYBER"],
+            ["Confirm whether an account, login, pairing flow, or permanent cloud access is required."],
+        )
+    if body_contact_signal and not _has_body_contact_material_detail(text):
+        add(
+            "body_contact_materials",
+            "Confirm the skin-contact surfaces, contact duration, and main body-contact materials.",
+            "medium",
+            ["silicone wrist strap with daily skin contact", "stainless-steel sensor surface", "brief grooming contact only"],
+            ["wearable", "body_worn_or_applied", "personal_care"],
+            ["GPSR", "MDR"],
+            ["Confirm skin-contact materials, contact duration, and whether a biocompatibility review is needed."],
         )
     if tool_signal and not _has_installation_detail(text):
         add(
@@ -1461,6 +1740,7 @@ def _missing_information(
             ["handheld power tool", "portable workshop unit", "stationary bench machine"],
             ["handheld", "portable", "fixed_installation"],
             ["MD", "MACH_REG", "LVD"],
+            ["Confirm whether the equipment is handheld, portable, bench-top, or fixed-installation."],
         )
     if compressor_signal and not _has_pressure_detail(text):
         add(
@@ -1470,6 +1750,7 @@ def _missing_information(
             ["8 bar with 24 L receiver", "10 bar oil-free compressor", "16 bar line pressure"],
             ["pressure"],
             ["MD", "MACH_REG"],
+            ["Confirm the maximum working pressure and receiver volume."],
         )
     if compressor_signal and not re.search(r"\b(?:oil free|lubricated|duty cycle|continuous duty|intermittent duty)\b", text):
         add(
@@ -1479,6 +1760,7 @@ def _missing_information(
             ["oil-free portable compressor", "lubricated workshop compressor", "continuous-duty installation"],
             ["pressure", "motorized"],
             ["MD", "MACH_REG"],
+            ["Confirm lubrication type and duty-cycle classification."],
         )
     if "av_ict" in traits and (APPLIANCE_PRIMARY_TRAITS & traits):
         add(
@@ -1491,6 +1773,7 @@ def _missing_information(
             ],
             ["av_ict"],
             ["LVD", "EMC", "RED"],
+            ["Confirm the primary function so the correct appliance or AV/ICT route is retained."],
         )
     return items[:8]
 
@@ -1505,6 +1788,30 @@ def _build_quick_adds(missing: list[MissingInformationItem]) -> list[dict[str, s
             seen.add(example)
             out.append({"label": item.key.replace("_", " "), "text": example})
     return out[:10]
+
+
+def _top_actions_from_missing(missing: list[MissingInformationItem], limit: int) -> list[str]:
+    actions: list[str] = []
+    seen: set[str] = set()
+    for item in missing:
+        for action in item.next_actions or [item.message]:
+            if action in seen:
+                continue
+            seen.add(action)
+            actions.append(action)
+            if len(actions) >= limit:
+                return actions
+    return actions[:limit]
+
+
+def _route_context_summary(context: dict[str, Any], known_facts: list[KnownFactItem]) -> dict[str, Any]:
+    return {
+        "scope_route": context.get("scope_route"),
+        "scope_reasons": context.get("scope_reasons", []),
+        "context_tags": sorted(context.get("context_tags", [])),
+        "known_fact_keys": [item.key for item in known_facts],
+        "jurisdiction": "EU",
+    }
 
 
 def _build_standard_sections(items: list[StandardItem]) -> list[dict[str, Any]]:
@@ -1637,11 +1944,32 @@ def _risk_reasons(
         add("battery", "overall", "MEDIUM", "Battery-powered architecture", detail)
         add("battery", "current", "MEDIUM", "Battery-powered architecture", detail)
 
+    if {"wearable", "body_worn_or_applied", "personal_care"} & traits:
+        detail = "Body-contact or near-body use introduces skin-contact, RF exposure, and materials-review questions."
+        add("body_contact", "overall", "MEDIUM", "Body-contact or near-body use", detail)
+        add("body_contact", "current", "MEDIUM", "Body-contact or near-body use", detail)
+
+    if {"personal_data_likely", "health_related", "biometric", "account", "camera", "microphone", "location"} & traits:
+        detail = "Personal or health-related data can expand GDPR, privacy, and connected-device review scope."
+        add("personal_health_data", "overall", "MEDIUM", "Personal or health-related data", detail)
+        add("personal_health_data", "current", "MEDIUM", "Personal or health-related data", detail)
+
     if {"cloud", "app_control", "ota", "internet", "account", "authentication"} & traits:
         detail = "Connected software and account features can expand cybersecurity and data-governance obligations."
         add("connected_software", "overall", "MEDIUM", "Connected software surface", detail)
         if {"CRA", "RED_CYBER", "GDPR"} & set(directives):
             add("connected_software", "future", "HIGH" if future_risk == "HIGH" else "MEDIUM", "Connected software surface", detail)
+
+    if {"cloud", "account", "authentication"} & traits:
+        detail = "Cloud or account dependency can change cybersecurity, privacy, and service-continuity expectations."
+        add("cloud_dependency", "overall", "MEDIUM", "Cloud or account dependency", detail)
+        add("cloud_dependency", "current", "MEDIUM", "Cloud or account dependency", detail)
+
+    if {"possible_medical_boundary", "medical_context", "medical_claims"} & traits:
+        detail = "The stated use case may sit on the wellness-to-medical boundary and needs intended-purpose review before relying on the route."
+        level: RiskLevel = "HIGH" if "medical_claims" in traits else "MEDIUM"
+        add("possible_medical_boundary", "overall", level, "Possible medical / wellness boundary", detail)
+        add("possible_medical_boundary", "current", level, "Possible medical / wellness boundary", detail)
 
     if "MACH_REG" in directives:
         add(
@@ -1742,8 +2070,13 @@ def _build_findings(
         if impacted_routes:
             finding_text += " Affects: " + _join_readable(impacted_routes, 3) + "."
         action = None
+        action_parts: list[str] = []
+        if item.next_actions:
+            action_parts.append("Next: " + _join_readable(item.next_actions, 2))
         if item.examples:
-            action = "Clarify with: " + _join_readable(item.examples, 2)
+            action_parts.append("Clarify with: " + _join_readable(item.examples, 2))
+        if action_parts:
+            action = " ".join(action_parts)
         status = "FAIL" if item.importance == "high" else ("WARN" if item.importance == "medium" else "INFO")
         add(
             10 if item.importance == "high" else 40,
@@ -1909,6 +2242,7 @@ def _standard_item_from_row(
 ) -> StandardItem:
     primary_directive = _standard_primary_directive(row, traits)
     legislation = legislation_by_directive.get(primary_directive)
+    timing_status = legislation.timing_status if legislation else "current"
     return StandardItem(
         code=str(row["code"]),
         title=str(row["title"]),
@@ -1924,7 +2258,7 @@ def _standard_item_from_row(
         reason=row.get("reason"),
         notes=row.get("notes"),
         regime_bucket=legislation.bucket if legislation else None,
-        timing_status=legislation.timing_status if legislation else "current",
+        timing_status=timing_status,
         matched_traits_all=row.get("matched_traits_all", []),
         matched_traits_any=row.get("matched_traits_any", []),
         missing_required_traits=row.get("missing_required_traits", []),
@@ -1946,6 +2280,9 @@ def _standard_item_from_row(
         selection_group=row.get("selection_group"),
         selection_priority=int(row.get("selection_priority", 0)),
         required_fact_basis=row.get("required_fact_basis", "inferred"),
+        jurisdiction=str(row.get("region") or "EU"),
+        applicability_state=_standard_applicability_state(row, timing_status),
+        applicability_hint=_route_condition_hint(row),
     )
 
 
@@ -2210,8 +2547,9 @@ def analyze_v1(
         contradiction_severity=traits_data.get("contradiction_severity", "none"),
     )
     top_actions_limit = {"quick": 2, "standard": 3, "deep": 5}[depth]
-    suggested_questions_limit = {"quick": 2, "standard": 4, "deep": 6}[depth]
+    suggested_questions_limit = {"quick": 2, "standard": 6, "deep": 8}[depth]
     quick_adds_limit = {"quick": 4, "standard": 8, "deep": 10}[depth]
+    known_facts = _build_known_facts(description)
 
     return AnalysisResult(
         product_summary=description.strip(),
@@ -2290,11 +2628,15 @@ def analyze_v1(
         input_gaps_panel={
             "items": [item.model_dump() for item in missing_items],
         },
-        top_actions=[item.message for item in missing_items[:top_actions_limit]],
+        top_actions=_top_actions_from_missing(missing_items, top_actions_limit),
         current_path=[section["title"] for section in standard_sections],
         future_watchlist=[item.title for item in legislation_items if item.bucket == "future"],
         suggested_questions=[item.message for item in missing_items[:suggested_questions_limit]],
         suggested_quick_adds=_build_quick_adds(missing_items)[:quick_adds_limit],
+        known_facts=known_facts,
+        known_fact_keys=[item.key for item in known_facts],
+        primary_jurisdiction="EU",
+        supported_jurisdictions=["EU"],
         findings=findings,
     )
 
@@ -2470,8 +2812,9 @@ def analyze(
         contradiction_severity=traits_data.get("contradiction_severity", "none"),
     )
     top_actions_limit = {"quick": 2, "standard": 3, "deep": 5}[depth]
-    suggested_questions_limit = {"quick": 2, "standard": 4, "deep": 6}[depth]
+    suggested_questions_limit = {"quick": 2, "standard": 6, "deep": 8}[depth]
     quick_adds_limit = {"quick": 4, "standard": 8, "deep": 10}[depth]
+    known_facts = _build_known_facts(description)
 
     trait_evidence = _trait_evidence_from_state_map(raw_state_map, confirmed_traits)
     product_match_audit_raw = traits_data.get("product_match_audit")
@@ -2615,11 +2958,16 @@ def analyze(
         input_gaps_panel={
             "items": [item.model_dump() for item in missing_items],
         },
-        top_actions=[item.message for item in missing_items[:top_actions_limit]],
+        top_actions=_top_actions_from_missing(missing_items, top_actions_limit),
         current_path=[section["title"] for section in standard_sections],
         future_watchlist=[item.title for item in legislation_items if item.bucket == "future"],
         suggested_questions=[item.message for item in missing_items[:suggested_questions_limit]],
         suggested_quick_adds=_build_quick_adds(missing_items)[:quick_adds_limit],
+        known_facts=known_facts,
+        known_fact_keys=[item.key for item in known_facts],
+        route_context=_route_context_summary(context, known_facts),
+        primary_jurisdiction="EU",
+        supported_jurisdictions=["EU"],
         findings=findings,
     )
 

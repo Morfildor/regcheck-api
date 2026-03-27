@@ -224,6 +224,63 @@ genres:
   - tabletop
   score_penalty_if_traits: []
   negative_examples: []
+- id: cooking_food_appliance
+  label: Cooking / food appliance
+  keywords:
+  - cooking appliance
+  - kitchen appliance
+  - food appliance
+  - countertop kitchen appliance
+  - food prep appliance
+  - small kitchen appliance
+  - cooking-appliance
+  - cookingappliance
+  - cooking appliances
+  - kitchen-appliance
+  - kitchenappliance
+  - kitchen appliances
+  - food-appliance
+  - foodappliance
+  - food appliances
+  traits:
+  - food_preparation
+  - food_contact
+  default_traits:
+  - tabletop
+  functional_classes:
+  - kitchen_appliance
+  likely_standards:
+  - EN 55014-1
+  - EN 55014-2
+  strong_keywords:
+  - cooking appliance
+  - kitchen appliance
+  - food appliance
+  - countertop kitchen appliance
+  - food prep appliance
+  - small kitchen appliance
+  - cooking-appliance
+  - cookingappliance
+  - cooking appliances
+  weak_keywords:
+  - kitchen-appliance
+  - kitchenappliance
+  - kitchen appliances
+  - food-appliance
+  - foodappliance
+  - food appliances
+  likely_standard_refs:
+  - ref: EN 55014-1
+    kind: unspecified
+  - ref: EN 55014-2
+    kind: unspecified
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - food_preparation
+  - food_contact
+  - tabletop
+  score_penalty_if_traits: []
+  negative_examples: []
 - id: cleaning_laundry_appliance
   label: Cleaning / laundry appliance
   keywords:
@@ -494,6 +551,55 @@ genres:
   - outdoor_use
   - motorized
   - consumer
+  score_penalty_if_traits: []
+  negative_examples: []
+- id: garden_outdoor_appliance
+  label: Garden / grow appliance
+  keywords:
+  - garden appliance
+  - irrigation controller
+  - sprinkler controller
+  - grow system
+  - smart planter
+  - indoor garden
+  - hydroponic garden
+  - garden-appliance
+  - gardenappliance
+  - irrigation-controller
+  - irrigationcontroller
+  - grow-system
+  - growsystem
+  traits:
+  - water_contact
+  default_traits: []
+  functional_classes:
+  - garden_device
+  likely_standards:
+  - EN 55014-1
+  - EN 55014-2
+  strong_keywords:
+  - garden appliance
+  - irrigation controller
+  - sprinkler controller
+  - grow system
+  - smart planter
+  - indoor garden
+  - hydroponic garden
+  weak_keywords:
+  - garden-appliance
+  - gardenappliance
+  - irrigation-controller
+  - irrigationcontroller
+  - grow-system
+  - growsystem
+  likely_standard_refs:
+  - ref: EN 55014-1
+    kind: unspecified
+  - ref: EN 55014-2
+    kind: unspecified
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - water_contact
   score_penalty_if_traits: []
   negative_examples: []
 - id: building_access_drive
@@ -1335,8 +1441,7 @@ genres:
   - consumer
   - electronic
   - health_related
-  default_traits:
-  - medical_claims
+  default_traits: []
   functional_classes:
   - health_device
   likely_standards:

@@ -518,6 +518,16 @@ def _context_bonus_v2(standard: dict[str, Any], context_tags: set[str]) -> int:
         bonus += 35
     if "power:external_psu" not in context_tags and code == "EN 50563":
         bonus -= 40
+    if "power:portable_battery" in context_tags and code in {"EN 62133-2", "Battery safety review", "UN 38.3 review"}:
+        bonus += 40
+    if "contact:skin" in context_tags and code == "Biocompatibility / skin-contact review":
+        bonus += 85
+    if "data:personal_or_health" in context_tags and code in {"EN 18031-2", "GDPR review"}:
+        bonus += 60
+    if "cyber:connected_radio" in context_tags and code in {"EN 18031-1", "CRA review"}:
+        bonus += 45
+    if "boundary:medical_wellness" in context_tags and code == "MDR borderline review":
+        bonus += 75
     return bonus
 
 

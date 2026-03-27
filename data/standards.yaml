@@ -6612,11 +6612,10 @@ standards:
   is_harmonized: false
   version: Borderline review
   dated_version: Borderline review
-  applies_if_genres:
-  - wellness_borderline_medical
   applies_if_any:
   - medical_claims
-  - health_related
+  - medical_context
+  - possible_medical_boundary
   test_focus:
   - safety
   - software
@@ -6659,6 +6658,7 @@ standards:
   dated_version: EN 60601 series
   applies_if_any:
   - medical_claims
+  - medical_context
   test_focus:
   - safety
   - electrical

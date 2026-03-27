@@ -849,10 +849,12 @@ legislations:
   directive_key: MDR
   bucket: framework
   applicability: conditional
-  reason: Borderline review needed where a consumer product makes medical, diagnostic, monitoring, or treatment claims that
-    may move it into MDR scope.
+  reason: Borderline review needed where the stated claims, clinical context, or physiological monitoring purpose suggest a
+    possible medical-device boundary rather than ordinary consumer wellness positioning.
   triggers:
   - medical or diagnostic claims
+  - patient or clinical use context
+  - physiological monitoring with possible medical purpose
   - wellness versus medical intended-purpose review
   doc_impacts:
   - intended-purpose review
@@ -860,14 +862,18 @@ legislations:
   - classification review
   any_of_traits:
   - medical_claims
-  - health_related
+  - medical_context
+  - possible_medical_boundary
   required_any_traits_normalized:
   - medical_claims
-  - health_related
+  - medical_context
+  - possible_medical_boundary
   required_all_traits_normalized: []
   excluded_traits_normalized: []
   evidence_keywords:
   - medical or diagnostic claims
+  - patient or clinical use context
+  - physiological monitoring with possible medical purpose
   - wellness versus medical intended-purpose review
   - intended-purpose review
   - claims review

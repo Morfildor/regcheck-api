@@ -14,6 +14,7 @@ FactBasis = Literal["confirmed", "mixed", "inferred"]
 ProductMatchStage = Literal["family", "subtype", "ambiguous"]
 TraitEvidenceState = Literal["text_explicit", "text_inferred", "product_core", "product_default", "engine_derived"]
 StandardAuditOutcome = Literal["selected", "review", "rejected"]
+KnownFactSource = Literal["parsed", "derived"]
 
 
 class ProductInput(BaseModel):
@@ -74,6 +75,9 @@ class LegislationItem(BaseModel):
     replaced_by: str | None = None
     evidence_strength: FactBasis = "confirmed"
     is_forced: bool = False
+    jurisdiction: str = "EU"
+    applicability_state: str = "current"
+    applicability_hint: str | None = None
 
 
 class StandardItem(BaseModel):
@@ -116,6 +120,9 @@ class StandardItem(BaseModel):
     selection_group: str | None = None
     selection_priority: int = 0
     required_fact_basis: FactBasis = "inferred"
+    jurisdiction: str = "EU"
+    applicability_state: str = "current"
+    applicability_hint: str | None = None
 
 
 class StandardAuditItem(BaseModel):
@@ -157,6 +164,15 @@ class MissingInformationItem(BaseModel):
     examples: list[str] = Field(default_factory=list)
     related_traits: list[str] = Field(default_factory=list)
     route_impact: list[str] = Field(default_factory=list)
+    next_actions: list[str] = Field(default_factory=list)
+
+
+class KnownFactItem(BaseModel):
+    key: str
+    label: str
+    value: str
+    source: KnownFactSource = "parsed"
+    related_traits: list[str] = Field(default_factory=list)
 
 
 class RiskReason(BaseModel):
@@ -257,5 +273,10 @@ class AnalysisResult(BaseModel):
     future_watchlist: list[str] = Field(default_factory=list)
     suggested_questions: list[str] = Field(default_factory=list)
     suggested_quick_adds: list[dict[str, Any]] = Field(default_factory=list)
+    known_facts: list[KnownFactItem] = Field(default_factory=list)
+    known_fact_keys: list[str] = Field(default_factory=list)
+    route_context: dict[str, Any] = Field(default_factory=dict)
+    primary_jurisdiction: str = "EU"
+    supported_jurisdictions: list[str] = Field(default_factory=lambda: ["EU"])
 
     findings: list[Finding] = Field(default_factory=list)

@@ -1,0 +1,83 @@
+products:
+- id: industrial_handheld_scanner
+  label: Industrial handheld scanner
+  product_family: industrial_data_capture
+  product_subfamily: industrial_handheld_scanner
+  aliases:
+  - industrial handheld scanner
+  - handheld scanner
+  - barcode scanner
+  - wireless barcode scanner
+  - inventory scanner
+  - rugged scanner
+  - warehouse scanner
+  - data capture terminal
+  - industrial-handheld-scanner
+  - industrialhandheldscanner
+  - handheld-scanner
+  - handheldscanner
+  - barcode-scanner
+  - barcodescanner
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - handheld
+  - display
+  - wifi
+  - bluetooth
+  core_traits:
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - handheld
+  default_traits:
+  - display
+  - wifi
+  - bluetooth
+  functional_classes:
+  - av_ict_device
+  - industrial_equipment
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - industrial handheld scanner
+  - handheld scanner
+  - barcode scanner
+  - wireless barcode scanner
+  - inventory scanner
+  - rugged scanner
+  - warehouse scanner
+  - data capture terminal
+  weak_aliases:
+  - industrial-handheld-scanner
+  - industrialhandheldscanner
+  - handheld-scanner
+  - handheldscanner
+  - barcode-scanner
+  - barcodescanner
+  marketplace_aliases:
+  - rugged barcode scanner
+  - handheld barcode scanner
+  - industrial scanner
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - handheld
+  - portable
+  - wifi
+  - bluetooth
+  - display
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Industrial handheld barcode and inventory scanners. Keeps professional AV/ICT routing without collapsing into consumer projector matches.
