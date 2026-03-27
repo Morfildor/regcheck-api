@@ -19265,7 +19265,8 @@ products:
   - industrial_equipment
   likely_standards:
   - Power tool safety review
-  genres: []
+  genres:
+  - electric_power_tool
   family_keywords:
   - industrial power tool
   - professional power tool
@@ -19377,7 +19378,8 @@ products:
   - industrial_equipment
   likely_standards:
   - Power tool safety review
-  genres: []
+  genres:
+  - electric_power_tool
   family_keywords:
   - drill
   - power drill
@@ -19491,7 +19493,8 @@ products:
   - industrial_equipment
   likely_standards:
   - Power tool safety review
-  genres: []
+  genres:
+  - electric_power_tool
   family_keywords:
   - saw
   - power saw
@@ -19721,8 +19724,10 @@ products:
   functional_classes:
   - tool_device
   - industrial_equipment
-  likely_standards: []
-  genres: []
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
   preferred_clues:
   - drill
   - drill driver
@@ -19769,7 +19774,9 @@ products:
   - battery storage system
   - powerwall
   negative_examples: []
-  likely_standard_refs: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -20432,9 +20439,12 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  - EN 55032
+  - EN 55035
   genres:
   - wellness_borderline_medical
   - wearable_device
+  - av_ict_device
   strong_aliases:
   - heart rate monitor
   - heart monitor
@@ -20491,6 +20501,10 @@ products:
   likely_standard_refs:
   - ref: EN 62368-1
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -20505,7 +20519,25 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Covers consumer-grade ECG monitors, Holter-style patches, chest straps, and portable ECG devices. Distinct from smartwatch and blood pressure monitor.
+  matching_notes: Covers consumer-grade ECG monitors, Holter-style patches, chest
+    straps, and portable ECG devices. Distinct from smartwatch and blood pressure
+    monitor.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  default_traits:
+  - bluetooth
+  - app_control
+  - data_storage
+  - personal_data_likely
+  - account
+  - ota
 - id: pulse_oximeter
   label: Pulse oximeter / SpO2 monitor
   product_family: health_monitor
@@ -20552,9 +20584,12 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  - EN 55032
+  - EN 55035
   genres:
   - wellness_borderline_medical
   - wearable_device
+  - av_ict_device
   strong_aliases:
   - pulse oximeter
   - spo2 monitor
@@ -20588,6 +20623,10 @@ products:
   likely_standard_refs:
   - ref: EN 62368-1
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -20601,7 +20640,22 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer-grade pulse oximeters and SpO2 monitors. Borderline medical; EN 62368-1 for electronics, MDR review for medical claims.
+  matching_notes: Consumer-grade pulse oximeters and SpO2 monitors. Borderline medical;
+    EN 62368-1 for electronics, MDR review for medical claims.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - display
+  default_traits:
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - personal_data_likely
 - id: continuous_glucose_monitor
   label: Continuous glucose monitor (CGM)
   product_family: health_monitor
@@ -20650,9 +20704,12 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  - EN 55032
+  - EN 55035
   genres:
   - wellness_borderline_medical
   - wearable_device
+  - av_ict_device
   strong_aliases:
   - continuous glucose monitor
   - cgm sensor
@@ -20687,6 +20744,10 @@ products:
   likely_standard_refs:
   - ref: EN 62368-1
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -20701,7 +20762,25 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer and OTC CGM devices and glucose sensor patches. MDR borderline review required for medical-grade claims.
+  matching_notes: Consumer and OTC CGM devices and glucose sensor patches. MDR borderline
+    review required for medical-grade claims.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  default_traits:
+  - bluetooth
+  - nfc
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
+  - ota
 - id: smart_thermometer
   label: Smart / connected body thermometer
   product_family: health_monitor
@@ -20748,9 +20827,12 @@ products:
   - home_device
   likely_standards:
   - EN 62368-1
+  - EN 55032
+  - EN 55035
   genres:
   - wellness_borderline_medical
   - smart_home_iot
+  - av_ict_device
   strong_aliases:
   - smart thermometer
   - connected thermometer
@@ -20789,6 +20871,10 @@ products:
   likely_standard_refs:
   - ref: EN 62368-1
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -20801,7 +20887,21 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer body/clinical thermometers with connectivity. Excludes food/cooking thermometers.
+  matching_notes: Consumer body/clinical thermometers with connectivity. Excludes
+    food/cooking thermometers.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - display
+  default_traits:
+  - bluetooth
+  - app_control
+  - personal_data_likely
 - id: cpap_device
   label: CPAP / sleep apnea therapy device
   product_family: respiratory_therapy
@@ -20904,7 +21004,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: CPAP, APAP, BiPAP devices for consumer sleep apnea therapy. Mains-powered with motor/blower. MDR borderline review for medical-grade devices.
+  matching_notes: CPAP, APAP, BiPAP devices for consumer sleep apnea therapy. Mains-powered
+    with motor/blower. MDR borderline review for medical-grade devices.
 - id: massage_gun
   label: Massage gun / percussion massager
   product_family: wellness_massage
@@ -21004,7 +21105,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Handheld battery-powered percussion/vibration massage guns. Distinct from stationary massage appliances (EN 60335-2-32).
+  matching_notes: Handheld battery-powered percussion/vibration massage guns. Distinct
+    from stationary massage appliances (EN 60335-2-32).
 - id: smart_inhaler
   label: Smart inhaler / connected nebulizer
   product_family: respiratory_therapy
@@ -21096,7 +21198,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Bluetooth-enabled inhalers and smart nebulizers that track usage and connect to apps. MDR borderline review where therapeutic claims are made.
+  matching_notes: Bluetooth-enabled inhalers and smart nebulizers that track usage
+    and connect to apps. MDR borderline review where therapeutic claims are made.
 - id: smart_hearing_aid
   label: Smart hearing aid / OTC hearing amplifier
   product_family: hearing_device
@@ -21209,7 +21312,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: OTC and consumer smart hearing aids and personal sound amplifiers. MDR borderline review if therapeutic hearing restoration claims made. RED applies for Bluetooth.
+  matching_notes: OTC and consumer smart hearing aids and personal sound amplifiers.
+    MDR borderline review if therapeutic hearing restoration claims made. RED applies
+    for Bluetooth.
 - id: true_wireless_earbuds
   label: True wireless earbuds (TWS)
   product_family: audio_wearable
@@ -21337,7 +21442,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: True wireless stereo (TWS) earbuds and in-ear Bluetooth headphones. Distinct from over-ear/on-ear wireless headphones. EN 62479 applies for SAR/RF exposure.
+  matching_notes: True wireless stereo (TWS) earbuds and in-ear Bluetooth headphones.
+    Distinct from over-ear/on-ear wireless headphones. EN 62479 applies for SAR/RF
+    exposure.
 - id: smart_food_thermometer
   label: Smart food / cooking thermometer
   product_family: smart_kitchen_tool
@@ -21459,7 +21566,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Connected cooking thermometers for food/BBQ/oven use. Excludes clinical body thermometers.
+  matching_notes: Connected cooking thermometers for food/BBQ/oven use. Excludes clinical
+    body thermometers.
 - id: smart_food_scale
   label: Smart kitchen food scale
   product_family: smart_kitchen_tool
@@ -21576,7 +21684,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Connected kitchen food/nutrition/baking/coffee scales. Distinct from body weight/composition scales.
+  matching_notes: Connected kitchen food/nutrition/baking/coffee scales. Distinct
+    from body weight/composition scales.
 - id: sous_vide_cooker
   label: Sous vide cooker / immersion circulator
   product_family: cooking_appliance
@@ -21675,7 +21784,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Immersion circulators and sous vide cookers. Classified under EN 60335-2-14 (liquid heating appliances) due to motorized heating in water.
+  matching_notes: Immersion circulators and sous vide cookers. Classified under EN
+    60335-2-14 (liquid heating appliances) due to motorized heating in water.
 - id: smart_air_quality_monitor
   label: Smart indoor air quality monitor
   product_family: environmental_monitor
@@ -21813,7 +21923,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Indoor air quality monitors measuring CO2, VOC, PM2.5, temperature, humidity. Distinct from smoke/CO alarms and air purifiers.
+  matching_notes: Indoor air quality monitors measuring CO2, VOC, PM2.5, temperature,
+    humidity. Distinct from smoke/CO alarms and air purifiers.
 - id: smart_radiator_valve
   label: Smart thermostatic radiator valve (TRV)
   product_family: hvac_control
@@ -21918,7 +22029,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Battery-powered motorized TRVs for smart radiator control. Distinct from smart thermostats which control the boiler.
+  matching_notes: Battery-powered motorized TRVs for smart radiator control. Distinct
+    from smart thermostats which control the boiler.
 - id: smart_irrigation_controller
   label: Smart garden irrigation / sprinkler controller
   product_family: garden_automation
@@ -22013,7 +22125,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: WiFi-connected irrigation and garden sprinkler controllers. Outdoor-rated electronics covered under EN 62368-1.
+  matching_notes: WiFi-connected irrigation and garden sprinkler controllers. Outdoor-rated
+    electronics covered under EN 62368-1.
 - id: smart_indoor_garden
   label: Smart indoor garden / hydroponic grow system
   product_family: garden_automation
@@ -22128,7 +22241,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Smart countertop hydro/aeroponic grow systems with integrated LED lighting and pumps. Mixed EN 60335-1 (appliance with motor/pump) and EN 62368-1 (electronic control/connectivity) scope.
+  matching_notes: Smart countertop hydro/aeroponic grow systems with integrated LED
+    lighting and pumps. Mixed EN 60335-1 (appliance with motor/pump) and EN 62368-1
+    (electronic control/connectivity) scope.
 - id: uv_c_sanitizer
   label: UV-C sanitizer / disinfection device
   product_family: wellness_sanitizer
@@ -22239,7 +22354,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer UV-C germicidal sanitizers and disinfection wands. EN 62471 photobiological safety applies for UV emission risk assessment.
+  matching_notes: Consumer UV-C germicidal sanitizers and disinfection wands. EN 62471
+    photobiological safety applies for UV emission risk assessment.
 - id: connected_breast_pump
   label: Connected / smart electric breast pump
   product_family: maternity_care
@@ -22336,7 +22452,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Smart electric breast pumps with Bluetooth app connectivity. Covered under EN 60335-2-32.
+  matching_notes: Smart electric breast pumps with Bluetooth app connectivity. Covered
+    under EN 60335-2-32.
 - id: smart_pet_fountain
   label: Smart / automatic pet water fountain
   product_family: pet_care_device
@@ -22431,7 +22548,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Motorized recirculating water fountains for pets with filter and optional WiFi. Covered by EN 60335-1 as motorized water appliance.
+  matching_notes: Motorized recirculating water fountains for pets with filter and
+    optional WiFi. Covered by EN 60335-1 as motorized water appliance.
 - id: electric_cargo_bike
   label: Electric cargo bike / longtail e-bike
   product_family: electric_bicycle
@@ -22533,7 +22651,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Electric cargo/longtail bikes for family or last-mile delivery. EN 15194 EPAC standard; distinct from regular e-bikes due to cargo platform/extended frame.
+  matching_notes: Electric cargo/longtail bikes for family or last-mile delivery.
+    EN 15194 EPAC standard; distinct from regular e-bikes due to cargo platform/extended
+    frame.
 - id: smart_cycling_computer
   label: Smart cycling computer / GPS bike head unit
   product_family: sports_wearable
@@ -22637,7 +22757,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: GPS head units and cycling computers mounted on bikes. Bluetooth/ANT+ connectivity to sensors. Covered by EN 62368-1 as portable AV/ICT device.
+  matching_notes: GPS head units and cycling computers mounted on bikes. Bluetooth/ANT+
+    connectivity to sensors. Covered by EN 62368-1 as portable AV/ICT device.
 - id: smart_water_bottle
   label: Smart water bottle / hydration tracker
   product_family: smart_kitchen_tool
@@ -22731,7 +22852,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Bluetooth-connected water bottles with hydration tracking, LED indicators or displays, and app integration.
+  matching_notes: Bluetooth-connected water bottles with hydration tracking, LED indicators
+    or displays, and app integration.
 - id: smart_standing_desk
   label: Smart motorized standing desk / sit-stand desk
   product_family: smart_furniture
@@ -22830,7 +22952,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Motorized height-adjustable desks with electric actuators and smart controls. Covered under EN 60335-1 as motorized household equipment.
+  matching_notes: Motorized height-adjustable desks with electric actuators and smart
+    controls. Covered under EN 60335-1 as motorized household equipment.
 - id: smart_fertility_tracker
   label: Smart fertility tracker / BBT monitor
   product_family: health_monitor
@@ -22878,9 +23001,12 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  - EN 55032
+  - EN 55035
   genres:
   - wellness_borderline_medical
   - wearable_device
+  - av_ict_device
   strong_aliases:
   - fertility tracker
   - bbt thermometer
@@ -22918,6 +23044,10 @@ products:
   likely_standard_refs:
   - ref: EN 62368-1
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 30
   score_boost_if_traits:
   - consumer
@@ -22931,7 +23061,23 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: BBT and fertility tracking devices. Borderline medical; EN 62368-1 for electronics, MDR review if ovulation prediction medical claims are made.
+  matching_notes: BBT and fertility tracking devices. Borderline medical; EN 62368-1
+    for electronics, MDR review if ovulation prediction medical claims are made.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  default_traits:
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
 - id: smart_insole
   label: Smart shoe insole / gait analysis insole
   product_family: sports_wearable
@@ -22978,9 +23124,12 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 62479
+  - EN 55032
+  - EN 55035
   genres:
   - wearable_device
   - wellness_borderline_medical
+  - av_ict_device
   strong_aliases:
   - smart insole
   - connected insole
@@ -23016,6 +23165,10 @@ products:
     kind: unspecified
   - ref: EN 62479
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 30
   score_boost_if_traits:
   - consumer
@@ -23030,7 +23183,23 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Bluetooth-enabled shoe insoles for gait, pressure, and activity tracking. EN 62479 for RF/SAR as body-worn device.
+  matching_notes: Bluetooth-enabled shoe insoles for gait, pressure, and activity
+    tracking. EN 62479 for RF/SAR as body-worn device.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - health_related
+  default_traits:
+  - bluetooth
+  - app_control
+  - motion_detection
+  - personal_data_likely
 - id: smart_posture_corrector
   label: Smart posture corrector / wearable posture trainer
   product_family: wellness_wearable
@@ -23075,9 +23244,12 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 62479
+  - EN 55032
+  - EN 55035
   genres:
   - wearable_device
   - wellness_borderline_medical
+  - av_ict_device
   strong_aliases:
   - posture corrector
   - smart posture corrector
@@ -23113,6 +23285,10 @@ products:
     kind: unspecified
   - ref: EN 62479
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -23128,7 +23304,23 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Wearable posture monitoring sensors that alert users to slouching via vibration. EN 62479 applies due to body-worn RF device proximity.
+  matching_notes: Wearable posture monitoring sensors that alert users to slouching
+    via vibration. EN 62479 applies due to body-worn RF device proximity.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - health_related
+  default_traits:
+  - bluetooth
+  - app_control
+  - motion_detection
+  - personal_data_likely
 - id: digital_stethoscope
   label: Digital / electronic stethoscope
   product_family: health_monitor
@@ -23173,8 +23365,11 @@ products:
   likely_standards:
   - EN 62368-1
   - MDR borderline review
+  - EN 55032
+  - EN 55035
   genres:
   - wellness_borderline_medical
+  - av_ict_device
   strong_aliases:
   - digital stethoscope
   - electronic stethoscope
@@ -23206,6 +23401,10 @@ products:
   likely_standard_refs:
   - ref: EN 62368-1
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 35
   score_boost_if_traits:
   - consumer
@@ -23219,7 +23418,23 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer and professional-grade digital/amplified stethoscopes. MDR borderline review where diagnostic claims are made.
+  matching_notes: Consumer and professional-grade digital/amplified stethoscopes.
+    MDR borderline review where diagnostic claims are made.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  default_traits:
+  - body_worn_or_applied
+  - bluetooth
+  - microphone
+  - app_control
+  - personal_data_likely
+  - data_storage
 - id: smart_desk_lamp
   label: Smart desk lamp / connected task light
   product_family: smart_lighting
@@ -23323,7 +23538,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Smart LED desk and task lamps with app/voice control. EN 62031 applies for LED module safety; EN 62368-1 covers electronic control and connectivity.
+  matching_notes: Smart LED desk and task lamps with app/voice control. EN 62031 applies
+    for LED module safety; EN 62368-1 covers electronic control and connectivity.
 - id: smart_glucose_meter
   label: Smart blood glucose meter / connected glucometer
   product_family: health_monitor
@@ -23372,8 +23588,11 @@ products:
   likely_standards:
   - EN 62368-1
   - MDR borderline review
+  - EN 55032
+  - EN 55035
   genres:
   - wellness_borderline_medical
+  - av_ict_device
   strong_aliases:
   - blood glucose meter
   - glucometer
@@ -23409,6 +23628,10 @@ products:
   likely_standard_refs:
   - ref: EN 62368-1
     kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -23422,7 +23645,24 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Connected blood glucose meters (fingerstick type). Distinct from continuous glucose monitors (CGM patches). MDR borderline review for diagnostic claims.
+  matching_notes: Connected blood glucose meters (fingerstick type). Distinct from
+    continuous glucose monitors (CGM patches). MDR borderline review for diagnostic
+    claims.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - display
+  default_traits:
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
 - id: smart_baby_monitor_breathing
   label: Baby breathing / movement monitor
   product_family: baby_safety_device
@@ -23534,4 +23774,579 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Wearable infant breathing and movement monitors (socks, clips, pads). Distinct from AV baby monitors with cameras. EN 62479 for body-worn RF proximity.
+  matching_notes: Wearable infant breathing and movement monitors (socks, clips, pads).
+    Distinct from AV baby monitors with cameras. EN 62479 for body-worn RF proximity.
+- id: industrial_handheld_scanner
+  label: Industrial handheld scanner
+  product_family: industrial_data_capture
+  product_subfamily: industrial_handheld_scanner
+  aliases:
+  - industrial handheld scanner
+  - handheld scanner
+  - barcode scanner
+  - wireless barcode scanner
+  - inventory scanner
+  - rugged scanner
+  - warehouse scanner
+  - data capture terminal
+  - industrial-handheld-scanner
+  - industrialhandheldscanner
+  - handheld-scanner
+  - handheldscanner
+  - barcode-scanner
+  - barcodescanner
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - handheld
+  - display
+  - wifi
+  - bluetooth
+  core_traits:
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - handheld
+  default_traits:
+  - display
+  - wifi
+  - bluetooth
+  functional_classes:
+  - av_ict_device
+  - industrial_equipment
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - industrial handheld scanner
+  - handheld scanner
+  - barcode scanner
+  - wireless barcode scanner
+  - inventory scanner
+  - rugged scanner
+  - warehouse scanner
+  - data capture terminal
+  weak_aliases:
+  - industrial-handheld-scanner
+  - industrialhandheldscanner
+  - handheld-scanner
+  - handheldscanner
+  - barcode-scanner
+  - barcodescanner
+  marketplace_aliases:
+  - rugged barcode scanner
+  - handheld barcode scanner
+  - industrial scanner
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - handheld
+  - portable
+  - wifi
+  - bluetooth
+  - display
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Industrial handheld barcode and inventory scanners. Keeps professional
+    AV/ICT routing without collapsing into consumer projector matches.
+- id: cordless_screwdriver
+  label: Cordless screwdriver / electric screwdriver
+  product_family: industrial_power_equipment
+  product_subfamily: power_screwdriver
+  aliases:
+  - cordless screwdriver
+  - electric screwdriver
+  - battery screwdriver
+  - rechargeable screwdriver
+  - power screwdriver
+  - cordless electric screwdriver
+  - cordless-screwdriver
+  - cordlessscrewdriver
+  - cordless screwdrivers
+  - electric-screwdriver
+  - electricscrewdriver
+  - electric screwdrivers
+  - battery-screwdriver
+  - batteryscrewdriver
+  - battery screwdrivers
+  - rechargeable-screwdriver
+  - rechargeablescrewdriver
+  - rechargeable screwdrivers
+  implied_traits:
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - battery_powered
+  - electrical
+  - motorized
+  core_traits:
+  - electrical
+  - motorized
+  - battery_powered
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - screwdriver
+  - electric screwdriver
+  - cordless screwdriver
+  preferred_clues:
+  - screwdriver
+  - power screwdriver
+  - assembly driver
+  exclude_clues:
+  - manual screwdriver
+  - precision screwdriver
+  - toothbrush
+  strong_aliases:
+  - cordless screwdriver
+  - electric screwdriver
+  - battery screwdriver
+  - rechargeable screwdriver
+  - power screwdriver
+  - cordless electric screwdriver
+  weak_aliases:
+  - cordless-screwdriver
+  - cordlessscrewdriver
+  - cordless screwdrivers
+  - electric-screwdriver
+  - electricscrewdriver
+  - electric screwdrivers
+  - battery-screwdriver
+  - batteryscrewdriver
+  - battery screwdrivers
+  - rechargeable-screwdriver
+  - rechargeablescrewdriver
+  - rechargeable screwdrivers
+  marketplace_aliases:
+  - cordless driver
+  - electric driver screwdriver
+  not_when_text_contains:
+  - manual screwdriver
+  - precision screwdriver
+  - screwdriver bit
+  - toothbrush
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - oral_care
+  - personal_care
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Battery-powered screwdrivers and compact assembly drivers.
+- id: impact_driver
+  label: Impact driver
+  product_family: industrial_power_equipment
+  product_subfamily: impact_driver
+  aliases:
+  - impact driver
+  - cordless impact driver
+  - brushless impact driver
+  - electric impact driver
+  - hex impact driver
+  - impact-driver
+  - impactdriver
+  - impact drivers
+  - cordless-impact-driver
+  - cordlessimpactdriver
+  - cordless impact drivers
+  - brushless-impact-driver
+  - brushlessimpactdriver
+  - brushless impact drivers
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - impact driver
+  - driver tool
+  preferred_clues:
+  - impact driver
+  - hex driver
+  exclude_clues:
+  - driver bit
+  - device driver
+  - software driver
+  strong_aliases:
+  - impact driver
+  - cordless impact driver
+  - brushless impact driver
+  - electric impact driver
+  - hex impact driver
+  weak_aliases:
+  - impact-driver
+  - impactdriver
+  - impact drivers
+  - cordless-impact-driver
+  - cordlessimpactdriver
+  - cordless impact drivers
+  - brushless-impact-driver
+  - brushlessimpactdriver
+  - brushless impact drivers
+  marketplace_aliases:
+  - compact impact driver
+  not_when_text_contains:
+  - driver bit
+  - device driver
+  - software driver
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - battery_powered
+  score_penalty_if_traits:
+  - av_ict
+  required_any_traits:
+  - electrical
+  - motorized
+  forbidden_traits: []
+  matching_notes: Impact-driver route for fastening tools that should land in machinery
+    review rather than generic appliance routing.
+- id: angle_grinder
+  label: Angle grinder
+  product_family: industrial_power_equipment
+  product_subfamily: power_grinder
+  aliases:
+  - angle grinder
+  - electric angle grinder
+  - cordless angle grinder
+  - disc grinder
+  - cut-off grinder
+  - cutoff grinder
+  - angle-grinder
+  - anglegrinder
+  - angle grinders
+  - electric-angle-grinder
+  - electricanglegrinder
+  - electric angle grinders
+  - disc-grinder
+  - discgrinder
+  - disc grinders
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - angle grinder
+  - disc grinder
+  - cut-off grinder
+  preferred_clues:
+  - angle grinder
+  - disc grinder
+  - cut-off grinder
+  exclude_clues:
+  - coffee grinder
+  - spice grinder
+  - meat grinder
+  strong_aliases:
+  - angle grinder
+  - electric angle grinder
+  - cordless angle grinder
+  - disc grinder
+  - cut-off grinder
+  - cutoff grinder
+  weak_aliases:
+  - angle-grinder
+  - anglegrinder
+  - angle grinders
+  - electric-angle-grinder
+  - electricanglegrinder
+  - electric angle grinders
+  - disc-grinder
+  - discgrinder
+  - disc grinders
+  marketplace_aliases:
+  - grinder tool
+  - cutting grinder
+  not_when_text_contains:
+  - coffee grinder
+  - spice grinder
+  - herb grinder
+  - meat grinder
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - food_contact
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Angle grinder and abrasive cutting/grinding tool coverage.
+- id: orbital_sander
+  label: Orbital sander
+  product_family: industrial_power_equipment
+  product_subfamily: power_sander
+  aliases:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  - finishing sander
+  - sheet sander
+  - orbital-sander
+  - orbitalsander
+  - orbital sanders
+  - random-orbital-sander
+  - randomorbitalsander
+  - random orbital sanders
+  - palm-sander
+  - palmsander
+  - palm sanders
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  preferred_clues:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  exclude_clues:
+  - nail file
+  - pedicure
+  - manicure
+  strong_aliases:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  - finishing sander
+  - sheet sander
+  weak_aliases:
+  - orbital-sander
+  - orbitalsander
+  - orbital sanders
+  - random-orbital-sander
+  - randomorbitalsander
+  - random orbital sanders
+  - palm-sander
+  - palmsander
+  - palm sanders
+  marketplace_aliases:
+  - electric sander
+  - finishing tool sander
+  not_when_text_contains:
+  - nail file
+  - pedicure
+  - manicure
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - personal_care
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Electric orbital and finishing sander coverage for workshop tools.
+- id: rotary_hammer
+  label: Rotary hammer / SDS drill
+  product_family: industrial_power_equipment
+  product_subfamily: rotary_hammer
+  aliases:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  - sds plus drill
+  - demolition hammer
+  - combination hammer
+  - rotary-hammer
+  - rotaryhammer
+  - rotary hammers
+  - rotary-hammer-drill
+  - rotaryhammerdrill
+  - rotary hammer drills
+  - sds-drill
+  - sdsdrill
+  - sds drills
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - rotary hammer
+  - sds drill
+  - demolition hammer
+  preferred_clues:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  exclude_clues:
+  - massage gun
+  - toy hammer
+  - dental drill
+  strong_aliases:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  - sds plus drill
+  - demolition hammer
+  - combination hammer
+  weak_aliases:
+  - rotary-hammer
+  - rotaryhammer
+  - rotary hammers
+  - rotary-hammer-drill
+  - rotaryhammerdrill
+  - rotary hammer drills
+  - sds-drill
+  - sdsdrill
+  - sds drills
+  marketplace_aliases:
+  - sds plus hammer drill
+  - combi hammer
+  not_when_text_contains:
+  - massage gun
+  - toy hammer
+  - dental drill
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - personal_care
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Rotary hammer and SDS drilling tool coverage.

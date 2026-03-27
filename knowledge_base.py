@@ -37,15 +37,9 @@ REQUIRED_DATA_FILES = (
     "products.yaml",
     "legislation_catalog.yaml",
     "standards.yaml",
-)
-OPTIONAL_DATA_FILES = (
-    "trait_extensions.yaml",
     "product_genres.yaml",
-    "product_extensions.yaml",
-    "legislation_extensions.yaml",
-    "standard_extensions.yaml",
 )
-ALL_DATA_FILES = REQUIRED_DATA_FILES + OPTIONAL_DATA_FILES
+ALL_DATA_FILES = REQUIRED_DATA_FILES
 ALLOWED_HARMONIZATION_STATUSES = {"harmonized", "state_of_the_art", "review", "unknown"}
 ALLOWED_FACT_BASIS = {"confirmed", "mixed", "inferred"}
 ALLOWED_TEST_FOCUS = {
@@ -711,35 +705,27 @@ def _kb_meta(counts: dict[str, int], standards: list[dict[str, Any]]) -> dict[st
 
 def _load_traits_catalog() -> list[dict[str, Any]]:
     base = _load_yaml_raw("traits.yaml")
-    ext = _load_yaml_raw("trait_extensions.yaml", required=False)
-    merged = {"traits": _merge_records(_require_list(base, "traits", "traits.yaml"), _optional_list(ext, "traits"), "id")}
-    return _validate_traits(merged)
+    return _validate_traits(base)
 
 
 def _load_genres_catalog(trait_ids: set[str]) -> list[dict[str, Any]]:
-    raw = _load_yaml_raw("product_genres.yaml", required=False)
+    raw = _load_yaml_raw("product_genres.yaml")
     return _validate_genres(raw, trait_ids)
 
 
 def _load_products_catalog(trait_ids: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
     base = _load_yaml_raw("products.yaml")
-    ext = _load_yaml_raw("product_extensions.yaml", required=False)
-    merged = {"products": _merge_records(_require_list(base, "products", "products.yaml"), _optional_list(ext, "products"), "id")}
-    return _validate_products(merged, trait_ids, genre_ids)
+    return _validate_products(base, trait_ids, genre_ids)
 
 
 def _load_legislations_catalog(product_ids: set[str], trait_ids: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
     base = _load_yaml_raw("legislation_catalog.yaml")
-    ext = _load_yaml_raw("legislation_extensions.yaml", required=False)
-    merged = {"legislations": _merge_records(_require_list(base, "legislations", "legislation_catalog.yaml"), _optional_list(ext, "legislations"), "code")}
-    return _validate_legislations(merged, product_ids, trait_ids, genre_ids)
+    return _validate_legislations(base, product_ids, trait_ids, genre_ids)
 
 
 def _load_standards_catalog(product_ids: set[str], trait_ids: set[str], legislation_keys: set[str], genre_ids: set[str]) -> list[dict[str, Any]]:
     base = _load_yaml_raw("standards.yaml")
-    ext = _load_yaml_raw("standard_extensions.yaml", required=False)
-    merged = {"standards": _merge_records(_require_list(base, "standards", "standards.yaml"), _optional_list(ext, "standards"), "code")}
-    return _validate_standards(merged, product_ids, trait_ids, legislation_keys, genre_ids)
+    return _validate_standards(base, product_ids, trait_ids, legislation_keys, genre_ids)
 
 
 @lru_cache(maxsize=1)

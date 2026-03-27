@@ -290,6 +290,60 @@ class MatchingRegressionTests(unittest.TestCase):
                 self.assertNotIn("RED", result.directives)
                 self.assertIn("connectivity.no_radio", result.known_fact_keys)
 
+    def test_smart_insole_prefers_av_ict_routes_after_catalog_merge(self) -> None:
+        result = analyze("smart insole with bluetooth app")
+
+        standard_codes = {item.code for item in result.standards}
+        all_codes = standard_codes | {item.code for item in result.review_items}
+
+        self.assertEqual(result.product_type, "smart_insole")
+        self.assertIn("av_ict_device", result.analysis_audit.product_genres)
+        self.assertIn("scope:av_ict", result.route_context.context_tags)
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertNotIn("EN 55014-1", all_codes)
+        self.assertNotIn("EN 55014-2", all_codes)
+
+    def test_smart_posture_corrector_prefers_av_ict_routes_after_catalog_merge(self) -> None:
+        result = analyze("smart posture corrector with bluetooth app")
+
+        standard_codes = {item.code for item in result.standards}
+        all_codes = standard_codes | {item.code for item in result.review_items}
+
+        self.assertEqual(result.product_type, "smart_posture_corrector")
+        self.assertIn("av_ict_device", result.analysis_audit.product_genres)
+        self.assertIn("scope:av_ict", result.route_context.context_tags)
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+        self.assertNotIn("EN 55014-1", all_codes)
+        self.assertNotIn("EN 55014-2", all_codes)
+
+    def test_digital_stethoscope_promotes_primary_av_ict_routes_after_catalog_merge(self) -> None:
+        result = analyze("digital stethoscope with bluetooth app")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertEqual(result.product_type, "digital_stethoscope")
+        self.assertIn("av_ict_device", result.analysis_audit.product_genres)
+        self.assertIn("scope:av_ict", result.route_context.context_tags)
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+
+    def test_smart_glucose_meter_promotes_primary_av_ict_routes_after_catalog_merge(self) -> None:
+        result = analyze("smart glucose meter with bluetooth app")
+
+        standard_codes = {item.code for item in result.standards}
+
+        self.assertEqual(result.product_type, "smart_glucose_meter")
+        self.assertIn("av_ict_device", result.analysis_audit.product_genres)
+        self.assertIn("scope:av_ict", result.route_context.context_tags)
+        self.assertIn("EN 62368-1", standard_codes)
+        self.assertIn("EN 55032", standard_codes)
+        self.assertIn("EN 55035", standard_codes)
+
 
 if __name__ == "__main__":
     unittest.main()
