@@ -402,7 +402,13 @@ legislations:
   - milking_machine
   - industrial_power_tool
   - corded_power_drill
+  - cordless_power_drill
   - portable_power_saw
+  - cordless_screwdriver
+  - impact_driver
+  - angle_grinder
+  - orbital_sander
+  - rotary_hammer
   - industrial_air_compressor
   any_of_genres:
   - building_access_drive
@@ -474,7 +480,13 @@ legislations:
   - milking_machine
   - industrial_power_tool
   - corded_power_drill
+  - cordless_power_drill
   - portable_power_saw
+  - cordless_screwdriver
+  - impact_driver
+  - angle_grinder
+  - orbital_sander
+  - rotary_hammer
   - industrial_air_compressor
   any_of_genres:
   - building_access_drive
@@ -781,7 +793,7 @@ legislations:
     14 years of age.
   triggers:
   - toy or play value
-  - child-targeted connected product
+  - marketed or intended as a toy
   - designed or intended for play by children under 14
   doc_impacts:
   - toy safety assessment
@@ -790,14 +802,12 @@ legislations:
   - EN 71 and EN 62115 route review
   any_of_traits:
   - toy
-  - child_targeted
   any_of_genres:
   - connected_toy_childcare
   notes: Use intended play value and child-targeting as the primary fork. Decorative, collector, transport, and non-play products
     should not fall into this route merely because they look toy-like.
   required_any_traits_normalized:
   - toy
-  - child_targeted
   required_all_traits_normalized: []
   excluded_traits_normalized: []
   evidence_keywords:

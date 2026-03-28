@@ -143,6 +143,10 @@ class ApiContractTests(unittest.TestCase):
             "route_context",
             "classification_summary",
             "primary_uncertainties",
+            "primary_route_standard_code",
+            "primary_route_reason",
+            "overlay_routes",
+            "route_confidence",
             "degraded_mode",
             "degraded_reasons",
         ):
@@ -159,6 +163,9 @@ class ApiContractTests(unittest.TestCase):
         self.assertIn("route_context", payload)
         self.assertIn("known_facts", payload)
         self.assertIn("classification_summary", payload)
+        self.assertIn("primary_route_standard_code", payload)
+        self.assertIn("overlay_routes", payload)
+        self.assertIn("route_confidence", payload)
         self.assertIn("api_version", payload)
         self.assertIn("catalog_version", payload)
 

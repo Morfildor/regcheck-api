@@ -52,6 +52,10 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-65
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-65
+  supporting_standard_codes:
+  - EN 60335-1
   genres:
   - household_appliance
   - hvac_environmental_appliance
@@ -184,6 +188,10 @@ products:
   - comfort_appliance
   likely_standards:
   - EN 60335-2-65
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-65
+  supporting_standard_codes:
+  - EN 60335-1
   genres:
   - household_appliance
   - hvac_environmental_appliance
@@ -5443,6 +5451,10 @@ products:
   - major_appliance
   likely_standards:
   - EN 60335-2-24
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-24
+  supporting_standard_codes:
+  - EN 60335-1
   genres:
   - household_appliance
   - kitchen_food_appliance
@@ -6804,6 +6816,10 @@ products:
   - cleaning_appliance
   likely_standards:
   - EN 60335-2-2
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-2
+  supporting_standard_codes:
+  - EN 60335-1
   genres:
   - household_appliance
   - cleaning_laundry_appliance
@@ -7816,8 +7832,16 @@ products:
     classification.
 - id: smart_thermostat
   label: Smart thermostat
+  product_family: hvac_control
+  product_subfamily: smart_thermostat
+  family_keywords:
+  - thermostat
+  - hvac control
+  - heating control
+  - room temperature control
   aliases:
   - smart thermostat
+  - hvac thermostat
   - wifi thermostat
   - connected thermostat
   - programmable thermostat
@@ -7828,6 +7852,7 @@ products:
   - nest thermostat
   - ecobee
   - hive thermostat
+  - heating controller
   - heating thermostat smart
   - smart-thermostat
   - smartthermostat
@@ -7867,7 +7892,6 @@ products:
   - household
   - electrical
   - electronic
-  - av_ict
   - mains_power_likely
   - battery_powered
   - display
@@ -7884,14 +7908,41 @@ products:
   - occupancy_detection
   - ambient_light_sensor
   - remote_control
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - battery_powered
+  - display
+  - remote_control
+  - energy_monitoring
+  default_traits:
+  - display_touchscreen
+  - wifi
+  - bluetooth
+  - zigbee
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - account
+  - occupancy_detection
+  - ambient_light_sensor
   functional_classes:
   - home_device
-  - av_ict_device
   - building_automation
   likely_standards:
-  - EN 62368-1
+  - EN 60730-1
+  - EN 60730-2-9
+  route_family: hvac_control
+  primary_standard_code: EN 60730-2-9
+  supporting_standard_codes:
+  - EN 60730-1
   genres:
   - smart_home_iot
+  - hvac_environmental_appliance
   strong_aliases:
   - smart thermostat
   - wifi thermostat
@@ -7982,7 +8033,9 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - ref: EN 62368-1
+  - ref: EN 60730-1
+    kind: unspecified
+  - ref: EN 60730-2-9
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
@@ -7990,9 +8043,9 @@ products:
   - household
   - electrical
   - electronic
-  - av_ict
   - mains_power_likely
-  score_penalty_if_traits: []
+  score_penalty_if_traits:
+  - speaker
   required_any_traits:
   - electrical
   - electronic
@@ -8006,11 +8059,9 @@ products:
   family_keywords:
   - smart assistant
   - assistant device
-  - voice assistant
   aliases:
   - smart speaker
   - voice assistant speaker
-  - voice assistant
   - amazon echo
   - google home
   - apple homepod
@@ -8043,13 +8094,11 @@ products:
   - speaker
   - audio
   - music
-  - voice assistant
   - alexa
   - echo
   - homepod
   - google home
   - smart home speaker
-  - assistant
   exclude_clues:
   - screen
   - display
@@ -8118,7 +8167,6 @@ products:
   strong_aliases:
   - smart speaker
   - voice assistant speaker
-  - voice assistant
   - amazon echo
   - google home
   - apple homepod
@@ -8132,9 +8180,6 @@ products:
   - voice-assistant-speaker
   - voiceassistantspeaker
   - voice assistant speakers
-  - voice-assistant
-  - voiceassistant
-  - voice assistants
   - amazon-echo
   - amazonecho
   - amazon echos
@@ -8158,10 +8203,6 @@ products:
   - voice-assistant-speaker
   - voiceassistantspeaker
   - voice assistant speakers
-  - voice assistant
-  - voice-assistant
-  - voiceassistant
-  - voice assistants
   - amazon echo
   - amazon-echo
   - amazonecho
@@ -9447,7 +9488,6 @@ products:
   family_keywords:
   - smart assistant
   - assistant device
-  - voice assistant
   aliases:
   - smart display
   - display hub
@@ -13414,16 +13454,22 @@ products:
   - evse
   - vehicle charging
   - electric vehicle charging
+  - conductive charging
+  - ac charging station
   aliases:
   - ev charger
   - home ev charger
   - electric vehicle charger
+  - ac charging station
+  - mode 3 evse
   - wallbox
   - ev wallbox
   - type 2 charger home
   - smart ev charger
   - home charging point
   - electric car charger
+  - charging station
+  - type 2 charging station
   - ev-charger
   - evcharger
   - ev chargers
@@ -13458,34 +13504,58 @@ products:
   - household
   - electrical
   - electronic
-  - av_ict
   - mains_powered
   - fixed_installation
   - wall_mount
+  - ev_charging
+  - vehicle_supply
+  - energy_monitoring
+  - smart_grid_ready
+  - display
+  - outdoor_rated
   - wifi
   - bluetooth
   - app_control
   - ota
   - cloud
   - authentication
+  - data_storage
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - fixed_installation
+  - wall_mount
   - ev_charging
   - vehicle_supply
   - energy_monitoring
   - smart_grid_ready
-  - data_storage
   - display
   - outdoor_rated
+  default_traits:
+  - wifi
+  - bluetooth
+  - app_control
+  - ota
+  - cloud
+  - authentication
+  - data_storage
   functional_classes:
   - power_supply
-  - av_ict_device
   - home_device
   likely_standards:
-  - EN 62368-1
-  - IEC 61851-1
-  - IEC 61851-21-2
-  - IEC 62196-2
+  - EN IEC 61851-1
+  - EN IEC 61851-21-2
+  - EN 62196-2
+  route_family: ev_charging
+  primary_standard_code: EN IEC 61851-1
+  supporting_standard_codes:
+  - EN IEC 61851-21-2
+  - EN 62196-2
   genres:
-  - portable_energy
+  - ev_charging_equipment
   strong_aliases:
   - ev charger
   - home ev charger
@@ -13530,13 +13600,11 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - ref: EN 62368-1
+  - ref: EN IEC 61851-1
     kind: unspecified
-  - ref: IEC 61851-1
+  - ref: EN IEC 61851-21-2
     kind: unspecified
-  - ref: IEC 61851-21-2
-    kind: unspecified
-  - ref: IEC 62196-2
+  - ref: EN 62196-2
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
@@ -13544,9 +13612,10 @@ products:
   - household
   - electrical
   - electronic
-  - av_ict
   - mains_powered
-  score_penalty_if_traits: []
+  score_penalty_if_traits:
+  - speaker
+  - projector
   required_any_traits:
   - electrical
   - electronic
@@ -13561,17 +13630,24 @@ products:
   - ev charging
   - evse
   - vehicle charging
+  - mode 2
+  - charging cable with control box
   aliases:
   - portable ev charger
   - portable electric vehicle charger
+  - portable evse
   - mode 2 charger
   - mode 2 ev charger
   - mode 2 evse
+  - ac ev charger
   - granny charger
   - ev travel charger
   - portable wallbox
   - iccpd
   - ic-cpd
+  - charging cable with control box
+  - charging cable with in cable control box
+  - in cable control box
   - in cable control and protection device
   - in-cable control and protection device
   implied_traits:
@@ -13582,13 +13658,29 @@ products:
   - portable
   - ev_charging
   - vehicle_supply
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - portable
+  - ev_charging
+  - vehicle_supply
   functional_classes:
   - power_supply
   likely_standards:
-  - IEC 61851-1
-  - IEC 61851-21-2
-  - IEC 62196-2
+  - EN IEC 61851-1
+  - EN IEC 61851-21-2
+  - EN 62196-2
   - IEC 62752
+  route_family: ev_charging
+  primary_standard_code: EN IEC 61851-1
+  supporting_standard_codes:
+  - EN IEC 61851-21-2
+  - EN 62196-2
+  - IEC 62752
+  genres:
+  - ev_charging_equipment
   strong_aliases:
   - portable ev charger
   - portable electric vehicle charger
@@ -13607,11 +13699,11 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - ref: IEC 61851-1
+  - ref: EN IEC 61851-1
     kind: unspecified
-  - ref: IEC 61851-21-2
+  - ref: EN IEC 61851-21-2
     kind: unspecified
-  - ref: IEC 62196-2
+  - ref: EN 62196-2
     kind: unspecified
   - ref: IEC 62752
     kind: unspecified
@@ -13624,6 +13716,8 @@ products:
   exclude_clues:
   - wall mount
   - fixed installation
+  - power adapter
+  - phone charger
   genres: []
   minimum_match_score: 28
   score_boost_if_traits:
@@ -13635,6 +13729,7 @@ products:
   - vehicle_supply
   score_penalty_if_traits:
   - fixed_installation
+  - speaker
   required_any_traits:
   - electrical
   forbidden_traits:
@@ -14174,6 +14269,13 @@ products:
     classification.
 - id: smart_smoke_co_alarm
   label: Smart smoke / CO alarm
+  product_family: life_safety_alarm
+  product_subfamily: smart_smoke_co_alarm
+  family_keywords:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  - life safety alarm
   aliases:
   - smart smoke alarm
   - smart co alarm
@@ -14210,35 +14312,58 @@ products:
   - household
   - electrical
   - electronic
-  - av_ict
   - mains_power_likely
   - battery_powered
   - backup_battery
-  - wifi
-  - bluetooth
-  - zigbee
   - smoke_detection
   - co_detection
   - siren
+  - safety_function
+  - ceiling_mount
+  - wifi
+  - bluetooth
+  - zigbee
   - app_control
   - ota
   - cloud
   - data_storage
   - account
   - authentication
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - battery_powered
+  - backup_battery
+  - smoke_detection
+  - co_detection
+  - siren
   - safety_function
   - ceiling_mount
+  default_traits:
+  - wifi
+  - bluetooth
+  - zigbee
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - account
+  - authentication
   functional_classes:
   - security_device
   - safety_device
-  - av_ict_device
   likely_standards:
-  - EN 62368-1
   - EN 14604
+  - EN 50291-1
+  route_family: life_safety_alarm
+  primary_standard_code: EN 14604
+  supporting_standard_codes:
+  - EN 50291-1
   genres:
-  - smart_home_iot
-  - security_access_iot
-  - building_access_drive
+  - life_safety_alarm
   strong_aliases:
   - smart smoke alarm
   - smart co alarm
@@ -14275,9 +14400,9 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - ref: EN 62368-1
-    kind: unspecified
   - ref: EN 14604
+    kind: unspecified
+  - ref: EN 50291-1
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
@@ -14285,9 +14410,10 @@ products:
   - household
   - electrical
   - electronic
-  - av_ict
   - mains_power_likely
-  score_penalty_if_traits: []
+  score_penalty_if_traits:
+  - speaker
+  - projector
   required_any_traits:
   - electrical
   - electronic
@@ -14351,7 +14477,6 @@ products:
   - EN 62368-1
   genres:
   - security_access_iot
-  - connected_toy_childcare
   strong_aliases:
   - baby monitor
   - video baby monitor
@@ -14726,13 +14851,26 @@ products:
     classification.
 - id: smart_lock
   label: Smart lock
+  product_family: building_hardware_lock
+  product_subfamily: smart_lock
+  family_keywords:
+  - door lock
+  - deadbolt
+  - entry lock
+  - electromechanical lock
+  - building hardware
   aliases:
   - smart lock
+  - smart door lock
   - wifi lock
   - bluetooth lock
   - connected door lock
   - keyless lock
   - smart deadbolt
+  - door lock
+  - entry lock
+  - deadbolt
+  - electromechanical lock
   - fingerprint lock
   - nfc lock
   - connected lock
@@ -14775,8 +14913,11 @@ products:
   - household
   - electrical
   - electronic
-  - av_ict
   - battery_powered
+  - fixed_installation
+  - security_or_barrier
+  - tamper_detection
+  - safety_function
   - bluetooth
   - wifi
   - zigbee
@@ -14788,25 +14929,45 @@ products:
   - data_storage
   - personal_data_likely
   - account
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - fixed_installation
   - security_or_barrier
   - tamper_detection
   - safety_function
+  default_traits:
+  - bluetooth
+  - wifi
+  - zigbee
+  - nfc
+  - authentication
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - personal_data_likely
+  - account
   functional_classes:
   - security_device
-  - av_ict_device
   - home_device
   - connected_device
   likely_standards:
-  - EN 62368-1
+  - EN 14846
+  - EN 12209
   - EN 18031-1
   - EN 18031-2
   - EN 303 645 review
-  product_family: smart_home_security
-  product_subfamily: smart_lock
+  route_family: building_hardware
+  primary_standard_code: EN 14846
+  supporting_standard_codes:
+  - EN 12209
   genres:
-  - smart_home_iot
+  - building_hardware_lock
   - security_access_iot
-  - building_access_drive
   strong_aliases:
   - smart lock
   - wifi lock
@@ -14895,7 +15056,9 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
-  - ref: EN 62368-1
+  - ref: EN 14846
+    kind: unspecified
+  - ref: EN 12209
     kind: unspecified
   - ref: EN 18031-1
     kind: unspecified
@@ -14909,9 +15072,10 @@ products:
   - household
   - electrical
   - electronic
-  - av_ict
   - battery_powered
-  score_penalty_if_traits: []
+  score_penalty_if_traits:
+  - speaker
+  - projector
   required_any_traits:
   - electrical
   - electronic
@@ -15463,6 +15627,8 @@ products:
   - av_ict_device
   likely_standards:
   - EN 62368-1
+  route_family: av_ict_wearable
+  primary_standard_code: EN 62368-1
   genres:
   - wearable_device
   - av_ict_device
@@ -16514,6 +16680,10 @@ products:
   likely_standards:
   - EN 62115
   - EN 71 review
+  route_family: toy
+  primary_standard_code: EN 62115
+  supporting_standard_codes:
+  - EN 71 review
   strong_aliases:
   - smart toy
   - connected toy
@@ -16587,7 +16757,6 @@ products:
   product_family: childcare_monitoring
   product_subfamily: baby_monitor_smart
   genres:
-  - connected_toy_childcare
   - smart_home_iot
   - security_access_iot
   implied_traits:
@@ -16725,6 +16894,8 @@ products:
   likely_standards:
   - EN 62368-1
   - EN 62479
+  route_family: av_ict_wearable
+  primary_standard_code: EN 62368-1
   strong_aliases:
   - smartwatch
   - smart watch
@@ -19264,7 +19435,9 @@ products:
   - tool_device
   - industrial_equipment
   likely_standards:
-  - Power tool safety review
+  - EN 62841-1
+  route_family: machinery_power_tool
+  primary_standard_code: EN 62841-1
   genres:
   - electric_power_tool
   family_keywords:
@@ -19308,7 +19481,7 @@ products:
   - commercial kitchen appliance
   negative_examples: []
   likely_standard_refs:
-  - ref: Power tool safety review
+  - ref: EN 62841-1
     kind: unspecified
   minimum_match_score: 28
   score_boost_if_traits:
@@ -19377,7 +19550,12 @@ products:
   - tool_device
   - industrial_equipment
   likely_standards:
-  - Power tool safety review
+  - EN 62841-1
+  - EN 62841-2-1
+  route_family: machinery_power_tool
+  primary_standard_code: EN 62841-2-1
+  supporting_standard_codes:
+  - EN 62841-1
   genres:
   - electric_power_tool
   family_keywords:
@@ -19424,7 +19602,9 @@ products:
   - rechargeable
   negative_examples: []
   likely_standard_refs:
-  - ref: Power tool safety review
+  - ref: EN 62841-1
+    kind: unspecified
+  - ref: EN 62841-2-1
     kind: unspecified
   minimum_match_score: 30
   score_boost_if_traits:
@@ -19725,7 +19905,12 @@ products:
   - tool_device
   - industrial_equipment
   likely_standards:
-  - Power tool safety review
+  - EN 62841-1
+  - EN 62841-2-1
+  route_family: machinery_power_tool
+  primary_standard_code: EN 62841-2-1
+  supporting_standard_codes:
+  - EN 62841-1
   genres:
   - electric_power_tool
   preferred_clues:
@@ -19775,7 +19960,9 @@ products:
   - powerwall
   negative_examples: []
   likely_standard_refs:
-  - ref: Power tool safety review
+  - ref: EN 62841-1
+    kind: unspecified
+  - ref: EN 62841-2-1
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
@@ -23475,17 +23662,20 @@ products:
   - wifi
   - bluetooth
   - app_control
-  - display
   - indoor_use
   functional_classes:
   - home_device
   - smart_lighting
   likely_standards:
-  - EN 62368-1
+  - EN IEC 62560
+  - EN 62031
+  route_family: lighting_device
+  primary_standard_code: EN IEC 62560
+  supporting_standard_codes:
   - EN 62031
   genres:
+  - lighting_device
   - smart_home_iot
-  - household_appliance
   strong_aliases:
   - smart desk lamp
   - connected desk lamp
@@ -23521,7 +23711,9 @@ products:
   negative_examples:
   - smart_light_controller
   likely_standard_refs:
-  - ref: EN 62368-1
+  - ref: EN IEC 62560
+    kind: unspecified
+  - ref: EN 62031
     kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
@@ -23533,13 +23725,148 @@ products:
   - lighting
   - wifi
   - bluetooth
-  score_penalty_if_traits: []
+  score_penalty_if_traits:
+  - speaker
+  - projector
   required_any_traits:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Smart LED desk and task lamps with app/voice control. EN 62031 applies
-    for LED module safety; EN 62368-1 covers electronic control and connectivity.
+  matching_notes: Smart desk and task lamps stay on a lighting-device route. Connectivity
+    features add overlays but do not replace the primary light-source safety path.
+- id: smart_led_bulb
+  label: Smart LED bulb / connected light source
+  product_family: smart_lighting
+  product_subfamily: smart_led_bulb
+  family_keywords:
+  - smart bulb
+  - led bulb
+  - led lamp
+  - light source
+  - e27
+  preferred_clues:
+  - led bulb
+  - smart bulb
+  - led lamp
+  - e27
+  - light source
+  exclude_clues:
+  - speaker
+  - display
+  - projector
+  confusable_with:
+  - smart_speaker
+  - smart_display
+  - home_projector
+  aliases:
+  - smart bulb
+  - smart led bulb
+  - led bulb
+  - led lamp
+  - smart lamp
+  - smart light bulb
+  - connected light bulb
+  - wifi bulb
+  - bluetooth bulb
+  - e27 smart bulb
+  - e27 led lamp
+  - connected light source
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - wifi
+  - bluetooth
+  - app_control
+  - indoor_use
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  subtype_traits:
+  - wifi
+  - bluetooth
+  - app_control
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  default_traits:
+  - wifi
+  - bluetooth
+  - app_control
+  - ota
+  - cloud
+  functional_classes:
+  - home_device
+  - smart_lighting
+  likely_standards:
+  - EN IEC 62560
+  - EN 62031
+  route_family: lighting_device
+  primary_standard_code: EN IEC 62560
+  supporting_standard_codes:
+  - EN 62031
+  genres:
+  - lighting_device
+  - smart_home_iot
+  strong_aliases:
+  - smart bulb
+  - smart led bulb
+  - led bulb
+  - led lamp
+  - smart lamp
+  - smart light bulb
+  - connected light bulb
+  - wifi bulb
+  - bluetooth bulb
+  - e27 smart bulb
+  - e27 led lamp
+  - connected light source
+  weak_aliases: []
+  marketplace_aliases:
+  - smart bulb
+  - smart led lamp
+  - wifi light bulb
+  not_when_text_contains:
+  - projector
+  - projection
+  negative_examples:
+  - home_projector
+  likely_standard_refs:
+  - ref: EN IEC 62560
+    kind: unspecified
+  - ref: EN 62031
+    kind: unspecified
+  minimum_match_score: 26
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - wifi
+  - bluetooth
+  score_penalty_if_traits:
+  - speaker
+  - projector
+  required_any_traits:
+  - electrical
+  - lighting
+  forbidden_traits: []
+  matching_notes: Smart bulbs and smart lamps stay on the lighting route. App, cloud,
+    and voice-assistant integration are secondary overlays only and must not move the
+    product into AV/ICT or projector families.
 - id: smart_glucose_meter
   label: Smart blood glucose meter / connected glucometer
   product_family: health_monitor

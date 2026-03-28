@@ -109,15 +109,30 @@ _COMPILED_CLEANUP1 = re.compile(r"[^a-z0-9_]+")
 _COMPILED_CLEANUP2 = re.compile(r"\s+")
 
 NEGATIONS: dict[str, list[str]] = {
-    "radio": [r"\bno radio\b", r"\bwithout radio\b"],
-    "wifi": [r"\bno wifi\b", r"\bwithout wifi\b", r"\bnon wifi\b"],
+    "radio": [
+        r"\bno radio\b",
+        r"\bwithout radio\b",
+        r"\bno wireless communication\b",
+        r"\bwithout wireless communication\b",
+        r"\bwired only\b",
+    ],
+    "wifi": [r"\bno wifi\b", r"\bwithout wifi\b", r"\bnon wifi\b", r"\bwifi not present\b"],
     "bluetooth": [r"\bno bluetooth\b", r"\bwithout bluetooth\b"],
-    "cloud": [r"\bno cloud\b", r"\bwithout cloud\b", r"\bcloud free\b", r"\blocal only\b"],
-    "internet": [r"\bno internet\b", r"\bwithout internet\b", r"\boffline only\b", r"\blocal only\b"],
+    "cloud": [r"\bno cloud\b", r"\bwithout cloud\b", r"\bcloud free\b", r"\blocal only\b", r"\blocal control only\b"],
+    "internet": [
+        r"\bno internet\b",
+        r"\bwithout internet\b",
+        r"\boffline only\b",
+        r"\blocal only\b",
+        r"\blocal control only\b",
+    ],
     "app_control": [r"\bno app\b", r"\bwithout app\b"],
     "ota": [r"\bno ota\b", r"\bwithout ota\b", r"\bmanual update only\b"],
     "account": [r"\bno account\b", r"\bwithout account\b", r"\bguest only\b"],
     "authentication": [r"\bno password\b", r"\bwithout login\b", r"\bwithout authentication\b"],
+    "speaker": [r"\bnot a speaker\b", r"\bno speaker\b", r"\bwithout speaker\b"],
+    "toy": [r"\bnot a toy\b", r"\bnot intended for play\b"],
+    "child_targeted": [r"\bnot intended for play\b", r"\bnot designed for play\b"],
     "monetary_transaction": [
         r"\bno payment\b",
         r"\bwithout payment\b",
@@ -129,6 +144,21 @@ NEGATIONS: dict[str, list[str]] = {
 _COMPILED_NEGATIONS: dict[str, list[re.Pattern]] = {
     trait: [re.compile(p) for p in pats]
     for trait, pats in NEGATIONS.items()
+}
+NEGATED_TRAIT_SUPPRESSIONS: dict[str, set[str]] = {
+    "radio": RADIO_TRAITS | {"radio"},
+    "wifi": {"wifi", "wifi_5ghz", "wifi_6", "wifi_7", "tri_band_wifi", "mesh_network_node", "wpa3"},
+    "bluetooth": {"bluetooth"},
+    "cloud": {"cloud"},
+    "internet": {"internet", "internet_connected"},
+    "app_control": {"app_control"},
+    "ota": {"ota"},
+    "account": {"account"},
+    "authentication": {"authentication"},
+    "speaker": {"speaker", "multi_room_audio", "spatial_audio"},
+    "toy": {"toy", "child_targeted"},
+    "child_targeted": {"child_targeted", "toy"},
+    "monetary_transaction": {"monetary_transaction", "subscription_dependency"},
 }
 
 TRAIT_PATTERNS: dict[str, list[str]] = {
@@ -291,7 +321,6 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bmedia player\b",
         r"\bprojector\b",
         r"\bsmart speaker\b",
-        r"\bvoice assistant\b",
         r"\bict equipment\b",
         r"\baudio video equipment\b",
     ],
@@ -311,7 +340,7 @@ TRAIT_PATTERNS: dict[str, list[str]] = {
         r"\bpaid plan\b",
     ],
     "camera": [r"\bcamera\b"],
-    "microphone": [r"\bmicrophone\b", r"\bmic\b", r"\bvoice assistant\b", r"\bvoice control\b", r"\bvoice command\b"],
+    "microphone": [r"\bmicrophone\b", r"\bmic\b", r"\bvoice control\b", r"\bvoice command\b"],
     "speaker": [r"\bspeaker\b", r"\baudio playback\b", r"\bsound output\b"],
     "display": [r"\bdisplay\b", r"\bscreen\b", r"\btouchscreen\b", r"\btouch screen\b", r"\bmonitor\b"],
     "display_touchscreen": [r"\btouchscreen\b", r"\btouch screen\b"],
@@ -776,7 +805,7 @@ def _infer_baseline_traits(text: str, explicit_traits: set[str]) -> set[str]:
     if "electronic" in inferred and not ({"electrical"} & (explicit_traits | inferred)):
         inferred.add("electrical")
 
-    if "wifi" in explicit_traits and ({"cloud", "ota", "account", "authentication", "app_control"} & explicit_traits):
+    if "wifi" in explicit_traits and ({"cloud", "ota"} & explicit_traits):
         inferred.add("internet")
     if "cellular" in explicit_traits:
         inferred.add("internet")
@@ -812,9 +841,7 @@ def _infer_connected_traits(text: str, signal_traits: set[str]) -> set[str]:
     serviceish = bool({"cloud", "internet", "app_control", "ota", "account", "authentication", "subscription_dependency", "remote_management"} & signal_traits)
 
     if voiceish:
-        inferred.update({"app_control", "microphone"})
-        if consumerish:
-            inferred.add("speaker")
+        inferred.add("app_control")
 
     if "subscription_dependency" in signal_traits:
         inferred.add("monetary_transaction")
@@ -830,16 +857,13 @@ def _infer_connected_traits(text: str, signal_traits: set[str]) -> set[str]:
     if smartish or voiceish:
         inferred.add("app_control")
 
-    if voiceish or smartish or {"cloud", "account", "authentication", "remote_management", "subscription_dependency"} & signal_traits:
+    if {"cloud", "account", "authentication", "remote_management", "subscription_dependency"} & signal_traits:
         inferred.update({"internet", "internet_connected"})
-        if consumerish:
+        if {"cloud", "remote_management", "subscription_dependency"} & signal_traits and consumerish:
             inferred.add("cloud")
 
     if "cloud" in signal_traits:
         inferred.update({"internet", "internet_connected"})
-
-    if smartish and consumerish and {"wifi", "bluetooth", "radio", "cloud", "internet"} & (signal_traits | inferred):
-        inferred.add("ota")
 
     if {"wifi", "cloud", "internet", "ota"} & (signal_traits | inferred):
         inferred.add("internet_connected")
@@ -868,6 +892,19 @@ def _suppress_unmentioned_product_wireless_traits(
     return set(traits) - (RADIO_TRAITS | {"radio"})
 
 
+def _suppressed_traits_for_negations(negations: list[str]) -> set[str]:
+    suppressed: set[str] = set()
+    for trait in negations:
+        suppressed.update(NEGATED_TRAIT_SUPPRESSIONS.get(trait, {trait}))
+    return suppressed
+
+
+def _apply_explicit_trait_negations(traits: set[str], negations: list[str]) -> set[str]:
+    if not traits or not negations:
+        return set(traits)
+    return set(traits) - _suppressed_traits_for_negations(negations)
+
+
 def _expand_related_traits(traits: set[str]) -> set[str]:
     expanded = set(traits)
 
@@ -885,8 +922,8 @@ def _expand_related_traits(traits: set[str]) -> set[str]:
         expanded.add("lora")
     if expanded & {"display_touchscreen", "e_ink_display", "hdr_display", "high_refresh_display"}:
         expanded.add("display")
-    if expanded & {"voice_assistant", "privacy_switch"}:
-        expanded.update({"microphone", "speaker", "personal_data_likely"})
+    if "privacy_switch" in expanded:
+        expanded.update({"microphone", "personal_data_likely"})
     if expanded & {"biometric"}:
         expanded.update({"health_related", "personal_data_likely"})
     if expanded & {"medical_context", "medical_claims", "possible_medical_boundary"}:
@@ -1634,7 +1671,7 @@ def _trait_evidence_items(
 
 def _collect_text_trait_signals(text: str) -> tuple[set[str], set[str], dict[str, dict[str, list[str]]], list[str]]:
     explicit_direct: set[str] = set()
-    negations = sorted(trait for trait in TRAIT_PATTERNS if _trait_is_negated(text, trait))
+    negations = sorted(trait for trait in _COMPILED_NEGATIONS if _trait_is_negated(text, trait))
     state_map = _empty_trait_state_map()
 
     for trait, patterns in _COMPILED_TRAIT_PATTERNS.items():
@@ -1910,9 +1947,9 @@ def _build_product_candidate_v2(
     penalty_hits = sorted(score_penalty_traits & signal_traits)
     required_any_traits = set(_string_list(product.get("required_any_traits")))
     required_any_missing = bool(required_any_traits and not (required_any_traits & signal_traits))
-    score += len(boost_hits) * 6
-    score -= len(penalty_hits) * 8
-    score -= len(blocked_phrases) * 18
+    score += len(boost_hits) * 8
+    score -= len(penalty_hits) * 18
+    score -= len(blocked_phrases) * 60
     if required_any_missing:
         score -= 18
 
@@ -2227,6 +2264,10 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
         explicit_traits,
         matched_aliases,
     )
+    explicit_traits = _apply_explicit_trait_negations(explicit_traits, negations)
+    inferred_traits = _apply_explicit_trait_negations(inferred_traits, negations)
+    product_core_traits = _apply_explicit_trait_negations(product_core_traits, negations)
+    product_default_traits = _apply_explicit_trait_negations(product_default_traits, negations)
     product_genres = {item for item in (match.get("product_genres") or set()) if isinstance(item, str) and item}
 
     functional_classes.update(match["functional_classes"])
@@ -2270,6 +2311,7 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
     engine_derived_traits = _expand_related_traits(
         _infer_connected_traits(text, explicit_traits | inferred_traits | product_core_traits | product_default_traits)
     ) - explicit_traits - inferred_traits
+    engine_derived_traits = _apply_explicit_trait_negations(engine_derived_traits, negations)
     if engine_derived_traits:
         inferred_traits |= engine_derived_traits
         _record_trait_state(state_map, "engine_derived", engine_derived_traits, "engine:connectivity_inference")
@@ -2299,7 +2341,11 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
     # but a cordless/lithium model should not inherit that).
     if "battery_powered" in explicit_traits and "mains_powered" not in explicit_traits:
         product_default_traits = product_default_traits - {"mains_power_likely"}
-    inferred_traits = {trait for trait in _expand_related_traits(inferred_traits | product_core_traits | product_default_traits) if trait in known_traits}
+    product_core_traits = _apply_explicit_trait_negations(product_core_traits, negations)
+    product_default_traits = _apply_explicit_trait_negations(product_default_traits, negations)
+    inferred_traits = _apply_explicit_trait_negations(inferred_traits | product_core_traits | product_default_traits, negations)
+    inferred_traits = {trait for trait in _expand_related_traits(inferred_traits) if trait in known_traits}
+    confirmed_traits = _apply_explicit_trait_negations(confirmed_traits, negations)
     confirmed_traits = {trait for trait in _expand_related_traits(confirmed_traits) if trait in known_traits}
 
     diagnostics.append("matched_products=" + ",".join(matched_products))
@@ -2357,10 +2403,13 @@ def extract_traits_v1(description: str, category: str = "") -> dict:
     confirmed_functional_classes: set[str] = set()
     contradictions: list[str] = []
     diagnostics: list[str] = []
+    negations = sorted(trait for trait in _COMPILED_NEGATIONS if _trait_is_negated(text, trait))
 
     _add_regex_trait(text, explicit_traits)
     explicit_traits = _expand_related_traits(explicit_traits)
+    explicit_traits = _apply_explicit_trait_negations(explicit_traits, negations)
     inferred_traits.update(_infer_baseline_traits(text, explicit_traits))
+    inferred_traits = _apply_explicit_trait_negations(inferred_traits, negations)
     diagnostics.append(f"normalized_text={text}")
 
     match = _hierarchical_product_match(text, explicit_traits | inferred_traits)
@@ -2386,6 +2435,7 @@ def extract_traits_v1(description: str, category: str = "") -> dict:
             matched_aliases,
         )
     )
+    inferred_traits = _apply_explicit_trait_negations(inferred_traits, negations)
     inferred_traits.update(
         _suppress_unmentioned_product_wireless_traits(
             text,
@@ -2394,6 +2444,7 @@ def extract_traits_v1(description: str, category: str = "") -> dict:
             matched_aliases,
         )
     )
+    inferred_traits = _apply_explicit_trait_negations(inferred_traits, negations)
     functional_classes.update(match["functional_classes"])
     confirmed_functional_classes.update(match["confirmed_functional_classes"])
     if product_family_confidence == "high":
@@ -2405,6 +2456,7 @@ def extract_traits_v1(description: str, category: str = "") -> dict:
                 matched_aliases,
             )
         )
+        confirmed_traits = _apply_explicit_trait_negations(confirmed_traits, negations)
     if product_match_stage == "subtype" and product_subtype_confidence == "high":
         confirmed_traits.update(
             _suppress_unmentioned_product_wireless_traits(
@@ -2414,6 +2466,7 @@ def extract_traits_v1(description: str, category: str = "") -> dict:
                 matched_aliases,
             )
         )
+        confirmed_traits = _apply_explicit_trait_negations(confirmed_traits, negations)
 
     diagnostics.extend(match["diagnostics"])
     if product_candidates:
@@ -2434,9 +2487,9 @@ def extract_traits_v1(description: str, category: str = "") -> dict:
         contradictions.append("Wi-Fi is present while the text also says no internet, but cloud or OTA features were also detected.")
 
     known_traits = _known_trait_ids()
-    explicit_traits = _expand_related_traits(explicit_traits)
-    inferred_traits = _expand_related_traits(inferred_traits)
-    confirmed_traits = _expand_related_traits(confirmed_traits)
+    explicit_traits = _apply_explicit_trait_negations(_expand_related_traits(explicit_traits), negations)
+    inferred_traits = _apply_explicit_trait_negations(_expand_related_traits(inferred_traits), negations)
+    confirmed_traits = _apply_explicit_trait_negations(_expand_related_traits(confirmed_traits), negations)
     explicit_traits = {t for t in explicit_traits if t in known_traits}
     inferred_traits = {t for t in inferred_traits if t in known_traits}
     confirmed_traits = {t for t in (confirmed_traits | explicit_traits) if t in known_traits}
@@ -2448,6 +2501,7 @@ def extract_traits_v1(description: str, category: str = "") -> dict:
     diagnostics.append("explicit_traits=" + ",".join(sorted(explicit_traits)))
     diagnostics.append("confirmed_traits=" + ",".join(sorted(confirmed_traits)))
     diagnostics.append("inferred_traits=" + ",".join(sorted(inferred_traits)))
+    diagnostics.append("negations=" + ",".join(negations))
     diagnostics.append("contradiction_severity=" + _contradiction_severity(contradictions))
 
     return {

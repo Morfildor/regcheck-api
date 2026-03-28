@@ -169,12 +169,15 @@ class MatchingRegressionTests(unittest.TestCase):
         result = analyze("portable EV charger with mode 2 cable and in-cable protection device")
 
         self.assertEqual(result.product_type, "portable_ev_charger")
+        self.assertEqual(result.primary_route_standard_code, "EN IEC 61851-1")
+        standard_codes = {item.code for item in result.standards}
         review_codes = {item.code for item in result.review_items}
 
-        self.assertIn("IEC 61851-1", review_codes)
-        self.assertIn("IEC 61851-21-2", review_codes)
-        self.assertIn("IEC 62196-2", review_codes)
+        self.assertIn("EN IEC 61851-1", standard_codes)
+        self.assertIn("EN IEC 61851-21-2", standard_codes)
+        self.assertIn("EN 62196-2", review_codes)
         self.assertIn("IEC 62752", review_codes)
+        self.assertNotIn("EN 62368-1", standard_codes | review_codes)
 
     def test_granny_charger_alias_beats_generic_battery_charger(self) -> None:
         result = analyze("granny charger for electric car")
@@ -197,8 +200,9 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertFalse(result.classification_confidence_below_threshold)
         self.assertNotIn("electric_fish_stunner", {item.id for item in result.product_candidates})
         self.assertNotIn("bain_marie", {item.id for item in result.product_candidates})
+        self.assertEqual(result.primary_route_standard_code, "EN 62841-1")
         md_section = next(section for section in result.standards_by_directive if section.directive_key == "MD")
-        self.assertIn("Power tool safety review", {item.code for item in md_section.items})
+        self.assertIn("EN 62841-1", {item.code for item in md_section.items})
 
     def test_generic_industrial_tool_falls_back_to_ambiguous_match(self) -> None:
         result = analyze("generic industrial tool")
@@ -214,9 +218,11 @@ class MatchingRegressionTests(unittest.TestCase):
 
         self.assertEqual(result.product_type, "corded_power_drill")
         self.assertFalse(result.classification_is_ambiguous)
+        self.assertEqual(result.primary_route_standard_code, "EN 62841-2-1")
         md_section = next(section for section in result.standards_by_directive if section.directive_key == "MD")
         md_codes = {item.code for item in md_section.items}
-        self.assertIn("Power tool safety review", md_codes)
+        self.assertIn("EN 62841-1", md_codes)
+        self.assertIn("EN 62841-2-1", md_codes)
         self.assertTrue(any(item.triggered_by_directive == "MD" for item in md_section.items))
 
     def test_cordless_screwdriver_prefers_power_tool_route_over_oral_hygiene(self) -> None:
@@ -270,7 +276,6 @@ class MatchingRegressionTests(unittest.TestCase):
             "smart air sensor",
             "smart radiator valve",
             "smart irrigation controller",
-            "smart smoke alarm",
             "smart water bottle",
         ]:
             with self.subTest(description=description):
@@ -343,6 +348,110 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertIn("EN 62368-1", standard_codes)
         self.assertIn("EN 55032", standard_codes)
         self.assertIn("EN 55035", standard_codes)
+
+    def test_smart_door_lock_prefers_building_hardware_route(self) -> None:
+        result = analyze("smart door lock with wifi bluetooth keypad and app control")
+
+        all_codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+        self.assertEqual(result.product_type, "smart_lock")
+        self.assertEqual(result.primary_route_standard_code, "EN 14846")
+        self.assertNotIn("smart_speaker", {item.id for item in result.product_candidates})
+        self.assertIn("EN 14846", all_codes)
+        self.assertNotIn("EN 62368-1", all_codes)
+
+    def test_smart_led_bulb_prefers_lighting_route(self) -> None:
+        result = analyze("smart LED bulb with wifi app control and voice assistant integration")
+
+        all_codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+        self.assertEqual(result.product_type, "smart_led_bulb")
+        self.assertEqual(result.primary_route_standard_code, "EN IEC 62560")
+        self.assertNotIn("smart_speaker", {item.id for item in result.product_candidates})
+        self.assertNotIn("home_projector", {item.id for item in result.product_candidates})
+        self.assertIn("EN IEC 62560", all_codes)
+        self.assertNotIn("EN 62368-1", all_codes)
+
+    def test_smart_refrigerator_prefers_refrigerator_route(self) -> None:
+        result = analyze("smart refrigerator with touchscreen display and internal camera")
+
+        self.assertEqual(result.product_type, "refrigerator_freezer")
+        self.assertEqual(result.primary_route_standard_code, "EN 60335-2-24")
+        self.assertIn("EN 60335-2-24", {item.code for item in result.standards})
+
+    def test_air_purifier_prefers_air_cleaning_route(self) -> None:
+        result = analyze("connected air purifier with app control and HEPA filter")
+
+        self.assertEqual(result.product_type, "air_purifier")
+        self.assertEqual(result.primary_route_standard_code, "EN 60335-2-65")
+        self.assertIn("EN 60335-2-65", {item.code for item in result.standards})
+
+    def test_robot_vacuum_prefers_vacuum_route(self) -> None:
+        result = analyze("robot vacuum with docking station and wifi")
+
+        all_codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+        self.assertEqual(result.product_type, "robot_vacuum")
+        self.assertEqual(result.primary_route_standard_code, "EN 60335-2-2")
+        self.assertIn("EN 60335-2-2", all_codes)
+        self.assertNotIn("EN 62368-1", all_codes)
+
+    def test_smartwatch_keeps_wearable_avict_primary_route(self) -> None:
+        result = analyze("smart watch with bluetooth and app")
+
+        self.assertEqual(result.product_type, "smartwatch")
+        self.assertEqual(result.primary_route_standard_code, "EN 62368-1")
+        self.assertIn("EN 62368-1", {item.code for item in result.standards})
+
+    def test_cordless_drill_without_radio_stays_on_machinery_route(self) -> None:
+        result = analyze("cordless drill with rechargeable battery and no wireless communication")
+
+        self.assertEqual(result.product_type, "cordless_power_drill")
+        self.assertEqual(result.primary_route_standard_code, "EN 62841-2-1")
+        self.assertNotIn("RED", result.directives)
+        self.assertNotIn("radio", result.all_traits)
+        self.assertIn("EN 62841-2-1", {item.code for item in result.standards})
+
+    def test_smart_smoke_and_co_alarm_prefers_alarm_route(self) -> None:
+        result = analyze("smart smoke and carbon monoxide alarm with wifi app control")
+
+        standard_codes = {item.code for item in result.standards}
+        self.assertEqual(result.product_type, "smart_smoke_co_alarm")
+        self.assertEqual(result.primary_route_standard_code, "EN 14604")
+        self.assertIn("EN 14604", standard_codes)
+        self.assertIn("EN 50291-1", standard_codes)
+        self.assertNotIn("EN 62368-1", standard_codes | {item.code for item in result.review_items})
+
+    def test_smart_thermostat_prefers_control_route(self) -> None:
+        result = analyze("smart thermostat with voice assistant integration and local control only")
+
+        all_codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+        self.assertEqual(result.product_type, "smart_thermostat")
+        self.assertEqual(result.primary_route_standard_code, "EN 60730-2-9")
+        self.assertIn("EN 60730-2-9", all_codes)
+        self.assertNotIn("EN 62368-1", all_codes)
+
+    def test_toy_like_child_play_product_uses_toy_route(self) -> None:
+        result = analyze("interactive toy robot for children under 14 with bluetooth")
+
+        self.assertEqual(result.product_type, "smart_toy")
+        self.assertEqual(result.primary_route_standard_code, "EN 62115")
+        self.assertIn("TOY", result.directives)
+        self.assertIn("EN 62115", {item.code for item in result.review_items})
+
+    def test_child_related_non_play_safety_product_does_not_use_toy_route(self) -> None:
+        result = analyze("baby monitor with wifi camera and app control")
+
+        self.assertEqual(result.product_type, "baby_monitor")
+        self.assertNotIn("TOY", result.directives)
+
+    def test_explicit_negations_change_routing_signals(self) -> None:
+        smart_lock = analyze("smart door lock with no cloud and local control only")
+        smart_bulb = analyze("smart LED bulb, not a speaker, with no projection functions")
+        child_safety = analyze("child safety wearable with bluetooth, not intended for play")
+
+        self.assertEqual(smart_lock.product_type, "smart_lock")
+        self.assertNotIn("cloud", smart_lock.all_traits)
+        self.assertEqual(smart_bulb.product_type, "smart_led_bulb")
+        self.assertNotIn("EN 62368-1", {item.code for item in smart_bulb.standards} | {item.code for item in smart_bulb.review_items})
+        self.assertNotIn("TOY", child_safety.directives)
 
 
 if __name__ == "__main__":

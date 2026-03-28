@@ -381,13 +381,26 @@ def _score_standard(
 FACT_BASIS_RANK: dict[FactBasis, int] = {"inferred": 0, "mixed": 1, "confirmed": 2}
 
 BASE_STANDARD_PRIORITY_V2 = {
+    "EN 14846": 220,
+    "EN 12209": 205,
     "EN 60335-1": 155,
     "EN 60335-2": 175,
+    "EN 60730-1": 210,
+    "EN 60730-2-9": 225,
+    "EN IEC 61851-1": 230,
+    "EN IEC 61851-21-2": 220,
+    "EN 62196-2": 210,
+    "EN IEC 62560": 220,
+    "EN 62031": 195,
     "EN 55014-1": 145,
     "EN 55014-2": 140,
     "EN 55032": 145,
     "EN 55035": 140,
     "EN 62368-1": 155,
+    "EN 14604": 220,
+    "EN 50291-1": 215,
+    "EN 62841-1": 225,
+    "EN 62841-2-1": 235,
     "EN 62311": 130,
     "EN 62479": 125,
     "EN 62209": 150,
@@ -587,6 +600,59 @@ def _context_bonus_v2(standard: dict[str, Any], context_tags: set[str]) -> int:
         bonus += 45
     if "boundary:medical_wellness" in context_tags and code == "MDR borderline review":
         bonus += 75
+    if "primary:building_hardware" in context_tags:
+        if code == "EN 14846":
+            bonus += 230
+        elif code == "EN 12209":
+            bonus += 180
+        elif code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}:
+            bonus -= 220
+    if "primary:lighting_device" in context_tags:
+        if code == "EN IEC 62560":
+            bonus += 230
+        elif code == "EN 62031":
+            bonus += 180
+        elif code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}:
+            bonus -= 220
+    if "primary:life_safety_alarm" in context_tags:
+        if code == "EN 14604":
+            bonus += 230
+        elif code == "EN 50291-1":
+            bonus += 180
+        elif code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}:
+            bonus -= 220
+    if "primary:hvac_control" in context_tags:
+        if code == "EN 60730-2-9":
+            bonus += 230
+        elif code == "EN 60730-1":
+            bonus += 180
+        elif code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}:
+            bonus -= 220
+    if "primary:ev_charging" in context_tags:
+        if code == "EN IEC 61851-1":
+            bonus += 240
+        elif code == "EN IEC 61851-21-2":
+            bonus += 215
+        elif code in {"EN 62196-2", "IEC 62752"}:
+            bonus += 180
+        elif code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}:
+            bonus -= 230
+    if "primary:machinery_power_tool" in context_tags:
+        if code == "EN 62841-2-1":
+            bonus += 240
+        elif code == "EN 62841-1":
+            bonus += 200
+        elif code == "Power tool safety review":
+            bonus += 80
+        elif code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}:
+            bonus -= 230
+    if "primary:toy" in context_tags:
+        if code == "EN 62115":
+            bonus += 220
+        elif code == "EN 71 review":
+            bonus += 160
+        elif code == "EN 62368-1":
+            bonus -= 220
     return bonus
 
 
@@ -718,6 +784,7 @@ def _finalize_selected_rows_v2(
     rejected_rows: list[dict[str, Any]] = []
     kept: list[dict[str, Any]] = []
     scope_route = str(context.get("scope_route") or "generic")
+    primary_route_family = str(context.get("primary_route_family") or "")
     has_external_psu = bool(context.get("has_external_psu"))
     has_laser_source = bool(context.get("has_laser_source"))
     has_photobiological_source = bool(context.get("has_photobiological_source"))
@@ -729,6 +796,46 @@ def _finalize_selected_rows_v2(
         row = dict(original_row)
         code = str(row.get("code") or "")
         route = str(row.get("directive") or row.get("legislation_key") or "OTHER")
+
+        if primary_route_family == "building_hardware" and (
+            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
+        ):
+            _reject_selected_row(row, "building-hardware route takes precedence over generic AV/ICT or appliance safety routes", rejected_rows, rejections)
+            continue
+
+        if primary_route_family == "lighting_device" and (
+            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
+        ):
+            _reject_selected_row(row, "lighting route takes precedence over generic AV/ICT or appliance safety routes", rejected_rows, rejections)
+            continue
+
+        if primary_route_family == "life_safety_alarm" and (
+            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
+        ):
+            _reject_selected_row(row, "alarm-specific safety routes take precedence over generic AV/ICT or appliance routes", rejected_rows, rejections)
+            continue
+
+        if primary_route_family == "hvac_control" and (
+            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
+        ):
+            _reject_selected_row(row, "HVAC control routes take precedence over generic AV/ICT or appliance routes", rejected_rows, rejections)
+            continue
+
+        if primary_route_family == "ev_charging" and (
+            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
+        ):
+            _reject_selected_row(row, "EV charging routes take precedence over generic AV/ICT or household-appliance routes", rejected_rows, rejections)
+            continue
+
+        if primary_route_family == "machinery_power_tool" and (
+            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
+        ):
+            _reject_selected_row(row, "machinery power-tool routes take precedence over AV/ICT and appliance routes", rejected_rows, rejections)
+            continue
+
+        if primary_route_family == "toy" and code == "EN 62368-1":
+            _reject_selected_row(row, "toy-specific safety routes take precedence over generic AV/ICT safety routes", rejected_rows, rejections)
+            continue
 
         if code in {"EN 55032", "EN 55035"} and scope_route == "appliance":
             _reject_selected_row(row, f"scope route '{scope_route}' prefers appliance EMC standards", rejected_rows, rejections)

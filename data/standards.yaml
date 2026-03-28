@@ -5393,20 +5393,320 @@ standards:
   - audio
   - video
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
-- code: IEC 61851-1
-  title: 'Electric vehicle conductive charging system - Part 1: General requirements'
+- code: EN 12209
+  title: Building hardware - Mechanically operated locks, latches and locking plates
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN 12209
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN 12209
+  dated_version: EN 12209
+  applies_if_products:
+  - smart_lock
+  applies_if_any:
+  - security_or_barrier
+  - safety_function
+  exclude_if: []
+  test_focus:
+  - safety
+  - mechanical
+  evidence_hint:
+  - lockset and latch architecture
+  - mechanical locking function description
+  - door application details
+  keywords:
+  - door lock
+  - mortise lock
+  - latch
+  - locking plate
+  notes: Supporting lock and latch route for building-hardware products where the mechanical
+    locking function remains relevant alongside electromechanical control.
+  applies_if_genres:
+  - building_hardware_lock
+  standard_ref: EN 12209
+  selection_group: EN 12209
+  selection_priority: 15
+  evidence_keywords:
+  - lockset and latch architecture
+  - mechanical locking function description
+  - door application details
+  - door lock
+  - mortise lock
+  - latch
+  - locking plate
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 14846
+  title: Building hardware - Locks and latches - Electromechanically operated locks and striking plates
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN 14846
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN 14846
+  dated_version: EN 14846
+  applies_if_products:
+  - smart_lock
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - security_or_barrier
+  - safety_function
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  - mechanical
+  evidence_hint:
+  - electromechanical lock architecture
+  - door and striking-plate configuration
+  - access-control function description
+  keywords:
+  - smart lock
+  - electromechanical lock
+  - deadbolt
+  - entry lock
+  notes: Primary electromechanical lock route for smart locks, keyless deadbolts, and
+    similar building-hardware access products.
+  applies_if_genres:
+  - building_hardware_lock
+  standard_ref: EN 14846
+  selection_group: EN 14846
+  selection_priority: 40
+  evidence_keywords:
+  - electromechanical lock architecture
+  - door and striking-plate configuration
+  - access-control function description
+  - smart lock
+  - electromechanical lock
+  - deadbolt
+  - entry lock
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN IEC 62560
+  title: Self-ballasted LED-lamps for general lighting services by voltage > 50 V - Safety specifications
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN IEC 62560
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN IEC 62560
+  dated_version: EN IEC 62560
+  applies_if_products:
+  - smart_led_bulb
+  - smart_desk_lamp
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - lighting
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  - energy
+  evidence_hint:
+  - lamp electrical ratings
+  - light-source architecture
+  - cap/base and control-gear description
+  keywords:
+  - led lamp
+  - led bulb
+  - smart bulb
+  - light source
+  - e27
+  notes: Primary light-source safety route for smart LED bulbs and similar connected
+    lamps. Connectivity features remain overlays and do not move the product into AV/ICT.
+  applies_if_genres:
+  - lighting_device
+  standard_ref: EN IEC 62560
+  selection_group: EN IEC 62560
+  selection_priority: 35
+  evidence_keywords:
+  - lamp electrical ratings
+  - light-source architecture
+  - cap/base and control-gear description
+  - led lamp
+  - led bulb
+  - smart bulb
+  - light source
+  - e27
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 62031
+  title: LED modules for general lighting - Safety specifications
   region: EU
   category: safety
   directives:
   - LVD
   legislation_key: LVD
   item_type: review
-  standard_family: IEC 61851-1
+  standard_family: EN 62031
   confidence: medium
+  required_fact_basis: confirmed
   harmonization_status: review
   is_harmonized: false
-  version: IEC 61851-1
-  dated_version: IEC 61851-1
+  version: EN 62031
+  dated_version: EN 62031
+  applies_if_products:
+  - smart_led_bulb
+  - smart_desk_lamp
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - lighting
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - LED module and driver details
+  - light-engine architecture
+  - luminaire integration details
+  keywords:
+  - led module
+  - task light
+  - desk lamp
+  - luminaire
+  notes: Supporting lighting review route where the product is a lamp or luminaire with
+    LED modules and integrated control electronics.
+  applies_if_genres:
+  - lighting_device
+  standard_ref: EN 62031
+  selection_group: EN 62031
+  selection_priority: 15
+  evidence_keywords:
+  - LED module and driver details
+  - light-engine architecture
+  - luminaire integration details
+  - led module
+  - task light
+  - desk lamp
+  - luminaire
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 60730-1
+  title: Automatic electrical controls for household and similar use - Part 1 General requirements
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN 60730-1
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN 60730-1
+  dated_version: EN 60730-1
+  applies_if_products:
+  - smart_thermostat
+  applies_if_all:
+  - electrical
+  - electronic
+  applies_if_any: []
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - control architecture description
+  - thermostat operating logic
+  - sensor and switching details
+  keywords:
+  - thermostat control
+  - automatic electrical controls
+  - heating controller
+  notes: General control-safety anchor for thermostats and similar automatic electrical
+    control products.
+  applies_if_genres:
+  - hvac_environmental_appliance
+  standard_ref: EN 60730-1
+  selection_group: EN 60730-1
+  selection_priority: 25
+  evidence_keywords:
+  - control architecture description
+  - thermostat operating logic
+  - sensor and switching details
+  - thermostat control
+  - automatic electrical controls
+  - heating controller
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 60730-2-9
+  title: Automatic electrical controls for household and similar use - Particular requirements for temperature sensing controls
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN 60730-2-9
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN 60730-2-9
+  dated_version: EN 60730-2-9
+  applies_if_products:
+  - smart_thermostat
+  applies_if_all:
+  - electrical
+  - electronic
+  applies_if_any: []
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - thermostat sensing path
+  - heating or HVAC control logic
+  - set-point and switching description
+  keywords:
+  - thermostat
+  - hvac thermostat
+  - heating controller
+  - radiator valve
+  notes: Primary thermostat route for room thermostats, heating controllers, and similar
+    connected temperature-sensing controls.
+  applies_if_genres:
+  - hvac_environmental_appliance
+  standard_ref: EN 60730-2-9
+  selection_group: EN 60730-2-9
+  selection_priority: 40
+  evidence_keywords:
+  - thermostat sensing path
+  - heating or HVAC control logic
+  - set-point and switching description
+  - thermostat
+  - hvac thermostat
+  - heating controller
+  - radiator valve
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN IEC 61851-1
+  title: 'Electric vehicle conductive charging system - Part 1: General requirements'
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN IEC 61851-1
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN IEC 61851-1
+  dated_version: EN IEC 61851-1
   applies_if_products:
   - ev_charger_home
   - portable_ev_charger
@@ -5436,10 +5736,10 @@ standards:
     where the product is clearly charger-side equipment.
   state_of_the_art_scope: EU
   applies_if_genres:
-  - portable_energy
-  standard_ref: IEC 61851-1
-  selection_group: IEC 61851-1
-  selection_priority: 0
+  - ev_charging_equipment
+  standard_ref: EN IEC 61851-1
+  selection_group: EN IEC 61851-1
+  selection_priority: 40
   evidence_keywords:
   - EVSE function description
   - charging interface and installation details
@@ -5452,7 +5752,7 @@ standards:
   - mode 2 charger
   - granny charger
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
-- code: IEC 61851-21-2
+- code: EN IEC 61851-21-2
   title: 'Electric vehicle conductive charging system - Part 21-2: EMC requirements
     for off-board electric vehicle charging systems'
   region: EU
@@ -5460,14 +5760,14 @@ standards:
   directives:
   - EMC
   legislation_key: EMC
-  item_type: review
-  standard_family: IEC 61851-21-2
-  confidence: medium
+  item_type: standard
+  standard_family: EN IEC 61851-21-2
+  confidence: high
   required_fact_basis: confirmed
-  harmonization_status: review
+  harmonization_status: unknown
   is_harmonized: false
-  version: IEC 61851-21-2
-  dated_version: IEC 61851-21-2
+  version: EN IEC 61851-21-2
+  dated_version: EN IEC 61851-21-2
   applies_if_products:
   - ev_charger_home
   - portable_ev_charger
@@ -5494,9 +5794,11 @@ standards:
   notes: Review route for conductive EV charging equipment where product-specific
     EMC evidence is needed beyond generic household or AV/ICT assumptions.
   state_of_the_art_scope: EU
-  standard_ref: IEC 61851-21-2
-  selection_group: IEC 61851-21-2
-  selection_priority: 5
+  applies_if_genres:
+  - ev_charging_equipment
+  standard_ref: EN IEC 61851-21-2
+  selection_group: EN IEC 61851-21-2
+  selection_priority: 35
   evidence_keywords:
   - EVSE EMC test plan
   - conductive charging interface description
@@ -5506,7 +5808,7 @@ standards:
   - off-board charging system
   - conductive charging emc
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
-- code: IEC 62196-2
+- code: EN 62196-2
   title: Plugs, socket-outlets, vehicle connectors and vehicle inlets - Conductive
     charging of electric vehicles - Part 2
   region: EU
@@ -5515,13 +5817,13 @@ standards:
   - LVD
   legislation_key: LVD
   item_type: review
-  standard_family: IEC 62196-2
+  standard_family: EN 62196-2
   confidence: medium
   required_fact_basis: confirmed
   harmonization_status: review
   is_harmonized: false
-  version: IEC 62196-2
-  dated_version: IEC 62196-2
+  version: EN 62196-2
+  dated_version: EN 62196-2
   applies_if_products:
   - ev_charger_home
   - portable_ev_charger
@@ -5548,9 +5850,11 @@ standards:
   notes: Review route for EV charging connectors, sockets, tethered cables, and related
     AC interface hardware used with home or portable EVSE.
   state_of_the_art_scope: EU
-  standard_ref: IEC 62196-2
-  selection_group: IEC 62196-2
-  selection_priority: 5
+  applies_if_genres:
+  - ev_charging_equipment
+  standard_ref: EN 62196-2
+  selection_group: EN 62196-2
+  selection_priority: 20
   evidence_keywords:
   - connector interface description
   - charging cable or socket specification
@@ -5622,10 +5926,10 @@ standards:
   directives:
   - LVD
   legislation_key: LVD
-  item_type: review
+  item_type: standard
   standard_family: EN 14604
-  confidence: medium
-  harmonization_status: review
+  confidence: high
+  harmonization_status: unknown
   is_harmonized: false
   version: EN 14604
   dated_version: EN 14604
@@ -5654,12 +5958,10 @@ standards:
     life-safety references connected without breaking the main standards engine.
   state_of_the_art_scope: EU
   applies_if_genres:
-  - building_access_drive
-  - security_access_iot
-  - smart_home_iot
+  - life_safety_alarm
   standard_ref: EN 14604
   selection_group: EN 14604
-  selection_priority: 0
+  selection_priority: 35
   evidence_keywords:
   - alarm function description
   - detector technology description
@@ -5668,6 +5970,57 @@ standards:
   - connected smoke detector
   - safety alarm
   - smoke alarm devices
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 50291-1
+  title: Electrical apparatus for the detection of carbon monoxide in domestic premises - Part 1
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN 50291-1
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN 50291-1
+  dated_version: EN 50291-1
+  applies_if_products:
+  - smart_smoke_co_alarm
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - co_detection
+  - safety_function
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  - mechanical
+  evidence_hint:
+  - carbon monoxide detection principle
+  - warning output details
+  - domestic installation details
+  keywords:
+  - co alarm
+  - co detector
+  - carbon monoxide alarm
+  - combined smoke and co alarm
+  notes: Carbon-monoxide detector route for residential and combined smoke/CO alarm products.
+  applies_if_genres:
+  - life_safety_alarm
+  standard_ref: EN 50291-1
+  selection_group: EN 50291-1
+  selection_priority: 30
+  evidence_keywords:
+  - carbon monoxide detection principle
+  - warning output details
+  - domestic installation details
+  - co alarm
+  - co detector
+  - carbon monoxide alarm
+  - combined smoke and co alarm
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
 - code: EN 62471
   title: Photobiological safety of lamps and lamp systems
@@ -6929,6 +7282,112 @@ standards:
   - garden equipment robotic
   - outdoor safety review
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 62841-1
+  title: Electric motor-operated hand-held tools, transportable tools and lawn and garden machinery - Safety - Part 1 General requirements
+  region: EU
+  category: safety
+  directives:
+  - MD
+  - MACH_REG
+  legislation_key: MD
+  item_type: standard
+  standard_family: EN 62841-1
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN 62841-1
+  dated_version: EN 62841-1
+  applies_if_products:
+  - industrial_power_tool
+  - corded_power_drill
+  - cordless_power_drill
+  applies_if_genres:
+  - electric_power_tool
+  applies_if_all:
+  - electrical
+  - motorized
+  applies_if_any:
+  - handheld
+  - portable
+  exclude_if: []
+  test_focus:
+  - safety
+  - mechanical
+  - electrical
+  evidence_hint:
+  - tool architecture and guarding review
+  - motor and control specification
+  - moving-part and overload protection review
+  keywords:
+  - power tool
+  - hand-held tool
+  - transportable tool
+  - drill driver
+  notes: Primary machinery-family anchor for hand-held and transportable electric power
+    tools.
+  standard_ref: EN 62841-1
+  selection_group: EN 62841-1
+  selection_priority: 35
+  evidence_keywords:
+  - tool architecture and guarding review
+  - motor and control specification
+  - moving-part and overload protection review
+  - power tool
+  - hand-held tool
+  - transportable tool
+  - drill driver
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 62841-2-1
+  title: Electric motor-operated hand-held tools, transportable tools and lawn and garden machinery - Safety - Particular requirements for hand-held drills and impact drills
+  region: EU
+  category: safety
+  directives:
+  - MD
+  - MACH_REG
+  legislation_key: MD
+  item_type: standard
+  standard_family: EN 62841-2-1
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN 62841-2-1
+  dated_version: EN 62841-2-1
+  applies_if_products:
+  - corded_power_drill
+  - cordless_power_drill
+  applies_if_all:
+  - electrical
+  - motorized
+  applies_if_any:
+  - handheld
+  - portable
+  exclude_if: []
+  test_focus:
+  - safety
+  - mechanical
+  - electrical
+  evidence_hint:
+  - drill and chuck architecture
+  - impact-drill function description
+  - user-control and overload-protection details
+  keywords:
+  - drill
+  - electric drill
+  - impact drill
+  - drill driver
+  notes: Particular drill-family route for hand-held drills and impact drills.
+  standard_ref: EN 62841-2-1
+  selection_group: EN 62841-2-1
+  selection_priority: 45
+  evidence_keywords:
+  - drill and chuck architecture
+  - impact-drill function description
+  - user-control and overload-protection details
+  - drill
+  - electric drill
+  - impact drill
+  - drill driver
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
 - code: Power tool safety review
   title: Hand-held and transportable electric power tool standards-suite review
   region: EU
@@ -6946,9 +7405,6 @@ standards:
   version: Power tool standards-suite review
   dated_version: Power tool standards-suite review
   applies_if_products:
-  - industrial_power_tool
-  - corded_power_drill
-  - cordless_power_drill
   - portable_power_saw
   - cordless_screwdriver
   - impact_driver

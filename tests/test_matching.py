@@ -116,6 +116,29 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual(result["product_family"], "air_treatment_cleaner")
         self.assertEqual(result["product_subtype"], "air_purifier")
 
+    def test_smart_led_bulb_beats_speaker_and_projector_clues(self) -> None:
+        result = extract_traits("smart LED bulb with wifi app control and voice assistant integration")
+
+        self.assertEqual(result["product_family"], "smart_lighting")
+        self.assertEqual(result["product_subtype"], "smart_led_bulb")
+        self.assertEqual(result["product_match_stage"], "subtype")
+        self.assertEqual(result["preferred_standard_codes"], ["EN IEC 62560", "EN 62031"])
+
+    def test_smart_thermostat_stays_out_of_speaker_route(self) -> None:
+        result = extract_traits("smart thermostat with voice assistant integration and local control only")
+
+        self.assertEqual(result["product_family"], "hvac_control")
+        self.assertEqual(result["product_subtype"], "smart_thermostat")
+        self.assertEqual(result["product_match_stage"], "subtype")
+        self.assertEqual(result["preferred_standard_codes"], ["EN 60730-1", "EN 60730-2-9"])
+
+    def test_no_wireless_negation_blocks_radio_for_power_tool(self) -> None:
+        result = extract_traits("cordless drill with no wireless communication")
+
+        self.assertEqual(result["product_type"], "cordless_power_drill")
+        self.assertNotIn("radio", result["all_traits"])
+        self.assertNotIn("wifi", result["all_traits"])
+
     def test_fan_heater_beats_fan_with_heater_clue(self) -> None:
         result = extract_traits("fan heater for indoor room heating")
 
@@ -308,8 +331,9 @@ class MatchingTests(unittest.TestCase):
             self.assertIn(reference, known_refs)
 
         result = analyze("smart ev charger wallbox with wifi, bluetooth and mobile app")
-        review_codes = {item.code for item in result.review_items}
-        self.assertIn("IEC 61851-1", review_codes)
+        all_codes = {item.code for item in result.standards} | {item.code for item in result.review_items}
+        self.assertEqual(result.primary_route_standard_code, "EN IEC 61851-1")
+        self.assertIn("EN IEC 61851-1", all_codes)
 
     def test_all_product_likely_standards_resolve_to_known_codes_or_families(self) -> None:
         standards = load_standards()

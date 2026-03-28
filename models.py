@@ -278,6 +278,11 @@ class RouteContext(BaseModel):
     known_fact_keys: list[str] = Field(default_factory=list)
     jurisdiction: str = "EU"
     route_trigger_reasons: list[str] = Field(default_factory=list)
+    primary_route_family: str | None = None
+    primary_route_standard_code: str | None = None
+    primary_route_reason: str = ""
+    overlay_routes: list[str] = Field(default_factory=list)
+    route_confidence: ConfidenceLevel = "low"
 
 
 class ShadowDiffItem(BaseModel):
@@ -372,6 +377,10 @@ class AnalysisResult(BaseModel):
     primary_uncertainties: list[str] = Field(default_factory=list)
     route_trigger_reasons: list[str] = Field(default_factory=list)
     triggered_routes: list[str] = Field(default_factory=list)
+    primary_route_standard_code: str | None = None
+    primary_route_reason: str = ""
+    overlay_routes: list[str] = Field(default_factory=list)
+    route_confidence: ConfidenceLevel = "low"
     product_candidates: list[ProductCandidate] = Field(default_factory=list)
     functional_classes: list[str] = Field(default_factory=list)
     confirmed_functional_classes: list[str] = Field(default_factory=list)

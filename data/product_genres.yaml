@@ -1581,3 +1581,164 @@ genres:
   negative_examples:
   - coffee grinder
   - oral irrigator
+- id: building_hardware_lock
+  label: Building hardware / lock
+  keywords:
+  - lock
+  - door lock
+  - deadbolt
+  - entry lock
+  - electromechanical lock
+  traits:
+  - consumer
+  - electrical
+  - electronic
+  - security_or_barrier
+  - safety_function
+  functional_classes:
+  - security_device
+  likely_standards:
+  - EN 14846
+  - EN 12209
+  strong_keywords:
+  - door lock
+  - deadbolt
+  - entry lock
+  - electromechanical lock
+  weak_keywords:
+  - lock
+  likely_standard_refs:
+  - ref: EN 14846
+    kind: unspecified
+  - ref: EN 12209
+    kind: unspecified
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - security_or_barrier
+  - safety_function
+  score_penalty_if_traits: []
+  negative_examples: []
+- id: life_safety_alarm
+  label: Life-safety alarm
+  keywords:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  - co alarm
+  - co detector
+  - combined smoke and co alarm
+  traits:
+  - consumer
+  - electrical
+  - electronic
+  - safety_function
+  functional_classes:
+  - safety_device
+  - security_device
+  likely_standards:
+  - EN 14604
+  - EN 50291-1
+  strong_keywords:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  - co detector
+  - combined smoke and co alarm
+  weak_keywords:
+  - co alarm
+  likely_standard_refs:
+  - ref: EN 14604
+    kind: unspecified
+  - ref: EN 50291-1
+    kind: unspecified
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - safety_function
+  score_penalty_if_traits: []
+  negative_examples: []
+- id: lighting_device
+  label: Lighting device / light source
+  keywords:
+  - led lamp
+  - led bulb
+  - smart bulb
+  - smart lamp
+  - light source
+  - e27
+  traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - lighting
+  functional_classes:
+  - smart_lighting
+  - home_device
+  likely_standards:
+  - EN IEC 62560
+  strong_keywords:
+  - led bulb
+  - smart bulb
+  - led lamp
+  - light source
+  weak_keywords:
+  - smart lamp
+  - e27
+  likely_standard_refs:
+  - ref: EN IEC 62560
+    kind: unspecified
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - lighting
+  score_penalty_if_traits: []
+  negative_examples: []
+- id: ev_charging_equipment
+  label: EV charging equipment
+  keywords:
+  - ev charger
+  - evse
+  - wallbox
+  - mode 2 charger
+  - charging cable with control box
+  - vehicle connector
+  - charging socket
+  traits:
+  - electrical
+  - electronic
+  - ev_charging
+  - vehicle_supply
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN IEC 61851-1
+  - EN IEC 61851-21-2
+  - EN 62196-2
+  strong_keywords:
+  - ev charger
+  - evse
+  - mode 2 charger
+  - vehicle connector
+  - charging socket
+  weak_keywords:
+  - wallbox
+  likely_standard_refs:
+  - ref: EN IEC 61851-1
+    kind: unspecified
+  - ref: EN IEC 61851-21-2
+    kind: unspecified
+  - ref: EN 62196-2
+    kind: unspecified
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - ev_charging
+  - vehicle_supply
+  score_penalty_if_traits: []
+  negative_examples: []

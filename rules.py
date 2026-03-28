@@ -14,7 +14,7 @@ from env_config import init_env
 init_env()
 
 from classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, extract_traits, extract_traits_v1, normalize
-from knowledge_base import load_legislations, load_meta
+from knowledge_base import load_legislations, load_meta, load_products
 from models import (
     AnalysisAudit,
     AnalysisResult,
@@ -431,6 +431,43 @@ SMALL_SMART_62368_GENRES = {
     "pet_tech",
 }
 
+ROUTE_FAMILY_SCOPE = {
+    "household_appliance": "appliance",
+    "av_ict": "av_ict",
+    "av_ict_wearable": "av_ict",
+    "lighting_device": "appliance",
+    "building_hardware": "appliance",
+    "hvac_control": "appliance",
+    "life_safety_alarm": "appliance",
+    "ev_charging": "appliance",
+    "machinery_power_tool": "machinery",
+    "toy": "toy",
+}
+
+ROUTE_FAMILY_PRIMARY_DIRECTIVE = {
+    "machinery_power_tool": "MD",
+    "toy": "TOY",
+}
+
+PRIMARY_DIRECTIVE_EXCLUSIONS = {
+    "MD": {"LVD"},
+    "TOY": {"LVD"},
+}
+
+OVERLAY_DIRECTIVE_KEYS = {
+    "RED",
+    "EMC",
+    "BATTERY",
+    "RED_CYBER",
+    "GDPR",
+    "ROHS",
+    "REACH",
+    "WEEE",
+    "ECO",
+    "ESPR",
+    "CRA",
+}
+
 
 @dataclass(slots=True)
 class PreparedAnalysis:
@@ -452,6 +489,18 @@ class PreparedAnalysis:
     confirmed_traits: set[str]
     functional_classes: set[str]
     raw_state_map: dict[str, dict[str, list[str]]]
+    route_plan: RoutePlan
+
+
+@dataclass(slots=True)
+class RoutePlan:
+    primary_route_family: str | None = None
+    primary_standard_code: str | None = None
+    supporting_standard_codes: list[str] = field(default_factory=list)
+    primary_directive: str | None = None
+    reason: str = ""
+    confidence: ConfidenceLevel = "low"
+    scope_route: str = "generic"
 
 
 @dataclass(slots=True)
@@ -485,14 +534,95 @@ class AnalysisTrace:
         self.stage_timings_ms[stage] = int((perf_counter() - started_at) * 1000)
 
 
+def _products_by_id() -> dict[str, dict[str, Any]]:
+    return {
+        str(row.get("id")): row
+        for row in load_products()
+        if isinstance(row, dict) and isinstance(row.get("id"), str)
+    }
+
+
+def _route_product_row(product_type: str | None, matched_products: set[str] | None = None) -> dict[str, Any] | None:
+    products = _products_by_id()
+    candidate_ids: list[str] = []
+    if product_type:
+        candidate_ids.append(product_type)
+    for candidate_id in sorted(matched_products or set()):
+        if candidate_id not in candidate_ids:
+            candidate_ids.append(candidate_id)
+    for candidate_id in candidate_ids:
+        row = products.get(candidate_id)
+        if row and (row.get("route_family") or row.get("primary_standard_code")):
+            return row
+    return None
+
+
+def _route_scope_from_family(route_family: str | None) -> str | None:
+    if not route_family:
+        return None
+    return ROUTE_FAMILY_SCOPE.get(route_family)
+
+
+def _build_route_plan(
+    traits_data: dict[str, Any],
+    traits: set[str],
+    matched_products: set[str],
+    product_type: str | None,
+) -> RoutePlan:
+    product_match_confidence = _confidence_level(traits_data.get("product_match_confidence"), default="low")
+    route_row = _route_product_row(product_type, matched_products)
+    if route_row:
+        route_family = str(route_row.get("route_family") or "") or None
+        primary_standard_code = str(route_row.get("primary_standard_code") or "") or None
+        supporting_standard_codes = _string_list(route_row.get("supporting_standard_codes"))
+        scope_route = _route_scope_from_family(route_family) or "generic"
+        label = str(route_row.get("label") or route_row.get("id") or product_type or "product")
+        if primary_standard_code:
+            reason = f"{label} maps to {primary_standard_code} as the primary product-safety route."
+        elif route_family:
+            reason = f"{label} maps to the {route_family.replace('_', ' ')} product-safety route."
+        else:
+            reason = f"{label} maps to a product-specific safety route."
+        return RoutePlan(
+            primary_route_family=route_family,
+            primary_standard_code=primary_standard_code,
+            supporting_standard_codes=supporting_standard_codes,
+            primary_directive=ROUTE_FAMILY_PRIMARY_DIRECTIVE.get(route_family or ""),
+            reason=reason,
+            confidence=product_match_confidence,
+            scope_route=scope_route,
+        )
+
+    if "toy" in traits:
+        return RoutePlan(
+            primary_route_family="toy",
+            primary_directive="TOY",
+            reason="Toy intent is explicit in the description.",
+            confidence=product_match_confidence,
+            scope_route="toy",
+        )
+
+    return RoutePlan(confidence=product_match_confidence)
+
+
 def _scope_route(
     traits: set[str],
     matched_products: set[str],
     product_type: str | None,
     confirmed_traits: set[str] | None = None,
+    route_family: str | None = None,
 ) -> tuple[str, list[str]]:
     confirmed_traits = confirmed_traits or set()
     reasons: list[str] = []
+
+    scoped_family = route_family
+    if not scoped_family:
+        route_row = _route_product_row(product_type, matched_products)
+        scoped_family = str(route_row.get("route_family") or "") or None if route_row else None
+    family_scope = _route_scope_from_family(scoped_family)
+    if family_scope:
+        reasons.append(f"primary_route_family={scoped_family}")
+        return family_scope, reasons
 
     appliance_signals = set(APPLIANCE_PRIMARY_TRAITS) & traits
     av_ict_signals = {"av_ict"} & traits
@@ -1183,8 +1313,18 @@ def _standard_context(
     product_type: str | None,
     confirmed_traits: set[str] | None,
     description: str,
+    route_plan: RoutePlan | None = None,
 ) -> dict[str, Any]:
-    scope_route, scope_reasons = _scope_route(traits, matched_products, product_type, confirmed_traits)
+    route_plan = route_plan or RoutePlan()
+    scope_route, scope_reasons = _scope_route(
+        traits,
+        matched_products,
+        product_type,
+        confirmed_traits,
+        route_plan.primary_route_family,
+    )
+    if route_plan.reason:
+        scope_reasons = [route_plan.reason, *scope_reasons]
     text = normalize(description)
     has_external_psu = "external_psu" in traits or bool(matched_products & {"battery_charger", "industrial_charger"})
     has_portable_battery = bool({"battery_powered", "backup_battery"} & traits)
@@ -1232,6 +1372,10 @@ def _standard_context(
     )
 
     context_tags: set[str] = {f"scope:{scope_route}"}
+    if route_plan.primary_route_family:
+        context_tags.add("primary:" + route_plan.primary_route_family)
+    if route_plan.primary_standard_code:
+        context_tags.add("primary_standard:" + route_plan.primary_standard_code)
     if has_external_psu:
         context_tags.add("power:external_psu")
     if has_portable_battery:
@@ -1262,6 +1406,10 @@ def _standard_context(
         "scope_reasons": scope_reasons,
         "text": text,
         "context_tags": context_tags,
+        "primary_route_family": route_plan.primary_route_family,
+        "primary_standard_code": route_plan.primary_standard_code,
+        "primary_route_reason": route_plan.reason,
+        "route_confidence": route_plan.confidence,
         "has_external_psu": has_external_psu,
         "has_portable_battery": has_portable_battery,
         "has_laser_source": has_laser_source,
@@ -1540,6 +1688,37 @@ def _build_legislation_sections(
     return items, sections, _directive_keys(items)
 
 
+def _legislation_sections_from_items(items: list[LegislationItem]) -> list[LegislationSection]:
+    sections_dict: dict[str, dict[str, Any]] = {
+        "ce": {"key": "ce", "title": "CE routes", "items": []},
+        "non_ce": {"key": "non_ce", "title": "Parallel obligations", "items": []},
+        "framework": {"key": "framework", "title": "Additional framework checks", "items": []},
+        "future": {"key": "future", "title": "Future / lifecycle watchlist", "items": []},
+        "informational": {"key": "informational", "title": "Informational notices", "items": []},
+    }
+    for item in items:
+        sections_dict[item.bucket]["items"].append(item)
+    return [
+        LegislationSection(
+            key=value["key"],
+            title=value["title"],
+            count=len(value["items"]),
+            items=value["items"],
+        )
+        for value in sections_dict.values()
+        if value["items"]
+    ]
+
+
+def _filter_legislation_items_for_route_plan(items: list[LegislationItem], route_plan: RoutePlan) -> list[LegislationItem]:
+    if not route_plan.primary_directive:
+        return items
+    excluded = PRIMARY_DIRECTIVE_EXCLUSIONS.get(route_plan.primary_directive, set())
+    if not excluded:
+        return items
+    return [item for item in items if item.directive_key not in excluded]
+
+
 def _build_known_facts(description: str) -> list[KnownFactItem]:
     text = normalize(description)
     facts: list[KnownFactItem] = []
@@ -1715,10 +1894,12 @@ def _missing_information(
     description: str,
     product_type: str | None = None,
     product_match_stage: ProductMatchStage = "ambiguous",
+    route_plan: RoutePlan | None = None,
 ) -> list[MissingInformationItem]:
     text = normalize(description)
     items: list[MissingInformationItem] = []
     seen_keys: set[str] = set()
+    route_plan = route_plan or RoutePlan()
 
     def add(
         key: str,
@@ -1745,6 +1926,14 @@ def _missing_information(
         )
 
     known_fact_keys = {item.key for item in _build_known_facts(description)}
+    route_family = route_plan.primary_route_family
+
+    def stated(pattern: str) -> bool:
+        return bool(re.search(pattern, text))
+
+    def stated_any(patterns: list[str]) -> bool:
+        return any(stated(pattern) for pattern in patterns)
+
     tool_signal = bool(
         matched_products
         & {"industrial_power_tool", "corded_power_drill", "cordless_power_drill", "portable_power_saw", "industrial_air_compressor"}
@@ -1774,6 +1963,258 @@ def _missing_information(
     radio_band_known = _has_radio_band_detail(text)
     radio_power_known = _has_radio_power_detail(text)
     data_category_known = _has_data_category_detail(text) or "data.health_related" in known_fact_keys
+
+    if product_type == "smart_lock":
+        if not stated_any([r"\bindoor\b", r"\boutdoor\b", r"\bweather(?:proof|resistant)\b", r"\bexternal door\b"]):
+            add(
+                "smart_lock_installation",
+                "Confirm whether the lock is indoor-only or intended for exposed outdoor use.",
+                "medium",
+                ["indoor apartment door", "outdoor gate or exterior door"],
+                ["fixed_installation"],
+                ["LVD", "GPSR"],
+            )
+        if "biometric" in traits and not stated_any([r"\blocal only\b", r"\bon device\b", r"\bcloud\b", r"\bremote unlock history\b"]):
+            add(
+                "smart_lock_biometric_storage",
+                "Confirm whether biometric data is processed locally only or backed up to the cloud.",
+                "high",
+                ["fingerprint templates stored locally only", "biometric data synced to cloud account"],
+                ["biometric", "cloud", "personal_data_likely"],
+                ["GDPR", "RED_CYBER"],
+            )
+        if not stated_any([r"\bpanic\b", r"\bemergency exit\b", r"\bescape route\b", r"\bfire exit\b"]):
+            add(
+                "smart_lock_escape_route",
+                "Confirm whether the lock is used on an emergency-exit, panic, or escape-route door.",
+                "medium",
+                ["standard residential entry door", "panic-exit application"],
+                ["safety_function"],
+                ["GPSR"],
+            )
+        if ("app_control" in traits or "voice_assistant" in traits) and "radio" not in traits:
+            add(
+                "smart_lock_actual_radio",
+                "Confirm the actual radio modules present, if any.",
+                "high",
+                ["Wi-Fi", "Bluetooth", "Zigbee", "Z-Wave", "NFC", "no wireless communication"],
+                ["radio", "wifi", "bluetooth", "zigbee", "nfc"],
+                ["RED", "RED_CYBER"],
+            )
+
+    if route_family == "ev_charging" or product_type in {"ev_charger_home", "portable_ev_charger"}:
+        if not stated_any([r"\bmode ?2\b", r"\bmode ?3\b", r"\bmode ?4\b"]):
+            add(
+                "ev_mode",
+                "Confirm whether the product is mode 2, mode 3, or mode 4 charging equipment.",
+                "high",
+                ["mode 2 portable EVSE", "mode 3 wallbox", "mode 4 DC charger"],
+                ["ev_charging"],
+                ["LVD", "EMC"],
+            )
+        if not stated_any([r"\bac charging\b", r"\bdc charging\b", r"\bac\b", r"\bdc\b"]):
+            add(
+                "ev_ac_dc",
+                "Confirm whether the charging equipment is AC or DC.",
+                "high",
+                ["single-phase AC", "three-phase AC", "DC fast charging"],
+                ["ev_charging"],
+                ["LVD", "EMC"],
+            )
+        if not stated_any([r"\bportable\b", r"\bfixed\b", r"\bwallbox\b", r"\bcharging station\b", r"\bwall mount\b"]):
+            add(
+                "ev_installation_type",
+                "Confirm whether it is a portable EVSE or a fixed charging station.",
+                "high",
+                ["portable mode 2 EVSE", "fixed wallbox charging station"],
+                ["portable", "fixed_installation"],
+                ["LVD", "EMC"],
+            )
+        if not stated_any([r"\btype ?1\b", r"\btype ?2\b", r"\bccs\b", r"\bconnector\b", r"\binlet\b", r"\bcoupler\b", r"\bsocket\b"]):
+            add(
+                "ev_connector_type",
+                "Confirm whether the connector, coupler, or inlet type is relevant.",
+                "medium",
+                ["Type 2 vehicle connector", "CCS interface", "socket-outlet only"],
+                ["vehicle_supply"],
+                ["LVD"],
+            )
+        if not stated_any([r"\baccessory\b", r"\bconnector only\b", r"\bcoupler only\b", r"\binlet only\b", r"\boff board\b", r"\boff-board\b"]):
+            add(
+                "ev_equipment_boundary",
+                "Confirm whether the product is off-board charging equipment or only a connector/accessory.",
+                "high",
+                ["off-board EV charging equipment", "connector-only accessory"],
+                ["ev_charging", "vehicle_supply"],
+                ["LVD", "EMC"],
+            )
+        if ("app_control" in traits or "ota" in traits or "cloud" in traits) and "radio" not in traits:
+            add(
+                "ev_actual_radio",
+                "Confirm whether any actual radio modules are present.",
+                "medium",
+                ["Wi-Fi present", "Bluetooth present", "wired control only"],
+                ["radio"],
+                ["RED", "RED_CYBER"],
+            )
+
+    if product_type == "air_purifier":
+        if not stated_any([r"\buv ?c\b", r"\bultraviolet\b", r"\bgermicidal\b", r"\bno uv\b"]):
+            add(
+                "air_purifier_uvc",
+                "Confirm whether the air purifier intentionally emits UV-C or other germicidal radiation.",
+                "high",
+                ["HEPA filter only", "UV-C disinfection lamp included"],
+                ["air_treatment"],
+                ["LVD", "GPSR"],
+            )
+        if not stated_any([r"\bportable\b", r"\btabletop\b", r"\broom\b", r"\bhvac\b", r"\bintegrated\b", r"\bduct\b"]):
+            add(
+                "air_purifier_installation",
+                "Confirm whether it is a portable appliance or an integrated HVAC component.",
+                "medium",
+                ["portable room appliance", "ducted HVAC module"],
+                ["air_treatment"],
+                ["LVD", "GPSR"],
+            )
+
+    if route_family == "lighting_device" or product_type in {"smart_led_bulb", "smart_desk_lamp"}:
+        if not stated_any([r"\bbulb\b", r"\blamp\b", r"\blight source\b", r"\bluminaire\b", r"\bfixture\b", r"\bdesk lamp\b"]):
+            add(
+                "lighting_form_factor",
+                "Confirm whether the product is a lamp only or a luminaire / fixture.",
+                "medium",
+                ["E27 LED lamp only", "integrated desk-lamp luminaire"],
+                ["lighting"],
+                ["LVD", "ECO"],
+            )
+        if not stated_any([r"\bmains\b", r"\bdriver\b", r"\bcontrol gear\b", r"\btransformer\b", r"\busb powered\b"]):
+            add(
+                "lighting_power_architecture",
+                "Confirm whether the light source is mains-direct or relies on external / integrated control gear.",
+                "medium",
+                ["mains-direct E27 lamp", "external driver or control gear"],
+                ["mains_powered", "electrical"],
+                ["LVD", "ECO"],
+            )
+        if not stated_any([r"\bdimmable\b", r"\bnon dimmable\b"]):
+            add(
+                "lighting_dimming",
+                "Confirm whether the lamp is dimmable.",
+                "low",
+                ["phase-cut dimmable", "non-dimmable"],
+                ["lighting"],
+                ["ECO"],
+            )
+
+    if product_type == "refrigerator_freezer":
+        if not stated_any([r"\bhousehold\b", r"\bdomestic\b", r"\bcommercial\b", r"\bprofessional\b"]):
+            add(
+                "refrigerator_use_class",
+                "Confirm whether the refrigerator is for household/domestic use or commercial use.",
+                "high",
+                ["household fridge-freezer", "commercial upright refrigerator"],
+                ["household", "professional"],
+                ["LVD", "GPSR"],
+            )
+        if not stated_any([r"\brefrigerant\b", r"\bsealed system\b", r"\br600a\b", r"\br290\b", r"\bcompressor\b"]):
+            add(
+                "refrigerator_cooling_system",
+                "Confirm whether the sealed cooling system and refrigerant details are relevant.",
+                "medium",
+                ["sealed system with R600a", "thermoelectric cooler"],
+                ["motorized"],
+                ["LVD", "GPSR"],
+            )
+
+    if product_type == "robot_vacuum":
+        if not stated_any([r"\bmop\b", r"\bvacuum only\b", r"\bsweep\b"]):
+            add(
+                "robot_vacuum_function",
+                "Confirm whether the robot performs vacuum-only cleaning or vacuum plus mopping.",
+                "medium",
+                ["vacuum only", "vacuum and mop"],
+                ["cleaning"],
+                ["LVD", "GPSR"],
+            )
+        if not stated_any([r"\bdocking station\b", r"\bcharging dock\b", r"\bself empty\b", r"\bbase station\b"]):
+            add(
+                "robot_vacuum_dock",
+                "Confirm whether a docking station or charger is included.",
+                "low",
+                ["charging dock included", "robot only without dock"],
+                ["battery_powered"],
+                ["BATTERY", "ECO"],
+            )
+
+    if route_family == "life_safety_alarm" or product_type == "smart_smoke_co_alarm":
+        if not stated_any([r"\bsmoke\b", r"\bco\b", r"\bcarbon monoxide\b", r"\bcombined\b"]):
+            add(
+                "alarm_detection_type",
+                "Confirm whether the alarm is for smoke, carbon monoxide, or both.",
+                "high",
+                ["smoke alarm only", "CO alarm only", "combined smoke and CO alarm"],
+                ["smoke_detection", "co_detection"],
+                ["LVD", "GPSR"],
+            )
+        if not stated_any([r"\bstandalone\b", r"\bdomestic\b", r"\bhousehold\b", r"\bsystem component\b", r"\bpanel\b"]):
+            add(
+                "alarm_system_boundary",
+                "Confirm whether it is a domestic standalone alarm or a system component.",
+                "high",
+                ["standalone residential alarm", "alarm-system component"],
+                ["safety_function"],
+                ["LVD", "GPSR"],
+            )
+
+    if route_family == "machinery_power_tool" or product_type in {"corded_power_drill", "cordless_power_drill", "industrial_power_tool"}:
+        if ("app_control" in traits or "ota" in traits) and "radio" not in traits:
+            add(
+                "tool_actual_radio",
+                "Confirm whether the tool has any actual radio functionality.",
+                "high",
+                ["Bluetooth module present", "no wireless communication"],
+                ["radio"],
+                ["RED", "RED_CYBER"],
+            )
+        if not stated_any([r"\bhandheld\b", r"\bhand held\b", r"\btransportable\b", r"\bbench\b", r"\bstationary\b"]):
+            add(
+                "tool_form_factor",
+                "Confirm whether the tool is handheld or transportable/stationary.",
+                "medium",
+                ["handheld drill", "transportable bench tool"],
+                ["handheld", "portable"],
+                ["MD"],
+            )
+        if not stated_any([r"\bconsumer\b", r"\bdomestic\b", r"\bprofessional\b", r"\bindustrial\b"]):
+            add(
+                "tool_use_class",
+                "Confirm whether the tool is a consumer tool or industrial/professional machinery.",
+                "medium",
+                ["consumer cordless drill", "industrial/professional power tool"],
+                ["consumer", "professional", "industrial"],
+                ["MD", "GPSR"],
+            )
+
+    if "child_targeted" in traits and "toy" not in traits:
+        if not stated_any([r"\bnot intended for play\b", r"\bdesigned for play\b", r"\btoy\b", r"\bplay\b"]):
+            add(
+                "toy_play_intent",
+                "Confirm whether the product is designed or intended for play by children under 14.",
+                "high",
+                ["not intended for play", "marketed as a toy for children under 14"],
+                ["toy", "child_targeted"],
+                ["TOY", "GPSR"],
+            )
+        if not stated_any([r"\bmain(?:ly)? for play\b", r"\bplay(?:ful)? function\b", r"\beducational aid\b", r"\bsafety product\b"]):
+            add(
+                "toy_primary_function",
+                "Confirm whether play is the main intended function.",
+                "high",
+                ["primary function is play", "primary function is monitoring or safety"],
+                ["toy"],
+                ["TOY", "GPSR"],
+            )
 
     if product_match_stage != "subtype" and tool_signal:
         add(
@@ -2030,7 +2471,11 @@ def _top_actions_from_missing(missing: list[MissingInformationItem], limit: int)
     return actions[:limit]
 
 
-def _route_context_summary(context: dict[str, Any], known_facts: list[KnownFactItem]) -> RouteContext:
+def _route_context_summary(
+    context: dict[str, Any],
+    known_facts: list[KnownFactItem],
+    overlay_routes: list[str] | None = None,
+) -> RouteContext:
     scope_reasons = [reason for reason in context.get("scope_reasons", []) if isinstance(reason, str)]
     return RouteContext(
         scope_route=str(context.get("scope_route") or "generic"),
@@ -2039,6 +2484,11 @@ def _route_context_summary(context: dict[str, Any], known_facts: list[KnownFactI
         known_fact_keys=[item.key for item in known_facts],
         jurisdiction="EU",
         route_trigger_reasons=scope_reasons,
+        primary_route_family=str(context.get("primary_route_family") or "") or None,
+        primary_route_standard_code=str(context.get("primary_standard_code") or "") or None,
+        primary_route_reason=str(context.get("primary_route_reason") or ""),
+        overlay_routes=list(overlay_routes or []),
+        route_confidence=_confidence_level(context.get("route_confidence"), default="low"),
     )
 
 
@@ -2634,7 +3084,8 @@ def _prepare_analysis(
     product_genres = set(traits_data.get("product_genres") or [])
     product_type = traits_data.get("product_type")
     product_match_stage = _product_match_stage(traits_data.get("product_match_stage"))
-    routing_product_type = product_type if product_match_stage == "subtype" else None
+    product_match_confidence = _confidence_level(traits_data.get("product_match_confidence"), default="low")
+    routing_product_type = product_type if (product_type and product_match_confidence != "low") else None
     likely_standards = _collect_preferred_standard_codes(traits_data)
 
     base_trait_set = set(traits_data.get("all_traits") or [])
@@ -2652,6 +3103,20 @@ def _prepare_analysis(
     route_traits, suppressed_traits = _route_selection_traits(trait_set, confirmed_traits, raw_state_map, product_genres)
     if suppressed_traits:
         diagnostics.append("route_trait_suppressed=" + ",".join(suppressed_traits))
+
+    route_plan = _build_route_plan(
+        traits_data=traits_data,
+        traits=route_traits,
+        matched_products=routing_matched_products or matched_products,
+        product_type=routing_product_type or product_type,
+    )
+    if route_plan.primary_standard_code:
+        likely_standards.add(route_plan.primary_standard_code)
+    likely_standards.update(route_plan.supporting_standard_codes)
+    if route_plan.primary_route_family:
+        diagnostics.append("primary_route_family=" + route_plan.primary_route_family)
+    if route_plan.primary_standard_code:
+        diagnostics.append("primary_route_standard=" + route_plan.primary_standard_code)
 
     return PreparedAnalysis(
         depth=depth,
@@ -2672,6 +3137,7 @@ def _prepare_analysis(
         confirmed_traits=confirmed_traits,
         functional_classes=functional_classes,
         raw_state_map=raw_state_map,
+        route_plan=route_plan,
     )
 
 
@@ -2680,6 +3146,8 @@ def _select_legislation_routes(
     directives: list[str] | None,
 ) -> LegislationSelection:
     forced_directives = [item for item in dict.fromkeys(directives or []) if item]
+    if prepared.route_plan.primary_directive and prepared.route_plan.primary_directive not in forced_directives:
+        forced_directives.append(prepared.route_plan.primary_directive)
     legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
         traits=prepared.route_traits,
         functional_classes=prepared.functional_classes,
@@ -2698,6 +3166,7 @@ def _select_legislation_routes(
     )
     if inferred_directive_hints - set(detected_directives):
         prepared.diagnostics.append("directive_hints=" + ",".join(sorted(inferred_directive_hints - set(detected_directives))))
+        effective_forced_directives = sorted(set(forced_directives) | inferred_directive_hints)
         legislation_items, legislation_sections, detected_directives = _build_legislation_sections(
             traits=prepared.route_traits,
             functional_classes=prepared.functional_classes,
@@ -2705,8 +3174,12 @@ def _select_legislation_routes(
             matched_products=prepared.routing_matched_products,
             product_genres=prepared.product_genres,
             confirmed_traits=prepared.confirmed_traits,
-            forced_directives=sorted(set(forced_directives) | inferred_directive_hints),
+            forced_directives=effective_forced_directives,
         )
+        forced_directives = effective_forced_directives
+    legislation_items = _filter_legislation_items_for_route_plan(legislation_items, prepared.route_plan)
+    legislation_sections = _legislation_sections_from_items(legislation_items)
+    detected_directives = _directive_keys(legislation_items)
     return LegislationSelection(
         items=legislation_items,
         sections=legislation_sections,
@@ -2728,6 +3201,7 @@ def _select_standards(
         prepared.routing_product_type,
         prepared.confirmed_traits,
         description,
+        prepared.route_plan,
     )
     prepared.diagnostics.append("scope_route=" + context["scope_route"])
     if context["scope_reasons"]:
@@ -2781,6 +3255,7 @@ def _select_standards(
         description,
         product_type=prepared.product_type,
         product_match_stage=prepared.product_match_stage,
+        route_plan=prepared.route_plan,
     )
 
     try:
@@ -3092,6 +3567,10 @@ def _build_analysis_result(
         primary_uncertainties=_primary_uncertainties(contradictions, missing_items, degraded_reasons, warnings),
         route_trigger_reasons=route_context.route_trigger_reasons,
         triggered_routes=detected_directives,
+        primary_route_standard_code=route_context.primary_route_standard_code,
+        primary_route_reason=route_context.primary_route_reason,
+        overlay_routes=route_context.overlay_routes,
+        route_confidence=route_context.route_confidence,
         product_candidates=traits_data.get("product_candidates") or [],
         functional_classes=traits_data.get("functional_classes") or [],
         confirmed_functional_classes=traits_data.get("confirmed_functional_classes") or [],
@@ -3518,7 +3997,11 @@ def analyze(
         trait_evidence=trait_evidence,
         product_match_audit=product_match_audit,
         standard_match_audit=standard_match_audit,
-        route_context=_route_context_summary(standards.context, known_facts),
+        route_context=_route_context_summary(
+            standards.context,
+            known_facts,
+            [directive for directive in routes.detected_directives if directive in OVERLAY_DIRECTIVE_KEYS],
+        ),
         overall_risk=overall_risk,
         current_risk=current_risk,
         future_risk=future_risk,
