@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 import logging
-from typing import Generic, TypeVar
+from typing import TypeVar
 
 T = TypeVar("T")
 

@@ -1,11 +1,15 @@
 .env
+.env.*
+!.env.example
 .git
 .pytest_cache
 .mypy_cache
 .ruff_cache
 __pycache__
+*.py[cod]
 venv
 .venv
 package-lock.json
 dist
 build
+*.egg-info

@@ -13,7 +13,7 @@ from fastapi.responses import JSONResponse
 
 from app.core.logging import clear_request_id, configure_logging, set_request_id
 from app.core.runtime_state import APP_VERSION, AppRuntimeState, KnowledgeBaseWarmupSnapshot
-from app.core.settings import get_settings
+from app.core.settings import get_settings, load_settings
 from app.domain.models import (
     AnalysisResult,
     ErrorInfo,
@@ -29,7 +29,6 @@ from app.services.knowledge_base import (
     KnowledgeBaseError,
     KnowledgeBaseWarmupResult,
     load_metadata_payload,
-    reset_cache,
     warmup_knowledge_base,
 )
 from app.services.rules import AnalysisTrace, ENGINE_VERSION, analyze
@@ -53,6 +52,33 @@ def get_runtime_state(target_app: FastAPI | None = None) -> AppRuntimeState:
         runtime_state = AppRuntimeState()
         app_ref.state.runtime_state = runtime_state
     return runtime_state
+
+
+def _compat_main_attr(name: str) -> Any | None:
+    try:
+        import main as compat_main
+    except ImportError:
+        return None
+    return getattr(compat_main, name, None)
+
+
+def _warmup_knowledge_base() -> KnowledgeBaseWarmupResult:
+    compat_warmup = _compat_main_attr("warmup_knowledge_base")
+    if callable(compat_warmup):
+        return compat_warmup(refresh_paths=True)
+    return warmup_knowledge_base(refresh_paths=True)
+
+
+def _analyze_product(*, description: str, category: str, directives: list[str] | None, depth: str, trace: AnalysisTrace) -> AnalysisResult:
+    compat_analyze = _compat_main_attr("analyze")
+    analyzer = compat_analyze if callable(compat_analyze) else analyze
+    return analyzer(
+        description=description,
+        category=category,
+        directives=directives,
+        depth=depth,
+        trace=trace,
+    )
 
 
 def _readiness_payload(runtime_state: AppRuntimeState) -> dict[str, Any]:
@@ -105,7 +131,7 @@ async def lifespan(target_app: FastAPI):
     runtime_state = get_runtime_state(target_app)
     runtime_state.mark_warming("warming_up")
     try:
-        result = warmup_knowledge_base(refresh_paths=True)
+        result = _warmup_knowledge_base()
         _update_runtime_state_after_warmup(target_app, result)
         snapshot = runtime_state.snapshot()
         logger.info(
@@ -196,7 +222,7 @@ def _analyzer_ready_or_raise() -> AppRuntimeState:
 def _require_admin_reload_token(
     x_admin_token: Annotated[str | None, Header(alias="X-Admin-Token")] = None,
 ) -> None:
-    settings = get_settings()
+    settings = load_settings()
     expected_token = settings.admin_reload_token
     if not expected_token:
         raise _http_error(
@@ -277,7 +303,7 @@ def admin_reload(_: None = Depends(_require_admin_reload_token)) -> dict[str, An
     with runtime_state.reload_guard():
         runtime_state.mark_warming("reloading", preserve_snapshot=True)
         try:
-            result = warmup_knowledge_base(refresh_paths=True)
+            result = _warmup_knowledge_base()
             _update_runtime_state_after_warmup(app, result, reloaded=True)
             snapshot = runtime_state.snapshot()
             logger.info(
@@ -315,7 +341,7 @@ def run_analysis(product: ProductInput, request: Request | None = None) -> Analy
             ",".join(product.directives or []),
             product.depth,
         )
-        result = analyze(
+        result = _analyze_product(
             description=product.description,
             category=product.category,
             directives=product.directives,

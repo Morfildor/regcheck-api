@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.services.rules.service import (
+from app.services.rules.routing import (
     LegislationSelection,
     PreparedAnalysis,
     RoutePlan,

@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-from app.services.knowledge_base import (
-    KnowledgeBaseError,
+from .loader import _load_yaml_raw
+from .paths import KnowledgeBaseError
+from .snapshot import (
     KnowledgeBaseSnapshot,
     KnowledgeBaseWarmupResult,
-    _load_yaml_raw,
-    _validate_products,
-    _validate_standard_metadata,
     activate_knowledge_base_snapshot,
     build_knowledge_base_snapshot,
     get_knowledge_base_snapshot,
@@ -21,6 +19,7 @@ from app.services.knowledge_base import (
     reset_cache,
     warmup_knowledge_base,
 )
+from .validator import _validate_products, _validate_standard_metadata
 
 __all__ = [
     "KnowledgeBaseError",

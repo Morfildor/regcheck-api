@@ -11,3 +11,4 @@ venv/
 package-lock.json
 dist/
 build/
+*.egg-info/

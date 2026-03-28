@@ -59,18 +59,14 @@ class Settings:
     project_root: Path
     data_dir: Path | None
     admin_reload_token_env: str
+    admin_reload_token: str
     expose_health_details: bool
     enable_engine_v2_shadow: bool
     cors: CorsSettings
     log_level: str = "INFO"
-    health_detail_exposure: bool = False
     build_metadata_env: str = "REGCHECK_BUILD_METADATA"
     catalog_version_env: str = "REGCHECK_CATALOG_VERSION"
     extra: dict[str, str] = field(default_factory=dict)
-
-    @property
-    def admin_reload_token(self) -> str:
-        return os.getenv(self.admin_reload_token_env, "").strip()
 
 
 def _build_settings() -> Settings:
@@ -86,17 +82,21 @@ def _build_settings() -> Settings:
         project_root=PROJECT_ROOT,
         data_dir=data_dir,
         admin_reload_token_env=ADMIN_RELOAD_TOKEN_ENV,
+        admin_reload_token=os.getenv(ADMIN_RELOAD_TOKEN_ENV, "").strip(),
         expose_health_details=expose_health_details,
         enable_engine_v2_shadow=_as_bool("REGCHECK_ENGINE_V2_SHADOW", default=False),
         cors=CorsSettings(allow_origins=allow_origins, allow_origin_regex=allow_origin_regex),
         log_level=os.getenv("REGCHECK_LOG_LEVEL", "INFO").strip().upper() or "INFO",
-        health_detail_exposure=expose_health_details,
     )
+
+
+def load_settings() -> Settings:
+    return _build_settings()
 
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
-    return _build_settings()
+    return load_settings()
 
 
 def reset_settings_cache() -> None:
