@@ -15,6 +15,7 @@ from app.domain.models import (
     LegislationSection,
     MissingInformationItem,
     ProductMatchStage,
+    RedArticleRoute,
     RouteContext,
     StandardItem,
     StandardSection,
@@ -387,6 +388,21 @@ CONNECTED_ROUTE_TRAITS = {
     "monetary_transaction",
 }
 SENSITIVE_ROUTE_TRAITS = RADIO_ROUTE_TRAITS | CONNECTED_ROUTE_TRAITS
+
+# Traits that trigger RED Art. 3.3 (conditional privacy/network/emergency routes)
+RED_ART_33_TRAITS = {
+    "account",
+    "authentication",
+    "personal_data_likely",
+    "monetary_transaction",
+    "internet",
+    "cloud",
+    "camera",
+    "microphone",
+    "location",
+    "emergency_use",
+}
+
 DEFAULT_CONNECTED_ROUTE_GENRES = {
     "smart_home_iot",
     "security_access_iot",
@@ -834,6 +850,61 @@ def _directive_keys(items: list[LegislationItem]) -> list[str]:
     return keys
 
 
+def _build_red_sub_articles(traits: set[str]) -> list[dict[str, Any]]:
+    """Build the mandatory RED article sub-routes for a radio product."""
+    has_art_33 = bool(RED_ART_33_TRAITS & traits)
+    return [
+        {
+            "article": "Art. 3.1(a)",
+            "label": "Safety",
+            "description": "Safety and health — LVD safety objectives apply without voltage limit",
+            "applicable": True,
+        },
+        {
+            "article": "Art. 3.1(b)",
+            "label": "EMC",
+            "description": "Electromagnetic compatibility",
+            "applicable": True,
+        },
+        {
+            "article": "Art. 3.2",
+            "label": "Radio",
+            "description": "Radio / spectrum efficiency",
+            "applicable": True,
+        },
+        {
+            "article": "Art. 3.3",
+            "label": "Conditional",
+            "description": "Privacy / fraud / network / emergency / software / charging routes",
+            "applicable": has_art_33,
+        },
+    ]
+
+
+def _remove_standalone_lvd_emc_for_radio(items: list[LegislationItem]) -> list[LegislationItem]:
+    """Remove standalone LVD and EMC CE routes for radio products.
+
+    RED Art. 3.1(a) covers safety and RED Art. 3.1(b) covers EMC, so these
+    directives must not appear as separate top-level CE routes alongside RED.
+    Non-CE obligations (ROHS, REACH, etc.) and informational items are preserved.
+    """
+    return [
+        item for item in items
+        if not (item.directive_key in {"LVD", "EMC"} and item.bucket == "ce")
+    ]
+
+
+def _attach_red_sub_articles(items: list[LegislationItem], traits: set[str]) -> list[LegislationItem]:
+    """Attach RED article sub-routes to all CE-bucket RED legislation items."""
+    sub_articles = [RedArticleRoute(**a) for a in _build_red_sub_articles(traits)]
+    return [
+        item.model_copy(update={"sub_articles": sub_articles})
+        if item.directive_key == "RED" and item.bucket == "ce"
+        else item
+        for item in items
+    ]
+
+
 def _pick_legislations(
     traits: set[str],
     functional_classes: set[str],
@@ -909,6 +980,11 @@ def _infer_forced_directives(
     confirmed_traits: set[str],
     preferred_standard_codes: set[str] | None = None,
 ) -> set[str]:
+    # Radio products route through RED which covers safety (Art. 3.1(a)) and
+    # EMC (Art. 3.1(b)); do not force standalone LVD for radio products.
+    if "radio" in traits:
+        return set()
+
     preferred_standard_codes = preferred_standard_codes or set()
     normalized_codes = {
         str(code or "").upper().replace("IEC", "EN").replace("  ", " ").strip()
@@ -1060,30 +1136,39 @@ def _standard_primary_directive(row: dict[str, Any], traits: set[str]) -> str:
         return "RED" if "radio" in traits else "LVD"
     if directive == "RED" and code.startswith("EN 301 489-"):
         return "RED"
+    # For radio products, safety (LVD) and EMC standards move under RED:
+    # Art. 3.1(a) covers safety, Art. 3.1(b) covers EMC.
+    if "radio" in traits and directive in {"LVD", "EMC"}:
+        return "RED"
     return directive or "OTHER"
 
 
 def _derive_directives(traits: set[str], forced_directives: list[str] | None = None) -> list[str]:
     directives: list[str] = []
+    is_radio = "radio" in traits
 
-    appliance_lvd_signal = bool(
-        "electrical" in traits
-        and "radio" not in traits
-        and "consumer" in traits
-        and "household" in traits
-        and ({"heating", "motorized", "water_contact", "mains_powered", "mains_power_likely"} & traits)
-    )
+    # LVD and EMC are only standalone routes for non-radio products.
+    # Radio products route through RED which covers safety (Art. 3.1(a)) and
+    # EMC (Art. 3.1(b)), so LVD and EMC must not be added as separate directives.
+    if not is_radio:
+        appliance_lvd_signal = bool(
+            "electrical" in traits
+            and "consumer" in traits
+            and "household" in traits
+            and ({"heating", "motorized", "water_contact", "mains_powered", "mains_power_likely"} & traits)
+        )
 
-    if "electrical" in traits and ({"mains_powered", "mains_power_likely"} & traits):
-        directives.append("LVD")
-    elif _has_small_avict_lvd_power_signal(traits, set(), None):
-        directives.append("LVD")
-    elif appliance_lvd_signal:
-        directives.append("LVD")
+        if "electrical" in traits and ({"mains_powered", "mains_power_likely"} & traits):
+            directives.append("LVD")
+        elif _has_small_avict_lvd_power_signal(traits, set(), None):
+            directives.append("LVD")
+        elif appliance_lvd_signal:
+            directives.append("LVD")
 
-    if "electrical" in traits and "radio" not in traits:
-        directives.append("EMC")
-    if "radio" in traits:
+        if "electrical" in traits:
+            directives.append("EMC")
+
+    if is_radio:
         directives.append("RED")
     if "radio" in traits and ({"internet", "wifi", "bluetooth", "cellular", "app_control", "ota", "cloud"} & traits):
         directives.append("RED_CYBER")
@@ -1856,6 +1941,25 @@ def _select_legislation_routes(
         )
         forced_directives = effective_forced_directives
     legislation_items = _filter_legislation_items_for_route_plan(legislation_items, prepared.route_plan)
+
+    # Capture the full directive set BEFORE radio de-dup so the standards engine
+    # can still gate-pass LVD/EMC standards (which move under RED Art. 3.1(a)/(b)).
+    full_directives_for_standards = set(_directive_keys(legislation_items))
+    # For radio products, safety (Art. 3.1(a)) and EMC (Art. 3.1(b)) standards
+    # must always pass the standards engine gate even when the KB doesn't
+    # independently match standalone LVD/EMC legislation (e.g. external-PSU-only
+    # or battery-only radio devices).
+    if "radio" in prepared.route_traits:
+        full_directives_for_standards.update({"LVD", "EMC"})
+
+    # For radio products, enforce RED-only primary CE routing:
+    # remove standalone LVD and EMC which are covered by RED Art. 3.1(a)/(b).
+    if "radio" in prepared.route_traits:
+        legislation_items = _remove_standalone_lvd_emc_for_radio(legislation_items)
+
+    # Attach mandatory RED article sub-routes to every CE-bucket RED item.
+    legislation_items = _attach_red_sub_articles(legislation_items, prepared.route_traits)
+
     legislation_sections = _legislation_sections_from_items(legislation_items)
     detected_directives = _directive_keys(legislation_items)
     return LegislationSelection(
@@ -1863,7 +1967,7 @@ def _select_legislation_routes(
         sections=legislation_sections,
         detected_directives=detected_directives,
         forced_directives=forced_directives,
-        allowed_directives=set(detected_directives),
+        allowed_directives=full_directives_for_standards,
         legislation_by_directive=_primary_legislation_by_directive(legislation_items),
     )
 

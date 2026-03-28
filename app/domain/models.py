@@ -97,6 +97,14 @@ class TraitEvidenceItem(BaseModel):
     evidence: list[str] = Field(default_factory=list)
 
 
+class RedArticleRoute(BaseModel):
+    """A RED sub-article route (Art. 3.1(a), 3.1(b), 3.2, 3.3)."""
+    article: str
+    label: str
+    description: str = ""
+    applicable: bool = True
+
+
 class LegislationItem(BaseModel):
     code: str
     title: str
@@ -119,6 +127,7 @@ class LegislationItem(BaseModel):
     jurisdiction: str = "EU"
     applicability_state: str = "current"
     applicability_hint: str | None = None
+    sub_articles: list[RedArticleRoute] = Field(default_factory=list)
 
 
 class StandardItem(BaseModel):

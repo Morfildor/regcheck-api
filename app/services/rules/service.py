@@ -102,7 +102,9 @@ def _select_standards(
         fallback={"standards": [], "review_items": [], "audit": {}, "rejections": []},
         operation=lambda: find_applicable_items(
             traits=prepared.route_traits,
-            directives=routes.detected_directives,
+            # Use the full standards-engine directive set (includes LVD/EMC for radio
+            # products so safety and EMC standards are not treated as review fallbacks).
+            directives=list(routes.allowed_directives),
             product_type=prepared.routing_product_type,
             matched_products=sorted(prepared.routing_matched_products),
             product_genres=sorted(prepared.product_genres),

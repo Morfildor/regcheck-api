@@ -145,11 +145,26 @@ def _standard_item_from_row(
     primary_directive = _standard_primary_directive(row, traits)
     legislation = legislation_by_directive.get(primary_directive)
     timing_status = legislation.timing_status if legislation else "current"
+
+    raw_directives = [str(item) for item in (row.get("directives") or []) if isinstance(item, str)]
+    # Determine whether this standard originally belongs to LVD or EMC.
+    # Check the raw KB directives list (not gating-modified) and the current
+    # directive field (which may be gating-modified from LVD/EMC).
+    native_dir = raw_directives[0] if raw_directives else None
+    gate_dir = str(row.get("directive") or "")
+    original_is_lvd_emc = native_dir in {"LVD", "EMC"} or gate_dir in {"LVD", "EMC"}
+    # For radio products, standards remapped from LVD/EMC under RED must have
+    # their directives list updated so standard sections group them under RED.
+    if "radio" in traits and primary_directive == "RED" and original_is_lvd_emc:
+        effective_directives: list[str] = ["RED"]
+    else:
+        effective_directives = raw_directives or [primary_directive]
+
     return StandardItem(
         code=str(row["code"]),
         title=str(row["title"]),
         directive=primary_directive,
-        directives=[str(item) for item in (row.get("directives") or []) if isinstance(item, str)] or [primary_directive],
+        directives=effective_directives,
         legislation_key=row.get("legislation_key"),
         category=str(row.get("category", "other")),
         confidence=_confidence_from_score(int(row.get("score", 0))),
