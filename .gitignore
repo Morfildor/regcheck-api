@@ -1,5 +1,7 @@
 __pycache__/
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .venv/
 venv/
 *.py[cod]
@@ -7,3 +9,5 @@ venv/
 .env.*
 !.env.example
 package-lock.json
+dist/
+build/
