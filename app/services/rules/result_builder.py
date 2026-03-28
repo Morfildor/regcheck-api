@@ -90,10 +90,42 @@ def _sort_standard_items(items: list[StandardItem]) -> list[StandardItem]:
 
     return sorted(items, key=key)
 
+def _standard_section_route_keys(item: StandardItem) -> list[str]:
+    route_keys = (
+        [item.directive]
+        if item.category in {"safety", "radio_emc"}
+        else ([key for key in item.directives if key] or [item.directive])
+    )
+
+    # When a standard is surfaced through RED, do not also create stray LVD/EMC
+    # sections from its multi-directive metadata. RED Art. 3.1(a)/(b) covers those
+    # branches for radio products.
+    if item.directive == "RED" or "RED" in item.directives:
+        route_keys = [key for key in route_keys if key not in {"LVD", "EMC"}]
+        if item.directive == "RED" and "RED" not in route_keys:
+            route_keys.append("RED")
+
+    deduped: list[str] = []
+    for key in route_keys:
+        if key and key not in deduped:
+            deduped.append(key)
+    return deduped
+
+
+def _standard_section_category(item: StandardItem, route_key: str) -> str:
+    if route_key != "RED":
+        return item.category
+    if item.category in {"safety", "battery", "emf", "power"}:
+        return "safety"
+    if item.category in {"emc", "radio_emc"}:
+        return "emc"
+    return item.category
+
+
 def _build_standard_sections(items: list[StandardItem]) -> list[StandardSection]:
     grouped: dict[str, list[StandardItem]] = defaultdict(list)
     for item in items:
-        route_keys = [item.directive] if item.category in {"safety", "radio_emc"} else ([key for key in item.directives if key] or [item.directive])
+        route_keys = _standard_section_route_keys(item)
         for key in route_keys:
             grouped[key].append(item)
     sections: list[StandardSection] = []
@@ -102,7 +134,7 @@ def _build_standard_sections(items: list[StandardItem]) -> list[StandardSection]
         directive_label, directive_title = DIRECTIVE_TITLES.get(key, (key, key))
         section_items = [
             StandardSectionItem(
-                **item.model_dump(),
+                **(item.model_dump() | {"category": _standard_section_category(item, key)}),
                 triggered_by_directive=key,
                 triggered_by_label=directive_label,
                 triggered_by_title=directive_title,
@@ -159,6 +191,10 @@ def _standard_item_from_row(
         effective_directives: list[str] = ["RED"]
     else:
         effective_directives = raw_directives or [primary_directive]
+        if "radio" not in traits:
+            effective_directives = [directive for directive in effective_directives if directive != "RED"]
+        if primary_directive and primary_directive not in effective_directives:
+            effective_directives.append(primary_directive)
 
     return StandardItem(
         code=str(row["code"]),

@@ -111,6 +111,30 @@ class RedRoutingTests(unittest.TestCase):
         section_keys = {section.key for section in result.standard_sections}
         self.assertIn("RED", section_keys)
         self.assertNotIn("LVD", section_keys)
+        self.assertNotIn("EMC", section_keys)
+
+    def test_radio_battery_product_does_not_leak_lvd_or_emc_standard_sections(self) -> None:
+        result = analyze("bluetooth tracker with rechargeable battery and mobile app")
+
+        section_keys = {section.key for section in result.standard_sections}
+        self.assertIn("RED", section_keys)
+        self.assertNotIn("LVD", section_keys)
+        self.assertNotIn("EMC", section_keys)
+
+    def test_red_section_normalizes_article_bucket_categories_for_display(self) -> None:
+        result = analyze(
+            "electric dental flosser with rechargeable battery, charging dock, bathroom use, app connectivity, bluetooth radio"
+        )
+
+        red_section = next(section for section in result.standard_sections if section.key == "RED")
+        by_code = {item.code: item for item in red_section.items}
+
+        self.assertEqual(by_code["Battery safety review"].category, "safety")
+        self.assertEqual(by_code["Charger / external PSU review"].category, "safety")
+        self.assertEqual(by_code["EN 62311"].category, "safety")
+        self.assertEqual(by_code["EN 301 489-1"].category, "emc")
+        self.assertEqual(by_code["EN 301 489-17"].category, "emc")
+        self.assertEqual(by_code["EN 300 328"].category, "radio")
 
     # ------------------------------------------------------------------
     # Non-radio product routing
@@ -138,6 +162,13 @@ class RedRoutingTests(unittest.TestCase):
         result = analyze("8-port gigabit wired ethernet switch with steel housing")
 
         self.assertNotIn("RED", result.directives)
+
+    def test_non_radio_battery_product_does_not_leak_red_standard_section(self) -> None:
+        result = analyze("battery-powered oral hygiene appliance")
+
+        section_keys = {section.key for section in result.standard_sections}
+        self.assertNotIn("RED", result.directives)
+        self.assertNotIn("RED", section_keys)
 
     # ------------------------------------------------------------------
     # De-duplication: no radio product produces duplicate standalone routes
