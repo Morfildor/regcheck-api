@@ -1,0 +1,83 @@
+{
+  "ce_legislation_keys": [
+    "EMC",
+    "ROHS"
+  ],
+  "classification_confidence_below_threshold": false,
+  "classification_is_ambiguous": true,
+  "decision_trace_steps": [
+    "classification",
+    "traits",
+    "assumptions",
+    "missing_facts",
+    "legislation",
+    "standards",
+    "rejections"
+  ],
+  "directives": [
+    "EMC",
+    "ROHS",
+    "REACH",
+    "GPSR",
+    "WEEE",
+    "ECO"
+  ],
+  "missing_information_keys": [
+    "lighting_power_architecture",
+    "lighting_dimming",
+    "power_source",
+    "body_contact_materials",
+    "uv_irradiation_intent",
+    "body_treatment_scope"
+  ],
+  "non_ce_obligation_keys": [
+    "REACH",
+    "GPSR",
+    "WEEE"
+  ],
+  "primary_route_reason": "UV nail lamp maps to the lighting device product-safety route. The route remains conservative because the product sits near a catalog boundary.",
+  "primary_route_standard_code": null,
+  "product_family": "optical_beauty_device",
+  "product_match_confidence": "medium",
+  "product_match_stage": "family",
+  "product_subtype": null,
+  "product_type": "uv_nail_lamp",
+  "review_codes": [
+    "UV / irradiation application review",
+    "Biocompatibility / skin-contact review",
+    "EN 62471"
+  ],
+  "route_context": {
+    "context_tags": [
+      "boundary:body_treatment",
+      "boundary:uv_irradiation",
+      "contact:body",
+      "contact:skin",
+      "optical:photobio",
+      "primary:lighting_device",
+      "scope:appliance"
+    ],
+    "overlay_routes": [
+      "EMC",
+      "ROHS",
+      "REACH",
+      "WEEE",
+      "ECO"
+    ],
+    "primary_route_family": "lighting_device",
+    "primary_route_standard_code": null,
+    "route_confidence": "low",
+    "scope_route": "appliance"
+  },
+  "standard_codes": [
+    "EN 63000",
+    "EN 50564"
+  ],
+  "standard_section_keys": [
+    "LVD",
+    "ROHS",
+    "GPSR",
+    "ECO",
+    "OTHER"
+  ]
+}

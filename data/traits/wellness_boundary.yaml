@@ -1,0 +1,128 @@
+traits:
+- id: biometric
+  label: Biometric / physiological sensing
+  description: Measures physiological, biometric, or body-state data such as heart rate, SpO2, ECG, or similar signals.
+  aliases:
+  - biometric
+  - physiological sensing
+  - heart rate
+  - spo2
+  - ecg
+  examples: []
+  regex:
+  - \bbiometric\b
+  - \bphysiological[ -]?sensing\b
+  - \bheart[ -]?rate\b
+  - \bspo2\b
+  - \becg\b
+  normalized_to: biometric
+  normalization_priority: 0
+- id: body_contact
+  label: Body contact
+  description: Intended for direct contact with the body during normal use, including non-wearable contact.
+  aliases:
+  - body contact
+  examples: []
+  regex:
+  - \bbody[ -]?contact\b
+  normalized_to: body_contact
+  normalization_priority: 0
+- id: body_worn_or_applied
+  label: Body worn or body applied
+  description: Worn on the body or directly applied to the body during use
+  aliases:
+  - body worn or applied
+  examples: []
+  regex:
+  - \bbody[ -]?worn[ -]?or[ -]?applied\b
+  normalized_to: body_worn_or_applied
+  normalization_priority: 0
+- id: health_data
+  label: Health data
+  description: Likely handles identifiable wellness, physiological, or health-related personal data.
+  aliases:
+  - health data
+  - wellness data
+  examples: []
+  regex:
+  - \bhealth[ -]?data\b
+  - \bwellness[ -]?data\b
+  normalized_to: health_data
+  normalization_priority: 0
+- id: health_related
+  label: Health related
+  description: Measures or handles physiological or health-related information
+  aliases:
+  - health related
+  examples: []
+  regex:
+  - \bhealth[ -]?related\b
+  normalized_to: health_related
+  normalization_priority: 0
+- id: medical_adjacent
+  label: Medical-adjacent
+  description: Sits near the wellness-to-medical boundary and may need intended-purpose review.
+  aliases:
+  - medical adjacent
+  - wellness medical boundary
+  examples: []
+  regex:
+  - \bmedical[ -]?adjacent\b
+  - \bwellness[ -]?medical[ -]?boundary\b
+  normalized_to: medical_adjacent
+  normalization_priority: 0
+- id: medical_claims
+  label: Medical or diagnostic claims
+  description: Claims diagnosis, treatment, monitoring, or other medical purpose and needs borderline review
+  aliases:
+  - medical claims
+  examples: []
+  regex:
+  - \bmedical[ -]?claims\b
+  normalized_to: medical_claims
+  normalization_priority: 0
+- id: medical_context
+  label: Medical context
+  description: Intended for healthcare, patient, or clinical use context
+  aliases:
+  - medical context
+  examples: []
+  regex:
+  - \bmedical[ -]?context\b
+  normalized_to: medical_context
+  normalization_priority: 0
+- id: possible_medical_boundary
+  label: Possible medical boundary
+  description: Text or product context suggests diagnosis, monitoring, therapy, or patient-use language that may trigger MDR
+    borderline review.
+  aliases:
+  - possible medical boundary
+  - borderline medical
+  examples: []
+  regex:
+  - \bpossible[ -]?medical[ -]?boundary\b
+  - \bborderline[ -]?medical\b
+  normalized_to: possible_medical_boundary
+  normalization_priority: 0
+- id: wearable
+  label: Wearable
+  description: Intended to be worn on the body
+  aliases:
+  - wearable
+  examples: []
+  regex:
+  - \bwearable\b
+  normalized_to: wearable
+  normalization_priority: 0
+- id: wellness
+  label: Wellness
+  description: Intended for wellness, fitness, recovery, self-care, or non-medical health support.
+  aliases:
+  - wellness
+  - recovery device
+  examples: []
+  regex:
+  - \bwellness\b
+  - \brecovery[ -]?device\b
+  normalized_to: wellness
+  normalization_priority: 0

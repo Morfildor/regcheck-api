@@ -10,8 +10,10 @@ Verifies:
 from __future__ import annotations
 
 import unittest
+from typing import cast
 
 from knowledge_base import reset_cache
+from app.domain.models import LegislationItem
 from rules import analyze
 
 
@@ -49,8 +51,9 @@ class RedRoutingTests(unittest.TestCase):
             None,
         )
         self.assertIsNotNone(red_item, "RED legislation item not found in CE routes")
+        red_legislation = cast(LegislationItem, red_item)
 
-        article_labels = {a.article for a in red_item.sub_articles}
+        article_labels = {a.article for a in red_legislation.sub_articles}
         self.assertIn("Art. 3.1(a)", article_labels)
         self.assertIn("Art. 3.1(b)", article_labels)
         self.assertIn("Art. 3.2", article_labels)
@@ -64,8 +67,9 @@ class RedRoutingTests(unittest.TestCase):
             None,
         )
         self.assertIsNotNone(red_item)
+        red_legislation = cast(LegislationItem, red_item)
 
-        by_article = {a.article: a for a in red_item.sub_articles}
+        by_article = {a.article: a for a in red_legislation.sub_articles}
         self.assertTrue(by_article["Art. 3.1(a)"].applicable)
         self.assertTrue(by_article["Art. 3.1(b)"].applicable)
         self.assertTrue(by_article["Art. 3.2"].applicable)
@@ -80,8 +84,9 @@ class RedRoutingTests(unittest.TestCase):
             None,
         )
         self.assertIsNotNone(red_item)
+        red_legislation = cast(LegislationItem, red_item)
 
-        art_33 = next(a for a in red_item.sub_articles if a.article == "Art. 3.3")
+        art_33 = next(a for a in red_legislation.sub_articles if a.article == "Art. 3.3")
         self.assertTrue(art_33.applicable)
 
     def test_mains_powered_wifi_product_has_safety_standards_in_standards_list(self) -> None:

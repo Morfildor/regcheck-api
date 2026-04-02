@@ -1,0 +1,1393 @@
+products:
+- id: commercial_hood
+  label: Commercial hood
+  aliases:
+  - commercial hood
+  - commercial extractor hood
+  - commercial-hood
+  - commercialhood
+  - commercial hoods
+  - commercial-extractor-hood
+  - commercialextractorhood
+  - commercial extractor hoods
+  implied_traits:
+  - professional
+  - electrical
+  - motorized
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  - air_treatment
+  likely_standards:
+  - EN 60335-2-99
+  genres:
+  - commercial_appliance
+  strong_aliases:
+  - commercial hood
+  - commercial extractor hood
+  weak_aliases:
+  - commercial-hood
+  - commercialhood
+  - commercial hoods
+  - commercial-extractor-hood
+  - commercialextractorhood
+  - commercial extractor hoods
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-99
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - motorized
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: consumer_drone
+  label: Consumer camera drone
+  aliases:
+  - drone
+  - camera drone
+  - consumer drone
+  - quadcopter
+  - fpv drone
+  - aerial drone
+  - drones
+  - camera-drone
+  - cameradrone
+  - camera drones
+  - consumer-drone
+  - consumerdrone
+  - consumer drones
+  - quadcopters
+  - fpv-drone
+  - fpvdrone
+  - fpv drones
+  - aerial-drone
+  - aerialdrone
+  - aerial drones
+  - consumer camera drone
+  - consumer-camera-drone
+  - consumercameradrone
+  - consumer camera drones
+  product_family: drone_device
+  product_subfamily: consumer_drone
+  genres:
+  - drone_uas
+  implied_traits:
+  - wifi
+  - bluetooth
+  - camera
+  - gnss
+  functional_classes:
+  - aerial_device
+  - imaging_device
+  likely_standards:
+  - UAS open-category review
+  - EN 62368-1
+  strong_aliases:
+  - drone
+  - camera drone
+  - consumer drone
+  - quadcopter
+  - fpv drone
+  - aerial drone
+  weak_aliases:
+  - drones
+  - camera-drone
+  - cameradrone
+  - camera drones
+  - consumer-drone
+  - consumerdrone
+  - consumer drones
+  - quadcopters
+  - fpv-drone
+  - fpvdrone
+  - fpv drones
+  - aerial-drone
+  - aerialdrone
+  - aerial drones
+  - consumer camera drone
+  - consumer-camera-drone
+  - consumercameradrone
+  - consumer camera drones
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: UAS open-category review
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - wifi
+  - bluetooth
+  - camera
+  - gnss
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: drone_controller
+  label: Drone remote controller
+  aliases:
+  - drone controller
+  - drone remote
+  - fpv controller
+  - radio controller for drone
+  - drone-controller
+  - dronecontroller
+  - drone controllers
+  - drone-remote
+  - droneremote
+  - drone remotes
+  - fpv-controller
+  - fpvcontroller
+  - fpv controllers
+  - radio-controller-for-drone
+  - radiocontrollerfordrone
+  - radio controller for drones
+  - drone remote controller
+  - drone-remote-controller
+  - droneremotecontroller
+  - drone remote controllers
+  product_family: drone_device
+  product_subfamily: drone_controller
+  genres:
+  - drone_uas
+  implied_traits:
+  - display
+  - handheld
+  functional_classes:
+  - aerial_device
+  likely_standards:
+  - UAS open-category review
+  - EN 62368-1
+  strong_aliases:
+  - drone controller
+  - drone remote
+  - fpv controller
+  - radio controller for drone
+  weak_aliases:
+  - drone-controller
+  - dronecontroller
+  - drone controllers
+  - drone-remote
+  - droneremote
+  - drone remotes
+  - fpv-controller
+  - fpvcontroller
+  - fpv controllers
+  - radio-controller-for-drone
+  - radiocontrollerfordrone
+  - radio controller for drones
+  - drone remote controller
+  - drone-remote-controller
+  - droneremotecontroller
+  - drone remote controllers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: UAS open-category review
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - display
+  - handheld
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_fish_stunner
+  label: Electric fishing machine / fish stunner
+  aliases:
+  - electric fish stunner
+  - electric fishing machine
+  - electric-fish-stunner
+  - electricfishstunner
+  - electric fish stunners
+  - electric-fishing-machine
+  - electricfishingmachine
+  - electric fishing machines
+  - electric fishing machine fish stunner
+  - electric-fishing-machine-fish-stunner
+  - electricfishingmachinefishstunner
+  - electric fishing machine fish stunners
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_powered
+  functional_classes:
+  - specialty_appliance
+  likely_standards:
+  - EN 60335-2-86
+  - EN 60335-2-87
+  strong_aliases:
+  - electric fish stunner
+  - electric fishing machine
+  weak_aliases:
+  - electric-fish-stunner
+  - electricfishstunner
+  - electric fish stunners
+  - electric-fishing-machine
+  - electricfishingmachine
+  - electric fishing machines
+  - electric fishing machine fish stunner
+  - electric-fishing-machine-fish-stunner
+  - electricfishingmachinefishstunner
+  - electric fishing machine fish stunners
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-86
+    kind: unspecified
+  - ref: EN 60335-2-87
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: fence_energizer
+  label: Electric fence energizer
+  aliases:
+  - fence energizer
+  - electric fence controller
+  - fence-energizer
+  - fenceenergizer
+  - fence energizers
+  - electric-fence-controller
+  - electricfencecontroller
+  - electric fence controllers
+  - electric fence energizer
+  - electric-fence-energizer
+  - electricfenceenergizer
+  - electric fence energizers
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_power_likely
+  functional_classes:
+  - agricultural_appliance
+  likely_standards:
+  - EN 60335-2-76
+  strong_aliases:
+  - fence energizer
+  - electric fence controller
+  weak_aliases:
+  - fence-energizer
+  - fenceenergizer
+  - fence energizers
+  - electric-fence-controller
+  - electricfencecontroller
+  - electric fence controllers
+  - electric fence energizer
+  - electric-fence-energizer
+  - electricfenceenergizer
+  - electric fence energizers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-76
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: home_energy_monitor
+  label: Home energy monitor
+  aliases:
+  - home energy monitor
+  - smart home energy monitor
+  - clamp meter wifi
+  - ct sensor energy monitor
+  - whole home energy monitor
+  - energy dashboard device
+  - home-energy-monitor
+  - homeenergymonitor
+  - home energy monitors
+  - smart-home-energy-monitor
+  - smarthomeenergymonitor
+  - smart home energy monitors
+  - clamp meter wi-fi
+  - clamp meter wi fi
+  - clamp-meter-wifi
+  - clampmeterwifi
+  - clamp meter wifis
+  - ct-sensor-energy-monitor
+  - ctsensorenergymonitor
+  - ct sensor energy monitors
+  - whole-home-energy-monitor
+  - wholehomeenergymonitor
+  - whole home energy monitors
+  - energy-dashboard-device
+  - energydashboarddevice
+  - energy dashboard devices
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - wifi
+  - bluetooth
+  - energy_monitoring
+  - smart_grid_ready
+  - app_control
+  - cloud
+  - data_storage
+  - display
+  - fixed_installation
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  strong_aliases:
+  - home energy monitor
+  - smart home energy monitor
+  - clamp meter wifi
+  - ct sensor energy monitor
+  - whole home energy monitor
+  - energy dashboard device
+  weak_aliases:
+  - home-energy-monitor
+  - homeenergymonitor
+  - home energy monitors
+  - smart-home-energy-monitor
+  - smarthomeenergymonitor
+  - smart home energy monitors
+  - clamp meter wi-fi
+  - clamp meter wi fi
+  - clamp-meter-wifi
+  - clampmeterwifi
+  - clamp meter wifis
+  - ct-sensor-energy-monitor
+  - ctsensorenergymonitor
+  - ct sensor energy monitors
+  - whole-home-energy-monitor
+  - wholehomeenergymonitor
+  - whole home energy monitors
+  - energy-dashboard-device
+  - energydashboarddevice
+  - energy dashboard devices
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: industrial_air_compressor
+  product_family: industrial_power_equipment
+  product_subfamily: air_compressor
+  label: Industrial / professional air compressor
+  aliases:
+  - air compressor
+  - industrial air compressor
+  - professional air compressor
+  - workshop compressor
+  - compressed air compressor
+  - pneumatic compressor
+  - air-compressor
+  - aircompressor
+  - air compressors
+  - workshop-compressor
+  - workshopcompressor
+  - workshop compressors
+  implied_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - pressure
+  - mains_power_likely
+  family_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  subtype_traits:
+  - pressure
+  - mains_power_likely
+  core_traits:
+  - electrical
+  - motorized
+  - mains_power_likely
+  functional_classes:
+  - industrial_equipment
+  likely_standards:
+  - Air compressor safety review
+  genres: []
+  family_keywords:
+  - air compressor
+  - compressor
+  - workshop compressor
+  - pneumatic compressor
+  preferred_clues:
+  - air compressor
+  - compressed air
+  - pneumatic
+  - pressure
+  exclude_clues:
+  - motor compressor
+  - refrigerant
+  - condensing unit
+  - fridge
+  - freezer
+  strong_aliases:
+  - air compressor
+  - industrial air compressor
+  - professional air compressor
+  - workshop compressor
+  - compressed air compressor
+  - pneumatic compressor
+  weak_aliases:
+  - air-compressor
+  - aircompressor
+  - air compressors
+  - workshop-compressor
+  - workshopcompressor
+  - workshop compressors
+  marketplace_aliases: []
+  not_when_text_contains:
+  - motor compressor
+  - refrigerant
+  - condensing unit
+  - fridge
+  - freezer
+  - air conditioner compressor
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Air compressor safety review
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - pressure
+  - mains_powered
+  - mains_power_likely
+  score_penalty_if_traits:
+  - food_contact
+  required_any_traits:
+  - motorized
+  - pressure
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: milking_machine
+  label: Milking machine
+  aliases:
+  - milking machine
+  - electric milking machine
+  - vacuum milker
+  - milking-machine
+  - milkingmachine
+  - milking machines
+  - electric-milking-machine
+  - electricmilkingmachine
+  - electric milking machines
+  - vacuum-milker
+  - vacuummilker
+  - vacuum milkers
+  implied_traits:
+  - professional
+  - electrical
+  - motorized
+  - pumping
+  - mains_powered
+  - animal_use
+  functional_classes:
+  - agricultural_appliance
+  likely_standards:
+  - EN 60335-2-70
+  genres:
+  - commercial_appliance
+  strong_aliases:
+  - milking machine
+  - electric milking machine
+  - vacuum milker
+  weak_aliases:
+  - milking-machine
+  - milkingmachine
+  - milking machines
+  - electric-milking-machine
+  - electricmilkingmachine
+  - electric milking machines
+  - vacuum-milker
+  - vacuummilker
+  - vacuum milkers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-70
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - motorized
+  - pumping
+  - mains_powered
+  - animal_use
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: pen_3d
+  label: 3D printing pen
+  aliases:
+  - 3d pen
+  - 3-d pen
+  - 3d printing pen
+  - printing pen
+  - 3d-pen
+  - 3dpen
+  - 3d pens
+  - 3 d pen
+  - 3-d-pen
+  - 3-dpen
+  - 3-d pens
+  - 3d-printing-pen
+  - 3dprintingpen
+  - 3d printing pens
+  - printing-pen
+  - printingpen
+  - printing pens
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - heating
+  - handheld
+  - portable
+  functional_classes:
+  - tool_device
+  likely_standards:
+  - EN 62368-1
+  genres: []
+  preferred_clues:
+  - 3d pen
+  - printing pen
+  exclude_clues:
+  - projector
+  - router
+  strong_aliases:
+  - 3d pen
+  - 3-d pen
+  - 3d printing pen
+  - printing pen
+  weak_aliases:
+  - 3d-pen
+  - 3dpen
+  - 3d pens
+  - 3 d pen
+  - 3-d-pen
+  - 3-dpen
+  - 3-d pens
+  - 3d-printing-pen
+  - 3dprintingpen
+  - 3d printing pens
+  - printing-pen
+  - printingpen
+  - printing pens
+  marketplace_aliases: []
+  not_when_text_contains:
+  - projector
+  - router
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - heating
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - projector
+  - router
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: rc_boat
+  label: RC boat / remote-controlled toy boat
+  aliases:
+  - rc boat
+  - remote control boat
+  - remote controlled boat
+  - radio controlled boat
+  - toy boat remote control
+  - rc-boat
+  - rcboat
+  - rc boats
+  - remote-control-boat
+  - remotecontrolboat
+  - remote control boats
+  - remote-controlled-boat
+  - remotecontrolledboat
+  - remote controlled boats
+  - radio-controlled-boat
+  - radiocontrolledboat
+  - radio controlled boats
+  - toy-boat-remote-control
+  - toyboatremotecontrol
+  - toy boat remote controls
+  - rc boat remote-controlled toy boat
+  - rc boat remote controlled toy boat
+  - rc-boat-remote-controlled-toy-boat
+  - rcboatremote-controlledtoyboat
+  - rc boat remote-controlled toy boats
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - radio
+  - remote_control
+  - toy
+  - child_targeted
+  - portable
+  functional_classes:
+  - toy_product
+  likely_standards:
+  - EN 62115
+  genres: []
+  preferred_clues:
+  - rc boat
+  - remote control boat
+  - toy boat
+  exclude_clues:
+  - button
+  - remote button
+  strong_aliases:
+  - rc boat
+  - remote control boat
+  - remote controlled boat
+  - radio controlled boat
+  - toy boat remote control
+  weak_aliases:
+  - rc-boat
+  - rcboat
+  - rc boats
+  - remote-control-boat
+  - remotecontrolboat
+  - remote control boats
+  - remote-controlled-boat
+  - remotecontrolledboat
+  - remote controlled boats
+  - radio-controlled-boat
+  - radiocontrolledboat
+  - radio controlled boats
+  - toy-boat-remote-control
+  - toyboatremotecontrol
+  - toy boat remote controls
+  - rc boat remote-controlled toy boat
+  - rc boat remote controlled toy boat
+  - rc-boat-remote-controlled-toy-boat
+  - rcboatremote-controlledtoyboat
+  - rc boat remote-controlled toy boats
+  marketplace_aliases: []
+  not_when_text_contains:
+  - button
+  - remote button
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62115
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - radio
+  - remote_control
+  score_penalty_if_traits:
+  - button
+  - remote button
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: rc_car
+  label: RC car / remote-controlled toy vehicle
+  aliases:
+  - rc car
+  - remote control car
+  - remote controlled car
+  - radio controlled car
+  - toy car remote control
+  - 2.4 ghz rc car
+  - rc-car
+  - rccar
+  - rc cars
+  - remote-control-car
+  - remotecontrolcar
+  - remote control cars
+  - remote-controlled-car
+  - remotecontrolledcar
+  - remote controlled cars
+  - radio-controlled-car
+  - radiocontrolledcar
+  - radio controlled cars
+  - toy-car-remote-control
+  - toycarremotecontrol
+  - toy car remote controls
+  - 2.4-ghz-rc-car
+  - 2.4ghzrccar
+  - 2.4 ghz rc cars
+  - rc car remote-controlled toy vehicle
+  - rc car remote controlled toy vehicle
+  - rc-car-remote-controlled-toy-vehicle
+  - rccarremote-controlledtoyvehicle
+  - rc car remote-controlled toy vehicles
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - radio
+  - remote_control
+  - toy
+  - child_targeted
+  - portable
+  functional_classes:
+  - toy_product
+  likely_standards:
+  - EN 62115
+  genres: []
+  preferred_clues:
+  - rc car
+  - remote control car
+  - toy car
+  exclude_clues:
+  - button
+  - doorbell
+  - remote button
+  strong_aliases:
+  - rc car
+  - remote control car
+  - remote controlled car
+  - radio controlled car
+  - toy car remote control
+  - 2.4 ghz rc car
+  weak_aliases:
+  - rc-car
+  - rccar
+  - rc cars
+  - remote-control-car
+  - remotecontrolcar
+  - remote control cars
+  - remote-controlled-car
+  - remotecontrolledcar
+  - remote controlled cars
+  - radio-controlled-car
+  - radiocontrolledcar
+  - radio controlled cars
+  - toy-car-remote-control
+  - toycarremotecontrol
+  - toy car remote controls
+  - 2.4-ghz-rc-car
+  - 2.4ghzrccar
+  - 2.4 ghz rc cars
+  - rc car remote-controlled toy vehicle
+  - rc car remote controlled toy vehicle
+  - rc-car-remote-controlled-toy-vehicle
+  - rccarremote-controlledtoyvehicle
+  - rc car remote-controlled toy vehicles
+  marketplace_aliases: []
+  not_when_text_contains:
+  - button
+  - doorbell
+  - remote button
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62115
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - radio
+  - remote_control
+  score_penalty_if_traits:
+  - button
+  - doorbell
+  - remote button
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_home_panel
+  label: Smart home wall panel / controller
+  aliases:
+  - smart home panel
+  - smart wall panel
+  - home automation panel
+  - smart home touchscreen
+  - home control panel
+  - smart-home-panel
+  - smarthomepanel
+  - smart home panels
+  - smart-wall-panel
+  - smartwallpanel
+  - smart wall panels
+  - home-automation-panel
+  - homeautomationpanel
+  - home automation panels
+  - smart-home-touchscreen
+  - smarthometouchscreen
+  - smart home touchscreens
+  - home-control-panel
+  - homecontrolpanel
+  - home control panels
+  - smart home wall panel controller
+  - smart-home-wall-panel-controller
+  - smarthomewallpanelcontroller
+  - smart home wall panel controllers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - fixed_installation
+  - wall_mount
+  - display
+  - display_touchscreen
+  - wifi
+  - bluetooth
+  - zigbee
+  - microphone
+  - speaker
+  - camera
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - account
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  strong_aliases:
+  - smart home panel
+  - smart wall panel
+  - home automation panel
+  - smart home touchscreen
+  - home control panel
+  weak_aliases:
+  - smart-home-panel
+  - smarthomepanel
+  - smart home panels
+  - smart-wall-panel
+  - smartwallpanel
+  - smart wall panels
+  - home-automation-panel
+  - homeautomationpanel
+  - home automation panels
+  - smart-home-touchscreen
+  - smarthometouchscreen
+  - smart home touchscreens
+  - home-control-panel
+  - homecontrolpanel
+  - home control panels
+  - smart home wall panel controller
+  - smart-home-wall-panel-controller
+  - smarthomewallpanelcontroller
+  - smart home wall panel controllers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_irrigation_controller
+  label: Smart garden irrigation / sprinkler controller
+  product_family: garden_automation
+  product_subfamily: smart_irrigation_controller
+  aliases:
+  - smart sprinkler controller
+  - garden irrigation controller
+  - smart watering system
+  - wifi sprinkler controller
+  - irrigation timer smart
+  - smart garden watering
+  - connected sprinkler
+  - smart sprinkler timer
+  - smart-irrigation-controller
+  - smartirrigationcontroller
+  - smart irrigation controllers
+  - smart-sprinkler-controller
+  - smartsprinklercontroller
+  - garden-irrigation-controller
+  - gardenirrigationcontroller
+  - wifi-sprinkler-controller
+  - wifisprinklercontroller
+  - irrigation-timer-smart
+  - irrigationtimersmart
+  - connected-sprinkler
+  - connectedsprinkler
+  - smart-sprinkler-timer
+  - smartsprinklertimer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - wifi
+  - app_control
+  - cloud
+  - ota
+  - outdoor_use
+  - water_contact
+  functional_classes:
+  - home_device
+  - garden_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - garden_outdoor_appliance
+  strong_aliases:
+  - smart sprinkler controller
+  - garden irrigation controller
+  - smart watering system
+  - wifi sprinkler controller
+  - smart garden watering
+  - connected sprinkler
+  weak_aliases:
+  - smart-irrigation-controller
+  - smartirrigationcontroller
+  - smart irrigation controllers
+  - smart-sprinkler-controller
+  - smartsprinklercontroller
+  - garden-irrigation-controller
+  - gardenirrigationcontroller
+  - wifi-sprinkler-controller
+  - wifisprinklercontroller
+  - irrigation-timer-smart
+  - irrigationtimersmart
+  - connected-sprinkler
+  - connectedsprinkler
+  marketplace_aliases:
+  - smart sprinkler
+  - wifi sprinkler
+  - garden irrigation timer
+  - smart watering controller
+  not_when_text_contains: []
+  negative_examples:
+  - smart_thermostat
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - wifi
+  - outdoor_use
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: WiFi-connected irrigation and garden sprinkler controllers. Outdoor-rated electronics covered under EN 62368-1.
+- id: smart_meter_display
+  label: Smart meter in-home display (IHD)
+  aliases:
+  - in-home display
+  - ihd
+  - smart meter display
+  - energy display unit
+  - smart meter consumer unit
+  - home area network display
+  - in home display
+  - in-home-display
+  - in-homedisplay
+  - in-home displays
+  - ihds
+  - smart-meter-display
+  - smartmeterdisplay
+  - smart meter displays
+  - energy-display-unit
+  - energydisplayunit
+  - energy display units
+  - smart-meter-consumer-unit
+  - smartmeterconsumerunit
+  - smart meter consumer units
+  - home-area-network-display
+  - homeareanetworkdisplay
+  - home area network displays
+  - smart meter in-home display (ihd)
+  - smart meter in home display (ihd)
+  - smart-meter-in-home-display-(ihd)
+  - smartmeterin-homedisplay(ihd)
+  - smart meter in-home display (ihd)s
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - display
+  - zigbee
+  - data_storage
+  - energy_monitoring
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  strong_aliases:
+  - in-home display
+  - ihd
+  - smart meter display
+  - energy display unit
+  - smart meter consumer unit
+  - home area network display
+  weak_aliases:
+  - in home display
+  - in-home-display
+  - in-homedisplay
+  - in-home displays
+  - ihds
+  - smart-meter-display
+  - smartmeterdisplay
+  - smart meter displays
+  - energy-display-unit
+  - energydisplayunit
+  - energy display units
+  - smart-meter-consumer-unit
+  - smartmeterconsumerunit
+  - smart meter consumer units
+  - home-area-network-display
+  - homeareanetworkdisplay
+  - home area network displays
+  - smart meter in-home display (ihd)
+  - smart meter in home display (ihd)
+  - smart-meter-in-home-display-(ihd)
+  - smartmeterin-homedisplay(ihd)
+  - smart meter in-home display (ihd)s
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_plug
+  label: Smart plug / smart outlet
+  aliases:
+  - smart plug
+  - wifi smart plug
+  - wifi plug
+  - smart outlet
+  - smart socket
+  - connected plug
+  - connected outlet
+  - wifi socket
+  - control outlet
+  - outlet control
+  - smart-plug
+  - smartplug
+  - smart plugs
+  - wi-fi smart plug
+  - wi fi smart plug
+  - wifi-smart-plug
+  - wifismartplug
+  - wifi smart plugs
+  - wi-fi plug
+  - wi fi plug
+  - wifi-plug
+  - wifiplug
+  - wifi plugs
+  - smart-outlet
+  - smartoutlet
+  - smart outlets
+  - smart-socket
+  - smartsocket
+  - smart sockets
+  - connected-plug
+  - connectedplug
+  - connected plugs
+  - connected-outlet
+  - connectedoutlet
+  - connected outlets
+  - wi-fi socket
+  - wi fi socket
+  - wifi-socket
+  - wifisocket
+  - wifi sockets
+  - control-outlet
+  - controloutlet
+  - control outlets
+  - outlet-control
+  - outletcontrol
+  - outlet controls
+  - smart plug smart outlet
+  - smart-plug-smart-outlet
+  - smartplugsmartoutlet
+  - smart plug smart outlets
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - radio
+  - wifi
+  - bluetooth
+  - zigbee
+  - app_control
+  - remote_control
+  - ota
+  - energy_monitoring
+  - cloud
+  - data_storage
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  strong_aliases:
+  - smart plug
+  - wifi smart plug
+  - wifi plug
+  - smart outlet
+  - smart socket
+  - connected plug
+  - connected outlet
+  - wifi socket
+  weak_aliases:
+  - control outlet
+  - outlet control
+  - smart-plug
+  - smartplug
+  - smart plugs
+  - wi-fi smart plug
+  - wi fi smart plug
+  - wifi-smart-plug
+  - wifismartplug
+  - wifi smart plugs
+  - wi-fi plug
+  - wi fi plug
+  - wifi-plug
+  - wifiplug
+  - wifi plugs
+  - smart-outlet
+  - smartoutlet
+  - smart outlets
+  - smart-socket
+  - smartsocket
+  - smart sockets
+  - connected-plug
+  - connectedplug
+  - connected plugs
+  - connected-outlet
+  - connectedoutlet
+  - connected outlets
+  - wi-fi socket
+  - wi fi socket
+  - wifi-socket
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: solar_panel_module
+  label: Solar panel / PV module
+  aliases:
+  - solar panel
+  - pv panel
+  - photovoltaic panel
+  - solar module
+  - pv module
+  - solar-panel
+  - solarpanel
+  - solar panels
+  - pv-panel
+  - pvpanel
+  - pv panels
+  - photovoltaic-panel
+  - photovoltaicpanel
+  - photovoltaic panels
+  - solar-module
+  - solarmodule
+  - solar modules
+  - pv-module
+  - pvmodule
+  - pv modules
+  - solar panel pv module
+  - solar-panel-pv-module
+  - solarpanelpvmodule
+  - solar panel pv modules
+  implied_traits:
+  - consumer
+  - electrical
+  - fixed_installation
+  - outdoor_use
+  - solar_powered
+  functional_classes:
+  - power_device
+  likely_standards: []
+  genres: []
+  preferred_clues:
+  - solar panel
+  - pv module
+  - photovoltaic
+  exclude_clues:
+  - inverter
+  - gateway
+  - energy monitor
+  strong_aliases:
+  - solar panel
+  - pv panel
+  - photovoltaic panel
+  - solar module
+  - pv module
+  weak_aliases:
+  - solar-panel
+  - solarpanel
+  - solar panels
+  - pv-panel
+  - pvpanel
+  - pv panels
+  - photovoltaic-panel
+  - photovoltaicpanel
+  - photovoltaic panels
+  - solar-module
+  - solarmodule
+  - solar modules
+  - pv-module
+  - pvmodule
+  - pv modules
+  - solar panel pv module
+  - solar-panel-pv-module
+  - solarpanelpvmodule
+  - solar panel pv modules
+  marketplace_aliases: []
+  not_when_text_contains:
+  - inverter
+  - gateway
+  - energy monitor
+  negative_examples: []
+  likely_standard_refs: []
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - fixed_installation
+  - outdoor_use
+  - solar_powered
+  score_penalty_if_traits:
+  - inverter
+  - gateway
+  - energy monitor
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

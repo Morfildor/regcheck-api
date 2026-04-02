@@ -24,7 +24,7 @@ from app.domain.models import (
     MetadataTraitOption,
 )
 
-from .paths import ALL_DATA_FILES, KnowledgeBaseError, _resolve_data_path
+from .paths import ALL_DATA_FILES, KnowledgeBaseError, _resolve_catalog_sources
 
 if TYPE_CHECKING:
     from app.services.classifier.matching import ProductMatchingSnapshot
@@ -43,18 +43,21 @@ def _catalog_version() -> str:
 
     digest = hashlib.sha256()
     for filename in ALL_DATA_FILES:
-        path = _resolve_data_path(filename, required=False)
         digest.update(filename.encode("utf-8"))
         digest.update(b"\0")
-        if path is None:
+        bundle = _resolve_catalog_sources(filename, required=False)
+        if bundle is None or not bundle.paths:
             digest.update(b"<missing>")
             digest.update(b"\0")
             continue
-        try:
-            digest.update(path.read_bytes())
-        except OSError as exc:
-            raise KnowledgeBaseError(f"Could not read knowledge-base file: {path}") from exc
-        digest.update(b"\0")
+        for path in bundle.paths:
+            try:
+                digest.update(path.name.encode("utf-8"))
+                digest.update(b"\0")
+                digest.update(path.read_bytes())
+            except OSError as exc:
+                raise KnowledgeBaseError(f"Could not read knowledge-base file: {path}") from exc
+            digest.update(b"\0")
     return f"sha256:{digest.hexdigest()[:12]}"
 
 

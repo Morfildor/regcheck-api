@@ -823,7 +823,10 @@ class MatchingTests(unittest.TestCase):
                 main._require_admin_reload_token()
 
         self.assertEqual(ctx.exception.status_code, 503)
-        self.assertIn("disabled", ctx.exception.detail["message"])
+        detail = ctx.exception.detail
+        self.assertIsInstance(detail, dict)
+        assert isinstance(detail, dict)
+        self.assertIn("disabled", detail["message"])
 
     def test_admin_reload_accepts_valid_token(self) -> None:
         with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": "secret"}):
@@ -854,7 +857,10 @@ class MatchingTests(unittest.TestCase):
             runtime_state.warmup_counts = original[3]
 
         self.assertEqual(ctx.exception.status_code, 500)
-        self.assertEqual(ctx.exception.detail["message"], "Analysis failed")
+        detail = ctx.exception.detail
+        self.assertIsInstance(detail, dict)
+        assert isinstance(detail, dict)
+        self.assertEqual(detail["message"], "Analysis failed")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,105 @@
+trait_detection:
+  wave3_roles:
+    access_reader_role:
+    - \baccess reader\b
+    - \bbadge reader\b
+    - \bcard reader\b
+    - \brfid reader\b
+    conference_audio:
+    - \bconference speakerphone\b
+    - \bspeakerphone\b
+    - \bconference audio\b
+    creator_equipment:
+    - \bstudio panel light\b
+    - \bring light\b
+    - \bdocument camera\b
+    - \bvisualizer\b
+    office_peripheral:
+    - \bkvm switch\b
+    - \bpresentation clicker\b
+    - \bpresentation remote\b
+    - \bconference speakerphone\b
+    wired_networking:
+    - \bethernet\b
+    - \blan\b
+    - \bwired only\b
+    - \bwired networking\b
+    metering:
+    - \bsmart meter\b
+    - \bmeter gateway\b
+    - \benergy meter\b
+    - \bmetering\b
+    smart_building:
+    - \bsmart building\b
+    - \bbuilding automation\b
+    - \bbuilding management\b
+    pressure_cooking:
+    - \bpressure cooker\b
+    - \bpressure cooking\b
+    water_dispensing:
+    - \bwater dispenser\b
+    - \bwater cooler\b
+    - \bbottleless water cooler\b
+    beverage_service:
+    - \bhot chocolate maker\b
+    - \bmilk frother\b
+    - \bbeverage dispenser\b
+    ups_function:
+    - \bups\b
+    - \buninterruptible power supply\b
+    - \bbattery backup power\b
+    inverter_system:
+    - \bsolar inverter\b
+    - \bpv inverter\b
+    - \bhybrid inverter\b
+    battery_storage_system:
+    - \bbattery storage\b
+    - \bhome battery\b
+    - \bresidential battery storage\b
+    intrusion_detection:
+    - '\bglass break(?: sensor| detector)?\b'
+    - '\bintrusion(?: sensor| detector)?\b'
+    - \btamper alarm\b
+    sterilization:
+    - \bbottle sterilizer\b
+    - \bsterili(?:sation|zation|ser|zer)\b
+    sanitization:
+    - \bsanit(?:ization|ising|izing)\b
+    germicidal_emission:
+    - \bgermicidal lamp\b
+    - \bgermicidal light\b
+    - \buv sanitizing box\b
+  wave3_boundaries:
+    uv_irradiation_boundary:
+    - \buv(?:-c| c)?\b
+    - \bir illuminator\b
+    - \binfrared treatment\b
+    - \bipl\b
+    - \blight-based hair removal\b
+    body_treatment_boundary:
+    - \bipl\b
+    - \bintense pulsed light\b
+    - \binfrared massager\b
+    - \bheated eye mask\b
+    - '\bheated neck(?: and|\/)?shoulder\b'
+    - \btens\b
+    - \bems\b
+    - \belectrical stimulation\b
+    energy_system_boundary:
+    - \bsolar inverter\b
+    - \bbattery storage\b
+    - \benergy gateway\b
+    - \bsmart meter gateway\b
+    - \bsolar charge controller\b
+    industrial_installation_boundary:
+    - \bdin rail\b
+    - \bdistribution board\b
+    - \bpanel mount\b
+    - \bfixed installation\b
+    - \bhardwired\b
+    machinery_boundary:
+    - \bbench saw\b
+    - \btile cutter\b
+    - \btiller\b
+    - \bcultivator\b
+    - \bshop vac\b

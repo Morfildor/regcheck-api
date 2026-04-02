@@ -1,0 +1,289 @@
+products:
+- id: smart_pet_feeder
+  label: Smart pet feeder
+  aliases:
+  - smart pet feeder
+  - connected pet feeder
+  - wifi pet feeder
+  - automatic pet feeder
+  - pet feeder
+  - smart-pet-feeder
+  - smartpetfeeder
+  - smart pet feeders
+  - connected-pet-feeder
+  - connectedpetfeeder
+  - connected pet feeders
+  - wi-fi pet feeder
+  - wi fi pet feeder
+  - wifi-pet-feeder
+  - wifipetfeeder
+  - wifi pet feeders
+  - automatic-pet-feeder
+  - automaticpetfeeder
+  - automatic pet feeders
+  - pet-feeder
+  - petfeeder
+  - pet feeders
+  product_family: pet_technology
+  product_subfamily: smart_pet_feeder
+  genres:
+  - pet_tech
+  - smart_home_iot
+  - kitchen_food_appliance
+  implied_traits:
+  - consumer
+  - household
+  - mains_power_likely
+  - wifi
+  - app_control
+  - food_contact
+  - motorized
+  - radio
+  - cloud
+  - internet
+  - ota
+  functional_classes:
+  - pet_device
+  - connected_device
+  likely_standards:
+  - EN 60335-1
+  - EN 18031-1
+  strong_aliases:
+  - smart pet feeder
+  - connected pet feeder
+  - wifi pet feeder
+  - automatic pet feeder
+  - pet feeder
+  weak_aliases:
+  - smart-pet-feeder
+  - smartpetfeeder
+  - smart pet feeders
+  - connected-pet-feeder
+  - connectedpetfeeder
+  - connected pet feeders
+  - wi-fi pet feeder
+  - wi fi pet feeder
+  - wifi-pet-feeder
+  - wifipetfeeder
+  - wifi pet feeders
+  - automatic-pet-feeder
+  - automaticpetfeeder
+  - automatic pet feeders
+  - pet-feeder
+  - petfeeder
+  - pet feeders
+  marketplace_aliases:
+  - pet feeder
+  - automatic pet feeder
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  - ref: EN 18031-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - wifi
+  - app_control
+  - food_contact
+  - motorized
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_pet_fountain
+  label: Smart / automatic pet water fountain
+  product_family: pet_care_device
+  product_subfamily: smart_pet_fountain
+  aliases:
+  - pet water fountain
+  - smart pet fountain
+  - automatic pet water fountain
+  - cat water fountain
+  - dog water fountain
+  - connected pet fountain
+  - wifi pet fountain
+  - pet drinking fountain
+  - pet-water-fountain
+  - petwaterfountain
+  - pet water fountains
+  - smart-pet-fountain
+  - smartpetfountain
+  - automatic-pet-water-fountain
+  - automaticpetwaterfountain
+  - cat-water-fountain
+  - catwaterfountain
+  - dog-water-fountain
+  - dogwaterfountain
+  - connected-pet-fountain
+  - connectedpetfountain
+  - pet-drinking-fountain
+  - petdrinkingfountain
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - motorized
+  - water_contact
+  - app_control
+  - wifi
+  - bluetooth
+  functional_classes:
+  - home_device
+  - pet_device
+  likely_standards:
+  - EN 60335-1
+  genres:
+  - pet_tech
+  - household_appliance
+  strong_aliases:
+  - pet water fountain
+  - smart pet fountain
+  - automatic pet water fountain
+  - cat water fountain
+  - dog water fountain
+  - connected pet fountain
+  - pet drinking fountain
+  weak_aliases:
+  - pet-water-fountain
+  - petwaterfountain
+  - pet water fountains
+  - smart-pet-fountain
+  - smartpetfountain
+  - automatic-pet-water-fountain
+  - automaticpetwaterfountain
+  - cat-water-fountain
+  - catwaterfountain
+  - dog-water-fountain
+  - dogwaterfountain
+  - connected-pet-fountain
+  - connectedpetfountain
+  marketplace_aliases:
+  - pet water fountain
+  - cat fountain
+  - dog water fountain
+  - automatic pet waterer
+  not_when_text_contains: []
+  negative_examples:
+  - smart_pet_feeder
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - motorized
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Motorized recirculating water fountains for pets with filter and optional WiFi. Covered by EN 60335-1 as
+    motorized water appliance.
+- id: smart_toy
+  label: Smart connected toy
+  aliases:
+  - smart toy
+  - connected toy
+  - app connected toy
+  - educational robot toy
+  - interactive toy
+  - smart-toy
+  - smarttoy
+  - smart toys
+  - connected-toy
+  - connectedtoy
+  - connected toys
+  - app-connected-toy
+  - appconnectedtoy
+  - app connected toys
+  - educational-robot-toy
+  - educationalrobottoy
+  - educational robot toys
+  - interactive-toy
+  - interactivetoy
+  - interactive toys
+  - smart connected toy
+  - smart-connected-toy
+  - smartconnectedtoy
+  - smart connected toys
+  product_family: connected_child_product
+  product_subfamily: smart_toy
+  genres:
+  - connected_toy_childcare
+  - smart_home_iot
+  implied_traits:
+  - wifi
+  - bluetooth
+  - microphone
+  - speaker
+  - radio
+  - app_control
+  - cloud
+  - internet
+  - ota
+  functional_classes:
+  - toy_product
+  likely_standards:
+  - EN 62115
+  - EN 71 review
+  route_family: toy
+  primary_standard_code: EN 62115
+  supporting_standard_codes:
+  - EN 71 review
+  strong_aliases:
+  - smart toy
+  - connected toy
+  - app connected toy
+  - educational robot toy
+  - interactive toy
+  weak_aliases:
+  - smart-toy
+  - smarttoy
+  - smart toys
+  - connected-toy
+  - connectedtoy
+  - connected toys
+  - app-connected-toy
+  - appconnectedtoy
+  - app connected toys
+  - educational-robot-toy
+  - educationalrobottoy
+  - educational robot toys
+  - interactive-toy
+  - interactivetoy
+  - interactive toys
+  - smart connected toy
+  - smart-connected-toy
+  - smartconnectedtoy
+  - smart connected toys
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62115
+    kind: unspecified
+  - ref: EN 71 review
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - wifi
+  - bluetooth
+  - microphone
+  - speaker
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

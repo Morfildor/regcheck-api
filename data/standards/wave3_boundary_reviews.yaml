@@ -1,0 +1,216 @@
+standards:
+- code: Household cooking appliance part-2 review
+  title: Household cooking appliance part-2 review
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: review
+  standard_family: Household cooking appliance part-2 review
+  confidence: low
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products:
+  - multicooker
+  - slow_cooker
+  - bread_maker
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  - food_contact
+  applies_if_any:
+  - cooking
+  - pressure_cooking
+  - food_preparation
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - intended cooking modes and vessel design
+  - exact appliance family / product-part confirmation
+  keywords:
+  - cooking appliance review
+  - multicooker review
+  notes: Conservative review item for countertop cooking appliances where RuleGrid should stay broad instead of forcing an uncertain Part 2 family.
+  standard_ref: Household cooking appliance part-2 review
+  selection_group: household_cooking_part2_review
+  selection_priority: 10
+  evidence_keywords:
+  - intended cooking modes and vessel design
+  - exact appliance family / product-part confirmation
+- code: Water dispenser / cooler review
+  title: Water dispenser, cooler, and plumbed-dispensing review
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  - GPSR
+  legislation_key: LVD
+  item_type: review
+  standard_family: Water dispenser / cooler review
+  confidence: low
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products:
+  - water_dispenser
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  - water_contact
+  applies_if_any:
+  - water_dispensing
+  - beverage_service
+  exclude_if: []
+  test_focus:
+  - safety
+  - materials
+  evidence_hint:
+  - dispensing configuration and hygiene controls
+  - bottled versus bottleless installation details
+  keywords:
+  - water dispenser review
+  - water cooler review
+  notes: Conservative review item for hot/cold water dispensers and bottleless coolers where installation and hygiene details still matter.
+  standard_ref: Water dispenser / cooler review
+  selection_group: water_dispenser_review
+  selection_priority: 15
+  evidence_keywords:
+  - dispensing configuration and hygiene controls
+  - bottled versus bottleless installation details
+- code: Sterilization / hygiene appliance review
+  title: Sterilization and hygiene appliance review
+  region: EU
+  category: safety
+  directives:
+  - GPSR
+  - LVD
+  legislation_key: GPSR
+  item_type: review
+  standard_family: Sterilization / hygiene appliance review
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products:
+  - bottle_sterilizer
+  - smart_litter_box
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - sterilization
+  - sanitization
+  exclude_if: []
+  test_focus:
+  - safety
+  - materials
+  evidence_hint:
+  - hygiene claim set and cleaning cycle description
+  - user contact and contamination pathway description
+  keywords:
+  - sterilization review
+  - hygiene appliance review
+  notes: Review item for hygiene-centric consumer appliances where the product claim set extends beyond ordinary heating or motion.
+  standard_ref: Sterilization / hygiene appliance review
+  selection_group: hygiene_appliance_review
+  selection_priority: 10
+  evidence_keywords:
+  - hygiene claim set and cleaning cycle description
+  - user contact and contamination pathway description
+- code: Energy storage / inverter system review
+  title: Energy storage, inverter, and backup-power system review
+  region: EU
+  category: power
+  directives:
+  - LVD
+  - BATTERY
+  - CRA
+  legislation_key: LVD
+  item_type: review
+  standard_family: Energy storage / inverter system review
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products:
+  - ups
+  - smart_meter_gateway
+  - solar_inverter_gateway
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - energy_system_boundary
+  - battery_storage_system
+  - inverter_system
+  - ups_function
+  exclude_if: []
+  test_focus:
+  - safety
+  - battery
+  - energy
+  evidence_hint:
+  - single-line architecture or system diagram
+  - battery, inverter, and installation role details
+  keywords:
+  - inverter system review
+  - battery storage review
+  - ups review
+  notes: Conservative review item for products that look like energy subsystems or gateways rather than ordinary standalone consumer devices.
+  standard_ref: Energy storage / inverter system review
+  selection_group: energy_system_review
+  selection_priority: 20
+  evidence_keywords:
+  - single-line architecture or system diagram
+  - battery, inverter, and installation role details
+- code: UV / irradiation application review
+  title: UV, germicidal, and irradiation application review
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  - GPSR
+  legislation_key: LVD
+  item_type: review
+  standard_family: UV / irradiation application review
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products:
+  - uv_nail_lamp
+  - ipl_hair_removal_device
+  - uv_sanitizing_box
+  - germicidal_lamp
+  - ir_illuminator
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  - optical_emission
+  applies_if_any:
+  - uv_irradiation_boundary
+  - uv_emitting
+  - germicidal_emission
+  - body_treatment_boundary
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - optical spectrum and intended-use description
+  - sanitizing, treatment, or cosmetic claim set
+  keywords:
+  - uv review
+  - germicidal review
+  - irradiation review
+  notes: Review item to keep UV, IR, and light-treatment products from being routed with false precision before intended use and irradiation details are confirmed.
+  standard_ref: UV / irradiation application review
+  selection_group: uv_irradiation_review
+  selection_priority: 20
+  evidence_keywords:
+  - optical spectrum and intended-use description
+  - sanitizing, treatment, or cosmetic claim set

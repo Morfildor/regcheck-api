@@ -110,6 +110,31 @@ def _risk_reasons(
         add("possible_medical_boundary", "overall", level, "Possible medical / wellness boundary", detail)
         add("possible_medical_boundary", "current", level, "Possible medical / wellness boundary", detail)
 
+    if "energy_system_boundary" in traits:
+        detail = "The product appears to sit inside a wider inverter, storage, backup-power, or metering system, so standalone consumer assumptions may be unreliable."
+        add("energy_system_boundary", "overall", "HIGH", "Energy-system boundary", detail)
+        add("energy_system_boundary", "current", "HIGH", "Energy-system boundary", detail)
+
+    if "uv_irradiation_boundary" in traits:
+        detail = "Intentional UV, IR, or irradiation-like optical output can change the safety route and needs intended-output review before treating the product as ordinary lighting."
+        add("uv_irradiation_boundary", "overall", "HIGH", "UV / irradiation boundary", detail)
+        add("uv_irradiation_boundary", "current", "MEDIUM", "UV / irradiation boundary", detail)
+
+    if "body_treatment_boundary" in traits:
+        detail = "Body-treatment or stimulation functionality may shift the product from ordinary consumer scope into cosmetic, wellness, or medical-boundary review."
+        add("body_treatment_boundary", "overall", "HIGH", "Body-treatment boundary", detail)
+        add("body_treatment_boundary", "current", "HIGH", "Body-treatment boundary", detail)
+
+    if "industrial_installation_boundary" in traits:
+        detail = "Installation details suggest the product may be a fixed-installation or professional system component rather than an ordinary consumer end product."
+        add("industrial_installation_boundary", "overall", "MEDIUM", "Installation boundary", detail)
+        add("industrial_installation_boundary", "current", "MEDIUM", "Installation boundary", detail)
+
+    if "machinery_boundary" in traits:
+        detail = "The product looks tool-like or machine-like, but the exact handheld-versus-stationary machinery scope is still unresolved."
+        add("machinery_boundary", "overall", "HIGH", "Machinery boundary", detail)
+        add("machinery_boundary", "current", "HIGH", "Machinery boundary", detail)
+
     if "MACH_REG" in directives:
         add(
             "machinery_future",

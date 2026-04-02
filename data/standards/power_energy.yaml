@@ -1,0 +1,245 @@
+standards:
+- code: Battery safety review
+  title: Battery safety and transport review required
+  region: EU
+  category: battery
+  directives:
+  - LVD
+  - CRA
+  legislation_key: LVD
+  item_type: review
+  standard_family: BATTERY SAFETY REVIEW
+  confidence: low
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - battery_powered
+  applies_if_any:
+  - wearable
+  - consumer
+  - household
+  exclude_if: []
+  test_focus:
+  - battery
+  evidence_hint:
+  - safety test report
+  - CB report or equivalent technical evidence
+  keywords:
+  - Battery safety and transport review required
+  notes: Review battery safety, transport, charger architecture, and chemistry-specific compliance dependencies.
+  state_of_the_art_scope: EU
+  standard_ref: Battery safety review
+  selection_group: BATTERY SAFETY REVIEW
+  selection_priority: 0
+  evidence_keywords:
+  - safety test report
+  - CB report or equivalent technical evidence
+  - Battery safety and transport review required
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: Charger / external PSU review
+  title: External power supply and charger route review required
+  region: EU
+  category: power
+  directives:
+  - LVD
+  - ECO
+  legislation_key: LVD
+  item_type: review
+  standard_family: CHARGER / EXTERNAL PSU REVIEW
+  confidence: low
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - external_psu
+  exclude_if: []
+  test_focus:
+  - electrical
+  - energy
+  evidence_hint:
+  - power architecture description
+  - adapter / charger specification
+  - safety test report
+  keywords:
+  - external power supply review
+  - charger architecture review
+  notes: Review whether a supplied external AC/DC adapter, charging dock, or charger creates additional safety or ecodesign
+    obligations. Do not trigger for ordinary direct-mains products with internal power conversion only.
+  state_of_the_art_scope: EU
+  standard_ref: Charger / external PSU review
+  selection_group: CHARGER / EXTERNAL PSU REVIEW
+  selection_priority: 0
+  evidence_keywords:
+  - power architecture description
+  - adapter / charger specification
+  - safety test report
+  - external power supply review
+  - charger architecture review
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 50604-1
+  title: 'Secondary lithium batteries for light EV applications - Part 1: General safety requirements and test methods'
+  region: EU
+  category: battery
+  directives:
+  - BATTERY
+  legislation_key: BATTERY
+  item_type: review
+  standard_family: EN 50604-1
+  confidence: medium
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  version: EN 50604-1
+  dated_version: EN 50604-1
+  applies_if_products:
+  - electric_scooter
+  - hoverboard
+  - electric_skateboard
+  - electric_unicycle
+  - electric_bicycle
+  exclude_if_products: []
+  applies_if_all:
+  - light_means_of_transport
+  applies_if_any:
+  - traction_motor
+  - battery_powered
+  exclude_if: []
+  test_focus:
+  - battery
+  - safety
+  - electrical
+  evidence_hint:
+  - traction battery specification
+  - battery-pack architecture
+  - light-EV battery safety evidence
+  keywords:
+  - traction battery
+  - light ev battery
+  - scooter battery
+  - e-bike battery
+  notes: Review route for lithium traction batteries and integrated packs used in light electric transport products such as
+    e-bikes, e-scooters, hoverboards, e-skateboards, and electric unicycles.
+  state_of_the_art_scope: EU
+  standard_ref: EN 50604-1
+  selection_group: EN 50604-1
+  selection_priority: 5
+  evidence_keywords:
+  - traction battery specification
+  - battery-pack architecture
+  - light-EV battery safety evidence
+  - traction battery
+  - light ev battery
+  - scooter battery
+  - e-bike battery
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 62133-2
+  title: Secondary cells and batteries containing alkaline or other non-acid electrolytes - Safety requirements for portable
+    sealed secondary lithium cells and for batteries made from them
+  region: EU
+  category: battery
+  directives:
+  - BATTERY
+  - LVD
+  - RED
+  legislation_key: BATTERY
+  item_type: standard
+  standard_family: EN 62133-2
+  confidence: medium
+  harmonization_status: state_of_the_art
+  is_harmonized: false
+  harmonized_under: BATTERY
+  harmonized_reference: 2023/1542/EU
+  version: EN 62133-2:2017/A1:2021
+  dated_version: EN 62133-2:2017/A1:2021
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - battery_powered
+  applies_if_any:
+  - consumer
+  - electronic
+  - portable
+  - battery_powered
+  - battery_pack
+  exclude_if: []
+  test_focus:
+  - battery
+  - electrical
+  - safety
+  evidence_hint:
+  - battery safety evidence
+  - cell or pack qualification records
+  - battery pack specification
+  - lithium battery safety evidence
+  - cell / pack test evidence
+  keywords:
+  - lithium systems
+  - lithium battery
+  - rechargeable battery
+  - power bank
+  notes: Common lithium-battery safety review route for portable batteries and embedded rechargeable packs.
+  state_of_the_art_scope: EU
+  required_fact_basis: confirmed
+  standard_ref: EN 62133-2
+  selection_group: EN 62133-2
+  selection_priority: 0
+  evidence_keywords:
+  - battery safety evidence
+  - cell or pack qualification records
+  - battery pack specification
+  - lithium battery safety evidence
+  - cell / pack test evidence
+  - lithium systems
+  - lithium battery
+  - rechargeable battery
+  - power bank
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: UN 38.3 review
+  title: Lithium battery transport review
+  region: international
+  category: battery
+  directives:
+  - BATTERY
+  legislation_key: BATTERY
+  item_type: review
+  standard_family: UN 38.3
+  confidence: medium
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  version: UN Manual of Tests and Criteria, Part III, subsection 38.3
+  dated_version: UN 38.3
+  applies_if_any:
+  - battery_pack
+  - portable_energy
+  - light_means_of_transport
+  test_focus:
+  - battery
+  - safety
+  evidence_hint:
+  - transport test summary review
+  - cell / pack configuration review
+  - shipping classification review
+  keywords:
+  - transport battery
+  - power bank
+  - battery pack
+  - lithium battery transport review
+  notes: Practical transport and logistics review item for lithium battery products and replacement packs.
+  standard_ref: UN 38.3 review
+  selection_group: UN 38.3
+  selection_priority: 0
+  evidence_keywords:
+  - transport test summary review
+  - cell / pack configuration review
+  - shipping classification review
+  - transport battery
+  - power bank
+  - battery pack
+  - lithium battery transport review
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.

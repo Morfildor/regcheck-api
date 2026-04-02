@@ -1,0 +1,3412 @@
+products:
+- id: audio_glasses
+  label: Audio glasses / smart audio eyewear
+  aliases:
+  - audio glasses
+  - bluetooth glasses
+  - smart audio glasses
+  - speaker glasses
+  - audio sunglasses
+  - open ear glasses
+  - smart eyewear audio
+  - smart led glasses
+  - led glasses
+  - bluetooth audio glasses
+  - smart glasses audio
+  - audio-glasses
+  - audioglasses
+  - audio glasse
+  - bluetooth-glasses
+  - bluetoothglasses
+  - bluetooth glasse
+  - smart-audio-glasses
+  - smartaudioglasses
+  - smart audio glasse
+  - speaker-glasses
+  - speakerglasses
+  - speaker glasse
+  - audio-sunglasses
+  - audiosunglasses
+  - audio sunglasse
+  - open-ear-glasses
+  - openearglasses
+  - open ear glasse
+  - smart-eyewear-audio
+  - smarteyewearaudio
+  - smart eyewear audios
+  - smart-led-glasses
+  - smartledglasses
+  - smart led glasse
+  - led-glasses
+  - ledglasses
+  - led glasse
+  - bluetooth-audio-glasses
+  - bluetoothaudioglasses
+  - bluetooth audio glasse
+  - smart-glasses-audio
+  - smartglassesaudio
+  - smart glasses audios
+  - audio glasses smart audio eyewear
+  - audio-glasses-smart-audio-eyewear
+  - audioglassessmartaudioeyewear
+  - audio glasses smart audio eyewears
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - bluetooth
+  - speaker
+  - microphone
+  - wearable
+  - body_worn_or_applied
+  - portable
+  functional_classes:
+  - av_ict_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - wearable_device
+  - av_ict_device
+  preferred_clues:
+  - audio glasses
+  - bluetooth audio
+  - bluetooth glasses
+  - led glasses
+  - open ear
+  - speaker glasses
+  exclude_clues:
+  - vr
+  - ar
+  - xr
+  - display
+  - headset
+  strong_aliases:
+  - audio glasses
+  - bluetooth glasses
+  - smart audio glasses
+  - speaker glasses
+  - audio sunglasses
+  - open ear glasses
+  - smart eyewear audio
+  - smart led glasses
+  weak_aliases:
+  - led glasses
+  - bluetooth audio glasses
+  - smart glasses audio
+  - audio-glasses
+  - audioglasses
+  - audio glasse
+  - bluetooth-glasses
+  - bluetoothglasses
+  - bluetooth glasse
+  - smart-audio-glasses
+  - smartaudioglasses
+  - smart audio glasse
+  - speaker-glasses
+  - speakerglasses
+  - speaker glasse
+  - audio-sunglasses
+  - audiosunglasses
+  - audio sunglasse
+  - open-ear-glasses
+  - openearglasses
+  - open ear glasse
+  - smart-eyewear-audio
+  - smarteyewearaudio
+  - smart eyewear audios
+  - smart-led-glasses
+  - smartledglasses
+  - smart led glasse
+  - led-glasses
+  - ledglasses
+  - led glasse
+  marketplace_aliases: []
+  not_when_text_contains:
+  - vr
+  - ar
+  - xr
+  - display
+  - headset
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - bluetooth
+  score_penalty_if_traits:
+  - vr
+  - ar
+  - xr
+  - display
+  - headset
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: connected_breast_pump
+  label: Connected / smart electric breast pump
+  product_family: maternity_care
+  product_subfamily: connected_breast_pump
+  aliases:
+  - electric breast pump
+  - smart breast pump
+  - connected breast pump
+  - wearable breast pump
+  - hands free breast pump
+  - portable breast pump
+  - bluetooth breast pump
+  - electric-breast-pump
+  - electricbreastpump
+  - electric breast pumps
+  - smart-breast-pump
+  - smartbreastpump
+  - connected-breast-pump
+  - connectedbreastpump
+  - wearable-breast-pump
+  - wearablebreastpump
+  - hands-free-breast-pump
+  - handsfreebreastpump
+  - portable-breast-pump
+  - portablebreastpump
+  - bluetooth-breast-pump
+  - bluetoothbreastpump
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - motorized
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  - data_storage
+  functional_classes:
+  - personal_care_device
+  - wellness_device
+  likely_standards:
+  - EN 60335-2-32
+  genres:
+  - wellness_borderline_medical
+  - personal_care_appliance
+  strong_aliases:
+  - electric breast pump
+  - smart breast pump
+  - connected breast pump
+  - wearable breast pump
+  - hands free breast pump
+  - portable breast pump
+  - bluetooth breast pump
+  weak_aliases:
+  - electric-breast-pump
+  - electricbreastpump
+  - electric breast pumps
+  - smart-breast-pump
+  - smartbreastpump
+  - connected-breast-pump
+  - connectedbreastpump
+  - wearable-breast-pump
+  - wearablebreastpump
+  - hands-free-breast-pump
+  - handsfreebreastpump
+  - portable-breast-pump
+  - portablebreastpump
+  - bluetooth-breast-pump
+  - bluetoothbreastpump
+  marketplace_aliases:
+  - breast pump
+  - electric breast pump
+  - wearable breast pump
+  - hands free breast pump
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-32
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - health_related
+  - body_worn_or_applied
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Smart electric breast pumps with Bluetooth app connectivity. Covered under EN 60335-2-32.
+- id: continuous_glucose_monitor
+  label: Continuous glucose monitor (CGM)
+  product_family: health_monitor
+  product_subfamily: continuous_glucose_monitor
+  aliases:
+  - continuous glucose monitor
+  - cgm sensor
+  - cgm device
+  - glucose sensor patch
+  - flash glucose monitor
+  - interstitial glucose sensor
+  - cgm patch
+  - continuous-glucose-monitor
+  - continuousglucosemonitor
+  - continuous glucose monitors
+  - cgm-sensor
+  - cgmsensor
+  - cgm sensors
+  - cgm-device
+  - cgmdevice
+  - cgm devices
+  - glucose-sensor-patch
+  - glucosesensorpatch
+  - flash-glucose-monitor
+  - flashglucosemonitor
+  - cgm-patch
+  - cgmpatch
+  - cgm patches
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  - nfc
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
+  - ota
+  functional_classes:
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  - EN 55032
+  - EN 55035
+  genres:
+  - wellness_borderline_medical
+  - wearable_device
+  - av_ict_device
+  strong_aliases:
+  - continuous glucose monitor
+  - cgm sensor
+  - cgm device
+  - glucose sensor patch
+  - flash glucose monitor
+  - cgm patch
+  weak_aliases:
+  - continuous-glucose-monitor
+  - continuousglucosemonitor
+  - continuous glucose monitors
+  - cgm-sensor
+  - cgmsensor
+  - cgm sensors
+  - cgm-device
+  - cgmdevice
+  - cgm devices
+  - glucose-sensor-patch
+  - glucosesensorpatch
+  - flash-glucose-monitor
+  - flashglucosemonitor
+  - cgm-patch
+  - cgmpatch
+  marketplace_aliases:
+  - cgm sensor
+  - continuous glucose monitor
+  - glucose patch
+  not_when_text_contains: []
+  negative_examples:
+  - smart_blood_pressure_monitor
+  - smart_glucose_meter
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Consumer and OTC CGM devices and glucose sensor patches. MDR borderline review required for medical-grade
+    claims.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  default_traits:
+  - bluetooth
+  - nfc
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
+  - ota
+- id: digital_stethoscope
+  label: Digital / electronic stethoscope
+  product_family: health_monitor
+  product_subfamily: digital_stethoscope
+  aliases:
+  - digital stethoscope
+  - electronic stethoscope
+  - smart stethoscope
+  - bluetooth stethoscope
+  - connected stethoscope
+  - amplified stethoscope
+  - digital-stethoscope
+  - digitalstethoscope
+  - digital stethoscopes
+  - electronic-stethoscope
+  - electronicstethoscope
+  - smart-stethoscope
+  - smartstethoscope
+  - bluetooth-stethoscope
+  - bluetoothstethoscope
+  - connected-stethoscope
+  - connectedstethoscope
+  - amplified-stethoscope
+  - amplifiedstethoscope
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  - microphone
+  - app_control
+  - personal_data_likely
+  - data_storage
+  functional_classes:
+  - av_ict_device
+  - wellness_device
+  likely_standards:
+  - EN 62368-1
+  - MDR borderline review
+  - EN 55032
+  - EN 55035
+  genres:
+  - wellness_borderline_medical
+  - av_ict_device
+  strong_aliases:
+  - digital stethoscope
+  - electronic stethoscope
+  - smart stethoscope
+  - bluetooth stethoscope
+  - connected stethoscope
+  - amplified stethoscope
+  weak_aliases:
+  - digital-stethoscope
+  - digitalstethoscope
+  - digital stethoscopes
+  - electronic-stethoscope
+  - electronicstethoscope
+  - smart-stethoscope
+  - smartstethoscope
+  - bluetooth-stethoscope
+  - bluetoothstethoscope
+  - connected-stethoscope
+  - connectedstethoscope
+  - amplified-stethoscope
+  - amplifiedstethoscope
+  marketplace_aliases:
+  - digital stethoscope
+  - electronic stethoscope
+  - bluetooth stethoscope
+  not_when_text_contains: []
+  negative_examples:
+  - heart_rate_monitor
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 35
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - health_related
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Consumer and professional-grade digital/amplified stethoscopes. MDR borderline review where diagnostic claims
+    are made.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  default_traits:
+  - body_worn_or_applied
+  - bluetooth
+  - microphone
+  - app_control
+  - personal_data_likely
+  - data_storage
+- id: gps_pet_tracker
+  label: GPS pet tracker
+  aliases:
+  - pet tracker
+  - gps pet tracker
+  - dog tracker
+  - cat tracker
+  - smart pet collar
+  - pet-tracker
+  - pettracker
+  - pet trackers
+  - gps-pet-tracker
+  - gpspettracker
+  - gps pet trackers
+  - dog-tracker
+  - dogtracker
+  - dog trackers
+  - cat-tracker
+  - cattracker
+  - cat trackers
+  - smart-pet-collar
+  - smartpetcollar
+  - smart pet collars
+  product_family: pet_technology
+  product_subfamily: gps_pet_tracker
+  genres:
+  - pet_tech
+  - wearable_device
+  implied_traits:
+  - bluetooth
+  - cellular
+  - gnss
+  - location_tracking
+  functional_classes:
+  - pet_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  strong_aliases:
+  - pet tracker
+  - gps pet tracker
+  - dog tracker
+  - cat tracker
+  - smart pet collar
+  weak_aliases:
+  - pet-tracker
+  - pettracker
+  - pet trackers
+  - gps-pet-tracker
+  - gpspettracker
+  - gps pet trackers
+  - dog-tracker
+  - dogtracker
+  - dog trackers
+  - cat-tracker
+  - cattracker
+  - cat trackers
+  - smart-pet-collar
+  - smartpetcollar
+  - smart pet collars
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - bluetooth
+  - cellular
+  - gnss
+  - location_tracking
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: heart_rate_monitor
+  label: Heart rate monitor / ECG device
+  product_family: health_monitor
+  product_subfamily: heart_rate_monitor
+  aliases:
+  - heart rate monitor
+  - heart monitor
+  - ecg monitor
+  - ekg monitor
+  - cardiac monitor
+  - ecg device
+  - holter monitor
+  - chest strap heart rate monitor
+  - optical heart rate sensor
+  - ecg patch
+  - smart ecg
+  - portable ecg
+  - wearable ecg
+  - heart rhythm monitor
+  - hrm sensor
+  - heart-rate-monitor
+  - heartratemonitor
+  - heart rate monitors
+  - ecg-monitor
+  - ecgmonitor
+  - ecg monitors
+  - ekg-monitor
+  - ekgmonitor
+  - ekg monitors
+  - cardiac-monitor
+  - cardiacmonitor
+  - cardiac monitors
+  - holter-monitor
+  - holtermonitor
+  - holter monitors
+  - chest-strap-heart-rate-monitor
+  - cheststrapheartatemonitor
+  - ecg-patch
+  - ecgpatch
+  - ecg patches
+  - smart-ecg
+  - smartecg
+  - portable-ecg
+  - portableecg
+  - wearable-ecg
+  - wearableecg
+  - heart-rhythm-monitor
+  - heartrhythmonitor
+  - hrm-sensor
+  - hrmsensor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - data_storage
+  - personal_data_likely
+  - account
+  - ota
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  - EN 55032
+  - EN 55035
+  genres:
+  - wellness_borderline_medical
+  - wearable_device
+  - av_ict_device
+  strong_aliases:
+  - heart rate monitor
+  - heart monitor
+  - ecg monitor
+  - ekg monitor
+  - cardiac monitor
+  - ecg device
+  - holter monitor
+  - chest strap heart rate monitor
+  - ecg patch
+  - smart ecg
+  - portable ecg
+  - wearable ecg
+  - heart rhythm monitor
+  - hrm sensor
+  weak_aliases:
+  - heart-rate-monitor
+  - heartratemonitor
+  - heart rate monitors
+  - ecg-monitor
+  - ecgmonitor
+  - ecg monitors
+  - ekg-monitor
+  - ekgmonitor
+  - ekg monitors
+  - cardiac-monitor
+  - cardiacmonitor
+  - cardiac monitors
+  - holter-monitor
+  - holtermonitor
+  - holter monitors
+  - chest-strap-heart-rate-monitor
+  - cheststrapheartatemonitor
+  - ecg-patch
+  - ecgpatch
+  - ecg patches
+  - smart-ecg
+  - smartecg
+  - portable-ecg
+  - portableecg
+  - wearable-ecg
+  - wearableecg
+  - heart-rhythm-monitor
+  - heartrhythmonitor
+  marketplace_aliases:
+  - heart rate monitor
+  - cardiac monitor
+  - ecg patch
+  - chest strap
+  not_when_text_contains: []
+  negative_examples:
+  - smartwatch_fitness_tracker
+  - smart_blood_pressure_monitor
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - health_related
+  - body_worn_or_applied
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Covers consumer-grade ECG monitors, Holter-style patches, chest straps, and portable ECG devices. Distinct
+    from smartwatch and blood pressure monitor.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  default_traits:
+  - bluetooth
+  - app_control
+  - data_storage
+  - personal_data_likely
+  - account
+  - ota
+- id: led_shoes
+  label: LED shoes / light-up footwear
+  aliases:
+  - led shoes
+  - light up shoes
+  - light-up shoes
+  - bluetooth led shoes
+  - flashing shoes
+  - illuminated shoes
+  - led sneakers
+  - led-shoes
+  - ledshoes
+  - led shoe
+  - light-up-shoes
+  - lightupshoes
+  - light up shoe
+  - light-upshoes
+  - light-up shoe
+  - bluetooth-led-shoes
+  - bluetoothledshoes
+  - bluetooth led shoe
+  - flashing-shoes
+  - flashingshoes
+  - flashing shoe
+  - illuminated-shoes
+  - illuminatedshoes
+  - illuminated shoe
+  - led-sneakers
+  - ledsneakers
+  - led sneaker
+  - led shoes light-up footwear
+  - led shoes light up footwear
+  - led-shoes-light-up-footwear
+  - ledshoeslight-upfootwear
+  - led shoes light-up footwears
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - wearable
+  - body_worn_or_applied
+  - portable
+  - bluetooth
+  - radio
+  - app_control
+  functional_classes:
+  - wearable_device
+  likely_standards: []
+  genres:
+  - wearable_device
+  preferred_clues:
+  - shoes
+  - footwear
+  - sneakers
+  - led shoes
+  exclude_clues:
+  - speaker
+  - projector
+  strong_aliases:
+  - led shoes
+  - light up shoes
+  - light-up shoes
+  - bluetooth led shoes
+  - flashing shoes
+  - illuminated shoes
+  - led sneakers
+  weak_aliases:
+  - led-shoes
+  - ledshoes
+  - led shoe
+  - light-up-shoes
+  - lightupshoes
+  - light up shoe
+  - light-upshoes
+  - light-up shoe
+  - bluetooth-led-shoes
+  - bluetoothledshoes
+  - bluetooth led shoe
+  - flashing-shoes
+  - flashingshoes
+  - flashing shoe
+  - illuminated-shoes
+  - illuminatedshoes
+  - illuminated shoe
+  - led-sneakers
+  - ledsneakers
+  - led sneaker
+  - led shoes light-up footwear
+  - led shoes light up footwear
+  - led-shoes-light-up-footwear
+  - ledshoeslight-upfootwear
+  - led shoes light-up footwears
+  marketplace_aliases: []
+  not_when_text_contains:
+  - speaker
+  - projector
+  negative_examples: []
+  likely_standard_refs: []
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - wearable
+  - body_worn_or_applied
+  score_penalty_if_traits:
+  - speaker
+  - projector
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: massage_appliance
+  label: Massage appliance
+  aliases:
+  - massager
+  - massage gun
+  - massage cushion
+  - foot massager
+  - massagers
+  - massage-gun
+  - massagegun
+  - massage guns
+  - massage-cushion
+  - massagecushion
+  - massage cushions
+  - foot-massager
+  - footmassager
+  - foot massagers
+  - massage appliance
+  - massage-appliance
+  - massageappliance
+  - massage appliances
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - electronic
+  - mains_power_likely
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-32
+  genres:
+  - wellness_borderline_medical
+  - household_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - massager
+  - massage gun
+  - massage cushion
+  - foot massager
+  weak_aliases:
+  - massagers
+  - massage-gun
+  - massagegun
+  - massage guns
+  - massage-cushion
+  - massagecushion
+  - massage cushions
+  - foot-massager
+  - footmassager
+  - foot massagers
+  - massage appliance
+  - massage-appliance
+  - massageappliance
+  - massage appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-32
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: massage_gun
+  label: Massage gun / percussion massager
+  product_family: wellness_massage
+  product_subfamily: massage_gun
+  aliases:
+  - massage gun
+  - percussion massager
+  - deep tissue massager
+  - muscle massage gun
+  - handheld massager gun
+  - vibration massager
+  - smart massage gun
+  - massage-gun
+  - massagegun
+  - massage guns
+  - percussion-massager
+  - percussionmassager
+  - percussion massagers
+  - deep-tissue-massager
+  - deeptissuemassager
+  - deep tissue massagers
+  - muscle-massage-gun
+  - musclemassagegun
+  - handheld-massager-gun
+  - handheldmassagergun
+  - vibration-massager
+  - vibrationmassager
+  - smart-massage-gun
+  - smartmassagegun
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - handheld
+  - motorized
+  - health_related
+  - body_worn_or_applied
+  functional_classes:
+  - wellness_device
+  - personal_care_device
+  likely_standards:
+  - EN 60335-2-32
+  genres:
+  - wellness_borderline_medical
+  - personal_care_appliance
+  preferred_clues:
+  - massage gun
+  - percussion massager
+  strong_aliases:
+  - massage gun
+  - percussion massager
+  - deep tissue massager
+  - muscle massage gun
+  - handheld massager gun
+  - vibration massager
+  - smart massage gun
+  weak_aliases:
+  - massage-gun
+  - massagegun
+  - massage guns
+  - percussion-massager
+  - percussionmassager
+  - percussion massagers
+  - deep-tissue-massager
+  - deeptissuemassager
+  - muscle-massage-gun
+  - musclemassagegun
+  - handheld-massager-gun
+  - handheldmassagergun
+  - vibration-massager
+  - vibrationmassager
+  - smart-massage-gun
+  - smartmassagegun
+  marketplace_aliases:
+  - massage gun
+  - percussion massager
+  - deep tissue gun
+  not_when_text_contains: []
+  negative_examples:
+  - massage_appliance
+  likely_standard_refs:
+  - ref: EN 60335-2-32
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - motorized
+  - health_related
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Handheld battery-powered percussion/vibration massage guns. Distinct from stationary massage appliances
+    (EN 60335-2-32).
+- id: pulse_oximeter
+  label: Pulse oximeter / SpO2 monitor
+  product_family: health_monitor
+  product_subfamily: pulse_oximeter
+  aliases:
+  - pulse oximeter
+  - spo2 monitor
+  - blood oxygen monitor
+  - fingertip oximeter
+  - wearable oximeter
+  - continuous spo2 tracker
+  - oxygen saturation monitor
+  - pulse-oximeter
+  - pulseoximeter
+  - pulse oximeters
+  - spo2-monitor
+  - spo2monitor
+  - spo2 monitors
+  - blood-oxygen-monitor
+  - bloodoxygenmonitor
+  - blood oxygen monitors
+  - fingertip-oximeter
+  - fingertipoximeter
+  - fingertip oximeters
+  - wearable-oximeter
+  - wearableoximeter
+  - oxygen-saturation-monitor
+  - oxygensaturationmonitor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  - display
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  - EN 55032
+  - EN 55035
+  genres:
+  - wellness_borderline_medical
+  - wearable_device
+  - av_ict_device
+  strong_aliases:
+  - pulse oximeter
+  - spo2 monitor
+  - blood oxygen monitor
+  - fingertip oximeter
+  - wearable oximeter
+  - oxygen saturation monitor
+  weak_aliases:
+  - pulse-oximeter
+  - pulseoximeter
+  - pulse oximeters
+  - spo2-monitor
+  - spo2monitor
+  - spo2 monitors
+  - blood-oxygen-monitor
+  - bloodoxygenmonitor
+  - blood oxygen monitors
+  - fingertip-oximeter
+  - fingertipoximeter
+  - wearable-oximeter
+  - wearableoximeter
+  - oxygen-saturation-monitor
+  - oxygensaturationmonitor
+  marketplace_aliases:
+  - pulse oximeter
+  - fingertip pulse oximeter
+  - spo2 finger monitor
+  not_when_text_contains: []
+  negative_examples:
+  - smartwatch_fitness_tracker
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - health_related
+  - body_worn_or_applied
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Consumer-grade pulse oximeters and SpO2 monitors. Borderline medical; EN 62368-1 for electronics, MDR review
+    for medical claims.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - display
+  default_traits:
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - personal_data_likely
+- id: sleep_tracker
+  label: Sleep tracker hub / smart sleep device
+  aliases:
+  - sleep tracker
+  - smart sleep monitor
+  - sleep hub
+  - mattress sleep tracker
+  - bed sensor sleep
+  - sleep-tracker
+  - sleeptracker
+  - sleep trackers
+  - smart-sleep-monitor
+  - smartsleepmonitor
+  - smart sleep monitors
+  - sleep-hub
+  - sleephub
+  - sleep hubs
+  - mattress-sleep-tracker
+  - mattresssleeptracker
+  - mattress sleep trackers
+  - bed-sensor-sleep
+  - bedsensorsleep
+  - bed sensor sleeps
+  - sleep tracker hub smart sleep device
+  - sleep-tracker-hub-smart-sleep-device
+  - sleeptrackerhubsmartsleepdevice
+  - sleep tracker hub smart sleep devices
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - battery_powered
+  - wifi
+  - bluetooth
+  - health_related
+  - motion_detection
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - personal_data_likely
+  - account
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - wearable_device
+  strong_aliases:
+  - sleep tracker
+  - smart sleep monitor
+  - sleep hub
+  - mattress sleep tracker
+  - bed sensor sleep
+  weak_aliases:
+  - sleep-tracker
+  - sleeptracker
+  - sleep trackers
+  - smart-sleep-monitor
+  - smartsleepmonitor
+  - smart sleep monitors
+  - sleep-hub
+  - sleephub
+  - sleep hubs
+  - mattress-sleep-tracker
+  - mattresssleeptracker
+  - mattress sleep trackers
+  - bed-sensor-sleep
+  - bedsensorsleep
+  - bed sensor sleeps
+  - sleep tracker hub smart sleep device
+  - sleep-tracker-hub-smart-sleep-device
+  - sleeptrackerhubsmartsleepdevice
+  - sleep tracker hub smart sleep devices
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_blood_pressure_monitor
+  label: Smart blood pressure monitor
+  aliases:
+  - smart blood pressure monitor
+  - connected bp monitor
+  - wifi blood pressure monitor
+  - bluetooth blood pressure cuff
+  - smart-blood-pressure-monitor
+  - smartbloodpressuremonitor
+  - smart blood pressure monitors
+  - connected-bp-monitor
+  - connectedbpmonitor
+  - connected bp monitors
+  - wi-fi blood pressure monitor
+  - wi fi blood pressure monitor
+  - wifi-blood-pressure-monitor
+  - wifibloodpressuremonitor
+  - wifi blood pressure monitors
+  - bluetooth-blood-pressure-cuff
+  - bluetoothbloodpressurecuff
+  - bluetooth blood pressure cuffs
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - bluetooth
+  - wifi
+  - display
+  - health_related
+  - body_worn_or_applied
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - account
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - wellness_borderline_medical
+  - smart_home_iot
+  strong_aliases:
+  - smart blood pressure monitor
+  - connected bp monitor
+  - wifi blood pressure monitor
+  - bluetooth blood pressure cuff
+  weak_aliases:
+  - smart-blood-pressure-monitor
+  - smartbloodpressuremonitor
+  - smart blood pressure monitors
+  - connected-bp-monitor
+  - connectedbpmonitor
+  - connected bp monitors
+  - wi-fi blood pressure monitor
+  - wi fi blood pressure monitor
+  - wifi-blood-pressure-monitor
+  - wifibloodpressuremonitor
+  - wifi blood pressure monitors
+  - bluetooth-blood-pressure-cuff
+  - bluetoothbloodpressurecuff
+  - bluetooth blood pressure cuffs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_cycling_computer
+  label: Smart cycling computer / GPS bike head unit
+  product_family: sports_wearable
+  product_subfamily: smart_cycling_computer
+  aliases:
+  - cycling computer
+  - bike computer
+  - gps cycling computer
+  - bike gps
+  - cycling head unit
+  - smart bike computer
+  - connected cycling computer
+  - ant+ cycling computer
+  - cycling-computer
+  - cyclingcomputer
+  - cycling computers
+  - bike-computer
+  - bikecomputer
+  - bike computers
+  - gps-cycling-computer
+  - gpscyclingcomputer
+  - bike-gps
+  - bikegps
+  - cycling-head-unit
+  - cyclingheadunit
+  - smart-bike-computer
+  - smartbikecomputer
+  - connected-cycling-computer
+  - connectedcyclingcomputer
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - display
+  - gnss
+  - bluetooth
+  - wifi
+  - app_control
+  - ota
+  - data_storage
+  - outdoor_use
+  functional_classes:
+  - av_ict_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - wearable_device
+  - av_ict_device
+  strong_aliases:
+  - cycling computer
+  - bike computer
+  - gps cycling computer
+  - bike gps
+  - cycling head unit
+  - smart bike computer
+  - ant+ cycling computer
+  weak_aliases:
+  - cycling-computer
+  - cyclingcomputer
+  - cycling computers
+  - bike-computer
+  - bikecomputer
+  - bike computers
+  - gps-cycling-computer
+  - gpscyclingcomputer
+  - bike-gps
+  - bikegps
+  - cycling-head-unit
+  - cyclingheadunit
+  - smart-bike-computer
+  - smartbikecomputer
+  - connected-cycling-computer
+  - connectedcyclingcomputer
+  marketplace_aliases:
+  - cycling computer
+  - bike gps
+  - cycling head unit
+  - gps bike computer
+  not_when_text_contains: []
+  negative_examples:
+  - smartwatch_fitness_tracker
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - display
+  - gnss
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: GPS head units and cycling computers mounted on bikes. Bluetooth/ANT+ connectivity to sensors. Covered by
+    EN 62368-1 as portable AV/ICT device.
+- id: smart_fertility_tracker
+  label: Smart fertility tracker / BBT monitor
+  product_family: health_monitor
+  product_subfamily: smart_fertility_tracker
+  aliases:
+  - fertility tracker
+  - bbt thermometer
+  - basal body temperature monitor
+  - ovulation tracker
+  - smart fertility monitor
+  - connected fertility tracker
+  - bbt monitor
+  - smart ovulation tracker
+  - fertility-tracker
+  - fertilitytracker
+  - fertility trackers
+  - bbt-thermometer
+  - bbtthermometer
+  - basal-body-temperature-monitor
+  - basalbodytemperaturemonitor
+  - ovulation-tracker
+  - ovulationtracker
+  - smart-fertility-monitor
+  - smartfertilitymonitor
+  - connected-fertility-tracker
+  - connectedfertilitytracker
+  - bbt-monitor
+  - bbtmonitor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
+  functional_classes:
+  - wellness_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  - EN 55032
+  - EN 55035
+  genres:
+  - wellness_borderline_medical
+  - wearable_device
+  - av_ict_device
+  strong_aliases:
+  - fertility tracker
+  - bbt thermometer
+  - basal body temperature monitor
+  - ovulation tracker
+  - smart fertility monitor
+  - connected fertility tracker
+  - bbt monitor
+  - smart ovulation tracker
+  weak_aliases:
+  - fertility-tracker
+  - fertilitytracker
+  - fertility trackers
+  - bbt-thermometer
+  - bbtthermometer
+  - basal-body-temperature-monitor
+  - basalbodytemperaturemonitor
+  - ovulation-tracker
+  - ovulationtracker
+  - smart-fertility-monitor
+  - smartfertilitymonitor
+  - connected-fertility-tracker
+  - connectedfertilitytracker
+  - bbt-monitor
+  - bbtmonitor
+  marketplace_aliases:
+  - fertility tracker
+  - ovulation monitor
+  - bbt thermometer
+  - smart fertility monitor
+  not_when_text_contains: []
+  negative_examples:
+  - smart_thermometer
+  - smartwatch_fitness_tracker
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - health_related
+  - body_worn_or_applied
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: BBT and fertility tracking devices. Borderline medical; EN 62368-1 for electronics, MDR review if ovulation
+    prediction medical claims are made.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  default_traits:
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
+- id: smart_glucose_meter
+  label: Smart blood glucose meter / connected glucometer
+  product_family: health_monitor
+  product_subfamily: smart_glucose_meter
+  aliases:
+  - blood glucose meter
+  - glucometer
+  - smart glucometer
+  - connected glucometer
+  - bluetooth glucose meter
+  - digital blood sugar monitor
+  - glucose monitor
+  - smart blood sugar meter
+  - blood-glucose-meter
+  - bloodglucosemeter
+  - blood glucose meters
+  - smart-glucometer
+  - smartglucometer
+  - connected-glucometer
+  - connectedglucometer
+  - bluetooth-glucose-meter
+  - bluetoothglucosemeter
+  - digital-blood-sugar-monitor
+  - digitalbloodsugarmonitor
+  - glucose-monitor
+  - glucosemonitor
+  - smart-blood-sugar-meter
+  - smartbloodsugarmeater
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - bluetooth
+  - display
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  - MDR borderline review
+  - EN 55032
+  - EN 55035
+  genres:
+  - wellness_borderline_medical
+  - av_ict_device
+  strong_aliases:
+  - blood glucose meter
+  - glucometer
+  - smart glucometer
+  - connected glucometer
+  - bluetooth glucose meter
+  - digital blood sugar monitor
+  - glucose monitor
+  weak_aliases:
+  - blood-glucose-meter
+  - bloodglucosemeter
+  - blood glucose meters
+  - smart-glucometer
+  - smartglucometer
+  - connected-glucometer
+  - connectedglucometer
+  - bluetooth-glucose-meter
+  - bluetoothglucosemeter
+  - digital-blood-sugar-monitor
+  - digitalbloodsugarmonitor
+  - glucose-monitor
+  - glucosemonitor
+  - smart-blood-sugar-meter
+  marketplace_aliases:
+  - blood glucose meter
+  - glucometer
+  - blood sugar monitor
+  - smart glucose meter
+  not_when_text_contains: []
+  negative_examples:
+  - continuous_glucose_monitor
+  - smart_blood_pressure_monitor
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - health_related
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Connected blood glucose meters (fingerstick type). Distinct from continuous glucose monitors (CGM patches).
+    MDR borderline review for diagnostic claims.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - display
+  default_traits:
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  - account
+  - data_storage
+- id: smart_hearing_aid
+  label: Smart hearing aid / OTC hearing amplifier
+  product_family: hearing_device
+  product_subfamily: smart_hearing_aid
+  aliases:
+  - hearing aid
+  - smart hearing aid
+  - otc hearing aid
+  - hearing amplifier
+  - personal sound amplifier
+  - psap device
+  - rechargeable hearing aid
+  - bluetooth hearing aid
+  - connected hearing aid
+  - hearing-aid
+  - hearingaid
+  - hearing aids
+  - smart-hearing-aid
+  - smarthearingaid
+  - smart hearing aids
+  - otc-hearing-aid
+  - otchearingaid
+  - hearing-amplifier
+  - hearingamplifier
+  - hearing amplifiers
+  - personal-sound-amplifier
+  - personalsoundamplifier
+  - psap-device
+  - psapdevice
+  - rechargeable-hearing-aid
+  - rechargeablehearingaid
+  - bluetooth-hearing-aid
+  - bluetoothhearingaid
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - microphone
+  - speaker
+  - ota
+  - personal_data_likely
+  functional_classes:
+  - wearable_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  genres:
+  - wellness_borderline_medical
+  - wearable_device
+  - av_ict_device
+  strong_aliases:
+  - hearing aid
+  - smart hearing aid
+  - otc hearing aid
+  - hearing amplifier
+  - personal sound amplifier
+  - rechargeable hearing aid
+  - bluetooth hearing aid
+  weak_aliases:
+  - hearing-aid
+  - hearingaid
+  - hearing aids
+  - smart-hearing-aid
+  - smarthearingaid
+  - otc-hearing-aid
+  - otchearingaid
+  - hearing-amplifier
+  - hearingamplifier
+  - personal-sound-amplifier
+  - personalsoundamplifier
+  - psap-device
+  - psapdevice
+  - rechargeable-hearing-aid
+  - rechargeablehearingaid
+  - bluetooth-hearing-aid
+  - bluetoothhearingaid
+  marketplace_aliases:
+  - hearing aid
+  - otc hearing aid
+  - hearing amplifier
+  - smart hearing device
+  not_when_text_contains: []
+  negative_examples:
+  - true_wireless_earbuds
+  - wireless_headphones
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: OTC and consumer smart hearing aids and personal sound amplifiers. MDR borderline review if therapeutic
+    hearing restoration claims made. RED applies for Bluetooth.
+- id: smart_inhaler
+  label: Smart inhaler / connected nebulizer
+  product_family: respiratory_therapy
+  product_subfamily: smart_inhaler
+  aliases:
+  - smart inhaler
+  - connected inhaler
+  - smart nebulizer
+  - digital inhaler
+  - inhaler tracker
+  - bluetooth inhaler
+  - inhaler sensor
+  - smart-inhaler
+  - smartinhaler
+  - smart inhalers
+  - connected-inhaler
+  - connectedinhaler
+  - connected inhalers
+  - smart-nebulizer
+  - smartnebulizer
+  - smart nebulizers
+  - digital-inhaler
+  - digitalinhaler
+  - digital inhalers
+  - inhaler-tracker
+  - inhalertracker
+  - bluetooth-inhaler
+  - bluetoothinhaler
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  - account
+  - ota
+  functional_classes:
+  - wellness_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  - MDR borderline review
+  genres:
+  - wellness_borderline_medical
+  strong_aliases:
+  - smart inhaler
+  - connected inhaler
+  - smart nebulizer
+  - digital inhaler
+  - inhaler tracker
+  - bluetooth inhaler
+  weak_aliases:
+  - smart-inhaler
+  - smartinhaler
+  - smart inhalers
+  - connected-inhaler
+  - connectedinhaler
+  - smart-nebulizer
+  - smartnebulizer
+  - digital-inhaler
+  - digitalinhaler
+  - inhaler-tracker
+  - inhalertracker
+  - bluetooth-inhaler
+  - bluetoothinhaler
+  marketplace_aliases:
+  - smart inhaler
+  - connected inhaler
+  - inhaler tracker
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - health_related
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Bluetooth-enabled inhalers and smart nebulizers that track usage and connect to apps. MDR borderline review
+    where therapeutic claims are made.
+- id: smart_insole
+  label: Smart shoe insole / gait analysis insole
+  product_family: sports_wearable
+  product_subfamily: smart_insole
+  aliases:
+  - smart insole
+  - connected insole
+  - pressure insole
+  - gait analysis insole
+  - smart shoe insole
+  - activity insole
+  - running insole sensor
+  - smart-insole
+  - smartinsole
+  - smart insoles
+  - connected-insole
+  - connectedinsole
+  - pressure-insole
+  - pressureinsole
+  - gait-analysis-insole
+  - gaitanalysisinsole
+  - smart-shoe-insole
+  - smartshoeinsole
+  - activity-insole
+  - activityinsole
+  - running-insole-sensor
+  - runninginsoleensor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - health_related
+  - motion_detection
+  - personal_data_likely
+  functional_classes:
+  - wearable_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  - EN 55032
+  - EN 55035
+  genres:
+  - wearable_device
+  - wellness_borderline_medical
+  - av_ict_device
+  strong_aliases:
+  - smart insole
+  - connected insole
+  - pressure insole
+  - gait analysis insole
+  - smart shoe insole
+  - running insole sensor
+  weak_aliases:
+  - smart-insole
+  - smartinsole
+  - smart insoles
+  - connected-insole
+  - connectedinsole
+  - pressure-insole
+  - pressureinsole
+  - gait-analysis-insole
+  - gaitanalysisinsole
+  - smart-shoe-insole
+  - smartshoeinsole
+  - activity-insole
+  - activityinsole
+  - running-insole-sensor
+  marketplace_aliases:
+  - smart insole
+  - pressure insole
+  - gait insole
+  - connected shoe insole
+  not_when_text_contains: []
+  negative_examples:
+  - smartwatch_fitness_tracker
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Bluetooth-enabled shoe insoles for gait, pressure, and activity tracking. EN 62479 for RF/SAR as body-worn
+    device.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - health_related
+  default_traits:
+  - bluetooth
+  - app_control
+  - motion_detection
+  - personal_data_likely
+- id: smart_jump_rope
+  label: Smart jump rope
+  aliases:
+  - smart jump rope
+  - connected jump rope
+  - digital jump rope
+  - fitness jump rope
+  - smart-jump-rope
+  - smartjumprope
+  - smart jump ropes
+  - connected-jump-rope
+  - connectedjumprope
+  - connected jump ropes
+  - digital-jump-rope
+  - digitaljumprope
+  - digital jump ropes
+  - fitness-jump-rope
+  - fitnessjumprope
+  - fitness jump ropes
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - display
+  - bluetooth
+  - radio
+  - app_control
+  - data_storage
+  functional_classes:
+  - fitness_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - wearable_device
+  preferred_clues:
+  - jump rope
+  - fitness
+  exclude_clues:
+  - projector
+  - display hub
+  strong_aliases:
+  - smart jump rope
+  - connected jump rope
+  - digital jump rope
+  - fitness jump rope
+  weak_aliases:
+  - smart-jump-rope
+  - smartjumprope
+  - smart jump ropes
+  - connected-jump-rope
+  - connectedjumprope
+  - connected jump ropes
+  - digital-jump-rope
+  - digitaljumprope
+  - digital jump ropes
+  - fitness-jump-rope
+  - fitnessjumprope
+  - fitness jump ropes
+  marketplace_aliases: []
+  not_when_text_contains:
+  - projector
+  - display hub
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - display
+  score_penalty_if_traits:
+  - projector
+  - display hub
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_posture_corrector
+  label: Smart posture corrector / wearable posture trainer
+  product_family: wellness_wearable
+  product_subfamily: smart_posture_corrector
+  aliases:
+  - posture corrector
+  - smart posture corrector
+  - posture trainer
+  - posture brace smart
+  - back posture device
+  - wearable posture monitor
+  - posture sensor
+  - electronic posture corrector
+  - posture-corrector
+  - posturecorrector
+  - posture correctors
+  - smart-posture-corrector
+  - smartposturecorrector
+  - posture-trainer
+  - posturetrainer
+  - back-posture-device
+  - backposturedevice
+  - wearable-posture-monitor
+  - wearableposturemonitor
+  - posture-sensor
+  - posturesensor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - app_control
+  - health_related
+  - motion_detection
+  functional_classes:
+  - wearable_device
+  - wellness_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  - EN 55032
+  - EN 55035
+  genres:
+  - wearable_device
+  - wellness_borderline_medical
+  - av_ict_device
+  strong_aliases:
+  - posture corrector
+  - smart posture corrector
+  - posture trainer
+  - back posture device
+  - wearable posture monitor
+  - posture sensor
+  weak_aliases:
+  - posture-corrector
+  - posturecorrector
+  - posture correctors
+  - smart-posture-corrector
+  - smartposturecorrector
+  - posture-trainer
+  - posturetrainer
+  - back-posture-device
+  - backposturedevice
+  - wearable-posture-monitor
+  - wearableposturemonitor
+  - posture-sensor
+  - posturesensor
+  marketplace_aliases:
+  - posture corrector
+  - smart posture trainer
+  - wearable back brace
+  - posture sensor
+  not_when_text_contains: []
+  negative_examples:
+  - smartwatch_fitness_tracker
+  - ems_tens_device
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - health_related
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Wearable posture monitoring sensors that alert users to slouching via vibration. EN 62479 applies due to
+    body-worn RF device proximity.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - health_related
+  default_traits:
+  - bluetooth
+  - app_control
+  - motion_detection
+  - personal_data_likely
+- id: smart_ring
+  label: Smart ring
+  aliases:
+  - smart ring
+  - connected ring
+  - fitness ring
+  - smart-ring
+  - smartring
+  - smart rings
+  - connected-ring
+  - connectedring
+  - connected rings
+  - fitness-ring
+  - fitnessring
+  - fitness rings
+  product_family: wearable_device_family
+  product_subfamily: smart_ring
+  genres:
+  - wearable_device
+  - av_ict_device
+  - smart_home_iot
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - health_related
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  default_traits:
+  - health_related
+  functional_classes:
+  - wearable_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  strong_aliases:
+  - smart ring
+  - connected ring
+  - fitness ring
+  weak_aliases:
+  - smart-ring
+  - smartring
+  - smart rings
+  - connected-ring
+  - connectedring
+  - connected rings
+  - fitness-ring
+  - fitnessring
+  - fitness rings
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - bluetooth
+  - health_related
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_scale
+  label: Smart body scale / composition monitor
+  aliases:
+  - smart scale
+  - smart body scale
+  - connected scale
+  - body composition scale
+  - body composition analyzer
+  - body composition analyser
+  - wifi scale
+  - bluetooth scale
+  - smart-scale
+  - smartscale
+  - smart scales
+  - smart-body-scale
+  - smartbodyscale
+  - smart body scales
+  - connected-scale
+  - connectedscale
+  - connected scales
+  - body-composition-scale
+  - bodycompositionscale
+  - body composition scales
+  - body-composition-analyzer
+  - bodycompositionanalyzer
+  - body composition analyzers
+  - body-composition-analyser
+  - bodycompositionanalyser
+  - body composition analysers
+  - wi-fi scale
+  - wi fi scale
+  - wifi-scale
+  - wifiscale
+  - wifi scales
+  - bluetooth-scale
+  - bluetoothscale
+  - bluetooth scales
+  - smart body scale composition monitor
+  - smart-body-scale-composition-monitor
+  - smartbodyscalecompositionmonitor
+  - smart body scale composition monitors
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - bluetooth
+  - wifi
+  - display
+  - health_related
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - account
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - wellness_borderline_medical
+  - smart_home_iot
+  strong_aliases:
+  - smart scale
+  - smart body scale
+  - connected scale
+  - body composition scale
+  - wifi scale
+  - bluetooth scale
+  weak_aliases:
+  - smart-scale
+  - smartscale
+  - smart scales
+  - smart-body-scale
+  - smartbodyscale
+  - smart body scales
+  - connected-scale
+  - connectedscale
+  - connected scales
+  - body-composition-scale
+  - bodycompositionscale
+  - body composition scales
+  - wi-fi scale
+  - wi fi scale
+  - wifi-scale
+  - wifiscale
+  - wifi scales
+  - bluetooth-scale
+  - bluetoothscale
+  - bluetooth scales
+  - smart body scale composition monitor
+  - smart-body-scale-composition-monitor
+  - smartbodyscalecompositionmonitor
+  - smart body scale composition monitors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_thermometer
+  label: Smart / connected body thermometer
+  product_family: health_monitor
+  product_subfamily: smart_thermometer
+  aliases:
+  - smart thermometer
+  - connected thermometer
+  - bluetooth thermometer
+  - wifi thermometer
+  - digital ear thermometer
+  - infrared forehead thermometer
+  - temporal thermometer
+  - smart baby thermometer
+  - no contact thermometer
+  - non contact thermometer
+  - smart-thermometer
+  - smartthermometer
+  - smart thermometers
+  - connected-thermometer
+  - connectedthermometer
+  - bluetooth-thermometer
+  - bluetooththermometer
+  - digital-ear-thermometer
+  - digitalearchermometer
+  - infrared-forehead-thermometer
+  - no-contact-thermometer
+  - nocontactthermometer
+  - non-contact-thermometer
+  - noncontactthermometer
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - display
+  - bluetooth
+  - app_control
+  - personal_data_likely
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  - EN 55032
+  - EN 55035
+  genres:
+  - wellness_borderline_medical
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart thermometer
+  - connected thermometer
+  - bluetooth thermometer
+  - digital ear thermometer
+  - infrared forehead thermometer
+  - no contact thermometer
+  - non contact thermometer
+  weak_aliases:
+  - smart-thermometer
+  - smartthermometer
+  - smart thermometers
+  - connected-thermometer
+  - connectedthermometer
+  - bluetooth-thermometer
+  - bluetooththermometer
+  - digital-ear-thermometer
+  - digitalearchermometer
+  - infrared-forehead-thermometer
+  - no-contact-thermometer
+  - nocontactthermometer
+  - non-contact-thermometer
+  - noncontactthermometer
+  marketplace_aliases:
+  - smart thermometer
+  - bluetooth thermometer
+  - digital forehead thermometer
+  not_when_text_contains:
+  - cooking
+  - meat
+  - food
+  - grill
+  - oven
+  negative_examples:
+  - smart_food_thermometer
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 55032
+    kind: unspecified
+  - ref: EN 55035
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - health_related
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Consumer body/clinical thermometers with connectivity. Excludes food/cooking thermometers.
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - display
+  default_traits:
+  - bluetooth
+  - app_control
+  - personal_data_likely
+- id: smart_water_bottle
+  label: Smart water bottle / hydration tracker
+  product_family: smart_kitchen_tool
+  product_subfamily: smart_water_bottle
+  aliases:
+  - smart water bottle
+  - hydration tracker
+  - smart hydration bottle
+  - connected water bottle
+  - smart tumbler
+  - insulated smart bottle
+  - hydration reminder bottle
+  - bluetooth water bottle
+  - smart-water-bottle
+  - smartwaterbottle
+  - smart water bottles
+  - hydration-tracker
+  - hydrationtracker
+  - smart-hydration-bottle
+  - smarthydrationbottle
+  - connected-water-bottle
+  - connectedwaterbottle
+  - smart-tumbler
+  - smarttumbler
+  - hydration-reminder-bottle
+  - hydrationreminderbottle
+  - bluetooth-water-bottle
+  - bluetoothwaterbottle
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - water_contact
+  - bluetooth
+  - display
+  - app_control
+  - health_related
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - wellness_borderline_medical
+  strong_aliases:
+  - smart water bottle
+  - hydration tracker
+  - smart hydration bottle
+  - connected water bottle
+  - smart tumbler
+  - hydration reminder bottle
+  - bluetooth water bottle
+  weak_aliases:
+  - smart-water-bottle
+  - smartwaterbottle
+  - smart water bottles
+  - hydration-tracker
+  - hydrationtracker
+  - smart-hydration-bottle
+  - smarthydrationbottle
+  - connected-water-bottle
+  - connectedwaterbottle
+  - smart-tumbler
+  - smarttumbler
+  - hydration-reminder-bottle
+  - hydrationreminderbottle
+  - bluetooth-water-bottle
+  - bluetoothwaterbottle
+  marketplace_aliases:
+  - smart water bottle
+  - hydration tracker bottle
+  - connected water bottle
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - water_contact
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Bluetooth-connected water bottles with hydration tracking, LED indicators or displays, and app integration.
+- id: smartwatch
+  label: Smartwatch
+  aliases:
+  - smartwatch
+  - smart watch
+  - fitness watch
+  - connected watch
+  - smartwatchs
+  - smart-watch
+  - smart watchs
+  - fitness-watch
+  - fitnesswatch
+  - fitness watchs
+  - connected-watch
+  - connectedwatch
+  - connected watchs
+  product_family: wearable_device_family
+  product_subfamily: smartwatch
+  genres:
+  - wearable_device
+  - av_ict_device
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - wifi
+  - display
+  - gnss
+  - health_related
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - wifi
+  - display
+  default_traits:
+  - gnss
+  - health_related
+  functional_classes:
+  - wearable_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  route_family: av_ict_wearable
+  primary_standard_code: EN 62368-1
+  strong_aliases:
+  - smartwatch
+  - smart watch
+  - fitness watch
+  - connected watch
+  weak_aliases:
+  - smartwatchs
+  - smart-watch
+  - smart watchs
+  - fitness-watch
+  - fitnesswatch
+  - fitness watchs
+  - connected-watch
+  - connectedwatch
+  - connected watchs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - bluetooth
+  - wifi
+  - gnss
+  - health_related
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smartwatch_fitness_tracker
+  label: Smartwatch / fitness tracker
+  aliases:
+  - smartwatch
+  - fitness tracker
+  - smart band
+  - activity tracker
+  - fitness watch
+  - health watch
+  - sport watch connected
+  - smartwatchs
+  - fitness-tracker
+  - fitnesstracker
+  - fitness trackers
+  - smart-band
+  - smartband
+  - smart bands
+  - activity-tracker
+  - activitytracker
+  - activity trackers
+  - fitness-watch
+  - fitnesswatch
+  - fitness watchs
+  - health-watch
+  - healthwatch
+  - health watchs
+  - sport-watch-connected
+  - sportwatchconnected
+  - sport watch connecteds
+  - smartwatch fitness tracker
+  - smartwatch-fitness-tracker
+  - smartwatchfitnesstracker
+  - smartwatch fitness trackers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - wifi
+  - display
+  - microphone
+  - speaker
+  - nfc
+  - gnss
+  - motion_detection
+  - health_related
+  - account
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - wireless_charging_rx
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - wifi
+  - display
+  default_traits:
+  - microphone
+  - speaker
+  - nfc
+  - gnss
+  - motion_detection
+  - health_related
+  - account
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - wireless_charging_rx
+  functional_classes:
+  - wearable_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict_wearable
+  primary_standard_code: EN 62368-1
+  genres:
+  - wearable_device
+  - av_ict_device
+  strong_aliases:
+  - smartwatch
+  - fitness tracker
+  - smart band
+  - activity tracker
+  - fitness watch
+  - health watch
+  - sport watch connected
+  weak_aliases:
+  - smartwatchs
+  - fitness-tracker
+  - fitnesstracker
+  - fitness trackers
+  - smart-band
+  - smartband
+  - smart bands
+  - activity-tracker
+  - activitytracker
+  - activity trackers
+  - fitness-watch
+  - fitnesswatch
+  - fitness watchs
+  - health-watch
+  - healthwatch
+  - health watchs
+  - sport-watch-connected
+  - sportwatchconnected
+  - sport watch connecteds
+  - smartwatch fitness tracker
+  - smartwatch-fitness-tracker
+  - smartwatchfitnesstracker
+  - smartwatch fitness trackers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: true_wireless_earbuds
+  label: True wireless earbuds (TWS)
+  product_family: audio_wearable
+  product_subfamily: true_wireless_earbuds
+  aliases:
+  - true wireless earbuds
+  - tws earbuds
+  - wireless earbuds
+  - bluetooth earbuds
+  - in-ear headphones wireless
+  - wireless earphones
+  - noise cancelling earbuds
+  - anc earbuds
+  - sport earbuds
+  - gaming earbuds
+  - open ear earbuds
+  - true-wireless-earbuds
+  - truewirelessearbuds
+  - tws-earbuds
+  - twsearbuds
+  - wireless-earbuds
+  - wirelessearbuds
+  - bluetooth-earbuds
+  - bluetoothearbuds
+  - in-ear-headphones-wireless
+  - inearheadphoneswireless
+  - wireless-earphones
+  - wirelessearphones
+  - noise-cancelling-earbuds
+  - noisecancellingearbuds
+  - anc-earbuds
+  - ancearbuds
+  - sport-earbuds
+  - sportearbuds
+  - gaming-earbuds
+  - gamingearbuds
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  - microphone
+  - speaker
+  - wireless_charging_rx
+  - app_control
+  - ota
+  functional_classes:
+  - wearable_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  genres:
+  - wearable_device
+  - av_ict_device
+  preferred_clues:
+  - earbuds
+  - earphones
+  - tws
+  confusable_with:
+  - wireless_headphones
+  - smart_hearing_aid
+  strong_aliases:
+  - true wireless earbuds
+  - tws earbuds
+  - wireless earbuds
+  - bluetooth earbuds
+  - wireless earphones
+  - noise cancelling earbuds
+  - anc earbuds
+  - sport earbuds
+  - open ear earbuds
+  weak_aliases:
+  - true-wireless-earbuds
+  - truewirelessearbuds
+  - tws-earbuds
+  - twsearbuds
+  - wireless-earbuds
+  - wirelessearbuds
+  - bluetooth-earbuds
+  - bluetoothearbuds
+  - in-ear-headphones-wireless
+  - inearheadphoneswireless
+  - wireless-earphones
+  - wirelessearphones
+  - noise-cancelling-earbuds
+  - noisecancellingearbuds
+  - anc-earbuds
+  - ancearbuds
+  - sport-earbuds
+  - sportearbuds
+  - gaming-earbuds
+  - gamingearbuds
+  marketplace_aliases:
+  - wireless earbuds
+  - bluetooth earbuds
+  - tws earbuds
+  - true wireless earphones
+  not_when_text_contains: []
+  negative_examples:
+  - wireless_headphones
+  - smart_hearing_aid
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - wearable
+  - body_worn_or_applied
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: True wireless stereo (TWS) earbuds and in-ear Bluetooth headphones. Distinct from over-ear/on-ear wireless
+    headphones. EN 62479 applies for SAR/RF exposure.
+- id: uv_c_sanitizer
+  label: UV-C sanitizer / disinfection device
+  product_family: wellness_sanitizer
+  product_subfamily: uv_c_sanitizer
+  aliases:
+  - uv-c sanitizer
+  - uvc sanitizer
+  - uv sanitizer
+  - uv disinfection device
+  - uv sterilizer
+  - uvc sterilizer
+  - uv-c wand
+  - ultraviolet sanitizer
+  - uv phone sanitizer
+  - uvc lamp sterilizer
+  - uv-c-sanitizer
+  - uvcsanitizer
+  - uvc-sanitizer
+  - uv-sanitizer
+  - uvsanitizer
+  - uv-disinfection-device
+  - uvdisinfectiondevice
+  - uv-sterilizer
+  - uvsterilizer
+  - uvc-sterilizer
+  - uvcsterilizer
+  - uv-c-wand
+  - uvcwand
+  - ultraviolet-sanitizer
+  - ultravioletsanitizer
+  - uv-phone-sanitizer
+  - uvphonesanitizer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - battery_powered
+  - lighting
+  - uv_emitting
+  functional_classes:
+  - wellness_device
+  - home_device
+  likely_standards:
+  - EN 60335-1
+  - EN 62471
+  genres:
+  - wellness_borderline_medical
+  - household_appliance
+  preferred_clues:
+  - uv-c
+  - uvc
+  - ultraviolet sterilizer
+  confusable_with:
+  - ultraviolet_appliance
+  strong_aliases:
+  - uv-c sanitizer
+  - uvc sanitizer
+  - uv sanitizer
+  - uv disinfection device
+  - uv sterilizer
+  - uvc sterilizer
+  - uv-c wand
+  - ultraviolet sanitizer
+  - uv phone sanitizer
+  weak_aliases:
+  - uv-c-sanitizer
+  - uvcsanitizer
+  - uvc-sanitizer
+  - uv-sanitizer
+  - uvsanitizer
+  - uv-disinfection-device
+  - uvdisinfectiondevice
+  - uv-sterilizer
+  - uvsterilizer
+  - uvc-sterilizer
+  - uvcsterilizer
+  - uv-c-wand
+  - uvcwand
+  - ultraviolet-sanitizer
+  - ultravioletsanitizer
+  - uv-phone-sanitizer
+  - uvphonesanitizer
+  marketplace_aliases:
+  - uvc sanitizer
+  - uv sterilizer
+  - uv-c disinfection wand
+  - ultraviolet sterilizer
+  not_when_text_contains: []
+  negative_examples:
+  - ultraviolet_appliance
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  - ref: EN 62471
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - lighting
+  - uv_emitting
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Consumer UV-C germicidal sanitizers and disinfection wands. EN 62471 photobiological safety applies for
+    UV emission risk assessment.
+- id: vr_ar_headset
+  label: VR / AR headset
+  aliases:
+  - vr headset
+  - ar headset
+  - mixed reality headset
+  - virtual reality glasses
+  - augmented reality glasses
+  - smart glasses
+  - xr headset
+  - meta quest
+  - apple vision
+  - hololens
+  - vr-headset
+  - vrheadset
+  - vr headsets
+  - ar-headset
+  - arheadset
+  - ar headsets
+  - mixed-reality-headset
+  - mixedrealityheadset
+  - mixed reality headsets
+  - virtual-reality-glasses
+  - virtualrealityglasses
+  - virtual reality glasse
+  - augmented-reality-glasses
+  - augmentedrealityglasses
+  - augmented reality glasse
+  - smart-glasses
+  - smartglasses
+  - smart glasse
+  - xr-headset
+  - xrheadset
+  - xr headsets
+  - meta-quest
+  - metaquest
+  - meta quests
+  - apple-vision
+  - applevision
+  - apple visions
+  - hololen
+  - vr ar headset
+  - vr-ar-headset
+  - vrarheadset
+  - vr ar headsets
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - display
+  - display_touchscreen
+  - camera
+  - microphone
+  - speaker
+  - bluetooth
+  - wifi
+  - body_worn_or_applied
+  - data_storage
+  - account
+  - ota
+  - edge_ai
+  - lidar
+  - motion_detection
+  - personal_data_likely
+  - wireless_charging_rx
+  functional_classes:
+  - av_ict_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - xr_immersive
+  - wearable_device
+  - av_ict_device
+  preferred_clues:
+  - vr
+  - ar
+  - xr
+  - mixed reality
+  - virtual reality
+  - augmented reality
+  - headset
+  - hololens
+  - vision pro
+  - meta quest
+  exclude_clues:
+  - audio glasses
+  - bluetooth audio
+  - eyewear audio
+  - led glasses
+  - open ear glasses
+  - speaker glasses
+  - sunglasses
+  strong_aliases:
+  - vr headset
+  - ar headset
+  - mixed reality headset
+  - virtual reality glasses
+  - augmented reality glasses
+  - smart glasses
+  - xr headset
+  - meta quest
+  weak_aliases:
+  - apple vision
+  - hololens
+  - vr-headset
+  - vrheadset
+  - vr headsets
+  - ar-headset
+  - arheadset
+  - ar headsets
+  - mixed-reality-headset
+  - mixedrealityheadset
+  - mixed reality headsets
+  - virtual-reality-glasses
+  - virtualrealityglasses
+  - virtual reality glasse
+  - augmented-reality-glasses
+  - augmentedrealityglasses
+  - augmented reality glasse
+  - smart-glasses
+  - smartglasses
+  - smart glasse
+  - xr-headset
+  - xrheadset
+  - xr headsets
+  - meta-quest
+  - metaquest
+  - meta quests
+  - apple-vision
+  - applevision
+  - apple visions
+  - hololen
+  marketplace_aliases: []
+  not_when_text_contains:
+  - audio glasses
+  - bluetooth audio
+  - eyewear audio
+  - led glasses
+  - open ear glasses
+  - speaker glasses
+  - sunglasses
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits:
+  - audio glasses
+  - bluetooth audio
+  - eyewear audio
+  - led glasses
+  - open ear glasses
+  - speaker glasses
+  - sunglasses
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: vr_headset
+  label: VR / XR headset
+  aliases:
+  - vr headset
+  - virtual reality headset
+  - ar headset
+  - xr headset
+  - mixed reality headset
+  - vr goggles
+  - standalone vr headset
+  - vr-headset
+  - vrheadset
+  - vr headsets
+  - virtual-reality-headset
+  - virtualrealityheadset
+  - virtual reality headsets
+  - ar-headset
+  - arheadset
+  - ar headsets
+  - xr-headset
+  - xrheadset
+  - xr headsets
+  - mixed-reality-headset
+  - mixedrealityheadset
+  - mixed reality headsets
+  - vr xr headset
+  - vr-xr-headset
+  - vrxrheadset
+  - vr xr headsets
+  product_family: immersive_device
+  product_subfamily: vr_headset
+  genres:
+  - xr_immersive
+  - wearable_device
+  - av_ict_device
+  implied_traits:
+  - wifi
+  - bluetooth
+  - camera
+  - microphone
+  - speaker
+  functional_classes:
+  - av_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  strong_aliases:
+  - vr headset
+  - virtual reality headset
+  - ar headset
+  - xr headset
+  - mixed reality headset
+  - vr goggles
+  - standalone vr headset
+  weak_aliases:
+  - vr-headset
+  - vrheadset
+  - vr headsets
+  - virtual-reality-headset
+  - virtualrealityheadset
+  - virtual reality headsets
+  - ar-headset
+  - arheadset
+  - ar headsets
+  - xr-headset
+  - xrheadset
+  - xr headsets
+  - mixed-reality-headset
+  - mixedrealityheadset
+  - mixed reality headsets
+  - vr xr headset
+  - vr-xr-headset
+  - vrxrheadset
+  - vr xr headsets
+  marketplace_aliases:
+  - virtual reality headset
+  - vr goggles
+  - standalone vr headset
+  - vr headset
+  - vr-headset
+  - vrheadset
+  - vr headsets
+  - virtual-reality-headset
+  - virtualrealityheadset
+  - virtual reality headsets
+  - ar headset
+  - ar-headset
+  - arheadset
+  - ar headsets
+  - xr headset
+  - xr-headset
+  - xrheadset
+  - xr headsets
+  - mixed reality headset
+  - mixed-reality-headset
+  - mixedrealityheadset
+  - mixed reality headsets
+  - vr xr headset
+  - vr-xr-headset
+  - vrxrheadset
+  - vr xr headsets
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - wifi
+  - bluetooth
+  - camera
+  - microphone
+  - speaker
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

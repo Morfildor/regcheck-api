@@ -3,7 +3,9 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import replace
 
-from .matching_legacy import _hierarchical_product_match, _select_matched_products
+from app.domain.models import ConfidenceLevel, ProductMatchStage
+
+from .matching_legacy import _select_matched_products
 from .matching_runtime import (
     CompiledAlias,
     CompiledPhrase,
@@ -90,7 +92,7 @@ def _compiled_clue_score(
 def _candidate_confidence_v2(
     candidate: SubtypeCandidate | FamilySeedCandidate,
     next_candidate: SubtypeCandidate | FamilySeedCandidate | None = None,
-) -> str:
+) -> ConfidenceLevel:
     score = candidate.score
     gap = score - next_candidate.score if next_candidate else score
     direct_signals = candidate.direct_signal_count
@@ -257,9 +259,9 @@ def _resolve_stage(
     next_family: FamilySeedCandidate | None,
     top_subtype: SubtypeCandidate,
     next_subtype: SubtypeCandidate | None,
-    family_confidence: str,
-    subtype_confidence: str,
-) -> tuple[str, str, list[str], str | None]:
+    family_confidence: ConfidenceLevel,
+    subtype_confidence: ConfidenceLevel,
+) -> tuple[ProductMatchStage, str, list[str], str | None]:
     contradictions: list[str] = []
     ambiguity_reason: str | None = None
 
@@ -283,6 +285,12 @@ def _resolve_stage(
     if close_subtype_competition:
         ambiguity_reason = f"Subtype evidence is too close within family {top_family.family.replace('_', ' ')}."
         return "family", "family match is stable but subtype candidates remain too close to confirm", contradictions, ambiguity_reason
+
+    if str(top_subtype.product.get("max_match_stage") or "").strip() == "family":
+        family_only_reason = str(top_subtype.product.get("family_level_reason") or "").strip() or (
+            f"{top_subtype.label} is intentionally retained at family level pending boundary review."
+        )
+        return "family", family_only_reason, contradictions, family_only_reason
 
     if subtype_confidence == "high" or (subtype_confidence == "medium" and top_subtype.decisive):
         return "subtype", "decisive alias or clue support confirmed the subtype", contradictions, ambiguity_reason
@@ -333,8 +341,8 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
     family_rows = [row for row in candidates if row.family == top_family.family]
     top_subtype = family_rows[0]
     next_subtype = family_rows[1] if len(family_rows) > 1 else None
-    family_confidence = top_family.confidence
-    subtype_confidence = _candidate_confidence_v2(top_subtype, next_subtype)
+    family_confidence: ConfidenceLevel = top_family.confidence
+    subtype_confidence: ConfidenceLevel = _candidate_confidence_v2(top_subtype, next_subtype)
     family_stage, stage_reason, contradictions, ambiguity_reason = _resolve_stage(
         top_family=top_family,
         next_family=next_family,
@@ -365,7 +373,7 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
     routing_matched_products: list[str] = []
     product_subtype = top_subtype.id if family_stage == "subtype" else None
     product_type = top_subtype.id
-    product_match_confidence = subtype_confidence
+    product_match_confidence: ConfidenceLevel = subtype_confidence
 
     if family_stage == "ambiguous" and next_family is not None:
         matched_products = [top_family.id, next_family.id]
@@ -433,6 +441,9 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
         f"product_subtype_confidence={subtype_confidence}",
         f"product_match_stage={family_stage}",
     ]
+    boundary_tags = _string_list(top_subtype.product.get("boundary_tags"))
+    if boundary_tags:
+        diagnostics.append("product_boundary_tags=" + ",".join(sorted(boundary_tags)))
     top_shortlist = sorted(shortlist_scoring.items(), key=lambda item: (-item[1], item[0]))[:5]
     if top_shortlist:
         diagnostics.append(
@@ -490,7 +501,6 @@ __all__ = [
     "CompiledPhrase",
     "CompiledProductMatcher",
     "ProductMatchingSnapshot",
-    "_hierarchical_product_match",
     "_hierarchical_product_match_v2",
     "_select_matched_products",
     "_shortlist_product_matchers_v2",

@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+"""Compatibility-only v1 matcher support.
+
+New classifier behavior should go through the compiled v2 path in `matching.py`.
+This module remains as a narrow fallback for legacy payload parity and should only
+receive low-risk fixes that preserve that compatibility boundary.
+"""
+
 from collections.abc import Sequence
 from typing import Any
 

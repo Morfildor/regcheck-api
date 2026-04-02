@@ -1,0 +1,89 @@
+{
+  "ce_legislation_keys": [
+    "LVD",
+    "EMC",
+    "ROHS"
+  ],
+  "classification_confidence_below_threshold": false,
+  "classification_is_ambiguous": true,
+  "decision_trace_steps": [
+    "classification",
+    "traits",
+    "assumptions",
+    "missing_facts",
+    "legislation",
+    "standards",
+    "rejections"
+  ],
+  "directives": [
+    "LVD",
+    "EMC",
+    "ROHS",
+    "REACH",
+    "BATTERY",
+    "WEEE",
+    "ECO"
+  ],
+  "missing_information_keys": [
+    "battery_chemistry",
+    "battery_capacity",
+    "battery_pack_format",
+    "energy_system_scope"
+  ],
+  "non_ce_obligation_keys": [
+    "REACH",
+    "BATTERY",
+    "WEEE"
+  ],
+  "primary_route_reason": "UPS / battery backup unit maps to EN 62368-1 as the primary product-safety route. The route remains conservative because the product sits near a catalog boundary.",
+  "primary_route_standard_code": "EN 62368-1",
+  "product_family": "energy_power_system",
+  "product_match_confidence": "medium",
+  "product_match_stage": "family",
+  "product_subtype": null,
+  "product_type": "ups",
+  "review_codes": [
+    "Energy storage / inverter system review",
+    "Charger / external PSU review",
+    "UN 38.3 review"
+  ],
+  "route_context": {
+    "context_tags": [
+      "boundary:energy_system",
+      "power:external_psu",
+      "power:portable_battery",
+      "primary:av_ict",
+      "primary_standard:EN 62368-1",
+      "scope:av_ict"
+    ],
+    "overlay_routes": [
+      "EMC",
+      "ROHS",
+      "REACH",
+      "BATTERY",
+      "WEEE",
+      "ECO"
+    ],
+    "primary_route_family": "av_ict",
+    "primary_route_standard_code": "EN 62368-1",
+    "route_confidence": "medium",
+    "scope_route": "av_ict"
+  },
+  "standard_codes": [
+    "EN 62368-1",
+    "EN 55032",
+    "EN 55035",
+    "EN 62311",
+    "EN 63000",
+    "EN 62133-2",
+    "EN 50564"
+  ],
+  "standard_section_keys": [
+    "LVD",
+    "EMC",
+    "ROHS",
+    "BATTERY",
+    "ECO",
+    "CRA"
+  ]
+}

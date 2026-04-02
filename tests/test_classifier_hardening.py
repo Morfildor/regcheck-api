@@ -56,6 +56,23 @@ class ClassifierHardeningTests(unittest.TestCase):
         self.assertNotIn("wifi", result["all_traits"])
         self.assertNotIn("bluetooth", result["all_traits"])
 
+    def test_wave3_wired_and_local_products_stay_off_radio_and_cloud_paths(self) -> None:
+        cases = {
+            "conference speakerphone with local usb only and no cloud": "conference_speakerphone",
+            "occupancy sensor with wired ethernet only and no cloud": "occupancy_sensor",
+            "poe injector with wired ethernet only and no cloud": "poe_injector",
+        }
+
+        for description, expected in cases.items():
+            with self.subTest(description=description):
+                result = extract_traits(description)
+                self.assertEqual(result["product_type"], expected)
+                self.assertIn("local_only", result["all_traits"])
+                self.assertNotIn("radio", result["all_traits"])
+                self.assertNotIn("wifi", result["all_traits"])
+                self.assertNotIn("bluetooth", result["all_traits"])
+                self.assertNotIn("cloud", result["all_traits"])
+
     def test_power_contradictions_are_stable(self) -> None:
         result = extract_traits("battery powered mains powered inspection camera")
 
@@ -109,6 +126,15 @@ class ClassifierHardeningTests(unittest.TestCase):
         self.assertIn("wearable", result["all_traits"])
         self.assertIn("body_worn_or_applied", result["all_traits"])
         self.assertIn("possible_medical_boundary", result["all_traits"])
+
+    def test_ring_light_does_not_reenter_wearable_body_contact_bucket(self) -> None:
+        result = extract_traits("ring light for streaming desk setup")
+
+        self.assertEqual(result["product_type"], "ring_light")
+        self.assertIn("lighting", result["all_traits"])
+        self.assertNotIn("wearable", result["all_traits"])
+        self.assertNotIn("body_worn_or_applied", result["all_traits"])
+        self.assertNotIn("possible_medical_boundary", result["all_traits"])
 
     def test_toy_language_and_not_a_toy_language_diverge_cleanly(self) -> None:
         toy = analyze("interactive toy robot for children under 14 with bluetooth")

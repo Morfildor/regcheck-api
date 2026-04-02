@@ -1,0 +1,1343 @@
+products:
+- id: cpap_device
+  label: CPAP / sleep apnea therapy device
+  product_family: respiratory_therapy
+  product_subfamily: cpap_device
+  aliases:
+  - cpap machine
+  - cpap device
+  - sleep apnea machine
+  - apap device
+  - bipap machine
+  - sleep therapy device
+  - auto cpap
+  - smart cpap
+  - connected cpap
+  - cpap-machine
+  - cpapmachine
+  - cpap machines
+  - sleep-apnea-machine
+  - sleepapneamachine
+  - sleep apnea machines
+  - apap-device
+  - apapdevice
+  - apap devices
+  - bipap-machine
+  - bipapmachine
+  - bipap machines
+  - auto-cpap
+  - autocpap
+  - smart-cpap
+  - smartcpap
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - health_related
+  - motorized
+  - display
+  - bluetooth
+  - wifi
+  - app_control
+  - data_storage
+  - personal_data_likely
+  - account
+  - ota
+  - cloud
+  functional_classes:
+  - wellness_device
+  - home_device
+  likely_standards:
+  - EN 60335-1
+  - MDR borderline review
+  genres:
+  - wellness_borderline_medical
+  - household_appliance
+  strong_aliases:
+  - cpap machine
+  - cpap device
+  - sleep apnea machine
+  - apap device
+  - bipap machine
+  - sleep therapy device
+  - auto cpap
+  - smart cpap
+  - connected cpap
+  weak_aliases:
+  - cpap-machine
+  - cpapmachine
+  - cpap machines
+  - sleep-apnea-machine
+  - sleepapneamachine
+  - apap-device
+  - apapdevice
+  - bipap-machine
+  - bipapmachine
+  - auto-cpap
+  - autocpap
+  - smart-cpap
+  - smartcpap
+  marketplace_aliases:
+  - cpap machine
+  - sleep apnea device
+  - auto cpap machine
+  not_when_text_contains: []
+  negative_examples:
+  - sleep_tracker
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - health_related
+  - motorized
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: CPAP, APAP, BiPAP devices for consumer sleep apnea therapy. Mains-powered with motor/blower. MDR borderline
+    review for medical-grade devices.
+- id: electric_bicycle
+  label: Electric bicycle / e-bike
+  aliases:
+  - electric bicycle
+  - electric bike
+  - e bike
+  - e-bike
+  - epac bicycle
+  - pedal assist bike
+  - electric cycle
+  - power assisted bicycle
+  - ebike
+  - pedelec
+  - city e bike
+  - commuter e bike
+  - step through e bike
+  - electric-bicycle
+  - electricbicycle
+  - electric bicycles
+  - electric-bike
+  - electricbike
+  - electric bikes
+  - e bikes
+  - e-bikes
+  - epac-bicycle
+  - epacbicycle
+  - epac bicycles
+  - pedal-assist-bike
+  - pedalassistbike
+  - pedal assist bikes
+  - electric-cycle
+  - electriccycle
+  - electric cycles
+  - power-assisted-bicycle
+  - powerassistedbicycle
+  - power assisted bicycles
+  - electric bicycle e-bike
+  - electric bicycle ebike
+  - electric bicycle e bike
+  - electric-bicycle-e-bike
+  - electricbicyclee-bike
+  - electric bicycle e-bikes
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - traction_motor
+  - vehicle_use
+  - light_means_of_transport
+  - outdoor_environment
+  - portable
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 15194
+  - EN 50604-1
+  genres:
+  - micromobility
+  preferred_clues:
+  - e bike
+  - electric bicycle
+  - pedal assist
+  - epac
+  exclude_clues:
+  - battery storage
+  - powerwall
+  - solar battery
+  strong_aliases:
+  - electric bicycle
+  - electric bike
+  - e bike
+  - e-bike
+  - epac bicycle
+  - pedal assist bike
+  - electric cycle
+  - power assisted bicycle
+  - ebike
+  - pedelec
+  - city e bike
+  weak_aliases:
+  - commuter e bike
+  - step through e bike
+  - electric-bicycle
+  - electricbicycle
+  - electric bicycles
+  - electric-bike
+  - electricbike
+  - electric bikes
+  - e bikes
+  - e-bikes
+  - epac-bicycle
+  - epacbicycle
+  - epac bicycles
+  - pedal-assist-bike
+  - pedalassistbike
+  - pedal assist bikes
+  - electric-cycle
+  - electriccycle
+  - electric cycles
+  - power-assisted-bicycle
+  - powerassistedbicycle
+  - power assisted bicycles
+  - electric bicycle e-bike
+  - electric bicycle ebike
+  - electric bicycle e bike
+  - electric-bicycle-e-bike
+  - electricbicyclee-bike
+  - electric bicycle e-bikes
+  marketplace_aliases:
+  - e bike
+  - ebike
+  - pedelec
+  - city e bike
+  - commuter e bike
+  - step through e bike
+  - electric bicycle
+  - electric-bicycle
+  - electricbicycle
+  - electric bicycles
+  - electric bike
+  - electric-bike
+  - electricbike
+  - electric bikes
+  - e-bike
+  - e bikes
+  - e-bikes
+  - epac bicycle
+  - epac-bicycle
+  - epacbicycle
+  - epac bicycles
+  - pedal assist bike
+  - pedal-assist-bike
+  - pedalassistbike
+  - pedal assist bikes
+  - electric cycle
+  - electric-cycle
+  - electriccycle
+  - electric cycles
+  - power assisted bicycle
+  - power-assisted-bicycle
+  - powerassistedbicycle
+  - power assisted bicycles
+  - electric bicycle e-bike
+  - electric bicycle ebike
+  - electric bicycle e bike
+  - electric-bicycle-e-bike
+  - electricbicyclee-bike
+  - electric bicycle e-bikes
+  not_when_text_contains:
+  - battery storage
+  - powerwall
+  - solar battery
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 15194
+    kind: unspecified
+  - ref: EN 50604-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - traction_motor
+  - vehicle_use
+  score_penalty_if_traits:
+  - battery storage
+  - powerwall
+  - solar battery
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_cargo_bike
+  label: Electric cargo bike / longtail e-bike
+  product_family: electric_bicycle
+  product_subfamily: electric_cargo_bike
+  aliases:
+  - electric cargo bike
+  - cargo e-bike
+  - e-cargo bike
+  - longtail e-bike
+  - electric family bike
+  - electric cargo bicycle
+  - freight ebike
+  - last mile delivery ebike
+  - electric-cargo-bike
+  - electriccargobike
+  - electric cargo bikes
+  - cargo-e-bike
+  - cargoebike
+  - e-cargo-bike
+  - ecargobike
+  - longtail-e-bike
+  - longtailebike
+  - electric-family-bike
+  - electricfamilybike
+  - electric-cargo-bicycle
+  - electriccargobicycle
+  - freight-ebike
+  - freightebike
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - portable
+  - outdoor_use
+  - bluetooth
+  - display
+  - gnss
+  - app_control
+  functional_classes:
+  - micromobility_device
+  likely_standards:
+  - EN 15194
+  genres:
+  - micromobility
+  preferred_clues:
+  - cargo bike
+  - cargo e-bike
+  - longtail
+  confusable_with:
+  - electric_bicycle
+  strong_aliases:
+  - electric cargo bike
+  - cargo e-bike
+  - e-cargo bike
+  - longtail e-bike
+  - electric family bike
+  - electric cargo bicycle
+  - freight ebike
+  weak_aliases:
+  - electric-cargo-bike
+  - electriccargobike
+  - electric cargo bikes
+  - cargo-e-bike
+  - cargoebike
+  - e-cargo-bike
+  - ecargobike
+  - longtail-e-bike
+  - longtailebike
+  - electric-family-bike
+  - electricfamilybike
+  - electric-cargo-bicycle
+  - electriccargobicycle
+  - freight-ebike
+  - freightebike
+  marketplace_aliases:
+  - cargo e-bike
+  - electric cargo bike
+  - longtail e-bike
+  - electric family bike
+  not_when_text_contains: []
+  negative_examples:
+  - electric_bicycle
+  - electric_scooter
+  likely_standard_refs:
+  - ref: EN 15194
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - outdoor_use
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Electric cargo/longtail bikes for family or last-mile delivery. EN 15194 EPAC standard; distinct from regular
+    e-bikes due to cargo platform/extended frame.
+- id: electric_scooter
+  label: Electric scooter
+  aliases:
+  - electric scooter
+  - e scooter
+  - e-scooter
+  - electric kick scooter
+  - commuter scooter
+  - foldable electric scooter
+  - escooter
+  - standing scooter
+  - electric-scooter
+  - electricscooter
+  - electric scooters
+  - e scooters
+  - e-scooters
+  - electric-kick-scooter
+  - electrickickscooter
+  - electric kick scooters
+  - commuter-scooter
+  - commuterscooter
+  - commuter scooters
+  - foldable-electric-scooter
+  - foldableelectricscooter
+  - foldable electric scooters
+  product_family: micromobility_device
+  product_subfamily: electric_scooter
+  genres:
+  - micromobility
+  implied_traits:
+  - bluetooth
+  - app_control
+  - gnss
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 17128
+  - EN 50604-1
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - radio
+  - vehicle_use
+  - light_means_of_transport
+  subtype_traits:
+  - bluetooth
+  - app_control
+  - gnss
+  - traction_motor
+  - outdoor_environment
+  strong_aliases:
+  - electric scooter
+  - e scooter
+  - e-scooter
+  - electric kick scooter
+  - commuter scooter
+  - foldable electric scooter
+  - escooter
+  - standing scooter
+  weak_aliases:
+  - electric-scooter
+  - electricscooter
+  - electric scooters
+  - e scooters
+  - e-scooters
+  - electric-kick-scooter
+  - electrickickscooter
+  - electric kick scooters
+  - commuter-scooter
+  - commuterscooter
+  - commuter scooters
+  - foldable-electric-scooter
+  - foldableelectricscooter
+  - foldable electric scooters
+  marketplace_aliases:
+  - e scooter
+  - escooter
+  - standing scooter
+  - electric scooter
+  - electric-scooter
+  - electricscooter
+  - electric scooters
+  - e-scooter
+  - e scooters
+  - e-scooters
+  - electric kick scooter
+  - electric-kick-scooter
+  - electrickickscooter
+  - electric kick scooters
+  - commuter scooter
+  - commuter-scooter
+  - commuterscooter
+  - commuter scooters
+  - foldable electric scooter
+  - foldable-electric-scooter
+  - foldableelectricscooter
+  - foldable electric scooters
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 17128
+    kind: unspecified
+  - ref: EN 50604-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - bluetooth
+  - app_control
+  - gnss
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_skateboard
+  label: Electric skateboard
+  aliases:
+  - electric skateboard
+  - e skateboard
+  - e-skateboard
+  - electric longboard
+  - electric-skateboard
+  - electricskateboard
+  - electric skateboards
+  - eskateboard
+  - e skateboards
+  - e-skateboards
+  - electric-longboard
+  - electriclongboard
+  - electric longboards
+  product_family: micromobility_device
+  product_subfamily: electric_skateboard
+  genres:
+  - micromobility
+  implied_traits:
+  - bluetooth
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 17128
+  - EN 50604-1
+  strong_aliases:
+  - electric skateboard
+  - e skateboard
+  - e-skateboard
+  - electric longboard
+  weak_aliases:
+  - electric-skateboard
+  - electricskateboard
+  - electric skateboards
+  - eskateboard
+  - e skateboards
+  - e-skateboards
+  - electric-longboard
+  - electriclongboard
+  - electric longboards
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 17128
+    kind: unspecified
+  - ref: EN 50604-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_unicycle
+  label: Electric unicycle
+  aliases:
+  - electric unicycle
+  - euc
+  - one wheel electric unicycle
+  - electric-unicycle
+  - electricunicycle
+  - electric unicycles
+  - eucs
+  - one-wheel-electric-unicycle
+  - onewheelelectricunicycle
+  - one wheel electric unicycles
+  product_family: micromobility_device
+  product_subfamily: electric_unicycle
+  genres:
+  - micromobility
+  implied_traits:
+  - bluetooth
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 17128
+  - EN 50604-1
+  strong_aliases:
+  - electric unicycle
+  - euc
+  - one wheel electric unicycle
+  weak_aliases:
+  - electric-unicycle
+  - electricunicycle
+  - electric unicycles
+  - eucs
+  - one-wheel-electric-unicycle
+  - onewheelelectricunicycle
+  - one wheel electric unicycles
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 17128
+    kind: unspecified
+  - ref: EN 50604-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: ems_tens_device
+  label: EMS / TENS wellness device
+  aliases:
+  - ems device
+  - tens device
+  - muscle stimulator
+  - electrical stimulation device
+  - tens unit
+  - ems-device
+  - emsdevice
+  - ems devices
+  - tens-device
+  - tensdevice
+  - tens devices
+  - muscle-stimulator
+  - musclestimulator
+  - muscle stimulators
+  - electrical-stimulation-device
+  - electricalstimulationdevice
+  - electrical stimulation devices
+  - tens-unit
+  - tensunit
+  - tens units
+  - ems tens wellness device
+  - ems-tens-wellness-device
+  - emstenswellnessdevice
+  - ems tens wellness devices
+  product_family: wellness_electrostimulation
+  product_subfamily: ems_tens_device
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: EMS and TENS wellness devices stay at family level pending therapy, intended-use, and medical-boundary review.
+  boundary_tags:
+  - body_treatment_boundary
+  - medical_boundary
+  genres:
+  - wellness_borderline_medical
+  implied_traits:
+  - handheld
+  - battery_powered
+  - medical_claims
+  - body_treatment_boundary
+  - possible_medical_boundary
+  functional_classes:
+  - wellness_device
+  likely_standards:
+  - MDR borderline review
+  - EN 60601 review
+  - Biocompatibility / skin-contact review
+  strong_aliases:
+  - ems device
+  - tens device
+  - muscle stimulator
+  - electrical stimulation device
+  - tens unit
+  weak_aliases:
+  - ems-device
+  - emsdevice
+  - ems devices
+  - tens-device
+  - tensdevice
+  - tens devices
+  - muscle-stimulator
+  - musclestimulator
+  - muscle stimulators
+  - electrical-stimulation-device
+  - electricalstimulationdevice
+  - electrical stimulation devices
+  - tens-unit
+  - tensunit
+  - tens units
+  - ems tens wellness device
+  - ems-tens-wellness-device
+  - emstenswellnessdevice
+  - ems tens wellness devices
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: MDR borderline review
+    kind: unspecified
+  - ref: EN 60601 review
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - handheld
+  - battery_powered
+  - medical_claims
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: ev_charger_home
+  label: Home EV charger (EVSE)
+  product_family: ev_charging_equipment
+  product_subfamily: ev_charger_home
+  family_keywords:
+  - ev charging
+  - evse
+  - vehicle charging
+  - electric vehicle charging
+  - conductive charging
+  - ac charging station
+  aliases:
+  - ev charger
+  - home ev charger
+  - electric vehicle charger
+  - ac charging station
+  - mode 3 evse
+  - wallbox
+  - ev wallbox
+  - type 2 charger home
+  - smart ev charger
+  - home charging point
+  - electric car charger
+  - charging station
+  - type 2 charging station
+  - ev-charger
+  - evcharger
+  - ev chargers
+  - home-ev-charger
+  - homeevcharger
+  - home ev chargers
+  - electric-vehicle-charger
+  - electricvehiclecharger
+  - electric vehicle chargers
+  - wallboxs
+  - ev-wallbox
+  - evwallbox
+  - ev wallboxs
+  - type-2-charger-home
+  - type2chargerhome
+  - type 2 charger homes
+  - smart-ev-charger
+  - smartevcharger
+  - smart ev chargers
+  - home-charging-point
+  - homechargingpoint
+  - home charging points
+  - electric-car-charger
+  - electriccarcharger
+  - electric car chargers
+  - home ev charger (evse)
+  - home-ev-charger-(evse)
+  - homeevcharger(evse)
+  - home ev charger (evse)s
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - fixed_installation
+  - wall_mount
+  - ev_charging
+  - vehicle_supply
+  - energy_monitoring
+  - smart_grid_ready
+  - display
+  - outdoor_rated
+  - wifi
+  - bluetooth
+  - app_control
+  - ota
+  - cloud
+  - authentication
+  - data_storage
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - fixed_installation
+  - wall_mount
+  - ev_charging
+  - vehicle_supply
+  - energy_monitoring
+  - smart_grid_ready
+  - display
+  - outdoor_rated
+  default_traits:
+  - wifi
+  - bluetooth
+  - app_control
+  - ota
+  - cloud
+  - authentication
+  - data_storage
+  functional_classes:
+  - power_supply
+  - home_device
+  likely_standards:
+  - EN IEC 61851-1
+  - EN IEC 61851-21-2
+  - EN 62196-2
+  route_family: ev_charging
+  primary_standard_code: EN IEC 61851-1
+  supporting_standard_codes:
+  - EN IEC 61851-21-2
+  - EN 62196-2
+  genres:
+  - ev_charging_equipment
+  strong_aliases:
+  - ev charger
+  - home ev charger
+  - electric vehicle charger
+  - wallbox
+  - ev wallbox
+  - type 2 charger home
+  - smart ev charger
+  - home charging point
+  weak_aliases:
+  - electric car charger
+  - ev-charger
+  - evcharger
+  - ev chargers
+  - home-ev-charger
+  - homeevcharger
+  - home ev chargers
+  - electric-vehicle-charger
+  - electricvehiclecharger
+  - electric vehicle chargers
+  - wallboxs
+  - ev-wallbox
+  - evwallbox
+  - ev wallboxs
+  - type-2-charger-home
+  - type2chargerhome
+  - type 2 charger homes
+  - smart-ev-charger
+  - smartevcharger
+  - smart ev chargers
+  - home-charging-point
+  - homechargingpoint
+  - home charging points
+  - electric-car-charger
+  - electriccarcharger
+  - electric car chargers
+  - home ev charger (evse)
+  - home-ev-charger-(evse)
+  - homeevcharger(evse)
+  - home ev charger (evse)s
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN IEC 61851-1
+    kind: unspecified
+  - ref: EN IEC 61851-21-2
+    kind: unspecified
+  - ref: EN 62196-2
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  score_penalty_if_traits:
+  - speaker
+  - projector
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: ev_connector_accessory
+  label: EV charging connector / tethered cable accessory
+  product_family: ev_charging_equipment
+  product_subfamily: ev_connector_accessory
+  route_family: ev_connector_accessory
+  primary_standard_code: EN 62196-2
+  genres:
+  - ev_charging_equipment
+  aliases:
+  - vehicle connector
+  - type 2 vehicle connector
+  - charging connector cable
+  - ev charging connector
+  - ev charging cable
+  - tethered charging cable
+  - charging coupler
+  - charging inlet
+  family_keywords:
+  - vehicle connector
+  - charging connector
+  - charging cable
+  - tethered cable
+  preferred_clues:
+  - connector
+  - cable
+  - tethered
+  - accessory
+  exclude_clues:
+  - wallbox
+  - charging station
+  - evse
+  - control box
+  - mode 2
+  functional_classes:
+  - power_supply
+  core_traits:
+  - electrical
+  - ev_charging
+  - vehicle_supply
+  implied_traits:
+  - electrical
+  - ev_charging
+  - vehicle_supply
+  likely_standards:
+  - EN 62196-2
+  likely_standard_refs:
+  - ref: EN 62196-2
+    kind: unspecified
+- id: hoverboard
+  label: Hoverboard / self-balancing scooter
+  aliases:
+  - hoverboard
+  - self balancing scooter
+  - self-balancing scooter
+  - balance board scooter
+  - hoverboard with bluetooth speaker
+  - hoverboard scooter
+  - self balancing scooter with speaker
+  - two wheel self balancing scooter
+  - hoverboards
+  - self-balancing-scooter
+  - selfbalancingscooter
+  - self balancing scooters
+  - self-balancingscooter
+  - self-balancing scooters
+  - balance-board-scooter
+  - balanceboardscooter
+  - balance board scooters
+  - hoverboard-with-bluetooth-speaker
+  - hoverboardwithbluetoothspeaker
+  - hoverboard with bluetooth speakers
+  - hoverboard-scooter
+  - hoverboardscooter
+  - hoverboard scooters
+  - self-balancing-scooter-with-speaker
+  - selfbalancingscooterwithspeaker
+  - self balancing scooter with speakers
+  - hoverboard self-balancing scooter
+  - hoverboard self balancing scooter
+  - hoverboard-self-balancing-scooter
+  - hoverboardself-balancingscooter
+  - hoverboard self-balancing scooters
+  product_family: micromobility_device
+  product_subfamily: hoverboard
+  genres:
+  - micromobility
+  implied_traits:
+  - bluetooth
+  functional_classes:
+  - mobility_device
+  likely_standards:
+  - EN 17128
+  - EN 50604-1
+  preferred_clues:
+  - hoverboard
+  - self balancing
+  - self-balancing
+  - balance board
+  exclude_clues:
+  - speaker only
+  - portable speaker
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - radio
+  - vehicle_use
+  - light_means_of_transport
+  subtype_traits:
+  - bluetooth
+  - traction_motor
+  - outdoor_environment
+  strong_aliases:
+  - hoverboard
+  - self balancing scooter
+  - self-balancing scooter
+  - balance board scooter
+  - hoverboard with bluetooth speaker
+  - hoverboard scooter
+  - self balancing scooter with speaker
+  - two wheel self balancing scooter
+  weak_aliases:
+  - hoverboards
+  - self-balancing-scooter
+  - selfbalancingscooter
+  - self balancing scooters
+  - self-balancingscooter
+  - self-balancing scooters
+  - balance-board-scooter
+  - balanceboardscooter
+  - balance board scooters
+  - hoverboard-with-bluetooth-speaker
+  - hoverboardwithbluetoothspeaker
+  - hoverboard with bluetooth speakers
+  - hoverboard-scooter
+  - hoverboardscooter
+  - hoverboard scooters
+  - self-balancing-scooter-with-speaker
+  - selfbalancingscooterwithspeaker
+  - self balancing scooter with speakers
+  - hoverboard self-balancing scooter
+  - hoverboard self balancing scooter
+  - hoverboard-self-balancing-scooter
+  - hoverboardself-balancingscooter
+  - hoverboard self-balancing scooters
+  marketplace_aliases:
+  - self balancing scooter
+  - balance board scooter
+  - two wheel self balancing scooter
+  - hoverboard
+  - hoverboards
+  - self-balancing-scooter
+  - selfbalancingscooter
+  - self balancing scooters
+  - self-balancing scooter
+  - self-balancingscooter
+  - self-balancing scooters
+  - balance-board-scooter
+  - balanceboardscooter
+  - balance board scooters
+  - hoverboard with bluetooth speaker
+  - hoverboard-with-bluetooth-speaker
+  - hoverboardwithbluetoothspeaker
+  - hoverboard with bluetooth speakers
+  - hoverboard scooter
+  - hoverboard-scooter
+  - hoverboardscooter
+  - hoverboard scooters
+  - self balancing scooter with speaker
+  - self-balancing-scooter-with-speaker
+  - selfbalancingscooterwithspeaker
+  - self balancing scooter with speakers
+  - hoverboard self-balancing scooter
+  - hoverboard self balancing scooter
+  - hoverboard-self-balancing-scooter
+  - hoverboardself-balancingscooter
+  - hoverboard self-balancing scooters
+  not_when_text_contains:
+  - speaker only
+  - portable speaker
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 17128
+    kind: unspecified
+  - ref: EN 50604-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - bluetooth
+  score_penalty_if_traits:
+  - speaker only
+  - portable speaker
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: portable_ev_charger
+  label: Portable EV charger / mode 2 EVSE
+  product_family: ev_charging_equipment
+  product_subfamily: portable_ev_charger
+  family_keywords:
+  - ev charging
+  - evse
+  - vehicle charging
+  - mode 2
+  - charging cable with control box
+  aliases:
+  - portable ev charger
+  - portable electric vehicle charger
+  - portable evse
+  - mode 2 charger
+  - mode 2 ev charger
+  - mode 2 evse
+  - ac ev charger
+  - granny charger
+  - ev travel charger
+  - portable wallbox
+  - iccpd
+  - ic-cpd
+  - charging cable with control box
+  - charging cable with in cable control box
+  - in cable control box
+  - in cable control and protection device
+  - in-cable control and protection device
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - portable
+  - ev_charging
+  - vehicle_supply
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - portable
+  - ev_charging
+  - vehicle_supply
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN IEC 61851-1
+  - EN IEC 61851-21-2
+  - EN 62196-2
+  - IEC 62752
+  route_family: ev_charging
+  primary_standard_code: EN IEC 61851-1
+  supporting_standard_codes:
+  - EN IEC 61851-21-2
+  - EN 62196-2
+  - IEC 62752
+  genres: []
+  strong_aliases:
+  - portable ev charger
+  - portable electric vehicle charger
+  - mode 2 charger
+  - mode 2 ev charger
+  - granny charger
+  - ev travel charger
+  - iccpd
+  - ic-cpd
+  weak_aliases:
+  - mode 2 evse
+  - portable wallbox
+  - in cable control and protection device
+  - in-cable control and protection device
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN IEC 61851-1
+    kind: unspecified
+  - ref: EN IEC 61851-21-2
+    kind: unspecified
+  - ref: EN 62196-2
+    kind: unspecified
+  - ref: IEC 62752
+    kind: unspecified
+  required_clues: []
+  preferred_clues:
+  - portable
+  - mode 2
+  - granny
+  - travel charger
+  exclude_clues:
+  - wall mount
+  - fixed installation
+  - power adapter
+  - phone charger
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - mains_powered
+  - portable
+  - ev_charging
+  - vehicle_supply
+  score_penalty_if_traits:
+  - fixed_installation
+  - speaker
+  required_any_traits:
+  - electrical
+  forbidden_traits:
+  - fixed_installation
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: red_light_therapy_device
+  label: Red light therapy device
+  aliases:
+  - red light therapy device
+  - led therapy mask
+  - red light mask
+  - phototherapy beauty device
+  - red-light-therapy-device
+  - redlighttherapydevice
+  - red light therapy devices
+  - led-therapy-mask
+  - ledtherapymask
+  - led therapy masks
+  - red-light-mask
+  - redlightmask
+  - red light masks
+  - phototherapy-beauty-device
+  - phototherapybeautydevice
+  - phototherapy beauty devices
+  product_family: wellness_light_device
+  product_subfamily: red_light_therapy_device
+  genres:
+  - wellness_borderline_medical
+  implied_traits:
+  - battery_powered
+  - display
+  - medical_claims
+  functional_classes:
+  - wellness_device
+  likely_standards:
+  - MDR borderline review
+  - EN 60601 review
+  strong_aliases:
+  - red light therapy device
+  - led therapy mask
+  - red light mask
+  - phototherapy beauty device
+  weak_aliases:
+  - red-light-therapy-device
+  - redlighttherapydevice
+  - red light therapy devices
+  - led-therapy-mask
+  - ledtherapymask
+  - led therapy masks
+  - red-light-mask
+  - redlightmask
+  - red light masks
+  - phototherapy-beauty-device
+  - phototherapybeautydevice
+  - phototherapy beauty devices
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: MDR borderline review
+    kind: unspecified
+  - ref: EN 60601 review
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - battery_powered
+  - display
+  - medical_claims
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: streaming_device
+  label: Streaming device / set-top box
+  aliases:
+  - streaming device
+  - streaming stick
+  - set-top box
+  - media player
+  - tv box
+  - streaming-device
+  - streamingdevice
+  - streaming devices
+  - streaming-stick
+  - streamingstick
+  - streaming sticks
+  - set top box
+  - set-top-box
+  - set-topbox
+  - set-top boxs
+  - media-player
+  - mediaplayer
+  - media players
+  - television box
+  - tv-box
+  - tvbox
+  - tv boxs
+  - streaming device set-top box
+  - streaming device set top box
+  - streaming-device-set-top-box
+  - streamingdeviceset-topbox
+  - streaming device set-top boxs
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - data_storage
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - streaming device
+  - streaming stick
+  - set-top box
+  - media player
+  - tv box
+  weak_aliases:
+  - streaming-device
+  - streamingdevice
+  - streaming devices
+  - streaming-stick
+  - streamingstick
+  - streaming sticks
+  - set top box
+  - set-top-box
+  - set-topbox
+  - set-top boxs
+  - media-player
+  - mediaplayer
+  - media players
+  - television box
+  - tv-box
+  - tvbox
+  - tv boxs
+  - streaming device set-top box
+  - streaming device set top box
+  - streaming-device-set-top-box
+  - streamingdeviceset-topbox
+  - streaming device set-top boxs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

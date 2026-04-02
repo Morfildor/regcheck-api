@@ -1,0 +1,198 @@
+traits:
+- id: backup_battery
+  label: Backup battery
+  description: Contains a backup battery to maintain operation or alarm during mains power outage
+  aliases:
+  - backup battery
+  examples: []
+  regex:
+  - \bbackup[ -]?battery\b
+  normalized_to: backup_battery
+  normalization_priority: 0
+- id: battery_pack
+  label: Battery pack or power station
+  description: Stores electrical energy for later use, charging, backup, or power delivery
+  aliases:
+  - battery pack
+  examples: []
+  regex:
+  - \bbattery[ -]?pack\b
+  normalized_to: battery_pack
+  normalization_priority: 0
+- id: battery_powered
+  label: Battery powered
+  description: Powered by primary or rechargeable batteries
+  aliases:
+  - battery powered
+  - battery operated
+  - cordless
+  - rechargeable
+  examples:
+  - battery operated
+  - cordless
+  - rechargeable
+  regex:
+  - \bbattery[ -]?powered\b
+  - \bbattery[ -]?operated\b
+  - \bcordless\b
+  - \brechargeable\b
+  normalized_to: battery_powered
+  normalization_priority: 0
+- id: charger_role
+  label: Charger role
+  description: Main intended function is charging a battery-powered product or battery pack.
+  aliases:
+  - charger role
+  - charging device
+  - battery charger
+  examples: []
+  regex:
+  - \bcharger[ -]?role\b
+  - \bcharging[ -]?device\b
+  - \bbattery[ -]?charger\b
+  normalized_to: charger_role
+  normalization_priority: 0
+- id: energy_monitoring
+  label: Energy monitoring
+  description: Measures and reports electrical power or energy consumption data
+  aliases:
+  - energy monitoring
+  examples: []
+  regex:
+  - \benergy[ -]?monitoring\b
+  normalized_to: energy_monitoring
+  normalization_priority: 0
+- id: energy_storage
+  label: Energy storage
+  description: Stores electrical energy for later discharge, backup, or power delivery.
+  aliases:
+  - energy storage
+  - stored energy
+  examples: []
+  regex:
+  - \benergy[ -]?storage\b
+  - \bstored[ -]?energy\b
+  normalized_to: energy_storage
+  normalization_priority: 0
+- id: lithium_ion_battery
+  label: Lithium-ion battery
+  description: Uses lithium-ion or lithium-polymer rechargeable battery chemistry.
+  aliases:
+  - lithium ion battery
+  - li ion
+  - li-ion
+  - lithium polymer
+  examples: []
+  regex:
+  - \blithium[ -]?ion[ -]?battery\b
+  - \bli[ -]?ion\b
+  - \blithium[ -]?polymer\b
+  normalized_to: lithium_ion_battery
+  normalization_priority: 0
+- id: mains_power_likely
+  label: Likely mains powered
+  description: Likely to be mains powered based on product type or context
+  aliases:
+  - mains power likely
+  examples: []
+  regex:
+  - \bmains[ -]?power[ -]?likely\b
+  normalized_to: mains_powered
+  normalization_priority: 1
+- id: mains_powered
+  label: Mains powered
+  description: Explicitly stated to run from mains power
+  aliases:
+  - mains powered
+  - ac powered
+  - plug in
+  - plug-in
+  - wall powered
+  examples:
+  - ac powered
+  - plug in
+  - plug-in
+  regex:
+  - \bmains[ -]?powered\b
+  - \bac[ -]?powered\b
+  - \bplug[ -]?in\b
+  - \bplug\-in\b
+  - \bwall[ -]?powered\b
+  normalized_to: mains_powered
+  normalization_priority: 0
+- id: portable_energy
+  label: Portable energy product
+  description: Portable energy storage, power bank, or power station function is a main intended use
+  aliases:
+  - portable energy
+  examples: []
+  regex:
+  - \bportable[ -]?energy\b
+  normalized_to: portable_energy
+  normalization_priority: 0
+- id: power_source
+  label: Power source
+  description: Provides electrical output power to another product or circuit.
+  aliases:
+  - power source
+  - power supply source
+  examples: []
+  regex:
+  - \bpower[ -]?source\b
+  - \bpower[ -]?supply[ -]?source\b
+  normalized_to: power_source
+  normalization_priority: 0
+- id: powered_load
+  label: Powered load
+  description: Receives electrical power from an external source, charger, dock, or power supply.
+  aliases:
+  - powered load
+  - powered device
+  examples: []
+  regex:
+  - \bpowered[ -]?load\b
+  - \bpowered[ -]?device\b
+  normalized_to: powered_load
+  normalization_priority: 0
+- id: removable_battery
+  label: Removable battery
+  description: Battery pack or cell is intended to be removed or replaced by the user or service personnel.
+  aliases:
+  - removable battery
+  - replaceable battery
+  examples: []
+  regex:
+  - \bremovable[ -]?battery\b
+  - \breplaceable[ -]?battery\b
+  normalized_to: removable_battery
+  normalization_priority: 0
+- id: solar_powered
+  label: Solar powered
+  description: Powered wholly or partially by an integrated or connected solar panel
+  aliases:
+  - solar powered
+  examples: []
+  regex:
+  - \bsolar[ -]?powered\b
+  normalized_to: solar_powered
+  normalization_priority: 0
+- id: usb_powered
+  label: USB powered
+  description: Powered through USB, USB-C, or a similar low-voltage connector
+  aliases:
+  - usb powered
+  examples: []
+  regex:
+  - \busb[ -]?powered\b
+  normalized_to: usb_powered
+  normalization_priority: 0
+- id: vehicle_supply
+  label: Vehicle supply
+  description: Supplies, charges, or services vehicles or vehicle equipment
+  aliases:
+  - vehicle supply
+  examples: []
+  regex:
+  - \bvehicle[ -]?supply\b
+  normalized_to: vehicle_supply
+  normalization_priority: 0

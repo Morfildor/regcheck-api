@@ -1,0 +1,1702 @@
+products:
+- id: angle_grinder
+  label: Angle grinder
+  product_family: industrial_power_equipment
+  product_subfamily: power_grinder
+  aliases:
+  - angle grinder
+  - electric angle grinder
+  - cordless angle grinder
+  - disc grinder
+  - cut-off grinder
+  - cutoff grinder
+  - angle-grinder
+  - anglegrinder
+  - angle grinders
+  - electric-angle-grinder
+  - electricanglegrinder
+  - electric angle grinders
+  - disc-grinder
+  - discgrinder
+  - disc grinders
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - angle grinder
+  - disc grinder
+  - cut-off grinder
+  preferred_clues:
+  - angle grinder
+  - disc grinder
+  - cut-off grinder
+  exclude_clues:
+  - coffee grinder
+  - spice grinder
+  - meat grinder
+  strong_aliases:
+  - angle grinder
+  - electric angle grinder
+  - cordless angle grinder
+  - disc grinder
+  - cut-off grinder
+  - cutoff grinder
+  weak_aliases:
+  - angle-grinder
+  - anglegrinder
+  - angle grinders
+  - electric-angle-grinder
+  - electricanglegrinder
+  - electric angle grinders
+  - disc-grinder
+  - discgrinder
+  - disc grinders
+  marketplace_aliases:
+  - grinder tool
+  - cutting grinder
+  not_when_text_contains:
+  - coffee grinder
+  - spice grinder
+  - herb grinder
+  - meat grinder
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - food_contact
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Angle grinder and abrasive cutting/grinding tool coverage.
+- id: corded_power_drill
+  product_family: industrial_power_equipment
+  product_subfamily: power_drill
+  label: Corded / electric power drill
+  aliases:
+  - electric drill
+  - corded drill
+  - mains drill
+  - corded power drill
+  - electric power drill
+  - electric-drill
+  - electricdrill
+  - electric drills
+  - corded-drill
+  - cordeddrill
+  - corded drills
+  - mains-drill
+  - mainsdrill
+  - mains drills
+  - corded-power-drill
+  - cordedpowerdrill
+  - corded power drills
+  - electric-power-drill
+  - electricpowerdrill
+  - electric power drills
+  implied_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - mains_power_likely
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - professional
+  - industrial
+  - mains_power_likely
+  core_traits:
+  - electrical
+  - motorized
+  - mains_power_likely
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - EN 62841-1
+  - EN 62841-2-1
+  route_family: machinery_power_tool
+  primary_standard_code: EN 62841-2-1
+  supporting_standard_codes:
+  - EN 62841-1
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - drill
+  - power drill
+  - electric drill
+  - corded drill
+  preferred_clues:
+  - drill
+  - power drill
+  - hammer drill
+  - impact drill
+  - rotary hammer
+  exclude_clues:
+  - cordless
+  - battery drill
+  - battery-powered
+  strong_aliases:
+  - electric drill
+  - corded drill
+  - mains drill
+  - corded power drill
+  - electric power drill
+  weak_aliases:
+  - electric-drill
+  - electricdrill
+  - electric drills
+  - corded-drill
+  - cordeddrill
+  - corded drills
+  - mains-drill
+  - mainsdrill
+  - mains drills
+  - corded-power-drill
+  - cordedpowerdrill
+  - corded power drills
+  - electric-power-drill
+  - electricpowerdrill
+  - electric power drills
+  marketplace_aliases: []
+  not_when_text_contains:
+  - cordless
+  - battery drill
+  - rechargeable
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62841-1
+    kind: unspecified
+  - ref: EN 62841-2-1
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - mains_powered
+  - mains_power_likely
+  score_penalty_if_traits:
+  - battery_powered
+  required_any_traits:
+  - electrical
+  - mains_powered
+  - mains_power_likely
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: cordless_power_drill
+  product_family: industrial_power_equipment
+  product_subfamily: power_drill
+  family_keywords:
+  - drill
+  - power drill
+  - drill driver
+  - electric drill
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - battery_powered
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  core_traits:
+  - electrical
+  - motorized
+  - battery_powered
+  label: Cordless power drill / drill driver
+  aliases:
+  - cordless drill
+  - power drill
+  - drill driver
+  - battery drill
+  - cordless power drill
+  - impact drill
+  - hammer drill
+  - cordless-drill
+  - cordlessdrill
+  - cordless drills
+  - power-drill
+  - powerdrill
+  - power drills
+  - drill-driver
+  - drilldriver
+  - drill drivers
+  - battery-drill
+  - batterydrill
+  - battery drills
+  - cordless-power-drill
+  - cordlesspowerdrill
+  - cordless power drills
+  - impact-drill
+  - impactdrill
+  - impact drills
+  - hammer-drill
+  - hammerdrill
+  - hammer drills
+  - cordless power drill drill driver
+  - cordless-power-drill-drill-driver
+  - cordlesspowerdrilldrilldriver
+  - cordless power drill drill drivers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - handheld
+  - portable
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - EN 62841-1
+  - EN 62841-2-1
+  route_family: machinery_power_tool
+  primary_standard_code: EN 62841-2-1
+  supporting_standard_codes:
+  - EN 62841-1
+  genres:
+  - electric_power_tool
+  preferred_clues:
+  - drill
+  - drill driver
+  - impact drill
+  exclude_clues:
+  - battery storage system
+  - powerwall
+  strong_aliases:
+  - cordless drill
+  - power drill
+  - drill driver
+  - battery drill
+  - cordless power drill
+  - impact drill
+  - hammer drill
+  weak_aliases:
+  - cordless-drill
+  - cordlessdrill
+  - cordless drills
+  - power-drill
+  - powerdrill
+  - power drills
+  - drill-driver
+  - drilldriver
+  - drill drivers
+  - battery-drill
+  - batterydrill
+  - battery drills
+  - cordless-power-drill
+  - cordlesspowerdrill
+  - cordless power drills
+  - impact-drill
+  - impactdrill
+  - impact drills
+  - hammer-drill
+  - hammerdrill
+  - hammer drills
+  - cordless power drill drill driver
+  - cordless-power-drill-drill-driver
+  - cordlesspowerdrilldrilldriver
+  - cordless power drill drill drivers
+  marketplace_aliases: []
+  not_when_text_contains:
+  - battery storage system
+  - powerwall
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62841-1
+    kind: unspecified
+  - ref: EN 62841-2-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - handheld
+  score_penalty_if_traits:
+  - battery storage system
+  - powerwall
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: cordless_screwdriver
+  label: Cordless screwdriver / electric screwdriver
+  product_family: industrial_power_equipment
+  product_subfamily: power_screwdriver
+  aliases:
+  - cordless screwdriver
+  - electric screwdriver
+  - battery screwdriver
+  - rechargeable screwdriver
+  - power screwdriver
+  - cordless electric screwdriver
+  - cordless-screwdriver
+  - cordlessscrewdriver
+  - cordless screwdrivers
+  - electric-screwdriver
+  - electricscrewdriver
+  - electric screwdrivers
+  - battery-screwdriver
+  - batteryscrewdriver
+  - battery screwdrivers
+  - rechargeable-screwdriver
+  - rechargeablescrewdriver
+  - rechargeable screwdrivers
+  implied_traits:
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - battery_powered
+  - electrical
+  - motorized
+  core_traits:
+  - electrical
+  - motorized
+  - battery_powered
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - screwdriver
+  - electric screwdriver
+  - cordless screwdriver
+  preferred_clues:
+  - screwdriver
+  - power screwdriver
+  - assembly driver
+  exclude_clues:
+  - manual screwdriver
+  - precision screwdriver
+  - toothbrush
+  strong_aliases:
+  - cordless screwdriver
+  - electric screwdriver
+  - battery screwdriver
+  - rechargeable screwdriver
+  - power screwdriver
+  - cordless electric screwdriver
+  weak_aliases:
+  - cordless-screwdriver
+  - cordlessscrewdriver
+  - cordless screwdrivers
+  - electric-screwdriver
+  - electricscrewdriver
+  - electric screwdrivers
+  - battery-screwdriver
+  - batteryscrewdriver
+  - battery screwdrivers
+  - rechargeable-screwdriver
+  - rechargeablescrewdriver
+  - rechargeable screwdrivers
+  marketplace_aliases:
+  - cordless driver
+  - electric driver screwdriver
+  not_when_text_contains:
+  - manual screwdriver
+  - precision screwdriver
+  - screwdriver bit
+  - toothbrush
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - oral_care
+  - personal_care
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Battery-powered screwdrivers and compact assembly drivers.
+- id: electric_garden_tool
+  label: Electric garden tool
+  aliases:
+  - electric garden tool
+  - leaf blower
+  - garden blower
+  - garden shredder
+  - hedge trimmer
+  - electric-garden-tool
+  - electricgardentool
+  - electric garden tools
+  - leaf-blower
+  - leafblower
+  - leaf blowers
+  - garden-blower
+  - gardenblower
+  - garden blowers
+  - garden-shredder
+  - gardenshredder
+  - garden shredders
+  - hedge-trimmer
+  - hedgetrimmer
+  - hedge trimmers
+  implied_traits:
+  - consumer
+  - electrical
+  - motorized
+  - mains_power_likely
+  - outdoor_use
+  - garden_use
+  - portable
+  functional_classes:
+  - outdoor_appliance
+  - garden_tool
+  likely_standards: []
+  genres:
+  - garden_outdoor_power
+  strong_aliases:
+  - electric garden tool
+  - leaf blower
+  - garden blower
+  - garden shredder
+  - hedge trimmer
+  weak_aliases:
+  - electric-garden-tool
+  - electricgardentool
+  - electric garden tools
+  - leaf-blower
+  - leafblower
+  - leaf blowers
+  - garden-blower
+  - gardenblower
+  - garden blowers
+  - garden-shredder
+  - gardenshredder
+  - garden shredders
+  - hedge-trimmer
+  - hedgetrimmer
+  - hedge trimmers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs: []
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - motorized
+  - mains_power_likely
+  - outdoor_use
+  - garden_use
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: grass_shear
+  label: Grass shear
+  aliases:
+  - grass shear
+  - grass shears
+  - electric grass shear
+  - shrub shear
+  - grass-shear
+  - grassshear
+  - grass-shears
+  - grassshears
+  - electric-grass-shear
+  - electricgrassshear
+  - electric grass shears
+  - shrub-shear
+  - shrubshear
+  - shrub shears
+  implied_traits:
+  - consumer
+  - electrical
+  - motorized
+  - battery_powered
+  - outdoor_use
+  - garden_use
+  - portable
+  functional_classes:
+  - garden_tool
+  - outdoor_appliance
+  likely_standards:
+  - EN 60335-2-94
+  genres:
+  - garden_outdoor_power
+  strong_aliases:
+  - grass shear
+  - grass shears
+  - electric grass shear
+  - shrub shear
+  weak_aliases:
+  - grass-shear
+  - grassshear
+  - grass-shears
+  - grassshears
+  - electric-grass-shear
+  - electricgrassshear
+  - electric grass shears
+  - shrub-shear
+  - shrubshear
+  - shrub shears
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-94
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - motorized
+  - battery_powered
+  - outdoor_use
+  - garden_use
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: grass_trimmer
+  label: Grass trimmer / lawn edge trimmer
+  aliases:
+  - grass trimmer
+  - string trimmer
+  - line trimmer
+  - lawn trimmer
+  - edge trimmer
+  - grass-trimmer
+  - grasstrimmer
+  - grass trimmers
+  - string-trimmer
+  - stringtrimmer
+  - string trimmers
+  - line-trimmer
+  - linetrimmer
+  - line trimmers
+  - lawn-trimmer
+  - lawntrimmer
+  - lawn trimmers
+  - edge-trimmer
+  - edgetrimmer
+  - edge trimmers
+  - grass trimmer lawn edge trimmer
+  - grass-trimmer-lawn-edge-trimmer
+  - grasstrimmerlawnedgetrimmer
+  - grass trimmer lawn edge trimmers
+  implied_traits:
+  - consumer
+  - electrical
+  - motorized
+  - mains_power_likely
+  - outdoor_use
+  - garden_use
+  - portable
+  functional_classes:
+  - garden_tool
+  - outdoor_appliance
+  likely_standards:
+  - EN 60335-2-91
+  genres:
+  - garden_outdoor_power
+  strong_aliases:
+  - grass trimmer
+  - string trimmer
+  - line trimmer
+  - lawn trimmer
+  - edge trimmer
+  weak_aliases:
+  - grass-trimmer
+  - grasstrimmer
+  - grass trimmers
+  - string-trimmer
+  - stringtrimmer
+  - string trimmers
+  - line-trimmer
+  - linetrimmer
+  - line trimmers
+  - lawn-trimmer
+  - lawntrimmer
+  - lawn trimmers
+  - edge-trimmer
+  - edgetrimmer
+  - edge trimmers
+  - grass trimmer lawn edge trimmer
+  - grass-trimmer-lawn-edge-trimmer
+  - grasstrimmerlawnedgetrimmer
+  - grass trimmer lawn edge trimmers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-91
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - motorized
+  - mains_power_likely
+  - outdoor_use
+  - garden_use
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: heated_gully
+  label: Heated gully / roof drainage heater
+  aliases:
+  - heated gully
+  - roof drainage heater
+  - gutter heater
+  - heated-gully
+  - heatedgully
+  - heated gullys
+  - roof-drainage-heater
+  - roofdrainageheater
+  - roof drainage heaters
+  - gutter-heater
+  - gutterheater
+  - gutter heaters
+  - heated gully roof drainage heater
+  - heated-gully-roof-drainage-heater
+  - heatedgullyroofdrainageheater
+  - heated gully roof drainage heaters
+  implied_traits:
+  - consumer
+  - electrical
+  - heating
+  - mains_powered
+  - outdoor_use
+  - fixed_installation
+  functional_classes:
+  - heating_appliance
+  - outdoor_appliance
+  likely_standards:
+  - EN 60335-2-83
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - garden_outdoor_power
+  strong_aliases:
+  - heated gully
+  - roof drainage heater
+  - gutter heater
+  weak_aliases:
+  - heated-gully
+  - heatedgully
+  - heated gullys
+  - roof-drainage-heater
+  - roofdrainageheater
+  - roof drainage heaters
+  - gutter-heater
+  - gutterheater
+  - gutter heaters
+  - heated gully roof drainage heater
+  - heated-gully-roof-drainage-heater
+  - heatedgullyroofdrainageheater
+  - heated gully roof drainage heaters
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-83
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - heating
+  - mains_powered
+  - outdoor_use
+  - fixed_installation
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: high_pressure_cleaner
+  label: High-pressure cleaner
+  aliases:
+  - pressure washer
+  - high pressure cleaner
+  - power washer
+  - pressure-washer
+  - pressurewasher
+  - pressure washers
+  - high-pressure-cleaner
+  - highpressurecleaner
+  - high pressure cleaners
+  - power-washer
+  - powerwasher
+  - power washers
+  - high-pressure cleaner
+  - high-pressurecleaner
+  - high-pressure cleaners
+  implied_traits:
+  - consumer
+  - electrical
+  - motorized
+  - pumping
+  - water_contact
+  - mains_powered
+  - cleaning
+  - surface_cleaning
+  - outdoor_use
+  functional_classes:
+  - cleaning_appliance
+  - outdoor_appliance
+  likely_standards:
+  - EN 60335-2-79
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - garden_outdoor_power
+  strong_aliases:
+  - pressure washer
+  - high pressure cleaner
+  - power washer
+  weak_aliases:
+  - pressure-washer
+  - pressurewasher
+  - pressure washers
+  - high-pressure-cleaner
+  - highpressurecleaner
+  - high pressure cleaners
+  - power-washer
+  - powerwasher
+  - power washers
+  - high-pressure cleaner
+  - high-pressurecleaner
+  - high-pressure cleaners
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-79
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - motorized
+  - pumping
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: impact_driver
+  label: Impact driver
+  product_family: industrial_power_equipment
+  product_subfamily: impact_driver
+  aliases:
+  - impact driver
+  - cordless impact driver
+  - brushless impact driver
+  - electric impact driver
+  - hex impact driver
+  - impact-driver
+  - impactdriver
+  - impact drivers
+  - cordless-impact-driver
+  - cordlessimpactdriver
+  - cordless impact drivers
+  - brushless-impact-driver
+  - brushlessimpactdriver
+  - brushless impact drivers
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - impact driver
+  - driver tool
+  preferred_clues:
+  - impact driver
+  - hex driver
+  exclude_clues:
+  - driver bit
+  - device driver
+  - software driver
+  strong_aliases:
+  - impact driver
+  - cordless impact driver
+  - brushless impact driver
+  - electric impact driver
+  - hex impact driver
+  weak_aliases:
+  - impact-driver
+  - impactdriver
+  - impact drivers
+  - cordless-impact-driver
+  - cordlessimpactdriver
+  - cordless impact drivers
+  - brushless-impact-driver
+  - brushlessimpactdriver
+  - brushless impact drivers
+  marketplace_aliases:
+  - compact impact driver
+  not_when_text_contains:
+  - driver bit
+  - device driver
+  - software driver
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - battery_powered
+  score_penalty_if_traits:
+  - av_ict
+  required_any_traits:
+  - electrical
+  - motorized
+  forbidden_traits: []
+  matching_notes: Impact-driver route for fastening tools that should land in machinery review rather than generic appliance
+    routing.
+- id: industrial_power_tool
+  product_family: industrial_power_equipment
+  product_subfamily: generic_power_tool
+  label: Industrial / professional power tool
+  aliases:
+  - industrial power tool
+  - professional power tool
+  - electric power tool
+  - power tool
+  - industrial-power-tool
+  - industrialpowertool
+  - industrial power tools
+  - professional-power-tool
+  - professionalpowertool
+  - professional power tools
+  - electric-power-tool
+  - electricpowertool
+  - electric power tools
+  - power-tool
+  - powertool
+  - power tools
+  implied_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  subtype_traits:
+  - handheld
+  - portable
+  core_traits:
+  - electrical
+  - motorized
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - EN 62841-1
+  route_family: machinery_power_tool
+  primary_standard_code: EN 62841-1
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - industrial power tool
+  - professional power tool
+  - electric power tool
+  - power tool
+  - handheld power tool
+  preferred_clues:
+  - power tool
+  - handheld power tool
+  - workshop tool
+  - jobsite tool
+  exclude_clues:
+  - fish stunner
+  - fishing machine
+  - bain marie
+  - dishwasher
+  strong_aliases:
+  - industrial power tool
+  - professional power tool
+  - electric power tool
+  - power tool
+  weak_aliases:
+  - industrial-power-tool
+  - industrialpowertool
+  - industrial power tools
+  - professional-power-tool
+  - professionalpowertool
+  - professional power tools
+  - electric-power-tool
+  - electricpowertool
+  - electric power tools
+  - power-tool
+  - powertool
+  - power tools
+  marketplace_aliases: []
+  not_when_text_contains:
+  - fish stunner
+  - fishing machine
+  - commercial kitchen appliance
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62841-1
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - food_contact
+  - water_contact
+  required_any_traits:
+  - electrical
+  - motorized
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: lawn_mower
+  label: Electric lawn mower
+  aliases:
+  - lawn mower
+  - electric mower
+  - corded lawn mower
+  - battery lawn mower
+  - lawn-mower
+  - lawnmower
+  - lawn mowers
+  - electric-mower
+  - electricmower
+  - electric mowers
+  - corded-lawn-mower
+  - cordedlawnmower
+  - corded lawn mowers
+  - battery-lawn-mower
+  - batterylawnmower
+  - battery lawn mowers
+  - electric lawn mower
+  - electric-lawn-mower
+  - electriclawnmower
+  - electric lawn mowers
+  implied_traits:
+  - consumer
+  - electrical
+  - motorized
+  - battery_powered
+  - mains_power_likely
+  - outdoor_use
+  - garden_use
+  functional_classes:
+  - garden_tool
+  - outdoor_appliance
+  likely_standards:
+  - EN 60335-2-77
+  genres:
+  - garden_outdoor_power
+  strong_aliases:
+  - lawn mower
+  - electric mower
+  - corded lawn mower
+  - battery lawn mower
+  weak_aliases:
+  - lawn-mower
+  - lawnmower
+  - lawn mowers
+  - electric-mower
+  - electricmower
+  - electric mowers
+  - corded-lawn-mower
+  - cordedlawnmower
+  - corded lawn mowers
+  - battery-lawn-mower
+  - batterylawnmower
+  - battery lawn mowers
+  - electric lawn mower
+  - electric-lawn-mower
+  - electriclawnmower
+  - electric lawn mowers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-77
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - motorized
+  - battery_powered
+  - mains_power_likely
+  - outdoor_use
+  score_penalty_if_traits: []
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: orbital_sander
+  label: Orbital sander
+  product_family: industrial_power_equipment
+  product_subfamily: power_sander
+  aliases:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  - finishing sander
+  - sheet sander
+  - orbital-sander
+  - orbitalsander
+  - orbital sanders
+  - random-orbital-sander
+  - randomorbitalsander
+  - random orbital sanders
+  - palm-sander
+  - palmsander
+  - palm sanders
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  preferred_clues:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  exclude_clues:
+  - nail file
+  - pedicure
+  - manicure
+  strong_aliases:
+  - orbital sander
+  - random orbital sander
+  - palm sander
+  - finishing sander
+  - sheet sander
+  weak_aliases:
+  - orbital-sander
+  - orbitalsander
+  - orbital sanders
+  - random-orbital-sander
+  - randomorbitalsander
+  - random orbital sanders
+  - palm-sander
+  - palmsander
+  - palm sanders
+  marketplace_aliases:
+  - electric sander
+  - finishing tool sander
+  not_when_text_contains:
+  - nail file
+  - pedicure
+  - manicure
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - personal_care
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Electric orbital and finishing sander coverage for workshop tools.
+- id: outdoor_barbecue
+  label: Outdoor electric barbecue
+  aliases:
+  - outdoor electric barbecue
+  - electric bbq grill
+  - outdoor barbecue grill
+  - outdoor-electric-barbecue
+  - outdoorelectricbarbecue
+  - outdoor electric barbecues
+  - electric-bbq-grill
+  - electricbbqgrill
+  - electric bbq grills
+  - outdoor-barbecue-grill
+  - outdoorbarbecuegrill
+  - outdoor barbecue grills
+  implied_traits:
+  - consumer
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - outdoor_use
+  - food_preparation
+  functional_classes:
+  - outdoor_appliance
+  - cooking_appliance
+  likely_standards:
+  - EN 60335-2-78
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  - garden_outdoor_power
+  strong_aliases:
+  - outdoor electric barbecue
+  - electric bbq grill
+  - outdoor barbecue grill
+  weak_aliases:
+  - outdoor-electric-barbecue
+  - outdoorelectricbarbecue
+  - outdoor electric barbecues
+  - electric-bbq-grill
+  - electricbbqgrill
+  - electric bbq grills
+  - outdoor-barbecue-grill
+  - outdoorbarbecuegrill
+  - outdoor barbecue grills
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-78
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - outdoor_use
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: patio_heater
+  label: Patio heater
+  aliases:
+  - patio heater
+  - outdoor heater
+  - terrace heater
+  - patio-heater
+  - patioheater
+  - patio heaters
+  - outdoor-heater
+  - outdoorheater
+  - outdoor heaters
+  - terrace-heater
+  - terraceheater
+  - terrace heaters
+  implied_traits:
+  - consumer
+  - electrical
+  - heating
+  - mains_powered
+  - outdoor_use
+  functional_classes:
+  - heating_appliance
+  - outdoor_appliance
+  likely_standards:
+  - EN 60335-2-30
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - garden_outdoor_power
+  strong_aliases:
+  - patio heater
+  - outdoor heater
+  - terrace heater
+  weak_aliases:
+  - patio-heater
+  - patioheater
+  - patio heaters
+  - outdoor-heater
+  - outdoorheater
+  - outdoor heaters
+  - terrace-heater
+  - terraceheater
+  - terrace heaters
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-30
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - heating
+  - mains_powered
+  - outdoor_use
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: portable_power_saw
+  product_family: industrial_power_equipment
+  product_subfamily: power_saw
+  label: Electric / portable power saw
+  route_family: machinery_power_tool
+  primary_standard_code: Power tool safety review
+  aliases:
+  - power saw
+  - electric saw
+  - circular saw
+  - jigsaw
+  - reciprocating saw
+  - mitre saw
+  - miter saw
+  - power-saw
+  - powersaw
+  - power saws
+  - electric-saw
+  - electricsaw
+  - electric saws
+  - circular-saw
+  - circularsaw
+  - circular saws
+  - reciprocating-saw
+  - reciprocatingsaw
+  - reciprocating saws
+  implied_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - mains_power_likely
+  family_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  subtype_traits:
+  - handheld
+  - portable
+  - mains_power_likely
+  core_traits:
+  - electrical
+  - motorized
+  - mains_power_likely
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - saw
+  - power saw
+  - circular saw
+  - jigsaw
+  - reciprocating saw
+  preferred_clues:
+  - saw
+  - circular saw
+  - jigsaw
+  - reciprocating saw
+  - mitre saw
+  - miter saw
+  exclude_clues:
+  - chainsaw
+  - chain saw
+  - surgical saw
+  strong_aliases:
+  - power saw
+  - electric saw
+  - circular saw
+  - jigsaw
+  - reciprocating saw
+  - mitre saw
+  - miter saw
+  weak_aliases:
+  - power-saw
+  - powersaw
+  - power saws
+  - electric-saw
+  - electricsaw
+  - electric saws
+  - circular-saw
+  - circularsaw
+  - circular saws
+  - reciprocating-saw
+  - reciprocatingsaw
+  - reciprocating saws
+  marketplace_aliases: []
+  not_when_text_contains:
+  - chainsaw
+  - chain saw
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - industrial
+  - electrical
+  - motorized
+  - handheld
+  score_penalty_if_traits:
+  - garden_use
+  required_any_traits:
+  - electrical
+  - motorized
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: robotic_lawn_mower
+  label: Robotic lawn mower
+  aliases:
+  - robotic lawn mower
+  - robot lawn mower
+  - robot mower
+  - robotic mower
+  - automatic lawn mower
+  - lawn mowing robot
+  - robotic grass cutter
+  - robotic-lawn-mower
+  - roboticlawnmower
+  - robotic lawn mowers
+  - robot-mower
+  - robotmower
+  - robot mowers
+  - robotic-mower
+  - roboticmower
+  - robotic mowers
+  - robotic-grass-cutter
+  - roboticgrasscutter
+  - robotic grass cutters
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - motorized
+  - battery_powered
+  - remote_control
+  - outdoor_use
+  - garden_use
+  functional_classes:
+  - garden_tool
+  - outdoor_appliance
+  likely_standards:
+  - EN 50636-2-107
+  - EN 60335-2-107
+  genres:
+  - garden_outdoor_power
+  strong_aliases:
+  - robotic lawn mower
+  - robot lawn mower
+  - robot mower
+  - robotic mower
+  - automatic lawn mower
+  - lawn mowing robot
+  - robotic grass cutter
+  weak_aliases:
+  - robotic-lawn-mower
+  - roboticlawnmower
+  - robotic lawn mowers
+  - robot-mower
+  - robotmower
+  - robot mowers
+  - robotic-mower
+  - roboticmower
+  - robotic mowers
+  - robotic-grass-cutter
+  - roboticgrasscutter
+  - robotic grass cutters
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 50636-2-107
+    kind: unspecified
+  - ref: EN 60335-2-107
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - motorized
+  - battery_powered
+  - remote_control
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: rotary_hammer
+  label: Rotary hammer / SDS drill
+  product_family: industrial_power_equipment
+  product_subfamily: rotary_hammer
+  aliases:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  - sds plus drill
+  - demolition hammer
+  - combination hammer
+  - rotary-hammer
+  - rotaryhammer
+  - rotary hammers
+  - rotary-hammer-drill
+  - rotaryhammerdrill
+  - rotary hammer drills
+  - sds-drill
+  - sdsdrill
+  - sds drills
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  core_traits:
+  - electrical
+  - motorized
+  - handheld
+  functional_classes:
+  - tool_device
+  - industrial_equipment
+  likely_standards:
+  - Power tool safety review
+  genres:
+  - electric_power_tool
+  family_keywords:
+  - rotary hammer
+  - sds drill
+  - demolition hammer
+  preferred_clues:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  exclude_clues:
+  - massage gun
+  - toy hammer
+  - dental drill
+  strong_aliases:
+  - rotary hammer
+  - rotary hammer drill
+  - sds drill
+  - sds plus drill
+  - demolition hammer
+  - combination hammer
+  weak_aliases:
+  - rotary-hammer
+  - rotaryhammer
+  - rotary hammers
+  - rotary-hammer-drill
+  - rotaryhammerdrill
+  - rotary hammer drills
+  - sds-drill
+  - sdsdrill
+  - sds drills
+  marketplace_aliases:
+  - sds plus hammer drill
+  - combi hammer
+  not_when_text_contains:
+  - massage gun
+  - toy hammer
+  - dental drill
+  negative_examples: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  score_penalty_if_traits:
+  - personal_care
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Rotary hammer and SDS drilling tool coverage.
+- id: scarifier_aerator
+  label: Lawn scarifier / aerator
+  aliases:
+  - scarifier
+  - lawn scarifier
+  - aerator
+  - lawn aerator
+  - scarifiers
+  - lawn-scarifier
+  - lawnscarifier
+  - lawn scarifiers
+  - aerators
+  - lawn-aerator
+  - lawnaerator
+  - lawn aerators
+  - lawn scarifier aerator
+  - lawn-scarifier-aerator
+  - lawnscarifieraerator
+  - lawn scarifier aerators
+  implied_traits:
+  - consumer
+  - electrical
+  - motorized
+  - mains_power_likely
+  - outdoor_use
+  - garden_use
+  functional_classes:
+  - garden_tool
+  - outdoor_appliance
+  likely_standards:
+  - EN 60335-2-92
+  genres:
+  - garden_outdoor_power
+  strong_aliases:
+  - scarifier
+  - lawn scarifier
+  - aerator
+  - lawn aerator
+  weak_aliases:
+  - scarifiers
+  - lawn-scarifier
+  - lawnscarifier
+  - lawn scarifiers
+  - aerators
+  - lawn-aerator
+  - lawnaerator
+  - lawn aerators
+  - lawn scarifier aerator
+  - lawn-scarifier-aerator
+  - lawnscarifieraerator
+  - lawn scarifier aerators
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-92
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - motorized
+  - mains_power_likely
+  - outdoor_use
+  - garden_use
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

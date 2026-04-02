@@ -2,6 +2,10 @@ from __future__ import annotations
 
 from .models import ClassifierMatchOutcome, ProductImpliedTraitDecision
 from .scoring import SERVICE_DEPENDENT_TRAITS
+from .trait_contradiction_helpers import _detect_trait_contradictions as _build_trait_contradictions
+from .trait_inference_helpers import _expand_related_traits
+from .trait_negation_helpers import _apply_explicit_trait_negations, _suppress_unmentioned_product_wireless_traits
+from .trait_state_helpers import _record_trait_state
 
 
 def _apply_product_trait_signals(
@@ -12,13 +16,6 @@ def _apply_product_trait_signals(
     negations: list[str],
     state_map: dict[str, dict[str, list[str]]],
 ) -> tuple[set[str], set[str], set[str]]:
-    from .traits import (
-        _apply_explicit_trait_negations,
-        _expand_related_traits,
-        _record_trait_state,
-        _suppress_unmentioned_product_wireless_traits,
-    )
-
     matched_aliases = [candidate.matched_alias for candidate in match.product_candidates if candidate.matched_alias]
 
     def _accept_product_traits(traits: set[str], *, source: str) -> tuple[set[str], set[str], str | None]:
@@ -31,6 +28,7 @@ def _apply_product_trait_signals(
             expanded,
             explicit_traits,
             matched_aliases,
+            expand_related_traits=_expand_related_traits,
         )
         negation_filtered = _apply_explicit_trait_negations(wireless_filtered, negations)
 
@@ -139,18 +137,7 @@ def _detect_trait_contradictions(
     text: str,
     match_contradictions: list[str],
 ) -> list[str]:
-    from .traits import _trait_is_negated
-
-    contradictions = list(match_contradictions)
-    if "battery_powered" in explicit_traits and "mains_powered" in explicit_traits:
-        contradictions.append("Both battery-powered and mains-powered signals were detected.")
-    if "cloud" in explicit_traits and "local_only" in explicit_traits:
-        contradictions.append("Both cloud-connected and local-only signals were detected.")
-    if "professional" in explicit_traits and "household" in explicit_traits:
-        contradictions.append("Both professional/commercial and household-use signals were detected.")
-    if "wifi" in explicit_traits and _trait_is_negated(text, "internet") and {"cloud", "ota", "account"} & explicit_traits:
-        contradictions.append("Wi-Fi is present while the text also says no internet, but cloud or OTA features were also detected.")
-    return contradictions
+    return _build_trait_contradictions(explicit_traits, text, match_contradictions)
 
 
 __all__ = [

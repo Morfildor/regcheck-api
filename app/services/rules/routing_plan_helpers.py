@@ -1,12 +1,21 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import cast
 
 from app.domain.catalog_types import ProductCatalogRow
 from app.domain.models import ConfidenceLevel
 
 from .contracts import ClassifierTraitsSnapshot
 from .routing_models import RoutePlan
+
+
+def _cap_confidence(current: ConfidenceLevel, requested_cap: object) -> ConfidenceLevel:
+    if requested_cap not in {"low", "medium", "high"}:
+        return current
+    rank = {"low": 0, "medium": 1, "high": 2}
+    cap = cast(ConfidenceLevel, requested_cap)
+    return current if rank[current] <= rank[cap] else cap
 
 
 def _products_by_id(products: tuple[ProductCatalogRow, ...]) -> dict[str, ProductCatalogRow]:
@@ -168,19 +177,22 @@ def _build_route_plan(
         supporting_standard_codes = list(route_row.supporting_standard_codes)
         scope_route = _route_scope_from_family(route_family_scope, route_family) or "generic"
         label = route_row.label or route_row.id or product_type or "product"
+        confidence = _cap_confidence(product_match_confidence, route_row.get("route_confidence_cap"))
         if primary_standard_code:
             reason = f"{label} maps to {primary_standard_code} as the primary product-safety route."
         elif route_family:
             reason = f"{label} maps to the {route_family.replace('_', ' ')} product-safety route."
         else:
             reason = f"{label} maps to a product-specific safety route."
+        if route_row.get("route_confidence_cap") in {"low", "medium"}:
+            reason += " The route remains conservative because the product sits near a catalog boundary."
         return RoutePlan(
             primary_route_family=route_family,
             primary_standard_code=primary_standard_code,
             supporting_standard_codes=supporting_standard_codes,
             primary_directive=route_family_primary_directive.get(route_family or ""),
             reason=reason,
-            confidence=product_match_confidence,
+            confidence=confidence,
             scope_route=scope_route,
         )
 

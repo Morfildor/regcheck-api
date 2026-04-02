@@ -265,6 +265,59 @@ def _equipment_questions(tool_signal: bool, compressor_signal: bool, traits: set
         add("primary_function_boundary", "Confirm whether the primary function is household appliance operation or AV/ICT signal processing / communication equipment.", "high", ["primary function is heating, cleaning, cooking, pumping, or another appliance task", "primary function is audio, video, display, computing, or network communication"], ["av_ict"], ["LVD", "EMC", "RED"], ["Confirm the primary function so the correct appliance or AV/ICT route is retained."])
 
 
+def _boundary_review_questions(traits: set[str], add: MissingInformationAdd) -> None:
+    if "energy_system_boundary" in traits:
+        add(
+            "energy_system_scope",
+            "Confirm whether the product is a standalone consumer device or part of a wider inverter, storage, metering, or fixed-installation energy system.",
+            "high",
+            ["standalone UPS for office electronics", "hybrid inverter in a residential battery-storage system", "DIN-rail smart-meter gateway in a distribution board"],
+            ["energy_system_boundary", "battery_storage_system", "inverter_system", "ups_function"],
+            ["LVD", "BATTERY", "CRA"],
+            ["Confirm the system architecture, installation context, and whether the product is a standalone device or an energy-system component."],
+        )
+    if "uv_irradiation_boundary" in traits:
+        add(
+            "uv_irradiation_intent",
+            "Confirm whether the optical output is ordinary illumination only or is intended for UV/IR exposure, sanitizing, disinfection, or treatment.",
+            "high",
+            ["ordinary visible-light illumination only", "UV-C sanitizing output", "infrared illuminator for night vision", "cosmetic light-treatment output"],
+            ["uv_irradiation_boundary", "uv_emitting", "infrared_emitting", "germicidal_emission"],
+            ["LVD", "GPSR"],
+            ["Confirm the emitted spectrum, intended optical function, and whether sanitizing or treatment claims are marketed."],
+        )
+    if "body_treatment_boundary" in traits:
+        add(
+            "body_treatment_scope",
+            "Confirm whether the product remains in cosmetic or wellness scope, or whether it is marketed for therapy, treatment, stimulation, or other medical-adjacent outcomes.",
+            "high",
+            ["cosmetic nail-curing or grooming use only", "wellness-only massage use", "therapy or treatment claims", "clinical or patient use"],
+            ["body_treatment_boundary", "possible_medical_boundary", "medical_claims"],
+            ["GPSR", "MDR"],
+            ["Confirm the intended-use statement and whether the marketed outcome is cosmetic, wellness-only, therapy, or medical."],
+        )
+    if "industrial_installation_boundary" in traits:
+        add(
+            "installation_boundary",
+            "Confirm whether the product is sold as a consumer end product or as a fixed-installation, panel, cabinet, or professional building-system component.",
+            "high",
+            ["consumer plug-in device", "DIN-rail installation module", "panel-mounted building-system component"],
+            ["industrial_installation_boundary", "fixed_installation", "smart_building"],
+            ["LVD", "GPSR", "CRA"],
+            ["Confirm whether installation is plug-in, wall-mounted consumer use, or professional panel / cabinet installation."],
+        )
+    if "machinery_boundary" in traits:
+        add(
+            "machinery_boundary_scope",
+            "Confirm whether the equipment is a handheld / portable tool or a stationary, transportable, or machine-like product needing broader machinery review.",
+            "high",
+            ["handheld rotary tool", "transportable bench saw", "stationary workshop machine"],
+            ["machinery_boundary", "motorized", "cutting_hazard"],
+            ["MD", "MACH_REG"],
+            ["Confirm the exact form factor, moving-part architecture, and whether the product is handheld, transportable, or stationary machinery."],
+        )
+
+
 def populate_missing_information_questions(
     *,
     traits: set[str],
@@ -341,6 +394,7 @@ def populate_missing_information_questions(
     _battery_questions(battery_signal, text, battery_pack_detail_known, add)
     _body_contact_questions(body_contact_signal, text, add)
     _equipment_questions(tool_signal, compressor_signal, traits, text, add)
+    _boundary_review_questions(traits, add)
 
 
 __all__ = ["populate_missing_information_questions"]

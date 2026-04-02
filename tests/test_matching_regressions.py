@@ -377,6 +377,80 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertEqual(result.primary_route_standard_code, "EN 60335-2-24")
         self.assertIn("EN 60335-2-24", {item.code for item in result.standards})
 
+    def test_poe_injector_beats_downstream_camera_context(self) -> None:
+        result = analyze("poe injector for ip camera installation")
+
+        self.assertEqual(result.product_type, "poe_injector")
+        self.assertEqual(result.product_match_stage, "subtype")
+        self.assertEqual(result.primary_route_standard_code, "EN 62368-1")
+        self.assertNotIn("RED", result.directives)
+
+    def test_water_dispenser_stays_family_level_pending_boundary_review(self) -> None:
+        result = analyze("water dispenser with chilled water")
+
+        self.assertEqual(result.product_type, "water_dispenser")
+        self.assertEqual(result.product_match_stage, "family")
+        self.assertEqual(result.route_context.route_confidence, "medium")
+        self.assertIn("Water dispenser / cooler review", {item.code for item in result.review_items})
+
+    def test_uv_nail_lamp_prefers_boundary_review_over_false_precision(self) -> None:
+        result = analyze("uv nail lamp for gel polish")
+
+        review_codes = {item.code for item in result.review_items}
+        risk_keys = {item.key for item in result.risk_reasons}
+
+        self.assertEqual(result.product_type, "uv_nail_lamp")
+        self.assertEqual(result.product_match_stage, "family")
+        self.assertEqual(result.route_context.route_confidence, "low")
+        self.assertIn("UV / irradiation application review", review_codes)
+        self.assertIn("Biocompatibility / skin-contact review", review_codes)
+        self.assertIn("Confirm whether the optical output is ordinary illumination only or is intended for UV/IR exposure, sanitizing, disinfection, or treatment.", result.suggested_questions)
+        self.assertIn(
+            "Confirm whether the product remains in cosmetic or wellness scope, or whether it is marketed for therapy, treatment, stimulation, or other medical-adjacent outcomes.",
+            result.suggested_questions,
+        )
+        self.assertIn("uv_irradiation_boundary", risk_keys)
+        self.assertIn("body_treatment_boundary", risk_keys)
+
+    def test_ups_requests_energy_system_review_questions(self) -> None:
+        result = analyze("ups battery backup unit for office server")
+
+        review_codes = {item.code for item in result.review_items}
+        risk_keys = {item.key for item in result.risk_reasons}
+
+        self.assertEqual(result.product_type, "ups")
+        self.assertEqual(result.product_match_stage, "family")
+        self.assertEqual(result.route_context.route_confidence, "medium")
+        self.assertIn("Energy storage / inverter system review", review_codes)
+        self.assertIn(
+            "Confirm whether the product is a standalone consumer device or part of a wider inverter, storage, metering, or fixed-installation energy system.",
+            result.suggested_questions,
+        )
+        self.assertIn("energy_system_boundary", risk_keys)
+
+    def test_solar_charge_controller_stays_boundary_reviewed(self) -> None:
+        result = analyze("solar charge controller for off-grid battery bank")
+
+        risk_keys = {item.key for item in result.risk_reasons}
+
+        self.assertEqual(result.product_type, "solar_charge_controller")
+        self.assertEqual(result.product_match_stage, "family")
+        self.assertEqual(result.route_context.route_confidence, "low")
+        self.assertIn("Charger / external PSU review", {item.code for item in result.review_items})
+        self.assertIn(
+            "Confirm whether the product is sold as a consumer end product or as a fixed-installation, panel, cabinet, or professional building-system component.",
+            result.suggested_questions,
+        )
+        self.assertIn("energy_system_boundary", risk_keys)
+        self.assertIn("industrial_installation_boundary", risk_keys)
+
+    def test_bottle_sterilizer_no_longer_falls_into_toy_routes(self) -> None:
+        result = analyze("bottle sterilizer for baby feeding accessories")
+
+        self.assertEqual(result.product_type, "bottle_sterilizer")
+        self.assertNotIn("TOY", result.directives)
+        self.assertIn("Sterilization / hygiene appliance review", {item.code for item in result.review_items})
+
     def test_air_purifier_prefers_air_cleaning_route(self) -> None:
         result = analyze("connected air purifier with app control and HEPA filter")
 

@@ -10,6 +10,8 @@ LegislationBucket = Literal["ce", "non_ce", "framework", "future", "informationa
 LegislationPriority = Literal["core", "product_specific", "conditional", "informational"]
 LegislationApplicability = Literal["applicable", "conditional", "not_applicable"]
 StandardItemType = Literal["standard", "review"]
+ProductMaxMatchStage = Literal["family", "subtype"]
+RouteConfidenceCap = Literal["low", "medium", "high"]
 
 
 class MappingModel(BaseModel):
@@ -87,6 +89,10 @@ class ProductCatalogRow(MappingModel):
     likely_standards: list[str] = Field(default_factory=list)
     genre_likely_standards: list[str] = Field(default_factory=list)
     likely_standard_refs: list[LikelyStandardRef] = Field(default_factory=list)
+    boundary_tags: list[str] = Field(default_factory=list)
+    max_match_stage: ProductMaxMatchStage | None = None
+    route_confidence_cap: RouteConfidenceCap | None = None
+    family_level_reason: str | None = None
 
 
 class LegislationCatalogRow(MappingModel):

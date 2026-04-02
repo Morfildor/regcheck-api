@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from pathlib import Path
 from typing import Any
 
 import yaml
@@ -14,7 +15,7 @@ from app.domain.catalog_types import (
     TraitCatalogRow,
 )
 
-from .paths import KnowledgeBaseError, _resolve_data_path
+from .paths import KnowledgeBaseError, _resolve_catalog_sources
 from .validator import (
     _materialize_likely_standard_refs,
     _validate_genres,
@@ -40,16 +41,30 @@ def _optional_list(parent: dict[str, Any], key: str) -> list[Any]:
         raise KnowledgeBaseError(f"Optional key '{key}' must be a list when present.")
     return value
 
-def _load_yaml_raw(filename: str, *, required: bool = True) -> dict[str, Any]:
-    path = _resolve_data_path(filename, required=required)
-    if path is None:
-        return {}
 
+def _merge_yaml_payload(base: dict[str, Any], incoming: dict[str, Any]) -> dict[str, Any]:
+    merged = dict(base)
+    for key, value in incoming.items():
+        if key not in merged:
+            merged[key] = value
+            continue
+        existing = merged[key]
+        if isinstance(existing, dict) and isinstance(value, dict):
+            merged[key] = _merge_yaml_payload(existing, value)
+            continue
+        if isinstance(existing, list) and isinstance(value, list):
+            merged[key] = list(existing) + list(value)
+            continue
+        merged[key] = value
+    return merged
+
+
+def _load_yaml_fragment(path: Path) -> dict[str, Any]:
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+        with open(path, "r", encoding="utf-8") as handle:
+            data = yaml.safe_load(handle)
     except yaml.YAMLError as exc:
-        raise KnowledgeBaseError(f"Invalid YAML in {path.name}: {exc}") from exc
+        raise KnowledgeBaseError(f"Invalid YAML in {path.relative_to(path.parents[1])}: {exc}") from exc
     except OSError as exc:
         raise KnowledgeBaseError(f"Could not read knowledge-base file: {path}") from exc
 
@@ -58,6 +73,17 @@ def _load_yaml_raw(filename: str, *, required: bool = True) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise KnowledgeBaseError(f"{path.name} must contain a top-level mapping.")
     return data
+
+
+def _load_yaml_raw(filename: str, *, required: bool = True) -> dict[str, Any]:
+    bundle = _resolve_catalog_sources(filename, required=required)
+    if bundle is None:
+        return {}
+
+    merged: dict[str, Any] = {}
+    for path in bundle.paths:
+        merged = _merge_yaml_payload(merged, _load_yaml_fragment(path))
+    return merged
 
 
 def _as_trait_rows(rows: list[dict[str, Any]]) -> tuple[TraitCatalogRow, ...]:

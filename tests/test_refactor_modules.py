@@ -64,6 +64,8 @@ class RefactorModuleTests(unittest.TestCase):
     def test_build_route_plan_uses_typed_product_rows(self) -> None:
         row = _route_product_row("smart_lock", {"smart_lock"})
 
+        self.assertIsNotNone(row)
+        assert row is not None
         self.assertIsInstance(row, ProductCatalogRow)
         self.assertEqual(row.id, "smart_lock")
 

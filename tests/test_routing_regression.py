@@ -17,8 +17,10 @@ remain green as long as the intended regulatory outcomes are unchanged.
 from __future__ import annotations
 
 import unittest
+from typing import cast
 
 from knowledge_base import reset_cache
+from app.domain.models import LegislationItem
 from rules import analyze
 
 
@@ -72,7 +74,8 @@ class RadioProductRoutingTests(unittest.TestCase):
             (item for item in result.ce_legislations if item.directive_key == "RED"), None
         )
         self.assertIsNotNone(red_item, "RED legislation item missing from CE routes")
-        article_labels = {a.article for a in red_item.sub_articles}
+        red_legislation = cast(LegislationItem, red_item)
+        article_labels = {a.article for a in red_legislation.sub_articles}
         self.assertIn("Art. 3.1(a)", article_labels)
         self.assertIn("Art. 3.1(b)", article_labels)
         self.assertIn("Art. 3.2", article_labels)
@@ -83,7 +86,8 @@ class RadioProductRoutingTests(unittest.TestCase):
             (item for item in result.ce_legislations if item.directive_key == "RED"), None
         )
         self.assertIsNotNone(red_item)
-        by_article = {a.article: a for a in red_item.sub_articles}
+        red_legislation = cast(LegislationItem, red_item)
+        by_article = {a.article: a for a in red_legislation.sub_articles}
         self.assertTrue(by_article.get("Art. 3.1(a)", None) and by_article["Art. 3.1(a)"].applicable)
         self.assertTrue(by_article.get("Art. 3.1(b)", None) and by_article["Art. 3.1(b)"].applicable)
 

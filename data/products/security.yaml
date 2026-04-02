@@ -1,0 +1,2578 @@
+products:
+- id: action_camera
+  label: Action camera
+  aliases:
+  - action camera
+  - action cam
+  - gopro
+  - sports camera
+  - wearable camera
+  - body camera
+  - 360 camera
+  - action-camera
+  - actioncamera
+  - action cameras
+  - action-cam
+  - actioncam
+  - action cams
+  - gopros
+  - sports-camera
+  - sportscamera
+  - sports cameras
+  - wearable-camera
+  - wearablecamera
+  - wearable cameras
+  - body-camera
+  - bodycamera
+  - body cameras
+  - 360-camera
+  - 360camera
+  - 360 cameras
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - camera
+  - microphone
+  - wifi
+  - bluetooth
+  - sdcard_slot
+  - outdoor_rated
+  - body_worn_or_applied
+  - data_storage
+  functional_classes:
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - action camera
+  - action cam
+  - gopro
+  - sports camera
+  - wearable camera
+  - body camera
+  - 360 camera
+  weak_aliases:
+  - action-camera
+  - actioncamera
+  - action cameras
+  - action-cam
+  - actioncam
+  - action cams
+  - gopros
+  - sports-camera
+  - sportscamera
+  - sports cameras
+  - wearable-camera
+  - wearablecamera
+  - wearable cameras
+  - body-camera
+  - bodycamera
+  - body cameras
+  - 360-camera
+  - 360camera
+  - 360 cameras
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: baby_monitor
+  label: Video baby monitor
+  aliases:
+  - baby monitor
+  - video baby monitor
+  - wifi baby monitor
+  - smart baby monitor
+  - baby camera
+  - infant monitor
+  - baby-monitor
+  - babymonitor
+  - baby monitors
+  - video-baby-monitor
+  - videobabymonitor
+  - video baby monitors
+  - wi-fi baby monitor
+  - wi fi baby monitor
+  - wifi-baby-monitor
+  - wifibabymonitor
+  - wifi baby monitors
+  - smart-baby-monitor
+  - smartbabymonitor
+  - smart baby monitors
+  - baby-camera
+  - babycamera
+  - baby cameras
+  - infant-monitor
+  - infantmonitor
+  - infant monitors
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - battery_powered
+  - radio
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - display
+  - motion_detection
+  - cloud
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - account
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - security_access_iot
+  strong_aliases:
+  - baby monitor
+  - video baby monitor
+  - wifi baby monitor
+  - smart baby monitor
+  - baby camera
+  - infant monitor
+  weak_aliases:
+  - baby-monitor
+  - babymonitor
+  - baby monitors
+  - video-baby-monitor
+  - videobabymonitor
+  - video baby monitors
+  - wi-fi baby monitor
+  - wi fi baby monitor
+  - wifi-baby-monitor
+  - wifibabymonitor
+  - wifi baby monitors
+  - smart-baby-monitor
+  - smartbabymonitor
+  - smart baby monitors
+  - baby-camera
+  - babycamera
+  - baby cameras
+  - infant-monitor
+  - infantmonitor
+  - infant monitors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: baby_monitor_smart
+  label: Smart baby monitor
+  aliases:
+  - baby monitor
+  - smart baby monitor
+  - wifi baby monitor
+  - nursery camera
+  - smart nursery camera
+  - connected baby camera
+  - baby-monitor
+  - babymonitor
+  - baby monitors
+  - smart-baby-monitor
+  - smartbabymonitor
+  - smart baby monitors
+  - wi-fi baby monitor
+  - wi fi baby monitor
+  - wifi-baby-monitor
+  - wifibabymonitor
+  - wifi baby monitors
+  - nursery-camera
+  - nurserycamera
+  - nursery cameras
+  product_family: childcare_monitoring
+  product_subfamily: baby_monitor_smart
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  implied_traits:
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  functional_classes:
+  - child_product
+  - imaging_device
+  likely_standards:
+  - EN 62368-1
+  - EN 18031-1
+  - EN 18031-2
+  strong_aliases:
+  - baby monitor
+  - smart baby monitor
+  - wifi baby monitor
+  - nursery camera
+  - smart nursery camera
+  - connected baby camera
+  weak_aliases:
+  - baby-monitor
+  - babymonitor
+  - baby monitors
+  - smart-baby-monitor
+  - smartbabymonitor
+  - smart baby monitors
+  - wi-fi baby monitor
+  - wi fi baby monitor
+  - wifi-baby-monitor
+  - wifibabymonitor
+  - wifi baby monitors
+  - nursery-camera
+  - nurserycamera
+  - nursery cameras
+  marketplace_aliases:
+  - wifi baby monitor
+  - smart nursery camera
+  - connected baby camera
+  - baby monitor
+  - baby-monitor
+  - babymonitor
+  - baby monitors
+  - smart baby monitor
+  - smart-baby-monitor
+  - smartbabymonitor
+  - smart baby monitors
+  - wi-fi baby monitor
+  - wi fi baby monitor
+  - wifi-baby-monitor
+  - wifibabymonitor
+  - wifi baby monitors
+  - nursery camera
+  - nursery-camera
+  - nurserycamera
+  - nursery cameras
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: clock
+  label: Clock
+  aliases:
+  - clock
+  - alarm clock
+  - electric clock
+  - clocks
+  - alarm-clock
+  - alarmclock
+  - alarm clocks
+  - electric-clock
+  - electricclock
+  - electric clocks
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  functional_classes:
+  - home_device
+  likely_standards:
+  - EN 60335-2-26
+  genres:
+  - household_appliance
+  strong_aliases:
+  - clock
+  - alarm clock
+  - electric clock
+  weak_aliases:
+  - clocks
+  - alarm-clock
+  - alarmclock
+  - alarm clocks
+  - electric-clock
+  - electricclock
+  - electric clocks
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-26
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: e_reader
+  label: E-reader
+  aliases:
+  - e-reader
+  - ebook reader
+  - kindle
+  - kobo
+  - e-ink reader
+  - electronic book reader
+  - digital book reader
+  - e reader
+  - e-readers
+  - ebook-reader
+  - ebookreader
+  - ebook readers
+  - kindles
+  - kobos
+  - e ink reader
+  - e-ink-reader
+  - e-inkreader
+  - e-ink readers
+  - electronic-book-reader
+  - electronicbookreader
+  - electronic book readers
+  - digital-book-reader
+  - digitalbookreader
+  - digital book readers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - display
+  - e_ink_display
+  - wifi
+  - bluetooth
+  - data_storage
+  - account
+  - wireless_charging_rx
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - e-reader
+  - ebook reader
+  - kindle
+  - kobo
+  - e-ink reader
+  - electronic book reader
+  - digital book reader
+  weak_aliases:
+  - e reader
+  - e-readers
+  - ebook-reader
+  - ebookreader
+  - ebook readers
+  - kindles
+  - kobos
+  - e ink reader
+  - e-ink-reader
+  - e-inkreader
+  - e-ink readers
+  - electronic-book-reader
+  - electronicbookreader
+  - electronic book readers
+  - digital-book-reader
+  - digitalbookreader
+  - digital book readers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: garage_door_drive
+  label: Garage door drive
+  aliases:
+  - garage door drive
+  - garage door opener
+  - garage-door-drive
+  - garagedoordrive
+  - garage door drives
+  - garage-door-opener
+  - garagedooropener
+  - garage door openers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - remote_control
+  - mains_powered
+  - fixed_installation
+  - security_or_barrier
+  functional_classes:
+  - building_automation
+  likely_standards:
+  - EN 60335-2-95
+  genres:
+  - building_access_drive
+  strong_aliases:
+  - garage door drive
+  - garage door opener
+  weak_aliases:
+  - garage-door-drive
+  - garagedoordrive
+  - garage door drives
+  - garage-door-opener
+  - garagedooropener
+  - garage door openers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-95
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - remote_control
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: gate_door_window_drive
+  label: Drive for gates, doors or windows
+  aliases:
+  - gate operator
+  - door drive
+  - window drive
+  - gate-operator
+  - gateoperator
+  - gate operators
+  - door-drive
+  - doordrive
+  - door drives
+  - window-drive
+  - windowdrive
+  - window drives
+  - drive for gates, doors or windows
+  - drive-for-gates,-doors-or-windows
+  - driveforgates,doorsorwindows
+  - drive for gates, doors or window
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - remote_control
+  - mains_powered
+  - fixed_installation
+  - security_or_barrier
+  functional_classes:
+  - building_automation
+  likely_standards:
+  - EN 60335-2-103
+  - EN 60335-2-95
+  genres:
+  - building_access_drive
+  strong_aliases:
+  - gate operator
+  - door drive
+  - window drive
+  weak_aliases:
+  - gate-operator
+  - gateoperator
+  - gate operators
+  - door-drive
+  - doordrive
+  - door drives
+  - window-drive
+  - windowdrive
+  - window drives
+  - drive for gates, doors or windows
+  - drive-for-gates,-doors-or-windows
+  - driveforgates,doorsorwindows
+  - drive for gates, doors or window
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-103
+    kind: unspecified
+  - ref: EN 60335-2-95
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - remote_control
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: ip_camera
+  label: IP camera / smart security camera
+  family_keywords:
+  - security camera
+  - smart security
+  - connected camera
+  aliases:
+  - ip camera
+  - smart camera
+  - wifi camera
+  - security camera
+  - indoor camera
+  - outdoor camera
+  - cctv ip camera
+  - surveillance camera
+  - network camera
+  - connected camera
+  - ptz ip camera
+  - nanny cam
+  - ip-camera
+  - ipcamera
+  - ip cameras
+  - smart-camera
+  - smartcamera
+  - smart cameras
+  - wi-fi camera
+  - wi fi camera
+  - wifi-camera
+  - wificamera
+  - wifi cameras
+  - security-camera
+  - securitycamera
+  - security cameras
+  - indoor-camera
+  - indoorcamera
+  - indoor cameras
+  - outdoor-camera
+  - outdoorcamera
+  - outdoor cameras
+  - cctelevision ip camera
+  - cctv-ip-camera
+  - cctvipcamera
+  - cctv ip cameras
+  - surveillance-camera
+  - surveillancecamera
+  - surveillance cameras
+  - network-camera
+  - networkcamera
+  - network cameras
+  - connected-camera
+  - connectedcamera
+  - connected cameras
+  - ptz-ip-camera
+  - ptzipcamera
+  - ptz ip cameras
+  - nanny-cam
+  - nannycam
+  - nanny cams
+  - ip camera smart security camera
+  - ip-camera-smart-security-camera
+  - ipcamerasmartsecuritycamera
+  - ip camera smart security cameras
+  exclude_clues:
+  - poe injector
+  - power over ethernet injector
+  - midspan poe injector
+  - solar charge controller
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - battery_powered
+  - radio
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - motion_detection
+  - cloud
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - account
+  - authentication
+  - outdoor_rated
+  functional_classes:
+  - security_device
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - security_access_iot
+  strong_aliases:
+  - ip camera
+  - smart camera
+  - wifi camera
+  - security camera
+  - indoor camera
+  - outdoor camera
+  - cctv ip camera
+  - surveillance camera
+  weak_aliases:
+  - network camera
+  - connected camera
+  - ptz ip camera
+  - nanny cam
+  - ip-camera
+  - ipcamera
+  - ip cameras
+  - smart-camera
+  - smartcamera
+  - smart cameras
+  - wi-fi camera
+  - wi fi camera
+  - wifi-camera
+  - wificamera
+  - wifi cameras
+  - security-camera
+  - securitycamera
+  - security cameras
+  - indoor-camera
+  - indoorcamera
+  - indoor cameras
+  - outdoor-camera
+  - outdoorcamera
+  - outdoor cameras
+  - cctelevision ip camera
+  - cctv-ip-camera
+  - cctvipcamera
+  - cctv ip cameras
+  - surveillance-camera
+  - surveillancecamera
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: ip_intercom
+  label: IP video intercom
+  aliases:
+  - ip intercom
+  - video intercom
+  - door station ip
+  - video door station
+  - apartment intercom ip
+  - access control intercom
+  - ip-intercom
+  - ipintercom
+  - ip intercoms
+  - video-intercom
+  - videointercom
+  - video intercoms
+  - door-station-ip
+  - doorstationip
+  - door station ips
+  - video-door-station
+  - videodoorstation
+  - video door stations
+  - apartment-intercom-ip
+  - apartmentintercomip
+  - apartment intercom ips
+  - access-control-intercom
+  - accesscontrolintercom
+  - access control intercoms
+  - ip video intercom
+  - ip-video-intercom
+  - ipvideointercom
+  - ip video intercoms
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - fixed_installation
+  - wall_mount
+  - camera
+  - microphone
+  - speaker
+  - display
+  - wifi
+  - authentication
+  - data_storage
+  - personal_data_likely
+  functional_classes:
+  - security_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - security_access_iot
+  strong_aliases:
+  - ip intercom
+  - video intercom
+  - door station ip
+  - video door station
+  - apartment intercom ip
+  - access control intercom
+  weak_aliases:
+  - ip-intercom
+  - ipintercom
+  - ip intercoms
+  - video-intercom
+  - videointercom
+  - video intercoms
+  - door-station-ip
+  - doorstationip
+  - door station ips
+  - video-door-station
+  - videodoorstation
+  - video door stations
+  - apartment-intercom-ip
+  - apartmentintercomip
+  - apartment intercom ips
+  - access-control-intercom
+  - accesscontrolintercom
+  - access control intercoms
+  - ip video intercom
+  - ip-video-intercom
+  - ipvideointercom
+  - ip video intercoms
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: nvr_dvr_recorder
+  label: NVR / DVR recorder
+  product_family: security_recording
+  product_subfamily: nvr_dvr_recorder
+  family_keywords:
+  - nvr
+  - dvr
+  - video recorder
+  aliases:
+  - nvr
+  - dvr
+  - network video recorder
+  - digital video recorder
+  - cctv recorder
+  - surveillance recorder
+  - poe nvr
+  - security camera recorder
+  preferred_clues:
+  - network video recorder
+  - digital video recorder
+  - cctv recorder
+  - surveillance recorder
+  exclude_clues:
+  - dash cam
+  - body camera
+  - action camera
+  implied_traits:
+  - consumer
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - data_storage
+  - home_security
+  - surveillance
+  - camera_surveillance
+  - mains_powered
+  functional_classes:
+  - security_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - security_access_iot
+  - av_ict_device
+  strong_aliases:
+  - nvr
+  - dvr
+  - network video recorder
+  - digital video recorder
+  - cctv recorder
+  weak_aliases:
+  - surveillance recorder
+  - poe nvr
+  - security camera recorder
+  marketplace_aliases:
+  - 8 channel nvr
+  - 4 channel dvr
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - data_storage
+  - surveillance
+  - camera_surveillance
+  matching_notes: Adds consumer and small-business CCTV recorder coverage so NVR/DVR products stop falling back to generic
+    AV/ICT descriptions.
+- id: pet_camera
+  label: Pet camera / pet monitor
+  aliases:
+  - pet camera
+  - pet monitor
+  - pet interactive camera
+  - dog camera
+  - cat camera
+  - wifi pet camera
+  - smart pet monitor
+  - pet-camera
+  - petcamera
+  - pet cameras
+  - pet-monitor
+  - petmonitor
+  - pet monitors
+  - pet-interactive-camera
+  - petinteractivecamera
+  - pet interactive cameras
+  - dog-camera
+  - dogcamera
+  - dog cameras
+  - cat-camera
+  - catcamera
+  - cat cameras
+  - wi-fi pet camera
+  - wi fi pet camera
+  - wifi-pet-camera
+  - wifipetcamera
+  - wifi pet cameras
+  - smart-pet-monitor
+  - smartpetmonitor
+  - smart pet monitors
+  - pet camera pet monitor
+  - pet-camera-pet-monitor
+  - petcamerapetmonitor
+  - pet camera pet monitors
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - motion_detection
+  - cloud
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - account
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - pet_tech
+  - security_access_iot
+  strong_aliases:
+  - pet camera
+  - pet monitor
+  - pet interactive camera
+  - dog camera
+  - cat camera
+  - wifi pet camera
+  - smart pet monitor
+  weak_aliases:
+  - pet-camera
+  - petcamera
+  - pet cameras
+  - pet-monitor
+  - petmonitor
+  - pet monitors
+  - pet-interactive-camera
+  - petinteractivecamera
+  - pet interactive cameras
+  - dog-camera
+  - dogcamera
+  - dog cameras
+  - cat-camera
+  - catcamera
+  - cat cameras
+  - wi-fi pet camera
+  - wi fi pet camera
+  - wifi-pet-camera
+  - wifipetcamera
+  - wifi pet cameras
+  - smart-pet-monitor
+  - smartpetmonitor
+  - smart pet monitors
+  - pet camera pet monitor
+  - pet-camera-pet-monitor
+  - petcamerapetmonitor
+  - pet camera pet monitors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: rolling_shutter_drive
+  label: Drive for rolling shutters, awnings or blinds
+  aliases:
+  - rolling shutter drive
+  - awning motor
+  - blind motor
+  - rolling-shutter-drive
+  - rollingshutterdrive
+  - rolling shutter drives
+  - awning-motor
+  - awningmotor
+  - awning motors
+  - blind-motor
+  - blindmotor
+  - blind motors
+  - drive for rolling shutters, awnings or blinds
+  - drive-for-rolling-shutters,-awnings-or-blinds
+  - driveforrollingshutters,awningsorblinds
+  - drive for rolling shutters, awnings or blind
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - remote_control
+  - mains_powered
+  - fixed_installation
+  - security_or_barrier
+  functional_classes:
+  - building_automation
+  likely_standards:
+  - EN 60335-2-97
+  genres:
+  - building_access_drive
+  strong_aliases:
+  - rolling shutter drive
+  - awning motor
+  - blind motor
+  weak_aliases:
+  - rolling-shutter-drive
+  - rollingshutterdrive
+  - rolling shutter drives
+  - awning-motor
+  - awningmotor
+  - awning motors
+  - blind-motor
+  - blindmotor
+  - blind motors
+  - drive for rolling shutters, awnings or blinds
+  - drive-for-rolling-shutters,-awnings-or-blinds
+  - driveforrollingshutters,awningsorblinds
+  - drive for rolling shutters, awnings or blind
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-97
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - remote_control
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: security_hub
+  label: Smart security alarm hub
+  aliases:
+  - security hub
+  - alarm hub
+  - smart alarm system
+  - home alarm panel
+  - smart alarm panel
+  - connected alarm
+  - intruder alarm hub
+  - security system hub
+  - security-hub
+  - securityhub
+  - security hubs
+  - alarm-hub
+  - alarmhub
+  - alarm hubs
+  - smart-alarm-system
+  - smartalarmsystem
+  - smart alarm systems
+  - home-alarm-panel
+  - homealarmpanel
+  - home alarm panels
+  - smart-alarm-panel
+  - smartalarmpanel
+  - smart alarm panels
+  - connected-alarm
+  - connectedalarm
+  - connected alarms
+  - intruder-alarm-hub
+  - intruderalarmhub
+  - intruder alarm hubs
+  - security-system-hub
+  - securitysystemhub
+  - security system hubs
+  - smart security alarm hub
+  - smart-security-alarm-hub
+  - smartsecurityalarmhub
+  - smart security alarm hubs
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - backup_battery
+  - radio
+  - wifi
+  - zigbee
+  - z_wave
+  - bluetooth
+  - siren
+  - motion_detection
+  - tamper_detection
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - authentication
+  - account
+  - personal_data_likely
+  - safety_function
+  functional_classes:
+  - security_device
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - security_access_iot
+  - building_access_drive
+  strong_aliases:
+  - security hub
+  - alarm hub
+  - smart alarm system
+  - home alarm panel
+  - smart alarm panel
+  - connected alarm
+  - intruder alarm hub
+  - security system hub
+  weak_aliases:
+  - security-hub
+  - securityhub
+  - security hubs
+  - alarm-hub
+  - alarmhub
+  - alarm hubs
+  - smart-alarm-system
+  - smartalarmsystem
+  - smart alarm systems
+  - home-alarm-panel
+  - homealarmpanel
+  - home alarm panels
+  - smart-alarm-panel
+  - smartalarmpanel
+  - smart alarm panels
+  - connected-alarm
+  - connectedalarm
+  - connected alarms
+  - intruder-alarm-hub
+  - intruderalarmhub
+  - intruder alarm hubs
+  - security-system-hub
+  - securitysystemhub
+  - security system hubs
+  - smart security alarm hub
+  - smart-security-alarm-hub
+  - smartsecurityalarmhub
+  - smart security alarm hubs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_baby_monitor_breathing
+  label: Baby breathing / movement monitor
+  product_family: baby_safety_device
+  product_subfamily: smart_baby_monitor_breathing
+  aliases:
+  - baby breathing monitor
+  - infant breathing monitor
+  - baby movement monitor
+  - baby apnea monitor
+  - smart sock monitor
+  - baby oxygen monitor
+  - wearable baby monitor
+  - baby-breathing-monitor
+  - babybreathingmonitor
+  - baby breathing monitors
+  - infant-breathing-monitor
+  - infantbreathingmonitor
+  - baby-movement-monitor
+  - babymovementmonitor
+  - baby-apnea-monitor
+  - babyapneamonitor
+  - smart-sock-monitor
+  - smartsockmonitor
+  - baby-oxygen-monitor
+  - babyoxygenmonitor
+  - wearable-baby-monitor
+  - wearablebabymonitor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  - wifi
+  - app_control
+  - personal_data_likely
+  - account
+  - ota
+  - cloud
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
+  genres:
+  - wellness_borderline_medical
+  - security_access_iot
+  preferred_clues:
+  - breathing monitor
+  - movement monitor
+  - baby sock
+  confusable_with:
+  - baby_monitor
+  - baby_monitor_smart
+  strong_aliases:
+  - baby breathing monitor
+  - infant breathing monitor
+  - baby movement monitor
+  - baby apnea monitor
+  - smart sock monitor
+  - baby oxygen monitor
+  - wearable baby monitor
+  weak_aliases:
+  - baby-breathing-monitor
+  - babybreathingmonitor
+  - baby breathing monitors
+  - infant-breathing-monitor
+  - infantbreathingmonitor
+  - baby-movement-monitor
+  - babymovementmonitor
+  - baby-apnea-monitor
+  - babyapneamonitor
+  - smart-sock-monitor
+  - smartsockmonitor
+  - baby-oxygen-monitor
+  - babyoxygenmonitor
+  - wearable-baby-monitor
+  - wearablebabymonitor
+  marketplace_aliases:
+  - baby breathing monitor
+  - infant movement monitor
+  - smart baby sock
+  - baby oxygen monitor
+  not_when_text_contains: []
+  negative_examples:
+  - baby_monitor
+  - baby_monitor_smart
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - health_related
+  - body_worn_or_applied
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Wearable infant breathing and movement monitors (socks, clips, pads). Distinct from AV baby monitors with
+    cameras. EN 62479 for body-worn RF proximity.
+- id: smart_button_remote
+  label: Smart button / voice remote
+  aliases:
+  - smart button
+  - smart remote
+  - voice remote
+  - scene controller
+  - zigbee remote
+  - matter button
+  - smart switch button
+  - smart-button
+  - smartbutton
+  - smart buttons
+  - smart-remote
+  - smartremote
+  - smart remotes
+  - voice-remote
+  - voiceremote
+  - voice remotes
+  - scene-controller
+  - scenecontroller
+  - scene controllers
+  - zigbee-remote
+  - zigbeeremote
+  - zigbee remotes
+  - matter-button
+  - matterbutton
+  - matter buttons
+  - smart-switch-button
+  - smartswitchbutton
+  - smart switch buttons
+  - smart button voice remote
+  - smart-button-voice-remote
+  - smartbuttonvoiceremote
+  - smart button voice remotes
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - bluetooth
+  - zigbee
+  - thread
+  - radio
+  - remote_control
+  - app_control
+  - matter
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  strong_aliases:
+  - smart button
+  - smart remote
+  - voice remote
+  - scene controller
+  - zigbee remote
+  - matter button
+  - smart switch button
+  weak_aliases:
+  - smart-button
+  - smartbutton
+  - smart buttons
+  - smart-remote
+  - smartremote
+  - smart remotes
+  - voice-remote
+  - voiceremote
+  - voice remotes
+  - scene-controller
+  - scenecontroller
+  - scene controllers
+  - zigbee-remote
+  - zigbeeremote
+  - zigbee remotes
+  - matter-button
+  - matterbutton
+  - matter buttons
+  - smart-switch-button
+  - smartswitchbutton
+  - smart switch buttons
+  - smart button voice remote
+  - smart-button-voice-remote
+  - smartbuttonvoiceremote
+  - smart button voice remotes
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_doorbell
+  label: Smart video doorbell
+  product_family: smart_home_security
+  product_subfamily: smart_doorbell
+  aliases:
+  - smart doorbell
+  - video doorbell
+  - wifi doorbell
+  - ring doorbell
+  - connected doorbell
+  - ip doorbell
+  - camera doorbell
+  - smart-doorbell
+  - smartdoorbell
+  - smart doorbells
+  - video-doorbell
+  - videodoorbell
+  - video doorbells
+  - wi-fi doorbell
+  - wi fi doorbell
+  - wifi-doorbell
+  - wifidoorbell
+  - wifi doorbells
+  - ring-doorbell
+  - ringdoorbell
+  - ring doorbells
+  - connected-doorbell
+  - connecteddoorbell
+  - connected doorbells
+  - ip-doorbell
+  - ipdoorbell
+  - ip doorbells
+  - camera-doorbell
+  - cameradoorbell
+  - camera doorbells
+  - smart video doorbell
+  - smart-video-doorbell
+  - smartvideodoorbell
+  - smart video doorbells
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - radio
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - motion_detection
+  - cloud
+  - app_control
+  - ota
+  - data_storage
+  - personal_data_likely
+  - account
+  - authentication
+  - outdoor_rated
+  - fixed_installation
+  functional_classes:
+  - security_device
+  - av_ict_device
+  - home_device
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  - security_or_barrier
+  default_traits:
+  - cloud
+  - networked_standby
+  - radio
+  - wifi
+  - app_control
+  - internet_connected
+  - fixed_installation
+  likely_standards:
+  - EN 62368-1
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  strong_aliases:
+  - smart doorbell
+  - video doorbell
+  - wifi doorbell
+  - ring doorbell
+  - connected doorbell
+  - ip doorbell
+  - camera doorbell
+  weak_aliases:
+  - smart-doorbell
+  - smartdoorbell
+  - smart doorbells
+  - video-doorbell
+  - videodoorbell
+  - video doorbells
+  - wi-fi doorbell
+  - wi fi doorbell
+  - wifi-doorbell
+  - wifidoorbell
+  - wifi doorbells
+  - ring-doorbell
+  - ringdoorbell
+  - ring doorbells
+  - connected-doorbell
+  - connecteddoorbell
+  - connected doorbells
+  - ip-doorbell
+  - ipdoorbell
+  - ip doorbells
+  - camera-doorbell
+  - cameradoorbell
+  - camera doorbells
+  - smart video doorbell
+  - smart-video-doorbell
+  - smartvideodoorbell
+  - smart video doorbells
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_lock
+  label: Smart lock
+  product_family: building_hardware_lock
+  product_subfamily: smart_lock
+  family_keywords:
+  - door lock
+  - deadbolt
+  - entry lock
+  - electromechanical lock
+  - building hardware
+  aliases:
+  - smart lock
+  - smart door lock
+  - wifi lock
+  - bluetooth lock
+  - connected door lock
+  - keyless lock
+  - smart deadbolt
+  - door lock
+  - entry lock
+  - deadbolt
+  - electromechanical lock
+  - fingerprint lock
+  - nfc lock
+  - connected lock
+  - electronic door lock
+  - electronic lock
+  - smart-lock
+  - smartlock
+  - smart locks
+  - wi-fi lock
+  - wi fi lock
+  - wifi-lock
+  - wifilock
+  - wifi locks
+  - bluetooth-lock
+  - bluetoothlock
+  - bluetooth locks
+  - connected-door-lock
+  - connecteddoorlock
+  - connected door locks
+  - keyless-lock
+  - keylesslock
+  - keyless locks
+  - smart-deadbolt
+  - smartdeadbolt
+  - smart deadbolts
+  - fingerprint-lock
+  - fingerprintlock
+  - fingerprint locks
+  - nfc-lock
+  - nfclock
+  - nfc locks
+  - connected-lock
+  - connectedlock
+  - connected locks
+  - electronic-door-lock
+  - electronicdoorlock
+  - electronic door locks
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - fixed_installation
+  - security_or_barrier
+  - tamper_detection
+  - safety_function
+  - bluetooth
+  - wifi
+  - zigbee
+  - nfc
+  - authentication
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - personal_data_likely
+  - account
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - fixed_installation
+  - security_or_barrier
+  - tamper_detection
+  - safety_function
+  default_traits:
+  - bluetooth
+  - wifi
+  - zigbee
+  - nfc
+  - authentication
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - personal_data_likely
+  - account
+  functional_classes:
+  - security_device
+  - home_device
+  - connected_device
+  likely_standards:
+  - EN 14846
+  - EN 12209
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+  route_family: building_hardware
+  primary_standard_code: EN 14846
+  supporting_standard_codes:
+  - EN 12209
+  genres:
+  - building_hardware_lock
+  - security_access_iot
+  strong_aliases:
+  - smart lock
+  - wifi lock
+  - bluetooth lock
+  - connected door lock
+  - keyless lock
+  - smart deadbolt
+  - fingerprint lock
+  - nfc lock
+  - electronic lock
+  weak_aliases:
+  - connected lock
+  - electronic door lock
+  - smart-lock
+  - smartlock
+  - smart locks
+  - wi-fi lock
+  - wi fi lock
+  - wifi-lock
+  - wifilock
+  - wifi locks
+  - bluetooth-lock
+  - bluetoothlock
+  - bluetooth locks
+  - connected-door-lock
+  - connecteddoorlock
+  - connected door locks
+  - keyless-lock
+  - keylesslock
+  - keyless locks
+  - smart-deadbolt
+  - smartdeadbolt
+  - smart deadbolts
+  - fingerprint-lock
+  - fingerprintlock
+  - fingerprint locks
+  - nfc-lock
+  - nfclock
+  - nfc locks
+  - connected-lock
+  - connectedlock
+  marketplace_aliases:
+  - connected door lock
+  - wifi lock
+  - bluetooth lock
+  - electronic lock
+  - smart lock
+  - smart-lock
+  - smartlock
+  - smart locks
+  - wi-fi lock
+  - wi fi lock
+  - wifi-lock
+  - wifilock
+  - wifi locks
+  - bluetooth-lock
+  - bluetoothlock
+  - bluetooth locks
+  - connected-door-lock
+  - connecteddoorlock
+  - connected door locks
+  - keyless lock
+  - keyless-lock
+  - keylesslock
+  - keyless locks
+  - smart deadbolt
+  - smart-deadbolt
+  - smartdeadbolt
+  - smart deadbolts
+  - fingerprint lock
+  - fingerprint-lock
+  - fingerprintlock
+  - fingerprint locks
+  - nfc lock
+  - nfc-lock
+  - nfclock
+  - nfc locks
+  - connected lock
+  - connected-lock
+  - connectedlock
+  - connected locks
+  - electronic door lock
+  - electronic-door-lock
+  - electronicdoorlock
+  - electronic door locks
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 14846
+    kind: unspecified
+  - ref: EN 12209
+    kind: unspecified
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
+  - ref: EN 303 645 review
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  score_penalty_if_traits:
+  - speaker
+  - projector
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_security_camera
+  label: Smart security camera
+  aliases:
+  - security camera
+  - smart security camera
+  - wifi camera
+  - surveillance camera
+  - indoor camera
+  - outdoor camera
+  - home security cam
+  - ip camera
+  - connected camera
+  - security-camera
+  - securitycamera
+  - security cameras
+  - smart-security-camera
+  - smartsecuritycamera
+  - smart security cameras
+  - wi-fi camera
+  - wi fi camera
+  - wifi-camera
+  - wificamera
+  - wifi cameras
+  - surveillance-camera
+  - surveillancecamera
+  - surveillance cameras
+  - indoor-camera
+  - indoorcamera
+  - indoor cameras
+  - outdoor-camera
+  - outdoorcamera
+  - outdoor cameras
+  product_family: smart_home_security
+  product_subfamily: smart_security_camera
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - radio
+  - wifi
+  - camera
+  - microphone
+  - camera_surveillance
+  - networked_standby
+  functional_classes:
+  - connected_device
+  - imaging_device
+  - security_device
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - camera
+  - microphone
+  - camera_surveillance
+  - security_or_barrier
+  default_traits:
+  - cloud
+  - networked_standby
+  - radio
+  - wifi
+  - app_control
+  - internet_connected
+  likely_standards:
+  - EN 62368-1
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+  strong_aliases:
+  - security camera
+  - smart security camera
+  - wifi camera
+  - surveillance camera
+  - indoor camera
+  - outdoor camera
+  - home security cam
+  - ip camera
+  - connected camera
+  weak_aliases:
+  - security-camera
+  - securitycamera
+  - security cameras
+  - smart-security-camera
+  - smartsecuritycamera
+  - smart security cameras
+  - wi-fi camera
+  - wi fi camera
+  - wifi-camera
+  - wificamera
+  - wifi cameras
+  - surveillance-camera
+  - surveillancecamera
+  - surveillance cameras
+  - indoor-camera
+  - indoorcamera
+  - indoor cameras
+  - outdoor-camera
+  - outdoorcamera
+  - outdoor cameras
+  marketplace_aliases:
+  - wifi camera
+  - home security cam
+  - ip camera
+  - connected camera
+  - security camera
+  - security-camera
+  - securitycamera
+  - security cameras
+  - smart security camera
+  - smart-security-camera
+  - smartsecuritycamera
+  - smart security cameras
+  - wi-fi camera
+  - wi fi camera
+  - wifi-camera
+  - wificamera
+  - wifi cameras
+  - surveillance camera
+  - surveillance-camera
+  - surveillancecamera
+  - surveillance cameras
+  - indoor camera
+  - indoor-camera
+  - indoorcamera
+  - indoor cameras
+  - outdoor camera
+  - outdoor-camera
+  - outdoorcamera
+  - outdoor cameras
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
+  - ref: EN 303 645 review
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - wifi
+  - camera
+  - microphone
+  - camera_surveillance
+  - networked_standby
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_sensor_node
+  label: Smart home sensor (environmental)
+  aliases:
+  - smart sensor
+  - air quality sensor
+  - indoor air quality monitor
+  - co2 monitor smart
+  - temperature humidity sensor wifi
+  - voc sensor smart
+  - pm2.5 monitor smart
+  - environment sensor hub
+  - smart-sensor
+  - smartsensor
+  - smart sensors
+  - air-quality-sensor
+  - airqualitysensor
+  - air quality sensors
+  - indoor-air-quality-monitor
+  - indoorairqualitymonitor
+  - indoor air quality monitors
+  - co2-monitor-smart
+  - co2monitorsmart
+  - co2 monitor smarts
+  - temperature humidity sensor wi-fi
+  - temperature humidity sensor wi fi
+  - temperature-humidity-sensor-wifi
+  - temperaturehumiditysensorwifi
+  - temperature humidity sensor wifis
+  - voc-sensor-smart
+  - vocsensorsmart
+  - voc sensor smarts
+  - pm2.5-monitor-smart
+  - pm2.5monitorsmart
+  - pm2.5 monitor smarts
+  - environment-sensor-hub
+  - environmentsensorhub
+  - environment sensor hubs
+  - smart home sensor (environmental)
+  - smart-home-sensor-(environmental)
+  - smarthomesensor(environmental)
+  - smart home sensor (environmental)s
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - mains_power_likely
+  - wifi
+  - bluetooth
+  - zigbee
+  - display
+  - co2_sensor
+  - voc_sensor
+  - pm_sensor
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  strong_aliases:
+  - smart sensor
+  - air quality sensor
+  - indoor air quality monitor
+  - co2 monitor smart
+  - temperature humidity sensor wifi
+  - voc sensor smart
+  - pm2.5 monitor smart
+  - environment sensor hub
+  weak_aliases:
+  - smart-sensor
+  - smartsensor
+  - smart sensors
+  - air-quality-sensor
+  - airqualitysensor
+  - air quality sensors
+  - indoor-air-quality-monitor
+  - indoorairqualitymonitor
+  - indoor air quality monitors
+  - co2-monitor-smart
+  - co2monitorsmart
+  - co2 monitor smarts
+  - temperature humidity sensor wi-fi
+  - temperature humidity sensor wi fi
+  - temperature-humidity-sensor-wifi
+  - temperaturehumiditysensorwifi
+  - temperature humidity sensor wifis
+  - voc-sensor-smart
+  - vocsensorsmart
+  - voc sensor smarts
+  - pm2.5-monitor-smart
+  - pm2.5monitorsmart
+  - pm2.5 monitor smarts
+  - environment-sensor-hub
+  - environmentsensorhub
+  - environment sensor hubs
+  - smart home sensor (environmental)
+  - smart-home-sensor-(environmental)
+  - smarthomesensor(environmental)
+  - smart home sensor (environmental)s
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_smoke_co_alarm
+  label: Smart smoke / CO alarm
+  product_family: life_safety_alarm
+  product_subfamily: smart_smoke_co_alarm
+  family_keywords:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  - life safety alarm
+  aliases:
+  - smart smoke alarm
+  - smart co alarm
+  - smart smoke and carbon monoxide alarm
+  - smart smoke and carbon monoxide detector
+  - wifi smoke detector
+  - connected smoke detector
+  - smart carbon monoxide alarm
+  - combination smoke co alarm smart
+  - smart-smoke-alarm
+  - smartsmokealarm
+  - smart smoke alarms
+  - smart-co-alarm
+  - smartcoalarm
+  - smart co alarms
+  - wi-fi smoke detector
+  - wi fi smoke detector
+  - wifi-smoke-detector
+  - wifismokedetector
+  - wifi smoke detectors
+  - connected-smoke-detector
+  - connectedsmokedetector
+  - connected smoke detectors
+  - smart-carbon-monoxide-alarm
+  - smartcarbonmonoxidealarm
+  - smart carbon monoxide alarms
+  - combination-smoke-co-alarm-smart
+  - combinationsmokecoalarmsmart
+  - combination smoke co alarm smarts
+  - smart smoke co alarm
+  - smart-smoke-co-alarm
+  - smartsmokecoalarm
+  - smart smoke co alarms
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - battery_powered
+  - backup_battery
+  - smoke_detection
+  - co_detection
+  - siren
+  - safety_function
+  - ceiling_mount
+  - wifi
+  - bluetooth
+  - zigbee
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - account
+  - authentication
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - battery_powered
+  - backup_battery
+  - smoke_detection
+  - co_detection
+  - siren
+  - safety_function
+  - ceiling_mount
+  default_traits:
+  - wifi
+  - bluetooth
+  - zigbee
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - account
+  - authentication
+  functional_classes:
+  - security_device
+  - safety_device
+  likely_standards:
+  - EN 14604
+  - EN 50291-1
+  route_family: life_safety_alarm
+  primary_standard_code: EN 14604
+  supporting_standard_codes:
+  - EN 50291-1
+  genres:
+  - life_safety_alarm
+  strong_aliases:
+  - smart smoke alarm
+  - smart co alarm
+  - smart smoke and carbon monoxide alarm
+  - wifi smoke detector
+  - connected smoke detector
+  - smart carbon monoxide alarm
+  - combination smoke co alarm smart
+  weak_aliases:
+  - smart-smoke-alarm
+  - smartsmokealarm
+  - smart smoke alarms
+  - smart-co-alarm
+  - smartcoalarm
+  - smart co alarms
+  - wi-fi smoke detector
+  - wi fi smoke detector
+  - wifi-smoke-detector
+  - wifismokedetector
+  - wifi smoke detectors
+  - connected-smoke-detector
+  - connectedsmokedetector
+  - connected smoke detectors
+  - smart-carbon-monoxide-alarm
+  - smartcarbonmonoxidealarm
+  - smart carbon monoxide alarms
+  - combination-smoke-co-alarm-smart
+  - combinationsmokecoalarmsmart
+  - combination smoke co alarm smarts
+  - smart smoke co alarm
+  - smart-smoke-co-alarm
+  - smartsmokecoalarm
+  - smart smoke co alarms
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 14604
+    kind: unspecified
+  - ref: EN 50291-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits:
+  - speaker
+  - projector
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smoke_co_alarm
+  label: Smoke / CO alarm
+  product_family: life_safety_alarm
+  product_subfamily: smoke_co_alarm
+  family_keywords:
+  - smoke alarm
+  - carbon monoxide alarm
+  aliases:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  - co alarm
+  - co detector
+  - combination smoke co alarm
+  - dual smoke co detector
+  preferred_clues:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  exclude_clues:
+  - smart smoke alarm
+  - connected smoke detector
+  - wifi
+  - app control
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - backup_battery
+  - smoke_detection
+  - co_detection
+  - siren
+  - safety_function
+  - ceiling_mount
+  functional_classes:
+  - safety_device
+  - security_device
+  likely_standards:
+  - EN 14604
+  - EN 50291-1
+  route_family: life_safety_alarm
+  primary_standard_code: EN 14604
+  supporting_standard_codes:
+  - EN 50291-1
+  genres:
+  - life_safety_alarm
+  strong_aliases:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  - co alarm
+  - combination smoke co alarm
+  weak_aliases:
+  - co detector
+  - dual smoke co detector
+  marketplace_aliases:
+  - smoke and carbon monoxide alarm
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - smoke_detection
+  - co_detection
+  - safety_function
+  matching_notes: Non-connected life-safety alarm route, kept separate from smart/connected alarm variants.
+- id: soil_moisture_sensor
+  label: Soil moisture sensor / plant monitor
+  aliases:
+  - soil moisture sensor
+  - plant monitor
+  - bluetooth plant sensor
+  - soil sensor
+  - plant moisture meter
+  - smart plant monitor
+  - soil-moisture-sensor
+  - soilmoisturesensor
+  - soil moisture sensors
+  - plant-monitor
+  - plantmonitor
+  - plant monitors
+  - bluetooth-plant-sensor
+  - bluetoothplantsensor
+  - bluetooth plant sensors
+  - soil-sensor
+  - soilsensor
+  - soil sensors
+  - plant-moisture-meter
+  - plantmoisturemeter
+  - plant moisture meters
+  - smart-plant-monitor
+  - smartplantmonitor
+  - smart plant monitors
+  - soil moisture sensor plant monitor
+  - soil-moisture-sensor-plant-monitor
+  - soilmoisturesensorplantmonitor
+  - soil moisture sensor plant monitors
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - bluetooth
+  - radio
+  - portable
+  functional_classes:
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  preferred_clues:
+  - soil
+  - plant
+  - moisture
+  exclude_clues:
+  - drone
+  - camera
+  strong_aliases:
+  - soil moisture sensor
+  - plant monitor
+  - bluetooth plant sensor
+  - soil sensor
+  - plant moisture meter
+  - smart plant monitor
+  weak_aliases:
+  - soil-moisture-sensor
+  - soilmoisturesensor
+  - soil moisture sensors
+  - plant-monitor
+  - plantmonitor
+  - plant monitors
+  - bluetooth-plant-sensor
+  - bluetoothplantsensor
+  - bluetooth plant sensors
+  - soil-sensor
+  - soilsensor
+  - soil sensors
+  - plant-moisture-meter
+  - plantmoisturemeter
+  - plant moisture meters
+  - smart-plant-monitor
+  - smartplantmonitor
+  - smart plant monitors
+  - soil moisture sensor plant monitor
+  - soil-moisture-sensor-plant-monitor
+  - soilmoisturesensorplantmonitor
+  - soil moisture sensor plant monitors
+  marketplace_aliases: []
+  not_when_text_contains:
+  - drone
+  - camera
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - battery_powered
+  - bluetooth
+  - radio
+  score_penalty_if_traits:
+  - drone
+  - camera
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: video_doorbell
+  label: Video doorbell
+  aliases:
+  - video doorbell
+  - smart doorbell
+  - wifi doorbell
+  - connected doorbell camera
+  - doorbell camera
+  - video bell
+  - video-doorbell
+  - videodoorbell
+  - video doorbells
+  - smart-doorbell
+  - smartdoorbell
+  - smart doorbells
+  - wi-fi doorbell
+  - wi fi doorbell
+  - wifi-doorbell
+  - wifidoorbell
+  - wifi doorbells
+  - connected-doorbell-camera
+  - connecteddoorbellcamera
+  - connected doorbell cameras
+  product_family: smart_home_security
+  product_subfamily: video_doorbell
+  genres:
+  - smart_home_iot
+  - security_access_iot
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - radio
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  functional_classes:
+  - connected_device
+  - imaging_device
+  - security_device
+  core_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  - security_or_barrier
+  default_traits:
+  - cloud
+  - networked_standby
+  - radio
+  - wifi
+  - app_control
+  - internet_connected
+  - fixed_installation
+  likely_standards:
+  - EN 62368-1
+  - EN 18031-1
+  - EN 18031-2
+  - EN 303 645 review
+  strong_aliases:
+  - video doorbell
+  - smart doorbell
+  - wifi doorbell
+  - connected doorbell camera
+  - doorbell camera
+  - video bell
+  weak_aliases:
+  - video-doorbell
+  - videodoorbell
+  - video doorbells
+  - smart-doorbell
+  - smartdoorbell
+  - smart doorbells
+  - wi-fi doorbell
+  - wi fi doorbell
+  - wifi-doorbell
+  - wifidoorbell
+  - wifi doorbells
+  - connected-doorbell-camera
+  - connecteddoorbellcamera
+  - connected doorbell cameras
+  marketplace_aliases:
+  - smart doorbell
+  - wifi doorbell
+  - doorbell camera
+  - video bell
+  - video doorbell
+  - video-doorbell
+  - videodoorbell
+  - video doorbells
+  - smart-doorbell
+  - smartdoorbell
+  - smart doorbells
+  - wi-fi doorbell
+  - wi fi doorbell
+  - wifi-doorbell
+  - wifidoorbell
+  - wifi doorbells
+  - connected doorbell camera
+  - connected-doorbell-camera
+  - connecteddoorbellcamera
+  - connected doorbell cameras
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 18031-1
+    kind: unspecified
+  - ref: EN 18031-2
+    kind: unspecified
+  - ref: EN 303 645 review
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - wifi
+  - camera
+  - microphone
+  - speaker
+  - camera_surveillance
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

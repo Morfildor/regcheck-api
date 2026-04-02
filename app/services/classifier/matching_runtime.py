@@ -242,7 +242,7 @@ def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[
 
 
 def _compute_product_trait_buckets(product: ProductRowLike) -> tuple[set[str], set[str]]:
-    from .traits import _expand_related_traits
+    from .trait_inference_helpers import _expand_related_traits
 
     implied_traits = set(_string_list(product.get("implied_traits")))
     family_traits = set(_string_list(product.get("family_traits")))

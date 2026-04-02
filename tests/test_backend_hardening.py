@@ -162,7 +162,7 @@ class BackendHardeningTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             temp_data_dir = Path(tmpdir) / "data"
             shutil.copytree(source_dir, temp_data_dir)
-            products_path = temp_data_dir / "products.yaml"
+            products_path = temp_data_dir / "products" / "household_wave3.yaml"
             original = products_path.read_text(encoding="utf-8")
             products_path.write_text(
                 original.replace("supporting_standard_codes:\n  - EN 60335-1", "supporting_standard_codes: invalid", 1),
@@ -179,7 +179,7 @@ class BackendHardeningTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             temp_data_dir = Path(tmpdir) / "data"
             shutil.copytree(source_dir, temp_data_dir)
-            signals_path = temp_data_dir / "classifier_signals.yaml"
+            signals_path = temp_data_dir / "classifier_signals" / "connectivity.yaml"
             original = signals_path.read_text(encoding="utf-8")
             signals_path.write_text(
                 original.replace(
@@ -203,6 +203,8 @@ class BackendHardeningTests(unittest.TestCase):
         cases = {
             "smart_speaker": "smart speaker with wifi and bluetooth",
             "generic_industrial_tool": "generic industrial tool",
+            "uv_nail_lamp": "uv nail lamp for gel polish",
+            "ups_battery_backup": "ups battery backup unit for office server",
         }
 
         for name, description in cases.items():

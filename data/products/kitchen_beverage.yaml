@@ -1,0 +1,3053 @@
+products:
+- id: air_fryer
+  label: Air fryer
+  aliases:
+  - air fryer
+  - smart air fryer
+  - connected air fryer
+  - air-fryer
+  - airfryer
+  - air fryers
+  - smart air-fryer
+  - smart airfryer
+  - smart-air-fryer
+  - smartairfryer
+  - smart air fryers
+  - connected air-fryer
+  - connected airfryer
+  - connected-air-fryer
+  - connectedairfryer
+  - connected air fryers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - motorized
+  - food_contact
+  - mains_powered
+  - food_preparation
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-13
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - air fryer
+  - smart air fryer
+  - connected air fryer
+  weak_aliases:
+  - air-fryer
+  - airfryer
+  - air fryers
+  - smart air-fryer
+  - smart airfryer
+  - smart-air-fryer
+  - smartairfryer
+  - smart air fryers
+  - connected air-fryer
+  - connected airfryer
+  - connected-air-fryer
+  - connectedairfryer
+  - connected air fryers
+  marketplace_aliases:
+  - airfryer
+  - smart airfryer
+  - wifi air fryer
+  - connected airfryer
+  - dual basket air fryer
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-13
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - motorized
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: bain_marie
+  label: Bain-marie
+  aliases:
+  - bain marie
+  - bain-marie
+  - food warming bath
+  - bainmarie
+  - bain maries
+  - bain-maries
+  - food-warming-bath
+  - foodwarmingbath
+  - food warming baths
+  implied_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - commercial_food_service
+  functional_classes:
+  - commercial_appliance
+  - kitchen_appliance
+  likely_standards:
+  - EN 60335-2-50
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - bain marie
+  - bain-marie
+  - food warming bath
+  weak_aliases:
+  - bainmarie
+  - bain maries
+  - bain-maries
+  - food-warming-bath
+  - foodwarmingbath
+  - food warming baths
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-50
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - commercial_food_service
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: barbecue_grill
+  label: Electric barbecue grill
+  aliases:
+  - electric barbecue
+  - electric bbq
+  - barbecue grill
+  - electric barbecue grill
+  - table barbecue grill
+  - electric-barbecue
+  - electricbarbecue
+  - electric barbecues
+  - electric-bbq
+  - electricbbq
+  - electric bbqs
+  - barbecue-grill
+  - barbecuegrill
+  - barbecue grills
+  - electric-barbecue-grill
+  - electricbarbecuegrill
+  - electric barbecue grills
+  - table-barbecue-grill
+  - tablebarbecuegrill
+  - table barbecue grills
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - outdoor_use
+  - portable
+  - food_preparation
+  functional_classes:
+  - cooking_appliance
+  likely_standards:
+  - EN 60335-2-78
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - electric barbecue
+  - electric bbq
+  - barbecue grill
+  - electric barbecue grill
+  - table barbecue grill
+  weak_aliases:
+  - electric-barbecue
+  - electricbarbecue
+  - electric barbecues
+  - electric-bbq
+  - electricbbq
+  - electric bbqs
+  - barbecue-grill
+  - barbecuegrill
+  - barbecue grills
+  - electric-barbecue-grill
+  - electricbarbecuegrill
+  - electric barbecue grills
+  - table-barbecue-grill
+  - tablebarbecuegrill
+  - table barbecue grills
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-78
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: blender
+  label: Blender
+  aliases:
+  - blender
+  - hand blender
+  - stick blender
+  - blenders
+  - hand-blender
+  - handblender
+  - hand blenders
+  - stick-blender
+  - stickblender
+  - stick blenders
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  - food_preparation
+  - portable
+  functional_classes:
+  - food_preparation
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-14
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  strong_aliases:
+  - blender
+  - hand blender
+  - stick blender
+  weak_aliases:
+  - blenders
+  - hand-blender
+  - handblender
+  - hand blenders
+  - stick-blender
+  - stickblender
+  - stick blenders
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-14
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: coffee_grinder
+  label: Coffee grinder / coffee mill
+  aliases:
+  - coffee grinder
+  - coffee mill
+  - electric coffee grinder
+  - electric coffee mill
+  - burr grinder
+  - bean grinder
+  - espresso grinder
+  - coffee-grinder
+  - coffeegrinder
+  - coffee grinders
+  - coffee-mill
+  - coffeemill
+  - coffee mills
+  - electric-coffee-grinder
+  - electriccoffeegrinder
+  - electric coffee grinders
+  - electric-coffee-mill
+  - electriccoffeemill
+  - electric coffee mills
+  - burr-grinder
+  - burrgrinder
+  - burr grinders
+  - bean-grinder
+  - beangrinder
+  - bean grinders
+  - espresso-grinder
+  - espressogrinder
+  - espresso grinders
+  - coffee grinder coffee mill
+  - coffee-grinder-coffee-mill
+  - coffeegrindercoffeemill
+  - coffee grinder coffee mills
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  - portable
+  - coffee_grinding
+  - food_preparation
+  functional_classes:
+  - food_preparation
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-33
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  strong_aliases:
+  - coffee grinder
+  - coffee mill
+  - electric coffee grinder
+  - electric coffee mill
+  - burr grinder
+  - bean grinder
+  - espresso grinder
+  weak_aliases:
+  - coffee-grinder
+  - coffeegrinder
+  - coffee grinders
+  - coffee-mill
+  - coffeemill
+  - coffee mills
+  - electric-coffee-grinder
+  - electriccoffeegrinder
+  - electric coffee grinders
+  - electric-coffee-mill
+  - electriccoffeemill
+  - electric coffee mills
+  - burr-grinder
+  - burrgrinder
+  - burr grinders
+  - bean-grinder
+  - beangrinder
+  - bean grinders
+  - espresso-grinder
+  - espressogrinder
+  - espresso grinders
+  - coffee grinder coffee mill
+  - coffee-grinder-coffee-mill
+  - coffeegrindercoffeemill
+  - coffee grinder coffee mills
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-33
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: coffee_machine
+  label: Coffee machine
+  aliases:
+  - coffee machine
+  - coffee maker
+  - espresso machine
+  - espresso maker
+  - automatic espresso machine
+  - fully automatic espresso machine
+  - bean to cup coffee machine
+  - bean-to-cup coffee machine
+  - bean to cup espresso machine
+  - bean-to-cup espresso machine
+  - bean to cup machine
+  - filter coffee machine
+  - filter coffee maker
+  - drip coffee maker
+  - drip filter coffee machine
+  - pod coffee machine
+  - pod coffee maker
+  - capsule coffee machine
+  - capsule coffee maker
+  - single serve coffee maker
+  - single-serve coffee maker
+  - coffee-machine
+  - coffeemachine
+  - coffee machines
+  - coffee-maker
+  - coffeemaker
+  - coffee makers
+  - espresso-machine
+  - espressomachine
+  - espresso machines
+  - espresso-maker
+  - espressomaker
+  - espresso makers
+  - automatic-espresso-machine
+  - automaticespressomachine
+  - automatic espresso machines
+  - fully-automatic-espresso-machine
+  - fullyautomaticespressomachine
+  - fully automatic espresso machines
+  - bean-to-cup-coffee-machine
+  - beantocupcoffeemachine
+  - bean to cup coffee machines
+  - bean-to-cupcoffeemachine
+  - bean-to-cup coffee machines
+  - bean-to-cup-espresso-machine
+  - beantocupespressomachine
+  - bean to cup espresso machines
+  - bean-to-cupespressomachine
+  - bean-to-cup espresso machines
+  - bean-to-cup machine
+  - bean-to-cup-machine
+  - beantocupmachine
+  - bean to cup machines
+  - filter-coffee-machine
+  - filtercoffeemachine
+  - filter coffee machines
+  - filter-coffee-maker
+  - filtercoffeemaker
+  - filter coffee makers
+  - drip-coffee-maker
+  - dripcoffeemaker
+  - drip coffee makers
+  - drip-filter-coffee-machine
+  - dripfiltercoffeemachine
+  - drip filter coffee machines
+  - pod-coffee-machine
+  - podcoffeemachine
+  - pod coffee machines
+  - pod-coffee-maker
+  - podcoffeemaker
+  - pod coffee makers
+  - capsule-coffee-machine
+  - capsulecoffeemachine
+  - capsule coffee machines
+  - capsule-coffee-maker
+  - capsulecoffeemaker
+  - capsule coffee makers
+  - single-serve-coffee-maker
+  - singleservecoffeemaker
+  - single serve coffee makers
+  - single-servecoffeemaker
+  - single-serve coffee makers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  - food_contact
+  - mains_powered
+  - beverage_preparation
+  - water_heating
+  - coffee_brewing
+  functional_classes:
+  - beverage_preparation
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-15
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - coffee machine
+  - coffee maker
+  - espresso machine
+  - espresso maker
+  - automatic espresso machine
+  - fully automatic espresso machine
+  - bean to cup coffee machine
+  - bean-to-cup coffee machine
+  - pod coffee machine
+  - filter coffee maker
+  weak_aliases:
+  - bean to cup espresso machine
+  - bean-to-cup espresso machine
+  - bean to cup machine
+  - filter coffee machine
+  - drip coffee maker
+  - drip filter coffee machine
+  - pod coffee maker
+  - capsule coffee machine
+  - capsule coffee maker
+  - single serve coffee maker
+  - single-serve coffee maker
+  - coffee-machine
+  - coffeemachine
+  - coffee machines
+  - coffee-maker
+  - coffeemaker
+  - coffee makers
+  - espresso-machine
+  - espressomachine
+  - espresso machines
+  - espresso-maker
+  - espressomaker
+  - espresso makers
+  - automatic-espresso-machine
+  - automaticespressomachine
+  - automatic espresso machines
+  - fully-automatic-espresso-machine
+  - fullyautomaticespressomachine
+  - fully automatic espresso machines
+  - bean-to-cup-coffee-machine
+  marketplace_aliases:
+  - espresso machine
+  - bean to cup coffee machine
+  - pod coffee machine
+  - filter coffee maker
+  - coffee machine
+  - coffee-machine
+  - coffeemachine
+  - coffee machines
+  - coffee maker
+  - coffee-maker
+  - coffeemaker
+  - coffee makers
+  - espresso-machine
+  - espressomachine
+  - espresso machines
+  - espresso maker
+  - espresso-maker
+  - espressomaker
+  - espresso makers
+  - automatic espresso machine
+  - automatic-espresso-machine
+  - automaticespressomachine
+  - automatic espresso machines
+  - fully automatic espresso machine
+  - fully-automatic-espresso-machine
+  - fullyautomaticespressomachine
+  - fully automatic espresso machines
+  - bean-to-cup coffee machine
+  - bean-to-cup-coffee-machine
+  - beantocupcoffeemachine
+  - bean to cup coffee machines
+  - bean-to-cupcoffeemachine
+  - bean-to-cup coffee machines
+  - bean to cup espresso machine
+  - bean-to-cup espresso machine
+  - bean-to-cup-espresso-machine
+  - beantocupespressomachine
+  - bean to cup espresso machines
+  - bean-to-cupespressomachine
+  - bean-to-cup espresso machines
+  - bean to cup machine
+  - bean-to-cup machine
+  - bean-to-cup-machine
+  - beantocupmachine
+  - bean to cup machines
+  - filter coffee machine
+  - filter-coffee-machine
+  - filtercoffeemachine
+  - filter coffee machines
+  - filter-coffee-maker
+  - filtercoffeemaker
+  - filter coffee makers
+  - drip coffee maker
+  - drip-coffee-maker
+  - dripcoffeemaker
+  - drip coffee makers
+  - drip filter coffee machine
+  - drip-filter-coffee-machine
+  - dripfiltercoffeemachine
+  - drip filter coffee machines
+  - pod-coffee-machine
+  - podcoffeemachine
+  - pod coffee machines
+  - pod coffee maker
+  - pod-coffee-maker
+  - podcoffeemaker
+  - pod coffee makers
+  - capsule coffee machine
+  - capsule-coffee-machine
+  - capsulecoffeemachine
+  - capsule coffee machines
+  - capsule coffee maker
+  - capsule-coffee-maker
+  - capsulecoffeemaker
+  - capsule coffee makers
+  - single serve coffee maker
+  - single-serve-coffee-maker
+  - singleservecoffeemaker
+  - single serve coffee makers
+  - single-serve coffee maker
+  - single-servecoffeemaker
+  - single-serve coffee makers
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-15
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_cooking_appliance
+  label: Commercial cooking appliance
+  aliases:
+  - commercial cooking appliance
+  - commercial grill
+  - commercial-cooking-appliance
+  - commercialcookingappliance
+  - commercial cooking appliances
+  - commercial-grill
+  - commercialgrill
+  - commercial grills
+  implied_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  - cooking_appliance
+  likely_standards:
+  - EN 60335-2-36
+  - EN 60335-2-38
+  - EN 60335-2-39
+  - EN 60335-2-42
+  - EN 60335-2-46
+  - EN 60335-2-47
+  - EN 60335-2-48
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial cooking appliance
+  - commercial grill
+  weak_aliases:
+  - commercial-cooking-appliance
+  - commercialcookingappliance
+  - commercial cooking appliances
+  - commercial-grill
+  - commercialgrill
+  - commercial grills
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-36
+    kind: unspecified
+  - ref: EN 60335-2-38
+    kind: unspecified
+  - ref: EN 60335-2-39
+    kind: unspecified
+  - ref: EN 60335-2-42
+    kind: unspecified
+  - ref: EN 60335-2-46
+    kind: unspecified
+  - ref: EN 60335-2-47
+    kind: unspecified
+  - ref: EN 60335-2-48
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_dispensing_appliance
+  label: Commercial dispensing appliance
+  aliases:
+  - commercial dispenser
+  - beverage dispenser
+  - ice cream dispenser
+  - commercial-dispenser
+  - commercialdispenser
+  - commercial dispensers
+  - beverage-dispenser
+  - beveragedispenser
+  - beverage dispensers
+  - ice-cream-dispenser
+  - icecreamdispenser
+  - ice cream dispensers
+  - commercial dispensing appliance
+  - commercial-dispensing-appliance
+  - commercialdispensingappliance
+  - commercial dispensing appliances
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - heating
+  - cooling
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  likely_standards:
+  - EN 60335-2-75
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial dispenser
+  - beverage dispenser
+  - ice cream dispenser
+  weak_aliases:
+  - commercial-dispenser
+  - commercialdispenser
+  - commercial dispensers
+  - beverage-dispenser
+  - beveragedispenser
+  - beverage dispensers
+  - ice-cream-dispenser
+  - icecreamdispenser
+  - ice cream dispensers
+  - commercial dispensing appliance
+  - commercial-dispensing-appliance
+  - commercialdispensingappliance
+  - commercial dispensing appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-75
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - heating
+  - cooling
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_fryer
+  label: Commercial fryer
+  aliases:
+  - commercial fryer
+  - professional fryer
+  - commercial-fryer
+  - commercialfryer
+  - commercial fryers
+  - professional-fryer
+  - professionalfryer
+  - professional fryers
+  implied_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  - cooking_appliance
+  likely_standards:
+  - EN 60335-2-37
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial fryer
+  - professional fryer
+  weak_aliases:
+  - commercial-fryer
+  - commercialfryer
+  - commercial fryers
+  - professional-fryer
+  - professionalfryer
+  - professional fryers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-37
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_kitchen_machine
+  label: Commercial kitchen machine
+  aliases:
+  - commercial kitchen machine
+  - commercial mixer
+  - commercial planetary mixer
+  - professional mixer
+  - spiral mixer
+  - commercial food mixer
+  - commercial-kitchen-machine
+  - commercialkitchenmachine
+  - commercial kitchen machines
+  - commercial-mixer
+  - commercialmixer
+  - commercial mixers
+  - commercial-planetary-mixer
+  - commercialplanetarymixer
+  - commercial planetary mixers
+  - professional-mixer
+  - professionalmixer
+  - professional mixers
+  - spiral-mixer
+  - spiralmixer
+  - spiral mixers
+  - commercial-food-mixer
+  - commercialfoodmixer
+  - commercial food mixers
+  implied_traits:
+  - professional
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  - commercial_food_service
+  - food_preparation
+  functional_classes:
+  - commercial_appliance
+  - food_preparation
+  likely_standards:
+  - EN 60335-2-64
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  strong_aliases:
+  - commercial kitchen machine
+  - commercial mixer
+  - commercial planetary mixer
+  - professional mixer
+  - spiral mixer
+  - commercial food mixer
+  weak_aliases:
+  - commercial-kitchen-machine
+  - commercialkitchenmachine
+  - commercial kitchen machines
+  - commercial-mixer
+  - commercialmixer
+  - commercial mixers
+  - commercial-planetary-mixer
+  - commercialplanetarymixer
+  - commercial planetary mixers
+  - professional-mixer
+  - professionalmixer
+  - professional mixers
+  - spiral-mixer
+  - spiralmixer
+  - spiral mixers
+  - commercial-food-mixer
+  - commercialfoodmixer
+  - commercial food mixers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-64
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  - commercial_food_service
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_microwave
+  label: Commercial microwave oven
+  aliases:
+  - commercial microwave
+  - professional microwave oven
+  - commercial-microwave
+  - commercialmicrowave
+  - commercial microwaves
+  - professional-microwave-oven
+  - professionalmicrowaveoven
+  - professional microwave ovens
+  - commercial microwave oven
+  - commercial-microwave-oven
+  - commercialmicrowaveoven
+  - commercial microwave ovens
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  - cooking_appliance
+  likely_standards:
+  - EN 60335-2-90
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial microwave
+  - professional microwave oven
+  weak_aliases:
+  - commercial-microwave
+  - commercialmicrowave
+  - commercial microwaves
+  - professional-microwave-oven
+  - professionalmicrowaveoven
+  - professional microwave ovens
+  - commercial microwave oven
+  - commercial-microwave-oven
+  - commercialmicrowaveoven
+  - commercial microwave ovens
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-90
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_oven
+  label: Commercial oven
+  aliases:
+  - commercial oven
+  - professional oven
+  - bakery oven
+  - commercial-oven
+  - commercialoven
+  - commercial ovens
+  - professional-oven
+  - professionaloven
+  - professional ovens
+  - bakery-oven
+  - bakeryoven
+  - bakery ovens
+  implied_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  - cooking_appliance
+  likely_standards:
+  - EN 60335-2-36
+  - EN 60335-2-42
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial oven
+  - professional oven
+  - bakery oven
+  weak_aliases:
+  - commercial-oven
+  - commercialoven
+  - commercial ovens
+  - professional-oven
+  - professionaloven
+  - professional ovens
+  - bakery-oven
+  - bakeryoven
+  - bakery ovens
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-36
+    kind: unspecified
+  - ref: EN 60335-2-42
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_refrigerator
+  label: Commercial refrigerator
+  aliases:
+  - commercial refrigerator
+  - commercial fridge
+  - display chiller
+  - commercial-refrigerator
+  - commercialrefrigerator
+  - commercial refrigerators
+  - commercial-fridge
+  - commercialfridge
+  - commercial fridges
+  - display-chiller
+  - displaychiller
+  - display chillers
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - cooling
+  - food_contact
+  - mains_powered
+  - refrigeration
+  functional_classes:
+  - commercial_appliance
+  - cooling_appliance
+  likely_standards:
+  - EN 60335-2-89
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial refrigerator
+  - commercial fridge
+  - display chiller
+  weak_aliases:
+  - commercial-refrigerator
+  - commercialrefrigerator
+  - commercial refrigerators
+  - commercial-fridge
+  - commercialfridge
+  - commercial fridges
+  - display-chiller
+  - displaychiller
+  - display chillers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-89
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - cooling
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: cooking_range
+  label: Cooking range
+  aliases:
+  - cooking range
+  - electric range
+  - range cooker
+  - cooking-range
+  - cookingrange
+  - cooking ranges
+  - electric-range
+  - electricrange
+  - electric ranges
+  - range-cooker
+  - rangecooker
+  - range cookers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - cooking_appliance
+  - major_appliance
+  likely_standards:
+  - EN 60335-2-6
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - cooking range
+  - electric range
+  - range cooker
+  weak_aliases:
+  - cooking-range
+  - cookingrange
+  - cooking ranges
+  - electric-range
+  - electricrange
+  - electric ranges
+  - range-cooker
+  - rangecooker
+  - range cookers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-6
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: deep_fryer
+  label: Deep fryer
+  aliases:
+  - deep fryer
+  - fryer
+  - electric deep fryer
+  - deep-fryer
+  - deepfryer
+  - deep fryers
+  - fryers
+  - electric-deep-fryer
+  - electricdeepfryer
+  - electric deep fryers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - food_preparation
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-13
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - deep fryer
+  - fryer
+  - electric deep fryer
+  weak_aliases:
+  - deep-fryer
+  - deepfryer
+  - deep fryers
+  - fryers
+  - electric-deep-fryer
+  - electricdeepfryer
+  - electric deep fryers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-13
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_frying_pan
+  label: Electric frying pan
+  aliases:
+  - electric frying pan
+  - electric skillet
+  - electric-frying-pan
+  - electricfryingpan
+  - electric frying pans
+  - electric-skillet
+  - electricskillet
+  - electric skillets
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-13
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - electric frying pan
+  - electric skillet
+  weak_aliases:
+  - electric-frying-pan
+  - electricfryingpan
+  - electric frying pans
+  - electric-skillet
+  - electricskillet
+  - electric skillets
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-13
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_kettle
+  label: Electric kettle
+  aliases:
+  - electric kettle
+  - kettle
+  - electric water kettle
+  - water kettle
+  - smart kettle
+  - jug kettle
+  - electric-kettle
+  - electrickettle
+  - electric kettles
+  - kettles
+  - electric-water-kettle
+  - electricwaterkettle
+  - electric water kettles
+  - water-kettle
+  - waterkettle
+  - water kettles
+  - smart-kettle
+  - smartkettle
+  - smart kettles
+  - jug-kettle
+  - jugkettle
+  - jug kettles
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - food_contact
+  - mains_powered
+  - electronic
+  - beverage_preparation
+  - water_heating
+  functional_classes:
+  - beverage_preparation
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-15
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - electric kettle
+  - kettle
+  - electric water kettle
+  - water kettle
+  - smart kettle
+  - jug kettle
+  weak_aliases:
+  - electric-kettle
+  - electrickettle
+  - electric kettles
+  - kettles
+  - electric-water-kettle
+  - electricwaterkettle
+  - electric water kettles
+  - water-kettle
+  - waterkettle
+  - water kettles
+  - smart-kettle
+  - smartkettle
+  - smart kettles
+  - jug-kettle
+  - jugkettle
+  - jug kettles
+  marketplace_aliases:
+  - smart temperature kettle
+  - wifi kettle
+  - app kettle
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-15
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: food_processor
+  label: Food processor
+  aliases:
+  - food processor
+  - food-processor
+  - foodprocessor
+  - food processors
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  - food_preparation
+  functional_classes:
+  - food_preparation
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-14
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  strong_aliases:
+  - food processor
+  weak_aliases:
+  - food-processor
+  - foodprocessor
+  - food processors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-14
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: hob
+  label: Hob / cooktop
+  aliases:
+  - hob
+  - cooktop
+  - induction hob
+  - electric hob
+  - ceramic hob
+  - built-in hob
+  - built in hob
+  - hobs
+  - cooktops
+  - induction-hob
+  - inductionhob
+  - induction hobs
+  - electric-hob
+  - electrichob
+  - electric hobs
+  - ceramic-hob
+  - ceramichob
+  - ceramic hobs
+  - built-in-hob
+  - built-inhob
+  - built-in hobs
+  - builtinhob
+  - built in hobs
+  - hob cooktop
+  - hob-cooktop
+  - hobcooktop
+  - hob cooktops
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - fixed_installation
+  functional_classes:
+  - cooking_appliance
+  - major_appliance
+  likely_standards:
+  - EN 60335-2-6
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - hob
+  - cooktop
+  - induction hob
+  - electric hob
+  - ceramic hob
+  - built-in hob
+  - built in hob
+  weak_aliases:
+  - hobs
+  - cooktops
+  - induction-hob
+  - inductionhob
+  - induction hobs
+  - electric-hob
+  - electrichob
+  - electric hobs
+  - ceramic-hob
+  - ceramichob
+  - ceramic hobs
+  - built-in-hob
+  - built-inhob
+  - built-in hobs
+  - builtinhob
+  - built in hobs
+  - hob cooktop
+  - hob-cooktop
+  - hobcooktop
+  - hob cooktops
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-6
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: hot_cupboard
+  label: Hot cupboard
+  aliases:
+  - hot cupboard
+  - warming cabinet
+  - hot-cupboard
+  - hotcupboard
+  - hot cupboards
+  - warming-cabinet
+  - warmingcabinet
+  - warming cabinets
+  implied_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  likely_standards:
+  - EN 60335-2-49
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - hot cupboard
+  - warming cabinet
+  weak_aliases:
+  - hot-cupboard
+  - hotcupboard
+  - hot cupboards
+  - warming-cabinet
+  - warmingcabinet
+  - warming cabinets
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-49
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: juicer
+  label: Juicer
+  aliases:
+  - juicer
+  - juice extractor
+  - fruit juicer
+  - citrus juicer
+  - slow juicer
+  - cold press juicer
+  - centrifugal juicer
+  - masticating juicer
+  - juicers
+  - juice-extractor
+  - juiceextractor
+  - juice extractors
+  - fruit-juicer
+  - fruitjuicer
+  - fruit juicers
+  - citrus-juicer
+  - citrusjuicer
+  - citrus juicers
+  - slow-juicer
+  - slowjuicer
+  - slow juicers
+  - cold-press-juicer
+  - coldpressjuicer
+  - cold press juicers
+  - centrifugal-juicer
+  - centrifugaljuicer
+  - centrifugal juicers
+  - masticating-juicer
+  - masticatingjuicer
+  - masticating juicers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  - food_preparation
+  functional_classes:
+  - food_preparation
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-14
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  preferred_clues:
+  - juicer
+  - juice extractor
+  - citrus
+  - cold press
+  - masticating
+  exclude_clues:
+  - projector
+  - speaker
+  - display
+  - home cinema
+  strong_aliases:
+  - juicer
+  - juice extractor
+  - fruit juicer
+  - citrus juicer
+  - slow juicer
+  - cold press juicer
+  - centrifugal juicer
+  - masticating juicer
+  weak_aliases:
+  - juicers
+  - juice-extractor
+  - juiceextractor
+  - juice extractors
+  - fruit-juicer
+  - fruitjuicer
+  - fruit juicers
+  - citrus-juicer
+  - citrusjuicer
+  - citrus juicers
+  - slow-juicer
+  - slowjuicer
+  - slow juicers
+  - cold-press-juicer
+  - coldpressjuicer
+  - cold press juicers
+  - centrifugal-juicer
+  - centrifugaljuicer
+  - centrifugal juicers
+  - masticating-juicer
+  - masticatingjuicer
+  - masticating juicers
+  marketplace_aliases: []
+  not_when_text_contains:
+  - projector
+  - speaker
+  - display
+  - home cinema
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-14
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits:
+  - projector
+  - speaker
+  - display
+  - home cinema
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: kitchen_extractor_fan
+  label: Kitchen extractor fan
+  aliases:
+  - extractor fan for kitchen
+  - kitchen extraction fan
+  - extractor-fan-for-kitchen
+  - extractorfanforkitchen
+  - extractor fan for kitchens
+  - kitchen-extraction-fan
+  - kitchenextractionfan
+  - kitchen extraction fans
+  - kitchen extractor fan
+  - kitchen-extractor-fan
+  - kitchenextractorfan
+  - kitchen extractor fans
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - ventilation
+  - extraction
+  - fixed_installation
+  - built_in
+  functional_classes:
+  - air_treatment
+  - kitchen_appliance
+  likely_standards:
+  - EN 60335-2-31
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - extractor fan for kitchen
+  - kitchen extraction fan
+  weak_aliases:
+  - extractor-fan-for-kitchen
+  - extractorfanforkitchen
+  - extractor fan for kitchens
+  - kitchen-extraction-fan
+  - kitchenextractionfan
+  - kitchen extraction fans
+  - kitchen extractor fan
+  - kitchen-extractor-fan
+  - kitchenextractorfan
+  - kitchen extractor fans
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-31
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - ventilation
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: kitchen_machine
+  label: Kitchen machine
+  aliases:
+  - kitchen machine
+  - stand mixer
+  - food mixer
+  - dough mixer
+  - kneader
+  - planetary mixer
+  - kitchen-machine
+  - kitchenmachine
+  - kitchen machines
+  - stand-mixer
+  - standmixer
+  - stand mixers
+  - food-mixer
+  - foodmixer
+  - food mixers
+  - dough-mixer
+  - doughmixer
+  - dough mixers
+  - kneaders
+  - planetary-mixer
+  - planetarymixer
+  - planetary mixers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  - food_preparation
+  functional_classes:
+  - food_preparation
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-14
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  strong_aliases:
+  - kitchen machine
+  - stand mixer
+  - food mixer
+  - dough mixer
+  - kneader
+  - planetary mixer
+  weak_aliases:
+  - kitchen-machine
+  - kitchenmachine
+  - kitchen machines
+  - stand-mixer
+  - standmixer
+  - stand mixers
+  - food-mixer
+  - foodmixer
+  - food mixers
+  - dough-mixer
+  - doughmixer
+  - dough mixers
+  - kneaders
+  - planetary-mixer
+  - planetarymixer
+  - planetary mixers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-14
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: liquid_heater
+  label: Liquid heater
+  aliases:
+  - liquid heater
+  - beverage heater
+  - water heater appliance
+  - liquid-heater
+  - liquidheater
+  - liquid heaters
+  - beverage-heater
+  - beverageheater
+  - beverage heaters
+  - water-heater-appliance
+  - waterheaterappliance
+  - water heater appliances
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - food_contact
+  - mains_powered
+  - water_heating
+  functional_classes:
+  - beverage_preparation
+  likely_standards:
+  - EN 60335-2-15
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - liquid heater
+  - beverage heater
+  - water heater appliance
+  weak_aliases:
+  - liquid-heater
+  - liquidheater
+  - liquid heaters
+  - beverage-heater
+  - beverageheater
+  - beverage heaters
+  - water-heater-appliance
+  - waterheaterappliance
+  - water heater appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-15
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: microwave_oven
+  label: Microwave oven
+  aliases:
+  - microwave
+  - microwave oven
+  - combi microwave
+  - microwaves
+  - microwave-oven
+  - microwaveoven
+  - microwave ovens
+  - combi-microwave
+  - combimicrowave
+  - combi microwaves
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  - mains_powered
+  - food_preparation
+  functional_classes:
+  - cooking_appliance
+  - major_appliance
+  likely_standards:
+  - EN 60335-2-25
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - microwave
+  - microwave oven
+  - combi microwave
+  weak_aliases:
+  - microwaves
+  - microwave-oven
+  - microwaveoven
+  - microwave ovens
+  - combi-microwave
+  - combimicrowave
+  - combi microwaves
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-25
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: oven
+  label: Oven
+  aliases:
+  - oven
+  - electric oven
+  - built in oven
+  - countertop oven
+  - built-in oven
+  - built-in electric oven
+  - ovens
+  - electric-oven
+  - electricoven
+  - electric ovens
+  - built-in-oven
+  - builtinoven
+  - built in ovens
+  - countertop-oven
+  - countertopoven
+  - countertop ovens
+  - built-inoven
+  - built-in ovens
+  - built in electric oven
+  - built-in-electric-oven
+  - built-inelectricoven
+  - built-in electric ovens
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - fixed_installation
+  functional_classes:
+  - cooking_appliance
+  - major_appliance
+  likely_standards:
+  - EN 60335-2-6
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - oven
+  - electric oven
+  - built in oven
+  - countertop oven
+  - built-in oven
+  - built-in electric oven
+  weak_aliases:
+  - ovens
+  - electric-oven
+  - electricoven
+  - electric ovens
+  - built-in-oven
+  - builtinoven
+  - built in ovens
+  - countertop-oven
+  - countertopoven
+  - countertop ovens
+  - built-inoven
+  - built-in ovens
+  - built in electric oven
+  - built-in-electric-oven
+  - built-inelectricoven
+  - built-in electric ovens
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-6
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: portable_grill
+  label: Portable grill
+  aliases:
+  - portable grill
+  - contact grill
+  - sandwich grill
+  - sandwich maker
+  - table grill
+  - electric contact grill
+  - panini grill
+  - panini press
+  - toastie maker
+  - portable-grill
+  - portablegrill
+  - portable grills
+  - contact-grill
+  - contactgrill
+  - contact grills
+  - sandwich-grill
+  - sandwichgrill
+  - sandwich grills
+  - sandwich-maker
+  - sandwichmaker
+  - sandwich makers
+  - table-grill
+  - tablegrill
+  - table grills
+  - electric-contact-grill
+  - electriccontactgrill
+  - electric contact grills
+  - panini-grill
+  - paninigrill
+  - panini grills
+  - panini-press
+  - paninipress
+  - panini pres
+  - toastie-maker
+  - toastiemaker
+  - toastie makers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - portable
+  - food_preparation
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-9
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - portable grill
+  - contact grill
+  - sandwich grill
+  - sandwich maker
+  - table grill
+  - electric contact grill
+  - panini grill
+  - panini press
+  weak_aliases:
+  - toastie maker
+  - portable-grill
+  - portablegrill
+  - portable grills
+  - contact-grill
+  - contactgrill
+  - contact grills
+  - sandwich-grill
+  - sandwichgrill
+  - sandwich grills
+  - sandwich-maker
+  - sandwichmaker
+  - sandwich makers
+  - table-grill
+  - tablegrill
+  - table grills
+  - electric-contact-grill
+  - electriccontactgrill
+  - electric contact grills
+  - panini-grill
+  - paninigrill
+  - panini grills
+  - panini-press
+  - paninipress
+  - panini pres
+  - toastie-maker
+  - toastiemaker
+  - toastie makers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-9
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: range_hood
+  label: Range hood
+  aliases:
+  - range hood
+  - cooker hood
+  - extractor hood
+  - kitchen hood
+  - vent hood
+  - kitchen extractor hood
+  - chimney hood
+  - integrated hood
+  - built in hood
+  - built-in hood
+  - range-hood
+  - rangehood
+  - range hoods
+  - cooker-hood
+  - cookerhood
+  - cooker hoods
+  - extractor-hood
+  - extractorhood
+  - extractor hoods
+  - kitchen-hood
+  - kitchenhood
+  - kitchen hoods
+  - vent-hood
+  - venthood
+  - vent hoods
+  - kitchen-extractor-hood
+  - kitchenextractorhood
+  - kitchen extractor hoods
+  - chimney-hood
+  - chimneyhood
+  - chimney hoods
+  - integrated-hood
+  - integratedhood
+  - integrated hoods
+  - built-in-hood
+  - builtinhood
+  - built in hoods
+  - built-inhood
+  - built-in hoods
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - ventilation
+  - extraction
+  - fixed_installation
+  - built_in
+  functional_classes:
+  - kitchen_appliance
+  - air_treatment
+  likely_standards:
+  - EN 60335-2-31
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - range hood
+  - cooker hood
+  - extractor hood
+  - kitchen hood
+  - vent hood
+  - kitchen extractor hood
+  - chimney hood
+  - integrated hood
+  weak_aliases:
+  - built in hood
+  - built-in hood
+  - range-hood
+  - rangehood
+  - range hoods
+  - cooker-hood
+  - cookerhood
+  - cooker hoods
+  - extractor-hood
+  - extractorhood
+  - extractor hoods
+  - kitchen-hood
+  - kitchenhood
+  - kitchen hoods
+  - vent-hood
+  - venthood
+  - vent hoods
+  - kitchen-extractor-hood
+  - kitchenextractorhood
+  - kitchen extractor hoods
+  - chimney-hood
+  - chimneyhood
+  - chimney hoods
+  - integrated-hood
+  - integratedhood
+  - integrated hoods
+  - built-in-hood
+  - builtinhood
+  - built in hoods
+  - built-inhood
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-31
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - ventilation
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: refrigerator_freezer
+  label: Refrigerator / freezer
+  aliases:
+  - refrigerator
+  - fridge
+  - freezer
+  - fridge freezer
+  - wine cooler
+  - refrigerators
+  - fridges
+  - freezers
+  - fridge-freezer
+  - fridgefreezer
+  - fridge freezers
+  - wine-cooler
+  - winecooler
+  - wine coolers
+  - refrigerator freezer
+  - refrigerator-freezer
+  - refrigeratorfreezer
+  - refrigerator freezers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - cooling
+  - food_contact
+  - mains_powered
+  - refrigeration
+  functional_classes:
+  - cooling_appliance
+  - major_appliance
+  likely_standards:
+  - EN 60335-2-24
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-24
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - refrigerator
+  - fridge
+  - freezer
+  - fridge freezer
+  - wine cooler
+  weak_aliases:
+  - refrigerators
+  - fridges
+  - freezers
+  - fridge-freezer
+  - fridgefreezer
+  - fridge freezers
+  - wine-cooler
+  - winecooler
+  - wine coolers
+  - refrigerator freezer
+  - refrigerator-freezer
+  - refrigeratorfreezer
+  - refrigerator freezers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-24
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - cooling
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: rice_cooker
+  label: Rice cooker
+  aliases:
+  - rice cooker
+  - multicooker
+  - smart rice cooker
+  - electric rice cooker
+  - multi cooker
+  - multi-cooker
+  - rice-cooker
+  - ricecooker
+  - rice cookers
+  - multicookers
+  - smart-rice-cooker
+  - smartricecooker
+  - smart rice cookers
+  - electric-rice-cooker
+  - electricricecooker
+  - electric rice cookers
+  - multi cookers
+  - multi-cookers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  - water_contact
+  - mains_powered
+  - food_preparation
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-15
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - rice cooker
+  - multicooker
+  - smart rice cooker
+  - electric rice cooker
+  - multi cooker
+  - multi-cooker
+  weak_aliases:
+  - rice-cooker
+  - ricecooker
+  - rice cookers
+  - multicookers
+  - smart-rice-cooker
+  - smartricecooker
+  - smart rice cookers
+  - electric-rice-cooker
+  - electricricecooker
+  - electric rice cookers
+  - multi cookers
+  - multi-cookers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-15
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_food_scale
+  label: Smart kitchen food scale
+  product_family: smart_kitchen_tool
+  product_subfamily: smart_food_scale
+  aliases:
+  - kitchen scale
+  - food scale
+  - smart kitchen scale
+  - connected food scale
+  - bluetooth food scale
+  - digital kitchen scale
+  - nutrition scale
+  - baking scale
+  - coffee scale
+  - smart-food-scale
+  - smartfoodscale
+  - smart food scales
+  - kitchen-scale
+  - kitchenscale
+  - food-scale
+  - foodscale
+  - smart-kitchen-scale
+  - smartkitchenscale
+  - connected-food-scale
+  - connectedfoodscale
+  - bluetooth-food-scale
+  - bluetoothfoodscale
+  - digital-kitchen-scale
+  - digitalkitchenscale
+  - nutrition-scale
+  - nutritionscale
+  - baking-scale
+  - bakingscale
+  - coffee-scale
+  - coffeescale
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - food_contact
+  - bluetooth
+  - app_control
+  - display
+  functional_classes:
+  - kitchen_tool
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - cooking_food_appliance
+  - household_appliance
+  preferred_clues:
+  - kitchen scale
+  - food scale
+  - nutrition scale
+  - baking scale
+  confusable_with:
+  - smart_scale
+  strong_aliases:
+  - kitchen scale
+  - food scale
+  - smart kitchen scale
+  - connected food scale
+  - bluetooth food scale
+  - digital kitchen scale
+  - nutrition scale
+  - baking scale
+  - coffee scale
+  weak_aliases:
+  - smart-food-scale
+  - smartfoodscale
+  - smart food scales
+  - kitchen-scale
+  - kitchenscale
+  - food-scale
+  - foodscale
+  - smart-kitchen-scale
+  - smartkitchenscale
+  - connected-food-scale
+  - connectedfoodscale
+  - bluetooth-food-scale
+  - bluetoothfoodscale
+  - digital-kitchen-scale
+  - digitalkitchenscale
+  - nutrition-scale
+  - nutritionscale
+  marketplace_aliases:
+  - kitchen scale
+  - food scale
+  - digital kitchen scale
+  - nutrition scale
+  not_when_text_contains:
+  - body
+  - body weight
+  - body composition
+  - bathroom
+  negative_examples:
+  - smart_scale
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Connected kitchen food/nutrition/baking/coffee scales. Distinct from body weight/composition scales.
+- id: smart_food_thermometer
+  label: Smart food / cooking thermometer
+  product_family: smart_kitchen_tool
+  product_subfamily: smart_food_thermometer
+  aliases:
+  - cooking thermometer
+  - meat thermometer
+  - smart meat thermometer
+  - wireless cooking thermometer
+  - bluetooth bbq thermometer
+  - food probe thermometer
+  - instant read thermometer
+  - wifi grill thermometer
+  - oven thermometer smart
+  - smart-food-thermometer
+  - smartfoodthermometer
+  - smart food thermometers
+  - cooking-thermometer
+  - cookingthermometer
+  - meat-thermometer
+  - meatthermometer
+  - smart-meat-thermometer
+  - smartmeatthermometer
+  - wireless-cooking-thermometer
+  - wirelesscookingthermometer
+  - bluetooth-bbq-thermometer
+  - bluetoothbbqthermometer
+  - food-probe-thermometer
+  - foodprobethermometer
+  - instant-read-thermometer
+  - instantreadthermometer
+  - wifi-grill-thermometer
+  - wifigrillthermometer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - food_contact
+  - bluetooth
+  - wifi
+  - app_control
+  - display
+  functional_classes:
+  - kitchen_tool
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - cooking_food_appliance
+  - household_appliance
+  preferred_clues:
+  - thermometer
+  - meat probe
+  - food probe
+  exclude_clues:
+  - forehead
+  - ear
+  - body
+  - fever
+  confusable_with:
+  - smart_thermometer
+  strong_aliases:
+  - cooking thermometer
+  - meat thermometer
+  - smart meat thermometer
+  - wireless cooking thermometer
+  - bluetooth bbq thermometer
+  - food probe thermometer
+  - instant read thermometer
+  - wifi grill thermometer
+  weak_aliases:
+  - smart-food-thermometer
+  - smartfoodthermometer
+  - cooking-thermometer
+  - cookingthermometer
+  - meat-thermometer
+  - meatthermometer
+  - smart-meat-thermometer
+  - smartmeatthermometer
+  - wireless-cooking-thermometer
+  - wirelesscookingthermometer
+  - bluetooth-bbq-thermometer
+  - bluetoothbbqthermometer
+  - food-probe-thermometer
+  - foodprobethermometer
+  - instant-read-thermometer
+  - instantreadthermometer
+  - wifi-grill-thermometer
+  - wifigrillthermometer
+  marketplace_aliases:
+  - meat thermometer
+  - cooking thermometer
+  - bbq thermometer
+  - wireless food thermometer
+  not_when_text_contains:
+  - forehead
+  - ear
+  - fever
+  - body temperature
+  negative_examples:
+  - smart_thermometer
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - food_contact
+  - bluetooth
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Connected cooking thermometers for food/BBQ/oven use. Excludes clinical body thermometers.
+- id: sous_vide_cooker
+  label: Sous vide cooker / immersion circulator
+  product_family: cooking_appliance
+  product_subfamily: sous_vide_cooker
+  aliases:
+  - sous vide cooker
+  - immersion circulator
+  - sous vide stick
+  - sous vide precision cooker
+  - water bath circulator
+  - smart sous vide
+  - wifi sous vide
+  - sous-vide-cooker
+  - sousvidelooker
+  - sous vide cookers
+  - immersion-circulator
+  - immersioncirculator
+  - immersion circulators
+  - sous-vide-stick
+  - sous vide sticks
+  - sous-vide-precision-cooker
+  - water-bath-circulator
+  - waterbathcirculator
+  - smart-sous-vide
+  - smartsousvide
+  - wifi-sous-vide
+  - wifisousvide
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - heating
+  - motorized
+  - water_contact
+  - food_contact
+  - app_control
+  - wifi
+  - bluetooth
+  - display
+  functional_classes:
+  - cooking_appliance
+  likely_standards:
+  - EN 60335-2-14
+  genres:
+  - cooking_food_appliance
+  - household_appliance
+  strong_aliases:
+  - sous vide cooker
+  - immersion circulator
+  - sous vide stick
+  - sous vide precision cooker
+  - water bath circulator
+  - smart sous vide
+  weak_aliases:
+  - sous-vide-cooker
+  - sousvidelooker
+  - sous vide cookers
+  - immersion-circulator
+  - immersioncirculator
+  - immersion circulators
+  - sous-vide-stick
+  - sous vide sticks
+  - sous-vide-precision-cooker
+  - water-bath-circulator
+  - waterbathcirculator
+  - smart-sous-vide
+  - smartsousvide
+  - wifi-sous-vide
+  - wifisousvide
+  marketplace_aliases:
+  - sous vide cooker
+  - immersion circulator
+  - precision cooker
+  - sous vide stick
+  not_when_text_contains: []
+  negative_examples:
+  - rice_cooker
+  likely_standard_refs:
+  - ref: EN 60335-2-14
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - heating
+  - motorized
+  - water_contact
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Immersion circulators and sous vide cookers. Classified under EN 60335-2-14 (liquid heating appliances)
+    due to motorized heating in water.
+- id: spin_extractor
+  label: Spin extractor
+  aliases:
+  - spin extractor
+  - laundry spin extractor
+  - spin dryer
+  - spin-extractor
+  - spinextractor
+  - spin extractors
+  - laundry-spin-extractor
+  - laundryspinextractor
+  - laundry spin extractors
+  - spin-dryer
+  - spindryer
+  - spin dryers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - mains_power_likely
+  functional_classes:
+  - laundry_appliance
+  likely_standards:
+  - EN 60335-2-4
+  genres:
+  - kitchen_food_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - spin extractor
+  - laundry spin extractor
+  - spin dryer
+  weak_aliases:
+  - spin-extractor
+  - spinextractor
+  - spin extractors
+  - laundry-spin-extractor
+  - laundryspinextractor
+  - laundry spin extractors
+  - spin-dryer
+  - spindryer
+  - spin dryers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-4
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: toaster
+  label: Toaster
+  aliases:
+  - toaster
+  - pop up toaster
+  - smart toaster
+  - two-slice toaster
+  - four-slice toaster
+  - toasters
+  - pop-up-toaster
+  - popuptoaster
+  - pop up toasters
+  - smart-toaster
+  - smarttoaster
+  - smart toasters
+  - two slice toaster
+  - two-slice-toaster
+  - two-slicetoaster
+  - two-slice toasters
+  - four slice toaster
+  - four-slice-toaster
+  - four-slicetoaster
+  - four-slice toasters
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  - electronic
+  - food_preparation
+  functional_classes:
+  - cooking_appliance
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-9
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - toaster
+  - pop up toaster
+  - smart toaster
+  - two-slice toaster
+  - four-slice toaster
+  weak_aliases:
+  - toasters
+  - pop-up-toaster
+  - popuptoaster
+  - pop up toasters
+  - smart-toaster
+  - smarttoaster
+  - smart toasters
+  - two slice toaster
+  - two-slice-toaster
+  - two-slicetoaster
+  - two-slice toasters
+  - four slice toaster
+  - four-slice-toaster
+  - four-slicetoaster
+  - four-slice toasters
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-9
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: vending_machine
+  label: Vending machine
+  aliases:
+  - vending machine
+  - drink vending machine
+  - snack vending machine
+  - vending-machine
+  - vendingmachine
+  - vending machines
+  - drink-vending-machine
+  - drinkvendingmachine
+  - drink vending machines
+  - snack-vending-machine
+  - snackvendingmachine
+  - snack vending machines
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - cooling
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  likely_standards:
+  - EN 60335-2-75
+  genres:
+  - commercial_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - vending machine
+  - drink vending machine
+  - snack vending machine
+  weak_aliases:
+  - vending-machine
+  - vendingmachine
+  - vending machines
+  - drink-vending-machine
+  - drinkvendingmachine
+  - drink vending machines
+  - snack-vending-machine
+  - snackvendingmachine
+  - snack vending machines
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-75
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - cooling
+  - heating
+  - food_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: warming_plate
+  label: Warming plate
+  aliases:
+  - warming plate
+  - food warmer plate
+  - hot plate warmer
+  - warming-plate
+  - warmingplate
+  - warming plates
+  - food-warmer-plate
+  - foodwarmerplate
+  - food warmer plates
+  - hot-plate-warmer
+  - hotplatewarmer
+  - hot plate warmers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  functional_classes:
+  - kitchen_appliance
+  likely_standards:
+  - EN 60335-2-12
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - warming plate
+  - food warmer plate
+  - hot plate warmer
+  weak_aliases:
+  - warming-plate
+  - warmingplate
+  - warming plates
+  - food-warmer-plate
+  - foodwarmerplate
+  - food warmer plates
+  - hot-plate-warmer
+  - hotplatewarmer
+  - hot plate warmers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-12
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - food_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

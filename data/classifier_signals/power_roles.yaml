@@ -1,0 +1,111 @@
+trait_detection:
+  power_and_energy:
+    battery_powered:
+    - \bbattery powered\b
+    - \bbattery operated\b
+    - \brechargeable battery\b
+    - \brechargeable\b
+    - \bcordless\b
+    - \bli ion\b
+    - \bli-ion\b
+    - \blithium ion\b
+    - \blithium\b
+    - \blithium battery\b
+    - \bbattery pack\b
+    - \bbattery cell\b
+    - \bbattery powered device\b
+    - \bon battery\b
+    rechargeable:
+    - \brechargeable\b
+    - \brecharge via usb\b
+    - \busb rechargeable\b
+    removable_battery:
+    - \bremovable battery\b
+    - \breplaceable battery\b
+    - \bswappable battery\b
+    lithium_ion_battery:
+    - \bli ion\b
+    - \bli-ion\b
+    - \blithium ion\b
+    - \blithium-ion\b
+    energy_storage:
+    - \bbattery pack\b
+    - \benergy storage\b
+    - \bpower station\b
+    external_psu:
+    - \bexternal psu\b
+    - \bexternal power supply\b
+    - \bpower adapter\b
+    - \bac adapter\b
+    - \bdc adapter\b
+    - \bpower brick\b
+    - \bwall wart\b
+    - \bplug pack\b
+    - \bmains adapter\b
+    usb_powered:
+    - \busb powered\b
+    - \busb c powered\b
+    - \bpowered by usb\b
+    - \btype c powered\b
+    usb_pd:
+    - \busb pd\b
+    - \bpower delivery\b
+    - \busb power delivery\b
+    poe_powered:
+    - \bpoe powered\b
+    - \bpoe\b
+    - \b802 3af\b
+    - \b802 3at\b
+    - \b802 3bt\b
+    poe_supply:
+    - \bpoe injector\b
+    - \bpoe switch\b
+    - \bpower sourcing equipment\b
+    wireless_charging_tx:
+    - \bwireless charger\b
+    - \bcharging pad\b
+    - \bcharging stand\b
+    wireless_charging_rx:
+    - \bsupports wireless charging\b
+    - \bwireless charging receiver\b
+    backup_battery:
+    - \bbackup battery\b
+    - \bbattery backup\b
+    energy_monitoring:
+    - \benergy monitoring\b
+    - \bpower monitoring\b
+    - \benergy meter\b
+    - \bpower consumption\b
+    smart_grid_ready:
+    - \bsmart grid\b
+    - \bdemand response\b
+    - \bdynamic load management\b
+    charger_role:
+    - \bcharger\b
+    - \bcharging adapter\b
+    - \bcharging dock\b
+    - \bcharging cradle\b
+    - \bcharging station\b
+    charge_controller:
+    - \bcharge controller\b
+    - \bcharge management\b
+    power_source:
+    - \bpower supply\b
+    - \bpower source\b
+    - \bac dc adapter\b
+    - \bac-dc adapter\b
+    - \bpower adapter\b
+    powered_load:
+    - \bpowered device\b
+    - \bpowered load\b
+    mains_powered:
+    - \bmains\b
+    - \b230v\b
+    - \b220v\b
+    - \b240v\b
+    - \bac power\b
+    - \bplug in\b
+    - \bplugged in\b
+negations: {}
+suppression_mappings: {}
+cue_groups: {}

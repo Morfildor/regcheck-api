@@ -87,6 +87,16 @@ class CalibrationFixtureTests(unittest.TestCase):
                 self._assert_trace_structure(result)
                 self._assert_route_integrity(result)
 
+                if case.expected_primary_route_family is not None:
+                    self.assertEqual(result.route_context.primary_route_family, case.expected_primary_route_family)
+                if case.expected_primary_route_standard is not None and not case.assert_primary_route:
+                    self.assertEqual(result.primary_route_standard_code, case.expected_primary_route_standard)
+                    self.assertEqual(result.route_context.primary_route_standard_code, case.expected_primary_route_standard)
+                if case.expected_product_match_stage is not None:
+                    self.assertEqual(result.product_match_stage, case.expected_product_match_stage)
+                if case.expected_route_confidence is not None:
+                    self.assertEqual(result.route_context.route_confidence, case.expected_route_confidence)
+
                 if case.assert_primary_route:
                     self._assert_primary_route(result, case)
                 else:

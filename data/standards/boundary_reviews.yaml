@@ -1,0 +1,171 @@
+standards:
+- code: Biocompatibility / skin-contact review
+  title: Skin-contact biocompatibility and materials review
+  region: EU
+  category: safety
+  directives:
+  - GPSR
+  legislation_key: GPSR
+  item_type: review
+  standard_family: ISO 10993 review
+  confidence: medium
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_any:
+  - wearable
+  - body_worn_or_applied
+  - personal_care
+  exclude_if: []
+  test_focus:
+  - safety
+  - materials
+  evidence_hint:
+  - material composition review
+  - skin-contact duration and area review
+  - irritation / sensitization screening
+  keywords:
+  - skin contact
+  - body contact
+  - wearable
+  - personal care
+  notes: Review item for wearables, body-contact devices, and connected personal-care products where skin-contact material
+    and biocompatibility questions may matter.
+  standard_ref: Biocompatibility / skin-contact review
+  selection_group: BIOCOMPATIBILITY REVIEW
+  selection_priority: 0
+  evidence_keywords:
+  - material composition review
+  - skin-contact duration and area review
+  - irritation / sensitization screening
+  - skin contact
+  - body contact
+- code: EN 60601 review
+  title: Medical electrical equipment standards-suite review
+  region: EU
+  category: safety
+  directives:
+  - MDR
+  legislation_key: MDR
+  item_type: review
+  standard_family: EN 60601
+  confidence: low
+  required_fact_basis: confirmed
+  harmonization_status: review
+  is_harmonized: false
+  version: EN 60601 series
+  dated_version: EN 60601 series
+  applies_if_any:
+  - medical_claims
+  - medical_context
+  test_focus:
+  - safety
+  - electrical
+  - emc
+  evidence_hint:
+  - medical-electrical safety review
+  - patient-contact review
+  - EMC / usability review
+  keywords:
+  - medical electrical equipment
+  - patient monitor
+  notes: Only surface when the intended purpose or claims suggest MDR-type medical-electrical treatment.
+  standard_ref: EN 60601 review
+  selection_group: EN 60601
+  selection_priority: 0
+  evidence_keywords:
+  - medical-electrical safety review
+  - patient-contact review
+  - EMC / usability review
+  - medical electrical equipment
+  - patient monitor
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: GDPR review
+  title: GDPR assessment required
+  region: EU
+  category: privacy
+  directives:
+  - GDPR
+  legislation_key: GDPR
+  item_type: review
+  standard_family: GDPR REVIEW
+  confidence: medium
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all: []
+  applies_if_any:
+  - personal_data_likely
+  - camera
+  - microphone
+  - location
+  - health_related
+  - account
+  - child_targeted
+  - data_storage
+  exclude_if: []
+  test_focus:
+  - privacy
+  - software
+  evidence_hint:
+  - data-flow review
+  - privacy documentation review
+  keywords:
+  - personal data processing
+  - gdpr assessment required
+  notes: Review whether product features, services, or accounts involve personal-data processing that triggers GDPR obligations.
+  state_of_the_art_scope: EU
+  standard_ref: GDPR review
+  selection_group: GDPR REVIEW
+  selection_priority: 0
+  evidence_keywords:
+  - data-flow review
+  - privacy documentation review
+  - personal data processing
+  - gdpr assessment required
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: MDR borderline review
+  title: Medical-device borderline standards and intended-purpose review
+  region: EU
+  category: safety
+  directives:
+  - MDR
+  legislation_key: MDR
+  item_type: review
+  standard_family: MDR borderline
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  version: Borderline review
+  dated_version: Borderline review
+  applies_if_any:
+  - medical_claims
+  - medical_context
+  - possible_medical_boundary
+  test_focus:
+  - safety
+  - software
+  - privacy
+  evidence_hint:
+  - intended-purpose statement
+  - claim set review
+  - clinical / medical classification review
+  keywords:
+  - medical claims
+  - wellness device
+  - diagnostic
+  notes: Review item to stop consumer wellness products from being treated as ordinary household or AV/ICT products when medical
+    claims are present.
+  standard_ref: MDR borderline review
+  selection_group: MDR borderline
+  selection_priority: 0
+  evidence_keywords:
+  - intended-purpose statement
+  - claim set review
+  - clinical / medical classification review
+  - medical claims
+  - wellness device
+  - diagnostic
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.

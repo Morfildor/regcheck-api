@@ -1,0 +1,1332 @@
+products:
+- id: battery_charger
+  label: Battery charger
+  aliases:
+  - battery charger
+  - appliance charger
+  - charging dock
+  - charging cradle
+  - charging station
+  - charging base
+  - battery dock
+  - wall charger
+  - desktop charger
+  - battery-charger
+  - batterycharger
+  - battery chargers
+  - appliance-charger
+  - appliancecharger
+  - appliance chargers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - external_psu
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN 60335-2-29
+  genres:
+  - portable_energy
+  strong_aliases:
+  - battery charger
+  - appliance charger
+  - charging dock
+  - charging cradle
+  - charging station
+  - charging base
+  weak_aliases:
+  - battery dock
+  - wall charger
+  - desktop charger
+  - battery-charger
+  - batterycharger
+  - battery chargers
+  - appliance-charger
+  - appliancecharger
+  - appliance chargers
+  marketplace_aliases:
+  - charging dock
+  - charging cradle
+  - charging station
+  - charging base
+  - battery dock
+  - wall charger
+  - desktop charger
+  - battery charger
+  - battery-charger
+  - batterycharger
+  - battery chargers
+  - appliance charger
+  - appliance-charger
+  - appliancecharger
+  - appliance chargers
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-29
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - external_psu
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  exclude_clues:
+  - toothbrush
+  - flosser
+  - oral irrigator
+  - dental
+  - gum care
+  - water flosser
+- id: battery_powered_oral_hygiene
+  label: Battery-powered oral hygiene appliance
+  aliases:
+  - battery toothbrush
+  - smart toothbrush
+  - connected toothbrush
+  - battery water flosser
+  - cordless water flosser
+  - portable water flosser
+  - rechargeable water flosser
+  - electric flosser
+  - electric floss machine
+  - portable oral irrigator
+  - cordless oral irrigator
+  - dental water flosser
+  - water dental flosser
+  - water flosser pick
+  - teeth cleaning flosser
+  - rechargeable toothbrush
+  - cordless flosser
+  - rechargeable oral irrigator
+  - portable dental irrigator
+  - battery-toothbrush
+  - batterytoothbrush
+  - battery toothbrushs
+  - battery-water-flosser
+  - batterywaterflosser
+  - battery water flossers
+  - cordless-water-flosser
+  - cordlesswaterflosser
+  - cordless water flossers
+  - portable-water-flosser
+  - portablewaterflosser
+  - portable water flossers
+  - rechargeable-water-flosser
+  - rechargeablewaterflosser
+  - rechargeable water flossers
+  - electric-flosser
+  - electricflosser
+  - electric flossers
+  - electric-floss-machine
+  - electricflossmachine
+  - electric floss machines
+  - portable-oral-irrigator
+  - portableoralirrigator
+  - portable oral irrigators
+  - cordless-oral-irrigator
+  - cordlessoralirrigator
+  - cordless oral irrigators
+  - dental-water-flosser
+  - dentalwaterflosser
+  - dental water flossers
+  - water-dental-flosser
+  - waterdentalflosser
+  - water dental flossers
+  - water-flosser-pick
+  - waterflosserpick
+  - water flosser picks
+  - teeth-cleaning-flosser
+  - teethcleaningflosser
+  - teeth cleaning flossers
+  - rechargeable-toothbrush
+  - rechargeabletoothbrush
+  - rechargeable toothbrushs
+  - cordless-flosser
+  - cordlessflosser
+  - cordless flossers
+  - rechargeable-oral-irrigator
+  - rechargeableoralirrigator
+  - rechargeable oral irrigators
+  - portable-dental-irrigator
+  - portabledentalirrigator
+  - portable dental irrigators
+  - battery-powered oral hygiene appliance
+  - battery powered oral hygiene appliance
+  - battery-powered-oral-hygiene-appliance
+  - battery-poweredoralhygieneappliance
+  - battery-powered oral hygiene appliances
+  - dental flosser
+  - oral flosser
+  - waterpik
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - water_contact
+  - oral_care
+  - personal_care
+  - portable
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-52
+  genres:
+  - household_appliance
+  - personal_care_appliance
+  preferred_clues:
+  - battery
+  - rechargeable
+  - oral irrigator
+  - water flosser
+  - flossing machine
+  - toothbrush
+  - smart toothbrush
+  - waterpik
+  - dental flosser
+  - oral flosser
+  exclude_clues:
+  - projector
+  - display
+  - presentation
+  - home cinema
+  confusable_with:
+  - projector
+  - home_projector
+  product_family: oral_hygiene_device
+  product_subfamily: battery_powered_oral_hygiene
+  family_keywords:
+  - oral hygiene
+  - dental cleaning
+  - tooth cleaning
+  - gum care
+  family_traits: []
+  subtype_traits: []
+  required_clues: []
+  strong_aliases:
+  - battery toothbrush
+  - smart toothbrush
+  - connected toothbrush
+  - battery water flosser
+  - cordless water flosser
+  - portable water flosser
+  - rechargeable water flosser
+  - electric flosser
+  - electric floss machine
+  - portable oral irrigator
+  - dental flosser
+  - oral flosser
+  - waterpik
+  weak_aliases:
+  - cordless oral irrigator
+  - dental water flosser
+  - water dental flosser
+  - water flosser pick
+  - teeth cleaning flosser
+  - rechargeable toothbrush
+  - cordless flosser
+  - rechargeable oral irrigator
+  - portable dental irrigator
+  - battery-toothbrush
+  - batterytoothbrush
+  - battery toothbrushs
+  - battery-water-flosser
+  - batterywaterflosser
+  - battery water flossers
+  - cordless-water-flosser
+  - cordlesswaterflosser
+  - cordless water flossers
+  - portable-water-flosser
+  - portablewaterflosser
+  - portable water flossers
+  - rechargeable-water-flosser
+  - rechargeablewaterflosser
+  - rechargeable water flossers
+  - electric-flosser
+  - electricflosser
+  - electric flossers
+  - electric-floss-machine
+  - electricflossmachine
+  - electric floss machines
+  marketplace_aliases:
+  - smart toothbrush
+  - connected toothbrush
+  - waterpik flosser
+  - smart water flosser
+  - dental flosser
+  - oral flosser
+  - waterpik
+  not_when_text_contains:
+  - projector
+  - display
+  - presentation
+  - home cinema
+  negative_examples:
+  - projector
+  - home_projector
+  likely_standard_refs:
+  - ref: EN 60335-2-52
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - water_contact
+  score_penalty_if_traits:
+  - projector
+  - display
+  - presentation
+  - home cinema
+  required_any_traits:
+  - electrical
+  - electronic
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: external_power_supply
+  label: External power supply / AC-DC adapter
+  product_family: portable_power_charger
+  product_subfamily: external_power_supply
+  family_keywords:
+  - external power supply
+  - power adapter
+  - ac dc adapter
+  aliases:
+  - external power supply
+  - external psu
+  - power adapter
+  - ac adapter
+  - dc adapter
+  - ac dc adapter
+  - power brick
+  - replacement power supply
+  preferred_clues:
+  - external power supply
+  - external psu
+  - ac dc adapter
+  - replacement power supply
+  exclude_clues:
+  - battery charger
+  - usb wall charger
+  - monitor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - external_psu
+  - power_source
+  - mains_powered
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - portable_energy
+  - av_ict_device
+  strong_aliases:
+  - external power supply
+  - external psu
+  - power adapter
+  - ac adapter
+  - dc adapter
+  - ac dc adapter
+  weak_aliases:
+  - power brick
+  - replacement power supply
+  marketplace_aliases:
+  - switching power adapter
+  - desktop power supply adapter
+  minimum_match_score: 32
+  score_boost_if_traits:
+  - external_psu
+  - power_source
+  matching_notes: Keeps stand-alone adapters and power bricks separate from the powered end-product they are sold for.
+- id: home_battery_system
+  label: Home battery energy storage system
+  aliases:
+  - home battery
+  - home energy storage
+  - battery storage system
+  - powerwall
+  - home ups battery
+  - solar battery storage
+  - home-battery
+  - homebattery
+  - home batterys
+  - home-energy-storage
+  - homeenergystorage
+  - home energy storages
+  - battery-storage-system
+  - batterystoragesystem
+  - battery storage systems
+  - powerwalls
+  - home-ups-battery
+  - homeupsbattery
+  - home ups batterys
+  - solar-battery-storage
+  - solarbatterystorage
+  - solar battery storages
+  - home battery energy storage system
+  - home-battery-energy-storage-system
+  - homebatteryenergystoragesystem
+  - home battery energy storage systems
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - fixed_installation
+  - wifi
+  - app_control
+  - ota
+  - cloud
+  - energy_monitoring
+  - smart_grid_ready
+  - data_storage
+  - display
+  - battery_powered
+  functional_classes:
+  - power_supply
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - portable_energy
+  strong_aliases:
+  - home battery
+  - home energy storage
+  - battery storage system
+  - powerwall
+  - home ups battery
+  - solar battery storage
+  weak_aliases:
+  - home-battery
+  - homebattery
+  - home batterys
+  - home-energy-storage
+  - homeenergystorage
+  - home energy storages
+  - battery-storage-system
+  - batterystoragesystem
+  - battery storage systems
+  - powerwalls
+  - home-ups-battery
+  - homeupsbattery
+  - home ups batterys
+  - solar-battery-storage
+  - solarbatterystorage
+  - solar battery storages
+  - home battery energy storage system
+  - home-battery-energy-storage-system
+  - homebatteryenergystoragesystem
+  - home battery energy storage systems
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: industrial_charger
+  label: Industrial battery charger
+  aliases:
+  - industrial battery charger
+  - forklift charger
+  - traction battery charger
+  - industrial-battery-charger
+  - industrialbatterycharger
+  - industrial battery chargers
+  - forklift-charger
+  - forkliftcharger
+  - forklift chargers
+  - traction-battery-charger
+  - tractionbatterycharger
+  - traction battery chargers
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_powered
+  - external_psu
+  functional_classes:
+  - power_supply
+  - industrial_equipment
+  likely_standards:
+  - EN 50563
+  genres:
+  - portable_energy
+  strong_aliases:
+  - industrial battery charger
+  - forklift charger
+  - traction battery charger
+  weak_aliases:
+  - industrial-battery-charger
+  - industrialbatterycharger
+  - industrial battery chargers
+  - forklift-charger
+  - forkliftcharger
+  - forklift chargers
+  - traction-battery-charger
+  - tractionbatterycharger
+  - traction battery chargers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 50563
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_powered
+  - external_psu
+  score_penalty_if_traits: []
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: portable_power_station
+  label: Portable power station
+  aliases:
+  - portable power station
+  - power station
+  - solar generator
+  - portable generator battery
+  - backup power station
+  - portable battery station
+  - outdoor power station
+  - portable-power-station
+  - portablepowerstation
+  - portable power stations
+  - power-station
+  - powerstation
+  - power stations
+  - solar-generator
+  - solargenerator
+  - solar generators
+  - portable-generator-battery
+  - portablegeneratorbattery
+  - portable generator batterys
+  - backup-power-station
+  - backuppowerstation
+  - backup power stations
+  product_family: portable_energy_family
+  product_subfamily: portable_power_station
+  genres:
+  - portable_energy
+  implied_traits:
+  - display
+  - usb_powered
+  - mains_powered
+  functional_classes:
+  - power_device
+  - energy_storage
+  likely_standards:
+  - EN 62133-2
+  - EN 62368-1
+  - UN 38.3 review
+  strong_aliases:
+  - portable power station
+  - power station
+  - solar generator
+  - portable generator battery
+  - backup power station
+  - portable battery station
+  - outdoor power station
+  weak_aliases:
+  - portable-power-station
+  - portablepowerstation
+  - portable power stations
+  - power-station
+  - powerstation
+  - power stations
+  - solar-generator
+  - solargenerator
+  - solar generators
+  - portable-generator-battery
+  - portablegeneratorbattery
+  - portable generator batterys
+  - backup-power-station
+  - backuppowerstation
+  - backup power stations
+  marketplace_aliases:
+  - solar generator
+  - portable battery station
+  - outdoor power station
+  - portable power station
+  - portable-power-station
+  - portablepowerstation
+  - portable power stations
+  - power station
+  - power-station
+  - powerstation
+  - power stations
+  - solar-generator
+  - solargenerator
+  - solar generators
+  - portable generator battery
+  - portable-generator-battery
+  - portablegeneratorbattery
+  - portable generator batterys
+  - backup power station
+  - backup-power-station
+  - backuppowerstation
+  - backup power stations
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62133-2
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: UN 38.3 review
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - display
+  - usb_powered
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: power_bank
+  label: Power bank
+  aliases:
+  - power bank
+  - battery bank
+  - usb battery pack
+  - portable charger
+  - charging pack
+  - usb power bank
+  - power-bank
+  - powerbank
+  - power banks
+  - battery-bank
+  - batterybank
+  - battery banks
+  - usb-battery-pack
+  - usbbatterypack
+  - usb battery packs
+  - portable-charger
+  - portablecharger
+  - portable chargers
+  - charging-pack
+  - chargingpack
+  - charging packs
+  exclude_clues:
+  - solar charge controller
+  - pv charge controller
+  - mppt charge controller
+  - pwm solar controller
+  product_family: portable_energy_family
+  product_subfamily: power_bank
+  genres:
+  - portable_energy
+  implied_traits:
+  - usb_powered
+  - battery_powered
+  - electronic
+  - handheld
+  functional_classes:
+  - power_device
+  - energy_storage
+  likely_standards:
+  - EN 62133-2
+  - EN 62368-1
+  - UN 38.3 review
+  strong_aliases:
+  - power bank
+  - battery bank
+  - usb battery pack
+  - portable charger
+  - charging pack
+  - usb power bank
+  weak_aliases:
+  - power-bank
+  - powerbank
+  - power banks
+  - battery-bank
+  - batterybank
+  - battery banks
+  - usb-battery-pack
+  - usbbatterypack
+  - usb battery packs
+  - portable-charger
+  - portablecharger
+  - portable chargers
+  - charging-pack
+  - chargingpack
+  - charging packs
+  marketplace_aliases:
+  - portable charger
+  - battery bank
+  - usb power bank
+  - power bank
+  - power-bank
+  - powerbank
+  - power banks
+  - battery-bank
+  - batterybank
+  - battery banks
+  - usb battery pack
+  - usb-battery-pack
+  - usbbatterypack
+  - usb battery packs
+  - portable-charger
+  - portablecharger
+  - portable chargers
+  - charging pack
+  - charging-pack
+  - chargingpack
+  - charging packs
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62133-2
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: UN 38.3 review
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - usb_powered
+  - battery_powered
+  - handheld
+  score_penalty_if_traits: []
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_power_strip
+  label: Smart power strip / surge protector
+  aliases:
+  - smart power strip
+  - smart surge protector
+  - wifi power strip
+  - connected power strip
+  - smart extension lead
+  - smart-power-strip
+  - smartpowerstrip
+  - smart power strips
+  - smart-surge-protector
+  - smartsurgeprotector
+  - smart surge protectors
+  - wi-fi power strip
+  - wi fi power strip
+  - wifi-power-strip
+  - wifipowerstrip
+  - wifi power strips
+  - connected-power-strip
+  - connectedpowerstrip
+  - connected power strips
+  - smart-extension-lead
+  - smartextensionlead
+  - smart extension leads
+  - smart power strip surge protector
+  - smart-power-strip-surge-protector
+  - smartpowerstripsurgeprotector
+  - smart power strip surge protectors
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - radio
+  - wifi
+  - bluetooth
+  - app_control
+  - ota
+  - energy_monitoring
+  - usb_hub_function
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  strong_aliases:
+  - smart power strip
+  - smart surge protector
+  - wifi power strip
+  - connected power strip
+  - smart extension lead
+  weak_aliases:
+  - smart-power-strip
+  - smartpowerstrip
+  - smart power strips
+  - smart-surge-protector
+  - smartsurgeprotector
+  - smart surge protectors
+  - wi-fi power strip
+  - wi fi power strip
+  - wifi-power-strip
+  - wifipowerstrip
+  - wifi power strips
+  - connected-power-strip
+  - connectedpowerstrip
+  - connected power strips
+  - smart-extension-lead
+  - smartextensionlead
+  - smart extension leads
+  - smart power strip surge protector
+  - smart-power-strip-surge-protector
+  - smartpowerstripsurgeprotector
+  - smart power strip surge protectors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: solar_inverter_gateway
+  label: Home solar inverter / energy gateway
+  product_family: energy_power_system
+  product_subfamily: solar_inverter_gateway
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Home solar inverter and storage-gateway products stay at family level pending system-architecture and installation-boundary review.
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  aliases:
+  - solar inverter
+  - pv inverter
+  - home solar gateway
+  - solar energy monitor
+  - solar management gateway
+  - micro-inverter
+  - hybrid solar inverter
+  - solar-inverter
+  - solarinverter
+  - solar inverters
+  - pv-inverter
+  - pvinverter
+  - pv inverters
+  - home-solar-gateway
+  - homesolargateway
+  - home solar gateways
+  - solar-energy-monitor
+  - solarenergymonitor
+  - solar energy monitors
+  - solar-management-gateway
+  - solarmanagementgateway
+  - solar management gateways
+  - micro inverter
+  - micro-inverters
+  - hybrid-solar-inverter
+  - hybridsolarinverter
+  - hybrid solar inverters
+  - balcony power storage
+  - balcony battery storage
+  - residential battery storage
+  - home battery storage
+  - home solar inverter energy gateway
+  - home-solar-inverter-energy-gateway
+  - homesolarinverterenergygateway
+  - home solar inverter energy gateways
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - fixed_installation
+  - wifi
+  - bluetooth
+  - app_control
+  - ota
+  - cloud
+  - energy_monitoring
+  - energy_system_boundary
+  - inverter_system
+  - industrial_installation_boundary
+  - smart_grid_ready
+  - data_storage
+  - display
+  functional_classes:
+  - power_supply
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  - Energy storage / inverter system review
+  genres:
+  - portable_energy
+  - av_ict_device
+  strong_aliases:
+  - solar inverter
+  - pv inverter
+  - home solar gateway
+  - solar energy monitor
+  - solar management gateway
+  - micro-inverter
+  - hybrid solar inverter
+  weak_aliases:
+  - solar-inverter
+  - solarinverter
+  - solar inverters
+  - pv-inverter
+  - pvinverter
+  - pv inverters
+  - home-solar-gateway
+  - homesolargateway
+  - home solar gateways
+  - solar-energy-monitor
+  - solarenergymonitor
+  - solar energy monitors
+  - solar-management-gateway
+  - solarmanagementgateway
+  - solar management gateways
+  - micro inverter
+  - micro-inverters
+  - hybrid-solar-inverter
+  - hybridsolarinverter
+  - hybrid solar inverters
+  - home solar inverter energy gateway
+  - home-solar-inverter-energy-gateway
+  - homesolarinverterenergygateway
+  - home solar inverter energy gateways
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: travel_adapter_charger
+  label: Travel adapter with USB charging
+  product_family: portable_power_charger
+  product_subfamily: travel_adapter_charger
+  family_keywords:
+  - travel adapter
+  - travel charger
+  - plug adapter
+  aliases:
+  - travel adapter
+  - travel adapter with usb
+  - travel charger
+  - universal travel adapter
+  - world travel adapter
+  - plug adapter with usb charging
+  - international plug adapter charger
+  preferred_clues:
+  - travel adapter with usb
+  - universal travel adapter
+  - plug adapter with usb charging
+  exclude_clues:
+  - passive plug adapter
+  - mechanical plug adapter
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - portable
+  - external_psu
+  - charger_role
+  - power_source
+  - usb_pd
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - portable_energy
+  - av_ict_device
+  strong_aliases:
+  - travel adapter with usb
+  - universal travel adapter
+  - plug adapter with usb charging
+  - international plug adapter charger
+  weak_aliases:
+  - travel adapter
+  - travel charger
+  - world travel adapter
+  marketplace_aliases:
+  - travel adapter usb c
+  - universal adapter charger
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - portable
+  - external_psu
+  - charger_role
+  matching_notes: Covers active travel adapters with integrated USB charging while avoiding collisions with passive country
+    plug adapters.
+- id: usb_charging_hub
+  label: USB charging hub / PD charger
+  aliases:
+  - usb charger
+  - usb-c charger
+  - pd charger
+  - gan charger
+  - usb charging station
+  - multi-port charger
+  - desktop charger
+  - travel charger
+  - usb power delivery charger
+  - usb-charger
+  - usbcharger
+  - usb chargers
+  - usb c charger
+  - usb-c-charger
+  - usb-ccharger
+  - usb-c chargers
+  - pd-charger
+  - pdcharger
+  - pd chargers
+  - gan-charger
+  - gancharger
+  - gan chargers
+  - usb-charging-station
+  - usbchargingstation
+  - usb charging stations
+  - multi port charger
+  - multi-port-charger
+  - multi-portcharger
+  - multi-port chargers
+  - desktop-charger
+  - desktopcharger
+  - desktop chargers
+  - travel-charger
+  - travelcharger
+  - travel chargers
+  - usb-power-delivery-charger
+  - usbpowerdeliverycharger
+  - usb power delivery chargers
+  - usb charging hub pd charger
+  - usb-charging-hub-pd-charger
+  - usbcharginghubpdcharger
+  - usb charging hub pd chargers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - usb_hub_function
+  - usb_pd
+  functional_classes:
+  - power_supply
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - portable_energy
+  strong_aliases:
+  - usb charger
+  - usb-c charger
+  - pd charger
+  - gan charger
+  - usb charging station
+  - multi-port charger
+  - desktop charger
+  - travel charger
+  weak_aliases:
+  - usb power delivery charger
+  - usb-charger
+  - usbcharger
+  - usb chargers
+  - usb c charger
+  - usb-c-charger
+  - usb-ccharger
+  - usb-c chargers
+  - pd-charger
+  - pdcharger
+  - pd chargers
+  - gan-charger
+  - gancharger
+  - gan chargers
+  - usb-charging-station
+  - usbchargingstation
+  - usb charging stations
+  - multi port charger
+  - multi-port-charger
+  - multi-portcharger
+  - multi-port chargers
+  - desktop-charger
+  - desktopcharger
+  - desktop chargers
+  - travel-charger
+  - travelcharger
+  - travel chargers
+  - usb-power-delivery-charger
+  - usbpowerdeliverycharger
+  - usb power delivery chargers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - usb_hub_function
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: usb_wall_charger
+  label: USB wall charger / USB-C power adapter
+  product_family: portable_power_charger
+  product_subfamily: usb_wall_charger
+  family_keywords:
+  - usb charger
+  - usb wall charger
+  - usb c charger
+  aliases:
+  - usb charger
+  - usb wall charger
+  - usb-c wall charger
+  - usb c wall charger
+  - usb power adapter
+  - phone charger
+  - tablet charger
+  - pd charger
+  - gan charger
+  preferred_clues:
+  - usb wall charger
+  - usb-c wall charger
+  - usb power adapter
+  - pd charger
+  exclude_clues:
+  - battery charger dock
+  - wireless charger
+  - travel adapter
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - external_psu
+  - charger_role
+  - power_source
+  - usb_pd
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - portable_energy
+  - av_ict_device
+  strong_aliases:
+  - usb charger
+  - usb wall charger
+  - usb-c wall charger
+  - usb c wall charger
+  - usb power adapter
+  weak_aliases:
+  - phone charger
+  - tablet charger
+  - pd charger
+  - gan charger
+  marketplace_aliases:
+  - fast charger
+  - usb c charger
+  - usb power adapter
+  minimum_match_score: 32
+  score_boost_if_traits:
+  - external_psu
+  - charger_role
+  - usb_pd
+  matching_notes: Separates consumer USB charging adapters from appliance battery docks and keeps them on the EN 62368-1 AV/ICT
+    safety route.
+- id: wireless_charger
+  label: Wireless charging pad / stand
+  aliases:
+  - wireless charger
+  - qi charger
+  - qi2 charger
+  - magsafe charger
+  - wireless charging pad
+  - wireless charging stand
+  - inductive charger
+  - multi device wireless charger
+  - wireless-charger
+  - wirelesscharger
+  - wireless chargers
+  - qi-charger
+  - qicharger
+  - qi chargers
+  - qi2-charger
+  - qi2charger
+  - qi2 chargers
+  - magsafe-charger
+  - magsafecharger
+  - magsafe chargers
+  - wireless-charging-pad
+  - wirelesschargingpad
+  - wireless charging pads
+  - wireless-charging-stand
+  - wirelesschargingstand
+  - wireless charging stands
+  - inductive-charger
+  - inductivecharger
+  - inductive chargers
+  - multi-device-wireless-charger
+  - multidevicewirelesscharger
+  - multi device wireless chargers
+  - wireless charging pad stand
+  - wireless-charging-pad-stand
+  - wirelesschargingpadstand
+  - wireless charging pad stands
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - wireless_charging_tx
+  - usb_pd
+  functional_classes:
+  - power_supply
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - portable_energy
+  strong_aliases:
+  - wireless charger
+  - qi charger
+  - qi2 charger
+  - magsafe charger
+  - wireless charging pad
+  - wireless charging stand
+  - inductive charger
+  - multi device wireless charger
+  weak_aliases:
+  - wireless-charger
+  - wirelesscharger
+  - wireless chargers
+  - qi-charger
+  - qicharger
+  - qi chargers
+  - qi2-charger
+  - qi2charger
+  - qi2 chargers
+  - magsafe-charger
+  - magsafecharger
+  - magsafe chargers
+  - wireless-charging-pad
+  - wirelesschargingpad
+  - wireless charging pads
+  - wireless-charging-stand
+  - wirelesschargingstand
+  - wireless charging stands
+  - inductive-charger
+  - inductivecharger
+  - inductive chargers
+  - multi-device-wireless-charger
+  - multidevicewirelesscharger
+  - multi device wireless chargers
+  - wireless charging pad stand
+  - wireless-charging-pad-stand
+  - wirelesschargingpadstand
+  - wireless charging pad stands
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - wireless_charging_tx
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

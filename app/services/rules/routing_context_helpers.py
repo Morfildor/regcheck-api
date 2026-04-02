@@ -305,6 +305,16 @@ def _build_context_tags(
         tags.add("cyber:connected_radio")
     if has_medical_boundary:
         tags.add("boundary:medical_wellness")
+    if "energy_system_boundary" in traits:
+        tags.add("boundary:energy_system")
+    if "uv_irradiation_boundary" in traits:
+        tags.add("boundary:uv_irradiation")
+    if "body_treatment_boundary" in traits:
+        tags.add("boundary:body_treatment")
+    if "industrial_installation_boundary" in traits:
+        tags.add("boundary:industrial_installation")
+    if "machinery_boundary" in traits:
+        tags.add("boundary:machinery")
     return tags
 
 

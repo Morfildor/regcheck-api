@@ -1,0 +1,361 @@
+traits:
+- id: account
+  label: User account / profile
+  description: Requires, supports, or stores a user account, customer profile, login identity, or app-bound user record.
+  aliases:
+  - account
+  - login account
+  - user profile
+  - sign in
+  - account required
+  - create account
+  - sign up
+  examples:
+  - login account
+  - user profile
+  - sign in
+  - account required
+  - create account
+  regex:
+  - \baccount\b
+  - \blogin[ -]?account\b
+  - \buser[ -]?profile\b
+  - \bsign[ -]?in\b
+  - \baccount[ -]?required\b
+  - \bcreate[ -]?account\b
+  - \bsign[ -]?up\b
+  normalized_to: account
+  normalization_priority: 0
+- id: account_required
+  label: Account required
+  description: Requires account creation, login, or profile setup for core or marketed functions.
+  aliases:
+  - account required
+  - login required
+  examples: []
+  regex:
+  - \baccount[ -]?required\b
+  - \blogin[ -]?required\b
+  normalized_to: account_required
+  normalization_priority: 0
+- id: authentication
+  label: Authentication
+  description: Uses passwords, PINs, passkeys, pairing codes, tokens, certificates, MFA, or similar access-control measures.
+  aliases:
+  - authentication
+  - password
+  - pin
+  - passcode
+  - credential
+  - mfa
+  - log in
+  - passkey
+  - 2fa
+  examples:
+  - password
+  - pin
+  - passcode
+  - log in
+  - passkey
+  - 2fa
+  regex:
+  - \bauthentication\b
+  - \bpassword\b
+  - \bpin\b
+  - \bpasscode\b
+  - \bcredential\b
+  - \bmfa\b
+  - \blog[ -]?in\b
+  - \bpasskey\b
+  - \b2fa\b
+  normalized_to: authentication
+  normalization_priority: 0
+- id: av_ict
+  label: AV/ICT equipment
+  description: Audio, video, display, communication, or ICT-style equipment rather than a typical household appliance
+  aliases:
+  - av ict
+  examples: []
+  regex:
+  - \bav[ -]?ict\b
+  normalized_to: av_ict
+  normalization_priority: 0
+- id: bluetooth
+  label: Bluetooth
+  description: Uses Bluetooth radio technology
+  aliases:
+  - bluetooth
+  - ble
+  - bluetooth low energy
+  examples:
+  - ble
+  - bluetooth low energy
+  regex:
+  - \bbluetooth\b
+  - \bble\b
+  - \bbluetooth[ -]?low[ -]?energy\b
+  normalized_to: bluetooth
+  normalization_priority: 0
+- id: cloud
+  label: Cloud / backend connection
+  description: Connects to vendor cloud services, remote servers, SaaS backends, or web APIs beyond the local network.
+  aliases:
+  - cloud
+  - cloud service
+  - backend service
+  - remote server
+  - vendor cloud
+  - out of home control
+  - remote monitoring
+  - remote diagnostics
+  examples:
+  - cloud service
+  - backend service
+  - remote server
+  - out of home control
+  - remote monitoring
+  regex:
+  - \bcloud\b
+  - \bcloud[ -]?service\b
+  - \bbackend[ -]?service\b
+  - \bremote[ -]?server\b
+  - \bvendor[ -]?cloud\b
+  - \bout[ -]?of[ -]?home\b
+  - \bremote[ -]?monitoring\b
+  - \bremote[ -]?diagnostics\b
+  normalized_to: cloud
+  normalization_priority: 0
+- id: cloud_dependent
+  label: Cloud dependent
+  description: Core or marketed functions depend on vendor cloud services or remote backend availability.
+  aliases:
+  - cloud dependent
+  - requires cloud
+  examples: []
+  regex:
+  - \bcloud[ -]?dependent\b
+  - \brequires[ -]?cloud\b
+  normalized_to: cloud_dependent
+  normalization_priority: 0
+- id: data_storage
+  label: Data storage
+  description: Stores user, device, event, or configuration data
+  aliases:
+  - data storage
+  examples: []
+  regex:
+  - \bdata[ -]?storage\b
+  normalized_to: data_storage
+  normalization_priority: 0
+- id: gateway_role
+  label: Gateway / bridge role
+  description: Acts as a gateway, bridge, coordinator, or protocol translator between networks or device ecosystems.
+  aliases:
+  - gateway role
+  - bridge role
+  examples: []
+  regex:
+  - \bgateway[ -]?role\b
+  - \bbridge[ -]?role\b
+  normalized_to: gateway_role
+  normalization_priority: 0
+- id: network_gateway
+  label: Network gateway
+  description: Routes or gateways traffic between local networks and an upstream internet connection.
+  aliases:
+  - network gateway
+  examples: []
+  regex:
+  - \bnetwork[ -]?gateway\b
+  normalized_to: network_gateway
+  normalization_priority: 0
+- id: ota
+  label: OTA software updates
+  description: Supports remote firmware, software, or security updates delivered over the network.
+  aliases:
+  - ota
+  - over the air
+  - firmware update
+  - remote update
+  - software update
+  - automatic update
+  - security update
+  - software security update
+  examples:
+  - over the air
+  - firmware update
+  - remote update
+  - automatic update
+  - security update
+  regex:
+  - \bota\b
+  - \bover[ -]?the[ -]?air\b
+  - \bfirmware[ -]?update\b
+  - \bremote[ -]?update\b
+  - \bsoftware[ -]?update\b
+  - \bautomatic[ -]?updates?\b
+  - \bsecurity[ -]?updates?\b
+  - \bsoftware[ -]?security[ -]?updates?\b
+  normalized_to: ota
+  normalization_priority: 0
+- id: poe_powered
+  label: PoE powered
+  description: Receives operating power over Ethernet, such as 802.3af/at/bt PoE devices.
+  aliases:
+  - poe powered
+  examples: []
+  regex:
+  - \bpoe[ -]?powered\b
+  normalized_to: poe_powered
+  normalization_priority: 0
+- id: poe_supply
+  label: PoE power sourcing
+  description: Supplies power over Ethernet, such as PoE switches, injectors, or power-sourcing equipment.
+  aliases:
+  - poe supply
+  examples: []
+  regex:
+  - \bpoe[ -]?supply\b
+  normalized_to: poe_supply
+  normalization_priority: 0
+- id: radio
+  label: Radio functionality
+  description: Contains radio transmission or reception capability
+  aliases:
+  - radio
+  - wireless radio
+  - rf transmitter
+  - rf receiver
+  examples:
+  - wireless radio
+  - rf transmitter
+  - rf receiver
+  regex:
+  - \bradio\b
+  - \bwireless[ -]?radio\b
+  - \brf[ -]?transmitter\b
+  - \brf[ -]?receiver\b
+  normalized_to: radio
+  normalization_priority: 0
+- id: rotating_part
+  label: Rotating part
+  description: Includes a rotating blade, wheel, agitator, or similar moving part accessible during normal use or servicing.
+  aliases:
+  - rotating part
+  - rotating blade
+  examples: []
+  regex:
+  - \brotating[ -]?part\b
+  - \brotating[ -]?blade\b
+  normalized_to: rotating_part
+  normalization_priority: 0
+- id: tri_band_wifi
+  label: "Tri-band Wi\u2011Fi"
+  description: "Supports tri-band Wi\u2011Fi operation, often used in higher-end routers and mesh systems."
+  aliases:
+  - tri band wifi
+  - tri-band wifi
+  - tri band
+  - tri-band
+  examples: []
+  regex:
+  - \btri[ -]?band(?:[ -]?wifi)?\b
+  normalized_to: tri_band_wifi
+  normalization_priority: 0
+- id: whole_home_wifi
+  label: "Whole-home Wi\u2011Fi"
+  description: Extends wireless coverage across multiple rooms using a coordinated system.
+  aliases:
+  - whole home wifi
+  examples: []
+  regex:
+  - \bwhole[ -]?home[ -]?wifi\b
+  normalized_to: whole_home_wifi
+  normalization_priority: 0
+- id: wifi
+  label: Wi-Fi
+  description: Uses Wi-Fi radio technology
+  aliases:
+  - wifi
+  - wi fi
+  - wlan
+  - wireless lan
+  - '802.11'
+  - wifi enabled
+  - wifi connected
+  examples:
+  - wi fi
+  - wlan
+  - wireless lan
+  - wifi enabled
+  - wifi connected
+  regex:
+  - \bwifi\b
+  - \bwi[ -]?fi\b
+  - \bwlan\b
+  - \bwireless[ -]?lan\b
+  - \b802\.11\b
+  - \bwi[ -]?fi[ -]?enabled\b
+  - \bwi[ -]?fi[ -]?connected\b
+  normalized_to: wifi
+  normalization_priority: 0
+- id: wifi_5ghz
+  label: 5 GHz Wi-Fi / dual-band Wi-Fi
+  description: Supports 5 GHz Wi-Fi operation, including dual-band, tri-band, Wi-Fi 5, Wi-Fi 6/6E, and Wi-Fi 7 implementations
+    where 5 GHz is present
+  aliases:
+  - wifi 5ghz
+  - wifi 5 ghz
+  - 5 ghz wifi
+  - dual band wifi
+  - dual-band wifi
+  - tri band wifi
+  - tri-band wifi
+  - wifi 5
+  - wifi 6
+  - wifi 6e
+  - wifi 7
+  - 802.11a
+  - 802.11ac
+  - 802.11ax
+  - 802.11be
+  examples: []
+  regex:
+  - \bwifi[ -]?5[ -]?ghz\b
+  - \b5[ -]?ghz[ -]?wifi\b
+  - \bdual[ -]?band(?:[ -]?wifi)?\b
+  - \btri[ -]?band(?:[ -]?wifi)?\b
+  - \bwifi[ -]?5\b
+  - \bwifi[ -]?6(?:e)?\b
+  - \bwifi[ -]?7\b
+  - \b802\.11a\b
+  - \b802\.11ac\b
+  - \b802\.11ax\b
+  - \b802\.11be\b
+  normalized_to: wifi_5ghz
+  normalization_priority: 0
+- id: wifi_6
+  label: Wi-Fi 6 / 6E
+  description: Supports Wi-Fi 6 (802.11ax) or Wi-Fi 6E (6 GHz band) operation
+  aliases:
+  - wifi 6
+  - wifi 6e
+  - 802.11ax
+  examples: []
+  regex:
+  - \bwifi[ -]?6(?:e)?\b
+  - \b802\.11ax\b
+  normalized_to: wifi_6
+  normalization_priority: 0
+- id: wifi_7
+  label: Wi-Fi 7
+  description: Supports Wi-Fi 7 (802.11be) multi-link operation
+  aliases:
+  - wifi 7
+  - 802.11be
+  examples: []
+  regex:
+  - \bwifi[ -]?7\b
+  - \b802\.11be\b
+  normalized_to: wifi_7
+  normalization_priority: 0

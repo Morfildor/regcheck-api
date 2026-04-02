@@ -1,0 +1,2388 @@
+products:
+- id: aquarium_appliance
+  label: Aquarium appliance
+  aliases:
+  - aquarium appliance
+  - aquarium heater
+  - aquarium filter
+  - aquarium light
+  - aquarium-appliance
+  - aquariumappliance
+  - aquarium appliances
+  - aquarium-heater
+  - aquariumheater
+  - aquarium heaters
+  - aquarium-filter
+  - aquariumfilter
+  - aquarium filters
+  - aquarium-light
+  - aquariumlight
+  - aquarium lights
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - water_contact
+  - mains_power_likely
+  functional_classes:
+  - pet_care_appliance
+  likely_standards:
+  - EN 60335-2-55
+  genres:
+  - household_appliance
+  strong_aliases:
+  - aquarium appliance
+  - aquarium heater
+  - aquarium filter
+  - aquarium light
+  weak_aliases:
+  - aquarium-appliance
+  - aquariumappliance
+  - aquarium appliances
+  - aquarium-heater
+  - aquariumheater
+  - aquarium heaters
+  - aquarium-filter
+  - aquariumfilter
+  - aquarium filters
+  - aquarium-light
+  - aquariumlight
+  - aquarium lights
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-55
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - water_contact
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_dishwasher
+  label: Commercial dishwasher
+  aliases:
+  - commercial dishwasher
+  - professional dishwasher
+  - hood dishwasher
+  - glasswasher
+  - commercial-dishwasher
+  - commercialdishwasher
+  - commercial dishwashers
+  - professional-dishwasher
+  - professionaldishwasher
+  - professional dishwashers
+  - hood-dishwasher
+  - hooddishwasher
+  - hood dishwashers
+  - glasswashers
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  - mains_powered
+  - cleaning
+  - washing
+  functional_classes:
+  - commercial_appliance
+  - cleaning_appliance
+  - kitchen_appliance
+  likely_standards:
+  - EN 60335-2-58
+  genres:
+  - commercial_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial dishwasher
+  - professional dishwasher
+  - hood dishwasher
+  - glasswasher
+  weak_aliases:
+  - commercial-dishwasher
+  - commercialdishwasher
+  - commercial dishwashers
+  - professional-dishwasher
+  - professionaldishwasher
+  - professional dishwashers
+  - hood-dishwasher
+  - hooddishwasher
+  - hood dishwashers
+  - glasswashers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-58
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_floor_treatment_machine
+  label: Commercial floor treatment machine
+  aliases:
+  - commercial floor scrubber
+  - floor scrubber
+  - commercial floor polisher
+  - industrial floor cleaner
+  - commercial-floor-scrubber
+  - commercialfloorscrubber
+  - commercial floor scrubbers
+  - floor-scrubber
+  - floorscrubber
+  - floor scrubbers
+  - commercial-floor-polisher
+  - commercialfloorpolisher
+  - commercial floor polishers
+  - industrial-floor-cleaner
+  - industrialfloorcleaner
+  - industrial floor cleaners
+  - commercial floor treatment machine
+  - commercial-floor-treatment-machine
+  - commercialfloortreatmentmachine
+  - commercial floor treatment machines
+  implied_traits:
+  - professional
+  - electrical
+  - motorized
+  - water_contact
+  - mains_powered
+  - cleaning
+  - surface_cleaning
+  functional_classes:
+  - commercial_appliance
+  - cleaning_appliance
+  - floor_care
+  likely_standards:
+  - EN 60335-2-67
+  - EN 60335-2-72
+  genres:
+  - commercial_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - commercial floor scrubber
+  - floor scrubber
+  - commercial floor polisher
+  - industrial floor cleaner
+  weak_aliases:
+  - commercial-floor-scrubber
+  - commercialfloorscrubber
+  - commercial floor scrubbers
+  - floor-scrubber
+  - floorscrubber
+  - floor scrubbers
+  - commercial-floor-polisher
+  - commercialfloorpolisher
+  - commercial floor polishers
+  - industrial-floor-cleaner
+  - industrialfloorcleaner
+  - industrial floor cleaners
+  - commercial floor treatment machine
+  - commercial-floor-treatment-machine
+  - commercialfloortreatmentmachine
+  - commercial floor treatment machines
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-67
+    kind: unspecified
+  - ref: EN 60335-2-72
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - motorized
+  - water_contact
+  - mains_powered
+  - cleaning
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_spray_extraction_machine
+  label: Commercial spray extraction machine
+  aliases:
+  - commercial carpet extractor
+  - commercial spray extraction machine
+  - industrial carpet cleaner
+  - commercial-carpet-extractor
+  - commercialcarpetextractor
+  - commercial carpet extractors
+  - commercial-spray-extraction-machine
+  - commercialsprayextractionmachine
+  - commercial spray extraction machines
+  - industrial-carpet-cleaner
+  - industrialcarpetcleaner
+  - industrial carpet cleaners
+  implied_traits:
+  - professional
+  - electrical
+  - motorized
+  - water_contact
+  - pumping
+  - mains_powered
+  - cleaning
+  - surface_cleaning
+  functional_classes:
+  - commercial_appliance
+  - cleaning_appliance
+  - floor_care
+  likely_standards:
+  - EN 60335-2-68
+  genres:
+  - commercial_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - commercial carpet extractor
+  - commercial spray extraction machine
+  - industrial carpet cleaner
+  weak_aliases:
+  - commercial-carpet-extractor
+  - commercialcarpetextractor
+  - commercial carpet extractors
+  - commercial-spray-extraction-machine
+  - commercialsprayextractionmachine
+  - commercial spray extraction machines
+  - industrial-carpet-cleaner
+  - industrialcarpetcleaner
+  - industrial carpet cleaners
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-68
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - motorized
+  - water_contact
+  - pumping
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: dishwasher
+  label: Dishwasher
+  aliases:
+  - dishwasher
+  - dish washing machine
+  - dish washer
+  - built-in dishwasher
+  - freestanding dishwasher
+  - dishwashers
+  - dish-washing-machine
+  - dishwashingmachine
+  - dish washing machines
+  - dish-washer
+  - dish washers
+  - built in dishwasher
+  - built-in-dishwasher
+  - built-indishwasher
+  - built-in dishwashers
+  - freestanding-dishwasher
+  - freestandingdishwasher
+  - freestanding dishwashers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  - mains_power_likely
+  - washing
+  - cleaning
+  functional_classes:
+  - cleaning_appliance
+  - kitchen_appliance
+  likely_standards:
+  - EN 60335-2-5
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - dishwasher
+  - dish washing machine
+  - dish washer
+  - built-in dishwasher
+  - freestanding dishwasher
+  weak_aliases:
+  - dishwashers
+  - dish-washing-machine
+  - dishwashingmachine
+  - dish washing machines
+  - dish-washer
+  - dish washers
+  - built in dishwasher
+  - built-in-dishwasher
+  - built-indishwasher
+  - built-in dishwashers
+  - freestanding-dishwasher
+  - freestandingdishwasher
+  - freestanding dishwashers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-5
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_iron
+  label: Electric iron
+  aliases:
+  - iron
+  - electric iron
+  - steam iron
+  - dry iron
+  - garment steamer iron
+  - irons
+  - electric-iron
+  - electriciron
+  - electric irons
+  - steam-iron
+  - steamiron
+  - steam irons
+  - dry-iron
+  - dryiron
+  - dry irons
+  - garment-steamer-iron
+  - garmentsteameriron
+  - garment steamer irons
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_power_likely
+  - textile_care
+  - steam
+  functional_classes:
+  - garment_care
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-3
+  - EN 60335-2-45
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - iron
+  - electric iron
+  - steam iron
+  - dry iron
+  - garment steamer iron
+  weak_aliases:
+  - irons
+  - electric-iron
+  - electriciron
+  - electric irons
+  - steam-iron
+  - steamiron
+  - steam irons
+  - dry-iron
+  - dryiron
+  - dry irons
+  - garment-steamer-iron
+  - garmentsteameriron
+  - garment steamer irons
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-3
+    kind: unspecified
+  - ref: EN 60335-2-45
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_pump
+  label: Electric pump
+  aliases:
+  - water pump
+  - electric pump
+  - liquid pump
+  - garden pump
+  - water-pump
+  - waterpump
+  - water pumps
+  - electric-pump
+  - electricpump
+  - electric pumps
+  - liquid-pump
+  - liquidpump
+  - liquid pumps
+  - garden-pump
+  - gardenpump
+  - garden pumps
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - pumping
+  - water_contact
+  - mains_powered
+  - portable
+  functional_classes:
+  - pump
+  likely_standards:
+  - EN 60335-2-41
+  genres:
+  - household_appliance
+  strong_aliases:
+  - water pump
+  - electric pump
+  - liquid pump
+  - garden pump
+  weak_aliases:
+  - water-pump
+  - waterpump
+  - water pumps
+  - electric-pump
+  - electricpump
+  - electric pumps
+  - liquid-pump
+  - liquidpump
+  - liquid pumps
+  - garden-pump
+  - gardenpump
+  - garden pumps
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-41
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - pumping
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: elliptical_trainer
+  label: Elliptical trainer / cross trainer
+  aliases:
+  - elliptical
+  - elliptical trainer
+  - cross trainer
+  - smart elliptical
+  - connected elliptical
+  - ellipticals
+  - elliptical-trainer
+  - ellipticaltrainer
+  - elliptical trainers
+  - cross-trainer
+  - crosstrainer
+  - cross trainers
+  - smart-elliptical
+  - smartelliptical
+  - smart ellipticals
+  - connected-elliptical
+  - connectedelliptical
+  - connected ellipticals
+  - elliptical trainer cross trainer
+  - elliptical-trainer-cross-trainer
+  - ellipticaltrainercrosstrainer
+  - elliptical trainer cross trainers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - display
+  - app_control
+  functional_classes:
+  - fitness_device
+  likely_standards:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  preferred_clues:
+  - elliptical
+  - cross trainer
+  exclude_clues:
+  - display hub
+  - projector
+  strong_aliases:
+  - elliptical
+  - elliptical trainer
+  - cross trainer
+  - smart elliptical
+  - connected elliptical
+  weak_aliases:
+  - ellipticals
+  - elliptical-trainer
+  - ellipticaltrainer
+  - elliptical trainers
+  - cross-trainer
+  - crosstrainer
+  - cross trainers
+  - smart-elliptical
+  - smartelliptical
+  - smart ellipticals
+  - connected-elliptical
+  - connectedelliptical
+  - connected ellipticals
+  - elliptical trainer cross trainer
+  - elliptical-trainer-cross-trainer
+  - ellipticaltrainercrosstrainer
+  - elliptical trainer cross trainers
+  marketplace_aliases:
+  - connected elliptical
+  - smart cross trainer
+  not_when_text_contains:
+  - display hub
+  - projector
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - display
+  score_penalty_if_traits:
+  - display hub
+  - projector
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: exercise_bike
+  label: Exercise bike / stationary bike
+  aliases:
+  - exercise bike
+  - stationary bike
+  - indoor bike
+  - spin bike
+  - smart bike trainer
+  - connected exercise bike
+  - exercisebike
+  - exercise-bike
+  - exercise bikes
+  - stationary-bike
+  - stationarybike
+  - stationary bikes
+  - indoor-bike
+  - indoorbike
+  - indoor bikes
+  - spin-bike
+  - spinbike
+  - spin bikes
+  - smart-bike-trainer
+  - smartbiketrainer
+  - smart bike trainers
+  - connected exercisebike
+  - connected-exercise-bike
+  - connectedexercisebike
+  - connected exercise bikes
+  - exercise bike stationary bike
+  - exercisebike stationary bike
+  - exercise-bike-stationary-bike
+  - exercisebikestationarybike
+  - exercise bike stationary bikes
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - display
+  - app_control
+  functional_classes:
+  - fitness_device
+  likely_standards:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  preferred_clues:
+  - exercise bike
+  - stationary bike
+  - spin bike
+  exclude_clues:
+  - projector
+  - display hub
+  strong_aliases:
+  - exercise bike
+  - stationary bike
+  - indoor bike
+  - spin bike
+  - smart bike trainer
+  - connected exercise bike
+  weak_aliases:
+  - exercisebike
+  - exercise-bike
+  - exercise bikes
+  - stationary-bike
+  - stationarybike
+  - stationary bikes
+  - indoor-bike
+  - indoorbike
+  - indoor bikes
+  - spin-bike
+  - spinbike
+  - spin bikes
+  - smart-bike-trainer
+  - smartbiketrainer
+  - smart bike trainers
+  - connected exercisebike
+  - connected-exercise-bike
+  - connectedexercisebike
+  - connected exercise bikes
+  - exercise bike stationary bike
+  - exercisebike stationary bike
+  - exercise-bike-stationary-bike
+  - exercisebikestationarybike
+  - exercise bike stationary bikes
+  marketplace_aliases:
+  - smart exercise bike
+  - connected bike trainer
+  - app exercise bike
+  not_when_text_contains:
+  - projector
+  - display hub
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - display
+  score_penalty_if_traits:
+  - projector
+  - display hub
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: fabric_steamer
+  label: Fabric steamer
+  aliases:
+  - fabric steamer
+  - garment steamer
+  - clothes steamer
+  - handheld garment steamer
+  - fabric-steamer
+  - fabricsteamer
+  - fabric steamers
+  - garment-steamer
+  - garmentsteamer
+  - garment steamers
+  - clothes-steamer
+  - clothessteamer
+  - clothes steamers
+  - handheld-garment-steamer
+  - handheldgarmentsteamer
+  - handheld garment steamers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  - portable
+  - textile_care
+  - steam
+  functional_classes:
+  - garment_care
+  - small_domestic_appliance
+  likely_standards:
+  - EN 60335-2-85
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - fabric steamer
+  - garment steamer
+  - clothes steamer
+  - handheld garment steamer
+  weak_aliases:
+  - fabric-steamer
+  - fabricsteamer
+  - fabric steamers
+  - garment-steamer
+  - garmentsteamer
+  - garment steamers
+  - clothes-steamer
+  - clothessteamer
+  - clothes steamers
+  - handheld-garment-steamer
+  - handheldgarmentsteamer
+  - handheld garment steamers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-85
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: floor_treatment_machine
+  label: Floor treatment machine
+  aliases:
+  - floor treatment machine
+  - floor polisher
+  - buffer
+  - scrubber
+  - floor-treatment-machine
+  - floortreatmentmachine
+  - floor treatment machines
+  - floor-polisher
+  - floorpolisher
+  - floor polishers
+  - buffers
+  - scrubbers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - mains_powered
+  functional_classes:
+  - floor_care
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-10
+  - EN 60335-2-54
+  genres:
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - floor treatment machine
+  - floor polisher
+  - buffer
+  - scrubber
+  weak_aliases:
+  - floor-treatment-machine
+  - floortreatmentmachine
+  - floor treatment machines
+  - floor-polisher
+  - floorpolisher
+  - floor polishers
+  - buffers
+  - scrubbers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-10
+    kind: unspecified
+  - ref: EN 60335-2-54
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: food_waste_disposer
+  label: Food waste disposer
+  aliases:
+  - food waste disposer
+  - waste disposer
+  - garbage disposal
+  - food-waste-disposer
+  - foodwastedisposer
+  - food waste disposers
+  - waste-disposer
+  - wastedisposer
+  - waste disposers
+  - garbage-disposal
+  - garbagedisposal
+  - garbage disposals
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - mains_powered
+  functional_classes:
+  - kitchen_appliance
+  likely_standards:
+  - EN 60335-2-16
+  genres:
+  - household_appliance
+  strong_aliases:
+  - food waste disposer
+  - waste disposer
+  - garbage disposal
+  weak_aliases:
+  - food-waste-disposer
+  - foodwastedisposer
+  - food waste disposers
+  - waste-disposer
+  - wastedisposer
+  - waste disposers
+  - garbage-disposal
+  - garbagedisposal
+  - garbage disposals
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-16
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: fuel_burning_electrical_appliance
+  label: Fuel-burning appliance with electrical connections
+  aliases:
+  - gas appliance with electrical connection
+  - oil heater with electrical connection
+  - solid fuel appliance with electrical connection
+  - gas-appliance-with-electrical-connection
+  - gasappliancewithelectricalconnection
+  - gas appliance with electrical connections
+  - oil-heater-with-electrical-connection
+  - oilheaterwithelectricalconnection
+  - oil heater with electrical connections
+  - solid-fuel-appliance-with-electrical-connection
+  - solidfuelappliancewithelectricalconnection
+  - solid fuel appliance with electrical connections
+  - fuel-burning appliance with electrical connections
+  - fuel burning appliance with electrical connections
+  - fuel-burning-appliance-with-electrical-connections
+  - fuel-burningappliancewithelectricalconnections
+  - fuel-burning appliance with electrical connection
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  functional_classes:
+  - heating_appliance
+  likely_standards:
+  - EN 60335-2-102
+  genres:
+  - household_appliance
+  strong_aliases:
+  - gas appliance with electrical connection
+  - oil heater with electrical connection
+  - solid fuel appliance with electrical connection
+  weak_aliases:
+  - gas-appliance-with-electrical-connection
+  - gasappliancewithelectricalconnection
+  - gas appliance with electrical connections
+  - oil-heater-with-electrical-connection
+  - oilheaterwithelectricalconnection
+  - oil heater with electrical connections
+  - solid-fuel-appliance-with-electrical-connection
+  - solidfuelappliancewithelectricalconnection
+  - solid fuel appliance with electrical connections
+  - fuel-burning appliance with electrical connections
+  - fuel burning appliance with electrical connections
+  - fuel-burning-appliance-with-electrical-connections
+  - fuel-burningappliancewithelectricalconnections
+  - fuel-burning appliance with electrical connection
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-102
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: garment_steamer
+  label: Garment steamer / clothes steamer
+  product_family: textile_care_appliance
+  product_subfamily: garment_steamer
+  family_keywords:
+  - garment care
+  - textile care
+  - clothes steaming
+  aliases:
+  - garment steamer
+  - clothes steamer
+  - handheld garment steamer
+  - clothing steamer
+  - travel garment steamer
+  - fabric steamer
+  - steam brush
+  preferred_clues:
+  - garment steamer
+  - clothes steamer
+  - fabric steamer
+  exclude_clues:
+  - wallpaper steamer
+  - steam cleaner
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - heating_element
+  - water_contact
+  - steam
+  - mains_powered
+  - handheld
+  - textile_care
+  functional_classes:
+  - household_appliance
+  - textile_care_appliance
+  likely_standards:
+  - EN 60335-2-3
+  - EN 60335-2-45
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-3
+  supporting_standard_codes:
+  - EN 60335-2-45
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - garment steamer
+  - clothes steamer
+  - handheld garment steamer
+  - clothing steamer
+  - fabric steamer
+  weak_aliases:
+  - travel garment steamer
+  - steam brush
+  marketplace_aliases:
+  - garment steamer
+  - clothes steamer
+  - travel clothes steamer
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - heating
+  - water_contact
+  - steam
+  - textile_care
+  matching_notes: Separate garment-steamer coverage so apparel-steaming products do not collapse into generic irons or steam
+    cleaners.
+- id: ironer
+  label: Ironer
+  aliases:
+  - ironer
+  - rotary ironer
+  - linen ironer
+  - ironers
+  - rotary-ironer
+  - rotaryironer
+  - rotary ironers
+  - linen-ironer
+  - linenironer
+  - linen ironers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - motorized
+  - mains_powered
+  - textile_care
+  functional_classes:
+  - garment_care
+  likely_standards:
+  - EN 60335-2-44
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - ironer
+  - rotary ironer
+  - linen ironer
+  weak_aliases:
+  - ironers
+  - rotary-ironer
+  - rotaryironer
+  - rotary ironers
+  - linen-ironer
+  - linenironer
+  - linen ironers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-44
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - motorized
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: motor_compressor
+  label: Motor-compressor
+  aliases:
+  - motor compressor
+  - compressor unit
+  - motor-compressor
+  - motorcompressor
+  - motor compressors
+  - compressor-unit
+  - compressorunit
+  - compressor units
+  - motor-compressors
+  implied_traits:
+  - electrical
+  - motorized
+  - mains_powered
+  functional_classes:
+  - component
+  likely_standards:
+  - EN 60335-2-34
+  genres:
+  - household_appliance
+  strong_aliases:
+  - motor compressor
+  - compressor unit
+  weak_aliases:
+  - motor-compressor
+  - motorcompressor
+  - motor compressors
+  - compressor-unit
+  - compressorunit
+  - compressor units
+  - motor-compressors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-34
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electrical
+  - motorized
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: robot_mop
+  label: Robot mop / robotic floor mop
+  aliases:
+  - robot mop
+  - robotic mop
+  - robot floor mop
+  - mopping robot
+  - robot vacuum mop
+  - robot-mop
+  - robotmop
+  - robot mops
+  - robotic-mop
+  - roboticmop
+  - robotic mops
+  - robot-floor-mop
+  - robotfloormop
+  - robot floor mops
+  - mopping-robot
+  - moppingrobot
+  - mopping robots
+  - robo vac mop
+  - robot-vacuum-mop
+  - robotvacuummop
+  - robot vacuum mops
+  - robot mop robotic floor mop
+  - robot-mop-robotic-floor-mop
+  - robotmoproboticfloormop
+  - robot mop robotic floor mops
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - battery_powered
+  - water_contact
+  - cleaning
+  functional_classes:
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-2
+  genres:
+  - cleaning_laundry_appliance
+  - household_appliance
+  preferred_clues:
+  - robot mop
+  - mopping robot
+  exclude_clues:
+  - router
+  - gateway
+  strong_aliases:
+  - robot mop
+  - robotic mop
+  - robot floor mop
+  - mopping robot
+  - robot vacuum mop
+  weak_aliases:
+  - robot-mop
+  - robotmop
+  - robot mops
+  - robotic-mop
+  - roboticmop
+  - robotic mops
+  - robot-floor-mop
+  - robotfloormop
+  - robot floor mops
+  - mopping-robot
+  - moppingrobot
+  - mopping robots
+  - robo vac mop
+  - robot-vacuum-mop
+  - robotvacuummop
+  - robot vacuum mops
+  - robot mop robotic floor mop
+  - robot-mop-robotic-floor-mop
+  - robotmoproboticfloormop
+  - robot mop robotic floor mops
+  marketplace_aliases: []
+  not_when_text_contains:
+  - router
+  - gateway
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-2
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - battery_powered
+  score_penalty_if_traits:
+  - router
+  - gateway
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: robot_vacuum
+  label: Robot vacuum cleaner
+  aliases:
+  - robot vacuum
+  - robot vacuum cleaner
+  - robot vacuum mop
+  - robot vacuum and mop
+  - robotic vacuum
+  - robotic vacuum cleaner
+  - robovac
+  - robo vac
+  - robot hoover
+  - smart vacuum robot
+  - vacuum robot
+  - robot-vacuum
+  - robotvacuum
+  - robot vacuums
+  - robo vac cleaner
+  - robot-vacuum-cleaner
+  - robotvacuumcleaner
+  - robot vacuum cleaners
+  - robo vac mop
+  - robot-vacuum-mop
+  - robotvacuummop
+  - robot vacuum mops
+  - robo vac and mop
+  - robot-vacuum-and-mop
+  - robotvacuumandmop
+  - robot vacuum and mops
+  - robotic-vacuum
+  - roboticvacuum
+  - robotic vacuums
+  - robotic-vacuum-cleaner
+  - roboticvacuumcleaner
+  - robotic vacuum cleaners
+  - robovacs
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - cleaning
+  - surface_cleaning
+  - portable
+  functional_classes:
+  - floor_care
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-2
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-2
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - robot vacuum
+  - robot vacuum cleaner
+  - robot vacuum mop
+  - robot vacuum and mop
+  - robotic vacuum
+  - robotic vacuum cleaner
+  - robovac
+  - robo vac
+  - robot hoover
+  - smart vacuum robot
+  - vacuum robot
+  weak_aliases:
+  - robot-vacuum
+  - robotvacuum
+  - robot vacuums
+  - robo vac cleaner
+  - robot-vacuum-cleaner
+  - robotvacuumcleaner
+  - robot vacuum cleaners
+  - robo vac mop
+  - robot-vacuum-mop
+  - robotvacuummop
+  - robot vacuum mops
+  - robo vac and mop
+  - robot-vacuum-and-mop
+  - robotvacuumandmop
+  - robot vacuum and mops
+  - robotic-vacuum
+  - roboticvacuum
+  - robotic vacuums
+  - robotic-vacuum-cleaner
+  - roboticvacuumcleaner
+  - robotic vacuum cleaners
+  - robovacs
+  marketplace_aliases:
+  - robo vac
+  - robot hoover
+  - smart vacuum robot
+  - vacuum robot
+  - robot vacuum
+  - robot-vacuum
+  - robotvacuum
+  - robot vacuums
+  - robot vacuum cleaner
+  - robo vac cleaner
+  - robot-vacuum-cleaner
+  - robotvacuumcleaner
+  - robot vacuum cleaners
+  - robot vacuum mop
+  - robo vac mop
+  - robot-vacuum-mop
+  - robotvacuummop
+  - robot vacuum mops
+  - robot vacuum and mop
+  - robo vac and mop
+  - robot-vacuum-and-mop
+  - robotvacuumandmop
+  - robot vacuum and mops
+  - robotic vacuum
+  - robotic-vacuum
+  - roboticvacuum
+  - robotic vacuums
+  - robotic vacuum cleaner
+  - robotic-vacuum-cleaner
+  - roboticvacuumcleaner
+  - robotic vacuum cleaners
+  - robovac
+  - robovacs
+  - self empty robot vacuum
+  - self-empty robot vacuum
+  - auto empty robovac
+  - self empty robovac
+  - lidar robot vacuum
+  - laser robot vacuum
+  - mapping robot vacuum
+  - vacuum mop robot
+  - robot mop vacuum
+  - mop station robot vacuum
+  - vacuuming robot
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-2
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  preferred_clues:
+  - self empty
+  - lidar
+  - mapping
+- id: sewing_machine
+  label: Sewing machine
+  aliases:
+  - sewing machine
+  - overlocker
+  - serger
+  - sewing-machine
+  - sewingmachine
+  - sewing machines
+  - overlockers
+  - sergers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  functional_classes:
+  - home_device
+  likely_standards:
+  - EN 60335-2-28
+  genres:
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - sewing machine
+  - overlocker
+  - serger
+  weak_aliases:
+  - sewing-machine
+  - sewingmachine
+  - sewing machines
+  - overlockers
+  - sergers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-28
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: shower_cabinet
+  label: Multifunctional shower cabinet
+  aliases:
+  - shower cabinet
+  - steam shower cabin
+  - multifunctional shower cabinet
+  - shower-cabinet
+  - showercabinet
+  - shower cabinets
+  - steam-shower-cabin
+  - steamshowercabin
+  - steam shower cabins
+  - multifunctional-shower-cabinet
+  - multifunctionalshowercabinet
+  - multifunctional shower cabinets
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - heating
+  - mains_powered
+  functional_classes:
+  - bathroom_appliance
+  likely_standards:
+  - EN 60335-2-105
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - shower cabinet
+  - steam shower cabin
+  - multifunctional shower cabinet
+  weak_aliases:
+  - shower-cabinet
+  - showercabinet
+  - shower cabinets
+  - steam-shower-cabin
+  - steamshowercabin
+  - steam shower cabins
+  - multifunctional-shower-cabinet
+  - multifunctionalshowercabinet
+  - multifunctional shower cabinets
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-105
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - heating
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_indoor_garden
+  label: Smart indoor garden / hydroponic grow system
+  product_family: garden_automation
+  product_subfamily: smart_indoor_garden
+  aliases:
+  - smart indoor garden
+  - indoor grow light
+  - smart grow light
+  - hydroponic garden
+  - smart planter
+  - connected grow system
+  - aeroponic garden
+  - smart herb garden
+  - countertop garden
+  - indoor hydroponic kit
+  - smart-indoor-garden
+  - smartindoorgarden
+  - smart indoor gardens
+  - indoor-grow-light
+  - indoorgrowlight
+  - indoor grow lights
+  - smart-grow-light
+  - smartgrowlight
+  - hydroponic-garden
+  - hydroponicgarden
+  - hydroponic gardens
+  - smart-planter
+  - smartplanter
+  - connected-grow-system
+  - connectedgrowsystem
+  - aeroponic-garden
+  - aeroponicgarden
+  - smart-herb-garden
+  - smartherbgarden
+  - countertop-garden
+  - countertopgarden
+  - indoor-hydroponic-kit
+  - indoorhydroponickit
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - motorized
+  - water_contact
+  - indoor_use
+  - wifi
+  - bluetooth
+  - app_control
+  - display
+  functional_classes:
+  - home_device
+  - garden_device
+  likely_standards:
+  - EN 60335-1
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - garden_outdoor_appliance
+  - household_appliance
+  strong_aliases:
+  - smart indoor garden
+  - indoor grow light
+  - smart grow light
+  - hydroponic garden
+  - smart planter
+  - aeroponic garden
+  - smart herb garden
+  - countertop garden
+  - indoor hydroponic kit
+  weak_aliases:
+  - smart-indoor-garden
+  - smartindoorgarden
+  - smart indoor gardens
+  - indoor-grow-light
+  - indoorgrowlight
+  - smart-grow-light
+  - smartgrowlight
+  - hydroponic-garden
+  - hydroponicgarden
+  - smart-planter
+  - smartplanter
+  - connected-grow-system
+  - connectedgrowsystem
+  - aeroponic-garden
+  - aeroponicgarden
+  - smart-herb-garden
+  - smartherbgarden
+  marketplace_aliases:
+  - smart indoor garden
+  - hydroponic garden
+  - grow light
+  - countertop herb garden
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Smart countertop hydro/aeroponic grow systems with integrated LED lighting and pumps. Mixed EN 60335-1 (appliance
+    with motor/pump) and EN 62368-1 (electronic control/connectivity) scope.
+- id: smart_standing_desk
+  label: Smart motorized standing desk / sit-stand desk
+  product_family: smart_furniture
+  product_subfamily: smart_standing_desk
+  aliases:
+  - standing desk
+  - sit stand desk
+  - height adjustable desk
+  - motorized desk
+  - electric standing desk
+  - smart desk
+  - ergonomic desk
+  - lift desk
+  - electric height adjustable desk
+  - standing-desk
+  - standingdesk
+  - standing desks
+  - sit-stand-desk
+  - sitstanddesk
+  - height-adjustable-desk
+  - heightadjustabledesk
+  - motorized-desk
+  - motorizeddesk
+  - electric-standing-desk
+  - electricstandingdesk
+  - smart-desk
+  - smartdesk
+  - ergonomic-desk
+  - ergonomicdesk
+  - electric-height-adjustable-desk
+  - electricheightadjustabledesk
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - motorized
+  - app_control
+  - bluetooth
+  - display
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 60335-1
+  genres:
+  - smart_home_iot
+  - household_appliance
+  strong_aliases:
+  - standing desk
+  - sit stand desk
+  - height adjustable desk
+  - motorized desk
+  - electric standing desk
+  - smart desk
+  - ergonomic desk
+  - electric height adjustable desk
+  weak_aliases:
+  - standing-desk
+  - standingdesk
+  - standing desks
+  - sit-stand-desk
+  - sitstanddesk
+  - height-adjustable-desk
+  - heightadjustabledesk
+  - motorized-desk
+  - motorizeddesk
+  - electric-standing-desk
+  - electricstandingdesk
+  - smart-desk
+  - smartdesk
+  - ergonomic-desk
+  - ergonomicdesk
+  - electric-height-adjustable-desk
+  - electricheightadjustabledesk
+  marketplace_aliases:
+  - standing desk
+  - sit stand desk
+  - height adjustable desk
+  - motorized standing desk
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - motorized
+  - app_control
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Motorized height-adjustable desks with electric actuators and smart controls. Covered under EN 60335-1 as
+    motorized household equipment.
+- id: smart_treadmill
+  label: Treadmill / smart treadmill
+  aliases:
+  - treadmill
+  - smart treadmill
+  - connected treadmill
+  - folding treadmill
+  - running machine
+  - treadmills
+  - smart-treadmill
+  - smarttreadmill
+  - smart treadmills
+  - connected-treadmill
+  - connectedtreadmill
+  - connected treadmills
+  - folding-treadmill
+  - foldingtreadmill
+  - folding treadmills
+  - running-machine
+  - runningmachine
+  - running machines
+  - treadmill smart treadmill
+  - treadmill-smart-treadmill
+  - treadmillsmarttreadmill
+  - treadmill smart treadmills
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - display
+  - app_control
+  - radio
+  - wifi
+  - cloud
+  - internet
+  - ota
+  - data_storage
+  functional_classes:
+  - fitness_device
+  likely_standards:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  preferred_clues:
+  - treadmill
+  - running machine
+  - walking pad
+  exclude_clues:
+  - display hub
+  - smart display
+  - projector
+  strong_aliases:
+  - treadmill
+  - smart treadmill
+  - connected treadmill
+  - folding treadmill
+  - running machine
+  weak_aliases:
+  - treadmills
+  - smart-treadmill
+  - smarttreadmill
+  - smart treadmills
+  - connected-treadmill
+  - connectedtreadmill
+  - connected treadmills
+  - folding-treadmill
+  - foldingtreadmill
+  - folding treadmills
+  - running-machine
+  - runningmachine
+  - running machines
+  - treadmill smart treadmill
+  - treadmill-smart-treadmill
+  - treadmillsmarttreadmill
+  - treadmill smart treadmills
+  marketplace_aliases:
+  - connected treadmill
+  - wifi treadmill
+  - app treadmill
+  not_when_text_contains:
+  - display hub
+  - smart display
+  - projector
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  score_penalty_if_traits:
+  - display hub
+  - smart display
+  - projector
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: spray_extraction_machine
+  label: Spray extraction machine
+  aliases:
+  - spray extraction cleaner
+  - carpet cleaner
+  - upholstery cleaner
+  - spray-extraction-cleaner
+  - sprayextractioncleaner
+  - spray extraction cleaners
+  - carpet-cleaner
+  - carpetcleaner
+  - carpet cleaners
+  - upholstery-cleaner
+  - upholsterycleaner
+  - upholstery cleaners
+  - spray extraction machine
+  - spray-extraction-machine
+  - sprayextractionmachine
+  - spray extraction machines
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - pumping
+  - mains_powered
+  functional_classes:
+  - cleaning_appliance
+  - floor_care
+  likely_standards:
+  - EN 60335-2-54
+  genres:
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - spray extraction cleaner
+  - carpet cleaner
+  - upholstery cleaner
+  weak_aliases:
+  - spray-extraction-cleaner
+  - sprayextractioncleaner
+  - spray extraction cleaners
+  - carpet-cleaner
+  - carpetcleaner
+  - carpet cleaners
+  - upholstery-cleaner
+  - upholsterycleaner
+  - upholstery cleaners
+  - spray extraction machine
+  - spray-extraction-machine
+  - sprayextractionmachine
+  - spray extraction machines
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-54
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - pumping
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: steam_cleaner
+  label: Steam cleaner / steam mop
+  product_family: surface_cleaning_appliance
+  product_subfamily: steam_cleaner
+  family_keywords:
+  - steam cleaning
+  - surface cleaning
+  aliases:
+  - steam cleaner
+  - steam mop
+  - handheld steam cleaner
+  - floor steam cleaner
+  - garment steam cleaner
+  - steam sanitiser cleaner
+  preferred_clues:
+  - steam cleaner
+  - steam mop
+  - floor steam cleaner
+  exclude_clues:
+  - garment steamer
+  - wallpaper steamer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - heating
+  - heating_element
+  - water_contact
+  - steam
+  - cleaning
+  - surface_cleaning
+  - mains_powered
+  functional_classes:
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-79
+  - EN 60335-2-54
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-79
+  supporting_standard_codes:
+  - EN 60335-2-54
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - steam cleaner
+  - steam mop
+  - handheld steam cleaner
+  - floor steam cleaner
+  weak_aliases:
+  - garment steam cleaner
+  - steam sanitiser cleaner
+  marketplace_aliases:
+  - steam mop
+  - canister steam cleaner
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - steam
+  - cleaning
+  - water_contact
+  matching_notes: Adds explicit steam-cleaning coverage so mops and surface steamers route separately from garment steamers
+    and pressure washers.
+- id: tumble_dryer
+  label: Tumble dryer
+  aliases:
+  - tumble dryer
+  - dryer
+  - clothes dryer
+  - tumble-dryer
+  - tumbledryer
+  - tumble dryers
+  - dryers
+  - clothes-dryer
+  - clothesdryer
+  - clothes dryers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - motorized
+  - mains_powered
+  - textile_care
+  - drying
+  functional_classes:
+  - laundry_appliance
+  - major_appliance
+  likely_standards:
+  - EN 60335-2-11
+  - EN 60335-2-43
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - tumble dryer
+  - dryer
+  - clothes dryer
+  weak_aliases:
+  - tumble-dryer
+  - tumbledryer
+  - tumble dryers
+  - dryers
+  - clothes-dryer
+  - clothesdryer
+  - clothes dryers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-11
+    kind: unspecified
+  - ref: EN 60335-2-43
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - motorized
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: vacuum_cleaner
+  label: Vacuum cleaner
+  aliases:
+  - vacuum cleaner
+  - vacuum
+  - canister vacuum
+  - canister vacuum cleaner
+  - upright vacuum
+  - upright vacuum cleaner
+  - stick vacuum
+  - stick vacuum cleaner
+  - corded vacuum
+  - cordless vacuum cleaner
+  - hand vacuum
+  - handheld vacuum
+  - vacuum-cleaner
+  - vacuumcleaner
+  - vacuum cleaners
+  - vacuums
+  - canister-vacuum
+  - canistervacuum
+  - canister vacuums
+  - canister-vacuum-cleaner
+  - canistervacuumcleaner
+  - canister vacuum cleaners
+  - upright-vacuum
+  - uprightvacuum
+  - upright vacuums
+  - upright-vacuum-cleaner
+  - uprightvacuumcleaner
+  - upright vacuum cleaners
+  - stick-vacuum
+  - stickvacuum
+  - stick vacuums
+  - stick-vacuum-cleaner
+  - stickvacuumcleaner
+  - stick vacuum cleaners
+  - corded-vacuum
+  - cordedvacuum
+  - corded vacuums
+  - cordless-vacuum-cleaner
+  - cordlessvacuumcleaner
+  - cordless vacuum cleaners
+  - hand-vacuum
+  - handvacuum
+  - hand vacuums
+  - handheld-vacuum
+  - handheldvacuum
+  - handheld vacuums
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_power_likely
+  - cleaning
+  - surface_cleaning
+  - portable
+  functional_classes:
+  - floor_care
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-2
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - vacuum cleaner
+  - vacuum
+  - canister vacuum
+  - canister vacuum cleaner
+  - upright vacuum
+  - upright vacuum cleaner
+  - stick vacuum
+  - stick vacuum cleaner
+  weak_aliases:
+  - corded vacuum
+  - cordless vacuum cleaner
+  - hand vacuum
+  - handheld vacuum
+  - vacuum-cleaner
+  - vacuumcleaner
+  - vacuum cleaners
+  - vacuums
+  - canister-vacuum
+  - canistervacuum
+  - canister vacuums
+  - canister-vacuum-cleaner
+  - canistervacuumcleaner
+  - canister vacuum cleaners
+  - upright-vacuum
+  - uprightvacuum
+  - upright vacuums
+  - upright-vacuum-cleaner
+  - uprightvacuumcleaner
+  - upright vacuum cleaners
+  - stick-vacuum
+  - stickvacuum
+  - stick vacuums
+  - stick-vacuum-cleaner
+  - stickvacuumcleaner
+  - stick vacuum cleaners
+  - corded-vacuum
+  - cordedvacuum
+  - corded vacuums
+  - cordless-vacuum-cleaner
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-2
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_power_likely
+  - cleaning
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: washing_machine
+  label: Washing machine
+  aliases:
+  - washing machine
+  - washer
+  - clothes washer
+  - laundry washer
+  - front load washing machine
+  - top load washing machine
+  - washing-machine
+  - washingmachine
+  - washing machines
+  - washers
+  - clothes-washer
+  - clotheswasher
+  - clothes washers
+  - laundry-washer
+  - laundrywasher
+  - laundry washers
+  - front-load-washing-machine
+  - frontloadwashingmachine
+  - front load washing machines
+  - top-load-washing-machine
+  - toploadwashingmachine
+  - top load washing machines
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  - mains_powered
+  - washing
+  - cleaning
+  - textile_care
+  functional_classes:
+  - laundry_appliance
+  - major_appliance
+  likely_standards:
+  - EN 60335-2-7
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - washing machine
+  - washer
+  - clothes washer
+  - laundry washer
+  - front load washing machine
+  - top load washing machine
+  weak_aliases:
+  - washing-machine
+  - washingmachine
+  - washing machines
+  - washers
+  - clothes-washer
+  - clotheswasher
+  - clothes washers
+  - laundry-washer
+  - laundrywasher
+  - laundry washers
+  - front-load-washing-machine
+  - frontloadwashingmachine
+  - front load washing machines
+  - top-load-washing-machine
+  - toploadwashingmachine
+  - top load washing machines
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-7
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: water_suction_cleaner
+  label: Water-suction cleaning appliance
+  aliases:
+  - water suction cleaner
+  - wet vacuum
+  - wet and dry vacuum
+  - wet dry vacuum
+  - wet-dry vacuum
+  - shop vacuum
+  - shop vac
+  - water suction cleaning appliance
+  - water-suction-cleaner
+  - watersuctioncleaner
+  - water suction cleaners
+  - wet-vacuum
+  - wetvacuum
+  - wet vacuums
+  - wet-and-dry-vacuum
+  - wetanddryvacuum
+  - wet and dry vacuums
+  - wet-dry-vacuum
+  - wetdryvacuum
+  - wet dry vacuums
+  - wet-dryvacuum
+  - wet-dry vacuums
+  - shop-vacuum
+  - shopvacuum
+  - shop vacuums
+  - shop-vac
+  - shopvac
+  - shop vacs
+  - water-suction-cleaning-appliance
+  - watersuctioncleaningappliance
+  - water suction cleaning appliances
+  - water-suction cleaning appliance
+  - water-suctioncleaningappliance
+  - water-suction cleaning appliances
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - mains_power_likely
+  - cleaning
+  - surface_cleaning
+  - portable
+  - wet_and_dry_cleaning
+  functional_classes:
+  - floor_care
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-2
+  - EN 60335-2-69
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - water suction cleaner
+  - wet vacuum
+  - wet and dry vacuum
+  - wet dry vacuum
+  - wet-dry vacuum
+  - shop vacuum
+  - shop vac
+  - water suction cleaning appliance
+  weak_aliases:
+  - water-suction-cleaner
+  - watersuctioncleaner
+  - water suction cleaners
+  - wet-vacuum
+  - wetvacuum
+  - wet vacuums
+  - wet-and-dry-vacuum
+  - wetanddryvacuum
+  - wet and dry vacuums
+  - wet-dry-vacuum
+  - wetdryvacuum
+  - wet dry vacuums
+  - wet-dryvacuum
+  - wet-dry vacuums
+  - shop-vacuum
+  - shopvacuum
+  - shop vacuums
+  - shop-vac
+  - shopvac
+  - shop vacs
+  - water-suction-cleaning-appliance
+  - watersuctioncleaningappliance
+  - water suction cleaning appliances
+  - water-suction cleaning appliance
+  - water-suctioncleaningappliance
+  - water-suction cleaning appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-2
+    kind: unspecified
+  - ref: EN 60335-2-69
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

@@ -1,0 +1,101 @@
+standards:
+- code: EN 62471
+  title: Photobiological safety of lamps and lamp systems
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN 62471
+  confidence: low
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN 62471:2008
+  dated_version: EN 62471:2008
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - laser
+  - display
+  - optical_emission
+  - lighting
+  - uv_emitting
+  - infrared_emitting
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - safety test report
+  - CB report or equivalent technical evidence
+  keywords:
+  - photobio. safety
+  notes: Photobio. Safety.
+  state_of_the_art_scope: EU
+  standard_ref: EN 62471
+  selection_group: EN 62471
+  selection_priority: 0
+  evidence_keywords:
+  - safety test report
+  - CB report or equivalent technical evidence
+  - photobio. safety
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN IEC 62560
+  title: Self-ballasted LED-lamps for general lighting services by voltage > 50 V - Safety specifications
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN IEC 62560
+  confidence: high
+  harmonization_status: unknown
+  is_harmonized: false
+  version: EN IEC 62560
+  dated_version: EN IEC 62560
+  applies_if_products:
+  - smart_led_bulb
+  - smart_desk_lamp
+  - smart_indoor_garden
+  applies_if_all:
+  - electrical
+  applies_if_any:
+  - lighting
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  - energy
+  evidence_hint:
+  - lamp electrical ratings
+  - light-source architecture
+  - cap/base and control-gear description
+  keywords:
+  - led lamp
+  - led bulb
+  - smart bulb
+  - light source
+  - e27
+  notes: Primary light-source safety route for smart LED bulbs and similar connected lamps. Connectivity features remain overlays
+    and do not move the product into AV/ICT.
+  applies_if_genres:
+  - lighting_device
+  standard_ref: EN IEC 62560
+  selection_group: EN IEC 62560
+  selection_priority: 35
+  evidence_keywords:
+  - lamp electrical ratings
+  - light-source architecture
+  - cap/base and control-gear description
+  - led lamp
+  - led bulb
+  - smart bulb
+  - light source
+  - e27
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.

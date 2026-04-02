@@ -1,0 +1,356 @@
+products:
+- id: washer_dryer
+  label: Washer-dryer
+  product_family: laundry_combo_appliance
+  product_subfamily: washer_dryer
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-7
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  - hvac_environmental_appliance
+  aliases:
+  - washer dryer
+  - washer-dryer
+  - washer dryer combo
+  - washer dryer combination
+  - all in one washer dryer
+  - washer dryer combo unit
+  preferred_clues:
+  - wash and dry
+  - drying cycle
+  - combined washer dryer
+  exclude_clues:
+  - dryer only
+  - washing machine only
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - cleaning
+  - textile_care
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  - mains_powered
+  - washing
+  - drying
+  - cleaning
+  - textile_care
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  - mains_powered
+  - washing
+  - drying
+  - cleaning
+  - textile_care
+  likely_standards:
+  - EN 60335-2-7
+  - EN 60335-2-11
+- id: multicooker
+  label: Multicooker / programmable cooker
+  product_family: countertop_cooking_appliance
+  product_subfamily: multicooker
+  route_family: household_appliance
+  primary_standard_code: EN 60335-1
+  supporting_standard_codes:
+  - EN 55014-1
+  - EN 55014-2
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - cooking_food_appliance
+  aliases:
+  - multicooker
+  - multi cooker
+  - programmable cooker
+  - smart multicooker
+  - rice cooker and pressure cooker
+  preferred_clues:
+  - saute mode
+  - pressure mode
+  - slow cook mode
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - food_preparation
+  - food_contact
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  - mains_powered
+  - food_preparation
+  - cooking
+  - pressure_cooking
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  - mains_powered
+  - food_preparation
+  - cooking
+  - pressure_cooking
+  likely_standards:
+  - EN 60335-1
+  - Household cooking appliance part-2 review
+- id: slow_cooker
+  label: Slow cooker / crock pot
+  product_family: countertop_cooking_appliance
+  product_subfamily: slow_cooker
+  route_family: household_appliance
+  primary_standard_code: EN 60335-1
+  supporting_standard_codes:
+  - EN 55014-1
+  - EN 55014-2
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - cooking_food_appliance
+  aliases:
+  - slow cooker
+  - crock pot
+  - crockpot
+  preferred_clues:
+  - low and slow cooking
+  - ceramic pot
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - food_preparation
+  - food_contact
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  - food_preparation
+  - cooking
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  - food_preparation
+  - cooking
+  likely_standards:
+  - EN 60335-1
+  - Household cooking appliance part-2 review
+- id: bread_maker
+  label: Bread maker / bread machine
+  product_family: countertop_cooking_appliance
+  product_subfamily: bread_maker
+  route_family: household_appliance
+  primary_standard_code: EN 60335-1
+  supporting_standard_codes:
+  - EN 55014-1
+  - EN 55014-2
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - cooking_food_appliance
+  aliases:
+  - bread maker
+  - bread machine
+  - automatic bread maker
+  preferred_clues:
+  - kneads dough
+  - loaf pan
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - food_preparation
+  - food_contact
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - motorized
+  - mains_powered
+  - food_preparation
+  - cooking
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - motorized
+  - mains_powered
+  - food_preparation
+  - cooking
+  likely_standards:
+  - EN 60335-1
+  - Household cooking appliance part-2 review
+- id: air_cooler
+  label: Air cooler / evaporative cooler
+  product_family: comfort_air_appliance
+  product_subfamily: air_cooler
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-80
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  aliases:
+  - air cooler
+  - evaporative cooler
+  - portable air cooler
+  - swamp cooler
+  preferred_clues:
+  - evaporative
+  - cooling pad
+  - water tank
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - air_treatment
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - ventilation
+  - cooling
+  - water_contact
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - ventilation
+  - cooling
+  - water_contact
+  likely_standards:
+  - EN 60335-2-80
+- id: water_dispenser
+  label: Water dispenser / cooler
+  product_family: water_dispensing_appliance
+  product_subfamily: water_dispenser
+  route_family: household_appliance
+  primary_standard_code: EN 60335-1
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  - hvac_environmental_appliance
+  aliases:
+  - water dispenser
+  - water cooler
+  - bottleless water cooler
+  - plumbed water dispenser
+  - countertop water dispenser
+  preferred_clues:
+  - chilled water
+  - hot and cold water
+  - bottleless
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - water_contact
+  - beverage_service
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - water_contact
+  - water_dispensing
+  - beverage_service
+  - cooling
+  max_match_stage: family
+  route_confidence_cap: medium
+  family_level_reason: Water dispensers and bottleless coolers stay at family level until dispensing, plumbing, and hygiene details are confirmed.
+  boundary_tags:
+  - hygiene_boundary
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - water_contact
+  - water_dispensing
+  - beverage_service
+  - cooling
+  likely_standards:
+  - EN 60335-1
+  - Water dispenser / cooler review
+- id: bottle_sterilizer
+  label: Bottle sterilizer
+  product_family: childcare_hygiene_appliance
+  product_subfamily: bottle_sterilizer
+  route_family: household_appliance
+  primary_standard_code: EN 60335-1
+  genres:
+  - household_appliance
+  aliases:
+  - bottle sterilizer
+  - baby bottle sterilizer
+  - steam bottle sterilizer
+  preferred_clues:
+  - baby bottles
+  - sterilizing cycle
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - childcare_device
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - water_contact
+  - steam
+  - sterilization
+  - sanitization
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - water_contact
+  - steam
+  - sterilization
+  - sanitization
+  likely_standards:
+  - EN 60335-1
+  - Sterilization / hygiene appliance review

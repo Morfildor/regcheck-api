@@ -1,0 +1,103 @@
+traits:
+- id: ambient_light_sensor
+  label: Ambient light sensor
+  description: Measures ambient light level, typically for automatic brightness adjustment
+  aliases:
+  - ambient light sensor
+  examples: []
+  regex:
+  - \bambient[ -]?light[ -]?sensor\b
+  normalized_to: ambient_light_sensor
+  normalization_priority: 0
+- id: drone_flight
+  label: Drone flight
+  description: Intended to fly as an unmanned aircraft system or to directly control one
+  aliases:
+  - drone flight
+  examples: []
+  regex:
+  - \bdrone[ -]?flight\b
+  normalized_to: drone_flight
+  normalization_priority: 0
+- id: infrared_emitting
+  label: Infrared emitting
+  description: Emits infrared optical radiation such as IR heating or sensing output.
+  aliases:
+  - infrared emitting
+  - ir emitter
+  - infrared
+  examples: []
+  regex:
+  - \binfrared[ -]?emitting\b
+  - \bir[ -]?emitter\b
+  - \binfrared\b
+  normalized_to: infrared_emitting
+  normalization_priority: 0
+- id: laser
+  label: Laser emission
+  description: Includes a laser source, laser engine, scanner, rangefinder, or similar optical emitter
+  aliases:
+  - laser
+  examples: []
+  regex:
+  - \blaser\b
+  normalized_to: laser
+  normalization_priority: 0
+- id: light_means_of_transport
+  label: Light means of transport
+  description: Product or battery is intended for e-bikes, e-scooters, e-skateboards, or similar light transport
+  aliases:
+  - light means of transport
+  examples: []
+  regex:
+  - \blight[ -]?means[ -]?of[ -]?transport\b
+  normalized_to: light_means_of_transport
+  normalization_priority: 0
+- id: lighting
+  label: Lighting / light source
+  description: Product is primarily a lamp, bulb, luminaire, lighting fixture, or other light-emitting lighting product.
+  aliases:
+  - lighting
+  - light source
+  - lamp
+  - bulb
+  - luminaire
+  examples: []
+  regex:
+  - \blighting\b
+  - \blight[ -]?source\b
+  - \blamp\b
+  - \bbulb\b
+  - \bluminaire\b
+  normalized_to: lighting
+  normalization_priority: 0
+- id: optical_emission
+  label: Optical emission
+  description: Emits visible, ultraviolet, or infrared optical radiation as part of intended use.
+  aliases:
+  - optical emission
+  - light emitting
+  - optical output
+  examples: []
+  regex:
+  - \boptical[ -]?emission\b
+  - \blight[ -]?emitting\b
+  - \boptical[ -]?output\b
+  normalized_to: optical_emission
+  normalization_priority: 0
+- id: uv_emitting
+  label: UV emitting
+  description: Emits ultraviolet radiation such as UVA, UVB, or UVC.
+  aliases:
+  - uv emitting
+  - ultraviolet
+  - uv c
+  - uvc
+  examples: []
+  regex:
+  - \buv[ -]?emitting\b
+  - \bultra[ -]?violet\b
+  - \buv[ -]?c\b
+  - \buvc\b
+  normalized_to: uv_emitting
+  normalization_priority: 0

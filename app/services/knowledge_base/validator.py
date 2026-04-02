@@ -232,6 +232,7 @@ def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set
             "family_keywords",
             "genres",
             "supporting_standard_codes",
+            "boundary_tags",
         ):
             value = _validate_string_list_field(owner, row, key)
             if key == "implied_traits":
@@ -264,6 +265,15 @@ def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set
         primary_standard_code = row.get("primary_standard_code")
         if primary_standard_code is not None and (not isinstance(primary_standard_code, str) or not primary_standard_code.strip()):
             raise KnowledgeBaseError(f"{owner} field 'primary_standard_code' must be a non-empty string when provided.")
+        max_match_stage = row.get("max_match_stage")
+        if max_match_stage is not None and max_match_stage not in {"family", "subtype"}:
+            raise KnowledgeBaseError(f"{owner} field 'max_match_stage' must be 'family' or 'subtype' when provided.")
+        route_confidence_cap = row.get("route_confidence_cap")
+        if route_confidence_cap is not None and route_confidence_cap not in {"low", "medium", "high"}:
+            raise KnowledgeBaseError(f"{owner} field 'route_confidence_cap' must be low, medium, or high when provided.")
+        family_level_reason = row.get("family_level_reason")
+        if family_level_reason is not None and (not isinstance(family_level_reason, str) or not family_level_reason.strip()):
+            raise KnowledgeBaseError(f"{owner} field 'family_level_reason' must be a non-empty string when provided.")
         supporting_standard_codes = _string_list(row.get("supporting_standard_codes"))
         if primary_standard_code and primary_standard_code in supporting_standard_codes:
             raise KnowledgeBaseError(f"{owner} repeats primary_standard_code '{primary_standard_code}' in supporting_standard_codes.")

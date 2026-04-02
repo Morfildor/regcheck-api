@@ -1,0 +1,343 @@
+products:
+- id: access_reader
+  label: Access reader / badge reader
+  product_family: access_control_device
+  product_subfamily: access_reader
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - access reader
+  - badge reader
+  - card reader
+  - credential reader
+  - door access reader
+  - rfid reader
+  preferred_clues:
+  - access control
+  - reader terminal
+  - building entry
+  exclude_clues:
+  - payment terminal
+  - passport reader
+  family_traits:
+  - electronic
+  - av_ict
+  - security_or_barrier
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - access_control
+  - access_reader_role
+  - wired_networking
+  - smart_building
+  - fixed_installation
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - access_control
+  - access_reader_role
+  - wired_networking
+  - smart_building
+  - fixed_installation
+  likely_standards:
+  - EN 62368-1
+  - GDPR review
+- id: occupancy_sensor
+  label: Occupancy sensor / presence sensor
+  product_family: building_sensor
+  product_subfamily: occupancy_sensor
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - occupancy sensor
+  - presence sensor
+  - room occupancy sensor
+  - presence detector
+  preferred_clues:
+  - room presence
+  - motion and occupancy
+  family_traits:
+  - electronic
+  - av_ict
+  - smart_building
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - occupancy_detection
+  - smart_building
+  - fixed_installation
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - occupancy_detection
+  - smart_building
+  - fixed_installation
+  likely_standards:
+  - EN 62368-1
+- id: leak_detector
+  label: Leak detector / flood sensor
+  product_family: building_sensor
+  product_subfamily: leak_detector
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - leak detector
+  - leak sensor
+  - water leak sensor
+  - flood sensor
+  - flood detector
+  preferred_clues:
+  - water leak
+  - under sink
+  family_traits:
+  - electronic
+  - av_ict
+  - smart_building
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - flood_detection
+  - smart_building
+  - water_contact
+  - fixed_installation
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - flood_detection
+  - smart_building
+  - water_contact
+  - fixed_installation
+  likely_standards:
+  - EN 62368-1
+- id: conference_speakerphone
+  label: Conference speakerphone
+  product_family: conferencing_device
+  product_subfamily: conference_speakerphone
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - conference speakerphone
+  - usb speakerphone
+  - meeting room speakerphone
+  - conference phone
+  preferred_clues:
+  - meeting room
+  - conference call
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - conference_audio
+  - office_peripheral
+  - speaker
+  - microphone
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - conference_audio
+  - office_peripheral
+  - speaker
+  - microphone
+  likely_standards:
+  - EN 62368-1
+- id: kvm_switch
+  label: KVM switch
+  product_family: office_avict_peripheral
+  product_subfamily: kvm_switch
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - kvm switch
+  - keyboard video mouse switch
+  - usb hdmi kvm
+  preferred_clues:
+  - multiple computers
+  - workstation switching
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - office_peripheral
+  - wired_networking
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - office_peripheral
+  - wired_networking
+  likely_standards:
+  - EN 62368-1
+- id: all_in_one_pc
+  label: All-in-one PC
+  product_family: workstation_computing_device
+  product_subfamily: all_in_one_pc
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - all in one pc
+  - all-in-one pc
+  - aio pc
+  - pc monitor combo
+  preferred_clues:
+  - integrated computer
+  - desktop computer with display
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - data_storage
+  - office_peripheral
+  - mains_powered
+  max_match_stage: family
+  route_confidence_cap: medium
+  family_level_reason: All-in-one PCs stay at family level until it is clear whether the product is primarily a monitor, PC, or kiosk-style terminal.
+  boundary_tags:
+  - office_monitor_boundary
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - data_storage
+  - office_peripheral
+  - mains_powered
+  likely_standards:
+  - EN 62368-1
+- id: document_camera
+  label: Document camera / visualizer
+  product_family: creator_office_device
+  product_subfamily: document_camera
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - document camera
+  - visualizer
+  - presenter camera
+  - classroom visualizer
+  preferred_clues:
+  - lecture capture
+  - overhead document viewing
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - creator_equipment
+  - office_peripheral
+  - camera
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - creator_equipment
+  - office_peripheral
+  - camera
+  likely_standards:
+  - EN 62368-1
+- id: presentation_clicker
+  label: Presentation clicker / presenter remote
+  product_family: office_avict_peripheral
+  product_subfamily: presentation_clicker
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - presentation clicker
+  - presenter remote
+  - slideshow remote
+  preferred_clues:
+  - presentation
+  - slide advance
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - office_peripheral
+  - presentation_use
+  - battery_powered
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - office_peripheral
+  - presentation_use
+  - battery_powered
+  likely_standards:
+  - EN 62368-1

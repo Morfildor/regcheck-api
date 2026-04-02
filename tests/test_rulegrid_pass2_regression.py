@@ -2,22 +2,23 @@ from __future__ import annotations
 
 import unittest
 
+from app.domain.models import AnalysisResult
 from rules import analyze
 
 
-def _standard_codes(result: object) -> set[str]:
+def _standard_codes(result: AnalysisResult) -> set[str]:
     return {item.code for item in result.standards}
 
 
-def _review_codes(result: object) -> set[str]:
+def _review_codes(result: AnalysisResult) -> set[str]:
     return {item.code for item in result.review_items}
 
 
-def _missing_keys(result: object) -> set[str]:
+def _missing_keys(result: AnalysisResult) -> set[str]:
     return {item.key for item in result.missing_information_items}
 
 
-def _finding_articles(result: object) -> set[str]:
+def _finding_articles(result: AnalysisResult) -> set[str]:
     return {item.article for item in result.findings}
 
 

@@ -1,0 +1,558 @@
+standards:
+- code: EN 300 328
+  title: Wideband transmission systems; Data transmission equipment operating in the 2.4 GHz band
+  region: EU
+  category: radio
+  directives:
+  - RED
+  legislation_key: RED
+  item_type: standard
+  standard_family: EN 300 328
+  confidence: high
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: RED
+  harmonized_reference: 2014/53/EU
+  version: EN 300 328 V2.2.2:2019
+  dated_version: EN 300 328 V2.2.2:2019
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  applies_if_any:
+  - wifi
+  - bluetooth
+  - matter
+  - thread
+  exclude_if: []
+  test_focus:
+  - rf
+  evidence_hint:
+  - technical construction file
+  - test report
+  keywords:
+  - rf spectrum 2.4 ghz wifi
+  - wideband transmission systems
+  notes: Commonly relevant for products using 2.4 GHz radio technologies such as Wi-Fi, Bluetooth, Thread, or Matter over
+    2.4 GHz.
+  state_of_the_art_scope: EU
+  standard_ref: EN 300 328
+  selection_group: EN 300 328
+  selection_priority: 0
+  evidence_keywords:
+  - technical construction file
+  - test report
+  - rf spectrum 2.4 ghz wifi
+  - wideband transmission systems
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 301 489-1
+  title: EMC standard for radio equipment and services - Common technical requirements
+  region: EU
+  category: radio_emc
+  directives:
+  - RED
+  - EMC
+  legislation_key: RED
+  item_type: standard
+  standard_family: EN 301 489-1
+  confidence: high
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: RED
+  harmonized_reference: 2014/53/EU
+  version: ETSI EN 301 489-1 V2.2.3:2019
+  dated_version: EN 301 489-1 V1.9.2:2011
+  supersedes: EN 301 489-1 V1.9.2:2011
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  applies_if_any:
+  - wifi
+  - bluetooth
+  - cellular
+  - zigbee
+  - thread
+  exclude_if: []
+  test_focus:
+  - emission
+  - immunity
+  - rf
+  evidence_hint:
+  - technical construction file
+  - test report
+  keywords:
+  - emc radio equipm.
+  - general emc requirements for radio equipments
+  notes: Common EMC framework standard for radio equipment.
+  state_of_the_art_scope: EU
+  standard_ref: EN 301 489-1
+  selection_group: EN 301 489-1
+  selection_priority: 0
+  evidence_keywords:
+  - technical construction file
+  - test report
+  - emc radio equipm.
+  - general emc requirements for radio equipments
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 301 489-17
+  title: EMC standard for radio equipment and services - Specific conditions for broadband data transmission systems
+  region: EU
+  category: radio_emc
+  directives:
+  - RED
+  legislation_key: RED
+  item_type: standard
+  standard_family: EN 301 489-17
+  confidence: medium
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: RED
+  harmonized_reference: 2014/53/EU
+  version: EN 301 489-17 V3.3.1:2024 (clause 6 exception)
+  dated_version: EN 301 489-17 V3.3.1:2024 (clause 6 exception)
+  supersedes: EN 301 489-17 V3.3.1:2024 (clause 6 exception)
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  applies_if_any:
+  - wifi
+  - bluetooth
+  - zigbee
+  - thread
+  exclude_if: []
+  test_focus:
+  - emission
+  - immunity
+  - rf
+  evidence_hint:
+  - technical construction file
+  - test report
+  keywords:
+  - emc data transm.
+  - specific emc requirements for broadband data transmissions (bt, wifi)
+  notes: Specific EMC conditions for broadband data transmission radio equipment such as Wi-Fi and Bluetooth.
+  state_of_the_art_scope: EU
+  standard_ref: EN 301 489-17
+  selection_group: EN 301 489-17
+  selection_priority: 0
+  evidence_keywords:
+  - technical construction file
+  - test report
+  - emc data transm.
+  - specific emc requirements for broadband data transmissions (bt, wifi)
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 301 489-3
+  title: EMC standard for radio equipment and services - Specific conditions for short-range devices
+  region: EU
+  category: radio_emc
+  directives:
+  - RED
+  - EMC
+  legislation_key: RED
+  item_type: standard
+  standard_family: EN 301 489-3
+  confidence: medium
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: RED
+  harmonized_reference: 2014/53/EU
+  version: EN 301 489-3 V2.3.2:2023 (clause 6 exception)
+  dated_version: EN 301 489-3 V2.3.2:2023 (clause 6 exception)
+  supersedes: EN 301 489-3 V2.3.2:2023 (clause 6 exception)
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  applies_if_any:
+  - nfc
+  exclude_if: []
+  test_focus:
+  - immunity
+  - emission
+  - rf
+  evidence_hint:
+  - test report
+  - technical construction file
+  keywords:
+  - emc radio equipm.
+  - specific emc requirements for srd operating between 9khz and 246 ghz (rfid, nfc, qi/wireless charging & fm)
+  notes: Specific EMC conditions for short-range radio devices such as NFC, RFID, and similar SRD technologies.
+  state_of_the_art_scope: EU
+  standard_ref: EN 301 489-3
+  selection_group: EN 301 489-3
+  selection_priority: 0
+  evidence_keywords:
+  - test report
+  - technical construction file
+  - emc radio equipm.
+  - specific emc requirements for srd operating between 9khz and 246 ghz (rfid, nfc, qi/wireless charging & fm)
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 301 489-52
+  title: EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
+  region: EU
+  category: radio_emc
+  directives:
+  - RED
+  legislation_key: RED
+  item_type: standard
+  standard_family: EN 301 489-52
+  confidence: medium
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: RED
+  harmonized_reference: 2014/53/EU
+  version: EN 301 893 V2.2.1:2024
+  dated_version: EN 301 893 V2.1.1:2017
+  supersedes: EN 301 893 V2.1.1:2017
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  - cellular
+  applies_if_any:
+  - internet
+  - remote_control
+  exclude_if: []
+  test_focus:
+  - immunity
+  - emission
+  - rf
+  evidence_hint:
+  - test report
+  - technical construction file
+  keywords:
+  - EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
+  notes: Specific EMC conditions for cellular communications user equipment.
+  state_of_the_art_scope: EU
+  standard_ref: EN 301 489-52
+  selection_group: EN 301 489-52
+  selection_priority: 0
+  evidence_keywords:
+  - test report
+  - technical construction file
+  - EMC standard for radio equipment and services - Specific conditions for cellular communications user equipment
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 301 489-6
+  title: EMC standard for radio equipment and services - Specific conditions for digital enhanced cordless telecommunications
+    equipment
+  region: EU
+  category: radio_emc
+  directives:
+  - RED
+  - EMC
+  legislation_key: RED
+  item_type: standard
+  standard_family: EN 301 489-6
+  confidence: low
+  harmonization_status: state_of_the_art
+  is_harmonized: false
+  harmonized_under: RED
+  harmonized_reference: 2014/53/EU
+  version: EN 301 489-6 V2.2.1:2019
+  dated_version: EN 301 489-6 V2.2.1:2019
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  applies_if_any:
+  - dect
+  exclude_if: []
+  test_focus:
+  - immunity
+  - emission
+  - rf
+  evidence_hint:
+  - test report
+  - technical construction file
+  keywords:
+  - emc (dect)
+  notes: Specific EMC conditions for DECT equipment; verify only where DECT is present.
+  state_of_the_art_scope: EU
+  standard_ref: EN 301 489-6
+  selection_group: EN 301 489-6
+  selection_priority: 0
+  evidence_keywords:
+  - test report
+  - technical construction file
+  - emc (dect)
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 301 511
+  title: Harmonised standard for mobile stations in GSM networks
+  region: EU
+  category: radio
+  directives:
+  - RED
+  legislation_key: RED
+  item_type: standard
+  standard_family: EN 301 511
+  confidence: low
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: RED
+  harmonized_reference: 2014/53/EU
+  version: EN 301 893 V2.2.1:2024
+  dated_version: EN 301 893 V2.1.1:2017
+  supersedes: EN 301 893 V2.1.1:2017
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  - cellular
+  applies_if_any:
+  - gsm
+  exclude_if: []
+  test_focus:
+  - rf
+  evidence_hint:
+  - test report
+  - technical construction file
+  keywords:
+  - Harmonised standard for mobile stations in GSM networks
+  notes: Legacy GSM cellular spectrum route; verify only where GSM is actually supported.
+  state_of_the_art_scope: EU
+  standard_ref: EN 301 511
+  selection_group: EN 301 511
+  selection_priority: 0
+  evidence_keywords:
+  - test report
+  - technical construction file
+  - Harmonised standard for mobile stations in GSM networks
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 301 893
+  title: 5 GHz RLAN radio spectrum standard
+  region: EU
+  category: radio
+  directives:
+  - RED
+  legislation_key: RED
+  item_type: standard
+  standard_family: EN 301 893
+  confidence: high
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: RED
+  harmonized_reference: 2014/53/EU
+  version: EN 301 893 V2.2.1:2024
+  dated_version: EN 301 893 V2.1.1:2017
+  supersedes: EN 301 893 V2.1.1:2017
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  applies_if_any:
+  - wifi_5ghz
+  exclude_if: []
+  test_focus:
+  - rf
+  evidence_hint:
+  - test report
+  - technical construction file
+  keywords:
+  - rf spectrum 5 ghz wifi
+  - 5 ghz rlan radio spectrum standard
+  notes: 5 GHz Wi-Fi spectrum route. Confirm only where 5 GHz Wi-Fi or dual-band Wi-Fi is actually present.
+  state_of_the_art_scope: EU
+  standard_ref: EN 301 893
+  selection_group: EN 301 893
+  selection_priority: 0
+  evidence_keywords:
+  - test report
+  - technical construction file
+  - rf spectrum 5 ghz wifi
+  - 5 ghz rlan radio spectrum standard
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 301 908 series review
+  title: Cellular radio standard family review required
+  region: EU
+  category: radio
+  directives:
+  - RED
+  legislation_key: RED
+  item_type: review
+  standard_family: EN 301 908
+  confidence: medium
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - radio
+  - cellular
+  applies_if_any:
+  - internet
+  - remote_control
+  exclude_if: []
+  test_focus:
+  - rf
+  evidence_hint:
+  - test report
+  - technical construction file
+  keywords:
+  - cellular radio
+  - EN 301 908 series
+  notes: Select the applicable cellular radio standard based on RAT, supported bands, and module implementation.
+  state_of_the_art_scope: EU
+  standard_ref: EN 301 908 series review
+  selection_group: EN 301 908
+  selection_priority: 0
+  evidence_keywords:
+  - test report
+  - technical construction file
+  - cellular radio
+  - EN 301 908 series
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 55032
+  title: Electromagnetic compatibility of multimedia equipment - Emission requirements
+  region: EU
+  category: emc
+  directives:
+  - EMC
+  legislation_key: EMC
+  item_type: standard
+  standard_family: EN 55032
+  confidence: medium
+  selection_group: emc_primary_emission
+  selection_priority: 20
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: EMC
+  harmonized_reference: 2014/30/EU
+  version: EN 55032:2015 + A11:2020 (class B)
+  dated_version: EN 55032:2015 + A11:2020 (class B)
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - electronic
+  applies_if_any:
+  - av_ict
+  - display
+  - speaker
+  - microphone
+  - camera
+  - data_storage
+  exclude_if: []
+  test_focus:
+  - emission
+  evidence_hint:
+  - test report
+  - technical construction file
+  keywords:
+  - emc (qi /wireless charging & fm)
+  notes: EMC emission route for AV/ICT-style multimedia equipment. Do not use as the primary appliance EMC route for household
+    appliances.
+  state_of_the_art_scope: EU
+  standard_ref: EN 55032
+  evidence_keywords:
+  - test report
+  - technical construction file
+  - emc (qi /wireless charging & fm)
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 55035
+  title: Electromagnetic compatibility of multimedia equipment - Immunity requirements
+  region: EU
+  category: emc
+  directives:
+  - EMC
+  legislation_key: EMC
+  item_type: standard
+  standard_family: EN 55035
+  confidence: medium
+  selection_group: emc_primary_immunity
+  selection_priority: 20
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: EMC
+  harmonized_reference: 2014/30/EU
+  version: EN 55035:2017 + A11:2020
+  dated_version: EN 55035:2017 + A11:2020
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - electronic
+  applies_if_any:
+  - av_ict
+  - display
+  - speaker
+  - microphone
+  - camera
+  - data_storage
+  exclude_if: []
+  test_focus:
+  - immunity
+  evidence_hint:
+  - test report
+  - technical construction file
+  keywords:
+  - multimedia immunity
+  - av ict immunity
+  notes: EMC immunity route for AV/ICT-style multimedia equipment. Do not use as the primary appliance EMC route for household
+    appliances.
+  state_of_the_art_scope: EU
+  standard_ref: EN 55035
+  evidence_keywords:
+  - test report
+  - technical construction file
+  - multimedia immunity
+  - av ict immunity
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
+- code: EN 62368-1
+  title: Audio/video, information and communication technology equipment - Safety requirements
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  legislation_key: LVD
+  item_type: standard
+  standard_family: EN 62368-1
+  confidence: medium
+  selection_group: lvd_primary_safety
+  selection_priority: 20
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN IEC 62368-1:2024 + A11:2024
+  dated_version: 'EN 62368-1:2014 + AC:2015 + AC: 2015 + AC:2015'
+  supersedes: 'EN 62368-1:2014 + AC:2015 + AC: 2015 + AC:2015'
+  applies_if_products: []
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  - electronic
+  applies_if_any:
+  - av_ict
+  - display
+  - speaker
+  - microphone
+  - camera
+  - data_storage
+  exclude_if:
+  - food_contact
+  - water_contact
+  - beverage_preparation
+  - washing
+  - cleaning
+  - air_treatment
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - safety test report
+  - CB report or equivalent technical evidence
+  keywords:
+  - audio/video, ict
+  - audio
+  - video
+  notes: Primary safety route for AV/ICT equipment. Do not use for household appliances whose primary function is heating,
+    cleaning, cooking, pumping, or similar appliance operation.
+  state_of_the_art_scope: EU
+  standard_ref: EN 62368-1
+  evidence_keywords:
+  - safety test report
+  - CB report or equivalent technical evidence
+  - audio/video, ict
+  - audio
+  - video
+  matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.

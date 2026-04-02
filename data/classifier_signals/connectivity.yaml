@@ -1,0 +1,504 @@
+trait_detection:
+  connectivity:
+    radio:
+    - \bradio\b
+    bluetooth:
+    - \bbluetooth\b
+    wifi:
+    - \bwifi\b
+    - \bwi fi\b
+    - \bwlan\b
+    - \bwireless lan\b
+    - \b802 11\b
+    wifi_5ghz:
+    - \b5ghz\b
+    - \b5 ghz\b
+    - \b5ghz wifi\b
+    - \b5 ghz wifi\b
+    - \bdual band\b
+    - \bdual-band\b
+    - \btri band\b
+    - \btri-band\b
+    - \b802 11a\b
+    - \b802 11ac\b
+    - \b802 11ax\b
+    - \b802 11be\b
+    - \bwifi 5\b
+    - \bwifi 6\b
+    - \bwifi 6e\b
+    - \bwifi 7\b
+    wifi_6:
+    - \bwifi 6\b
+    - \bwifi 6e\b
+    - \b802 11ax\b
+    wifi_7:
+    - \bwifi 7\b
+    - \b802 11be\b
+    zigbee:
+    - \bzigbee\b
+    thread:
+    - \bthread\b
+    matter:
+    - \bmatter\b
+    matter_bridge:
+    - \bmatter bridge\b
+    nfc:
+    - \bnfc\b
+    - \brfid\b
+    cellular:
+    - \bcellular\b
+    - \blte\b
+    - \b4g\b
+    - \b5g cellular\b
+    - \b5g mobile\b
+    - \bgsm\b
+    - \bsim\b
+    dect:
+    - \bdect\b
+    gsm:
+    - \bgsm\b
+    sigfox:
+    - \bsigfox\b
+    lte_m:
+    - \blte m\b
+    - \blte-m\b
+    - \bnb iot\b
+    - \bnb-iot\b
+    5g_nr:
+    - \b5g nr\b
+    - \bstandalone 5g\b
+    satellite_connectivity:
+    - \bsatellite internet\b
+    - \bsatellite connectivity\b
+    - \bstarlink\b
+    - \bvsat\b
+    lora:
+    - \blora\b
+    lorawan:
+    - \blorawan\b
+    uwb:
+    - \buwb\b
+    - \bultra wideband\b
+    wpa3:
+    - \bwpa3\b
+    mesh_network_node:
+    - \bmesh wifi\b
+    - \bmesh node\b
+    - \bwhole home wifi\b
+    - \bmesh router\b
+    - \bmesh network router\b
+    tri_band_wifi:
+    - \btri band\b
+    - \btri band wifi\b
+  service:
+    app_control:
+    - \bmobile app\b
+    - \bcompanion app\b
+    - \bsmartphone app\b
+    - \bmobile application\b
+    - \bapp control\b
+    - \bapp controlled\b
+    - \bapp enabled\b
+    - \bapp connected\b
+    - \bapp sync(?:ed)?\b
+    - \bapp synced\b
+    - \bsyncs? with (?:the )?(?:mobile )?app\b
+    - \bsyncs? to (?:the )?(?:mobile )?app\b
+    - \bvia (?:the )?(?:mobile )?app\b
+    - \bapp monitoring\b
+    - \bbluetooth app\b
+    - \bwifi app\b
+    - \bcontrol(?:led)? via app\b
+    - \bworks with app\b
+    - \bworks with alexa\b
+    - \bgoogle home\b
+    - \bapple home\b
+    - \bhomekit\b
+    - \bsmartthings\b
+    - \btuya\b
+    cloud:
+    - \bcloud\b
+    - \bcloud account\b
+    - \bcloud account required\b
+    - \bcloud service\b
+    - \bcloud required\b
+    - \brequires cloud\b
+    - \bcloud dependent\b
+    - \bcloud dependency\b
+    - \bremote server\b
+    - \bbackend api\b
+    - \bweb service\b
+    - \bout of home\b
+    - \bremote monitoring\b
+    - \bremote diagnostics\b
+    internet:
+    - \binternet\b
+    - \binternet connected\b
+    - \bonline service\b
+    - \bremote access\b
+    - \bweb portal\b
+    - \biot\b
+    - \binternet of things\b
+    - \bconnected device\b
+    - \bconnected product\b
+    local_only:
+    - \boffline\b
+    - \bno cloud\b
+    - \bno internet\b
+    - \blocal only\b
+    - \blan only\b
+    ota:
+    - \bota\b
+    - \bota updates?\b
+    - \bfirmware update\b
+    - \bfirmware updates?\b
+    - \bover the air\b
+    - \bremote firmware update\b
+    - \bwireless firmware update\b
+    - \bsecurity patch\b
+    - \bsoftware update over\b
+    - \bsoftware updates?\b
+    - \bautomatic updates?\b
+    - \bsecurity updates?\b
+    - \bsoftware security updates?\b
+    account:
+    - \baccount\b
+    - \blogin\b
+    - \blog in\b
+    - \bsign in\b
+    - \buser account\b
+    - \buser profile\b
+    - \baccount required\b
+    - \bcreate account\b
+    - \bsign up\b
+    authentication:
+    - \bauthentication\b
+    - \bpassword\b
+    - \bpasscode\b
+    - \bcredential\b
+    - \bpin\b
+    - \bpin code\b
+    - \bpairing code\b
+    - \btwo factor\b
+    - \bmfa\b
+    - \b2fa\b
+    - \bpasskey\b
+    monetary_transaction:
+    - \bpayment\b
+    - \bpayments\b
+    - \bpurchase\b
+    - \bpurchases\b
+    - \bcheckout\b
+    - \bsubscription\b
+    - \bwallet\b
+    - \bmoney transfer\b
+    - \bmonetary value\b
+    - \bvirtual currency\b
+    - \bin app purchase\b
+    - \bplace order\b
+    - \bpaid plan\b
+    subscription_dependency:
+    - \bsubscription required\b
+    - \brequires subscription\b
+    - \bpaid subscription\b
+    - \bsubscription plan\b
+    - \bservice plan\b
+  av_ict:
+    av_ict:
+    - \brouter\b
+    - \bmodem\b
+    - \bgateway\b
+    - \bnetwork switch\b
+    - \bethernet switch\b
+    - \baccess point\b
+    - \bwireless access point\b
+    - \blaptop\b
+    - \bnotebook\b
+    - \bdesktop pc\b
+    - \bpersonal computer\b
+    - \bserver\b
+    - \bmonitor\b
+    - \btelevision\b
+    - \bsmart tv\b
+    - \btv\b
+    - \bsmart display\b
+    - \bdisplay hub\b
+    - \bset top box\b
+    - \bset-top box\b
+    - \bstreaming device\b
+    - \bmedia player\b
+    - \bprojector\b
+    - \bsmart speaker\b
+    - \bict equipment\b
+    - \baudio video equipment\b
+    router_role:
+    - \brouter\b
+    - \bwi[ -]?fi router\b
+    - \bwireless router\b
+    access_point_role:
+    - \baccess point\b
+    - \bwireless access point\b
+    - \bwifi access point\b
+    repeater_role:
+    - \bwi[ -]?fi extender\b
+    - \brange extender\b
+    - \bwi[ -]?fi repeater\b
+    - \bwireless repeater\b
+    gateway_role:
+    - \bgateway\b
+    - \bhome hub\b
+    - \bbridge\b
+    - \bcontrol bridge\b
+    camera:
+    - \bcamera\b
+    microphone:
+    - \bmicrophone\b
+    - \bmic\b
+    - \bvoice control\b
+    - \bvoice command\b
+    speaker:
+    - \bspeaker\b
+    - \baudio playback\b
+    - \bsound output\b
+    display:
+    - \bdisplay\b
+    - \bscreen\b
+    - \btouchscreen\b
+    - \btouch screen\b
+    - \bmonitor\b
+    display_touchscreen:
+    - \btouchscreen\b
+    - \btouch screen\b
+    e_ink_display:
+    - \beink\b
+    - \bepaper\b
+    - \be reader\b
+    hdr_display:
+    - \bhdr10\b
+    - \bhdr10\+\b
+    - \bdolby vision\b
+    - \bhlg\b
+    high_refresh_display:
+    - \b90hz\b
+    - \b120hz\b
+    - \b144hz\b
+    - \bhigh refresh\b
+    screen_mirroring:
+    - \bscreen mirroring\b
+    - \bchromecast\b
+    - \bairplay\b
+    - \bmiracast\b
+    multi_room_audio:
+    - \bmulti room audio\b
+    - \bmultiroom audio\b
+    spatial_audio:
+    - \bspatial audio\b
+    - \bdolby atmos\b
+    - \bdts x\b
+    - \b3d audio\b
+    voice_assistant:
+    - \bvoice assistant\b
+    - \balexa\b
+    - \bgoogle assistant\b
+    - \bsiri\b
+    - \bbixby\b
+    - \bworks with alexa\b
+    privacy_switch:
+    - \bprivacy switch\b
+    - \bmic mute switch\b
+    - \bcamera kill switch\b
+    parental_controls:
+    - \bparental control\b
+    - \bfamily safety\b
+    - \bcontent filter\b
+negations:
+  connectivity:
+    radio:
+    - \bno radio\b
+    - \bwithout radio\b
+    - \bno wireless communication\b
+    - \bwithout wireless communication\b
+    - \bno wireless connectivity\b
+    - \bwithout wireless connectivity\b
+    - \bwired only\b
+    wifi:
+    - \bno wifi\b
+    - \bwithout wifi\b
+    - \bnon wifi\b
+    - \bwifi not present\b
+    bluetooth:
+    - \bno bluetooth\b
+    - \bwithout bluetooth\b
+    cloud:
+    - \bno cloud\b
+    - \bwithout cloud\b
+    - \bcloud free\b
+    - \blocal only\b
+    - \blocal control only\b
+    internet:
+    - \bno internet\b
+    - \bwithout internet\b
+    - \boffline only\b
+    - \blocal only\b
+    - \blocal control only\b
+    app_control:
+    - \bno app\b
+    - \bwithout app\b
+    ota:
+    - \bno ota\b
+    - \bwithout ota\b
+    - \bmanual update only\b
+    account:
+    - \bno account\b
+    - \bwithout account\b
+    - \bguest only\b
+    - \bno cloud account\b
+    - \bno app account\b
+    - \bno account required\b
+    authentication:
+    - \bno password\b
+    - \bwithout login\b
+    - \bwithout authentication\b
+  power_and_transaction:
+    battery_powered:
+    - \bno battery\b
+    - \bwithout battery\b
+    - \bbattery not included\b
+    electronic:
+    - \bno electronics\b
+    - \bwithout electronics\b
+    - \bnon electronic\b
+    - \bpassive accessory\b
+    - \bpassive cable\b
+    monetary_transaction:
+    - \bno payment\b
+    - \bwithout payment\b
+    - \bno purchase\b
+    - \bwithout subscription\b
+    - \bno wallet\b
+suppression_mappings:
+  connectivity:
+    radio:
+    - radio
+    - bluetooth
+    - wifi
+    - wifi_5ghz
+    - wifi_6
+    - wifi_7
+    - zigbee
+    - thread
+    - matter
+    - nfc
+    - cellular
+    - dect
+    - gsm
+    - uwb
+    - 5g_nr
+    - lora
+    - lorawan
+    - sigfox
+    - lte_m
+    - satellite_connectivity
+    wifi:
+    - wifi
+    - wifi_5ghz
+    - wifi_6
+    - wifi_7
+    - tri_band_wifi
+    - mesh_network_node
+    - wpa3
+    bluetooth:
+    - bluetooth
+    cloud:
+    - cloud
+    - cloud_dependent
+    internet:
+    - internet
+    - internet_connected
+    app_control:
+    - app_control
+    ota:
+    - ota
+    account:
+    - account
+    - account_required
+    authentication:
+    - authentication
+  power_and_transaction:
+    battery_powered:
+    - battery_powered
+    - backup_battery
+    - portable
+    electronic:
+    - electronic
+    monetary_transaction:
+    - monetary_transaction
+    - subscription_dependency
+wireless_mentions:
+- \bwi[ -]?fi\b
+- \bwlan\b
+- \bbluetooth\b
+- \bble\b
+- \bzigbee\b
+- \bthread\b
+- \bmatter\b
+- \bnfc\b
+- \brfid\b
+- \bcellular\b
+- \blte\b
+- \b4g\b
+- \b5g\b
+- \bgsm\b
+- \bdect\b
+- \buwb\b
+- \blora\b
+- \blorawan\b
+- \bsigfox\b
+- \bsatellite connectivity\b
+- \bradio\b
+- \brf\b
+- \bwireless\b
+cue_groups:
+  smart_connected:
+  - \bsmart\b
+  - \bconnected\b
+  - \bapp[ -]?connected\b
+  - \bworks[ -]?with[ -]?alexa\b
+  - \bgoogle[ -]?home\b
+  - \bapple[ -]?home\b
+  - \bhomekit\b
+  - \bsmartthings\b
+  - \btuya\b
+  wired_network:
+  - \bethernet\b
+  - \brj45\b
+  - \blan\b
+  - \bpoe\b
+  - \bcat[ -]?[56]\b
+  - \bwired[ -]?network\b
+  electrical:
+  - \belectric(?:al)?\b
+  - \belectronic\b
+  - \bpowered\b
+  - \bvoltage\b
+  - \bcharger\b
+  - \badapter\b
+  - \bplug\b
+  - \bsocket\b
+  - \bdevice\b
+  - \bequipment\b
+  - \bappliance\b
+  electronic:
+  - \belectronic\b
+  - \bdigital\b
+  - \bfirmware\b
+  - \bsoftware\b
+  - \bpcb\b
+  - \bcircuit\b
+  - \bsensor\b
+  - \bsmart\b
+  - \bconnected\b
+  local_only:
+  - \blocal only\b
+  - \boffline only\b
+  - \blan only\b

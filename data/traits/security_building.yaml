@@ -1,0 +1,132 @@
+traits:
+- id: access_control
+  label: Access control
+  description: Controls entry, exit, locking, unlocking, or authorisation for a space, gate, or barrier.
+  aliases:
+  - access control
+  - entry control
+  examples: []
+  regex:
+  - \baccess[ -]?control\b
+  - \bentry[ -]?control\b
+  normalized_to: access_control
+  normalization_priority: 0
+- id: access_point_role
+  label: Access point role
+  description: Acts as a Wi-Fi access point or wireless infrastructure node.
+  aliases:
+  - access point role
+  - wireless access point
+  examples: []
+  regex:
+  - \baccess[ -]?point[ -]?role\b
+  - \bwireless[ -]?access[ -]?point\b
+  normalized_to: access_point_role
+  normalization_priority: 0
+- id: camera
+  label: Camera
+  description: Captures still or video images
+  aliases:
+  - camera
+  - video camera
+  - image sensor
+  - cam
+  examples:
+  - video camera
+  - image sensor
+  - cam
+  regex:
+  - \bcamera\b
+  - \bvideo[ -]?camera\b
+  - \bimage[ -]?sensor\b
+  - \bcam\b
+  normalized_to: camera
+  normalization_priority: 0
+- id: camera_surveillance
+  label: Surveillance-style camera function
+  description: Captures or streams images for security, monitoring, or watch functions
+  aliases:
+  - camera surveillance
+  examples: []
+  regex:
+  - \bcamera[ -]?surveillance\b
+  normalized_to: camera_surveillance
+  normalization_priority: 0
+- id: ev_cable_accessory
+  label: EV cable accessory
+  description: EV charging cable, tethered cable, or passive conductive charging accessory.
+  aliases:
+  - ev cable accessory
+  - charging cable accessory
+  examples: []
+  regex:
+  - \bev[ -]?cable[ -]?accessory\b
+  - \bcharging[ -]?cable[ -]?accessory\b
+  normalized_to: ev_cable_accessory
+  normalization_priority: 0
+- id: hardware_security_element
+  label: Hardware security element
+  description: Contains a hardware security element (SE, TPM, HSM) for key storage and cryptographic operations
+  aliases:
+  - hardware security element
+  examples: []
+  regex:
+  - \bhardware[ -]?security[ -]?element\b
+  normalized_to: hardware_security_element
+  normalization_priority: 0
+- id: home_security
+  label: Home security
+  description: Intended for intrusion detection, alarm, property monitoring, or household security use.
+  aliases:
+  - home security
+  - security system
+  examples: []
+  regex:
+  - \bhome[ -]?security\b
+  - \bsecurity[ -]?system\b
+  normalized_to: home_security
+  normalization_priority: 0
+- id: locking
+  label: Locking function
+  description: Performs locking or unlocking of a door, cabinet, gate, or similar barrier.
+  aliases:
+  - locking
+  - smart lock
+  examples: []
+  regex:
+  - \blocking\b
+  - \bsmart[ -]?lock\b
+  normalized_to: locking
+  normalization_priority: 0
+- id: occupancy_detection
+  label: Occupancy detection
+  description: Detects or infers presence or occupancy of a person in a room or zone
+  aliases:
+  - occupancy detection
+  examples: []
+  regex:
+  - \boccupancy[ -]?detection\b
+  normalized_to: occupancy_detection
+  normalization_priority: 0
+- id: security_or_barrier
+  label: Security or barrier function
+  description: Used for barriers, shutters, gates, doors, or access control movement
+  aliases:
+  - security or barrier
+  examples: []
+  regex:
+  - \bsecurity[ -]?or[ -]?barrier\b
+  normalized_to: security_or_barrier
+  normalization_priority: 0
+- id: surveillance
+  label: Surveillance / monitoring
+  description: Intended for watch, monitoring, or surveillance rather than casual imaging only.
+  aliases:
+  - surveillance
+  - monitoring camera
+  examples: []
+  regex:
+  - \bsurveillance\b
+  - \bmonitoring[ -]?camera\b
+  normalized_to: surveillance
+  normalization_priority: 0

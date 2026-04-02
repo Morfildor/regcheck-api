@@ -1,0 +1,442 @@
+trait_detection:
+  product_use:
+    professional:
+    - \bprofessional\b
+    - \bprofessional use\b
+    - \bfor professional use\b
+    - \bcommercial\b
+    - \bcommercial use\b
+    - \bindustrial\b
+    - \bindustrial use\b
+    - \bwarehouse\b
+    - \benterprise\b
+    - \bcatering\b
+    - \bhoreca\b
+    consumer:
+    - \bconsumer\b
+    - \bconsumer use\b
+    - \bdomestic\b
+    - \bhousehold\b
+    - \bhome use\b
+    - \bpersonal use\b
+    household:
+    - \bhousehold\b
+    - \bdomestic\b
+    - \bhome use\b
+    indoor_use:
+    - \bindoor\b
+    - \bindoor use\b
+    - \bindoors\b
+    outdoor_use:
+    - \boutdoor\b
+    - \bgarden\b
+    - \blawn\b
+    fixed_installation:
+    - \bbuilt in\b
+    - \bfixed\b
+    - \bwall mounted\b
+    - \bceiling mounted\b
+    - \bpermanently installed\b
+    wall_mount:
+    - \bwall mounted\b
+    - \bwall mount\b
+    ceiling_mount:
+    - \bceiling mounted\b
+    - \bceiling mount\b
+    rack_mount:
+    - \brack mount\b
+    - \b19 inch rack\b
+    din_rail_mount:
+    - \bdin rail\b
+    portable:
+    - \bportable\b
+    - \btravel\b
+    - \bhandheld\b
+    offline_capable:
+    - \blocal only\b
+    - \boffline only\b
+    - \blan only\b
+    - \bworks without cloud\b
+    cloud_dependent:
+    - \bcloud required\b
+    - \brequires cloud\b
+    - \bcloud dependent\b
+    - \bcloud dependency\b
+    account_required:
+    - \baccount required\b
+    - \blogin required\b
+    - \bsign in required\b
+    remote_control:
+    - \bremote control\b
+    - \bremote start\b
+    - \bremote operation\b
+    remote_management:
+    - \bremote management\b
+    - \bdevice management\b
+    - \bremote provisioning\b
+    - \bfleet management\b
+    - \bremote diagnostics\b
+    weather_exposure:
+    - \bweather resistant\b
+    - \bweatherproof\b
+    - \boutdoor rated\b
+    - \bip65\b
+    - \bip66\b
+    - \bip67\b
+  environment_and_safety:
+    lighting:
+    - \blighting\b
+    - \blight source\b
+    - \bled lamp\b
+    - \bled bulb\b
+    - \bdesk lamp\b
+    luminaire:
+    - \bluminaire\b
+    - \blighting fixture\b
+    - \bintegrated lamp\b
+    optical_emission:
+    - \blight output\b
+    - \blight emitting\b
+    - \boptical output\b
+    - \bphotobiological\b
+    uv_emitting:
+    - \buv\b
+    - \bultraviolet\b
+    - \buv c\b
+    - \buv-c\b
+    infrared_emitting:
+    - \binfrared\b
+    - \bir emitter\b
+    - \bir lamp\b
+    - \bir led\b
+    photobiological_relevance:
+    - \bphotobiological\b
+    - \bblue light hazard\b
+    - \brisk group\b
+    laser:
+    - \blaser\b
+    - \blidar\b
+    - \blaser scanner\b
+    - \brangefinder\b
+    location:
+    - \bgps\b
+    - \bgnss\b
+    - \bgeolocation\b
+    - \blocation tracking\b
+    water_contact:
+    - \bwater tank\b
+    - \bwater reservoir\b
+    - \bwater path\b
+    - \bliquid handling\b
+    - \bsteam\b
+    - \brinse\b
+    - \bwet use\b
+    - \bimmersion\b
+    heating:
+    - \bheating\b
+    - \bheater\b
+    - \bhot\b
+    - \bboil\b
+    - \bbrew\b
+    - \bsteam\b
+    cooling:
+    - \bcooling\b
+    - \brefrigerat\b
+    - \bfreezer\b
+    - \bice\b
+    - \bchill\b
+    motorized:
+    - \bmotor\b
+    - \bfan\b
+    - \bpump\b
+    - \bcompressor\b
+    - \bmotor drive\b
+    - \bdrive unit\b
+    - \bgear drive\b
+    - \bchain drive\b
+    - \bbelt drive\b
+    - \bpower tool\b
+    - \bdrill\b
+    - \bsaw\b
+    - \bgrinder\b
+    - \bsander\b
+    - \bimpact driver\b
+    - \brotary hammer\b
+    heating_element:
+    - \bheating element\b
+    - \bhot plate\b
+    - \bboiler\b
+    fan_air_mover:
+    - \bfan\b
+    - \bblower\b
+    - \bair mover\b
+    pump_system:
+    - \bpump\b
+    - \bpumping\b
+    compressor_system:
+    - \bcompressor\b
+    - \brefrigeration compressor\b
+    rotating_part:
+    - \brotating blade\b
+    - \bspinning head\b
+    - \brotating part\b
+    - \bcutting head\b
+    wet_use:
+    - \bwet use\b
+    - \bwet room\b
+    - \bwet area\b
+    bathroom_use:
+    - \bbathroom\b
+    - \bshower room\b
+    immersion_risk:
+    - \bimmersion\b
+    - \bsubmerged\b
+    - \bsubmersible\b
+    secure_boot:
+    - \bsecure boot\b
+    hardware_security_element:
+    - \bsecurity element\b
+    - \btpm\b
+    - \bhsm\b
+    - \bsecure enclave\b
+    ai_related:
+    - \bai\b
+    - \bmachine learning\b
+    - \bneural\b
+    - \bllm\b
+    personal_data_likely:
+    - \bpersonal data\b
+    - \buser data\b
+    - \bprofile\b
+    - \bprivacy\b
+    food_contact:
+    - \bfood contact\b
+    - \bfood safe\b
+    - \bfood grade\b
+    - \bfood prep\b
+    - \bfood processing\b
+    - \bfood processor\b
+    - \bfood handling\b
+    - \bbeverage dispenser\b
+    - \bdrink dispenser\b
+    - \bdrinking water\b
+    - \bbrew path\b
+    - \bcook\b
+    - \bwater tank\b
+    wet_environment:
+    - \bwet environment\b
+    - \bbathroom\b
+    - \bshower\b
+    - \bsplash\b
+    home_security:
+    - \bhome security\b
+    - \bsecurity system\b
+    - \bintrusion alarm\b
+    surveillance:
+    - \bsurveillance\b
+    - \bcctv\b
+    - \bvideo surveillance\b
+    - \bsecurity recording\b
+    access_control:
+    - \baccess control\b
+    - \bentry control\b
+    - \bdoor access\b
+    locking:
+    - \block\b
+    - \bdeadbolt\b
+    - \blocking\b
+    child_targeted:
+    - \bchild targeted\b
+    - \bfor children\b
+    - \bkids mode\b
+    ambient_light_sensor:
+    - \bambient light sensor\b
+    - \blight sensor\b
+    - \bauto brightness\b
+    occupancy_detection:
+    - \boccupancy detection\b
+    - \boccupancy sensor\b
+    - \bpresence detection\b
+    gas_detection:
+    - \bgas detection\b
+    - \bgas detector\b
+    - \blpg detector\b
+    - \bnatural gas detector\b
+    flood_detection:
+    - \bflood detection\b
+    - \bwater leak\b
+    - \bleak sensor\b
+    door_window_sensor:
+    - \bdoor sensor\b
+    - \bwindow sensor\b
+    - \bcontact sensor\b
+    strobe_output:
+    - \bstrobe\b
+    - \bvisual alarm\b
+    - \bflashing alarm\b
+  wearable_and_boundary:
+    wearable:
+    - \bwearable\b
+    - \bfitness tracker\b
+    - \bsmart band\b
+    - \bsmart watch\b
+    - \bsmartwatch\b
+    - \bactivity tracker\b
+    - \bfitness watch\b
+    - \bhealth watch\b
+    - \bsmart ring\b
+    - \bwrist worn\b
+    - \bwristband\b
+    - \bbody worn\b
+    body_worn_or_applied:
+    - \bbody worn\b
+    - \bbody worn use\b
+    - \bbody contact\b
+    - \bskin contact\b
+    - \bon body\b
+    - \bon skin\b
+    - \bchest strap\b
+    - \bwrist worn\b
+    - \bwristband\b
+    - \barmband\b
+    - \bfinger worn\b
+    - \bwearable patch\b
+    - \bsensor patch\b
+    - \bclip on body\b
+    hair_care:
+    - \bhair care\b
+    - \bhair trimmer\b
+    - \bhair clipper\b
+    - \bbeard trimmer\b
+    - \bclipper\b
+    oral_care:
+    - \boral care\b
+    - \btoothbrush\b
+    - \bdental flosser\b
+    - \bwater flosser\b
+    personal_care:
+    - \bpersonal care\b
+    - \bgrooming\b
+    - \bbeauty device\b
+    - \btrimmer\b
+    - \bshaver\b
+    - \bepilator\b
+    biometric:
+    - \bbiometric\b
+    - \bphysiological\b
+    - \bheart rate\b
+    - \bpulse\b
+    - \bspo2\b
+    - \boxygen saturation\b
+    - \bblood oxygen\b
+    - \becg\b
+    - \bekg\b
+    health_related:
+    - \bhealth monitor\b
+    - \bwellness monitor\b
+    - \bwellness device\b
+    - \bconnected health device\b
+    - \bhealth device\b
+    - \bhealth tracking\b
+    - \bphysiological monitoring\b
+    - \bbiometric monitoring\b
+    - \bheart rate monitor\b
+    - \bpulse monitor\b
+    - \bpulse oximeter\b
+    - \bspo2 monitor\b
+    - \becg monitor\b
+    - \bekg monitor\b
+    - \bblood oxygen monitor\b
+    medical_context:
+    - \bmedical use\b
+    - \bpatient use\b
+    - \bpatient monitoring\b
+    - \bclinical use\b
+    - \bclinical setting\b
+    - \bhospital use\b
+    - \bhealthcare use\b
+    medical_claims:
+    - \bdiagnos(?:e|is|tic)\b
+    - \btreat(?:ment|s|ing)?\b
+    - \btherap(?:y|eutic)\b
+    - \bdisease monitoring\b
+    - \bmedical claims?\b
+    - \bmedical grade\b
+    possible_medical_boundary:
+    - \bdiagnos(?:e|is|tic)\b
+    - \btreat(?:ment|s|ing)?\b
+    - \bdisease monitoring\b
+    - \bpatient monitoring\b
+    - \bclinical use\b
+    - \bmedical claims?\b
+    - \bmedical grade\b
+    - \bphysiological monitoring\b
+    - \bheart rate monitor\b
+    - \bpulse oximeter\b
+    - \becg monitor\b
+    - \bekg monitor\b
+    - \bwellness monitor\b
+    wellness:
+    - \bwellness\b
+    - \brecovery\b
+    - \bsleep support\b
+    - \brelaxation device\b
+    medical_adjacent:
+    - \bmedical adjacent\b
+    - \bborderline medical\b
+    health_data:
+    - \bhealth data\b
+    - \bbiometric data\b
+    - \bwellness data\b
+    - \bphysiological data\b
+    body_contact:
+    - \bbody contact\b
+    - \bskin contact\b
+    - \bon skin\b
+    oral_contact:
+    - \boral contact\b
+    - \bin mouth\b
+    - \btoothbrush head\b
+    childcare_device:
+    - \bbaby monitor\b
+    - \bnursery device\b
+    - \bfor infants\b
+    - \bfor babies\b
+negations:
+  product_shape:
+    speaker:
+    - \bnot a speaker\b
+    - \bno speaker\b
+    - \bwithout speaker\b
+    toy:
+    - \bnot a toy\b
+    - \bnot intended for play\b
+    child_targeted:
+    - \bnot intended for play\b
+    - \bnot designed for play\b
+suppression_mappings:
+  product_shape:
+    speaker:
+    - speaker
+    - multi_room_audio
+    - spatial_audio
+    toy:
+    - toy
+    - child_targeted
+    child_targeted:
+    - child_targeted
+    - toy
+cue_groups:
+  consumerish:
+  - \bhousehold\b
+  - \bconsumer\b
+  - \bdomestic\b
+  - \bappliance\b
+  - \bhome device\b
+  - \bpersonal care\b
+  - \bwearable\b
+  - \bwellness\b
+  professional_use:
+  - \b(?:commercial|professional|industrial|horeca|warehouse|enterprise)\b
+  household_use:
+  - \b(?:household|domestic|home use|consumer)\b

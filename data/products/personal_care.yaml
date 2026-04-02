@@ -1,0 +1,826 @@
+products:
+- id: beauty_treatment_appliance
+  label: Beauty treatment appliance
+  aliases:
+  - facial steamer
+  - beauty treatment appliance
+  - skin treatment device
+  - facial-steamer
+  - facialsteamer
+  - facial steamers
+  - beauty-treatment-appliance
+  - beautytreatmentappliance
+  - beauty treatment appliances
+  - skin-treatment-device
+  - skintreatmentdevice
+  - skin treatment devices
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  - mains_powered
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-23
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - facial steamer
+  - beauty treatment appliance
+  - skin treatment device
+  weak_aliases:
+  - facial-steamer
+  - facialsteamer
+  - facial steamers
+  - beauty-treatment-appliance
+  - beautytreatmentappliance
+  - beauty treatment appliances
+  - skin-treatment-device
+  - skintreatmentdevice
+  - skin treatment devices
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-23
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_blanket
+  label: Electric blanket
+  aliases:
+  - electric blanket
+  - underblanket
+  - heated mattress pad
+  - electric-blanket
+  - electricblanket
+  - electric blankets
+  - underblankets
+  - heated-mattress-pad
+  - heatedmattresspad
+  - heated mattress pads
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_power_likely
+  functional_classes:
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-17
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - electric blanket
+  - underblanket
+  - heated mattress pad
+  weak_aliases:
+  - electric-blanket
+  - electricblanket
+  - electric blankets
+  - underblankets
+  - heated-mattress-pad
+  - heatedmattresspad
+  - heated mattress pads
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-17
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: foot_warmer
+  label: Foot warmer
+  aliases:
+  - foot warmer
+  - heated foot warmer
+  - foot-warmer
+  - footwarmer
+  - foot warmers
+  - heated-foot-warmer
+  - heatedfootwarmer
+  - heated foot warmers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  functional_classes:
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-17
+  - EN 60335-2-81
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - foot warmer
+  - heated foot warmer
+  weak_aliases:
+  - foot-warmer
+  - footwarmer
+  - foot warmers
+  - heated-foot-warmer
+  - heatedfootwarmer
+  - heated foot warmers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-17
+    kind: unspecified
+  - ref: EN 60335-2-81
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: hair_clipper
+  label: Hair clipper
+  aliases:
+  - hair clipper
+  - clipper
+  - beard trimmer
+  - trimmer
+  - hair-clipper
+  - hairclipper
+  - hair clippers
+  - clippers
+  - beard-trimmer
+  - beardtrimmer
+  - beard trimmers
+  - trimmers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - hair_care
+  - personal_care
+  - portable
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-8
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - hair clipper
+  - clipper
+  - beard trimmer
+  - trimmer
+  weak_aliases:
+  - hair-clipper
+  - hairclipper
+  - hair clippers
+  - clippers
+  - beard-trimmer
+  - beardtrimmer
+  - beard trimmers
+  - trimmers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-8
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - hair_care
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: hair_curler
+  label: Hair curler / curling iron
+  aliases:
+  - hair curler
+  - curling iron
+  - hair curling iron
+  - automatic hair curler
+  - rotating hair curler
+  - curler wand
+  - curling wand
+  - hot air curler
+  - hair-curler
+  - haircurler
+  - hair curlers
+  - curling-iron
+  - curlingiron
+  - curling irons
+  - hair-curling-iron
+  - haircurlingiron
+  - hair curling irons
+  - automatic-hair-curler
+  - automatichaircurler
+  - automatic hair curlers
+  - rotating-hair-curler
+  - rotatinghaircurler
+  - rotating hair curlers
+  - curler-wand
+  - curlerwand
+  - curler wands
+  - curling-wand
+  - curlingwand
+  - curling wands
+  - hot-air-curler
+  - hotaircurler
+  - hot air curlers
+  - hair curler curling iron
+  - hair-curler-curling-iron
+  - haircurlercurlingiron
+  - hair curler curling irons
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - hair_care
+  - personal_care
+  - mains_power_likely
+  - handheld
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-23
+  genres:
+  - household_appliance
+  - personal_care_appliance
+  preferred_clues:
+  - curler
+  - curling iron
+  - curling wand
+  - hair styling
+  exclude_clues:
+  - projector
+  - speaker
+  - display
+  strong_aliases:
+  - hair curler
+  - curling iron
+  - hair curling iron
+  - automatic hair curler
+  - rotating hair curler
+  - curler wand
+  - curling wand
+  - hot air curler
+  weak_aliases:
+  - hair-curler
+  - haircurler
+  - hair curlers
+  - curling-iron
+  - curlingiron
+  - curling irons
+  - hair-curling-iron
+  - haircurlingiron
+  - hair curling irons
+  - automatic-hair-curler
+  - automatichaircurler
+  - automatic hair curlers
+  - rotating-hair-curler
+  - rotatinghaircurler
+  - rotating hair curlers
+  - curler-wand
+  - curlerwand
+  - curler wands
+  - curling-wand
+  - curlingwand
+  - curling wands
+  - hot-air-curler
+  - hotaircurler
+  - hot air curlers
+  - hair curler curling iron
+  - hair-curler-curling-iron
+  - haircurlercurlingiron
+  - hair curler curling irons
+  marketplace_aliases: []
+  not_when_text_contains:
+  - projector
+  - speaker
+  - display
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-23
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - hair_care
+  - personal_care
+  score_penalty_if_traits:
+  - projector
+  - speaker
+  - display
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: heating_pad
+  label: Heating pad / heating blanket
+  aliases:
+  - heating pad
+  - heated throw
+  - heating blanket
+  - heating-pad
+  - heatingpad
+  - heating pads
+  - heated-throw
+  - heatedthrow
+  - heated throws
+  - heating-blanket
+  - heatingblanket
+  - heating blankets
+  - heating pad heating blanket
+  - heating-pad-heating-blanket
+  - heatingpadheatingblanket
+  - heating pad heating blankets
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_power_likely
+  functional_classes:
+  - comfort_appliance
+  - heating_appliance
+  likely_standards:
+  - EN 60335-2-17
+  - EN 60335-2-96
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - heating pad
+  - heated throw
+  - heating blanket
+  weak_aliases:
+  - heating-pad
+  - heatingpad
+  - heating pads
+  - heated-throw
+  - heatedthrow
+  - heated throws
+  - heating-blanket
+  - heatingblanket
+  - heating blankets
+  - heating pad heating blanket
+  - heating-pad-heating-blanket
+  - heatingpadheatingblanket
+  - heating pad heating blankets
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-17
+    kind: unspecified
+  - ref: EN 60335-2-96
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: oral_hygiene_appliance
+  label: Oral hygiene appliance
+  aliases:
+  - electric toothbrush
+  - oral irrigator
+  - water flosser
+  - oral hygiene appliance
+  - electric-toothbrush
+  - electrictoothbrush
+  - electric toothbrushs
+  - oral-irrigator
+  - oralirrigator
+  - oral irrigators
+  - water-flosser
+  - waterflosser
+  - water flossers
+  - oral-hygiene-appliance
+  - oralhygieneappliance
+  - oral hygiene appliances
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - battery_powered
+  - oral_care
+  - personal_care
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-52
+  genres:
+  - household_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - electric toothbrush
+  - oral irrigator
+  - water flosser
+  - oral hygiene appliance
+  weak_aliases:
+  - electric-toothbrush
+  - electrictoothbrush
+  - electric toothbrushs
+  - oral-irrigator
+  - oralirrigator
+  - oral irrigators
+  - water-flosser
+  - waterflosser
+  - water flossers
+  - oral-hygiene-appliance
+  - oralhygieneappliance
+  - oral hygiene appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-52
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - battery_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: shaver
+  label: Electric shaver
+  aliases:
+  - shaver
+  - electric shaver
+  - razor
+  - electric razor
+  - shavers
+  - electric-shaver
+  - electricshaver
+  - electric shavers
+  - razors
+  - electric-razor
+  - electricrazor
+  - electric razors
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - personal_care
+  - portable
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-8
+  genres:
+  - household_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - shaver
+  - electric shaver
+  - razor
+  - electric razor
+  weak_aliases:
+  - shavers
+  - electric-shaver
+  - electricshaver
+  - electric shavers
+  - razors
+  - electric-razor
+  - electricrazor
+  - electric razors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-8
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - personal_care
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: skin_hair_care_appliance
+  label: Skin or hair care appliance
+  aliases:
+  - hair dryer
+  - blow dryer
+  - hair straightener
+  - flat iron
+  - curling iron
+  - curling tong
+  - hot air styler
+  - styler
+  - skin care appliance
+  - beauty appliance
+  - hair-dryer
+  - hairdryer
+  - hair dryers
+  - blow-dryer
+  - blowdryer
+  - blow dryers
+  - hair-straightener
+  - hairstraightener
+  - hair straighteners
+  - flat-iron
+  - flatiron
+  - flat irons
+  - curling-iron
+  - curlingiron
+  - curling irons
+  - curling-tong
+  - curlingtong
+  - curling tongs
+  - hot-air-styler
+  - hotairstyler
+  - hot air stylers
+  - stylers
+  - skin-care-appliance
+  - skincareappliance
+  - skin care appliances
+  - beauty-appliance
+  - beautyappliance
+  - beauty appliances
+  - skin or hair care appliance
+  - skin-or-hair-care-appliance
+  - skinorhaircareappliance
+  - skin or hair care appliances
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - electronic
+  - mains_power_likely
+  functional_classes:
+  - personal_care_appliance
+  likely_standards:
+  - EN 60335-2-23
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - hair dryer
+  - blow dryer
+  - hair straightener
+  - flat iron
+  - curling iron
+  - curling tong
+  - hot air styler
+  - styler
+  weak_aliases:
+  - skin care appliance
+  - beauty appliance
+  - hair-dryer
+  - hairdryer
+  - hair dryers
+  - blow-dryer
+  - blowdryer
+  - blow dryers
+  - hair-straightener
+  - hairstraightener
+  - hair straighteners
+  - flat-iron
+  - flatiron
+  - flat irons
+  - curling-iron
+  - curlingiron
+  - curling irons
+  - curling-tong
+  - curlingtong
+  - curling tongs
+  - hot-air-styler
+  - hotairstyler
+  - hot air stylers
+  - stylers
+  - skin-care-appliance
+  - skincareappliance
+  - skin care appliances
+  - beauty-appliance
+  - beautyappliance
+  - beauty appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-23
+    kind: unspecified
+  - ref: EN 60335-2-45
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: ultraviolet_appliance
+  label: Ultraviolet appliance
+  aliases:
+  - uv appliance
+  - ultraviolet sterilizer
+  - uv sanitizer lamp
+  - uv-appliance
+  - uvappliance
+  - uv appliances
+  - ultraviolet-sterilizer
+  - ultravioletsterilizer
+  - ultraviolet sterilizers
+  - uv-sanitizer-lamp
+  - uvsanitizerlamp
+  - uv sanitizer lamps
+  - ultraviolet appliance
+  - ultraviolet-appliance
+  - ultravioletappliance
+  - ultraviolet appliances
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  functional_classes:
+  - home_device
+  likely_standards:
+  - EN 60335-2-27
+  genres:
+  - household_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - uv appliance
+  - ultraviolet sterilizer
+  - uv sanitizer lamp
+  weak_aliases:
+  - uv-appliance
+  - uvappliance
+  - uv appliances
+  - ultraviolet-sterilizer
+  - ultravioletsterilizer
+  - ultraviolet sterilizers
+  - uv-sanitizer-lamp
+  - uvsanitizerlamp
+  - uv sanitizer lamps
+  - ultraviolet appliance
+  - ultraviolet-appliance
+  - ultravioletappliance
+  - ultraviolet appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-27
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: water_bed_heater
+  label: Water-bed heater
+  aliases:
+  - water bed heater
+  - waterbed heater
+  - water-bed-heater
+  - waterbedheater
+  - water bed heaters
+  - waterbed-heater
+  - waterbed heaters
+  - water-bed heater
+  - water-bedheater
+  - water-bed heaters
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  functional_classes:
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-17
+  - EN 60335-2-66
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  strong_aliases:
+  - water bed heater
+  - waterbed heater
+  weak_aliases:
+  - water-bed-heater
+  - waterbedheater
+  - water bed heaters
+  - waterbed-heater
+  - waterbed heaters
+  - water-bed heater
+  - water-bedheater
+  - water-bed heaters
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-17
+    kind: unspecified
+  - ref: EN 60335-2-66
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

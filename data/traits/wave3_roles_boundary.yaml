@@ -1,0 +1,305 @@
+traits:
+- id: access_reader_role
+  label: Access reader role
+  description: Reads credentials, badges, tokens, or identifiers for entry-control or building-access workflows.
+  aliases:
+  - access reader role
+  - badge reader
+  - card reader
+  - access reader
+  examples: []
+  regex:
+  - \baccess[ -]?reader(?:[ -]?role)?\b
+  - \bbadge[ -]?reader\b
+  - \bcard[ -]?reader\b
+  normalized_to: access_reader_role
+  normalization_priority: 0
+- id: battery_storage_system
+  label: Battery storage system
+  description: Stores energy in a battery pack or cabinet as part of a wider home, building, or backup-power system.
+  aliases:
+  - battery storage
+  - battery energy storage
+  - home battery
+  - residential battery storage
+  examples: []
+  regex:
+  - \bbattery[ -]?storage(?:[ -]?system)?\b
+  - \bbattery[ -]?energy[ -]?storage\b
+  - \bhome[ -]?battery\b
+  - \bresidential[ -]?battery[ -]?storage\b
+  normalized_to: battery_storage_system
+  normalization_priority: 0
+- id: beverage_service
+  label: Beverage service
+  description: Dispenses, portions, heats, cools, or serves beverages as part of normal use.
+  aliases:
+  - beverage service
+  - drink dispensing
+  examples: []
+  regex:
+  - \bbeverage[ -]?service\b
+  - \bdrink[ -]?dispensing\b
+  normalized_to: beverage_service
+  normalization_priority: 0
+- id: body_treatment_boundary
+  label: Body-treatment boundary
+  description: Uses heat, light, stimulation, or similar body-treatment mechanisms that may need extra wellness, cosmetic, or medical-boundary review.
+  aliases:
+  - body treatment boundary
+  - cosmetic treatment boundary
+  - therapy boundary
+  examples: []
+  regex:
+  - \bbody[ -]?treatment[ -]?boundary\b
+  - \bcosmetic[ -]?treatment[ -]?boundary\b
+  - \btherapy[ -]?boundary\b
+  normalized_to: body_treatment_boundary
+  normalization_priority: 0
+- id: conference_audio
+  label: Conference audio
+  description: Captures or reproduces meeting-room voice audio for conferencing, speakerphone, or collaboration use.
+  aliases:
+  - conference audio
+  - speakerphone
+  - conferencing audio
+  examples: []
+  regex:
+  - \bconference[ -]?audio\b
+  - \bspeakerphone\b
+  - \bconferencing[ -]?audio\b
+  normalized_to: conference_audio
+  normalization_priority: 0
+- id: creator_equipment
+  label: Creator equipment
+  description: Supports content creation, streaming, studio, or recording workflows rather than ordinary household appliance use.
+  aliases:
+  - creator equipment
+  - studio equipment
+  - content creation gear
+  examples: []
+  regex:
+  - \bcreator[ -]?equipment\b
+  - \bstudio[ -]?equipment\b
+  - \bcontent[ -]?creation(?:[ -]?gear)?\b
+  normalized_to: creator_equipment
+  normalization_priority: 0
+- id: energy_system_boundary
+  label: Energy-system boundary
+  description: Sits within a wider charging, backup-power, solar, storage, or energy-management system and may need installation/system-boundary review.
+  aliases:
+  - energy system boundary
+  - inverter boundary
+  - storage boundary
+  examples: []
+  regex:
+  - \benergy[ -]?system[ -]?boundary\b
+  - \binverter[ -]?boundary\b
+  - \bstorage[ -]?boundary\b
+  normalized_to: energy_system_boundary
+  normalization_priority: 0
+- id: germicidal_emission
+  label: Germicidal emission
+  description: Intentionally emits germicidal optical radiation for disinfection, sanitizing, or antimicrobial treatment.
+  aliases:
+  - germicidal emission
+  - germicidal lamp
+  - disinfecting light
+  examples: []
+  regex:
+  - \bgermicidal[ -]?emission\b
+  - \bgermicidal[ -]?lamp\b
+  - \bdisinfect(?:ing|ion)[ -]?(?:light|lamp)\b
+  normalized_to: germicidal_emission
+  normalization_priority: 0
+- id: industrial_installation_boundary
+  label: Industrial-installation boundary
+  description: Looks like a fixed-installation, panel, cabinet, or professional building-system component rather than an ordinary consumer end product.
+  aliases:
+  - industrial installation boundary
+  - professional installation boundary
+  - panel installation boundary
+  examples: []
+  regex:
+  - \bindustrial[ -]?installation[ -]?boundary\b
+  - \bprofessional[ -]?installation[ -]?boundary\b
+  - \bpanel[ -]?installation[ -]?boundary\b
+  normalized_to: industrial_installation_boundary
+  normalization_priority: 0
+- id: intrusion_detection
+  label: Intrusion detection
+  description: Detects break-in, forced entry, glass-break, tamper, or similar intrusion/security events.
+  aliases:
+  - intrusion detection
+  - break in detection
+  - glass break detection
+  examples: []
+  regex:
+  - \bintrusion[ -]?detection\b
+  - \bbreak[ -]?in[ -]?detection\b
+  - \bglass[ -]?break[ -]?detection\b
+  normalized_to: intrusion_detection
+  normalization_priority: 0
+- id: inverter_system
+  label: Inverter system
+  description: Converts DC/AC power or manages inverter functionality within a larger energy system.
+  aliases:
+  - inverter system
+  - power inverter
+  - solar inverter
+  examples: []
+  regex:
+  - \binverter[ -]?system\b
+  - \bpower[ -]?inverter\b
+  - \bsolar[ -]?inverter\b
+  normalized_to: inverter_system
+  normalization_priority: 0
+- id: machinery_boundary
+  label: Machinery boundary
+  description: Sits near the tool-versus-machinery boundary and may require broader machinery-family review instead of a precise subtype match.
+  aliases:
+  - machinery boundary
+  - machine boundary
+  - tool boundary
+  examples: []
+  regex:
+  - \bmachinery[ -]?boundary\b
+  - \bmachine[ -]?boundary\b
+  - \btool[ -]?boundary\b
+  normalized_to: machinery_boundary
+  normalization_priority: 0
+- id: metering
+  label: Metering
+  description: Measures utility, electrical, or resource-consumption values for billing, monitoring, or gateway purposes.
+  aliases:
+  - metering
+  - smart metering
+  - utility metering
+  examples: []
+  regex:
+  - \bmetering\b
+  - \bsmart[ -]?metering\b
+  - \butility[ -]?metering\b
+  normalized_to: metering
+  normalization_priority: 0
+- id: office_peripheral
+  label: Office peripheral
+  description: Acts as an office, conferencing, presentation, or workstation accessory around AV/ICT equipment.
+  aliases:
+  - office peripheral
+  - workstation accessory
+  - office accessory
+  examples: []
+  regex:
+  - \boffice[ -]?peripheral\b
+  - \bworkstation[ -]?accessory\b
+  - \boffice[ -]?accessory\b
+  normalized_to: office_peripheral
+  normalization_priority: 0
+- id: pressure_cooking
+  label: Pressure cooking
+  description: Uses sealed or elevated-pressure cooking modes as part of food preparation.
+  aliases:
+  - pressure cooking
+  - pressure cooker
+  examples: []
+  regex:
+  - \bpressure[ -]?cooking\b
+  - \bpressure[ -]?cooker\b
+  normalized_to: pressure_cooking
+  normalization_priority: 0
+- id: sanitization
+  label: Sanitization
+  description: Claims sanitizing or antimicrobial reduction rather than ordinary lighting, storage, or appliance operation.
+  aliases:
+  - sanitization
+  - sanitizing
+  - antimicrobial sanitizing
+  examples: []
+  regex:
+  - \bsanit(?:ization|ising|izing)\b
+  - \bantimicrobial[ -]?sanit(?:ization|ising|izing)\b
+  normalized_to: sanitization
+  normalization_priority: 0
+- id: smart_building
+  label: Smart-building role
+  description: Acts as a building-control, access-control, monitoring, or infrastructure node within a smart-building system.
+  aliases:
+  - smart building
+  - building automation
+  - building management system
+  examples: []
+  regex:
+  - \bsmart[ -]?building\b
+  - \bbuilding[ -]?automation\b
+  - \bbuilding[ -]?management[ -]?system\b
+  normalized_to: smart_building
+  normalization_priority: 0
+- id: sterilization
+  label: Sterilization
+  description: Claims sterilizing or sterile-treatment outcomes rather than ordinary cleaning or consumer appliance operation.
+  aliases:
+  - sterilization
+  - sterilizer
+  - sterilising
+  examples: []
+  regex:
+  - \bsterili(?:sation|zation|ser|zer|sing|zing)\b
+  normalized_to: sterilization
+  normalization_priority: 0
+- id: ups_function
+  label: UPS function
+  description: Provides battery-backed continuity, ride-through, or uninterruptible power during mains failure.
+  aliases:
+  - ups function
+  - uninterruptible power supply
+  - battery backup power
+  examples: []
+  regex:
+  - \bups[ -]?function\b
+  - \buninterruptible[ -]?power[ -]?supply\b
+  - \bbattery[ -]?backup[ -]?power\b
+  normalized_to: ups_function
+  normalization_priority: 0
+- id: uv_irradiation_boundary
+  label: UV / irradiation boundary
+  description: Uses UV, infrared, or irradiation-like optical output in a way that may need photobiological, germicidal, or treatment-boundary review.
+  aliases:
+  - uv irradiation boundary
+  - uv boundary
+  - irradiation boundary
+  examples: []
+  regex:
+  - \buv[ -]?irradiation[ -]?boundary\b
+  - \buv[ -]?boundary\b
+  - \birradiation[ -]?boundary\b
+  normalized_to: uv_irradiation_boundary
+  normalization_priority: 0
+- id: water_dispensing
+  label: Water dispensing
+  description: Dispenses drinking water or cooled/heated water to the user as a primary function.
+  aliases:
+  - water dispensing
+  - water dispenser
+  - water cooler
+  examples: []
+  regex:
+  - \bwater[ -]?dispensing\b
+  - \bwater[ -]?dispenser\b
+  - \bwater[ -]?cooler\b
+  normalized_to: water_dispensing
+  normalization_priority: 0
+- id: wired_networking
+  label: Wired networking
+  description: Relies on wired Ethernet, PoE, or similar cable-based network links rather than only local appliance controls.
+  aliases:
+  - wired networking
+  - ethernet networking
+  - lan networking
+  examples: []
+  regex:
+  - \bwired[ -]?networking\b
+  - \bethernet[ -]?networking\b
+  - \blan[ -]?networking\b
+  normalized_to: wired_networking
+  normalization_priority: 0

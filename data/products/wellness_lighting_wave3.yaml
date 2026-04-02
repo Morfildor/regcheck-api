@@ -1,0 +1,377 @@
+products:
+- id: uv_nail_lamp
+  label: UV nail lamp
+  product_family: optical_beauty_device
+  product_subfamily: uv_nail_lamp
+  route_family: lighting_device
+  genres:
+  - personal_care_appliance
+  - lighting_device
+  aliases:
+  - uv nail lamp
+  - led nail lamp
+  - gel nail lamp
+  - manicure lamp
+  preferred_clues:
+  - gel polish
+  - manicure
+  family_traits:
+  - consumer
+  - electrical
+  - personal_care
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - personal_care
+  - lighting
+  - optical_emission
+  - uv_emitting
+  - uv_irradiation_boundary
+  - body_treatment_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: UV nail lamps stay at family level until cosmetic-treatment and UV-exposure details are confirmed.
+  boundary_tags:
+  - uv_irradiation_boundary
+  - body_treatment_boundary
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - personal_care
+  - lighting
+  - optical_emission
+  - uv_emitting
+  - uv_irradiation_boundary
+  - body_treatment_boundary
+  likely_standards:
+  - EN 62471
+  - UV / irradiation application review
+- id: ipl_hair_removal_device
+  label: IPL hair-removal device
+  product_family: optical_beauty_device
+  product_subfamily: ipl_hair_removal_device
+  route_family: lighting_device
+  genres:
+  - personal_care_appliance
+  - wellness_borderline_medical
+  aliases:
+  - ipl hair removal device
+  - ipl handset
+  - light based hair removal
+  - intense pulsed light hair removal
+  preferred_clues:
+  - hair removal
+  - intense pulsed light
+  family_traits:
+  - consumer
+  - electrical
+  - personal_care
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - personal_care
+  - optical_emission
+  - uv_irradiation_boundary
+  - body_treatment_boundary
+  - health_related
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: IPL and light-based hair-removal products stay at family level pending body-treatment and medical-boundary review.
+  boundary_tags:
+  - uv_irradiation_boundary
+  - body_treatment_boundary
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - personal_care
+  - optical_emission
+  - uv_irradiation_boundary
+  - body_treatment_boundary
+  - health_related
+  likely_standards:
+  - EN 62471
+  - UV / irradiation application review
+  - MDR borderline review
+- id: ring_light
+  label: Ring light
+  product_family: lighting_accessory_device
+  product_subfamily: ring_light
+  route_family: lighting_device
+  genres:
+  - lighting_device
+  - av_ict_device
+  aliases:
+  - ring light
+  - selfie ring light
+  - usb ring light
+  preferred_clues:
+  - creator light
+  - studio light
+  family_traits:
+  - consumer
+  - electrical
+  - lighting
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - creator_equipment
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - creator_equipment
+  likely_standards:
+  - EN 62471
+- id: emergency_light
+  label: Emergency light
+  product_family: lighting_accessory_device
+  product_subfamily: emergency_light
+  route_family: lighting_device
+  genres:
+  - lighting_device
+  aliases:
+  - emergency light
+  - emergency lamp
+  - battery backup light
+  preferred_clues:
+  - emergency lighting
+  - backup illumination
+  family_traits:
+  - consumer
+  - electrical
+  - lighting
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - battery_powered
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - battery_powered
+  likely_standards:
+  - EN 62471
+- id: illuminated_mirror
+  label: Illuminated mirror
+  product_family: lighting_accessory_device
+  product_subfamily: illuminated_mirror
+  route_family: lighting_device
+  genres:
+  - lighting_device
+  aliases:
+  - illuminated mirror
+  - led mirror
+  - lighted mirror
+  - vanity mirror with light
+  preferred_clues:
+  - mirror light
+  - vanity mirror
+  family_traits:
+  - consumer
+  - electrical
+  - lighting
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - bathroom_use
+  max_match_stage: family
+  route_confidence_cap: medium
+  family_level_reason: Illuminated mirrors stay at family level until it is clear whether the product is mainly a luminaire, mirror accessory, or smart AV/ICT device.
+  boundary_tags:
+  - lighting_boundary
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - bathroom_use
+  likely_standards:
+  - EN 62471
+- id: uv_sanitizing_box
+  label: UV sanitizing box
+  product_family: optical_sanitizing_device
+  product_subfamily: uv_sanitizing_box
+  route_family: lighting_device
+  genres:
+  - lighting_device
+  aliases:
+  - uv sanitizing box
+  - uv sterilizer box
+  - uvc sanitizing case
+  preferred_clues:
+  - sanitizing box
+  - phone sterilizer
+  family_traits:
+  - consumer
+  - electrical
+  - lighting
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - optical_emission
+  - uv_emitting
+  - sanitization
+  - sterilization
+  - germicidal_emission
+  - uv_irradiation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: UV sanitizing boxes stay at family level pending irradiation, sanitizing-claim, and product-scope review.
+  boundary_tags:
+  - uv_irradiation_boundary
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - optical_emission
+  - uv_emitting
+  - sanitization
+  - sterilization
+  - germicidal_emission
+  - uv_irradiation_boundary
+  likely_standards:
+  - EN 62471
+  - UV / irradiation application review
+- id: germicidal_lamp
+  label: Germicidal lamp
+  product_family: optical_sanitizing_device
+  product_subfamily: germicidal_lamp
+  route_family: lighting_device
+  genres:
+  - lighting_device
+  aliases:
+  - germicidal lamp
+  - uv disinfection lamp
+  - uvc lamp
+  - sanitizing lamp
+  preferred_clues:
+  - disinfection
+  - germicidal
+  family_traits:
+  - consumer
+  - electrical
+  - lighting
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - uv_emitting
+  - sanitization
+  - germicidal_emission
+  - uv_irradiation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Germicidal lamps stay at family level pending irradiation-intent and application-boundary review.
+  boundary_tags:
+  - uv_irradiation_boundary
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - uv_emitting
+  - sanitization
+  - germicidal_emission
+  - uv_irradiation_boundary
+  likely_standards:
+  - EN 62471
+  - UV / irradiation application review
+- id: ir_illuminator
+  label: IR illuminator
+  product_family: optical_accessory_device
+  product_subfamily: ir_illuminator
+  route_family: lighting_device
+  genres:
+  - lighting_device
+  - av_ict_device
+  aliases:
+  - ir illuminator
+  - infrared illuminator
+  - ir lamp for camera
+  preferred_clues:
+  - night vision
+  - camera illumination
+  family_traits:
+  - consumer
+  - electrical
+  - lighting
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - infrared_emitting
+  max_match_stage: family
+  route_confidence_cap: medium
+  family_level_reason: IR illuminators stay at family level until it is clear whether the product is a lighting accessory, surveillance accessory, or integrated building-system component.
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - infrared_emitting
+  likely_standards:
+  - EN 62471
+- id: smart_litter_box
+  label: Smart litter box
+  product_family: pet_hygiene_appliance
+  product_subfamily: smart_litter_box
+  route_family: household_appliance
+  primary_standard_code: EN 60335-1
+  genres:
+  - pet_tech
+  - household_appliance
+  aliases:
+  - smart litter box
+  - self cleaning litter box
+  - automatic litter box
+  preferred_clues:
+  - cat litter
+  - self cleaning
+  family_traits:
+  - consumer
+  - electrical
+  - pet_use
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - pet_use
+  - motorized
+  - app_control
+  - sanitization
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - pet_use
+  - motorized
+  - app_control
+  - sanitization
+  likely_standards:
+  - EN 60335-1
+  - Sterilization / hygiene appliance review

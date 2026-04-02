@@ -1,0 +1,322 @@
+products:
+- id: ups
+  label: UPS / battery backup unit
+  product_family: energy_power_system
+  product_subfamily: ups
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - portable_energy
+  - av_ict_device
+  aliases:
+  - uninterruptible power supply
+  - ups battery backup
+  - line interactive ups
+  - backup power unit
+  preferred_clues:
+  - battery backup
+  - power outage
+  - runtime
+  family_traits:
+  - electrical
+  - electronic
+  - power_source
+  subtype_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - battery_storage_system
+  - inverter_system
+  - ups_function
+  - energy_system_boundary
+  - mains_powered
+  max_match_stage: family
+  route_confidence_cap: medium
+  family_level_reason: UPS products stay at family level until battery architecture, inverter role, and installation context are confirmed.
+  boundary_tags:
+  - energy_system_boundary
+  implied_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - battery_storage_system
+  - inverter_system
+  - ups_function
+  - energy_system_boundary
+  - mains_powered
+  likely_standards:
+  - EN 62368-1
+  - Battery safety review
+  - UN 38.3 review
+  - Energy storage / inverter system review
+- id: poe_injector
+  label: PoE injector
+  product_family: network_power_device
+  product_subfamily: poe_injector
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - poe injector
+  - power over ethernet injector
+  - midspan poe injector
+  required_clues:
+  - poe injector
+  - power over ethernet injector
+  preferred_clues:
+  - 802.3af
+  - 802.3at
+  - ethernet power
+  family_traits:
+  - electrical
+  - electronic
+  - av_ict
+  subtype_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - poe_supply
+  - wired_networking
+  - office_peripheral
+  - mains_powered
+  implied_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - poe_supply
+  - wired_networking
+  - office_peripheral
+  - mains_powered
+  likely_standards:
+  - EN 62368-1
+- id: smart_meter_gateway
+  label: Smart meter gateway
+  product_family: energy_power_system
+  product_subfamily: smart_meter_gateway
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  - smart_home_iot
+  aliases:
+  - smart meter gateway
+  - energy gateway
+  - utility meter gateway
+  - din rail energy gateway
+  preferred_clues:
+  - utility meter
+  - din rail
+  - distribution board
+  family_traits:
+  - electrical
+  - electronic
+  - av_ict
+  subtype_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - metering
+  - smart_building
+  - wired_networking
+  - fixed_installation
+  - industrial_installation_boundary
+  - energy_system_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Smart meter gateways stay at family level pending installation, metering, and utility-system boundary review.
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  implied_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - metering
+  - smart_building
+  - wired_networking
+  - fixed_installation
+  - industrial_installation_boundary
+  - energy_system_boundary
+  likely_standards:
+  - EN 62368-1
+  - Energy storage / inverter system review
+  - GDPR review
+- id: solar_charge_controller
+  label: Solar charge controller
+  product_family: energy_power_system
+  product_subfamily: solar_charge_controller
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  genres:
+  - portable_energy
+  - av_ict_device
+  aliases:
+  - solar charge controller
+  - pv charge controller
+  - mppt charge controller
+  - pwm solar controller
+  - off grid solar controller
+  required_clues:
+  - solar charge controller
+  - mppt charge controller
+  preferred_clues:
+  - photovoltaic
+  - battery bank
+  - off grid
+  - solar regulator
+  family_traits:
+  - electrical
+  - electronic
+  - power_source
+  subtype_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - charger_role
+  - fixed_installation
+  - energy_system_boundary
+  - industrial_installation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Solar charge controllers stay at family level pending energy-storage architecture and installation-boundary review.
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  implied_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - charger_role
+  - fixed_installation
+  - energy_system_boundary
+  - industrial_installation_boundary
+  likely_standards:
+  - EN 62368-1
+  - Energy storage / inverter system review
+  - Charger / external PSU review
+- id: heat_gun
+  label: Heat gun
+  product_family: portable_heating_tool
+  product_subfamily: heat_gun
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-45
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - electric_power_tool
+  aliases:
+  - heat gun
+  - hot air gun
+  preferred_clues:
+  - hot air
+  - shrink wrap
+  family_traits:
+  - electrical
+  - heating
+  subtype_traits:
+  - electrical
+  - handheld
+  - portable
+  - heating
+  - mains_powered
+  implied_traits:
+  - electrical
+  - handheld
+  - portable
+  - heating
+  - mains_powered
+  likely_standards:
+  - EN 60335-2-45
+- id: rotary_tool
+  label: Rotary tool
+  product_family: industrial_power_equipment
+  product_subfamily: rotary_tool
+  route_family: machinery_power_tool
+  primary_standard_code: Power tool safety review
+  genres:
+  - electric_power_tool
+  aliases:
+  - rotary tool
+  - multi tool rotary
+  - hobby rotary tool
+  preferred_clues:
+  - cutting wheel
+  - grinding bit
+  family_traits:
+  - electrical
+  - motorized
+  - handheld
+  subtype_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - machinery_boundary
+  - cutting_hazard
+  max_match_stage: family
+  route_confidence_cap: medium
+  family_level_reason: Rotary tools stay at family level until the exact tooling head and machinery-part route are confirmed.
+  boundary_tags:
+  - machinery_boundary
+  implied_traits:
+  - electrical
+  - motorized
+  - handheld
+  - portable
+  - machinery_boundary
+  - cutting_hazard
+  likely_standards:
+  - Power tool safety review
+  - EN 62841-1
+- id: bench_saw
+  label: Bench saw / table saw
+  product_family: industrial_power_equipment
+  product_subfamily: bench_saw
+  route_family: machinery_power_tool
+  primary_standard_code: Power tool safety review
+  genres:
+  - electric_power_tool
+  aliases:
+  - bench saw
+  - table saw
+  - jobsite table saw
+  preferred_clues:
+  - saw blade
+  - rip fence
+  family_traits:
+  - electrical
+  - motorized
+  subtype_traits:
+  - electrical
+  - motorized
+  - cutting_hazard
+  - machinery_boundary
+  - industrial_installation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Bench and table saw products remain at family level until stationary-machinery versus transportable-tool scope is confirmed.
+  boundary_tags:
+  - machinery_boundary
+  - industrial_installation_boundary
+  implied_traits:
+  - electrical
+  - motorized
+  - cutting_hazard
+  - machinery_boundary
+  - industrial_installation_boundary
+  likely_standards:
+  - Power tool safety review
+  - EN 62841-1

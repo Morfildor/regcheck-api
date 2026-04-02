@@ -1,0 +1,2467 @@
+products:
+- id: air_cleaner
+  label: Air cleaner / purifier
+  product_family: air_treatment_cleaner
+  product_subfamily: air_cleaner
+  family_keywords:
+  - air treatment
+  - air cleaning
+  aliases:
+  - air cleaner unit
+  - air cleaning unit
+  - room air cleaner
+  - indoor air cleaner
+  - air-cleaner-unit
+  - aircleanerunit
+  - air cleaner units
+  - air cleaner purifier
+  - air-cleaner-purifier
+  - aircleanerpurifier
+  - air cleaner purifiers
+  required_clues: []
+  preferred_clues:
+  - cleaner
+  - air cleaner
+  exclude_clues:
+  - purifier
+  confusable_with:
+  - air_purifier
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - air_treatment
+  - air_cleaning
+  - indoor_use
+  subtype_traits: []
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - air_treatment
+  - air_cleaning
+  - indoor_use
+  functional_classes:
+  - air_treatment
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-65
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-65
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - air cleaner unit
+  - air cleaning unit
+  - room air cleaner
+  - indoor air cleaner
+  weak_aliases:
+  - air-cleaner-unit
+  - aircleanerunit
+  - air cleaner units
+  - air cleaner purifier
+  - air-cleaner-purifier
+  - aircleanerpurifier
+  - air cleaner purifiers
+  marketplace_aliases:
+  - air cleaning unit
+  - room air cleaner
+  - indoor air cleaner
+  - air cleaner unit
+  - air-cleaner-unit
+  - aircleanerunit
+  - air cleaner units
+  - air cleaner purifier
+  - air-cleaner-purifier
+  - aircleanerpurifier
+  - air cleaner purifiers
+  not_when_text_contains:
+  - purifier
+  negative_examples:
+  - air_purifier
+  likely_standard_refs:
+  - ref: EN 60335-2-65
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  score_penalty_if_traits:
+  - purifier
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: air_purifier
+  label: Air purifier
+  product_family: air_treatment_cleaner
+  product_subfamily: air_purifier
+  family_keywords:
+  - air treatment
+  - air cleaning
+  aliases:
+  - air purifier
+  - air cleaner
+  - air cleaning appliance
+  - air treatment appliance
+  - smart air purifier
+  - connected air purifier
+  - wifi air purifier
+  - hepa air purifier
+  - hepa purifier
+  - room air purifier
+  - desktop air purifier
+  - tower air purifier
+  - smart purifier
+  - app connected purifier
+  - alexa air purifier
+  - air-purifier
+  - airpurifier
+  - air purifiers
+  - air-cleaner
+  - aircleaner
+  - air cleaners
+  - air-cleaning-appliance
+  - aircleaningappliance
+  - air cleaning appliances
+  - air-treatment-appliance
+  - airtreatmentappliance
+  - air treatment appliances
+  - smart-air-purifier
+  - smartairpurifier
+  - smart air purifiers
+  - connected-air-purifier
+  - connectedairpurifier
+  - connected air purifiers
+  - wi-fi air purifier
+  - wi fi air purifier
+  - wifi-air-purifier
+  - wifiairpurifier
+  - wifi air purifiers
+  - hepa-air-purifier
+  - hepaairpurifier
+  - hepa air purifiers
+  required_clues: []
+  preferred_clues:
+  - purifier
+  - hepa
+  - air purifier
+  exclude_clues: []
+  confusable_with:
+  - air_cleaner
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - air_treatment
+  - air_cleaning
+  - indoor_use
+  subtype_traits: []
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  - air_treatment
+  - air_cleaning
+  - indoor_use
+  functional_classes:
+  - air_treatment
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-65
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-65
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - air purifier
+  - air cleaner
+  - air cleaning appliance
+  - air treatment appliance
+  - smart air purifier
+  - connected air purifier
+  - wifi air purifier
+  - hepa air purifier
+  - hepa purifier
+  - room air purifier
+  - desktop air purifier
+  - tower air purifier
+  weak_aliases:
+  - smart purifier
+  - app connected purifier
+  - alexa air purifier
+  - air-purifier
+  - airpurifier
+  - air purifiers
+  - air-cleaner
+  - aircleaner
+  - air cleaners
+  - air-cleaning-appliance
+  - aircleaningappliance
+  - air cleaning appliances
+  - air-treatment-appliance
+  - airtreatmentappliance
+  - air treatment appliances
+  - smart-air-purifier
+  - smartairpurifier
+  - smart air purifiers
+  - connected-air-purifier
+  - connectedairpurifier
+  - connected air purifiers
+  - wi-fi air purifier
+  - wi fi air purifier
+  - wifi-air-purifier
+  - wifiairpurifier
+  - wifi air purifiers
+  - hepa-air-purifier
+  - hepaairpurifier
+  - hepa air purifiers
+  marketplace_aliases:
+  - hepa purifier
+  - room air purifier
+  - desktop air purifier
+  - tower air purifier
+  - smart purifier
+  - app connected purifier
+  - alexa air purifier
+  - air purifier
+  - air-purifier
+  - airpurifier
+  - air purifiers
+  - air cleaner
+  - air-cleaner
+  - aircleaner
+  - air cleaners
+  - air cleaning appliance
+  - air-cleaning-appliance
+  - aircleaningappliance
+  - air cleaning appliances
+  - air treatment appliance
+  - air-treatment-appliance
+  - airtreatmentappliance
+  - air treatment appliances
+  - smart air purifier
+  - smart-air-purifier
+  - smartairpurifier
+  - smart air purifiers
+  - connected air purifier
+  - connected-air-purifier
+  - connectedairpurifier
+  - connected air purifiers
+  - wifi air purifier
+  - wi-fi air purifier
+  - wi fi air purifier
+  - wifi-air-purifier
+  - wifiairpurifier
+  - wifi air purifiers
+  - hepa air purifier
+  - hepa-air-purifier
+  - hepaairpurifier
+  - hepa air purifiers
+  - wifi purifier
+  - app purifier
+  - alexa purifier
+  - smart purifier wifi
+  not_when_text_contains: []
+  negative_examples:
+  - air_cleaner
+  likely_standard_refs:
+  - ref: EN 60335-2-65
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits:
+  - water_contact
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: circulator
+  label: Circulator
+  aliases:
+  - circulator
+  - circulating pump
+  - heating circulator
+  - circulators
+  - circulating-pump
+  - circulatingpump
+  - circulating pumps
+  - heating-circulator
+  - heatingcirculator
+  - heating circulators
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - pumping
+  - water_contact
+  - mains_powered
+  functional_classes:
+  - pump
+  likely_standards:
+  - EN 60335-2-51
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - circulator
+  - circulating pump
+  - heating circulator
+  weak_aliases:
+  - circulators
+  - circulating-pump
+  - circulatingpump
+  - circulating pumps
+  - heating-circulator
+  - heatingcirculator
+  - heating circulators
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-51
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - pumping
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_rinsing_sink
+  label: Commercial rinsing sink
+  aliases:
+  - commercial rinsing sink
+  - electric rinsing sink
+  - commercial-rinsing-sink
+  - commercialrinsingsink
+  - commercial rinsing sinks
+  - electric-rinsing-sink
+  - electricrinsingsink
+  - electric rinsing sinks
+  implied_traits:
+  - professional
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  - commercial_food_service
+  functional_classes:
+  - commercial_appliance
+  - kitchen_appliance
+  likely_standards:
+  - EN 60335-2-62
+  genres:
+  - commercial_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial rinsing sink
+  - electric rinsing sink
+  weak_aliases:
+  - commercial-rinsing-sink
+  - commercialrinsingsink
+  - commercial rinsing sinks
+  - electric-rinsing-sink
+  - electricrinsingsink
+  - electric rinsing sinks
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-62
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  - commercial_food_service
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: commercial_washing_machine
+  label: Commercial washing machine
+  aliases:
+  - commercial washing machine
+  - industrial washer
+  - laundrette washer
+  - commercial-washing-machine
+  - commercialwashingmachine
+  - commercial washing machines
+  - industrial-washer
+  - industrialwasher
+  - industrial washers
+  - laundrette-washer
+  - laundrettewasher
+  - laundrette washers
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  - mains_powered
+  functional_classes:
+  - commercial_appliance
+  - laundry_appliance
+  likely_standards: []
+  genres:
+  - commercial_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - commercial washing machine
+  - industrial washer
+  - laundrette washer
+  weak_aliases:
+  - commercial-washing-machine
+  - commercialwashingmachine
+  - commercial washing machines
+  - industrial-washer
+  - industrialwasher
+  - industrial washers
+  - laundrette-washer
+  - laundrettewasher
+  - laundrette washers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs: []
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electrolyser_washing_machine
+  label: Detergent-free electrolyser washing machine
+  aliases:
+  - electrolyser washing machine
+  - detergent free washing machine
+  - electrolyser-washing-machine
+  - electrolyserwashingmachine
+  - electrolyser washing machines
+  - detergent-free-washing-machine
+  - detergentfreewashingmachine
+  - detergent free washing machines
+  - detergent-free electrolyser washing machine
+  - detergent free electrolyser washing machine
+  - detergent-free-electrolyser-washing-machine
+  - detergent-freeelectrolyserwashingmachine
+  - detergent-free electrolyser washing machines
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  - water_contact
+  - mains_powered
+  functional_classes:
+  - laundry_appliance
+  likely_standards:
+  - EN 60335-2-108
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - electrolyser washing machine
+  - detergent free washing machine
+  weak_aliases:
+  - electrolyser-washing-machine
+  - electrolyserwashingmachine
+  - electrolyser washing machines
+  - detergent-free-washing-machine
+  - detergentfreewashingmachine
+  - detergent free washing machines
+  - detergent-free electrolyser washing machine
+  - detergent free electrolyser washing machine
+  - detergent-free-electrolyser-washing-machine
+  - detergent-freeelectrolyserwashingmachine
+  - detergent-free electrolyser washing machines
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-108
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - heating
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: fan
+  label: Fan
+  product_family: indoor_air_mover
+  product_subfamily: fan
+  family_keywords:
+  - indoor air
+  - air mover
+  aliases:
+  - fan
+  - desk fan
+  - tower fan
+  - ceiling fan
+  - circulator fan
+  - pedestal fan
+  - standing fan
+  - smart fan
+  - fans
+  - desk-fan
+  - deskfan
+  - desk fans
+  - tower-fan
+  - towerfan
+  - tower fans
+  - ceiling-fan
+  - ceilingfan
+  - ceiling fans
+  - circulator-fan
+  - circulatorfan
+  - circulator fans
+  - pedestal-fan
+  - pedestalfan
+  - pedestal fans
+  - standing-fan
+  - standingfan
+  - standing fans
+  - smart-fan
+  - smartfan
+  - smart fans
+  required_clues: []
+  preferred_clues:
+  - fan
+  - ventilation
+  - air circulator
+  exclude_clues:
+  - heater
+  - heating
+  confusable_with:
+  - fan_heater
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - indoor_use
+  subtype_traits:
+  - ventilation
+  - air_treatment
+  - electronic
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - ventilation
+  - air_treatment
+  - indoor_use
+  - electronic
+  functional_classes:
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-80
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - fan
+  - desk fan
+  - tower fan
+  - ceiling fan
+  - circulator fan
+  - pedestal fan
+  - standing fan
+  - smart fan
+  weak_aliases:
+  - fans
+  - desk-fan
+  - deskfan
+  - desk fans
+  - tower-fan
+  - towerfan
+  - tower fans
+  - ceiling-fan
+  - ceilingfan
+  - ceiling fans
+  - circulator-fan
+  - circulatorfan
+  - circulator fans
+  - pedestal-fan
+  - pedestalfan
+  - pedestal fans
+  - standing-fan
+  - standingfan
+  - standing fans
+  - smart-fan
+  - smartfan
+  - smart fans
+  marketplace_aliases:
+  - smart fan
+  - wifi fan
+  - app fan
+  - smart tower fan
+  not_when_text_contains:
+  - heater
+  - heating
+  negative_examples:
+  - fan_heater
+  likely_standard_refs:
+  - ref: EN 60335-2-80
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - ventilation
+  score_penalty_if_traits:
+  - heater
+  - heating
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: fan_heater
+  label: Fan heater
+  product_family: indoor_air_mover
+  product_subfamily: fan_heater
+  family_keywords:
+  - indoor air
+  - room heating
+  aliases:
+  - fan heater
+  - heater fan
+  - fan-heater
+  - fanheater
+  - fan heaters
+  - heater-fan
+  - heaterfan
+  - heater fans
+  required_clues:
+  - heater
+  preferred_clues:
+  - heater
+  - heating
+  - fan heater
+  exclude_clues: []
+  confusable_with:
+  - fan
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - mains_powered
+  - indoor_use
+  subtype_traits:
+  - heating
+  - heating_personal_environment
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - motorized
+  - mains_powered
+  - heating_personal_environment
+  - indoor_use
+  functional_classes:
+  - heating_appliance
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-30
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - fan heater
+  - heater fan
+  weak_aliases:
+  - fan-heater
+  - fanheater
+  - fan heaters
+  - heater-fan
+  - heaterfan
+  - heater fans
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples:
+  - fan
+  likely_standard_refs:
+  - ref: EN 60335-2-30
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - motorized
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: heat_pump
+  label: Heat pump / air conditioner
+  aliases:
+  - heat pump
+  - air conditioner
+  - portable air conditioner
+  - split air conditioner
+  - split ac
+  - air conditioning unit
+  - room air conditioner
+  - heat-pump
+  - heatpump
+  - heat pumps
+  - air-conditioner
+  - airconditioner
+  - air conditioners
+  - portable-air-conditioner
+  - portableairconditioner
+  - portable air conditioners
+  - split-air-conditioner
+  - splitairconditioner
+  - split air conditioners
+  - split-ac
+  - splitac
+  - split acs
+  - air-conditioning-unit
+  - airconditioningunit
+  - air conditioning units
+  - room-air-conditioner
+  - roomairconditioner
+  - room air conditioners
+  - heat pump air conditioner
+  - heat-pump-air-conditioner
+  - heatpumpairconditioner
+  - heat pump air conditioners
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - cooling
+  - heating
+  - motorized
+  - mains_powered
+  - air_treatment
+  - indoor_use
+  functional_classes:
+  - comfort_appliance
+  - hvac_appliance
+  likely_standards:
+  - EN 60335-2-40
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - heat pump
+  - air conditioner
+  - portable air conditioner
+  - split air conditioner
+  - split ac
+  - air conditioning unit
+  - room air conditioner
+  weak_aliases:
+  - heat-pump
+  - heatpump
+  - heat pumps
+  - air-conditioner
+  - airconditioner
+  - air conditioners
+  - portable-air-conditioner
+  - portableairconditioner
+  - portable air conditioners
+  - split-air-conditioner
+  - splitairconditioner
+  - split air conditioners
+  - split-ac
+  - splitac
+  - split acs
+  - air-conditioning-unit
+  - airconditioningunit
+  - air conditioning units
+  - room-air-conditioner
+  - roomairconditioner
+  - room air conditioners
+  - heat pump air conditioner
+  - heat-pump-air-conditioner
+  - heatpumpairconditioner
+  - heat pump air conditioners
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-40
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - cooling
+  - heating
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: heated_carpet
+  label: Heated carpet / underfloor heating mat
+  aliases:
+  - heated carpet
+  - floor heating mat
+  - heating unit under floor covering
+  - heated-carpet
+  - heatedcarpet
+  - heated carpets
+  - floor-heating-mat
+  - floorheatingmat
+  - floor heating mats
+  - heating-unit-under-floor-covering
+  - heatingunitunderfloorcovering
+  - heating unit under floor coverings
+  - heated carpet underfloor heating mat
+  - heated-carpet-underfloor-heating-mat
+  - heatedcarpetunderfloorheatingmat
+  - heated carpet underfloor heating mats
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  functional_classes:
+  - heating_appliance
+  likely_standards:
+  - EN 60335-2-81
+  - EN 60335-2-96
+  - EN 60335-2-106
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - heated carpet
+  - floor heating mat
+  - heating unit under floor covering
+  weak_aliases:
+  - heated-carpet
+  - heatedcarpet
+  - heated carpets
+  - floor-heating-mat
+  - floorheatingmat
+  - floor heating mats
+  - heating-unit-under-floor-covering
+  - heatingunitunderfloorcovering
+  - heating unit under floor coverings
+  - heated carpet underfloor heating mat
+  - heated-carpet-underfloor-heating-mat
+  - heatedcarpetunderfloorheatingmat
+  - heated carpet underfloor heating mats
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-81
+    kind: unspecified
+  - ref: EN 60335-2-96
+    kind: unspecified
+  - ref: EN 60335-2-106
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: humidifier
+  label: Humidifier
+  aliases:
+  - humidifier
+  - air humidifier
+  - mist humidifier
+  - smart humidifier
+  - connected humidifier
+  - humidifiers
+  - air-humidifier
+  - airhumidifier
+  - air humidifiers
+  - mist-humidifier
+  - misthumidifier
+  - mist humidifiers
+  - smart-humidifier
+  - smarthumidifier
+  - smart humidifiers
+  - connected-humidifier
+  - connectedhumidifier
+  - connected humidifiers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - mains_powered
+  - humidification
+  - air_treatment
+  - indoor_use
+  functional_classes:
+  - air_treatment
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-98
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  preferred_clues:
+  - humidifier
+  - mist
+  - ultrasonic
+  - cool mist
+  - warm mist
+  - air humidifier
+  - aroma diffuser
+  exclude_clues:
+  - dehumidifier
+  - projector
+  - speaker
+  - home cinema
+  strong_aliases:
+  - humidifier
+  - air humidifier
+  - mist humidifier
+  - smart humidifier
+  - connected humidifier
+  weak_aliases:
+  - humidifiers
+  - air-humidifier
+  - airhumidifier
+  - air humidifiers
+  - mist-humidifier
+  - misthumidifier
+  - mist humidifiers
+  - smart-humidifier
+  - smarthumidifier
+  - smart humidifiers
+  - connected-humidifier
+  - connectedhumidifier
+  - connected humidifiers
+  marketplace_aliases:
+  - smart humidifier
+  - wifi humidifier
+  - app humidifier
+  not_when_text_contains:
+  - dehumidifier
+  - projector
+  - speaker
+  - home cinema
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-98
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits:
+  - dehumidifier
+  - projector
+  - speaker
+  - home cinema
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: hvac_humidifier
+  label: Humidifier for HVAC systems
+  aliases:
+  - hvac humidifier
+  - duct humidifier
+  - central humidifier
+  - humidifier for hvac
+  - hvac-humidifier
+  - hvachumidifier
+  - hvac humidifiers
+  - duct-humidifier
+  - ducthumidifier
+  - duct humidifiers
+  - central-humidifier
+  - centralhumidifier
+  - central humidifiers
+  - humidifier-for-hvac
+  - humidifierforhvac
+  - humidifier for hvacs
+  - humidifier for hvac systems
+  - humidifier-for-hvac-systems
+  - humidifierforhvacsystems
+  - humidifier for hvac system
+  implied_traits:
+  - consumer
+  - electrical
+  - water_contact
+  - mains_powered
+  - humidification
+  - air_treatment
+  - fixed_installation
+  functional_classes:
+  - hvac_appliance
+  - air_treatment
+  likely_standards:
+  - EN 60335-2-88
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - hvac humidifier
+  - duct humidifier
+  - central humidifier
+  - humidifier for hvac
+  weak_aliases:
+  - hvac-humidifier
+  - hvachumidifier
+  - hvac humidifiers
+  - duct-humidifier
+  - ducthumidifier
+  - duct humidifiers
+  - central-humidifier
+  - centralhumidifier
+  - central humidifiers
+  - humidifier-for-hvac
+  - humidifierforhvac
+  - humidifier for hvacs
+  - humidifier for hvac systems
+  - humidifier-for-hvac-systems
+  - humidifierforhvacsystems
+  - humidifier for hvac system
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-88
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - water_contact
+  - mains_powered
+  - humidification
+  - air_treatment
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: immersion_heater
+  label: Immersion heater
+  aliases:
+  - immersion heater
+  - water immersion heater
+  - immersion-heater
+  - immersionheater
+  - immersion heaters
+  - water-immersion-heater
+  - waterimmersionheater
+  - water immersion heaters
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  - portable
+  - water_heating
+  functional_classes:
+  - water_heating_appliance
+  likely_standards:
+  - EN 60335-2-35
+  - EN 60335-2-73
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - immersion heater
+  - water immersion heater
+  weak_aliases:
+  - immersion-heater
+  - immersionheater
+  - immersion heaters
+  - water-immersion-heater
+  - waterimmersionheater
+  - water immersion heaters
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-35
+    kind: unspecified
+  - ref: EN 60335-2-73
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: incubator
+  label: Incubator
+  aliases:
+  - incubator
+  - egg incubator
+  - incubators
+  - egg-incubator
+  - eggincubator
+  - egg incubators
+  implied_traits:
+  - consumer
+  - electrical
+  - heating
+  - mains_powered
+  functional_classes:
+  - specialty_appliance
+  likely_standards: []
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - incubator
+  - egg incubator
+  weak_aliases:
+  - incubators
+  - egg-incubator
+  - eggincubator
+  - egg incubators
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs: []
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - heating
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: livestock_heater
+  label: Livestock heating appliance
+  aliases:
+  - animal heating appliance
+  - livestock heater
+  - brooder heater
+  - animal-heating-appliance
+  - animalheatingappliance
+  - animal heating appliances
+  - livestock-heater
+  - livestockheater
+  - livestock heaters
+  - brooder-heater
+  - brooderheater
+  - brooder heaters
+  - livestock heating appliance
+  - livestock-heating-appliance
+  - livestockheatingappliance
+  - livestock heating appliances
+  implied_traits:
+  - professional
+  - electrical
+  - heating
+  - mains_powered
+  functional_classes:
+  - agricultural_appliance
+  likely_standards:
+  - EN 60335-2-71
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - animal heating appliance
+  - livestock heater
+  - brooder heater
+  weak_aliases:
+  - animal-heating-appliance
+  - animalheatingappliance
+  - animal heating appliances
+  - livestock-heater
+  - livestockheater
+  - livestock heaters
+  - brooder-heater
+  - brooderheater
+  - brooder heaters
+  - livestock heating appliance
+  - livestock-heating-appliance
+  - livestockheatingappliance
+  - livestock heating appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-71
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - heating
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: portable_air_conditioner
+  label: Portable air conditioner / portable AC
+  product_family: climate_conditioning_appliance
+  product_subfamily: portable_air_conditioner
+  family_keywords:
+  - air conditioner
+  - portable ac
+  - room cooling
+  aliases:
+  - portable air conditioner
+  - portable ac
+  - portable aircon
+  - room air conditioner
+  - mobile air conditioner
+  - portable cooling unit
+  - monoblock air conditioner
+  preferred_clues:
+  - portable air conditioner
+  - portable ac
+  - mobile air conditioner
+  exclude_clues:
+  - air purifier
+  - tower fan
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - fan_air_mover
+  - compressor_system
+  - cooling
+  - air_treatment
+  - dehumidification
+  - water_contact
+  - mains_powered
+  - indoor_use
+  functional_classes:
+  - comfort_appliance
+  - air_treatment
+  likely_standards:
+  - EN 60335-2-40
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-40
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - portable air conditioner
+  - portable ac
+  - portable aircon
+  - room air conditioner
+  - mobile air conditioner
+  weak_aliases:
+  - portable cooling unit
+  - monoblock air conditioner
+  marketplace_aliases:
+  - portable air conditioner
+  - room ac unit
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - cooling
+  - compressor_system
+  - fan_air_mover
+  matching_notes: Dedicated portable-AC coverage distinguishes cooling appliances from air purifiers, fans, and dehumidifiers.
+- id: portable_immersion_heater
+  label: Portable immersion heater
+  aliases:
+  - portable immersion heater
+  - travel immersion heater
+  - portable-immersion-heater
+  - portableimmersionheater
+  - portable immersion heaters
+  - travel-immersion-heater
+  - travelimmersionheater
+  - travel immersion heaters
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  - portable
+  - water_heating
+  functional_classes:
+  - water_heating_appliance
+  likely_standards:
+  - EN 60335-2-15
+  - EN 60335-2-74
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - portable immersion heater
+  - travel immersion heater
+  weak_aliases:
+  - portable-immersion-heater
+  - portableimmersionheater
+  - portable immersion heaters
+  - travel-immersion-heater
+  - travelimmersionheater
+  - travel immersion heaters
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-15
+    kind: unspecified
+  - ref: EN 60335-2-74
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: room_dehumidifier
+  label: Dehumidifier
+  aliases:
+  - dehumidifier
+  - room dehumidifier
+  - smart dehumidifier
+  - dehumidifiers
+  - room-dehumidifier
+  - roomdehumidifier
+  - room dehumidifiers
+  - smart-dehumidifier
+  - smartdehumidifier
+  - smart dehumidifiers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - cooling
+  - mains_powered
+  - dehumidification
+  - air_treatment
+  - indoor_use
+  functional_classes:
+  - air_treatment
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-40
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - dehumidifier
+  - room dehumidifier
+  - smart dehumidifier
+  weak_aliases:
+  - dehumidifiers
+  - room-dehumidifier
+  - roomdehumidifier
+  - room dehumidifiers
+  - smart-dehumidifier
+  - smartdehumidifier
+  - smart dehumidifiers
+  marketplace_aliases:
+  - smart dehumidifier
+  - wifi dehumidifier
+  - app dehumidifier
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-40
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - water_contact
+  - cooling
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: room_heater
+  label: Room heater
+  aliases:
+  - room heater
+  - space heater
+  - electric heater
+  - portable heater
+  - ceramic heater
+  - convector heater
+  - radiant heater
+  - panel heater
+  - oil filled radiator
+  - oil-filled radiator
+  - room-heater
+  - roomheater
+  - room heaters
+  - space-heater
+  - spaceheater
+  - space heaters
+  - electric-heater
+  - electricheater
+  - electric heaters
+  - portable-heater
+  - portableheater
+  - portable heaters
+  - ceramic-heater
+  - ceramicheater
+  - ceramic heaters
+  - convector-heater
+  - convectorheater
+  - convector heaters
+  - radiant-heater
+  - radiantheater
+  - radiant heaters
+  - panel-heater
+  - panelheater
+  - panel heaters
+  - oil-filled-radiator
+  - oilfilledradiator
+  - oil filled radiators
+  - oil-filledradiator
+  - oil-filled radiators
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  - heating_personal_environment
+  - indoor_use
+  functional_classes:
+  - comfort_appliance
+  - heating_appliance
+  likely_standards:
+  - EN 60335-2-30
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - room heater
+  - space heater
+  - electric heater
+  - portable heater
+  - ceramic heater
+  - convector heater
+  - radiant heater
+  - panel heater
+  weak_aliases:
+  - oil filled radiator
+  - oil-filled radiator
+  - room-heater
+  - roomheater
+  - room heaters
+  - space-heater
+  - spaceheater
+  - space heaters
+  - electric-heater
+  - electricheater
+  - electric heaters
+  - portable-heater
+  - portableheater
+  - portable heaters
+  - ceramic-heater
+  - ceramicheater
+  - ceramic heaters
+  - convector-heater
+  - convectorheater
+  - convector heaters
+  - radiant-heater
+  - radiantheater
+  - radiant heaters
+  - panel-heater
+  - panelheater
+  - panel heaters
+  - oil-filled-radiator
+  - oilfilledradiator
+  - oil filled radiators
+  - oil-filledradiator
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-30
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  - heating_personal_environment
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: room_heating_appliance
+  label: Room heating appliance
+  aliases:
+  - storage heater
+  - thermal storage heater
+  - storage radiator
+  - night storage heater
+  - storage-heater
+  - storageheater
+  - storage heaters
+  - thermal-storage-heater
+  - thermalstorageheater
+  - thermal storage heaters
+  - storage-radiator
+  - storageradiator
+  - storage radiators
+  - night-storage-heater
+  - nightstorageheater
+  - night storage heaters
+  - room heating appliance
+  - room-heating-appliance
+  - roomheatingappliance
+  - room heating appliances
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  - indoor_use
+  - fixed_installation
+  functional_classes:
+  - comfort_appliance
+  - heating_appliance
+  likely_standards:
+  - EN 60335-2-61
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - storage heater
+  - thermal storage heater
+  - storage radiator
+  - night storage heater
+  weak_aliases:
+  - storage-heater
+  - storageheater
+  - storage heaters
+  - thermal-storage-heater
+  - thermalstorageheater
+  - thermal storage heaters
+  - storage-radiator
+  - storageradiator
+  - storage radiators
+  - night-storage-heater
+  - nightstorageheater
+  - night storage heaters
+  - room heating appliance
+  - room-heating-appliance
+  - roomheatingappliance
+  - room heating appliances
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-61
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  - indoor_use
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: sauna_heater
+  label: Sauna heater
+  aliases:
+  - sauna heater
+  - electric sauna heater
+  - sauna-heater
+  - saunaheater
+  - sauna heaters
+  - electric-sauna-heater
+  - electricsaunaheater
+  - electric sauna heaters
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  functional_classes:
+  - heating_appliance
+  likely_standards:
+  - EN 60335-2-53
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - sauna heater
+  - electric sauna heater
+  weak_aliases:
+  - sauna-heater
+  - saunaheater
+  - sauna heaters
+  - electric-sauna-heater
+  - electricsaunaheater
+  - electric sauna heaters
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-53
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_air_quality_monitor
+  label: Smart indoor air quality monitor
+  product_family: environmental_monitor
+  product_subfamily: smart_air_quality_monitor
+  aliases:
+  - air quality monitor
+  - indoor air quality monitor
+  - air quality sensor
+  - co2 monitor
+  - voc monitor
+  - pm2.5 monitor
+  - smart air sensor
+  - connected air quality monitor
+  - wifi air quality monitor
+  - air quality detector
+  - iaq monitor
+  - particulate matter monitor
+  - smart-air-quality-monitor
+  - smartairqualitymonitor
+  - air quality monitors
+  - indoor-air-quality-monitor
+  - indoorairqualitymonitor
+  - air-quality-sensor
+  - airqualitysensor
+  - co2-monitor
+  - co2monitor
+  - co2 monitors
+  - voc-monitor
+  - vocmonitor
+  - pm2.5-monitor
+  - pm25monitor
+  - smart-air-sensor
+  - smartairsensor
+  - connected-air-quality-monitor
+  - connectedairqualitymonitor
+  - wifi-air-quality-monitor
+  - wifiairqualitymonitor
+  - iaq-monitor
+  - iaqmonitor
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - battery_powered
+  - wifi
+  - bluetooth
+  - display
+  - app_control
+  - cloud
+  - indoor_use
+  - data_storage
+  - ota
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - hvac_environmental_appliance
+  - household_appliance
+  preferred_clues:
+  - air quality
+  - co2
+  - voc
+  - pm2.5
+  - iaq
+  confusable_with:
+  - air_purifier
+  - smart_smoke_co_alarm
+  strong_aliases:
+  - air quality monitor
+  - indoor air quality monitor
+  - air quality sensor
+  - co2 monitor
+  - voc monitor
+  - pm2.5 monitor
+  - smart air sensor
+  - connected air quality monitor
+  - air quality detector
+  - iaq monitor
+  - particulate matter monitor
+  weak_aliases:
+  - smart-air-quality-monitor
+  - smartairqualitymonitor
+  - air quality monitors
+  - indoor-air-quality-monitor
+  - indoorairqualitymonitor
+  - air-quality-sensor
+  - airqualitysensor
+  - co2-monitor
+  - co2monitor
+  - voc-monitor
+  - vocmonitor
+  - pm2.5-monitor
+  - pm25monitor
+  - smart-air-sensor
+  - smartairsensor
+  - connected-air-quality-monitor
+  - connectedairqualitymonitor
+  - wifi-air-quality-monitor
+  - wifiairqualitymonitor
+  - iaq-monitor
+  - iaqmonitor
+  marketplace_aliases:
+  - air quality monitor
+  - co2 monitor
+  - indoor air sensor
+  - voc detector
+  not_when_text_contains:
+  - smoke
+  - carbon monoxide alarm
+  - fire alarm
+  negative_examples:
+  - smart_smoke_co_alarm
+  - air_purifier
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - wifi
+  - bluetooth
+  - display
+  - indoor_use
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Indoor air quality monitors measuring CO2, VOC, PM2.5, temperature, humidity. Distinct from smoke/CO alarms
+    and air purifiers.
+- id: smart_radiator_valve
+  label: Smart thermostatic radiator valve (TRV)
+  product_family: hvac_control
+  product_subfamily: smart_radiator_valve
+  aliases:
+  - smart radiator valve
+  - thermostatic radiator valve
+  - trv
+  - smart trv
+  - connected radiator valve
+  - electronic trv
+  - wifi radiator valve
+  - zigbee radiator valve
+  - radiator thermostat smart
+  - smart-radiator-valve
+  - smartradiatorvalve
+  - smart radiator valves
+  - thermostatic-radiator-valve
+  - thermostaticradiatorvalve
+  - thermostatic radiator valves
+  - smart-trv
+  - smarttrv
+  - smart trvs
+  - connected-radiator-valve
+  - connectedradiatorvalve
+  - electronic-trv
+  - electronictrv
+  - wifi-radiator-valve
+  - wifiradiatorvalve
+  - zigbee-radiator-valve
+  - zigbeeradiatorvalve
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - app_control
+  - bluetooth
+  - zigbee
+  - wifi
+  - ota
+  - indoor_use
+  functional_classes:
+  - hvac_control
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - hvac_environmental_appliance
+  - household_appliance
+  strong_aliases:
+  - smart radiator valve
+  - thermostatic radiator valve
+  - trv
+  - smart trv
+  - connected radiator valve
+  - electronic trv
+  - wifi radiator valve
+  - radiator thermostat smart
+  weak_aliases:
+  - smart-radiator-valve
+  - smartradiatorvalve
+  - smart radiator valves
+  - thermostatic-radiator-valve
+  - thermostaticradiatorvalve
+  - thermostatic radiator valves
+  - smart-trv
+  - smarttrv
+  - connected-radiator-valve
+  - connectedradiatorvalve
+  - electronic-trv
+  - electronictrv
+  - wifi-radiator-valve
+  - wifiradiatorvalve
+  - zigbee-radiator-valve
+  - zigbeeradiatorvalve
+  marketplace_aliases:
+  - smart radiator valve
+  - smart trv
+  - thermostatic radiator valve
+  - electronic trv
+  not_when_text_contains: []
+  negative_examples:
+  - smart_thermostat
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - motorized
+  - app_control
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Battery-powered motorized TRVs for smart radiator control. Distinct from smart thermostats which control
+    the boiler.
+- id: smart_thermostat
+  label: Smart thermostat
+  product_family: hvac_control
+  product_subfamily: smart_thermostat
+  family_keywords:
+  - thermostat
+  - hvac control
+  - heating control
+  - room temperature control
+  aliases:
+  - smart thermostat
+  - hvac thermostat
+  - wifi thermostat
+  - connected thermostat
+  - programmable thermostat
+  - room thermostat
+  - wireless thermostat
+  - internet thermostat
+  - learning thermostat
+  - nest thermostat
+  - ecobee
+  - hive thermostat
+  - heating controller
+  - heating thermostat smart
+  - smart-thermostat
+  - smartthermostat
+  - smart thermostats
+  - wi-fi thermostat
+  - wi fi thermostat
+  - wifi-thermostat
+  - wifithermostat
+  - wifi thermostats
+  - connected-thermostat
+  - connectedthermostat
+  - connected thermostats
+  - programmable-thermostat
+  - programmablethermostat
+  - programmable thermostats
+  - room-thermostat
+  - roomthermostat
+  - room thermostats
+  - wireless-thermostat
+  - wirelessthermostat
+  - wireless thermostats
+  - internet-thermostat
+  - internetthermostat
+  - internet thermostats
+  - learning-thermostat
+  - learningthermostat
+  - learning thermostats
+  - nest-thermostat
+  - nestthermostat
+  - nest thermostats
+  - ecobees
+  - hive-thermostat
+  - hivethermostat
+  - hive thermostats
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - battery_powered
+  - display
+  - display_touchscreen
+  - wifi
+  - bluetooth
+  - zigbee
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - account
+  - energy_monitoring
+  - occupancy_detection
+  - ambient_light_sensor
+  - remote_control
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  - battery_powered
+  - display
+  - remote_control
+  - energy_monitoring
+  default_traits:
+  - display_touchscreen
+  - wifi
+  - bluetooth
+  - zigbee
+  - app_control
+  - ota
+  - cloud
+  - data_storage
+  - account
+  - occupancy_detection
+  - ambient_light_sensor
+  functional_classes:
+  - home_device
+  - building_automation
+  likely_standards:
+  - EN 60730-1
+  - EN 60730-2-9
+  route_family: hvac_control
+  primary_standard_code: EN 60730-2-9
+  supporting_standard_codes:
+  - EN 60730-1
+  genres:
+  - smart_home_iot
+  - hvac_environmental_appliance
+  strong_aliases:
+  - smart thermostat
+  - wifi thermostat
+  - connected thermostat
+  - programmable thermostat
+  - room thermostat
+  - wireless thermostat
+  - internet thermostat
+  - learning thermostat
+  - heating thermostat smart
+  weak_aliases:
+  - nest thermostat
+  - ecobee
+  - hive thermostat
+  - smart-thermostat
+  - smartthermostat
+  - smart thermostats
+  - wi-fi thermostat
+  - wi fi thermostat
+  - wifi-thermostat
+  - wifithermostat
+  - wifi thermostats
+  - connected-thermostat
+  - connectedthermostat
+  - connected thermostats
+  - programmable-thermostat
+  - programmablethermostat
+  - programmable thermostats
+  - room-thermostat
+  - roomthermostat
+  - room thermostats
+  - wireless-thermostat
+  - wirelessthermostat
+  - wireless thermostats
+  - internet-thermostat
+  - internetthermostat
+  - internet thermostats
+  - learning-thermostat
+  - learningthermostat
+  - learning thermostats
+  - nest-thermostat
+  marketplace_aliases:
+  - connected thermostat
+  - wifi thermostat
+  - heating thermostat smart
+  - smart thermostat
+  - smart-thermostat
+  - smartthermostat
+  - smart thermostats
+  - wi-fi thermostat
+  - wi fi thermostat
+  - wifi-thermostat
+  - wifithermostat
+  - wifi thermostats
+  - connected-thermostat
+  - connectedthermostat
+  - connected thermostats
+  - programmable thermostat
+  - programmable-thermostat
+  - programmablethermostat
+  - programmable thermostats
+  - room thermostat
+  - room-thermostat
+  - roomthermostat
+  - room thermostats
+  - wireless thermostat
+  - wireless-thermostat
+  - wirelessthermostat
+  - wireless thermostats
+  - internet thermostat
+  - internet-thermostat
+  - internetthermostat
+  - internet thermostats
+  - learning thermostat
+  - learning-thermostat
+  - learningthermostat
+  - learning thermostats
+  - nest thermostat
+  - nest-thermostat
+  - nestthermostat
+  - nest thermostats
+  - ecobee
+  - ecobees
+  - hive thermostat
+  - hive-thermostat
+  - hivethermostat
+  - hive thermostats
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60730-1
+    kind: unspecified
+  - ref: EN 60730-2-9
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits:
+  - speaker
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_toilet
+  label: Electric toilet / smart toilet
+  aliases:
+  - smart toilet
+  - electric toilet
+  - washlet
+  - bidet toilet seat
+  - smart-toilet
+  - smarttoilet
+  - smart toilets
+  - electric-toilet
+  - electrictoilet
+  - electric toilets
+  - washlets
+  - bidet-toilet-seat
+  - bidettoiletseat
+  - bidet toilet seats
+  - electric toilet smart toilet
+  - electric-toilet-smart-toilet
+  - electrictoiletsmarttoilet
+  - electric toilet smart toilets
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - heating
+  - mains_powered
+  - wet_environment
+  - radio
+  - wifi
+  - app_control
+  - cloud
+  - internet
+  - ota
+  functional_classes:
+  - bathroom_appliance
+  likely_standards:
+  - EN 60335-2-84
+  genres:
+  - smart_home_iot
+  - hvac_environmental_appliance
+  strong_aliases:
+  - smart toilet
+  - electric toilet
+  - washlet
+  - bidet toilet seat
+  weak_aliases:
+  - smart-toilet
+  - smarttoilet
+  - smart toilets
+  - electric-toilet
+  - electrictoilet
+  - electric toilets
+  - washlets
+  - bidet-toilet-seat
+  - bidettoiletseat
+  - bidet toilet seats
+  - electric toilet smart toilet
+  - electric-toilet-smart-toilet
+  - electrictoiletsmarttoilet
+  - electric toilet smart toilets
+  marketplace_aliases:
+  - smart wc
+  - smart toilet seat
+  - washlet
+  - bidet smart toilet
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-84
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - heating
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: storage_water_heater
+  label: Storage water heater
+  aliases:
+  - storage water heater
+  - boiler
+  - hot water tank
+  - storage-water-heater
+  - storagewaterheater
+  - storage water heaters
+  - boilers
+  - hot-water-tank
+  - hotwatertank
+  - hot water tanks
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  - water_heating
+  - fixed_installation
+  functional_classes:
+  - water_heating_appliance
+  likely_standards:
+  - EN 60335-2-21
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - storage water heater
+  - boiler
+  - hot water tank
+  weak_aliases:
+  - storage-water-heater
+  - storagewaterheater
+  - storage water heaters
+  - boilers
+  - hot-water-tank
+  - hotwatertank
+  - hot water tanks
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-21
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: vaporizer
+  label: Vaporizer
+  aliases:
+  - vaporizer
+  - steam vaporizer
+  - vaporizers
+  - steam-vaporizer
+  - steamvaporizer
+  - steam vaporizers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  functional_classes:
+  - comfort_appliance
+  likely_standards:
+  - EN 60335-2-101
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - vaporizer
+  - steam vaporizer
+  weak_aliases:
+  - vaporizers
+  - steam-vaporizer
+  - steamvaporizer
+  - steam vaporizers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-101
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: whirlpool_bath
+  label: Whirlpool bath / spa bath
+  aliases:
+  - whirlpool bath
+  - whirlpool spa
+  - spa bath
+  - jetted bath
+  - whirlpool-bath
+  - whirlpoolbath
+  - whirlpool baths
+  - whirlpool-spa
+  - whirlpoolspa
+  - whirlpool spas
+  - spa-bath
+  - spabath
+  - spa baths
+  - jetted-bath
+  - jettedbath
+  - jetted baths
+  - whirlpool bath spa bath
+  - whirlpool-bath-spa-bath
+  - whirlpoolbathspabath
+  - whirlpool bath spa baths
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - mains_powered
+  - wet_environment
+  functional_classes:
+  - bathroom_appliance
+  likely_standards:
+  - EN 60335-2-60
+  genres:
+  - hvac_environmental_appliance
+  strong_aliases:
+  - whirlpool bath
+  - whirlpool spa
+  - spa bath
+  - jetted bath
+  weak_aliases:
+  - whirlpool-bath
+  - whirlpoolbath
+  - whirlpool baths
+  - whirlpool-spa
+  - whirlpoolspa
+  - whirlpool spas
+  - spa-bath
+  - spabath
+  - spa baths
+  - jetted-bath
+  - jettedbath
+  - jetted baths
+  - whirlpool bath spa bath
+  - whirlpool-bath-spa-bath
+  - whirlpoolbathspabath
+  - whirlpool bath spa baths
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-60
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - water_contact
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

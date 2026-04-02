@@ -1,0 +1,403 @@
+products:
+- id: heating_lamp
+  label: Heating lamp
+  aliases:
+  - heating lamp
+  - heat lamp
+  - heating-lamp
+  - heatinglamp
+  - heating lamps
+  - heat-lamp
+  - heatlamp
+  - heat lamps
+  implied_traits:
+  - consumer
+  - electrical
+  - heating
+  - mains_powered
+  functional_classes:
+  - heating_appliance
+  likely_standards: []
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - heating lamp
+  - heat lamp
+  weak_aliases:
+  - heating-lamp
+  - heatinglamp
+  - heating lamps
+  - heat-lamp
+  - heatlamp
+  - heat lamps
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs: []
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - heating
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_desk_lamp
+  label: Smart desk lamp / connected task light
+  product_family: smart_lighting
+  product_subfamily: smart_desk_lamp
+  aliases:
+  - smart desk lamp
+  - connected desk lamp
+  - wifi desk lamp
+  - smart task light
+  - led desk lamp smart
+  - app controlled lamp
+  - smart study lamp
+  - bluetooth desk lamp
+  - smart-desk-lamp
+  - smartdesklamp
+  - smart desk lamps
+  - connected-desk-lamp
+  - connecteddesklamp
+  - wifi-desk-lamp
+  - wifidesklamp
+  - smart-task-light
+  - smarttasklight
+  - led-desk-lamp-smart
+  - leddesklamp
+  - app-controlled-lamp
+  - appcontrolledlamp
+  - smart-study-lamp
+  - smartstudylamp
+  - bluetooth-desk-lamp
+  - bluetoothdesklamp
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - wifi
+  - bluetooth
+  - app_control
+  - indoor_use
+  functional_classes:
+  - home_device
+  - smart_lighting
+  likely_standards:
+  - EN IEC 62560
+  - EN 62031
+  route_family: lighting_device
+  primary_standard_code: EN IEC 62560
+  supporting_standard_codes:
+  - EN 62031
+  genres:
+  - lighting_device
+  - smart_home_iot
+  strong_aliases:
+  - smart desk lamp
+  - connected desk lamp
+  - wifi desk lamp
+  - smart task light
+  - led desk lamp smart
+  - app controlled lamp
+  - smart study lamp
+  - bluetooth desk lamp
+  weak_aliases:
+  - smart-desk-lamp
+  - smartdesklamp
+  - smart desk lamps
+  - connected-desk-lamp
+  - connecteddesklamp
+  - wifi-desk-lamp
+  - wifidesklamp
+  - smart-task-light
+  - smarttasklight
+  - led-desk-lamp-smart
+  - app-controlled-lamp
+  - appcontrolledlamp
+  - smart-study-lamp
+  - smartstudylamp
+  - bluetooth-desk-lamp
+  - bluetoothdesklamp
+  marketplace_aliases:
+  - smart desk lamp
+  - led desk lamp
+  - connected task light
+  - wifi desk lamp
+  not_when_text_contains: []
+  negative_examples:
+  - smart_light_controller
+  likely_standard_refs:
+  - ref: EN IEC 62560
+    kind: unspecified
+  - ref: EN 62031
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - wifi
+  - bluetooth
+  score_penalty_if_traits:
+  - speaker
+  - projector
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Smart desk and task lamps stay on a lighting-device route. Connectivity features add overlays but do not
+    replace the primary light-source safety path.
+- id: smart_led_bulb
+  label: Smart LED bulb / connected light source
+  product_family: smart_lighting
+  product_subfamily: smart_led_bulb
+  family_keywords:
+  - smart bulb
+  - led bulb
+  - led lamp
+  - light source
+  - e27
+  preferred_clues:
+  - led bulb
+  - smart bulb
+  - led lamp
+  - e27
+  - light source
+  exclude_clues:
+  - speaker
+  - display
+  - projector
+  confusable_with:
+  - smart_speaker
+  - smart_display
+  - home_projector
+  aliases:
+  - smart bulb
+  - smart led bulb
+  - led bulb
+  - led lamp
+  - smart lamp
+  - smart light bulb
+  - connected light bulb
+  - wifi bulb
+  - bluetooth bulb
+  - e27 smart bulb
+  - e27 led lamp
+  - connected light source
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - wifi
+  - bluetooth
+  - app_control
+  - indoor_use
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  subtype_traits:
+  - wifi
+  - bluetooth
+  - app_control
+  core_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  default_traits:
+  - wifi
+  - bluetooth
+  - app_control
+  - ota
+  - cloud
+  functional_classes:
+  - home_device
+  - smart_lighting
+  likely_standards:
+  - EN IEC 62560
+  - EN 62031
+  route_family: lighting_device
+  primary_standard_code: EN IEC 62560
+  supporting_standard_codes:
+  - EN 62031
+  genres:
+  - lighting_device
+  - smart_home_iot
+  strong_aliases:
+  - smart bulb
+  - smart led bulb
+  - led bulb
+  - led lamp
+  - smart lamp
+  - smart light bulb
+  - connected light bulb
+  - wifi bulb
+  - bluetooth bulb
+  - e27 smart bulb
+  - e27 led lamp
+  - connected light source
+  weak_aliases: []
+  marketplace_aliases:
+  - smart bulb
+  - smart led lamp
+  - wifi light bulb
+  not_when_text_contains:
+  - projector
+  - projection
+  negative_examples:
+  - home_projector
+  likely_standard_refs:
+  - ref: EN IEC 62560
+    kind: unspecified
+  - ref: EN 62031
+    kind: unspecified
+  minimum_match_score: 26
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - wifi
+  - bluetooth
+  score_penalty_if_traits:
+  - speaker
+  - projector
+  required_any_traits:
+  - electrical
+  - lighting
+  forbidden_traits: []
+  matching_notes: Smart bulbs and smart lamps stay on the lighting route. App, cloud, and voice-assistant integration are
+    secondary overlays only and must not move the product into AV/ICT or projector families.
+- id: smart_light_controller
+  label: Smart lighting controller / bridge
+  aliases:
+  - smart lighting bridge
+  - hue bridge
+  - zigbee lighting controller
+  - smart light hub
+  - dali gateway
+  - dmx controller smart
+  - smart lighting gateway
+  - smart-lighting-bridge
+  - smartlightingbridge
+  - smart lighting bridges
+  - hue-bridge
+  - huebridge
+  - hue bridges
+  - zigbee-lighting-controller
+  - zigbeelightingcontroller
+  - zigbee lighting controllers
+  - smart-light-hub
+  - smartlighthub
+  - smart light hubs
+  - dali-gateway
+  - daligateway
+  - dali gateways
+  - dmx-controller-smart
+  - dmxcontrollersmart
+  - dmx controller smarts
+  - smart-lighting-gateway
+  - smartlightinggateway
+  - smart lighting gateways
+  - smart lighting controller bridge
+  - smart-lighting-controller-bridge
+  - smartlightingcontrollerbridge
+  - smart lighting controller bridges
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - wifi
+  - zigbee
+  - bluetooth
+  - app_control
+  - ota
+  - data_storage
+  - cloud
+  - matter
+  functional_classes:
+  - home_device
+  - av_ict_device
+  - network_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  strong_aliases:
+  - smart lighting bridge
+  - hue bridge
+  - zigbee lighting controller
+  - smart light hub
+  - dali gateway
+  - dmx controller smart
+  - smart lighting gateway
+  weak_aliases:
+  - smart-lighting-bridge
+  - smartlightingbridge
+  - smart lighting bridges
+  - hue-bridge
+  - huebridge
+  - hue bridges
+  - zigbee-lighting-controller
+  - zigbeelightingcontroller
+  - zigbee lighting controllers
+  - smart-light-hub
+  - smartlighthub
+  - smart light hubs
+  - dali-gateway
+  - daligateway
+  - dali gateways
+  - dmx-controller-smart
+  - dmxcontrollersmart
+  - dmx controller smarts
+  - smart-lighting-gateway
+  - smartlightinggateway
+  - smart lighting gateways
+  - smart lighting controller bridge
+  - smart-lighting-controller-bridge
+  - smartlightingcontrollerbridge
+  - smart lighting controller bridges
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

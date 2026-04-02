@@ -1,0 +1,4254 @@
+products:
+- id: 5g_home_gateway
+  label: 5G home gateway / CPE
+  aliases:
+  - 5g home gateway
+  - 5g cpe
+  - 5g router
+  - 5g home broadband
+  - 5g modem router
+  - fixed wireless access gateway
+  - 4g lte router
+  - 5g wifi router
+  - 5g-home-gateway
+  - 5ghomegateway
+  - 5g home gateways
+  - 5g-cpe
+  - 5gcpe
+  - 5g cpes
+  - 5g-router
+  - 5grouter
+  - 5g routers
+  - 5g-home-broadband
+  - 5ghomebroadband
+  - 5g home broadbands
+  - 5g-modem-router
+  - 5gmodemrouter
+  - 5g modem routers
+  - fixed-wireless-access-gateway
+  - fixedwirelessaccessgateway
+  - fixed wireless access gateways
+  - 4g-lte-router
+  - 4glterouter
+  - 4g lte routers
+  - 5g wi-fi router
+  - 5g wi fi router
+  - 5g-wifi-router
+  - 5gwifirouter
+  - 5g wifi routers
+  - 5g home gateway cpe
+  - 5g-home-gateway-cpe
+  - 5ghomegatewaycpe
+  - 5g home gateway cpes
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - radio
+  - wifi
+  - wifi_5ghz
+  - wifi_6
+  - 5g_nr
+  - cellular
+  - esim
+  - data_storage
+  - app_control
+  - ota
+  - wpa3
+  - cloud
+  - internet
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - 5g home gateway
+  - 5g cpe
+  - 5g router
+  - 5g home broadband
+  - 5g modem router
+  - fixed wireless access gateway
+  - 4g lte router
+  - 5g wifi router
+  weak_aliases:
+  - 5g-home-gateway
+  - 5ghomegateway
+  - 5g home gateways
+  - 5g-cpe
+  - 5gcpe
+  - 5g cpes
+  - 5g-router
+  - 5grouter
+  - 5g routers
+  - 5g-home-broadband
+  - 5ghomebroadband
+  - 5g home broadbands
+  - 5g-modem-router
+  - 5gmodemrouter
+  - 5g modem routers
+  - fixed-wireless-access-gateway
+  - fixedwirelessaccessgateway
+  - fixed wireless access gateways
+  - 4g-lte-router
+  - 4glterouter
+  - 4g lte routers
+  - 5g wi-fi router
+  - 5g wi fi router
+  - 5g-wifi-router
+  - 5gwifirouter
+  - 5g wifi routers
+  - 5g home gateway cpe
+  - 5g-home-gateway-cpe
+  - 5ghomegatewaycpe
+  - 5g home gateway cpes
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: bluetooth_speaker
+  label: Portable Bluetooth speaker
+  aliases:
+  - bluetooth speaker
+  - portable speaker
+  - wireless speaker
+  - outdoor speaker
+  - waterproof speaker
+  - party speaker
+  - bluetooth-speaker
+  - bluetoothspeaker
+  - bluetooth speakers
+  - portable-speaker
+  - portablespeaker
+  - portable speakers
+  - wireless-speaker
+  - wirelessspeaker
+  - wireless speakers
+  - outdoor-speaker
+  - outdoorspeaker
+  - outdoor speakers
+  - waterproof-speaker
+  - waterproofspeaker
+  - waterproof speakers
+  - party-speaker
+  - partyspeaker
+  - party speakers
+  - portable bluetooth speaker
+  - portable-bluetooth-speaker
+  - portablebluetoothspeaker
+  - portable bluetooth speakers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - bluetooth
+  - speaker
+  - outdoor_use
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  exclude_clues:
+  - e bike
+  - electric bicycle
+  - guitar
+  - hoverboard
+  - piano
+  - self balancing scooter
+  - self-balancing scooter
+  - soundbar
+  - tv
+  strong_aliases:
+  - bluetooth speaker
+  - portable speaker
+  - wireless speaker
+  - outdoor speaker
+  - waterproof speaker
+  - party speaker
+  weak_aliases:
+  - bluetooth-speaker
+  - bluetoothspeaker
+  - bluetooth speakers
+  - portable-speaker
+  - portablespeaker
+  - portable speakers
+  - wireless-speaker
+  - wirelessspeaker
+  - wireless speakers
+  - outdoor-speaker
+  - outdoorspeaker
+  - outdoor speakers
+  - waterproof-speaker
+  - waterproofspeaker
+  - waterproof speakers
+  - party-speaker
+  - partyspeaker
+  - party speakers
+  - portable bluetooth speaker
+  - portable-bluetooth-speaker
+  - portablebluetoothspeaker
+  - portable bluetooth speakers
+  marketplace_aliases: []
+  not_when_text_contains:
+  - e bike
+  - electric bicycle
+  - guitar
+  - hoverboard
+  - piano
+  - self balancing scooter
+  - self-balancing scooter
+  - soundbar
+  - tv
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits:
+  - e bike
+  - electric bicycle
+  - guitar
+  - hoverboard
+  - piano
+  - self balancing scooter
+  - self-balancing scooter
+  - soundbar
+  - tv
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: bluetooth_tracker
+  label: Bluetooth tracker
+  aliases:
+  - bluetooth tracker
+  - bluetooth tag
+  - smart tag
+  - key finder
+  - item tracker
+  - item finder
+  - wallet tracker
+  - luggage tracker
+  - bluetooth-tracker
+  - bluetoothtracker
+  - bluetooth trackers
+  - bluetooth-tag
+  - bluetoothtag
+  - bluetooth tags
+  - smart-tag
+  - smarttag
+  - smart tags
+  - key-finder
+  - keyfinder
+  - key finders
+  - item-tracker
+  - itemtracker
+  - item trackers
+  - item-finder
+  - itemfinder
+  - item finders
+  - wallet-tracker
+  - wallettracker
+  - wallet trackers
+  - luggage-tracker
+  - luggagetracker
+  - luggage trackers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  - radio
+  - bluetooth
+  - location
+  functional_classes:
+  - home_device
+  likely_standards: []
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - bluetooth tracker
+  - bluetooth tag
+  - smart tag
+  - key finder
+  - item tracker
+  - item finder
+  - wallet tracker
+  - luggage tracker
+  weak_aliases:
+  - bluetooth-tracker
+  - bluetoothtracker
+  - bluetooth trackers
+  - bluetooth-tag
+  - bluetoothtag
+  - bluetooth tags
+  - smart-tag
+  - smarttag
+  - smart tags
+  - key-finder
+  - keyfinder
+  - key finders
+  - item-tracker
+  - itemtracker
+  - item trackers
+  - item-finder
+  - itemfinder
+  - item finders
+  - wallet-tracker
+  - wallettracker
+  - wallet trackers
+  - luggage-tracker
+  - luggagetracker
+  - luggage trackers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs: []
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: desktop_pc
+  label: Desktop PC
+  aliases:
+  - desktop pc
+  - desktop computer
+  - personal computer
+  - mini pc
+  - thin client
+  - desktop-pc
+  - desktoppc
+  - desktop pcs
+  - desktop-computer
+  - desktopcomputer
+  - desktop computers
+  - personal-computer
+  - personalcomputer
+  - personal computers
+  - mini-pc
+  - minipc
+  - mini pcs
+  - thin-client
+  - thinclient
+  - thin clients
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  - office_peripheral
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - desktop pc
+  - desktop computer
+  - personal computer
+  - mini pc
+  weak_aliases:
+  - desktop-pc
+  - desktoppc
+  - desktop pcs
+  - desktop-computer
+  - desktopcomputer
+  - desktop computers
+  - personal-computer
+  - personalcomputer
+  - personal computers
+  - mini-pc
+  - minipc
+  - mini pcs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: digital_audio_player
+  label: Digital audio player / DAC
+  aliases:
+  - digital audio player
+  - portable dac
+  - dac amp
+  - music player
+  - hi-res audio player
+  - usb dac
+  - portable music player
+  - digital-audio-player
+  - digitalaudioplayer
+  - digital audio players
+  - portable-dac
+  - portabledac
+  - portable dacs
+  - dac-amp
+  - dacamp
+  - dac amps
+  - music-player
+  - musicplayer
+  - music players
+  - hi res audio player
+  - hi-res-audio-player
+  - hi-resaudioplayer
+  - hi-res audio players
+  - usb-dac
+  - usbdac
+  - usb dacs
+  - portable-music-player
+  - portablemusicplayer
+  - portable music players
+  - digital audio player dac
+  - digital-audio-player-dac
+  - digitalaudioplayerdac
+  - digital audio player dacs
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - speaker
+  - sdcard_slot
+  functional_classes:
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - digital audio player
+  - portable dac
+  - dac amp
+  - music player
+  - hi-res audio player
+  - usb dac
+  - portable music player
+  weak_aliases:
+  - digital-audio-player
+  - digitalaudioplayer
+  - digital audio players
+  - portable-dac
+  - portabledac
+  - portable dacs
+  - dac-amp
+  - dacamp
+  - dac amps
+  - music-player
+  - musicplayer
+  - music players
+  - hi res audio player
+  - hi-res-audio-player
+  - hi-resaudioplayer
+  - hi-res audio players
+  - usb-dac
+  - usbdac
+  - usb dacs
+  - portable-music-player
+  - portablemusicplayer
+  - portable music players
+  - digital audio player dac
+  - digital-audio-player-dac
+  - digitalaudioplayerdac
+  - digital audio player dacs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: digital_photo_frame
+  label: Smart digital photo frame
+  aliases:
+  - digital photo frame
+  - smart photo frame
+  - connected photo frame
+  - wifi photo frame
+  - digital picture frame
+  - digital-photo-frame
+  - digitalphotoframe
+  - digital photo frames
+  - smart-photo-frame
+  - smartphotoframe
+  - smart photo frames
+  - connected-photo-frame
+  - connectedphotoframe
+  - connected photo frames
+  - wi-fi photo frame
+  - wi fi photo frame
+  - wifi-photo-frame
+  - wifiphotoframe
+  - wifi photo frames
+  - digital-picture-frame
+  - digitalpictureframe
+  - digital picture frames
+  - smart digital photo frame
+  - smart-digital-photo-frame
+  - smartdigitalphotoframe
+  - smart digital photo frames
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - display
+  - wifi
+  - cloud
+  - account
+  - data_storage
+  - personal_data_likely
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - digital photo frame
+  - smart photo frame
+  - connected photo frame
+  - wifi photo frame
+  - digital picture frame
+  weak_aliases:
+  - digital-photo-frame
+  - digitalphotoframe
+  - digital photo frames
+  - smart-photo-frame
+  - smartphotoframe
+  - smart photo frames
+  - connected-photo-frame
+  - connectedphotoframe
+  - connected photo frames
+  - wi-fi photo frame
+  - wi fi photo frame
+  - wifi-photo-frame
+  - wifiphotoframe
+  - wifi photo frames
+  - digital-picture-frame
+  - digitalpictureframe
+  - digital picture frames
+  - smart digital photo frame
+  - smart-digital-photo-frame
+  - smartdigitalphotoframe
+  - smart digital photo frames
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: digital_piano
+  label: Digital piano / electronic keyboard
+  aliases:
+  - digital piano
+  - electronic piano
+  - stage piano
+  - keyboard piano
+  - portable digital piano
+  - electronic keyboard
+  - digital-piano
+  - digitalpiano
+  - digital pianos
+  - electronic-piano
+  - electronicpiano
+  - electronic pianos
+  - stage-piano
+  - stagepiano
+  - stage pianos
+  - keyboard-piano
+  - keyboardpiano
+  - keyboard pianos
+  - portable-digital-piano
+  - portabledigitalpiano
+  - portable digital pianos
+  - electronic-keyboard
+  - electronickeyboard
+  - electronic keyboards
+  - digital piano electronic keyboard
+  - digital-piano-electronic-keyboard
+  - digitalpianoelectronickeyboard
+  - digital piano electronic keyboards
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - speaker
+  functional_classes:
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  preferred_clues:
+  - digital piano
+  - keyboard
+  - stage piano
+  exclude_clues:
+  - speaker only
+  - smart speaker
+  strong_aliases:
+  - digital piano
+  - electronic piano
+  - stage piano
+  - keyboard piano
+  - portable digital piano
+  - electronic keyboard
+  weak_aliases:
+  - digital-piano
+  - digitalpiano
+  - digital pianos
+  - electronic-piano
+  - electronicpiano
+  - electronic pianos
+  - stage-piano
+  - stagepiano
+  - stage pianos
+  - keyboard-piano
+  - keyboardpiano
+  - keyboard pianos
+  - portable-digital-piano
+  - portabledigitalpiano
+  - portable digital pianos
+  - electronic-keyboard
+  - electronickeyboard
+  - electronic keyboards
+  - digital piano electronic keyboard
+  - digital-piano-electronic-keyboard
+  - digitalpianoelectronickeyboard
+  - digital piano electronic keyboards
+  marketplace_aliases: []
+  not_when_text_contains:
+  - speaker only
+  - smart speaker
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - speaker
+  score_penalty_if_traits:
+  - speaker only
+  - smart speaker
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: docking_station
+  label: Docking station / USB-C hub
+  aliases:
+  - docking station
+  - laptop dock
+  - usb-c hub
+  - usb hub dock
+  - thunderbolt dock
+  - usb4 hub
+  - port replicator
+  - docking-station
+  - dockingstation
+  - docking stations
+  - laptop-dock
+  - laptopdock
+  - laptop docks
+  - usb c hub
+  - usb-c-hub
+  - usb-chub
+  - usb-c hubs
+  - usb-hub-dock
+  - usbhubdock
+  - usb hub docks
+  - thunderbolt-dock
+  - thunderboltdock
+  - thunderbolt docks
+  - usb4-hub
+  - usb4hub
+  - usb4 hubs
+  - port-replicator
+  - portreplicator
+  - port replicators
+  - docking station usb-c hub
+  - docking station usb c hub
+  - docking-station-usb-c-hub
+  - dockingstationusb-chub
+  - docking station usb-c hubs
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - usb_hub_function
+  - hdmi_interface
+  - usb_pd
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - docking station
+  - laptop dock
+  - usb-c hub
+  - usb hub dock
+  - thunderbolt dock
+  - usb4 hub
+  - port replicator
+  weak_aliases:
+  - docking-station
+  - dockingstation
+  - docking stations
+  - laptop-dock
+  - laptopdock
+  - laptop docks
+  - usb c hub
+  - usb-c-hub
+  - usb-chub
+  - usb-c hubs
+  - usb-hub-dock
+  - usbhubdock
+  - usb hub docks
+  - thunderbolt-dock
+  - thunderboltdock
+  - thunderbolt docks
+  - usb4-hub
+  - usb4hub
+  - usb4 hubs
+  - port-replicator
+  - portreplicator
+  - port replicators
+  - docking station usb-c hub
+  - docking station usb c hub
+  - docking-station-usb-c-hub
+  - dockingstationusb-chub
+  - docking station usb-c hubs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - usb_hub_function
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: document_scanner
+  label: Document scanner
+  product_family: office_imaging
+  product_subfamily: document_scanner
+  family_keywords:
+  - document scanner
+  - desktop scanner
+  - sheetfed scanner
+  aliases:
+  - document scanner
+  - desktop scanner
+  - office scanner
+  - sheetfed scanner
+  - flatbed scanner
+  - photo scanner
+  - a4 scanner
+  preferred_clues:
+  - document scanner
+  - desktop scanner
+  - sheetfed scanner
+  - flatbed scanner
+  exclude_clues:
+  - barcode scanner
+  - handheld scanner
+  - industrial scanner
+  implied_traits:
+  - consumer
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - document scanner
+  - desktop scanner
+  - office scanner
+  - sheetfed scanner
+  - flatbed scanner
+  weak_aliases:
+  - photo scanner
+  - a4 scanner
+  marketplace_aliases:
+  - duplex document scanner
+  - desktop document scanner
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - av_ict
+  - data_storage
+  matching_notes: Keeps office document imaging separate from rugged handheld barcode scanners and warehouse equipment.
+- id: electric_guitar
+  label: Electric guitar / instrument amplifier ecosystem
+  aliases:
+  - electric guitar
+  - guitar amp
+  - guitar amplifier
+  - bass guitar amp
+  - instrument amplifier
+  - electric-guitar
+  - electricguitar
+  - electric guitars
+  - guitar-amp
+  - guitaramp
+  - guitar amps
+  - guitar-amplifier
+  - guitaramplifier
+  - guitar amplifiers
+  - bass-guitar-amp
+  - bassguitaramp
+  - bass guitar amps
+  - instrument-amplifier
+  - instrumentamplifier
+  - instrument amplifiers
+  - electric guitar instrument amplifier ecosystem
+  - electric-guitar-instrument-amplifier-ecosystem
+  - electricguitarinstrumentamplifierecosystem
+  - electric guitar instrument amplifier ecosystems
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - speaker
+  functional_classes:
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  preferred_clues:
+  - electric guitar
+  - guitar amp
+  - instrument amplifier
+  exclude_clues:
+  - smart speaker
+  - projector
+  strong_aliases:
+  - electric guitar
+  - guitar amp
+  - guitar amplifier
+  - bass guitar amp
+  - instrument amplifier
+  weak_aliases:
+  - electric-guitar
+  - electricguitar
+  - electric guitars
+  - guitar-amp
+  - guitaramp
+  - guitar amps
+  - guitar-amplifier
+  - guitaramplifier
+  - guitar amplifiers
+  - bass-guitar-amp
+  - bassguitaramp
+  - bass guitar amps
+  - instrument-amplifier
+  - instrumentamplifier
+  - instrument amplifiers
+  - electric guitar instrument amplifier ecosystem
+  - electric-guitar-instrument-amplifier-ecosystem
+  - electricguitarinstrumentamplifierecosystem
+  - electric guitar instrument amplifier ecosystems
+  marketplace_aliases: []
+  not_when_text_contains:
+  - smart speaker
+  - projector
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - speaker
+  score_penalty_if_traits:
+  - smart speaker
+  - projector
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: external_storage
+  label: External storage (SSD / HDD)
+  aliases:
+  - external ssd
+  - external hard drive
+  - external hdd
+  - portable ssd
+  - usb drive
+  - flash drive
+  - external storage drive
+  - external-ssd
+  - externalssd
+  - external ssds
+  - external-hard-drive
+  - externalharddrive
+  - external hard drives
+  - external-hdd
+  - externalhdd
+  - external hdds
+  - portable-ssd
+  - portablessd
+  - portable ssds
+  - usb-drive
+  - usbdrive
+  - usb drives
+  - flash-drive
+  - flashdrive
+  - flash drives
+  - external-storage-drive
+  - externalstoragedrive
+  - external storage drives
+  - external storage (ssd hdd)
+  - external-storage-(ssd-hdd)
+  - externalstorage(ssdhdd)
+  - external storage (ssd hdd)s
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - data_storage
+  - usb_pd
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - external ssd
+  - external hard drive
+  - external hdd
+  - portable ssd
+  - usb drive
+  - flash drive
+  - external storage drive
+  weak_aliases:
+  - external-ssd
+  - externalssd
+  - external ssds
+  - external-hard-drive
+  - externalharddrive
+  - external hard drives
+  - external-hdd
+  - externalhdd
+  - external hdds
+  - portable-ssd
+  - portablessd
+  - portable ssds
+  - usb-drive
+  - usbdrive
+  - usb drives
+  - flash-drive
+  - flashdrive
+  - flash drives
+  - external-storage-drive
+  - externalstoragedrive
+  - external storage drives
+  - external storage (ssd hdd)
+  - external-storage-(ssd-hdd)
+  - externalstorage(ssdhdd)
+  - external storage (ssd hdd)s
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: game_console
+  label: Game console
+  aliases:
+  - game console
+  - gaming console
+  - playstation
+  - xbox
+  - nintendo switch
+  - home gaming console
+  - portable game console
+  - game-console
+  - gameconsole
+  - game consoles
+  - gaming-console
+  - gamingconsole
+  - gaming consoles
+  - playstations
+  - xboxs
+  - nintendo-switch
+  - nintendoswitch
+  - nintendo switchs
+  - home-gaming-console
+  - homegamingconsole
+  - home gaming consoles
+  - portable-game-console
+  - portablegameconsole
+  - portable game consoles
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - display
+  - speaker
+  - bluetooth
+  - wifi
+  - data_storage
+  - account
+  - hdmi_interface
+  - ota
+  - cloud
+  - internet
+  - app_control
+  - wireless_charging_rx
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - game console
+  - gaming console
+  - playstation
+  - xbox
+  - nintendo switch
+  - home gaming console
+  - portable game console
+  weak_aliases:
+  - game-console
+  - gameconsole
+  - game consoles
+  - gaming-console
+  - gamingconsole
+  - gaming consoles
+  - playstations
+  - xboxs
+  - nintendo-switch
+  - nintendoswitch
+  - nintendo switchs
+  - home-gaming-console
+  - homegamingconsole
+  - home gaming consoles
+  - portable-game-console
+  - portablegameconsole
+  - portable game consoles
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: home_cinema_system
+  label: Home cinema system
+  aliases:
+  - home cinema system
+  - home theater system
+  - av receiver
+  - amplifier receiver
+  - surround sound system
+  - hi-fi system
+  - home-cinema-system
+  - homecinemasystem
+  - home cinema systems
+  - home-theater-system
+  - hometheatersystem
+  - home theater systems
+  - av-receiver
+  - avreceiver
+  - av receivers
+  - amplifier-receiver
+  - amplifierreceiver
+  - amplifier receivers
+  - surround-sound-system
+  - surroundsoundsystem
+  - surround sound systems
+  - hi fi system
+  - hi-fi-system
+  - hi-fisystem
+  - hi-fi systems
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - speaker
+  - hdmi_interface
+  - hdmi_arc
+  - bluetooth
+  - wifi
+  - spatial_audio
+  - multi_room_audio
+  - app_control
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - home cinema system
+  - home theater system
+  - av receiver
+  - amplifier receiver
+  - surround sound system
+  - hi-fi system
+  weak_aliases:
+  - home-cinema-system
+  - homecinemasystem
+  - home cinema systems
+  - home-theater-system
+  - hometheatersystem
+  - home theater systems
+  - av-receiver
+  - avreceiver
+  - av receivers
+  - amplifier-receiver
+  - amplifierreceiver
+  - amplifier receivers
+  - surround-sound-system
+  - surroundsoundsystem
+  - surround sound systems
+  - hi fi system
+  - hi-fi-system
+  - hi-fisystem
+  - hi-fi systems
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: home_projector
+  label: Home projector / smart projector
+  product_family: projector_device
+  product_subfamily: home_projector
+  family_keywords:
+  - home cinema
+  - smart projector
+  - projector device
+  aliases:
+  - projector
+  - home projector
+  - smart projector
+  - mini projector
+  - pico projector
+  - portable projector
+  - laser projector
+  - ultra-short throw projector
+  - cinema projector home
+  - projectors
+  - home-projector
+  - homeprojector
+  - home projectors
+  - smart-projector
+  - smartprojector
+  - smart projectors
+  - mini-projector
+  - miniprojector
+  - mini projectors
+  - pico-projector
+  - picoprojector
+  - pico projectors
+  - portable-projector
+  - portableprojector
+  - portable projectors
+  - laser-projector
+  - laserprojector
+  - laser projectors
+  - ultra short throw projector
+  - ultra-short-throw-projector
+  - ultra-shortthrowprojector
+  - ultra-short throw projectors
+  - cinema-projector-home
+  - cinemaprojectorhome
+  - cinema projector homes
+  - home projector smart projector
+  - home-projector-smart-projector
+  - homeprojectorsmartprojector
+  - home projector smart projectors
+  required_clues: []
+  preferred_clues:
+  - smart
+  - wifi
+  - bluetooth
+  - home cinema
+  - laser
+  - ultra short throw
+  - android tv
+  - netflix
+  exclude_clues:
+  - conference room
+  - presentation
+  - business
+  confusable_with:
+  - projector
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_power_likely
+  subtype_traits:
+  - household
+  - speaker
+  - bluetooth
+  - wifi
+  - hdmi_interface
+  - app_control
+  - screen_mirroring
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - display
+  - speaker
+  - bluetooth
+  - wifi
+  - hdmi_interface
+  - app_control
+  - screen_mirroring
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - projector
+  - home projector
+  - smart projector
+  - mini projector
+  - pico projector
+  - portable projector
+  - laser projector
+  - ultra-short throw projector
+  weak_aliases:
+  - cinema projector home
+  - projectors
+  - home-projector
+  - homeprojector
+  - home projectors
+  - smart-projector
+  - smartprojector
+  - smart projectors
+  - mini-projector
+  - miniprojector
+  - mini projectors
+  - pico-projector
+  - picoprojector
+  - pico projectors
+  - portable-projector
+  - portableprojector
+  - portable projectors
+  - laser-projector
+  - laserprojector
+  - laser projectors
+  - ultra short throw projector
+  - ultra-short-throw-projector
+  - ultra-shortthrowprojector
+  - ultra-short throw projectors
+  - cinema-projector-home
+  - cinemaprojectorhome
+  - cinema projector homes
+  - home projector smart projector
+  - home-projector-smart-projector
+  - homeprojectorsmartprojector
+  marketplace_aliases: []
+  not_when_text_contains:
+  - conference room
+  - presentation
+  - business
+  negative_examples:
+  - projector
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits:
+  - conference room
+  - presentation
+  - business
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: industrial_handheld_scanner
+  label: Industrial handheld scanner
+  product_family: industrial_data_capture
+  product_subfamily: industrial_handheld_scanner
+  aliases:
+  - industrial handheld scanner
+  - handheld scanner
+  - barcode scanner
+  - wireless barcode scanner
+  - inventory scanner
+  - rugged scanner
+  - warehouse scanner
+  - data capture terminal
+  - industrial-handheld-scanner
+  - industrialhandheldscanner
+  - handheld-scanner
+  - handheldscanner
+  - barcode-scanner
+  - barcodescanner
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - handheld
+  - display
+  - wifi
+  - bluetooth
+  core_traits:
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - handheld
+  default_traits:
+  - display
+  - wifi
+  - bluetooth
+  functional_classes:
+  - av_ict_device
+  - industrial_equipment
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - industrial handheld scanner
+  - handheld scanner
+  - barcode scanner
+  - wireless barcode scanner
+  - inventory scanner
+  - rugged scanner
+  - warehouse scanner
+  - data capture terminal
+  weak_aliases:
+  - industrial-handheld-scanner
+  - industrialhandheldscanner
+  - handheld-scanner
+  - handheldscanner
+  - barcode-scanner
+  - barcodescanner
+  marketplace_aliases:
+  - rugged barcode scanner
+  - handheld barcode scanner
+  - industrial scanner
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - professional
+  - handheld
+  - portable
+  - wifi
+  - bluetooth
+  - display
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Industrial handheld barcode and inventory scanners. Keeps professional AV/ICT routing without collapsing
+    into consumer projector matches.
+- id: insect_killer
+  label: Insect killer
+  aliases:
+  - insect killer
+  - bug zapper
+  - mosquito killer
+  - insect-killer
+  - insectkiller
+  - insect killers
+  - bug-zapper
+  - bugzapper
+  - bug zappers
+  - mosquito-killer
+  - mosquitokiller
+  - mosquito killers
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  functional_classes:
+  - home_device
+  likely_standards:
+  - EN 60335-2-59
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - insect killer
+  - bug zapper
+  - mosquito killer
+  weak_aliases:
+  - insect-killer
+  - insectkiller
+  - insect killers
+  - bug-zapper
+  - bugzapper
+  - bug zappers
+  - mosquito-killer
+  - mosquitokiller
+  - mosquito killers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-59
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: iot_gateway
+  label: IoT gateway / hub
+  aliases:
+  - iot gateway
+  - smart home gateway
+  - smart home hub
+  - hub gateway
+  - iot-gateway
+  - iotgateway
+  - iot gateways
+  - smart-home-gateway
+  - smarthomegateway
+  - smart home gateways
+  - smart-home-hub
+  - smarthomehub
+  - smart home hubs
+  - hub-gateway
+  - hubgateway
+  - hub gateways
+  - iot gateway hub
+  - iot-gateway-hub
+  - iotgatewayhub
+  - iot gateway hubs
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - zigbee
+  - thread
+  - matter
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - iot gateway
+  - smart home gateway
+  - smart home hub
+  - hub gateway
+  weak_aliases:
+  - iot-gateway
+  - iotgateway
+  - iot gateways
+  - smart-home-gateway
+  - smarthomegateway
+  - smart home gateways
+  - smart-home-hub
+  - smarthomehub
+  - smart home hubs
+  - hub-gateway
+  - hubgateway
+  - hub gateways
+  - iot gateway hub
+  - iot-gateway-hub
+  - iotgatewayhub
+  - iot gateway hubs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: laptop
+  label: Laptop
+  aliases:
+  - laptop
+  - notebook computer
+  - notebook pc
+  - portable computer
+  - laptops
+  - notebook-computer
+  - notebookcomputer
+  - notebook computers
+  - notebook-pc
+  - notebookpc
+  - notebook pcs
+  - portable-computer
+  - portablecomputer
+  - portable computers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - display
+  - radio
+  - wifi
+  - bluetooth
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - laptop
+  - notebook computer
+  - notebook pc
+  - portable computer
+  weak_aliases:
+  - laptops
+  - notebook-computer
+  - notebookcomputer
+  - notebook computers
+  - notebook-pc
+  - notebookpc
+  - notebook pcs
+  - portable-computer
+  - portablecomputer
+  - portable computers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: lora_gateway
+  label: LoRa / LoRaWAN gateway
+  aliases:
+  - lora gateway
+  - lorawan gateway
+  - iot lora gateway
+  - helium hotspot
+  - smart city gateway lora
+  - lora-gateway
+  - loragateway
+  - lora gateways
+  - lorawan-gateway
+  - lorawangateway
+  - lorawan gateways
+  - iot-lora-gateway
+  - iotloragateway
+  - iot lora gateways
+  - helium-hotspot
+  - heliumhotspot
+  - helium hotspots
+  - smart-city-gateway-lora
+  - smartcitygatewaylora
+  - smart city gateway loras
+  - lora lorawan gateway
+  - lora-lorawan-gateway
+  - loralorawangateway
+  - lora lorawan gateways
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - lora
+  - lorawan
+  - wifi
+  - internet
+  - data_storage
+  - ota
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - lora gateway
+  - lorawan gateway
+  - iot lora gateway
+  - helium hotspot
+  - smart city gateway lora
+  weak_aliases:
+  - lora-gateway
+  - loragateway
+  - lora gateways
+  - lorawan-gateway
+  - lorawangateway
+  - lorawan gateways
+  - iot-lora-gateway
+  - iotloragateway
+  - iot lora gateways
+  - helium-hotspot
+  - heliumhotspot
+  - helium hotspots
+  - smart-city-gateway-lora
+  - smartcitygatewaylora
+  - smart city gateway loras
+  - lora lorawan gateway
+  - lora-lorawan-gateway
+  - loralorawangateway
+  - lora lorawan gateways
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: mesh_wifi_system
+  label: Mesh Wi-Fi system (node)
+  product_family: wifi_networking
+  product_subfamily: mesh_wifi_system
+  family_keywords:
+  - wifi networking
+  - whole home wifi
+  - mesh network
+  aliases:
+  - mesh wifi
+  - mesh router
+  - wifi mesh node
+  - whole home wifi
+  - eero
+  - google nest wifi
+  - orbi
+  - deco mesh
+  - mesh wifi system
+  - mesh network router
+  - mesh wi-fi
+  - mesh wi fi
+  - mesh-wifi
+  - meshwifi
+  - mesh wifis
+  - mesh-router
+  - meshrouter
+  - mesh routers
+  - wi-fi mesh node
+  - wi fi mesh node
+  - wifi-mesh-node
+  - wifimeshnode
+  - wifi mesh nodes
+  - whole home wi-fi
+  - whole home wi fi
+  - whole-home-wifi
+  - wholehomewifi
+  - whole home wifis
+  - eeros
+  - google nest wi-fi
+  - google nest wi fi
+  - google-nest-wifi
+  - googlenestwifi
+  - google nest wifis
+  - orbis
+  - deco-mesh
+  - decomesh
+  - deco meshs
+  - mesh wi-fi system
+  - mesh wi fi system
+  - mesh-wifi-system
+  - meshwifisystem
+  - mesh wifi systems
+  - mesh-network-router
+  - meshnetworkrouter
+  - mesh network routers
+  - mesh wi-fi system (node)
+  - mesh wifi system (node)
+  - mesh wi fi system (node)
+  - mesh-wi-fi-system-(node)
+  - meshwi-fisystem(node)
+  - mesh wi-fi system (node)s
+  required_clues:
+  - mesh
+  preferred_clues:
+  - mesh
+  - whole home wifi
+  - node
+  - tri band
+  - eero
+  - orbi
+  - deco mesh
+  exclude_clues:
+  - access point
+  confusable_with:
+  - router
+  - wireless_access_point
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  subtype_traits:
+  - wifi_6
+  - wifi_5ghz
+  - tri_band_wifi
+  - mesh_network_node
+  - bluetooth
+  - app_control
+  - ota
+  - wpa3
+  - cloud
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - wifi_5ghz
+  - wifi_6
+  - tri_band_wifi
+  - mesh_network_node
+  - bluetooth
+  - data_storage
+  - app_control
+  - ota
+  - wpa3
+  - cloud
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - mesh wifi
+  - mesh router
+  - wifi mesh node
+  - whole home wifi
+  - eero
+  - google nest wifi
+  - orbi
+  - deco mesh
+  weak_aliases:
+  - mesh wifi system
+  - mesh network router
+  - mesh wi-fi
+  - mesh wi fi
+  - mesh-wifi
+  - meshwifi
+  - mesh wifis
+  - mesh-router
+  - meshrouter
+  - mesh routers
+  - wi-fi mesh node
+  - wi fi mesh node
+  - wifi-mesh-node
+  - wifimeshnode
+  - wifi mesh nodes
+  - whole home wi-fi
+  - whole home wi fi
+  - whole-home-wifi
+  - wholehomewifi
+  - whole home wifis
+  - eeros
+  - google nest wi-fi
+  - google nest wi fi
+  - google-nest-wifi
+  - googlenestwifi
+  - google nest wifis
+  - orbis
+  - deco-mesh
+  - decomesh
+  - deco meshs
+  marketplace_aliases: []
+  not_when_text_contains:
+  - access point
+  negative_examples:
+  - router
+  - wireless_access_point
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits:
+  - access point
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: modem
+  label: Modem
+  aliases:
+  - modem
+  - cable modem
+  - dsl modem
+  - broadband modem
+  - modems
+  - cable-modem
+  - cablemodem
+  - cable modems
+  - dsl-modem
+  - dslmodem
+  - dsl modems
+  - broadband-modem
+  - broadbandmodem
+  - broadband modems
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - modem
+  - cable modem
+  - dsl modem
+  - broadband modem
+  weak_aliases:
+  - modems
+  - cable-modem
+  - cablemodem
+  - cable modems
+  - dsl-modem
+  - dslmodem
+  - dsl modems
+  - broadband-modem
+  - broadbandmodem
+  - broadband modems
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - data_storage
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: monitor
+  label: Monitor
+  aliases:
+  - monitor
+  - computer monitor
+  - display monitor
+  - monitors
+  - computer-monitor
+  - computermonitor
+  - computer monitors
+  - display-monitor
+  - displaymonitor
+  - display monitors
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_powered
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - monitor
+  - computer monitor
+  - display monitor
+  weak_aliases:
+  - monitors
+  - computer-monitor
+  - computermonitor
+  - computer monitors
+  - display-monitor
+  - displaymonitor
+  - display monitors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: network_switch
+  label: Network switch
+  aliases:
+  - network switch
+  - ethernet switch
+  - lan switch
+  - poe switch
+  - network-switch
+  - networkswitch
+  - network switchs
+  - ethernet-switch
+  - ethernetswitch
+  - ethernet switchs
+  - lan-switch
+  - lanswitch
+  - lan switchs
+  - poe-switch
+  - poeswitch
+  - poe switchs
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - data_storage
+  - wired_networking
+  - poe_supply
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - network switch
+  - ethernet switch
+  - lan switch
+  - poe switch
+  weak_aliases:
+  - network-switch
+  - networkswitch
+  - network switchs
+  - ethernet-switch
+  - ethernetswitch
+  - ethernet switchs
+  - lan-switch
+  - lanswitch
+  - lan switchs
+  - poe-switch
+  - poeswitch
+  - poe switchs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - data_storage
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: office_printer
+  label: Office printer / label printer
+  product_family: office_imaging
+  product_subfamily: office_printer
+  family_keywords:
+  - printer
+  - office printer
+  - label printer
+  aliases:
+  - office printer
+  - inkjet printer
+  - laser printer
+  - multifunction printer
+  - all in one printer
+  - label printer
+  - thermal label printer
+  - receipt printer
+  preferred_clues:
+  - inkjet printer
+  - laser printer
+  - multifunction printer
+  - label printer
+  exclude_clues:
+  - 3d printer
+  - resin printer
+  - filament printer
+  implied_traits:
+  - consumer
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - office printer
+  - inkjet printer
+  - laser printer
+  - multifunction printer
+  - label printer
+  weak_aliases:
+  - all in one printer
+  - thermal label printer
+  - receipt printer
+  marketplace_aliases:
+  - wifi printer
+  - office all in one printer
+  - shipping label printer
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - av_ict
+  - data_storage
+  - mains_powered
+  matching_notes: Adds mainstream office and label-printing coverage while staying distinct from 3D printers and fabrication
+    equipment.
+- id: printer_3d
+  label: 3D printer
+  aliases:
+  - 3d printer
+  - 3-d printer
+  - three dimensional printer
+  - fdm printer
+  - resin printer
+  - sla printer
+  - 3d-printer
+  - 3dprinter
+  - 3d printers
+  - 3 d printer
+  - 3-d-printer
+  - 3-dprinter
+  - 3-d printers
+  - three-dimensional-printer
+  - threedimensionalprinter
+  - three dimensional printers
+  - fdm-printer
+  - fdmprinter
+  - fdm printers
+  - resin-printer
+  - resinprinter
+  - resin printers
+  - sla-printer
+  - slaprinter
+  - sla printers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - display
+  - motorized
+  functional_classes:
+  - tool_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  preferred_clues:
+  - 3d printer
+  - fdm
+  - resin printer
+  - sla
+  exclude_clues:
+  - router
+  - wifi router
+  - projector
+  strong_aliases:
+  - 3d printer
+  - 3-d printer
+  - three dimensional printer
+  - fdm printer
+  - resin printer
+  - sla printer
+  weak_aliases:
+  - 3d-printer
+  - 3dprinter
+  - 3d printers
+  - 3 d printer
+  - 3-d-printer
+  - 3-dprinter
+  - 3-d printers
+  - three-dimensional-printer
+  - threedimensionalprinter
+  - three dimensional printers
+  - fdm-printer
+  - fdmprinter
+  - fdm printers
+  - resin-printer
+  - resinprinter
+  - resin printers
+  - sla-printer
+  - slaprinter
+  - sla printers
+  marketplace_aliases: []
+  not_when_text_contains:
+  - router
+  - wifi router
+  - projector
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - mains_powered
+  - display
+  - motorized
+  score_penalty_if_traits:
+  - router
+  - wifi router
+  - projector
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: projector
+  label: Projector
+  product_family: projector_device
+  product_subfamily: projector
+  aliases:
+  - projector
+  - video projector
+  - home projector
+  - portable projector
+  - projectors
+  - video-projector
+  - videoprojector
+  - video projectors
+  - home-projector
+  - homeprojector
+  - home projectors
+  - portable-projector
+  - portableprojector
+  - portable projectors
+  required_clues: []
+  preferred_clues:
+  - video projector
+  - conference room
+  - presentation
+  - business
+  exclude_clues:
+  - smart
+  - wifi
+  - bluetooth
+  - home cinema
+  - laser
+  - ultra short throw
+  confusable_with:
+  - home_projector
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_power_likely
+  subtype_traits: []
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_power_likely
+  functional_classes:
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - projector
+  - video projector
+  - home projector
+  - portable projector
+  weak_aliases:
+  - projectors
+  - video-projector
+  - videoprojector
+  - video projectors
+  - home-projector
+  - homeprojector
+  - home projectors
+  - portable-projector
+  - portableprojector
+  - portable projectors
+  marketplace_aliases: []
+  not_when_text_contains:
+  - smart
+  - wifi
+  - bluetooth
+  - home cinema
+  - laser
+  - ultra short throw
+  negative_examples:
+  - home_projector
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - mains_power_likely
+  score_penalty_if_traits:
+  - smart
+  - wifi
+  - bluetooth
+  - home cinema
+  - laser
+  - ultra short throw
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: router
+  label: Router
+  product_family: wifi_networking
+  product_subfamily: router
+  family_keywords:
+  - wifi networking
+  - home networking
+  - network gateway
+  aliases:
+  - router
+  - wifi router
+  - wireless router
+  - internet router
+  - home router
+  - mesh router
+  - broadband router
+  - routers
+  - wi-fi router
+  - wi fi router
+  - wifi-router
+  - wifirouter
+  - wifi routers
+  - wireless-router
+  - wirelessrouter
+  - wireless routers
+  - internet-router
+  - internetrouter
+  - internet routers
+  required_clues: []
+  preferred_clues:
+  - router
+  - internet router
+  - wan
+  - nat
+  - dhcp
+  exclude_clues:
+  - access point
+  - mesh
+  confusable_with:
+  - wireless_access_point
+  - mesh_wifi_system
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  subtype_traits: []
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - router
+  - wifi router
+  - wireless router
+  - internet router
+  - home router
+  weak_aliases:
+  - mesh router
+  - broadband router
+  - routers
+  - wi-fi router
+  - wi fi router
+  - wifi-router
+  - wifirouter
+  - wifi routers
+  - wireless-router
+  - wirelessrouter
+  - wireless routers
+  - internet-router
+  - internetrouter
+  - internet routers
+  marketplace_aliases:
+  - wifi router
+  - wireless router
+  - internet router
+  - home router
+  - mesh router
+  - broadband router
+  - router
+  - routers
+  - wi-fi router
+  - wi fi router
+  - wifi-router
+  - wifirouter
+  - wifi routers
+  - wireless-router
+  - wirelessrouter
+  - wireless routers
+  - internet-router
+  - internetrouter
+  - internet routers
+  not_when_text_contains:
+  - access point
+  - mesh
+  negative_examples:
+  - wireless_access_point
+  - mesh_wifi_system
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  score_penalty_if_traits:
+  - access point
+  - mesh
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: satellite_terminal
+  label: Satellite internet terminal
+  aliases:
+  - satellite internet terminal
+  - satellite dish router
+  - starlink terminal
+  - vsat terminal
+  - satellite modem
+  - satellite-internet-terminal
+  - satelliteinternetterminal
+  - satellite internet terminals
+  - satellite-dish-router
+  - satellitedishrouter
+  - satellite dish routers
+  - starlink-terminal
+  - starlinkterminal
+  - starlink terminals
+  - vsat-terminal
+  - vsatterminal
+  - vsat terminals
+  - satellite-modem
+  - satellitemodem
+  - satellite modems
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - radio
+  - wifi
+  - satellite_connectivity
+  - outdoor_rated
+  - data_storage
+  - app_control
+  - ota
+  - fixed_installation
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - satellite internet terminal
+  - satellite dish router
+  - starlink terminal
+  - vsat terminal
+  - satellite modem
+  weak_aliases:
+  - satellite-internet-terminal
+  - satelliteinternetterminal
+  - satellite internet terminals
+  - satellite-dish-router
+  - satellitedishrouter
+  - satellite dish routers
+  - starlink-terminal
+  - starlinkterminal
+  - starlink terminals
+  - vsat-terminal
+  - vsatterminal
+  - vsat terminals
+  - satellite-modem
+  - satellitemodem
+  - satellite modems
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - radio
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: server
+  label: Server / NAS
+  aliases:
+  - server
+  - network attached storage
+  - nas server
+  - home server
+  - servers
+  - network-attached-storage
+  - networkattachedstorage
+  - network attached storages
+  - nas-server
+  - nasserver
+  - nas servers
+  - home-server
+  - homeserver
+  - home servers
+  - server nas
+  - server-nas
+  - servernas
+  - server na
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - server
+  - network attached storage
+  - nas server
+  - home server
+  weak_aliases:
+  - servers
+  - network-attached-storage
+  - networkattachedstorage
+  - network attached storages
+  - nas-server
+  - nasserver
+  - nas servers
+  - home-server
+  - homeserver
+  - home servers
+  - server nas
+  - server-nas
+  - servernas
+  - server na
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_display
+  label: Smart display
+  product_family: smart_assistant_device
+  product_subfamily: smart_display
+  family_keywords:
+  - smart assistant
+  - assistant device
+  aliases:
+  - smart display
+  - display hub
+  - assistant display
+  - voice assistant display
+  - kitchen smart screen
+  - voice assistant screen
+  - smart home hub display
+  - smart-display
+  - smartdisplay
+  - smart displays
+  - display-hub
+  - displayhub
+  - display hubs
+  - assistant-display
+  - assistantdisplay
+  - assistant displays
+  - voice-assistant-display
+  - voiceassistantdisplay
+  - voice assistant displays
+  required_clues: []
+  preferred_clues:
+  - display
+  - screen
+  - touchscreen
+  - camera
+  exclude_clues: []
+  confusable_with:
+  - smart_speaker
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - speaker
+  - microphone
+  - app_control
+  subtype_traits:
+  - display
+  - camera
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - display
+  - speaker
+  - microphone
+  - camera
+  - app_control
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart display
+  - display hub
+  - assistant display
+  - voice assistant display
+  - kitchen smart screen
+  - voice assistant screen
+  - smart home hub display
+  weak_aliases:
+  - smart-display
+  - smartdisplay
+  - smart displays
+  - display-hub
+  - displayhub
+  - display hubs
+  - assistant-display
+  - assistantdisplay
+  - assistant displays
+  - voice-assistant-display
+  - voiceassistantdisplay
+  - voice assistant displays
+  marketplace_aliases:
+  - assistant display
+  - kitchen smart screen
+  - voice assistant screen
+  - smart home hub display
+  - smart display
+  - smart-display
+  - smartdisplay
+  - smart displays
+  - display hub
+  - display-hub
+  - displayhub
+  - display hubs
+  - assistant-display
+  - assistantdisplay
+  - assistant displays
+  - voice assistant display
+  - voice-assistant-display
+  - voiceassistantdisplay
+  - voice assistant displays
+  not_when_text_contains: []
+  negative_examples:
+  - smart_speaker
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_mirror
+  label: Smart mirror / interactive mirror
+  aliases:
+  - smart mirror
+  - magic mirror
+  - interactive mirror
+  - connected mirror
+  - beauty mirror
+  - connected beauty mirror
+  - bathroom smart mirror
+  - smart-mirror
+  - smartmirror
+  - smart mirrors
+  - magic-mirror
+  - magicmirror
+  - magic mirrors
+  - interactive-mirror
+  - interactivemirror
+  - interactive mirrors
+  - connected-mirror
+  - connectedmirror
+  - connected mirrors
+  - beauty-mirror
+  - beautymirror
+  - beauty mirrors
+  - connected-beauty-mirror
+  - connectedbeautymirror
+  - connected beauty mirrors
+  - bathroom-smart-mirror
+  - bathroomsmartmirror
+  - bathroom smart mirrors
+  - smart mirror interactive mirror
+  - smart-mirror-interactive-mirror
+  - smartmirrorinteractivemirror
+  - smart mirror interactive mirrors
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - display
+  - wifi
+  - bluetooth
+  - microphone
+  - camera
+  - voice_assistant
+  - app_control
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart mirror
+  - magic mirror
+  - interactive mirror
+  - connected mirror
+  - bathroom smart mirror
+  weak_aliases:
+  - smart-mirror
+  - smartmirror
+  - smart mirrors
+  - magic-mirror
+  - magicmirror
+  - magic mirrors
+  - interactive-mirror
+  - interactivemirror
+  - interactive mirrors
+  - connected-mirror
+  - connectedmirror
+  - connected mirrors
+  - bathroom-smart-mirror
+  - bathroomsmartmirror
+  - bathroom smart mirrors
+  - smart mirror interactive mirror
+  - smart-mirror-interactive-mirror
+  - smartmirrorinteractivemirror
+  - smart mirror interactive mirrors
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_relay
+  label: Smart relay / connected relay module
+  product_family: smart_power_control
+  product_subfamily: smart_relay
+  family_keywords:
+  - smart relay
+  - relay module
+  - din rail relay
+  aliases:
+  - smart relay
+  - wifi relay
+  - zigbee relay
+  - connected relay module
+  - smart dry contact relay
+  - smart din rail relay
+  - relay controller module
+  preferred_clues:
+  - smart relay
+  - relay module
+  - din rail relay
+  exclude_clues:
+  - protection relay
+  - automotive relay
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - fixed_installation
+  - din_rail_mount
+  - app_control
+  - wifi
+  - bluetooth
+  - zigbee
+  - matter
+  - ota
+  - cloud
+  functional_classes:
+  - home_device
+  - connected_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart relay
+  - connected relay module
+  - smart dry contact relay
+  - smart din rail relay
+  weak_aliases:
+  - wifi relay
+  - zigbee relay
+  - relay controller module
+  marketplace_aliases:
+  - din rail smart relay
+  - smart relay module
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - din_rail_mount
+  - app_control
+  - zigbee
+  - matter
+  matching_notes: Keeps smart relay modules distinct from network switches, protection relays, and generic smart plugs.
+- id: smart_speaker
+  label: Smart speaker
+  product_family: smart_assistant_device
+  product_subfamily: smart_speaker
+  family_keywords:
+  - smart assistant
+  - assistant device
+  aliases:
+  - smart speaker
+  - voice assistant speaker
+  - amazon echo
+  - google home
+  - apple homepod
+  - smart home speaker
+  - wifi speaker assistant
+  - connected speaker
+  - smart-speaker
+  - smartspeaker
+  - smart speakers
+  - voice-assistant-speaker
+  - voiceassistantspeaker
+  - voice assistant speakers
+  - voice-assistant
+  - voiceassistant
+  - voice assistants
+  - amazon-echo
+  - amazonecho
+  - amazon echos
+  - google-home
+  - googlehome
+  - google homes
+  - apple-homepod
+  - applehomepod
+  - apple homepods
+  - smart-home-speaker
+  - smarthomespeaker
+  - smart home speakers
+  required_clues: []
+  preferred_clues:
+  - speaker
+  - audio
+  - music
+  - alexa
+  - echo
+  - homepod
+  - google home
+  - smart home speaker
+  exclude_clues:
+  - screen
+  - display
+  - camera
+  - soundbar
+  - tv
+  - television
+  - home cinema
+  - earbuds
+  - headphones
+  - glasses
+  - wearable
+  confusable_with:
+  - smart_display
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - speaker
+  - microphone
+  - app_control
+  subtype_traits:
+  - voice_assistant
+  - cloud
+  - internet
+  - data_storage
+  - ota
+  - authentication
+  - account
+  - personal_data_likely
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - speaker
+  - microphone
+  - voice_assistant
+  - app_control
+  - cloud
+  - internet
+  - data_storage
+  - ota
+  - authentication
+  - account
+  - personal_data_likely
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart speaker
+  - voice assistant speaker
+  - amazon echo
+  - google home
+  - apple homepod
+  - smart home speaker
+  - wifi speaker assistant
+  - connected speaker
+  weak_aliases:
+  - smart-speaker
+  - smartspeaker
+  - smart speakers
+  - voice-assistant-speaker
+  - voiceassistantspeaker
+  - voice assistant speakers
+  - amazon-echo
+  - amazonecho
+  - amazon echos
+  - google-home
+  - googlehome
+  - google homes
+  - apple-homepod
+  - applehomepod
+  - apple homepods
+  - smart-home-speaker
+  - smarthomespeaker
+  - smart home speakers
+  marketplace_aliases:
+  - wifi speaker assistant
+  - voice assistant speaker
+  - connected speaker
+  - smart speaker
+  - smart-speaker
+  - smartspeaker
+  - smart speakers
+  - voice-assistant-speaker
+  - voiceassistantspeaker
+  - voice assistant speakers
+  - amazon echo
+  - amazon-echo
+  - amazonecho
+  - amazon echos
+  - google home
+  - google-home
+  - googlehome
+  - google homes
+  - apple homepod
+  - apple-homepod
+  - applehomepod
+  - apple homepods
+  - smart home speaker
+  - smart-home-speaker
+  - smarthomespeaker
+  - smart home speakers
+  not_when_text_contains:
+  - screen
+  - display
+  - camera
+  - soundbar
+  - tv
+  - television
+  - home cinema
+  - earbuds
+  - headphones
+  - glasses
+  - wearable
+  negative_examples:
+  - smart_display
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits:
+  - screen
+  - display
+  - camera
+  - soundbar
+  - tv
+  - television
+  - home cinema
+  - earbuds
+  - headphones
+  - glasses
+  - wearable
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_switch
+  label: Smart switch / connected wall switch
+  product_family: smart_power_control
+  product_subfamily: smart_switch
+  family_keywords:
+  - smart switch
+  - connected switch
+  - wall switch
+  aliases:
+  - smart switch
+  - wifi switch
+  - connected wall switch
+  - smart wall switch
+  - smart light switch
+  - app controlled switch
+  - touch smart switch
+  preferred_clues:
+  - smart switch
+  - smart wall switch
+  - smart light switch
+  exclude_clues:
+  - network switch
+  - ethernet switch
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - fixed_installation
+  - wall_mount
+  - app_control
+  - wifi
+  - bluetooth
+  - zigbee
+  - matter
+  - ota
+  - cloud
+  - data_storage
+  functional_classes:
+  - home_device
+  - connected_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart switch
+  - connected wall switch
+  - smart wall switch
+  - smart light switch
+  weak_aliases:
+  - wifi switch
+  - app controlled switch
+  - touch smart switch
+  marketplace_aliases:
+  - smart light switch
+  - wifi wall switch
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - app_control
+  - wifi
+  - bluetooth
+  - zigbee
+  - matter
+  matching_notes: Adds explicit wall-switch coverage while suppressing collisions with Ethernet and network switches.
+- id: smart_tv
+  label: Television / smart TV
+  aliases:
+  - smart tv
+  - television
+  - tv
+  - connected television
+  - smart television
+  - smart-tv
+  - smarttv
+  - smart tvs
+  - televisions
+  - tvs
+  - connected tv
+  - connected-television
+  - connectedtelevision
+  - connected televisions
+  - television smart tv
+  - television smart television
+  - tv smart tv
+  - television-smart-tv
+  - televisionsmarttv
+  - television smart tvs
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - speaker
+  - mains_powered
+  - radio
+  - wifi
+  - bluetooth
+  - app_control
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart tv
+  - television
+  - tv
+  - connected television
+  weak_aliases:
+  - smart television
+  - smart-tv
+  - smarttv
+  - smart tvs
+  - televisions
+  - tvs
+  - connected tv
+  - connected-television
+  - connectedtelevision
+  - connected televisions
+  - television smart tv
+  - television smart television
+  - tv smart tv
+  - television-smart-tv
+  - televisionsmarttv
+  - television smart tvs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  - speaker
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: soundbar
+  label: Soundbar
+  aliases:
+  - soundbar
+  - sound bar
+  - tv soundbar
+  - home cinema soundbar
+  - dolby atmos soundbar
+  - wireless soundbar
+  - smart soundbar
+  - soundbars
+  - sound-bar
+  - sound bars
+  - television soundbar
+  - tv-soundbar
+  - tvsoundbar
+  - tv soundbars
+  - home-cinema-soundbar
+  - homecinemasoundbar
+  - home cinema soundbars
+  - dolby-atmos-soundbar
+  - dolbyatmossoundbar
+  - dolby atmos soundbars
+  - wireless-soundbar
+  - wirelesssoundbar
+  - wireless soundbars
+  - smart-soundbar
+  - smartsoundbar
+  - smart soundbars
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - speaker
+  - bluetooth
+  - hdmi_interface
+  - hdmi_arc
+  - spatial_audio
+  - app_control
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - soundbar
+  - sound bar
+  - tv soundbar
+  - home cinema soundbar
+  - dolby atmos soundbar
+  - wireless soundbar
+  - smart soundbar
+  weak_aliases:
+  - soundbars
+  - sound-bar
+  - sound bars
+  - television soundbar
+  - tv-soundbar
+  - tvsoundbar
+  - tv soundbars
+  - home-cinema-soundbar
+  - homecinemasoundbar
+  - home cinema soundbars
+  - dolby-atmos-soundbar
+  - dolbyatmossoundbar
+  - dolby atmos soundbars
+  - wireless-soundbar
+  - wirelesssoundbar
+  - wireless soundbars
+  - smart-soundbar
+  - smartsoundbar
+  - smart soundbars
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: tablet
+  label: Tablet computer
+  aliases:
+  - tablet
+  - tablet computer
+  - ipad
+  - android tablet
+  - drawing tablet
+  - e-tablet
+  - slate computer
+  - tablets
+  - tablet-computer
+  - tabletcomputer
+  - tablet computers
+  - ipads
+  - android-tablet
+  - androidtablet
+  - android tablets
+  - drawing-tablet
+  - drawingtablet
+  - drawing tablets
+  - e tablet
+  - e-tablets
+  - slate-computer
+  - slatecomputer
+  - slate computers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - display
+  - display_touchscreen
+  - wifi
+  - bluetooth
+  - camera
+  - microphone
+  - speaker
+  - data_storage
+  - account
+  - ota
+  - app_control
+  - personal_data_likely
+  - nfc
+  - wireless_charging_rx
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - tablet
+  - tablet computer
+  - ipad
+  - android tablet
+  - drawing tablet
+  - e-tablet
+  - slate computer
+  weak_aliases:
+  - tablets
+  - tablet-computer
+  - tabletcomputer
+  - tablet computers
+  - ipads
+  - android-tablet
+  - androidtablet
+  - android tablets
+  - drawing-tablet
+  - drawingtablet
+  - drawing tablets
+  - e tablet
+  - e-tablets
+  - slate-computer
+  - slatecomputer
+  - slate computers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: usb_hub
+  label: USB hub
+  aliases:
+  - usb hub
+  - usb splitter
+  - usb-c hub
+  - usb 3 hub
+  - powered usb hub
+  - travel hub
+  - usb-hub
+  - usbhub
+  - usb hubs
+  - usb-splitter
+  - usbsplitter
+  - usb splitters
+  - usb c hub
+  - usb-c-hub
+  - usb-chub
+  - usb-c hubs
+  - usb-3-hub
+  - usb3hub
+  - usb 3 hubs
+  - powered-usb-hub
+  - poweredusbhub
+  - powered usb hubs
+  - travel-hub
+  - travelhub
+  - travel hubs
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - usb_hub_function
+  - mains_power_likely
+  - usb_pd
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - usb hub
+  - usb splitter
+  - usb-c hub
+  - usb 3 hub
+  - powered usb hub
+  - travel hub
+  weak_aliases:
+  - usb-hub
+  - usbhub
+  - usb hubs
+  - usb-splitter
+  - usbsplitter
+  - usb splitters
+  - usb c hub
+  - usb-c-hub
+  - usb-chub
+  - usb-c hubs
+  - usb-3-hub
+  - usb3hub
+  - usb 3 hubs
+  - powered-usb-hub
+  - poweredusbhub
+  - powered usb hubs
+  - travel-hub
+  - travelhub
+  - travel hubs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - usb_hub_function
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: voip_dect_phone
+  label: VoIP / DECT phone
+  aliases:
+  - voip phone
+  - ip phone
+  - dect phone
+  - dect handset
+  - cordless phone
+  - sip phone
+  - office ip phone
+  - voip-phone
+  - voipphone
+  - voip phones
+  - ip-phone
+  - ipphone
+  - ip phones
+  - dect-phone
+  - dectphone
+  - dect phones
+  - dect-handset
+  - decthandset
+  - dect handsets
+  - cordless-phone
+  - cordlessphone
+  - cordless phones
+  - sip-phone
+  - sipphone
+  - sip phones
+  - office-ip-phone
+  - officeipphone
+  - office ip phones
+  - voip dect phone
+  - voip-dect-phone
+  - voipdectphone
+  - voip dect phones
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - radio
+  - dect
+  - wifi
+  - speaker
+  - microphone
+  - display
+  - data_storage
+  - authentication
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - voip phone
+  - ip phone
+  - dect phone
+  - dect handset
+  - cordless phone
+  - sip phone
+  - office ip phone
+  weak_aliases:
+  - voip-phone
+  - voipphone
+  - voip phones
+  - ip-phone
+  - ipphone
+  - ip phones
+  - dect-phone
+  - dectphone
+  - dect phones
+  - dect-handset
+  - decthandset
+  - dect handsets
+  - cordless-phone
+  - cordlessphone
+  - cordless phones
+  - sip-phone
+  - sipphone
+  - sip phones
+  - office-ip-phone
+  - officeipphone
+  - office ip phones
+  - voip dect phone
+  - voip-dect-phone
+  - voipdectphone
+  - voip dect phones
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - battery_powered
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: webcam
+  label: Webcam / smart camera (USB/IP)
+  aliases:
+  - webcam
+  - usb webcam
+  - video conferencing camera
+  - streaming camera
+  - conference camera
+  - ptz camera office
+  - webcams
+  - usb-webcam
+  - usbwebcam
+  - usb webcams
+  - video-conferencing-camera
+  - videoconferencingcamera
+  - video conferencing cameras
+  - streaming-camera
+  - streamingcamera
+  - streaming cameras
+  - conference-camera
+  - conferencecamera
+  - conference cameras
+  - ptz-camera-office
+  - ptzcameraoffice
+  - ptz camera offices
+  - webcam smart camera (usb ip)
+  - webcam-smart-camera-(usb-ip)
+  - webcamsmartcamera(usbip)
+  - webcam smart camera (usb ip)s
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - usb_powered
+  - camera
+  - microphone
+  - data_storage
+  - personal_data_likely
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - webcam
+  - usb webcam
+  - video conferencing camera
+  - streaming camera
+  - conference camera
+  - ptz camera office
+  weak_aliases:
+  - webcams
+  - usb-webcam
+  - usbwebcam
+  - usb webcams
+  - video-conferencing-camera
+  - videoconferencingcamera
+  - video conferencing cameras
+  - streaming-camera
+  - streamingcamera
+  - streaming cameras
+  - conference-camera
+  - conferencecamera
+  - conference cameras
+  - ptz-camera-office
+  - ptzcameraoffice
+  - ptz camera offices
+  - webcam smart camera (usb ip)
+  - webcam-smart-camera-(usb-ip)
+  - webcamsmartcamera(usbip)
+  - webcam smart camera (usb ip)s
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - usb_powered
+  - camera
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: wifi_extender
+  label: Wi-Fi extender / range extender
+  product_family: wifi_networking
+  product_subfamily: wifi_extender
+  family_keywords:
+  - wifi extender
+  - range extender
+  - wifi repeater
+  aliases:
+  - wifi extender
+  - wi-fi extender
+  - range extender
+  - wifi repeater
+  - wireless repeater
+  - wifi booster
+  - home wifi extender
+  preferred_clues:
+  - wifi extender
+  - range extender
+  - wifi repeater
+  exclude_clues:
+  - mesh router
+  - router
+  - signal booster for cellular
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - radio
+  - wifi
+  - repeater_role
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  - smart_home_iot
+  strong_aliases:
+  - wifi extender
+  - wi-fi extender
+  - range extender
+  - wifi repeater
+  weak_aliases:
+  - wireless repeater
+  - wifi booster
+  - home wifi extender
+  marketplace_aliases:
+  - wifi range extender
+  - dual band wifi extender
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - wifi
+  - repeater_role
+  - av_ict
+  matching_notes: Covers consumer Wi-Fi repeaters and extenders separately from routers, mesh systems, and cellular signal
+    boosters.
+- id: wireless_access_point
+  label: Wireless access point
+  product_family: wifi_networking
+  product_subfamily: wireless_access_point
+  family_keywords:
+  - wifi networking
+  - wireless networking
+  - network access
+  aliases:
+  - access point
+  - wireless access point
+  - wifi access point
+  - access-point
+  - accesspoint
+  - access points
+  - wireless-access-point
+  - wirelessaccesspoint
+  - wireless access points
+  - wi-fi access point
+  - wi fi access point
+  - wifi-access-point
+  - wifiaccesspoint
+  - wifi access points
+  required_clues:
+  - access point
+  preferred_clues:
+  - access point
+  - wireless access point
+  - wifi access point
+  - poe
+  exclude_clues:
+  - router
+  - mesh
+  confusable_with:
+  - router
+  - mesh_wifi_system
+  family_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  subtype_traits: []
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - data_storage
+  functional_classes:
+  - network_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - access point
+  - wireless access point
+  - wifi access point
+  weak_aliases:
+  - access-point
+  - accesspoint
+  - access points
+  - wireless-access-point
+  - wirelessaccesspoint
+  - wireless access points
+  - wi-fi access point
+  - wi fi access point
+  - wifi-access-point
+  - wifiaccesspoint
+  - wifi access points
+  marketplace_aliases: []
+  not_when_text_contains:
+  - router
+  - mesh
+  negative_examples:
+  - router
+  - mesh_wifi_system
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 40
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  score_penalty_if_traits:
+  - router
+  - mesh
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: wireless_headphones
+  label: Wireless headphones / earbuds
+  aliases:
+  - wireless headphones
+  - bluetooth headphones
+  - true wireless earbuds
+  - tws earbuds
+  - in-ear headphones
+  - over-ear headphones
+  - noise cancelling headphones
+  - wireless earphones
+  - earbuds
+  - wireless-headphones
+  - wirelessheadphones
+  - wireless headphone
+  - bluetooth-headphones
+  - bluetoothheadphones
+  - bluetooth headphone
+  - true-wireless-earbuds
+  - truewirelessearbuds
+  - true wireless earbud
+  - tws-earbuds
+  - twsearbuds
+  - tws earbud
+  - in ear headphones
+  - in-ear-headphones
+  - in-earheadphones
+  - in-ear headphone
+  - over ear headphones
+  - over-ear-headphones
+  - over-earheadphones
+  - over-ear headphone
+  - noise-cancelling-headphones
+  - noisecancellingheadphones
+  - noise cancelling headphone
+  - wireless-earphones
+  - wirelessearphones
+  - wireless earphone
+  - earbud
+  - wireless headphones earbuds
+  - wireless-headphones-earbuds
+  - wirelessheadphonesearbuds
+  - wireless headphones earbud
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - bluetooth
+  - speaker
+  - microphone
+  - wireless_charging_rx
+  - body_worn_or_applied
+  functional_classes:
+  - av_ict_device
+  - wearable_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - wireless headphones
+  - bluetooth headphones
+  - true wireless earbuds
+  - tws earbuds
+  - in-ear headphones
+  - over-ear headphones
+  - noise cancelling headphones
+  - wireless earphones
+  weak_aliases:
+  - earbuds
+  - wireless-headphones
+  - wirelessheadphones
+  - wireless headphone
+  - bluetooth-headphones
+  - bluetoothheadphones
+  - bluetooth headphone
+  - true-wireless-earbuds
+  - truewirelessearbuds
+  - true wireless earbud
+  - tws-earbuds
+  - twsearbuds
+  - tws earbud
+  - in ear headphones
+  - in-ear-headphones
+  - in-earheadphones
+  - in-ear headphone
+  - over ear headphones
+  - over-ear-headphones
+  - over-earheadphones
+  - over-ear headphone
+  - noise-cancelling-headphones
+  - noisecancellingheadphones
+  - noise cancelling headphone
+  - wireless-earphones
+  - wirelessearphones
+  - wireless earphone
+  - earbud
+  - wireless headphones earbuds
+  - wireless-headphones-earbuds
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

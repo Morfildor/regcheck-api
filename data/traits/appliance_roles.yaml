@@ -1,0 +1,203 @@
+traits:
+- id: air_cleaning
+  label: Air cleaning
+  description: Filters, sanitises, or otherwise cleans air
+  aliases:
+  - air cleaning
+  examples: []
+  regex:
+  - \bair[ -]?cleaning\b
+  normalized_to: air_cleaning
+  normalization_priority: 0
+- id: cleaning
+  label: Cleaning appliance
+  description: Used to clean floors, surfaces, textiles, dishes, or people
+  aliases:
+  - cleaning
+  examples: []
+  regex:
+  - \bcleaning\b
+  normalized_to: cleaning
+  normalization_priority: 0
+- id: compressor_system
+  label: Compressor system
+  description: Uses a compressor for cooling, dehumidification, pressure, or similar function.
+  aliases:
+  - compressor system
+  - compressor
+  examples: []
+  regex:
+  - \bcompressor[ -]?system\b
+  - \bcompressor\b
+  normalized_to: compressor_system
+  normalization_priority: 0
+- id: cooking
+  label: Cooking appliance
+  description: Used to cook, grill, bake, fry, toast, roast, or otherwise heat food
+  aliases:
+  - cooking
+  examples: []
+  regex:
+  - \bcooking\b
+  normalized_to: cooking
+  normalization_priority: 0
+- id: drying
+  label: Drying function
+  description: Used to dry textiles, hands, hair, air, or other items
+  aliases:
+  - drying
+  examples: []
+  regex:
+  - \bdrying\b
+  normalized_to: drying
+  normalization_priority: 0
+- id: fan_air_mover
+  label: Fan / air mover
+  description: Uses a fan or blower as a primary air-moving mechanism.
+  aliases:
+  - fan air mover
+  - blower
+  - air mover
+  examples: []
+  regex:
+  - \bfan[ -]?air[ -]?mover\b
+  - \bblower\b
+  - \bair[ -]?mover\b
+  normalized_to: fan_air_mover
+  normalization_priority: 0
+- id: heating
+  label: Heating function
+  description: Generates heat as part of its intended function
+  aliases:
+  - heating
+  examples: []
+  regex:
+  - \bheating\b
+  normalized_to: heating
+  normalization_priority: 0
+- id: heating_element
+  label: Heating element
+  description: Uses an intentional electrical heating element, heating plate, coil, or resistive heater.
+  aliases:
+  - heating element
+  - heating coil
+  - heating plate
+  examples: []
+  regex:
+  - \bheating[ -]?element\b
+  - \bheating[ -]?coil\b
+  - \bheating[ -]?plate\b
+  normalized_to: heating_element
+  normalization_priority: 0
+- id: heating_personal_environment
+  label: Personal environment heating
+  description: Used to warm a person, bed, room zone, or local environment
+  aliases:
+  - heating personal environment
+  examples: []
+  regex:
+  - \bheating[ -]?personal[ -]?environment\b
+  normalized_to: heating_personal_environment
+  normalization_priority: 0
+- id: liquid_heating
+  label: Liquid heating
+  description: Heats liquids such as water, milk, oil, or similar substances
+  aliases:
+  - liquid heating
+  examples: []
+  regex:
+  - \bliquid[ -]?heating\b
+  normalized_to: liquid_heating
+  normalization_priority: 0
+- id: pump_system
+  label: Pump system
+  description: Uses a pump as a primary functional element for liquid or air movement.
+  aliases:
+  - pump system
+  - pump
+  examples: []
+  regex:
+  - \bpump[ -]?system\b
+  - \bpump\b
+  normalized_to: pump_system
+  normalization_priority: 0
+- id: pumping
+  label: Pumping function
+  description: Contains a pump or fluid transfer function
+  aliases:
+  - pumping
+  examples: []
+  regex:
+  - \bpumping\b
+  normalized_to: pumping
+  normalization_priority: 0
+- id: refrigeration
+  label: Refrigeration
+  description: Used to refrigerate, freeze, chill, or preserve goods at low temperature
+  aliases:
+  - refrigeration
+  examples: []
+  regex:
+  - \brefrigeration\b
+  normalized_to: refrigeration
+  normalization_priority: 0
+- id: sonic_cleaning
+  label: Sonic cleaning
+  description: Uses sonic vibration or oscillation as a primary cleaning mechanism.
+  aliases:
+  - sonic cleaning
+  examples: []
+  regex:
+  - \bsonic[ -]?cleaning\b
+  normalized_to: sonic_cleaning
+  normalization_priority: 0
+- id: surface_cleaning
+  label: Surface cleaning
+  description: Used primarily to clean floors, carpets, windows, or hard surfaces
+  aliases:
+  - surface cleaning
+  examples: []
+  regex:
+  - \bsurface[ -]?cleaning\b
+  normalized_to: surface_cleaning
+  normalization_priority: 0
+- id: washing
+  label: Washing function
+  description: Used to wash textiles, dishes, surfaces, or other items
+  aliases:
+  - washing
+  examples: []
+  regex:
+  - \bwashing\b
+  normalized_to: washing
+  normalization_priority: 0
+- id: water_contact
+  label: Water contact
+  description: Contains, heats, pumps, or is intended to contact water
+  aliases:
+  - water contact
+  examples: []
+  regex:
+  - \bwater[ -]?contact\b
+  normalized_to: water_contact
+  normalization_priority: 0
+- id: water_heating
+  label: Water heating
+  description: Heats water or another liquid as a primary function
+  aliases:
+  - water heating
+  examples: []
+  regex:
+  - \bwater[ -]?heating\b
+  normalized_to: water_heating
+  normalization_priority: 0
+- id: wet_and_dry_cleaning
+  label: Wet and dry cleaning
+  description: Can pick up liquids or perform both wet and dry floor cleaning.
+  aliases:
+  - wet and dry cleaning
+  examples: []
+  regex:
+  - \bwet[ -]?and[ -]?dry[ -]?cleaning\b
+  normalized_to: wet_and_dry_cleaning
+  normalization_priority: 0
