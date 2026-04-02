@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 import logging
 from threading import RLock
 from time import perf_counter
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from app.core.settings import reset_settings_cache
 from app.domain.catalog_types import (
@@ -43,6 +43,9 @@ from .metadata import (
 )
 from .paths import _resolved_data_paths_for_logging, clear_resolved_data_paths_cache
 
+if TYPE_CHECKING:
+    from app.services.classifier.matching import ProductMatchingSnapshot
+
 
 @dataclass(frozen=True, slots=True)
 class KnowledgeBaseWarmupResult:
@@ -61,7 +64,10 @@ class KnowledgeBaseSnapshot:
     counts: dict[str, int]
     meta: KnowledgeBaseMeta
     metadata_payloads: dict[str, MetadataOptionsResponse | MetadataStandardsResponse] = field(default_factory=dict)
-    classifier_runtime: Any = None
+    classifier_runtime: ProductMatchingSnapshot | None = None
+    legacy_payloads: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
+    meta_payload: dict[str, Any] = field(default_factory=dict)
+    load_all_payload: dict[str, Any] = field(default_factory=dict)
 
 
 logger = logging.getLogger(__name__)
@@ -117,6 +123,19 @@ def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBa
     }
 
     meta = _kb_meta(counts, standards)
+    legacy_payloads = {
+        "traits": _legacy_rows(traits),
+        "genres": _legacy_rows(genres),
+        "products": _legacy_rows(products),
+        "legislations": _legacy_rows(legislations),
+        "standards": _legacy_rows(standards),
+    }
+    meta_payload = meta.model_dump()
+    load_all_payload = {
+        **legacy_payloads,
+        "counts": counts,
+        "meta": meta_payload,
+    }
 
     return KnowledgeBaseSnapshot(
         traits=traits,
@@ -131,6 +150,9 @@ def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBa
             "standards": _build_metadata_standards_payload(standards, meta),
         },
         classifier_runtime=_build_classifier_runtime_snapshot(products, traits, meta.version),
+        legacy_payloads=legacy_payloads,
+        meta_payload=meta_payload,
+        load_all_payload=load_all_payload,
     )
 
 
@@ -155,40 +177,31 @@ def get_knowledge_base_snapshot() -> KnowledgeBaseSnapshot:
 
 
 def load_all() -> dict[str, Any]:
-    snapshot = get_knowledge_base_snapshot()
-    return {
-        "traits": _legacy_rows(snapshot.traits),
-        "genres": _legacy_rows(snapshot.genres),
-        "products": _legacy_rows(snapshot.products),
-        "legislations": _legacy_rows(snapshot.legislations),
-        "standards": _legacy_rows(snapshot.standards),
-        "counts": snapshot.counts,
-        "meta": snapshot.meta.model_dump(),
-    }
+    return get_knowledge_base_snapshot().load_all_payload
 
 
 def load_traits() -> list[dict[str, Any]]:
-    return load_all()["traits"]
+    return get_knowledge_base_snapshot().legacy_payloads["traits"]
 
 
 def load_genres() -> list[dict[str, Any]]:
-    return load_all()["genres"]
+    return get_knowledge_base_snapshot().legacy_payloads["genres"]
 
 
 def load_products() -> list[dict[str, Any]]:
-    return load_all()["products"]
+    return get_knowledge_base_snapshot().legacy_payloads["products"]
 
 
 def load_legislations() -> list[dict[str, Any]]:
-    return load_all()["legislations"]
+    return get_knowledge_base_snapshot().legacy_payloads["legislations"]
 
 
 def load_standards() -> list[dict[str, Any]]:
-    return load_all()["standards"]
+    return get_knowledge_base_snapshot().legacy_payloads["standards"]
 
 
 def load_meta() -> dict[str, Any]:
-    return get_knowledge_base_snapshot().meta.model_dump()
+    return get_knowledge_base_snapshot().meta_payload
 
 
 def load_metadata_payload(name: str) -> dict[str, Any]:
@@ -209,7 +222,7 @@ def warmup_knowledge_base(*, refresh_paths: bool = False) -> KnowledgeBaseWarmup
     )
     return KnowledgeBaseWarmupResult(
         counts=dict(snapshot.counts),
-        meta=snapshot.meta.model_dump(),
+        meta=snapshot.meta_payload,
         duration_ms=duration_ms,
     )
 

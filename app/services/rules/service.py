@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 import logging
 from dataclasses import dataclass
 from time import perf_counter
-from typing import Any
 
 from pydantic import ValidationError
 
@@ -19,6 +19,7 @@ from app.domain.models import (
     RiskReason,
     RiskSummary,
     ShadowDiffItem,
+    StandardAuditItem,
     StandardItem,
     StandardMatchAudit,
     StandardSection,
@@ -26,8 +27,9 @@ from app.domain.models import (
 )
 from app.services.classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, normalize
 from app.services.standards_engine import find_applicable_items
-from app.services.standards_engine.gating import ApplicableItems
+from app.services.standards_engine.contracts import ApplicableItems, ItemsAudit, RejectionEntry, SelectionContext
 
+from .contracts import ClassifierTraitsSnapshot
 from .facts import _build_known_facts, _missing_information
 from .findings import _build_findings
 from .legacy import analyze_v1
@@ -65,18 +67,56 @@ logger = logging.getLogger(__name__)
 
 @dataclass(slots=True)
 class StandardsSelection:
-    context: dict[str, Any]
+    context: SelectionContext
     standard_items: list[StandardItem]
     review_items: list[StandardItem]
     current_review_items: list[StandardItem]
     missing_items: list[MissingInformationItem]
     standard_sections: list[StandardSection]
-    items_audit: dict[str, Any]
-    rejections: list[dict[str, Any]]
+    items_audit: ItemsAudit
+    rejections: list[RejectionEntry]
 
 
 def _shadow_enabled() -> bool:
     return get_settings().enable_engine_v2_shadow
+
+
+def _items_audit_from_payload(payload: Mapping[str, object] | None) -> ItemsAudit:
+    if payload is None:
+        return ItemsAudit()
+
+    def _rows(key: str) -> list[StandardAuditItem]:
+        raw_rows = payload.get(key, [])
+        if not isinstance(raw_rows, list):
+            return []
+        rows: list[StandardAuditItem] = []
+        for raw_row in raw_rows:
+            if not isinstance(raw_row, Mapping):
+                continue
+            rows.append(StandardAuditItem.model_validate(dict(raw_row)))
+        return rows
+
+    return ItemsAudit(
+        selected=_rows("selected"),
+        review=_rows("review"),
+        rejected=_rows("rejected"),
+    )
+
+
+def _rejection_entries_from_payload(payload: list[dict[str, object]] | None) -> list[RejectionEntry]:
+    entries: list[RejectionEntry] = []
+    for raw_row in payload or []:
+        code = raw_row.get("code")
+        title = raw_row.get("title")
+        reason = raw_row.get("reason") or raw_row.get("rejection_reason") or ""
+        entries.append(
+            RejectionEntry(
+                code=str(code) if isinstance(code, str) and code else None,
+                title=str(title) if isinstance(title, str) and title else None,
+                reason=str(reason),
+            )
+        )
+    return entries
 
 
 def _select_standards(
@@ -93,10 +133,10 @@ def _select_standards(
         description,
         prepared.route_plan,
     )
-    prepared.diagnostics.append("scope_route=" + context["scope_route"])
-    if context["scope_reasons"]:
-        prepared.diagnostics.append("scope_route_reasons=" + ";".join(context["scope_reasons"]))
-    prepared.diagnostics.append("standard_context_tags=" + ",".join(sorted(context["context_tags"])))
+    prepared.diagnostics.append("scope_route=" + context.scope_route)
+    if context.scope_reasons:
+        prepared.diagnostics.append("scope_route_reasons=" + ";".join(context.scope_reasons))
+    prepared.diagnostics.append("standard_context_tags=" + ",".join(sorted(context.context_tags)))
 
     empty_items: ApplicableItems = {
         "standards": [],
@@ -120,16 +160,16 @@ def _select_standards(
             matched_products=sorted(prepared.routing_matched_products),
             product_genres=sorted(prepared.product_genres),
             preferred_standard_codes=sorted(prepared.likely_standards),
-            explicit_traits=set(prepared.traits_data.get("explicit_traits") or []),
+            explicit_traits=set(prepared.traits_data.explicit_traits),
             confirmed_traits=prepared.confirmed_traits,
             normalized_text=normalize(description),
-            context_tags=context["context_tags"],
+            context_tags=context.context_tags,
             allowed_directives=routes.allowed_directives,
             selection_context=context,
         ),
     )
 
-    selected_rows: list[StandardCatalogRow] = list(items.get("standards", [])) + list(items.get("review_items", []))
+    selected_rows: list[StandardCatalogRow] = list(items["standards"]) + list(items["review_items"])
 
     dedup: dict[str, StandardCatalogRow] = {}
     for row in selected_rows:
@@ -191,8 +231,8 @@ def _select_standards(
         current_review_items=current_review_items,
         missing_items=missing_items,
         standard_sections=standard_sections,
-        items_audit=dict(items.get("audit", {})),
-        rejections=list(items.get("rejections", [])),
+        items_audit=_items_audit_from_payload(items["audit"] if "audit" in items else None),
+        rejections=_rejection_entries_from_payload(items["rejections"] if "rejections" in items else None),
     )
 
 
@@ -202,8 +242,8 @@ def _compute_risk_profile(
     standards: StandardsSelection,
 ) -> tuple[RiskLevel, RiskLevel, RiskLevel, list[RiskReason], RiskSummary]:
     current_risk = _current_risk(
-        product_confidence=_confidence_level(prepared.traits_data.get("product_match_confidence"), default="low"),
-        contradiction_severity=_contradiction_severity(prepared.traits_data.get("contradiction_severity")),
+        product_confidence=_confidence_level(prepared.traits_data.product_match_confidence, default="low"),
+        contradiction_severity=_contradiction_severity(prepared.traits_data.contradiction_severity),
         review_items=standards.current_review_items,
         missing_items=standards.missing_items,
     )
@@ -220,8 +260,8 @@ def _compute_risk_profile(
         future_risk=future_risk,
         traits=prepared.route_traits,
         directives=routes.detected_directives,
-        product_confidence=str(prepared.traits_data.get("product_match_confidence") or "low"),
-        contradictions=prepared.traits_data.get("contradictions") or [],
+        product_confidence=prepared.traits_data.product_match_confidence,
+        contradictions=list(prepared.traits_data.contradictions),
         review_items=standards.review_items,
         missing_items=standards.missing_items,
     )
@@ -299,14 +339,15 @@ def _build_decision_trace(
     prepared: PreparedAnalysis,
     routes: LegislationSelection,
     standards: StandardsSelection,
-    known_facts: list[Any],
+    known_facts: list[KnownFactItem],
 ) -> list[DecisionTraceEntry]:
-    product_type = str(prepared.traits_data.get("product_type") or "") or None
-    product_family = str(prepared.traits_data.get("product_family") or "") or None
-    product_stage = str(prepared.traits_data.get("product_match_stage") or "ambiguous")
-    product_confidence = str(prepared.traits_data.get("product_match_confidence") or "low")
-    candidate_ids = [str(item.get("id") or "") for item in (prepared.traits_data.get("product_candidates") or []) if item.get("id")]
-    explicit_traits = [str(item) for item in (prepared.traits_data.get("explicit_traits") or []) if isinstance(item, str)]
+    traits_data: ClassifierTraitsSnapshot = prepared.traits_data
+    product_type = traits_data.product_type
+    product_family = traits_data.product_family
+    product_stage = traits_data.product_match_stage
+    product_confidence = traits_data.product_match_confidence
+    candidate_ids = [item.id for item in traits_data.product_candidates if item.id]
+    explicit_traits = list(traits_data.explicit_traits)
     assumed_traits = sorted(set(prepared.route_traits) - set(prepared.confirmed_traits))
     suppressed_traits: list[str] = []
     for diagnostic in prepared.diagnostics:
@@ -329,9 +370,9 @@ def _build_decision_trace(
             for item in standards.review_items[:2]
         )
     rejected_rows = [
-        f"{str(row.get('code') or '')}: {str(row.get('reason') or row.get('rejection_reason') or '').strip()}"
+        f"{row.code or ''}: {row.reason.strip()}"
         for row in standards.rejections[:5]
-        if str(row.get("code") or "")
+        if row.code
     ]
     missing_items = [
         f"{item.key} ({item.importance})"
@@ -472,8 +513,8 @@ def analyze(
             standards=standards.standard_items,
             review_items=standards.review_items,
             missing_items=standards.missing_items,
-            contradictions=prepared.traits_data.get("contradictions") or [],
-            contradiction_severity=_contradiction_severity(prepared.traits_data.get("contradiction_severity")),
+            contradictions=list(prepared.traits_data.contradictions),
+            contradiction_severity=_contradiction_severity(prepared.traits_data.contradiction_severity),
         ),
     )
 
@@ -489,25 +530,25 @@ def analyze(
 
     trait_evidence = _trait_evidence_from_state_map(prepared.raw_state_map, prepared.confirmed_traits)
     product_match_audit = _safe_product_match_audit(prepared.traits_data, prepared.normalized_description)
-    rejected_audit_rows = list(standards.items_audit.get("rejected", []))
-    selected_audit_rows = list(standards.items_audit.get("selected", []))
-    review_audit_rows = list(standards.items_audit.get("review", []))
+    rejected_audit_rows = [item.model_dump() for item in standards.items_audit.rejected]
+    selected_audit_rows = [item.model_dump() for item in standards.items_audit.selected]
+    review_audit_rows = [item.model_dump() for item in standards.items_audit.review]
     audited_rejected_codes = {str(row.get("code") or "") for row in rejected_audit_rows}
     rejected_audit_rows.extend(
         {
-            "code": row.get("code"),
-            "title": row.get("title", row.get("code")),
+            "code": row.code,
+            "title": row.title or row.code,
             "outcome": "rejected",
             "score": 0,
             "confidence": "low",
             "fact_basis": "inferred",
             "selection_group": None,
             "selection_priority": 0,
-            "keyword_hits": row.get("keyword_hits", []),
-            "reason": row.get("reason") or row.get("rejection_reason"),
+            "keyword_hits": [],
+            "reason": row.reason,
         }
         for row in standards.rejections
-        if str(row.get("code") or "") not in audited_rejected_codes
+        if (row.code or "") not in audited_rejected_codes
     )
     standard_match_audit = guarded_step(
         logger=logger,
@@ -517,7 +558,7 @@ def analyze(
         warning="Standard audit details could not be assembled; returning the selected routes without full audit detail.",
         fallback=StandardMatchAudit(
             engine_version=ENGINE_VERSION,
-            context_tags=sorted(standards.context["context_tags"]),
+            context_tags=sorted(standards.context.context_tags),
         ),
         operation=lambda: _build_standard_match_audit(
             {
@@ -555,7 +596,7 @@ def analyze(
                 ],
                 "rejected": rejected_audit_rows,
             },
-            standards.context["context_tags"],
+            standards.context.context_tags,
         ),
         handled_exceptions=(ValidationError, TypeError, ValueError, RuntimeError),
     )

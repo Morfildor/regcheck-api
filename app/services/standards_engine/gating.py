@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, Literal, TypedDict, cast
+from typing import Any, TypedDict, cast
 
 from app.domain.catalog_types import StandardCatalogRow
 
-from .audit import _reject_selected_row
+from .contracts import ApplicableItems, FactBasis, MatchBasis, ProductHitType, StandardAuditOutcome, StandardItemType
+from .gating_finalize import _finalize_selected_rows_v2
 
 
 DIRECTIVE_ORDER = {
@@ -33,11 +34,6 @@ DIRECTIVE_ORDER = {
     "OTHER": 99,
 }
 
-StandardItemType = Literal["standard", "review"]
-ProductHitType = Literal["not_product_gated", "primary_product", "alternate_product", "primary_genre"]
-StandardAuditOutcome = Literal["selected", "review", "rejected"]
-MatchBasis = Literal["product", "alternate_product", "preferred_product", "genre", "traits"]
-FactBasis = Literal["confirmed", "mixed", "inferred"]
 StandardRowLike = StandardCatalogRow | Mapping[str, Any]
 
 
@@ -53,13 +49,6 @@ class TraitGate(TypedDict):
     missing_any_group: list[str]
     excluded_by_traits: list[str]
     fact_basis: FactBasis
-
-
-class ApplicableItems(TypedDict):
-    standards: list[StandardCatalogRow]
-    review_items: list[StandardCatalogRow]
-    rejections: list[dict[str, Any]]
-    audit: dict[str, Any]
 
 
 def _string_list(value: Any) -> list[str]:
@@ -413,7 +402,7 @@ def _soften_preferred_62368_gate(
 
 
 def _recover_preferred_62368_group_loser(
-    row: dict[str, Any],
+    row: StandardCatalogRow,
     preferred_standard_codes: set[str],
     product_genres: list[str],
 ) -> bool:
@@ -426,202 +415,6 @@ def _recover_preferred_62368_group_loser(
 
 def _fact_basis_satisfies(required: FactBasis, actual: FactBasis) -> bool:
     return FACT_BASIS_RANK[actual] >= FACT_BASIS_RANK[required]
-
-def _finalize_selected_rows_v2(
-    selected_rows: list[dict[str, Any]],
-    *,
-    traits: set[str],
-    allowed_directives: set[str] | None,
-    selection_context: dict[str, Any] | None,
-    rejections: list[dict[str, Any]],
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    if not selected_rows:
-        return [], []
-
-    context = selection_context or {}
-    allowed_directives = allowed_directives or set()
-    rejected_rows: list[dict[str, Any]] = []
-    kept: list[dict[str, Any]] = []
-    scope_route = str(context.get("scope_route") or "generic")
-    primary_route_family = str(context.get("primary_route_family") or "")
-    has_external_psu = bool(context.get("has_external_psu"))
-    has_laser_source = bool(context.get("has_laser_source"))
-    has_photobiological_source = bool(context.get("has_photobiological_source"))
-    prefer_specific_red_emf = bool(context.get("prefer_specific_red_emf"))
-    prefer_62233 = bool(context.get("prefer_62233"))
-    prefer_62311 = bool(context.get("prefer_62311"))
-
-    for original_row in selected_rows:
-        row = dict(original_row)
-        code = str(row.get("code") or "")
-        route = str(row.get("directive") or row.get("legislation_key") or "OTHER")
-
-        if primary_route_family == "building_hardware" and (
-            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
-        ):
-            _reject_selected_row(row, "building-hardware route takes precedence over generic AV/ICT or appliance safety routes", rejected_rows, rejections)
-            continue
-
-        if primary_route_family == "lighting_device" and (
-            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
-        ):
-            _reject_selected_row(row, "lighting route takes precedence over generic AV/ICT or appliance safety routes", rejected_rows, rejections)
-            continue
-
-        if primary_route_family == "life_safety_alarm" and (
-            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
-        ):
-            _reject_selected_row(row, "alarm-specific safety routes take precedence over generic AV/ICT or appliance routes", rejected_rows, rejections)
-            continue
-
-        if primary_route_family == "hvac_control" and (
-            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
-        ):
-            _reject_selected_row(row, "HVAC control routes take precedence over generic AV/ICT or appliance routes", rejected_rows, rejections)
-            continue
-
-        if primary_route_family == "ev_charging" and (
-            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
-        ):
-            _reject_selected_row(row, "EV charging routes take precedence over generic AV/ICT or household-appliance routes", rejected_rows, rejections)
-            continue
-
-        if primary_route_family == "ev_connector_accessory" and (
-            code in {"EN IEC 61851-1", "EN IEC 61851-21-2", "IEC 62752", "EN 62368-1"}
-            or code.startswith("EN 60335-")
-            or code.startswith("EN 55014-")
-            or code in {"EN 55032", "EN 55035"}
-        ):
-            _reject_selected_row(
-                row,
-                "connector-accessory routes take precedence over EVSE system, AV/ICT, and household-appliance routes",
-                rejected_rows,
-                rejections,
-            )
-            continue
-
-        if primary_route_family == "machinery_power_tool" and (
-            code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
-        ):
-            _reject_selected_row(row, "machinery power-tool routes take precedence over AV/ICT and appliance routes", rejected_rows, rejections)
-            continue
-
-        if primary_route_family == "toy" and code == "EN 62368-1":
-            _reject_selected_row(row, "toy-specific safety routes take precedence over generic AV/ICT safety routes", rejected_rows, rejections)
-            continue
-
-        if code in {"EN 55032", "EN 55035"} and scope_route == "appliance":
-            _reject_selected_row(row, f"scope route '{scope_route}' prefers appliance EMC standards", rejected_rows, rejections)
-            continue
-
-        if code == "EN 62368-1" and scope_route == "appliance":
-            if row.get("item_type") != "review":
-                _reject_selected_row(row, f"scope route '{scope_route}' prefers household safety standards", rejected_rows, rejections)
-                continue
-
-        if code.startswith("EN 60335-") and scope_route == "av_ict":
-            _reject_selected_row(row, f"scope route '{scope_route}' prefers AV/ICT safety standards", rejected_rows, rejections)
-            continue
-
-        if code.startswith("EN 55014-") and scope_route == "av_ict":
-            _reject_selected_row(row, f"scope route '{scope_route}' prefers AV/ICT EMC standards", rejected_rows, rejections)
-            continue
-
-        if code == "Charger / external PSU review":
-            if not has_external_psu:
-                _reject_selected_row(row, "external PSU signal missing", rejected_rows, rejections)
-                continue
-            row["directive"] = "LVD"
-            row["legislation_key"] = "LVD"
-        elif code == "EN 50563":
-            if not has_external_psu:
-                _reject_selected_row(row, "external PSU signal missing", rejected_rows, rejections)
-                continue
-            row["directive"] = "ECO"
-            row["legislation_key"] = "ECO"
-
-        if code == "EN 62311":
-            if prefer_62233 and not ("radio" in traits and ({"wearable", "handheld", "body_worn_or_applied"} & traits)):
-                _reject_selected_row(row, "EN 62233 takes precedence for the detected household EMF route", rejected_rows, rejections)
-                continue
-            row["directive"] = "RED" if "radio" in traits else "LVD"
-            row["legislation_key"] = row["directive"]
-
-        if code == "EN 60825-1" and not has_laser_source:
-            _reject_selected_row(row, "laser source signal missing", rejected_rows, rejections)
-            continue
-
-        if code == "EN 62471" and not has_photobiological_source:
-            _reject_selected_row(row, "photobiological source signal missing", rejected_rows, rejections)
-            continue
-
-        if code == "EN 62479":
-            if "radio" not in traits:
-                _reject_selected_row(row, "radio signal missing", rejected_rows, rejections)
-                continue
-            if prefer_specific_red_emf:
-                _reject_selected_row(row, "a more specific RED EMF route takes precedence", rejected_rows, rejections)
-                continue
-
-        if code.startswith("EN 62209") and not (
-            "radio" in traits and ({"wearable", "handheld", "body_worn_or_applied", "cellular"} & traits)
-        ):
-            _reject_selected_row(row, "close-proximity radio signal missing", rejected_rows, rejections)
-            continue
-
-        route = str(row.get("directive") or "OTHER")
-        if allowed_directives and route not in allowed_directives and route != "OTHER":
-            _reject_selected_row(row, f"directive '{route}' was not selected", rejected_rows, rejections)
-            continue
-
-        kept.append(row)
-
-    household_part2_selected = any(
-        str(row.get("code") or "").startswith("EN 60335-2-") and row.get("item_type") == "standard"
-        for row in kept
-    )
-    if household_part2_selected:
-        for row in kept:
-            if str(row.get("code") or "") != "EN 60335-1" or row.get("item_type") != "review":
-                continue
-            row["item_type"] = "standard"
-            row["fact_basis"] = "confirmed"
-            reason = row.get("reason")
-            if isinstance(reason, str):
-                row["reason"] = reason.replace(
-                    ". some routing traits are inferred from product context and still need confirmation",
-                    "",
-                )
-
-    codes = {str(row.get("code") or "") for row in kept}
-    if "EN 62233" in codes and "EN 62311" in codes and prefer_62233:
-        for row in list(kept):
-            if row.get("code") != "EN 62311":
-                continue
-            kept.remove(row)
-            _reject_selected_row(row, "EN 62233 takes precedence for the detected household EMF route", rejected_rows, rejections)
-    elif "EN 62233" in codes and "EN 62311" in codes and prefer_62311:
-        for row in list(kept):
-            if row.get("code") != "EN 62233":
-                continue
-            kept.remove(row)
-            _reject_selected_row(row, "EN 62311 takes precedence for the detected AV/ICT or close-proximity EMF route", rejected_rows, rejections)
-
-    codes = {str(row.get("code") or "") for row in kept}
-    if (
-        "Battery safety review" in codes
-        and "EN 62133-2" in codes
-        and scope_route == "av_ict"
-        and not ({"wearable", "handheld", "body_worn_or_applied", "replaceable_battery"} & traits)
-    ):
-        for row in list(kept):
-            if row.get("code") != "Battery safety review":
-                continue
-            kept.remove(row)
-            _reject_selected_row(row, "EN 62133-2 already covers the detected AV/ICT battery route", rejected_rows, rejections)
-
-    return kept, rejected_rows
-
 
 __all__ = [
     "ApplicableItems",

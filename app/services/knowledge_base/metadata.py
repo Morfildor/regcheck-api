@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 import hashlib
 import os
-from typing import Any
+from typing import TYPE_CHECKING
 
 from app.core.settings import get_settings
 from app.domain.catalog_types import (
@@ -25,6 +25,9 @@ from app.domain.models import (
 )
 
 from .paths import ALL_DATA_FILES, KnowledgeBaseError, _resolve_data_path
+
+if TYPE_CHECKING:
+    from app.services.classifier.matching import ProductMatchingSnapshot
 
 
 def _catalog_version() -> str:
@@ -190,7 +193,7 @@ def _build_classifier_runtime_snapshot(
     products: Sequence[ProductCatalogRow],
     traits: Sequence[TraitCatalogRow],
     catalog_version: str | None,
-) -> Any:
+) -> ProductMatchingSnapshot:
     from app.services.classifier import build_product_matching_snapshot
 
     return build_product_matching_snapshot(
