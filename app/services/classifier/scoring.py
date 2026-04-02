@@ -7,6 +7,7 @@ from typing import Any
 from app.domain.catalog_types import ProductCatalogRow
 
 from .normalization import normalize
+from .signal_config import get_classifier_signal_snapshot
 
 ProductRowLike = ProductCatalogRow | Mapping[str, Any]
 
@@ -58,25 +59,6 @@ RADIO_TRAITS = {
 CONNECTED_TRAITS = {"app_control", "cloud", "internet", "internet_connected", "ota", "account", "authentication"}
 SERVICE_DEPENDENT_TRAITS = CONNECTED_TRAITS | {"personal_data_likely", "monetary_transaction"}
 ENGINE_VERSION = "2.0"
-SMART_CONNECTED_PATTERNS = [
-    r"\bsmart\b",
-    r"\bconnected\b",
-    r"\bapp[ -]?connected\b",
-    r"\bworks[ -]?with[ -]?alexa\b",
-    r"\bgoogle[ -]?home\b",
-    r"\bapple[ -]?home\b",
-    r"\bhomekit\b",
-    r"\bsmartthings\b",
-    r"\btuya\b",
-]
-WIRED_NETWORK_PATTERNS = [
-    r"\bethernet\b",
-    r"\brj45\b",
-    r"\blan\b",
-    r"\bpoe\b",
-    r"\bcat[ -]?[56]\b",
-    r"\bwired[ -]?network\b",
-]
 ELECTRONIC_SIGNAL_TRAITS = RADIO_TRAITS | CONNECTED_TRAITS | {
     "av_ict",
     "camera",
@@ -87,8 +69,6 @@ ELECTRONIC_SIGNAL_TRAITS = RADIO_TRAITS | CONNECTED_TRAITS | {
     "speaker",
 }
 
-_COMPILED_COMMERCIAL_CUES = re.compile(r"\b(?:commercial|professional|industrial|horeca|warehouse|enterprise)\b")
-_COMPILED_HOUSEHOLD_CUES = re.compile(r"\b(?:household|domestic|home use|consumer)\b")
 _PHRASE_PATTERN_CACHE: dict[str, re.Pattern] = {}
 _ALIAS_PATTERN_CACHE: dict[str, tuple[re.Pattern, re.Pattern | None]] = {}
 
@@ -182,8 +162,9 @@ def _context_bonus(text: str, product: ProductRowLike, explicit_traits: set[str]
     reasons: list[str] = []
     pid = product["id"]
     traits = set(_string_list(product.get("subtype_traits")) or _string_list(product.get("implied_traits")))
+    cue_groups = get_classifier_signal_snapshot().compiled_cue_groups
 
-    if _COMPILED_COMMERCIAL_CUES.search(text):
+    if any(pattern.search(text) for pattern in cue_groups.get("professional_use", ())):
         if "professional" in traits or "commercial_food_service" in traits:
             score += 20
             reasons.append("commercial/professional context fits")
@@ -191,7 +172,7 @@ def _context_bonus(text: str, product: ProductRowLike, explicit_traits: set[str]
             score -= 16
             reasons.append("consumer product conflicts with commercial wording")
 
-    if _COMPILED_HOUSEHOLD_CUES.search(text):
+    if any(pattern.search(text) for pattern in cue_groups.get("household_use", ())):
         if "consumer" in traits or "household" in traits:
             score += 16
             reasons.append("household context fits")

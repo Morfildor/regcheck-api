@@ -36,6 +36,7 @@ from .loader import (
     _load_traits_catalog,
 )
 from .metadata import (
+    _build_classifier_signal_snapshot,
     _build_classifier_runtime_snapshot,
     _build_metadata_options_payload,
     _build_metadata_standards_payload,
@@ -45,6 +46,7 @@ from .paths import _resolved_data_paths_for_logging, clear_resolved_data_paths_c
 
 if TYPE_CHECKING:
     from app.services.classifier.matching import ProductMatchingSnapshot
+    from app.services.classifier.signal_config import ClassifierSignalSnapshot
 
 
 @dataclass(frozen=True, slots=True)
@@ -65,6 +67,7 @@ class KnowledgeBaseSnapshot:
     meta: KnowledgeBaseMeta
     metadata_payloads: dict[str, MetadataOptionsResponse | MetadataStandardsResponse] = field(default_factory=dict)
     classifier_runtime: ProductMatchingSnapshot | None = None
+    classifier_signal_runtime: ClassifierSignalSnapshot | None = None
     legacy_payloads: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
     meta_payload: dict[str, Any] = field(default_factory=dict)
     load_all_payload: dict[str, Any] = field(default_factory=dict)
@@ -150,6 +153,7 @@ def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBa
             "standards": _build_metadata_standards_payload(standards, meta),
         },
         classifier_runtime=_build_classifier_runtime_snapshot(products, traits, meta.version),
+        classifier_signal_runtime=_build_classifier_signal_snapshot(meta.version),
         legacy_payloads=legacy_payloads,
         meta_payload=meta_payload,
         load_all_payload=load_all_payload,

@@ -11,6 +11,7 @@ class KnowledgeBaseError(RuntimeError):
 
 REQUIRED_DATA_FILES = (
     "traits.yaml",
+    "classifier_signals.yaml",
     "products.yaml",
     "legislation_catalog.yaml",
     "standards.yaml",

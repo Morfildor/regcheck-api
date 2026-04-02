@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-from typing import Any
-
+from .models import ClassifierMatchOutcome, ProductImpliedTraitDecision
 from .scoring import SERVICE_DEPENDENT_TRAITS
 
 
 def _apply_product_trait_signals(
     text: str,
-    match: dict[str, Any],
+    match: ClassifierMatchOutcome,
     explicit_traits: set[str],
     inferred_traits: set[str],
     negations: list[str],
@@ -20,48 +19,79 @@ def _apply_product_trait_signals(
         _suppress_unmentioned_product_wireless_traits,
     )
 
-    product_match_stage = match["product_match_stage"]
-    product_match_confidence = str(match.get("product_match_confidence") or "low")
-    matched_aliases = [
-        candidate.get("matched_alias")
-        for candidate in match["product_candidates"]
-        if candidate.get("matched_alias")
-    ]
-    product_core_traits = _suppress_unmentioned_product_wireless_traits(
-        text,
-        _expand_related_traits(set(match.get("product_core_traits") or set())),
-        explicit_traits,
-        matched_aliases,
-    )
-    product_default_traits = _suppress_unmentioned_product_wireless_traits(
-        text,
-        _expand_related_traits(set(match.get("product_default_traits") or set())),
-        explicit_traits,
-        matched_aliases,
-    )
-    product_core_traits = _apply_explicit_trait_negations(product_core_traits, negations)
-    product_default_traits = _apply_explicit_trait_negations(product_default_traits, negations)
-    product_genres = {item for item in (match.get("product_genres") or set()) if isinstance(item, str) and item}
+    matched_aliases = [candidate.matched_alias for candidate in match.product_candidates if candidate.matched_alias]
 
-    if product_match_stage == "ambiguous" and product_match_confidence == "low":
+    def _accept_product_traits(traits: set[str], *, source: str) -> tuple[set[str], set[str], str | None]:
+        expanded = _expand_related_traits(set(traits))
+        if not expanded:
+            return set(), set(), None
+
+        wireless_filtered = _suppress_unmentioned_product_wireless_traits(
+            text,
+            expanded,
+            explicit_traits,
+            matched_aliases,
+        )
+        negation_filtered = _apply_explicit_trait_negations(wireless_filtered, negations)
+
+        suppressed = expanded - negation_filtered
+        reasons: list[str] = []
+        if wireless_filtered != expanded:
+            reasons.append("suppressed wireless defaults without wireless text support")
+        if negation_filtered != wireless_filtered:
+            reasons.append("suppressed traits that conflicted with explicit negations")
+        return negation_filtered, suppressed, "; ".join(reasons) or None
+
+    product_core_traits, suppressed_core_traits, core_reason = _accept_product_traits(
+        set(match.product_core_traits),
+        source="product_core",
+    )
+    product_default_traits, suppressed_default_traits, default_reason = _accept_product_traits(
+        set(match.product_default_traits),
+        source="product_default",
+    )
+    product_genres = set(match.product_genres)
+
+    if match.product_match_stage == "ambiguous" and match.product_match_confidence == "low":
+        suppressed_core_traits |= product_core_traits
+        suppressed_default_traits |= product_default_traits
         product_core_traits = set()
         product_default_traits = set()
         product_genres = set()
+        core_reason = core_reason or "suppressed product-implied traits because the product match remained weak and ambiguous"
+        default_reason = default_reason or "suppressed product-implied traits because the product match remained weak and ambiguous"
 
     if product_core_traits:
         product_evidence = (
-            f"product:{match['product_subtype']}"
-            if product_match_stage == "subtype" and match.get("product_subtype")
-            else f"family:{match['product_family']}"
+            f"product:{match.product_subtype}"
+            if match.product_match_stage == "subtype" and match.product_subtype
+            else f"family:{match.product_family}"
         )
         _record_trait_state(state_map, "product_core", product_core_traits, product_evidence)
     if product_default_traits:
         product_evidence = (
-            f"product_default:{match['product_subtype']}"
-            if product_match_stage == "subtype" and match.get("product_subtype")
-            else f"family_default:{match['product_family']}"
+            f"product_default:{match.product_subtype}"
+            if match.product_match_stage == "subtype" and match.product_subtype
+            else f"family_default:{match.product_family}"
         )
         _record_trait_state(state_map, "product_default", product_default_traits, product_evidence)
+
+    match.audit.product_implied_traits.extend(
+        [
+            ProductImpliedTraitDecision(
+                source="product_core",
+                accepted_traits=tuple(sorted(product_core_traits)),
+                suppressed_traits=tuple(sorted(suppressed_core_traits)),
+                reason=core_reason,
+            ),
+            ProductImpliedTraitDecision(
+                source="product_default",
+                accepted_traits=tuple(sorted(product_default_traits)),
+                suppressed_traits=tuple(sorted(suppressed_default_traits)),
+                reason=default_reason,
+            ),
+        ]
+    )
 
     return product_core_traits, product_default_traits, product_genres
 
@@ -70,30 +100,32 @@ def _compute_confirmed_traits(
     explicit_traits: set[str],
     product_core_traits: set[str],
     product_default_traits: set[str],
-    product_match_stage: str,
-    product_family_confidence: str,
-    product_subtype_confidence: str,
-    product_candidates: list[dict[str, Any]],
+    match: ClassifierMatchOutcome,
 ) -> set[str]:
     confirmed = set(explicit_traits)
-    top_candidate = product_candidates[0] if product_candidates else {}
+    top_candidate = match.subtype_candidates[0] if match.subtype_candidates else None
 
     decisive_medium = (
-        product_match_stage == "subtype"
-        and product_subtype_confidence == "medium"
-        and bool(top_candidate.get("matched_alias") or top_candidate.get("positive_clues"))
+        match.product_match_stage == "subtype"
+        and match.product_subtype_confidence == "medium"
+        and bool(top_candidate and (top_candidate.matched_alias or top_candidate.positive_clues))
     )
     decisive_subtype = (
-        product_match_stage == "subtype"
+        match.product_match_stage == "subtype"
         and bool(
-            top_candidate.get("matched_alias")
-            or top_candidate.get("positive_clues")
-            or top_candidate.get("family_keyword_hits")
+            top_candidate
+            and (
+                top_candidate.matched_alias
+                or top_candidate.positive_clues
+                or top_candidate.family_keyword_hits
+            )
         )
     )
-    if product_family_confidence == "high":
+    if match.product_family_confidence == "high":
         confirmed.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
-    if product_match_stage == "subtype" and (product_subtype_confidence == "high" or decisive_medium or decisive_subtype):
+    if match.product_match_stage == "subtype" and (
+        match.product_subtype_confidence == "high" or decisive_medium or decisive_subtype
+    ):
         confirmed.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
 
     corroborated_default = {trait for trait in product_default_traits if trait in explicit_traits}

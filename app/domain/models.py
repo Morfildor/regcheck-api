@@ -194,14 +194,50 @@ class StandardAuditItem(BaseModel):
     reason: str | None = None
 
 
+class ProductMatchAuditCandidate(BaseModel):
+    id: str
+    label: str
+    family: str | None = None
+    subtype: str | None = None
+    score: int = 0
+    confidence: ConfidenceLevel = "low"
+    matched_alias: str | None = None
+    positive_clues: list[str] = Field(default_factory=list)
+    negative_clues: list[str] = Field(default_factory=list)
+    family_keyword_hits: list[str] = Field(default_factory=list)
+
+
+class ProductMatchAuditSuppression(BaseModel):
+    source: str
+    reason: str
+    traits: list[str] = Field(default_factory=list)
+
+
+class ProductMatchAuditTraitDecision(BaseModel):
+    source: str
+    accepted_traits: list[str] = Field(default_factory=list)
+    suppressed_traits: list[str] = Field(default_factory=list)
+    reason: str | None = None
+
+
 class ProductMatchAudit(BaseModel):
     engine_version: str
     normalized_text: str
+    normalized_text_summary: str | None = None
     retrieval_basis: list[str] = Field(default_factory=list)
     alias_hits: list[str] = Field(default_factory=list)
+    matched_aliases: list[str] = Field(default_factory=list)
     family_keyword_hits: list[str] = Field(default_factory=list)
     clue_hits: list[str] = Field(default_factory=list)
+    strongest_positive_clues: list[str] = Field(default_factory=list)
+    strongest_negative_clues: list[str] = Field(default_factory=list)
     negations: list[str] = Field(default_factory=list)
+    negation_suppressions: list[ProductMatchAuditSuppression] = Field(default_factory=list)
+    product_implied_traits: list[ProductMatchAuditTraitDecision] = Field(default_factory=list)
+    top_family_candidates: list[ProductMatchAuditCandidate] = Field(default_factory=list)
+    top_subtype_candidates: list[ProductMatchAuditCandidate] = Field(default_factory=list)
+    final_match_stage: ProductMatchStage = "ambiguous"
+    final_match_reason: str | None = None
     ambiguity_reason: str | None = None
 
 

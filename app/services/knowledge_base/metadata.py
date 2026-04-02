@@ -28,6 +28,7 @@ from .paths import ALL_DATA_FILES, KnowledgeBaseError, _resolve_data_path
 
 if TYPE_CHECKING:
     from app.services.classifier.matching import ProductMatchingSnapshot
+    from app.services.classifier.signal_config import ClassifierSignalSnapshot
 
 
 def _catalog_version() -> str:
@@ -203,8 +204,17 @@ def _build_classifier_runtime_snapshot(
     )
 
 
+def _build_classifier_signal_snapshot(
+    catalog_version: str | None,
+) -> ClassifierSignalSnapshot:
+    from app.services.classifier.signal_config import build_classifier_signal_snapshot
+
+    return build_classifier_signal_snapshot(catalog_version=catalog_version)
+
+
 __all__ = [
     "_build_classifier_runtime_snapshot",
+    "_build_classifier_signal_snapshot",
     "_build_metadata_options_payload",
     "_build_metadata_standards_payload",
     "_catalog_version",
