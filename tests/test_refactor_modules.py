@@ -2,11 +2,20 @@ from __future__ import annotations
 
 import unittest
 
-from app.domain.catalog_types import ProductCatalogRow, StandardCatalogRow
+from app.domain.catalog_types import (
+    GenreCatalogRow,
+    LegislationCatalogRow,
+    ProductCatalogRow,
+    StandardCatalogRow,
+    TraitCatalogRow,
+)
 from app.domain.models import (
     KnownFactItem,
+    KnowledgeBaseMeta,
     LegislationItem,
     LegislationSection,
+    MetadataOptionsResponse,
+    MetadataStandardsResponse,
     ProductMatchAudit,
     RiskSummary,
     RouteContext,
@@ -14,6 +23,7 @@ from app.domain.models import (
     StandardMatchAudit,
 )
 from app.services.classifier import extract_traits, normalize
+from app.services.knowledge_base.metadata import _build_metadata_options_payload, _build_metadata_standards_payload
 from app.services.rules.facts import _build_known_facts, _missing_information
 from app.services.rules.result_builder import (
     _build_analysis_result,
@@ -21,7 +31,13 @@ from app.services.rules.result_builder import (
     _standard_item_from_row,
 )
 from app.services.rules.risk import _current_risk, _future_risk
-from app.services.rules.routing import RoutePlan, _build_route_plan, _route_product_row, _route_selection_traits
+from app.services.rules.routing import (
+    RoutePlan,
+    _apply_post_selection_gates_v1,
+    _build_route_plan,
+    _route_product_row,
+    _route_selection_traits,
+)
 from app.services.standards_engine.gating import _trait_gate_details
 from app.services.standards_engine.scoring import _score_standard_v2
 from app.services.standards_engine.service import find_applicable_items
@@ -196,6 +212,90 @@ class RefactorModuleTests(unittest.TestCase):
         self.assertIsInstance(item, StandardItem)
         self.assertEqual(item.code, "EN 14846")
         self.assertEqual(item.directive, "RED")
+
+    def test_metadata_payload_helpers_accept_typed_catalog_rows(self) -> None:
+        meta = KnowledgeBaseMeta(
+            traits=1,
+            genres=1,
+            products=1,
+            legislations=1,
+            standards=1,
+            version="test-version",
+        )
+        traits = (TraitCatalogRow(id="wifi", label="Wi-Fi", description="Wireless networking"),)
+        genres = (
+            GenreCatalogRow(
+                id="smart_home_iot",
+                label="Smart home",
+                keywords=["smart home"],
+                traits=["wifi"],
+            ),
+        )
+        products = (
+            ProductCatalogRow(
+                id="smart_lock",
+                label="Smart lock",
+                product_family="smart_access_device",
+                product_subfamily="smart_lock",
+                genres=["smart_home_iot"],
+                aliases=["smart lock"],
+            ),
+        )
+        legislations = (
+            LegislationCatalogRow(
+                code="RED",
+                title="Radio Equipment Directive",
+                family="radio",
+                directive_key="RED",
+                bucket="ce",
+            ),
+        )
+        standards = (
+            StandardCatalogRow(
+                code="EN 14846",
+                title="Locks and latches",
+                category="safety",
+                directives=["RED"],
+                harmonization_status="harmonized",
+            ),
+        )
+
+        options_payload = _build_metadata_options_payload(traits, genres, products, legislations, meta)
+        standards_payload = _build_metadata_standards_payload(standards, meta)
+
+        self.assertIsInstance(options_payload, MetadataOptionsResponse)
+        self.assertEqual(options_payload.knowledge_base_meta.version, "test-version")
+        self.assertEqual(options_payload.products[0].id, "smart_lock")
+        self.assertIsInstance(standards_payload, MetadataStandardsResponse)
+        self.assertEqual(standards_payload.standards[0].directive, "RED")
+
+    def test_apply_post_selection_gates_v1_returns_typed_standard_rows(self) -> None:
+        row = StandardCatalogRow.model_validate(
+            {
+                "code": "EN 62311",
+                "title": "EMF assessment",
+                "category": "emf",
+                "directives": ["LVD"],
+                "score": 100,
+                "item_type": "standard",
+            }
+        )
+
+        gated_rows = _apply_post_selection_gates_v1(
+            [row],
+            traits={"radio", "electrical"},
+            matched_products=set(),
+            diagnostics=[],
+            allowed_directives={"RED", "LVD"},
+            product_type="smart_lock",
+            confirmed_traits={"radio", "electrical"},
+            description="radio-enabled smart lock",
+        )
+
+        self.assertEqual(len(gated_rows), 1)
+        self.assertIsInstance(gated_rows[0], StandardCatalogRow)
+        self.assertEqual(gated_rows[0].get("directive"), "RED")
+        self.assertEqual(gated_rows[0].get("legislation_key"), "RED")
 
     def test_build_analysis_result_preserves_route_context_fields(self) -> None:
         legislation = LegislationItem(

@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import Any
 
-from app.domain.catalog_types import LikelyStandardRef
+from app.domain.catalog_types import GenreCatalogRow, LikelyStandardRef, ProductCatalogRow
 
 from .paths import KnowledgeBaseError
 
@@ -387,7 +388,10 @@ def _validate_standards(data: dict[str, Any], product_ids: set[str], trait_ids: 
 
     return standards
 
-def _normalize_likely_standard_refs(row: dict[str, Any], owner: str) -> list[dict[str, str]]:
+def _normalize_likely_standard_refs(
+    row: ProductCatalogRow | GenreCatalogRow | Mapping[str, Any],
+    owner: str,
+) -> list[dict[str, str]]:
     raw_refs = row.get("likely_standard_refs")
     if raw_refs is None:
         return [{"ref": ref, "kind": "unspecified"} for ref in _string_list(row.get("likely_standards"))]

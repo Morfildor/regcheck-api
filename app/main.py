@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.core.logging import clear_request_id, configure_logging, set_request_id
-from app.core.runtime_state import APP_VERSION, AppRuntimeState, KnowledgeBaseWarmupSnapshot
+from app.core.runtime_state import APP_VERSION, AppRuntimeState, KnowledgeBaseWarmupSnapshot, StartupState
 from app.core.settings import get_settings, load_settings
 from app.domain.models import (
     AnalysisResult,
@@ -90,7 +90,7 @@ def _update_runtime_state_after_failure(
     target_app: FastAPI,
     error: str,
     *,
-    state: str = "failed",
+    state: StartupState = "failed",
     reloaded: bool = False,
 ) -> None:
     runtime_state = get_runtime_state(target_app)

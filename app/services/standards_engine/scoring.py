@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 import re
 from typing import Any
+
+from app.domain.catalog_types import StandardCatalogRow
 
 from .gating import (
     ProductHitType,
@@ -10,6 +13,7 @@ from .gating import (
     _string_list,
 )
 
+StandardRowLike = StandardCatalogRow | Mapping[str, Any]
 
 
 BASE_STANDARD_PRIORITY = {
@@ -34,7 +38,7 @@ BASE_STANDARD_PRIORITY = {
 }
 
 
-def _priority_bonus(standard: dict[str, Any]) -> int:
+def _priority_bonus(standard: StandardRowLike) -> int:
     code = str(standard.get("code", "")).upper()
     for prefix, bonus in BASE_STANDARD_PRIORITY.items():
         if code.startswith(prefix):
@@ -44,7 +48,7 @@ def _priority_bonus(standard: dict[str, Any]) -> int:
 
 
 def _score_standard(
-    standard: dict[str, Any],
+    standard: StandardRowLike,
     gate: TraitGate,
     product_hit_type: ProductHitType | None,
     is_preferred: bool,
@@ -125,7 +129,7 @@ BASE_STANDARD_PRIORITY_V2 = {
     "EN 63000": 120,
 }
 
-def _keyword_hits(standard: dict[str, Any], normalized_text: str) -> list[str]:
+def _keyword_hits(standard: StandardRowLike, normalized_text: str) -> list[str]:
     hits: list[str] = []
     if not normalized_text:
         return hits
@@ -141,7 +145,7 @@ def _keyword_hits(standard: dict[str, Any], normalized_text: str) -> list[str]:
     return hits
 
 
-def _priority_bonus_v2(standard: dict[str, Any]) -> int:
+def _priority_bonus_v2(standard: StandardRowLike) -> int:
     code = str(standard.get("code", "")).upper()
     for prefix, bonus in BASE_STANDARD_PRIORITY_V2.items():
         if code.startswith(prefix):
@@ -149,7 +153,7 @@ def _priority_bonus_v2(standard: dict[str, Any]) -> int:
     return 95 if _standard_item_type(standard) == "standard" else 45
 
 
-def _context_bonus_v2(standard: dict[str, Any], context_tags: set[str]) -> int:
+def _context_bonus_v2(standard: StandardRowLike, context_tags: set[str]) -> int:
     code = str(standard.get("code", ""))
     bonus = 0
     if "scope:av_ict" in context_tags and (code == "EN 62368-1" or code in {"EN 55032", "EN 55035"}):
@@ -241,7 +245,7 @@ def _context_bonus_v2(standard: dict[str, Any], context_tags: set[str]) -> int:
 
 
 def _score_standard_v2(
-    standard: dict[str, Any],
+    standard: StandardRowLike,
     gate: TraitGate,
     product_hit_type: ProductHitType | None,
     is_preferred: bool,

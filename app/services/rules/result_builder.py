@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from collections import defaultdict
 import logging
 from typing import Any, Literal
@@ -8,6 +9,7 @@ from pydantic import ValidationError
 
 from app.core.degradation import DegradationCollector, guarded_step
 from app.core.runtime_state import API_VERSION
+from app.domain.catalog_types import StandardCatalogRow
 from app.domain.models import (
     AnalysisAudit,
     AnalysisResult,
@@ -57,6 +59,7 @@ from .summary import _classification_summary, _primary_uncertainties
 
 AnalysisDepth = Literal["quick", "standard", "deep"]
 logger = logging.getLogger(__name__)
+StandardRowLike = StandardCatalogRow | Mapping[str, Any]
 
 
 def _sort_standard_items(
@@ -152,6 +155,61 @@ def _standard_section_category(item: StandardItem, route_key: str) -> str:
     return item.category
 
 
+def _section_item_from_standard(
+    item: StandardItem,
+    *,
+    route_key: str,
+    directive_label: str,
+    directive_title: str,
+) -> StandardSectionItem:
+    return StandardSectionItem(
+        code=item.code,
+        title=item.title,
+        directive=item.directive,
+        directives=list(item.directives),
+        legislation_key=item.legislation_key,
+        category=_standard_section_category(item, route_key),
+        confidence=item.confidence,
+        item_type=item.item_type,
+        match_basis=item.match_basis,
+        fact_basis=item.fact_basis,
+        score=item.score,
+        reason=item.reason,
+        notes=item.notes,
+        regime_bucket=item.regime_bucket,
+        timing_status=item.timing_status,
+        matched_traits_all=list(item.matched_traits_all),
+        matched_traits_any=list(item.matched_traits_any),
+        missing_required_traits=list(item.missing_required_traits),
+        excluded_by_traits=list(item.excluded_by_traits),
+        applies_if_products=list(item.applies_if_products),
+        exclude_if_products=list(item.exclude_if_products),
+        applies_if_genres=list(item.applies_if_genres),
+        product_match_type=item.product_match_type,
+        standard_family=item.standard_family,
+        is_harmonized=item.is_harmonized,
+        harmonized_under=item.harmonized_under,
+        harmonization_status=item.harmonization_status,
+        harmonized_reference=item.harmonized_reference,
+        version=item.version,
+        dated_version=item.dated_version,
+        supersedes=item.supersedes,
+        test_focus=list(item.test_focus),
+        evidence_hint=list(item.evidence_hint),
+        keywords=list(item.keywords),
+        keyword_hits=list(item.keyword_hits),
+        selection_group=item.selection_group,
+        selection_priority=item.selection_priority,
+        required_fact_basis=item.required_fact_basis,
+        jurisdiction=item.jurisdiction,
+        applicability_state=item.applicability_state,
+        applicability_hint=item.applicability_hint,
+        triggered_by_directive=route_key,
+        triggered_by_label=directive_label,
+        triggered_by_title=directive_title,
+    )
+
+
 def _build_standard_sections(
     items: list[StandardItem],
     *,
@@ -172,11 +230,11 @@ def _build_standard_sections(
         )
         directive_label, directive_title = DIRECTIVE_TITLES.get(key, (key, key))
         section_items = [
-            StandardSectionItem(
-                **(item.model_dump() | {"category": _standard_section_category(item, key)}),
-                triggered_by_directive=key,
-                triggered_by_label=directive_label,
-                triggered_by_title=directive_title,
+            _section_item_from_standard(
+                item,
+                route_key=key,
+                directive_label=directive_label,
+                directive_title=directive_title,
             )
             for item in route_items
         ]
@@ -209,7 +267,7 @@ def _primary_legislation_by_directive(items: list[LegislationItem]) -> dict[str,
 
 
 def _standard_item_from_row(
-    row: dict[str, Any],
+    row: StandardRowLike,
     legislation_by_directive: dict[str, LegislationItem],
     traits: set[str],
 ) -> StandardItem:
@@ -280,7 +338,7 @@ def _standard_item_from_row(
 
 
 def _normalize_trait_state_map(raw: Any) -> dict[str, dict[str, list[str]]]:
-    states = {
+    states: dict[str, dict[str, list[str]]] = {
         "text_explicit": {},
         "text_inferred": {},
         "product_core": {},

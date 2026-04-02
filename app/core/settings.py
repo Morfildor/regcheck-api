@@ -1,14 +1,17 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import lru_cache
 import os
 from pathlib import Path
 
 try:
-    from dotenv import load_dotenv
+    from dotenv import load_dotenv as _load_dotenv
 except ImportError:  # pragma: no cover
-    load_dotenv = None
+    load_dotenv: Callable[..., bool] | None = None
+else:
+    load_dotenv = _load_dotenv
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]

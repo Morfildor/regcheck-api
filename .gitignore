@@ -5,6 +5,8 @@ __pycache__/
 .venv/
 venv/
 *.py[cod]
+.coverage
+htmlcov/
 .env
 .env.*
 !.env.example
@@ -12,3 +14,6 @@ package-lock.json
 dist/
 build/
 *.egg-info/
+*.whl
+*.zip
+*.tar.gz

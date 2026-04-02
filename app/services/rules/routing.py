@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import date
 import re
 from time import perf_counter
-from typing import Any, Literal
+from typing import Any, Literal, TypedDict
 
-from app.domain.catalog_types import ProductCatalogRow
+from app.domain.catalog_types import LegislationCatalogRow, ProductCatalogRow, StandardCatalogRow
 from app.domain.models import (
     ConfidenceLevel,
     ContradictionSeverity,
@@ -25,6 +26,17 @@ from app.services.knowledge_base import get_knowledge_base_snapshot
 
 
 AnalysisDepth = Literal["quick", "standard", "deep"]
+LegislationRowLike = LegislationCatalogRow | Mapping[str, Any]
+StandardRowLike = StandardCatalogRow | Mapping[str, Any]
+StandardMatchProductType = Literal["product", "preferred_product"]
+
+
+class StandardMatchMeta(TypedDict):
+    matched_traits_all: list[str]
+    matched_traits_any: list[str]
+    missing_required_traits: list[str]
+    excluded_by_traits: list[str]
+    product_match_type: StandardMatchProductType | None
 
 
 DIRECTIVE_TITLES: dict[str, tuple[str, str]] = {
@@ -868,7 +880,7 @@ def _parse_date(value: Any) -> date | None:
         return None
 
 
-def _timing_status(row: dict[str, Any], today: date) -> str:
+def _timing_status(row: LegislationRowLike, today: date) -> str:
     if row.get("bucket") == "informational":
         return "informational"
 
@@ -883,7 +895,7 @@ def _timing_status(row: dict[str, Any], today: date) -> str:
 
 
 def _fact_basis_for_legislation(
-    row: dict[str, Any],
+    row: LegislationRowLike,
     traits: set[str],
     confirmed_traits: set[str],
 ) -> str:
@@ -902,7 +914,7 @@ def _fact_basis_for_legislation(
 
 
 def _legislation_matches(
-    row: dict[str, Any],
+    row: LegislationRowLike,
     traits: set[str],
     functional_classes: set[str],
     product_type: str | None,
@@ -959,7 +971,7 @@ def _legislation_matches(
     return True
 
 
-def _legislation_sort_key(row: dict[str, Any]) -> tuple[int, int, str]:
+def _legislation_sort_key(row: LegislationRowLike) -> tuple[int, int, str]:
     timing_rank = {"current": 0, "future": 1, "legacy": 2, "informational": 3}
     return (
         _directive_rank(str(row.get("directive_key") or "OTHER")),
@@ -1042,28 +1054,28 @@ def _pick_legislations(
     matched_products: set[str] | None = None,
     product_genres: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
-) -> list[dict[str, Any]]:
+) -> list[LegislationCatalogRow]:
     matched_products = matched_products or set()
     product_genres = product_genres or set()
     confirmed_traits = confirmed_traits or set(traits)
     forced_set = {item for item in (forced_directives or []) if item}
     today = _current_date()
 
-    picked: list[dict[str, Any]] = []
+    picked: list[LegislationCatalogRow] = []
     for row in get_knowledge_base_snapshot().legislations:
-        directive_key = str(row.get("directive_key") or "OTHER")
+        directive_key = row.directive_key or "OTHER"
         matched = _legislation_matches(row, traits, functional_classes, product_type, matched_products, product_genres)
-        forced = directive_key in forced_set and row.get("bucket") != "informational"
+        forced = directive_key in forced_set and row.bucket != "informational"
         if not matched and not forced:
             continue
 
-        enriched = dict(row)
+        enriched = row.as_legacy_dict()
         enriched["timing_status"] = _timing_status(enriched, today)
         enriched["evidence_strength"] = _fact_basis_for_legislation(enriched, traits, confirmed_traits)
         enriched["is_forced"] = forced
         if forced and not matched:
             enriched["applicability"] = "conditional"
-        picked.append(enriched)
+        picked.append(LegislationCatalogRow.model_validate(enriched))
 
     picked.sort(key=_legislation_sort_key)
     return picked
@@ -1206,18 +1218,18 @@ def _derive_engine_traits(
 
 
 def _match_standard(
-    row: dict[str, Any],
+    row: StandardRowLike,
     traits: set[str],
     matched_products: set[str],
     likely_standards: set[str],
-) -> tuple[bool, int, dict[str, Any]]:
+) -> tuple[bool, int, StandardMatchMeta]:
     applies_products = set(row.get("applies_if_products") or [])
     exclude_products = set(row.get("exclude_if_products") or [])
     requires_all = set(row.get("applies_if_all") or [])
     requires_any = set(row.get("applies_if_any") or [])
     excludes = set(row.get("exclude_if") or [])
 
-    meta = {
+    meta: StandardMatchMeta = {
         "matched_traits_all": sorted(requires_all & traits),
         "matched_traits_any": sorted(requires_any & traits),
         "missing_required_traits": sorted(requires_all - traits),
@@ -1255,7 +1267,7 @@ def _match_standard(
     return True, score, meta
 
 
-def _standard_primary_directive(row: dict[str, Any], traits: set[str]) -> str:
+def _standard_primary_directive(row: StandardRowLike, traits: set[str]) -> str:
     code = str(row.get("code") or "")
     directive = row.get("legislation_key") or (row.get("directives") or ["OTHER"])[0]
 
@@ -1320,7 +1332,7 @@ def _derive_directives(traits: set[str], forced_directives: list[str] | None = N
 
 
 def _apply_post_selection_gates_v1(
-    selected: list[dict[str, Any]],
+    selected: Sequence[StandardCatalogRow | Mapping[str, Any]],
     traits: set[str],
     matched_products: set[str],
     diagnostics: list[str],
@@ -1328,7 +1340,7 @@ def _apply_post_selection_gates_v1(
     product_type: str | None = None,
     confirmed_traits: set[str] | None = None,
     description: str = "",
-) -> list[dict[str, Any]]:
+) -> list[StandardCatalogRow]:
     kept: list[dict[str, Any]] = []
     scope_route, scope_reasons = _scope_route(traits, matched_products, product_type, confirmed_traits)
     diagnostics.append("scope_route=" + scope_route)
@@ -1347,7 +1359,7 @@ def _apply_post_selection_gates_v1(
     prefer_specific_red_emf = bool(
         "radio" in traits and ({"cellular", "wearable", "handheld", "body_worn_or_applied", "close_proximity_emf"} & traits)
     )
-    prefer_62233 = (
+    prefer_62233 = bool(
         scope_route != "av_ict"
         and "electrical" in traits
         and "consumer" in traits
@@ -1357,7 +1369,7 @@ def _apply_post_selection_gates_v1(
         and "handheld" not in traits
         and "body_worn_or_applied" not in traits
     )
-    prefer_62311 = (
+    prefer_62311 = bool(
         "electrical" in traits
         and (
             scope_route == "av_ict"
@@ -1369,7 +1381,8 @@ def _apply_post_selection_gates_v1(
         )
     )
 
-    for item in selected:
+    for selected_item in selected:
+        item = dict(selected_item)
         code = str(item.get("code") or "")
         route = str(item.get("directive") or "OTHER")
 
@@ -1486,7 +1499,7 @@ def _apply_post_selection_gates_v1(
         kept = [item for item in kept if item.get("code") != "Battery safety review"]
         diagnostics.append("gate=prune_Battery_safety_review:covered_by_EN62133-2")
 
-    return kept
+    return [StandardCatalogRow.model_validate(item) for item in kept]
 
 
 # ---------------------------------------------------------------------------
@@ -1540,7 +1553,7 @@ def _context_emf_flags(
     prefer_specific_red_emf = bool(
         "radio" in traits and ({"cellular", "wearable", "handheld", "body_worn_or_applied", "close_proximity_emf"} & traits)
     )
-    prefer_62233 = (
+    prefer_62233 = bool(
         scope_route != "av_ict"
         and "electrical" in traits
         and "consumer" in traits
@@ -1896,7 +1909,7 @@ def _sort_standard_items(items: list[StandardItem]) -> list[StandardItem]:
     return sorted(items, key=key)
 
 
-def _route_condition_hint(row: dict[str, Any]) -> str | None:
+def _route_condition_hint(row: LegislationRowLike | StandardRowLike) -> str | None:
     route_traits = set(_string_list(row.get("all_of_traits"))) | set(_string_list(row.get("any_of_traits")))
     if {"medical_claims", "medical_context", "possible_medical_boundary"} & route_traits:
         return "conditional on claim / medical-use context"
@@ -1907,7 +1920,7 @@ def _route_condition_hint(row: dict[str, Any]) -> str | None:
     return None
 
 
-def _legislation_applicability_state(row: dict[str, Any]) -> str:
+def _legislation_applicability_state(row: LegislationRowLike) -> str:
     if row.get("timing_status") == "future":
         return "upcoming"
     if row.get("applicability") == "conditional":
@@ -1915,7 +1928,7 @@ def _legislation_applicability_state(row: dict[str, Any]) -> str:
     return "current"
 
 
-def _standard_applicability_state(row: dict[str, Any], timing_status: str) -> str:
+def _standard_applicability_state(row: StandardRowLike, timing_status: str) -> str:
     if timing_status == "future":
         return "upcoming"
     if row.get("item_type") == "review":

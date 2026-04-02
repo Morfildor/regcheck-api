@@ -1,9 +1,14 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 import re
 from typing import Any
 
+from app.domain.catalog_types import ProductCatalogRow
+
 from .normalization import normalize
+
+ProductRowLike = ProductCatalogRow | Mapping[str, Any]
 
 GENERIC_ALIASES = {
     "air",
@@ -145,11 +150,11 @@ def _string_list(value: Any) -> list[str]:
     return [item for item in value if isinstance(item, str) and item]
 
 
-def _product_family(product: dict[str, Any]) -> str:
+def _product_family(product: ProductRowLike) -> str:
     return str(product.get("product_family") or product["id"])
 
 
-def _product_subfamily(product: dict[str, Any]) -> str:
+def _product_subfamily(product: ProductRowLike) -> str:
     return str(product.get("product_subfamily") or product["id"])
 
 
@@ -172,7 +177,7 @@ def _trait_overlap_score(explicit_traits: set[str], product_traits: set[str], we
     return len(explicit_traits & product_traits) * weight
 
 
-def _context_bonus(text: str, product: dict[str, Any], explicit_traits: set[str]) -> tuple[int, list[str]]:
+def _context_bonus(text: str, product: ProductRowLike, explicit_traits: set[str]) -> tuple[int, list[str]]:
     score = 0
     reasons: list[str] = []
     pid = product["id"]

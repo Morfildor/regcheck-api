@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
 import re
 from typing import Any
+
+from app.domain.catalog_types import GenreCatalogRow, ProductCatalogRow, StandardCatalogRow
 
 from .paths import KnowledgeBaseError
 from .validator import (
@@ -32,16 +35,16 @@ def _derive_harmonization_status(row: dict[str, Any]) -> str:
     return "unknown"
 
 
-def _genre_map(genres: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    return {row["id"]: row for row in genres}
+def _genre_map(genres: Sequence[GenreCatalogRow]) -> dict[str, GenreCatalogRow]:
+    return {row.id: row for row in genres}
 
 
-def _expand_genre_product_ids(target_genres: list[str], products: list[dict[str, Any]]) -> list[str]:
+def _expand_genre_product_ids(target_genres: list[str], products: Sequence[ProductCatalogRow]) -> list[str]:
     wanted = set(target_genres)
-    return [row["id"] for row in products if wanted & set(_string_list(row.get("genres")))]
+    return [row.id for row in products if wanted & set(_string_list(row.get("genres")))]
 
 
-def _enrich_products(rows: list[dict[str, Any]], genres: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _enrich_products(rows: list[dict[str, Any]], genres: Sequence[GenreCatalogRow]) -> list[dict[str, Any]]:
     genre_index = _genre_map(genres)
     out: list[dict[str, Any]] = []
     for row in rows:
@@ -97,11 +100,11 @@ def _enrich_products(rows: list[dict[str, Any]], genres: list[dict[str, Any]]) -
     return out
 
 
-def _enrich_legislations(rows: list[dict[str, Any]], products: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _enrich_legislations(rows: list[dict[str, Any]], products: Sequence[ProductCatalogRow]) -> list[dict[str, Any]]:
     return [dict(row) for row in rows]
 
 
-def _enrich_standards(rows: list[dict[str, Any]], products: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _enrich_standards(rows: list[dict[str, Any]], products: Sequence[ProductCatalogRow]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     seen_normalized_codes: set[str] = set()
     for row in rows:
@@ -123,16 +126,14 @@ def _enrich_standards(rows: list[dict[str, Any]], products: list[dict[str, Any]]
 
 
 def _post_validate_product_standard_links(
-    products: list[dict[str, Any]],
-    genres: list[dict[str, Any]],
-    standards: list[dict[str, Any]],
+    products: Sequence[ProductCatalogRow],
+    genres: Sequence[GenreCatalogRow],
+    standards: Sequence[StandardCatalogRow],
 ) -> None:
-    known_references = {row["code"] for row in standards} | {
-        row.get("standard_family") for row in standards if isinstance(row.get("standard_family"), str)
-    }
+    known_references = {row.code for row in standards} | {row.standard_family for row in standards if row.standard_family}
 
     for product in products:
-        pid = product["id"]
+        pid = product.id
         for ref_item in product.get("likely_standard_refs") or _normalize_likely_standard_refs(product, f"Product '{pid}'"):
             reference = ref_item["ref"]
             if reference not in known_references:
@@ -141,7 +142,7 @@ def _post_validate_product_standard_links(
                 )
 
     for genre in genres:
-        gid = genre["id"]
+        gid = genre.id
         for ref_item in genre.get("likely_standard_refs") or _normalize_likely_standard_refs(genre, f"Genre '{gid}'"):
             reference = ref_item["ref"]
             if reference not in known_references:

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from typing import Any
-
+from app.domain.catalog_types import StandardCatalogRow
 from app.domain.models import AnalysisResult, RiskLevel, RouteContext, StandardItem, StandardMatchAudit
 from app.services.classifier import extract_traits_v1, normalize
 from app.services.standards_engine import find_applicable_items_v1
+from app.services.standards_engine.gating import ApplicableItems
 
 from .facts import _build_known_facts, _missing_information
 from .findings import _build_findings
@@ -86,7 +86,7 @@ def analyze_v1(
     legislation_by_directive = _primary_legislation_by_directive(legislation_items)
     allowed_directives = set(detected_directives)
 
-    items = find_applicable_items_v1(
+    items: ApplicableItems = find_applicable_items_v1(
         traits=trait_set,
         directives=detected_directives,
         product_type=routing_product_type,
@@ -96,7 +96,7 @@ def analyze_v1(
         explicit_traits=set(traits_data.get("explicit_traits") or []),
         confirmed_traits=confirmed_traits,
     )
-    selected_rows = list(items["standards"]) + list(items["review_items"])
+    selected_rows: list[StandardCatalogRow] = list(items["standards"]) + list(items["review_items"])
     selected_rows = _apply_post_selection_gates_v1(
         selected_rows,
         trait_set,
@@ -108,7 +108,7 @@ def analyze_v1(
         description=description,
     )
 
-    dedup: dict[str, dict[str, Any]] = {}
+    dedup: dict[str, StandardCatalogRow] = {}
     for row in selected_rows:
         key = str(row.get("code") or "")
         if key not in dedup or int(row.get("score", 0)) > int(dedup[key].get("score", 0)):

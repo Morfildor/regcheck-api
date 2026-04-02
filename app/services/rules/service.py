@@ -9,8 +9,11 @@ from pydantic import ValidationError
 
 from app.core.degradation import DegradationCollector, guarded_step
 from app.core.settings import get_settings
+from app.domain.catalog_types import StandardCatalogRow
 from app.domain.models import (
     AnalysisResult,
+    Finding,
+    KnownFactItem,
     MissingInformationItem,
     RiskLevel,
     RiskReason,
@@ -23,6 +26,7 @@ from app.domain.models import (
 )
 from app.services.classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, normalize
 from app.services.standards_engine import find_applicable_items
+from app.services.standards_engine.gating import ApplicableItems
 
 from .facts import _build_known_facts, _missing_information
 from .findings import _build_findings
@@ -94,13 +98,19 @@ def _select_standards(
         prepared.diagnostics.append("scope_route_reasons=" + ";".join(context["scope_reasons"]))
     prepared.diagnostics.append("standard_context_tags=" + ",".join(sorted(context["context_tags"])))
 
-    items = guarded_step(
+    empty_items: ApplicableItems = {
+        "standards": [],
+        "review_items": [],
+        "audit": {},
+        "rejections": [],
+    }
+    items: ApplicableItems = guarded_step(
         logger=logger,
         collector=collector,
         step="standards_enrichment",
         reason="standards_enrichment_failed",
         warning="Standards enrichment failed; returning classification and legislation without standards.",
-        fallback={"standards": [], "review_items": [], "audit": {}, "rejections": []},
+        fallback=empty_items,
         operation=lambda: find_applicable_items(
             traits=prepared.route_traits,
             # Use the full standards-engine directive set (includes LVD/EMC for radio
@@ -119,9 +129,9 @@ def _select_standards(
         ),
     )
 
-    selected_rows = list(items.get("standards", [])) + list(items.get("review_items", []))
+    selected_rows: list[StandardCatalogRow] = list(items.get("standards", [])) + list(items.get("review_items", []))
 
-    dedup: dict[str, dict[str, Any]] = {}
+    dedup: dict[str, StandardCatalogRow] = {}
     for row in selected_rows:
         key = str(row.get("code") or "")
         if key not in dedup or int(row.get("score", 0)) > int(dedup[key].get("score", 0)):
@@ -156,7 +166,7 @@ def _select_standards(
         route_plan=prepared.route_plan,
     )
 
-    standard_sections = guarded_step(
+    standard_sections: list[StandardSection] = guarded_step(
         logger=logger,
         collector=collector,
         step="standard_sections",
@@ -449,7 +459,7 @@ def analyze(
         ),
     )
 
-    findings = guarded_step(
+    findings: list[Finding] = guarded_step(
         logger=logger,
         collector=collector,
         step="findings",
@@ -467,7 +477,7 @@ def analyze(
         ),
     )
 
-    known_facts = guarded_step(
+    known_facts: list[KnownFactItem] = guarded_step(
         logger=logger,
         collector=collector,
         step="known_facts",

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 from typing import cast
 
@@ -37,7 +37,7 @@ def _selection_row(row: StandardCatalogRow | Mapping[str, Any]) -> StandardCatal
     return StandardCatalogRow.model_validate(dict(row))
 
 
-def _selection_rows(rows: list[StandardCatalogRow | Mapping[str, Any]]) -> list[StandardCatalogRow]:
+def _selection_rows(rows: Sequence[StandardCatalogRow | Mapping[str, Any]]) -> list[StandardCatalogRow]:
     return [_selection_row(row) for row in rows]
 
 
@@ -132,7 +132,7 @@ def find_applicable_standards_v1(
     preferred_standard_codes: list[str] | None = None,
     explicit_traits: set[str] | None = None,
     confirmed_traits: set[str] | None = None,
-) -> list[dict[str, Any]]:
+) -> list[StandardCatalogRow]:
     return find_applicable_items_v1(
         traits=traits,
         directives=directives,

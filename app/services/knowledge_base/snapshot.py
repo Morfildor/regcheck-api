@@ -14,6 +14,7 @@ from app.domain.catalog_types import (
     StandardCatalogRow,
     TraitCatalogRow,
 )
+from app.domain.models import KnowledgeBaseMeta, MetadataOptionsResponse, MetadataStandardsResponse
 
 from .enricher import (
     _enrich_legislations,
@@ -58,8 +59,8 @@ class KnowledgeBaseSnapshot:
     legislations: tuple[LegislationCatalogRow, ...]
     standards: tuple[StandardCatalogRow, ...]
     counts: dict[str, int]
-    meta: dict[str, Any]
-    metadata_payloads: dict[str, dict[str, Any]] = field(default_factory=dict)
+    meta: KnowledgeBaseMeta
+    metadata_payloads: dict[str, MetadataOptionsResponse | MetadataStandardsResponse] = field(default_factory=dict)
     classifier_runtime: Any = None
 
 
@@ -129,7 +130,7 @@ def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBa
             "options": _build_metadata_options_payload(traits, genres, products, legislations, meta),
             "standards": _build_metadata_standards_payload(standards, meta),
         },
-        classifier_runtime=_build_classifier_runtime_snapshot(products, traits, meta.get("version")),
+        classifier_runtime=_build_classifier_runtime_snapshot(products, traits, meta.version),
     )
 
 
@@ -162,7 +163,7 @@ def load_all() -> dict[str, Any]:
         "legislations": _legacy_rows(snapshot.legislations),
         "standards": _legacy_rows(snapshot.standards),
         "counts": snapshot.counts,
-        "meta": snapshot.meta,
+        "meta": snapshot.meta.model_dump(),
     }
 
 
@@ -187,11 +188,12 @@ def load_standards() -> list[dict[str, Any]]:
 
 
 def load_meta() -> dict[str, Any]:
-    return load_all()["meta"]
+    return get_knowledge_base_snapshot().meta.model_dump()
 
 
 def load_metadata_payload(name: str) -> dict[str, Any]:
-    return get_knowledge_base_snapshot().metadata_payloads.get(name, {})
+    payload = get_knowledge_base_snapshot().metadata_payloads.get(name)
+    return payload.model_dump() if payload is not None else {}
 
 
 def warmup_knowledge_base(*, refresh_paths: bool = False) -> KnowledgeBaseWarmupResult:
@@ -202,12 +204,12 @@ def warmup_knowledge_base(*, refresh_paths: bool = False) -> KnowledgeBaseWarmup
     logger.info(
         "knowledge_base_warmup files=%s version=%s duration_ms=%s",
         _resolved_data_paths_for_logging(),
-        snapshot.meta.get("version"),
+        snapshot.meta.version,
         duration_ms,
     )
     return KnowledgeBaseWarmupResult(
         counts=dict(snapshot.counts),
-        meta=dict(snapshot.meta),
+        meta=snapshot.meta.model_dump(),
         duration_ms=duration_ms,
     )
 

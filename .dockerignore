@@ -7,9 +7,14 @@
 .ruff_cache
 __pycache__
 *.py[cod]
+.coverage
+htmlcov
 venv
 .venv
 package-lock.json
 dist
 build
 *.egg-info
+*.whl
+*.zip
+*.tar.gz

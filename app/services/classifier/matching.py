@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 import re
 from typing import Any
@@ -24,6 +25,7 @@ from .scoring import (
 
 
 _PRODUCT_TRAIT_BUCKET_CACHE: dict[str, tuple[set[str], set[str]]] = {}
+ProductRowLike = ProductCatalogRow | Mapping[str, Any]
 
 
 @dataclass(frozen=True, slots=True)
@@ -72,7 +74,8 @@ class ProductMatchingSnapshot:
     products: tuple[CompiledProductMatcher, ...]
     by_id: dict[str, CompiledProductMatcher]
 
-def _best_alias_match(text: str, product: dict[str, Any]) -> tuple[str | None, int, list[str]]:
+
+def _best_alias_match(text: str, product: ProductRowLike) -> tuple[str | None, int, list[str]]:
     best_alias = None
     best_score = 0
     best_reasons: list[str] = []
@@ -194,7 +197,7 @@ def _family_confidence(candidate: dict[str, Any], next_candidate: dict[str, Any]
     return "low"
 
 
-def _clue_score(text: str, product: dict[str, Any]) -> tuple[int, list[str], list[str], list[str], bool]:
+def _clue_score(text: str, product: ProductRowLike) -> tuple[int, list[str], list[str], list[str], bool]:
     required_hits = _matching_clues(text, _string_list(product.get("required_clues")))
     preferred_hits = _matching_clues(text, _string_list(product.get("preferred_clues")))
     exclude_hits = _matching_clues(text, _string_list(product.get("exclude_clues")))
@@ -238,7 +241,7 @@ def _compiled_clue_score(
     return score, reasons, positive_clues, negative_clues, decisive
 
 
-def _family_members(products: list[dict[str, Any]], family: str) -> list[dict[str, Any]]:
+def _family_members(products: Sequence[ProductRowLike], family: str) -> list[ProductRowLike]:
     return [product for product in products if _product_family(product) == family]
 
 
@@ -246,7 +249,7 @@ def _subtype_candidates(
     text: str,
     explicit_traits: set[str],
     family_score: int,
-    family_products: list[dict[str, Any]],
+    family_products: Sequence[ProductRowLike],
 ) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
     for product in family_products:
@@ -609,7 +612,7 @@ def _select_matched_products(product_candidates: list[dict[str, Any]]) -> list[s
 
     return selected[:3] or [product_candidates[0]["id"]]
 
-def _product_family_keywords(product: dict[str, Any]) -> list[str]:
+def _product_family_keywords(product: ProductRowLike) -> list[str]:
     keywords = _string_list(product.get("family_keywords"))
     family_phrase = _product_family(product).replace("_", " ")
     if family_phrase and family_phrase != product["id"] and family_phrase not in keywords:
@@ -665,7 +668,7 @@ def _compiled_phrase_hits(text: str, phrases: tuple[CompiledPhrase, ...]) -> lis
 
 
 def build_product_matching_snapshot(
-    products: list[dict[str, Any]],
+    products: Sequence[ProductCatalogRow],
     trait_ids: set[str],
     catalog_version: str | None = None,
 ) -> ProductMatchingSnapshot:
@@ -735,7 +738,7 @@ def _product_matching_snapshot() -> ProductMatchingSnapshot:
     return build_product_matching_snapshot(
         products=snapshot.products,
         trait_ids={row["id"] for row in snapshot.traits},
-        catalog_version=snapshot.meta.get("version"),
+        catalog_version=snapshot.meta.version,
     )
 
 
@@ -780,7 +783,7 @@ def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[
     return tuple(shortlisted), shortlist_scoring
 
 
-def _compute_product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]:
+def _compute_product_trait_buckets(product: ProductRowLike) -> tuple[set[str], set[str]]:
     from .traits import _expand_related_traits
 
     implied_traits = set(_string_list(product.get("implied_traits")))
@@ -803,7 +806,7 @@ def _compute_product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], s
     return core_traits, default_traits
 
 
-def _product_trait_buckets(product: dict[str, Any]) -> tuple[set[str], set[str]]:
+def _product_trait_buckets(product: ProductRowLike) -> tuple[set[str], set[str]]:
     pid = product["id"]
     cached = _PRODUCT_TRAIT_BUCKET_CACHE.get(pid)
     if cached is not None:

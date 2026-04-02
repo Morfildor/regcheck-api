@@ -13,7 +13,16 @@ from app.domain.catalog_types import (
     StandardCatalogRow,
     TraitCatalogRow,
 )
-from app.domain.models import KnowledgeBaseMeta, MetadataOptionsResponse, MetadataStandardsResponse
+from app.domain.models import (
+    KnowledgeBaseMeta,
+    MetadataGenreOption,
+    MetadataLegislationOption,
+    MetadataOptionsResponse,
+    MetadataProductOption,
+    MetadataStandardOption,
+    MetadataStandardsResponse,
+    MetadataTraitOption,
+)
 
 from .paths import ALL_DATA_FILES, KnowledgeBaseError, _resolve_data_path
 
@@ -45,15 +54,70 @@ def _catalog_version() -> str:
     return f"sha256:{digest.hexdigest()[:12]}"
 
 
-def _kb_meta(counts: dict[str, int], standards: Sequence[StandardCatalogRow]) -> dict[str, Any]:
+def _kb_meta(counts: dict[str, int], standards: Sequence[StandardCatalogRow]) -> KnowledgeBaseMeta:
     return KnowledgeBaseMeta(
         **counts,
-        harmonized_standards=sum(1 for row in standards if row.get("harmonization_status") == "harmonized"),
-        state_of_the_art_standards=sum(1 for row in standards if row.get("harmonization_status") == "state_of_the_art"),
-        review_items=sum(1 for row in standards if row.get("item_type") == "review"),
-        product_gated_standards=sum(1 for row in standards if row.get("applies_if_products") or row.get("applies_if_genres")),
+        harmonized_standards=sum(1 for row in standards if row.harmonization_status == "harmonized"),
+        state_of_the_art_standards=sum(1 for row in standards if row.harmonization_status == "state_of_the_art"),
+        review_items=sum(1 for row in standards if row.item_type == "review"),
+        product_gated_standards=sum(1 for row in standards if row.applies_if_products or row.applies_if_genres),
         version=_catalog_version(),
-    ).model_dump()
+    )
+
+
+def _trait_option(row: TraitCatalogRow) -> MetadataTraitOption:
+    return MetadataTraitOption(id=row.id, label=row.label, description=row.description)
+
+
+def _genre_option(row: GenreCatalogRow) -> MetadataGenreOption:
+    return MetadataGenreOption(
+        id=row.id,
+        label=row.label,
+        keywords=list(row.keywords),
+        traits=list(row.traits),
+        default_traits=list(row.default_traits),
+        functional_classes=list(row.functional_classes),
+        likely_standards=list(row.likely_standards),
+    )
+
+
+def _product_option(row: ProductCatalogRow) -> MetadataProductOption:
+    return MetadataProductOption(
+        id=row.id,
+        label=row.label,
+        product_family=row.product_family,
+        product_subfamily=row.product_subfamily,
+        genres=list(row.genres),
+        aliases=list(row.aliases),
+        family_keywords=list(row.family_keywords),
+        genre_keywords=list(row.genre_keywords),
+        required_clues=list(row.required_clues),
+        preferred_clues=list(row.preferred_clues),
+        exclude_clues=list(row.exclude_clues),
+        confusable_with=list(row.confusable_with),
+        functional_classes=list(row.functional_classes),
+        genre_functional_classes=list(row.genre_functional_classes),
+        family_traits=list(row.family_traits),
+        genre_traits=list(row.genre_traits),
+        genre_default_traits=list(row.genre_default_traits),
+        subtype_traits=list(row.subtype_traits),
+        core_traits=list(row.core_traits),
+        default_traits=list(row.default_traits),
+        implied_traits=list(row.implied_traits),
+        likely_standards=list(row.likely_standards),
+        genre_likely_standards=list(row.genre_likely_standards),
+    )
+
+
+def _legislation_option(row: LegislationCatalogRow) -> MetadataLegislationOption:
+    return MetadataLegislationOption(
+        code=row.code,
+        title=row.title,
+        directive_key=row.directive_key,
+        family=row.family,
+        priority=row.priority,
+        bucket=row.bucket,
+    )
 
 
 def _build_metadata_options_payload(
@@ -61,114 +125,65 @@ def _build_metadata_options_payload(
     genres: Sequence[GenreCatalogRow],
     products: Sequence[ProductCatalogRow],
     legislations: Sequence[LegislationCatalogRow],
-    meta: dict[str, Any],
-) -> dict[str, Any]:
+    meta: KnowledgeBaseMeta,
+) -> MetadataOptionsResponse:
     return MetadataOptionsResponse(
-        traits=[{"id": row["id"], "label": row["label"], "description": row["description"]} for row in traits],
-        genres=[
-            {
-                "id": row["id"],
-                "label": row["label"],
-                "keywords": row.get("keywords", []),
-                "traits": row.get("traits", []),
-                "default_traits": row.get("default_traits", []),
-                "functional_classes": row.get("functional_classes", []),
-                "likely_standards": row.get("likely_standards", []),
-            }
-            for row in genres
-        ],
-        products=[
-            {
-                "id": row["id"],
-                "label": row["label"],
-                "product_family": row.get("product_family"),
-                "product_subfamily": row.get("product_subfamily"),
-                "genres": row.get("genres", []),
-                "aliases": row.get("aliases", []),
-                "family_keywords": row.get("family_keywords", []),
-                "genre_keywords": row.get("genre_keywords", []),
-                "required_clues": row.get("required_clues", []),
-                "preferred_clues": row.get("preferred_clues", []),
-                "exclude_clues": row.get("exclude_clues", []),
-                "confusable_with": row.get("confusable_with", []),
-                "functional_classes": row.get("functional_classes", []),
-                "genre_functional_classes": row.get("genre_functional_classes", []),
-                "family_traits": row.get("family_traits", []),
-                "genre_traits": row.get("genre_traits", []),
-                "genre_default_traits": row.get("genre_default_traits", []),
-                "subtype_traits": row.get("subtype_traits", []),
-                "core_traits": row.get("core_traits", []),
-                "default_traits": row.get("default_traits", []),
-                "implied_traits": row.get("implied_traits", []),
-                "likely_standards": row.get("likely_standards", []),
-                "genre_likely_standards": row.get("genre_likely_standards", []),
-            }
-            for row in products
-        ],
-        legislations=[
-            {
-                "code": row["code"],
-                "title": row["title"],
-                "directive_key": row["directive_key"],
-                "family": row["family"],
-                "priority": row.get("priority", "conditional"),
-                "bucket": row.get("bucket", "non_ce"),
-            }
-            for row in legislations
-        ],
+        traits=[_trait_option(row) for row in traits],
+        genres=[_genre_option(row) for row in genres],
+        products=[_product_option(row) for row in products],
+        legislations=[_legislation_option(row) for row in legislations],
         knowledge_base_meta=meta,
-    ).model_dump()
+    )
 
 
-def _standard_directives(row: dict[str, Any]) -> list[str]:
-    directives = row.get("directives")
-    if isinstance(directives, list):
-        values = [item for item in directives if isinstance(item, str) and item]
-        if values:
-            return values
-
-    legislation_key = row.get("legislation_key")
-    if isinstance(legislation_key, str) and legislation_key:
-        return [legislation_key]
-
+def _standard_directives(row: StandardCatalogRow) -> list[str]:
+    if row.directives:
+        return list(row.directives)
+    if row.legislation_key:
+        return [row.legislation_key]
     return ["OTHER"]
 
 
-def _build_metadata_standards_payload(standards: Sequence[StandardCatalogRow], meta: dict[str, Any]) -> dict[str, Any]:
+def _standard_option(row: StandardCatalogRow) -> MetadataStandardOption:
+    directives = _standard_directives(row)
+    return MetadataStandardOption(
+        directive=directives[0],
+        directives=directives,
+        code=row.code,
+        title=row.title,
+        category=row.category,
+        legislation_key=row.legislation_key,
+        item_type=row.item_type,
+        standard_family=row.standard_family,
+        harmonization_status=row.harmonization_status,
+        is_harmonized=row.is_harmonized,
+        harmonized_under=row.harmonized_under,
+        harmonized_reference=row.harmonized_reference,
+        version=row.version,
+        dated_version=row.dated_version,
+        supersedes=row.supersedes,
+        test_focus=list(row.test_focus),
+        evidence_hint=list(row.evidence_hint),
+        keywords=list(row.keywords),
+        selection_group=row.selection_group,
+        selection_priority=row.selection_priority,
+        required_fact_basis=row.required_fact_basis,
+        applies_if_products=list(row.applies_if_products),
+        applies_if_genres=list(row.applies_if_genres),
+        applies_if_all=list(row.applies_if_all),
+        applies_if_any=list(row.applies_if_any),
+        exclude_if_genres=list(row.exclude_if_genres),
+    )
+
+
+def _build_metadata_standards_payload(
+    standards: Sequence[StandardCatalogRow],
+    meta: KnowledgeBaseMeta,
+) -> MetadataStandardsResponse:
     return MetadataStandardsResponse(
         knowledge_base_meta=meta,
-        standards=[
-            {
-                "directive": _standard_directives(row)[0],
-                "directives": _standard_directives(row),
-                "code": row["code"],
-                "title": row["title"],
-                "category": row["category"],
-                "legislation_key": row.get("legislation_key"),
-                "item_type": row.get("item_type", "standard"),
-                "standard_family": row.get("standard_family"),
-                "harmonization_status": row.get("harmonization_status", "unknown"),
-                "is_harmonized": row.get("is_harmonized"),
-                "harmonized_under": row.get("harmonized_under"),
-                "harmonized_reference": row.get("harmonized_reference"),
-                "version": row.get("version"),
-                "dated_version": row.get("dated_version"),
-                "supersedes": row.get("supersedes"),
-                "test_focus": row.get("test_focus", []),
-                "evidence_hint": row.get("evidence_hint", []),
-                "keywords": row.get("keywords", []),
-                "selection_group": row.get("selection_group"),
-                "selection_priority": row.get("selection_priority", 0),
-                "required_fact_basis": row.get("required_fact_basis", "inferred"),
-                "applies_if_products": row.get("applies_if_products", []),
-                "applies_if_genres": row.get("applies_if_genres", []),
-                "applies_if_all": row.get("applies_if_all", []),
-                "applies_if_any": row.get("applies_if_any", []),
-                "exclude_if_genres": row.get("exclude_if_genres", []),
-            }
-            for row in standards
-        ],
-    ).model_dump()
+        standards=[_standard_option(row) for row in standards],
+    )
 
 
 def _build_classifier_runtime_snapshot(
@@ -179,7 +194,7 @@ def _build_classifier_runtime_snapshot(
     from app.services.classifier import build_product_matching_snapshot
 
     return build_product_matching_snapshot(
-        products=list(products),
+        products=products,
         trait_ids={row["id"] for row in traits},
         catalog_version=catalog_version,
     )

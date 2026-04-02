@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Iterator, Mapping
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -13,14 +12,8 @@ LegislationApplicability = Literal["applicable", "conditional", "not_applicable"
 StandardItemType = Literal["standard", "review"]
 
 
-class MappingModel(BaseModel, Mapping[str, Any]):
+class MappingModel(BaseModel):
     model_config = ConfigDict(frozen=True, extra="allow")
-
-    def __iter__(self) -> Iterator[str]:
-        return iter(self._mapping_view())
-
-    def __len__(self) -> int:
-        return len(self._mapping_view())
 
     def __getitem__(self, key: str) -> Any:
         data = self._mapping_view()
@@ -30,6 +23,9 @@ class MappingModel(BaseModel, Mapping[str, Any]):
 
     def get(self, key: str, default: Any = None) -> Any:
         return self._mapping_view().get(key, default)
+
+    def items(self) -> list[tuple[str, Any]]:
+        return list(self._mapping_view().items())
 
     def as_legacy_dict(self) -> dict[str, Any]:
         return self.model_dump()

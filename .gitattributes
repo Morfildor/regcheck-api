@@ -1,7 +1,15 @@
 .env export-ignore
 .git export-ignore
 .pytest_cache export-ignore
+.mypy_cache export-ignore
+.ruff_cache export-ignore
 __pycache__ export-ignore
 venv export-ignore
 .venv export-ignore
 package-lock.json export-ignore
+build export-ignore
+dist export-ignore
+*.egg-info export-ignore
+*.whl export-ignore
+*.zip export-ignore
+*.tar.gz export-ignore

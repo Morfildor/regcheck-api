@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import Any, Literal
 
+from app.domain.catalog_types import StandardCatalogRow
+
 StandardAuditOutcome = Literal["selected", "review", "rejected"]
+StandardRowLike = StandardCatalogRow | Mapping[str, Any]
 
 
-def _audit_item_from_row(row: dict[str, Any], outcome: StandardAuditOutcome) -> dict[str, Any]:
+def _audit_item_from_row(row: StandardRowLike, outcome: StandardAuditOutcome) -> dict[str, Any]:
     return {
         "code": row.get("code"),
         "title": row.get("title", row.get("code")),

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from typing import Any, Literal, TypedDict, cast
 
 from app.domain.catalog_types import StandardCatalogRow
@@ -37,6 +38,7 @@ ProductHitType = Literal["not_product_gated", "primary_product", "alternate_prod
 StandardAuditOutcome = Literal["selected", "review", "rejected"]
 MatchBasis = Literal["product", "alternate_product", "preferred_product", "genre", "traits"]
 FactBasis = Literal["confirmed", "mixed", "inferred"]
+StandardRowLike = StandardCatalogRow | Mapping[str, Any]
 
 
 class TraitGate(TypedDict):
@@ -66,7 +68,7 @@ def _string_list(value: Any) -> list[str]:
     return [item for item in value if isinstance(item, str)]
 
 
-def _primary_directive(standard: dict[str, Any]) -> str:
+def _primary_directive(standard: StandardRowLike) -> str:
     directives = _string_list(standard.get("directives"))
     if directives:
         return directives[0]
@@ -74,7 +76,7 @@ def _primary_directive(standard: dict[str, Any]) -> str:
     return legislation_key if isinstance(legislation_key, str) and legislation_key else "OTHER"
 
 
-def _standard_item_type(standard: dict[str, Any]) -> StandardItemType:
+def _standard_item_type(standard: StandardRowLike) -> StandardItemType:
     item_type = standard.get("item_type")
     if item_type in {"standard", "review"}:
         return cast(StandardItemType, item_type)
@@ -83,13 +85,13 @@ def _standard_item_type(standard: dict[str, Any]) -> StandardItemType:
     return "review" if "review" in code or "review" in title else "standard"
 
 
-def _directive_sort_key(standard: dict[str, Any]) -> tuple[int, str]:
+def _directive_sort_key(standard: StandardRowLike) -> tuple[int, str]:
     directive = _primary_directive(standard)
     return DIRECTIVE_ORDER.get(directive, 99), str(standard.get("code", ""))
 
 
 def _product_hit_type(
-    standard: dict[str, Any],
+    standard: StandardRowLike,
     product_type: str | None,
     matched_products: list[str] | None,
     product_genres: list[str] | None = None,
@@ -128,7 +130,7 @@ def _product_hit_type(
     return None
 
 
-def _normalize_selection_group(standard: dict[str, Any]) -> str | None:
+def _normalize_selection_group(standard: StandardRowLike) -> str | None:
     selection_group = standard.get("selection_group")
     if isinstance(selection_group, str) and selection_group.strip():
         return selection_group.strip()
@@ -139,28 +141,28 @@ def _normalize_selection_group(standard: dict[str, Any]) -> str | None:
     return None
 
 
-def _is_subtype_specific_standard(standard: dict[str, Any]) -> bool:
+def _is_subtype_specific_standard(standard: StandardRowLike) -> bool:
     code = str(standard.get("code", "")).upper()
     family = str(standard.get("standard_family", "")).upper()
     selection_group = _normalize_selection_group(standard)
     return code.startswith("EN 60335-2-") or family.startswith("EN 60335-2-") or selection_group == "lvd_household_part2"
 
 
-def _is_exact_preferred_standard(standard: dict[str, Any], preferred_standard_codes: set[str]) -> bool:
+def _is_exact_preferred_standard(standard: StandardRowLike, preferred_standard_codes: set[str]) -> bool:
     if not preferred_standard_codes:
         return False
     code = standard.get("code")
     return isinstance(code, str) and code in preferred_standard_codes
 
 
-def _is_family_preferred_standard(standard: dict[str, Any], preferred_standard_codes: set[str]) -> bool:
+def _is_family_preferred_standard(standard: StandardRowLike, preferred_standard_codes: set[str]) -> bool:
     if not preferred_standard_codes:
         return False
     family = standard.get("standard_family")
     return isinstance(family, str) and family in preferred_standard_codes
 
 
-def _is_preferred_standard(standard: dict[str, Any], preferred_standard_codes: set[str]) -> bool:
+def _is_preferred_standard(standard: StandardRowLike, preferred_standard_codes: set[str]) -> bool:
     return _is_exact_preferred_standard(standard, preferred_standard_codes) or _is_family_preferred_standard(
         standard, preferred_standard_codes
     )
@@ -171,7 +173,7 @@ def _has_household_part2_preference(preferred_standard_codes: set[str]) -> bool:
 
 
 def _directive_review_fallback_allowed(
-    standard: dict[str, Any],
+    standard: StandardRowLike,
     preferred_standard_codes: set[str],
     product_hit_type: ProductHitType | None,
 ) -> bool:
@@ -190,7 +192,7 @@ def _directive_review_fallback_allowed(
 
 
 def _trait_gate_details(
-    standard: dict[str, Any],
+    standard: StandardRowLike,
     traits: set[str],
     confirmed_traits: set[str],
     allow_soft_any_miss: bool,
@@ -250,7 +252,7 @@ def _rejection_reason(product_hit_type: ProductHitType | None, gate: TraitGate) 
 
 
 def _build_reason(
-    standard: dict[str, Any],
+    standard: StandardRowLike,
     product_type: str | None,
     matched_products: list[str],
     product_genres: list[str],
@@ -382,7 +384,7 @@ def _has_small_smart_62368_preference(preferred_standard_codes: set[str], produc
 
 
 def _soften_preferred_62368_gate(
-    standard: dict[str, Any],
+    standard: StandardRowLike,
     gate: TraitGate,
     preferred_standard_codes: set[str],
     product_genres: list[str],
