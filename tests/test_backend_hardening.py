@@ -50,7 +50,7 @@ class BackendHardeningTests(unittest.TestCase):
             results.append(main.admin_reload(None))
 
         threads = [threading.Thread(target=invoke_reload) for _ in range(2)]
-        with patch("main.warmup_knowledge_base", side_effect=fake_warmup):
+        with patch("app.main.warmup_knowledge_base", side_effect=fake_warmup):
             for thread in threads:
                 thread.start()
             for thread in threads:
@@ -118,7 +118,7 @@ class BackendHardeningTests(unittest.TestCase):
         self.assertTrue(hasattr(loaded["app.services.result_builder"], "build_analysis_result"))
 
     def test_controlled_degraded_mode_uses_standardized_reason_and_warning(self) -> None:
-        with patch("rules._build_summary", side_effect=TypeError("boom")):
+        with patch("app.services.rules.service._build_summary", side_effect=TypeError("boom")):
             result = analyze("smart speaker with wifi and bluetooth")
 
         self.assertTrue(result.degraded_mode)

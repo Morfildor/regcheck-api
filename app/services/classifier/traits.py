@@ -922,24 +922,24 @@ def _collect_text_trait_signals(text: str) -> tuple[set[str], set[str], dict[str
 
     return explicit_traits, inferred_traits, state_map, negations
 
-def extract_traits_v2(description: str, category: str = "") -> dict:
-    text = normalize(f"{category} {description}")
-    explicit_traits, inferred_traits, state_map, negations = _collect_text_trait_signals(text)
-    functional_classes: set[str] = set()
-    confirmed_functional_classes: set[str] = set()
-    contradictions: list[str] = []
-    diagnostics: list[str] = [f"normalized_text={text}"]
+def _apply_product_trait_signals(
+    text: str,
+    match: dict,
+    explicit_traits: set[str],
+    inferred_traits: set[str],
+    negations: list[str],
+    state_map: dict,
+) -> tuple[set[str], set[str], set[str]]:
+    """Expand and filter product-level core/default traits, record them in state_map.
 
-    match = _hierarchical_product_match_v2(text, explicit_traits | inferred_traits)
-    product_candidates = match["product_candidates"]
-    matched_products = match["matched_products"]
-    routing_matched_products = match["routing_matched_products"]
-    confirmed_products = match["confirmed_products"]
-    preferred_standard_codes = match["preferred_standard_codes"]
-    product_family_confidence = match["product_family_confidence"]
-    product_subtype_confidence = match["product_subtype_confidence"]
+    Returns (product_core_traits, product_default_traits, product_genres).
+    """
     product_match_stage = match["product_match_stage"]
-    matched_aliases = [candidate.get("matched_alias") for candidate in product_candidates if candidate.get("matched_alias")]
+    matched_aliases = [
+        candidate.get("matched_alias")
+        for candidate in match["product_candidates"]
+        if candidate.get("matched_alias")
+    ]
     product_core_traits = _suppress_unmentioned_product_wireless_traits(
         text,
         _expand_related_traits(set(match.get("product_core_traits") or set())),
@@ -952,17 +952,15 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
         explicit_traits,
         matched_aliases,
     )
-    explicit_traits = _apply_explicit_trait_negations(explicit_traits, negations)
-    inferred_traits = _apply_explicit_trait_negations(inferred_traits, negations)
     product_core_traits = _apply_explicit_trait_negations(product_core_traits, negations)
     product_default_traits = _apply_explicit_trait_negations(product_default_traits, negations)
     product_genres = {item for item in (match.get("product_genres") or set()) if isinstance(item, str) and item}
 
-    functional_classes.update(match["functional_classes"])
-    confirmed_functional_classes.update(match["confirmed_functional_classes"])
     if product_core_traits:
         product_evidence = (
-            f"product:{match['product_subtype']}" if product_match_stage == "subtype" and match.get("product_subtype") else f"family:{match['product_family']}"
+            f"product:{match['product_subtype']}"
+            if product_match_stage == "subtype" and match.get("product_subtype")
+            else f"family:{match['product_family']}"
         )
         _record_trait_state(state_map, "product_core", product_core_traits, product_evidence)
     if product_default_traits:
@@ -973,8 +971,22 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
         )
         _record_trait_state(state_map, "product_default", product_default_traits, product_evidence)
 
-    confirmed_traits = set(explicit_traits)
+    return product_core_traits, product_default_traits, product_genres
+
+
+def _compute_confirmed_traits(
+    explicit_traits: set[str],
+    product_core_traits: set[str],
+    product_default_traits: set[str],
+    product_match_stage: str,
+    product_family_confidence: str,
+    product_subtype_confidence: str,
+    product_candidates: list[dict],
+) -> set[str]:
+    """Build the confirmed traits set from explicit signals and product match quality."""
+    confirmed = set(explicit_traits)
     top_candidate = product_candidates[0] if product_candidates else {}
+
     decisive_medium = (
         product_match_stage == "subtype"
         and product_subtype_confidence == "medium"
@@ -988,31 +1000,26 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
             or top_candidate.get("family_keyword_hits")
         )
     )
+    # Promote product-core traits to confirmed when match is sufficiently confident.
     if product_family_confidence == "high":
-        confirmed_traits.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
+        confirmed.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
     if product_match_stage == "subtype" and (product_subtype_confidence == "high" or decisive_medium or decisive_subtype):
-        confirmed_traits.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
+        confirmed.update(product_core_traits - SERVICE_DEPENDENT_TRAITS)
 
+    # Corroborated defaults: product default traits that are also explicit in text.
     corroborated_default = {trait for trait in product_default_traits if trait in explicit_traits}
-    confirmed_traits.update(corroborated_default - SERVICE_DEPENDENT_TRAITS)
+    confirmed.update(corroborated_default - SERVICE_DEPENDENT_TRAITS)
 
-    engine_derived_traits = _expand_related_traits(
-        _infer_connected_traits(text, explicit_traits | inferred_traits | product_core_traits | product_default_traits)
-    ) - explicit_traits - inferred_traits
-    engine_derived_traits = _apply_explicit_trait_negations(engine_derived_traits, negations)
-    if engine_derived_traits:
-        inferred_traits |= engine_derived_traits
-        _record_trait_state(state_map, "engine_derived", engine_derived_traits, "engine:connectivity_inference")
+    return confirmed
 
-    diagnostics.extend(match["diagnostics"])
-    if product_candidates:
-        diagnostics.append(f"product_winner={product_candidates[0]['id']}")
-        diagnostics.append(f"product_alias={product_candidates[0].get('matched_alias') or ''}")
-    else:
-        diagnostics.append("product_winner=none")
 
-    contradictions.extend(match["contradictions"])
-
+def _detect_trait_contradictions(
+    explicit_traits: set[str],
+    text: str,
+    match_contradictions: list[str],
+) -> list[str]:
+    """Collect trait-level signal contradictions from both product matching and text signals."""
+    contradictions = list(match_contradictions)
     if "battery_powered" in explicit_traits and "mains_powered" in explicit_traits:
         contradictions.append("Both battery-powered and mains-powered signals were detected.")
     if "cloud" in explicit_traits and "local_only" in explicit_traits:
@@ -1021,7 +1028,64 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
         contradictions.append("Both professional/commercial and household-use signals were detected.")
     if "wifi" in explicit_traits and _trait_is_negated(text, "internet") and {"cloud", "ota", "account"} & explicit_traits:
         contradictions.append("Wi-Fi is present while the text also says no internet, but cloud or OTA features were also detected.")
+    return contradictions
 
+
+def extract_traits_v2(description: str, category: str = "") -> dict:
+    text = normalize(f"{category} {description}")
+    explicit_traits, inferred_traits, state_map, negations = _collect_text_trait_signals(text)
+    diagnostics: list[str] = [f"normalized_text={text}"]
+
+    # --- Product matching ---
+    match = _hierarchical_product_match_v2(text, explicit_traits | inferred_traits)
+    product_candidates = match["product_candidates"]
+    matched_products = match["matched_products"]
+    routing_matched_products = match["routing_matched_products"]
+    confirmed_products = match["confirmed_products"]
+    preferred_standard_codes = match["preferred_standard_codes"]
+    product_family_confidence = match["product_family_confidence"]
+    product_subtype_confidence = match["product_subtype_confidence"]
+    product_match_stage = match["product_match_stage"]
+
+    # Apply negations to text-level traits before using them in product trait logic.
+    explicit_traits = _apply_explicit_trait_negations(explicit_traits, negations)
+    inferred_traits = _apply_explicit_trait_negations(inferred_traits, negations)
+
+    # --- Apply product-level trait signals (core / default traits from catalog) ---
+    product_core_traits, product_default_traits, product_genres = _apply_product_trait_signals(
+        text, match, explicit_traits, inferred_traits, negations, state_map
+    )
+    functional_classes = set(match["functional_classes"])
+    confirmed_functional_classes = set(match["confirmed_functional_classes"])
+
+    # --- Compute confirmed trait set ---
+    confirmed_traits = _compute_confirmed_traits(
+        explicit_traits, product_core_traits, product_default_traits,
+        product_match_stage, product_family_confidence, product_subtype_confidence,
+        product_candidates,
+    )
+
+    # --- Engine-derived connectivity inference ---
+    engine_derived_traits = _expand_related_traits(
+        _infer_connected_traits(text, explicit_traits | inferred_traits | product_core_traits | product_default_traits)
+    ) - explicit_traits - inferred_traits
+    engine_derived_traits = _apply_explicit_trait_negations(engine_derived_traits, negations)
+    if engine_derived_traits:
+        inferred_traits |= engine_derived_traits
+        _record_trait_state(state_map, "engine_derived", engine_derived_traits, "engine:connectivity_inference")
+
+    # --- Diagnostics: product matching ---
+    diagnostics.extend(match["diagnostics"])
+    if product_candidates:
+        diagnostics.append(f"product_winner={product_candidates[0]['id']}")
+        diagnostics.append(f"product_alias={product_candidates[0].get('matched_alias') or ''}")
+    else:
+        diagnostics.append("product_winner=none")
+
+    # --- Contradiction detection ---
+    contradictions = _detect_trait_contradictions(explicit_traits, text, match["contradictions"])
+
+    # --- Final trait-set cleanup: expand and filter to known catalog traits ---
     known_traits = _known_trait_ids()
     explicit_traits = {trait for trait in _expand_related_traits(explicit_traits) if trait in known_traits}
     # If battery_powered is explicitly detected from text, suppress mains_power_likely that may
@@ -1036,6 +1100,7 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
     confirmed_traits = _apply_explicit_trait_negations(confirmed_traits, negations)
     confirmed_traits = {trait for trait in _expand_related_traits(confirmed_traits) if trait in known_traits}
 
+    # --- Diagnostics: final trait sets ---
     diagnostics.append("matched_products=" + ",".join(matched_products))
     diagnostics.append("routing_matched_products=" + ",".join(routing_matched_products))
     diagnostics.append("confirmed_products=" + ",".join(confirmed_products))

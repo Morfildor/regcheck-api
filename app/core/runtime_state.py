@@ -3,10 +3,21 @@ from __future__ import annotations
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as _pkg_version
 from threading import Lock, RLock
 from typing import Any, Iterator, Literal
 
-APP_VERSION = "6.1.0"
+
+def _resolve_app_version() -> str:
+    # Single source of truth: pyproject.toml [project] version.
+    try:
+        return _pkg_version("rulegrid-backend")
+    except PackageNotFoundError:
+        return "0.0.0+dev"
+
+
+APP_VERSION = _resolve_app_version()
 API_VERSION = "1.0"
 
 StartupState = Literal["starting", "warming_up", "ready", "failed", "reloading"]

@@ -1360,6 +1360,130 @@ def _apply_post_selection_gates_v1(
     return kept
 
 
+# ---------------------------------------------------------------------------
+# _standard_context helpers — each helper owns one category of boolean flags.
+# ---------------------------------------------------------------------------
+
+def _context_power_flags(traits: set[str], matched_products: set[str]) -> tuple[bool, bool]:
+    """Return (has_external_psu, has_portable_battery)."""
+    has_external_psu = "external_psu" in traits or bool(matched_products & {"battery_charger", "industrial_charger"})
+    has_portable_battery = bool({"battery_powered", "backup_battery"} & traits)
+    return has_external_psu, has_portable_battery
+
+
+def _context_optical_flags(
+    traits: set[str],
+    matched_products: set[str],
+    product_type: str | None,
+    text: str,
+) -> tuple[bool, bool]:
+    """Return (has_laser_source, has_photobiological_source)."""
+    has_laser_source = "laser" in traits or _has_any(text, LASER_SOURCE_PATTERNS)
+    has_photobiological_source = (
+        has_laser_source
+        or bool(matched_products & PHOTOBIO_PRODUCT_HINTS)
+        or (product_type in PHOTOBIO_PRODUCT_HINTS if product_type else False)
+        or _has_any(text, PHOTOBIOLOGICAL_SOURCE_PATTERNS)
+    )
+    return has_laser_source, has_photobiological_source
+
+
+def _context_body_flags(traits: set[str], text: str) -> tuple[bool, bool]:
+    """Return (has_body_contact, has_skin_contact)."""
+    has_body_contact = bool({"wearable", "body_worn_or_applied", "personal_care"} & traits) or bool(
+        re.search(r"\b(?:body contact|skin contact|body worn|on body|on skin|chest strap|sensor patch|wearable patch|armband)\b", text)
+    )
+    has_skin_contact = bool(re.search(r"\b(?:skin contact|on skin|chest strap|sensor patch|wearable patch)\b", text))
+    return has_body_contact, has_skin_contact
+
+
+def _context_emf_flags(
+    traits: set[str],
+    matched_products: set[str],
+    scope_route: str,
+) -> tuple[bool, bool, bool]:
+    """Return (prefer_specific_red_emf, prefer_62233, prefer_62311).
+
+    prefer_specific_red_emf: close-proximity RF products where SAR/limb-SAR routes apply.
+    prefer_62233: household motor/heating appliances where EN 62233 is the primary EMF route.
+    prefer_62311: AV/ICT, wearables, personal-care, and non-consumer radio where EN 62311 applies.
+    """
+    prefer_specific_red_emf = bool(
+        "radio" in traits and ({"cellular", "wearable", "handheld", "body_worn_or_applied", "close_proximity_emf"} & traits)
+    )
+    prefer_62233 = (
+        scope_route != "av_ict"
+        and "electrical" in traits
+        and "consumer" in traits
+        and "household" in traits
+        and ({"heating", "motorized", "mains_powered", "mains_power_likely"} & traits)
+        and "wearable" not in traits
+        and "handheld" not in traits
+        and "body_worn_or_applied" not in traits
+    )
+    prefer_62311 = bool(
+        "electrical" in traits
+        and (
+            scope_route == "av_ict"
+            or "wearable" in traits
+            or "handheld" in traits
+            or "body_worn_or_applied" in traits
+            or ("radio" in traits and "consumer" not in traits)
+            or bool(matched_products & PERSONAL_CARE_PRODUCT_HINTS)
+        )
+    )
+    return prefer_specific_red_emf, prefer_62233, prefer_62311
+
+
+def _build_context_tags(
+    scope_route: str,
+    route_plan: RoutePlan,
+    traits: set[str],
+    has_external_psu: bool,
+    has_portable_battery: bool,
+    has_laser_source: bool,
+    has_photobiological_source: bool,
+    prefer_specific_red_emf: bool,
+    prefer_62233: bool,
+    has_body_contact: bool,
+    has_skin_contact: bool,
+    has_personal_or_health_data: bool,
+    has_connected_radio: bool,
+    has_medical_boundary: bool,
+) -> set[str]:
+    """Assemble the context_tags set from pre-computed flags."""
+    tags: set[str] = {f"scope:{scope_route}"}
+    if route_plan.primary_route_family:
+        tags.add("primary:" + route_plan.primary_route_family)
+    if route_plan.primary_standard_code:
+        tags.add("primary_standard:" + route_plan.primary_standard_code)
+    if has_external_psu:
+        tags.add("power:external_psu")
+    if has_portable_battery:
+        tags.add("power:portable_battery")
+    if has_laser_source:
+        tags.add("optical:laser")
+    if has_photobiological_source:
+        tags.add("optical:photobio")
+    if prefer_specific_red_emf:
+        tags.add("exposure:close_proximity")
+    if prefer_62233:
+        tags.add("exposure:household_emf")
+    if has_body_contact:
+        tags.add("contact:body")
+    if has_skin_contact or has_body_contact:
+        tags.add("contact:skin")
+    if has_personal_or_health_data:
+        tags.add("data:personal_or_health")
+    if {"health_related", "biometric"} & traits:
+        tags.add("data:health")
+    if has_connected_radio:
+        tags.add("cyber:connected_radio")
+    if has_medical_boundary:
+        tags.add("boundary:medical_wellness")
+    return tags
+
+
 def _standard_context(
     traits: set[str],
     matched_products: set[str],
@@ -1378,20 +1502,11 @@ def _standard_context(
     )
     if route_plan.reason:
         scope_reasons = [route_plan.reason, *scope_reasons]
+
     text = normalize(description)
-    has_external_psu = "external_psu" in traits or bool(matched_products & {"battery_charger", "industrial_charger"})
-    has_portable_battery = bool({"battery_powered", "backup_battery"} & traits)
-    has_laser_source = "laser" in traits or _has_any(text, LASER_SOURCE_PATTERNS)
-    has_photobiological_source = (
-        has_laser_source
-        or bool(matched_products & PHOTOBIO_PRODUCT_HINTS)
-        or (product_type in PHOTOBIO_PRODUCT_HINTS if product_type else False)
-        or _has_any(text, PHOTOBIOLOGICAL_SOURCE_PATTERNS)
-    )
-    has_body_contact = bool({"wearable", "body_worn_or_applied", "personal_care"} & traits) or bool(
-        re.search(r"\b(?:body contact|skin contact|body worn|on body|on skin|chest strap|sensor patch|wearable patch|armband)\b", text)
-    )
-    has_skin_contact = bool(re.search(r"\b(?:skin contact|on skin|chest strap|sensor patch|wearable patch)\b", text))
+    has_external_psu, has_portable_battery = _context_power_flags(traits, matched_products)
+    has_laser_source, has_photobiological_source = _context_optical_flags(traits, matched_products, product_type, text)
+    has_body_contact, has_skin_contact = _context_body_flags(traits, text)
     has_personal_or_health_data = bool(
         {"personal_data_likely", "health_related", "biometric", "account", "camera", "microphone", "location"} & traits
     )
@@ -1399,60 +1514,16 @@ def _standard_context(
         "radio" in traits and ({"wifi", "bluetooth", "cellular", "app_control", "cloud", "ota", "internet", "account", "authentication"} & traits)
     )
     has_medical_boundary = bool({"possible_medical_boundary", "medical_context", "medical_claims"} & traits)
-    prefer_specific_red_emf = bool(
-        "radio" in traits and ({"cellular", "wearable", "handheld", "body_worn_or_applied", "close_proximity_emf"} & traits)
-    )
-    prefer_62233 = (
-        scope_route != "av_ict"
-        and "electrical" in traits
-        and "consumer" in traits
-        and "household" in traits
-        and ({"heating", "motorized", "mains_powered", "mains_power_likely"} & traits)
-        and "wearable" not in traits
-        and "handheld" not in traits
-        and "body_worn_or_applied" not in traits
-    )
-    prefer_62311 = (
-        "electrical" in traits
-        and (
-            scope_route == "av_ict"
-            or "wearable" in traits
-            or "handheld" in traits
-            or "body_worn_or_applied" in traits
-            or ("radio" in traits and "consumer" not in traits)
-            or bool(matched_products & PERSONAL_CARE_PRODUCT_HINTS)
-        )
-    )
+    prefer_specific_red_emf, prefer_62233, prefer_62311 = _context_emf_flags(traits, matched_products, scope_route)
 
-    context_tags: set[str] = {f"scope:{scope_route}"}
-    if route_plan.primary_route_family:
-        context_tags.add("primary:" + route_plan.primary_route_family)
-    if route_plan.primary_standard_code:
-        context_tags.add("primary_standard:" + route_plan.primary_standard_code)
-    if has_external_psu:
-        context_tags.add("power:external_psu")
-    if has_portable_battery:
-        context_tags.add("power:portable_battery")
-    if has_laser_source:
-        context_tags.add("optical:laser")
-    if has_photobiological_source:
-        context_tags.add("optical:photobio")
-    if prefer_specific_red_emf:
-        context_tags.add("exposure:close_proximity")
-    if prefer_62233:
-        context_tags.add("exposure:household_emf")
-    if has_body_contact:
-        context_tags.add("contact:body")
-    if has_skin_contact or has_body_contact:
-        context_tags.add("contact:skin")
-    if has_personal_or_health_data:
-        context_tags.add("data:personal_or_health")
-    if {"health_related", "biometric"} & traits:
-        context_tags.add("data:health")
-    if has_connected_radio:
-        context_tags.add("cyber:connected_radio")
-    if has_medical_boundary:
-        context_tags.add("boundary:medical_wellness")
+    context_tags = _build_context_tags(
+        scope_route, route_plan, traits,
+        has_external_psu, has_portable_battery,
+        has_laser_source, has_photobiological_source,
+        prefer_specific_red_emf, prefer_62233,
+        has_body_contact, has_skin_contact,
+        has_personal_or_health_data, has_connected_radio, has_medical_boundary,
+    )
 
     return {
         "scope_route": scope_route,
@@ -1477,6 +1548,160 @@ def _standard_context(
     }
 
 
+# ---------------------------------------------------------------------------
+# _apply_post_selection_gates helpers
+# ---------------------------------------------------------------------------
+
+def _gate_per_item(
+    item: dict[str, Any],
+    context: dict[str, Any],
+    traits: set[str],
+    allowed_directives: set[str],
+    product_genres: set[str] | None,
+    preferred_standard_codes: set[str] | None,
+    diagnostics: list[str],
+) -> bool:
+    """Evaluate all per-item gates. Returns True if the item should be dropped."""
+    code = str(item.get("code") or "")
+    route = str(item.get("directive") or item.get("legislation_key") or "OTHER")
+
+    # --- Scope-based EMC standard gates (appliance vs AV/ICT) ---
+    if code in {"EN 55032", "EN 55035"} and context["scope_route"] == "appliance":
+        diagnostics.append(f"gate=drop_{code}:appliance_primary")
+        return True
+
+    if code == "EN 62368-1" and context["scope_route"] == "appliance":
+        if _keep_preferred_62368_review_in_appliance_scope(item, product_genres, preferred_standard_codes):
+            diagnostics.append("gate=keep_EN62368-1:preferred_small_smart_review")
+        else:
+            diagnostics.append("gate=drop_EN62368-1:appliance_primary")
+            return True
+
+    if code.startswith("EN 60335-") and context["scope_route"] == "av_ict":
+        diagnostics.append(f"gate=drop_{code}:av_ict_primary")
+        return True
+
+    if code.startswith("EN 55014-") and context["scope_route"] == "av_ict":
+        diagnostics.append(f"gate=drop_{code}:av_ict_primary")
+        return True
+
+    # --- External PSU gates: assign directive and drop if no PSU signal ---
+    if code == "Charger / external PSU review":
+        if route == "EMC":
+            # Prevent PSU review from appearing under EMC directive.
+            diagnostics.append("gate=drop_external_psu_from_emc")
+            return True
+        if not context["has_external_psu"]:
+            diagnostics.append("gate=drop_external_psu_review:no_external_psu_signal")
+            return True
+        item["directive"] = "LVD"
+        item["legislation_key"] = "LVD"
+    elif code == "EN 50563":
+        if not context["has_external_psu"]:
+            diagnostics.append("gate=drop_EN50563:no_external_psu_signal")
+            return True
+        item["directive"] = "ECO"
+        item["legislation_key"] = "ECO"
+
+    # --- EMF / RF exposure gates ---
+    if code == "EN 62311":
+        if context["prefer_62233"] and not ("radio" in traits and ({"wearable", "handheld", "body_worn_or_applied"} & traits)):
+            diagnostics.append("gate=drop_EN62311:prefer_EN62233")
+            return True
+        item["directive"] = "RED" if "radio" in traits else "LVD"
+        item["legislation_key"] = item["directive"]
+
+    if code == "EN 62479":
+        if "radio" not in traits:
+            diagnostics.append("gate=drop_EN62479:no_radio_signal")
+            return True
+        if context["prefer_specific_red_emf"]:
+            diagnostics.append("gate=drop_EN62479:prefer_specific_red_emf_route")
+            return True
+
+    if code.startswith("EN 62209") and not (
+        "radio" in traits and ({"wearable", "handheld", "body_worn_or_applied", "cellular"} & traits)
+    ):
+        diagnostics.append(f"gate=drop_{code}:not_close_proximity_radio")
+        return True
+
+    # --- Optical / photobiological gates ---
+    if code == "EN 60825-1" and not context["has_laser_source"]:
+        diagnostics.append("gate=drop_EN60825-1:no_laser_source")
+        return True
+
+    if code == "EN 62471" and not context["has_photobiological_source"]:
+        diagnostics.append("gate=drop_EN62471:no_photobiological_source")
+        return True
+
+    # --- Directive-scope gate: drop if the assigned directive was not selected ---
+    effective_route = str(item.get("directive") or "OTHER")
+    if effective_route not in allowed_directives and effective_route != "OTHER":
+        diagnostics.append(f"gate=drop_{code}:directive_{effective_route}_not_selected")
+        return True
+
+    return False
+
+
+def _promote_household_part1(kept: list[dict[str, Any]], diagnostics: list[str]) -> None:
+    """Promote EN 60335-1 from review to standard when a Part-2 household standard is present."""
+    household_part2_selected = any(
+        str(item.get("code") or "").startswith("EN 60335-2-") and item.get("item_type") == "standard"
+        for item in kept
+    )
+    if not household_part2_selected:
+        return
+    for item in kept:
+        if str(item.get("code") or "") != "EN 60335-1" or item.get("item_type") != "review":
+            continue
+        item["item_type"] = "standard"
+        item["fact_basis"] = "confirmed"
+        reason = item.get("reason")
+        if isinstance(reason, str):
+            item["reason"] = reason.replace(
+                ". some routing traits are inferred from product context and still need confirmation",
+                "",
+            )
+        diagnostics.append("gate=promote_EN60335-1:paired_with_household_part2")
+
+
+def _prune_emf_duplicate(
+    kept: list[dict[str, Any]],
+    context: dict[str, Any],
+    diagnostics: list[str],
+) -> list[dict[str, Any]]:
+    """Remove the less-preferred EMF standard when both EN 62233 and EN 62311 are present."""
+    codes = {str(item.get("code") or "") for item in kept}
+    if "EN 62233" not in codes or "EN 62311" not in codes:
+        return kept
+    if context["prefer_62233"]:
+        diagnostics.append("gate=prune_EN62311_after_pairing")
+        return [item for item in kept if item.get("code") != "EN 62311"]
+    if context["prefer_62311"]:
+        diagnostics.append("gate=prune_EN62233_after_pairing")
+        return [item for item in kept if item.get("code") != "EN 62233"]
+    return kept
+
+
+def _prune_battery_safety_review(
+    kept: list[dict[str, Any]],
+    context: dict[str, Any],
+    traits: set[str],
+    diagnostics: list[str],
+) -> list[dict[str, Any]]:
+    """Drop generic Battery safety review when EN 62133-2 is already selected for AV/ICT."""
+    codes = {str(item.get("code") or "") for item in kept}
+    if (
+        "Battery safety review" in codes
+        and "EN 62133-2" in codes
+        and context["scope_route"] == "av_ict"
+        and not ({"wearable", "handheld", "body_worn_or_applied", "replaceable_battery"} & traits)
+    ):
+        diagnostics.append("gate=prune_Battery_safety_review:covered_by_EN62133-2")
+        return [item for item in kept if item.get("code") != "Battery safety review"]
+    return kept
+
+
 def _apply_post_selection_gates(
     selected: list[dict[str, Any]],
     traits: set[str],
@@ -1489,124 +1714,22 @@ def _apply_post_selection_gates(
     product_genres: set[str] | None = None,
     preferred_standard_codes: set[str] | None = None,
 ) -> list[dict[str, Any]]:
-    kept: list[dict[str, Any]] = []
     context = _standard_context(traits, matched_products, product_type, confirmed_traits, description)
     diagnostics.append("scope_route=" + context["scope_route"])
     if context["scope_reasons"]:
         diagnostics.append("scope_route_reasons=" + ";".join(context["scope_reasons"]))
     diagnostics.append("standard_context_tags=" + ",".join(sorted(context["context_tags"])))
 
-    for item in selected:
-        code = str(item.get("code") or "")
-        route = str(item.get("directive") or item.get("legislation_key") or "OTHER")
+    # Per-item gates: evaluate each candidate and collect keepers.
+    kept: list[dict[str, Any]] = [
+        item for item in selected
+        if not _gate_per_item(item, context, traits, allowed_directives, product_genres, preferred_standard_codes, diagnostics)
+    ]
 
-        if code in {"EN 55032", "EN 55035"} and context["scope_route"] == "appliance":
-            diagnostics.append(f"gate=drop_{code}:appliance_primary")
-            continue
-
-        if code == "EN 62368-1" and context["scope_route"] == "appliance":
-            if _keep_preferred_62368_review_in_appliance_scope(item, product_genres, preferred_standard_codes):
-                diagnostics.append("gate=keep_EN62368-1:preferred_small_smart_review")
-            else:
-                diagnostics.append("gate=drop_EN62368-1:appliance_primary")
-                continue
-
-        if code.startswith("EN 60335-") and context["scope_route"] == "av_ict":
-            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
-            continue
-
-        if code.startswith("EN 55014-") and context["scope_route"] == "av_ict":
-            diagnostics.append(f"gate=drop_{code}:av_ict_primary")
-            continue
-
-        if code == "Charger / external PSU review":
-            if not context["has_external_psu"]:
-                diagnostics.append("gate=drop_external_psu_review:no_external_psu_signal")
-                continue
-            item["directive"] = "LVD"
-            item["legislation_key"] = "LVD"
-        elif code == "EN 50563":
-            if not context["has_external_psu"]:
-                diagnostics.append("gate=drop_EN50563:no_external_psu_signal")
-                continue
-            item["directive"] = "ECO"
-            item["legislation_key"] = "ECO"
-
-        if code == "EN 62311":
-            if context["prefer_62233"] and not ("radio" in traits and ({"wearable", "handheld", "body_worn_or_applied"} & traits)):
-                diagnostics.append("gate=drop_EN62311:prefer_EN62233")
-                continue
-            item["directive"] = "RED" if "radio" in traits else "LVD"
-            item["legislation_key"] = item["directive"]
-
-        if code == "EN 60825-1" and not context["has_laser_source"]:
-            diagnostics.append("gate=drop_EN60825-1:no_laser_source")
-            continue
-
-        if code == "EN 62471" and not context["has_photobiological_source"]:
-            diagnostics.append("gate=drop_EN62471:no_photobiological_source")
-            continue
-
-        if code == "EN 62479":
-            if "radio" not in traits:
-                diagnostics.append("gate=drop_EN62479:no_radio_signal")
-                continue
-            if context["prefer_specific_red_emf"]:
-                diagnostics.append("gate=drop_EN62479:prefer_specific_red_emf_route")
-                continue
-
-        if code.startswith("EN 62209") and not (
-            "radio" in traits and ({"wearable", "handheld", "body_worn_or_applied", "cellular"} & traits)
-        ):
-            diagnostics.append(f"gate=drop_{code}:not_close_proximity_radio")
-            continue
-
-        if route == "EMC" and code == "Charger / external PSU review":
-            diagnostics.append("gate=drop_external_psu_from_emc")
-            continue
-
-        route = str(item.get("directive") or "OTHER")
-        if route not in allowed_directives and route != "OTHER":
-            diagnostics.append(f"gate=drop_{code}:directive_{route}_not_selected")
-            continue
-
-        kept.append(item)
-
-    household_part2_selected = any(
-        str(item.get("code") or "").startswith("EN 60335-2-") and item.get("item_type") == "standard"
-        for item in kept
-    )
-    if household_part2_selected:
-        for item in kept:
-            if str(item.get("code") or "") != "EN 60335-1" or item.get("item_type") != "review":
-                continue
-            item["item_type"] = "standard"
-            item["fact_basis"] = "confirmed"
-            reason = item.get("reason")
-            if isinstance(reason, str):
-                item["reason"] = reason.replace(
-                    ". some routing traits are inferred from product context and still need confirmation",
-                    "",
-                )
-            diagnostics.append("gate=promote_EN60335-1:paired_with_household_part2")
-
-    codes = {str(item.get("code") or "") for item in kept}
-    if "EN 62233" in codes and "EN 62311" in codes and context["prefer_62233"]:
-        kept = [item for item in kept if item.get("code") != "EN 62311"]
-        diagnostics.append("gate=prune_EN62311_after_pairing")
-    elif "EN 62233" in codes and "EN 62311" in codes and context["prefer_62311"]:
-        kept = [item for item in kept if item.get("code") != "EN 62233"]
-        diagnostics.append("gate=prune_EN62233_after_pairing")
-
-    codes = {str(item.get("code") or "") for item in kept}
-    if (
-        "Battery safety review" in codes
-        and "EN 62133-2" in codes
-        and context["scope_route"] == "av_ict"
-        and not ({"wearable", "handheld", "body_worn_or_applied", "replaceable_battery"} & traits)
-    ):
-        kept = [item for item in kept if item.get("code") != "Battery safety review"]
-        diagnostics.append("gate=prune_Battery_safety_review:covered_by_EN62133-2")
+    # Post-loop promotions and pruning.
+    _promote_household_part1(kept, diagnostics)
+    kept = _prune_emf_duplicate(kept, context, diagnostics)
+    kept = _prune_battery_safety_review(kept, context, traits, diagnostics)
 
     return kept
 

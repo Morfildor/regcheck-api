@@ -54,32 +54,6 @@ def get_runtime_state(target_app: FastAPI | None = None) -> AppRuntimeState:
     return runtime_state
 
 
-def _compat_main_attr(name: str) -> Any | None:
-    try:
-        import main as compat_main
-    except ImportError:
-        return None
-    return getattr(compat_main, name, None)
-
-
-def _warmup_knowledge_base() -> KnowledgeBaseWarmupResult:
-    compat_warmup = _compat_main_attr("warmup_knowledge_base")
-    if callable(compat_warmup):
-        return compat_warmup(refresh_paths=True)
-    return warmup_knowledge_base(refresh_paths=True)
-
-
-def _analyze_product(*, description: str, category: str, directives: list[str] | None, depth: str, trace: AnalysisTrace) -> AnalysisResult:
-    compat_analyze = _compat_main_attr("analyze")
-    analyzer = compat_analyze if callable(compat_analyze) else analyze
-    return analyzer(
-        description=description,
-        category=category,
-        directives=directives,
-        depth=depth,
-        trace=trace,
-    )
-
 
 def _readiness_payload(runtime_state: AppRuntimeState) -> dict[str, Any]:
     settings = get_settings()
@@ -131,7 +105,7 @@ async def lifespan(target_app: FastAPI):
     runtime_state = get_runtime_state(target_app)
     runtime_state.mark_warming("warming_up")
     try:
-        result = _warmup_knowledge_base()
+        result = warmup_knowledge_base(refresh_paths=True)
         _update_runtime_state_after_warmup(target_app, result)
         snapshot = runtime_state.snapshot()
         logger.info(
@@ -303,7 +277,7 @@ def admin_reload(_: None = Depends(_require_admin_reload_token)) -> dict[str, An
     with runtime_state.reload_guard():
         runtime_state.mark_warming("reloading", preserve_snapshot=True)
         try:
-            result = _warmup_knowledge_base()
+            result = warmup_knowledge_base(refresh_paths=True)
             _update_runtime_state_after_warmup(app, result, reloaded=True)
             snapshot = runtime_state.snapshot()
             logger.info(
@@ -341,7 +315,7 @@ def run_analysis(product: ProductInput, request: Request | None = None) -> Analy
             ",".join(product.directives or []),
             product.depth,
         )
-        result = _analyze_product(
+        result = analyze(
             description=product.description,
             category=product.category,
             directives=product.directives,

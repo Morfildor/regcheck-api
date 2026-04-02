@@ -120,7 +120,7 @@ class ApiContractTests(unittest.TestCase):
         self.assertEqual(body["error"]["request_id"], response.headers["X-Request-Id"])
 
     def test_degraded_mode_response_when_standards_fail(self) -> None:
-        with patch("rules.find_applicable_items", side_effect=RuntimeError("boom")):
+        with patch("app.services.rules.service.find_applicable_items", side_effect=RuntimeError("boom")):
             result = analyze("smart speaker with wifi and bluetooth")
 
         self.assertTrue(result.degraded_mode)
@@ -178,7 +178,7 @@ class ApiContractTests(unittest.TestCase):
         with TestClient(main.app) as client:
             with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": "secret"}):
                 with patch("main.reset_cache"):
-                    with patch("main.warmup_knowledge_base", return_value=warmup):
+                    with patch("app.main.warmup_knowledge_base", return_value=warmup):
                         response = client.post("/admin/reload", headers={"X-Admin-Token": "secret"})
 
         self.assertEqual(response.status_code, 200)
@@ -192,7 +192,7 @@ class ApiContractTests(unittest.TestCase):
         with TestClient(main.app) as client:
             with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": "secret"}):
                 with patch("main.reset_cache"):
-                    with patch("main.warmup_knowledge_base", side_effect=KnowledgeBaseError("reload failed")):
+                    with patch("app.main.warmup_knowledge_base", side_effect=KnowledgeBaseError("reload failed")):
                         response = client.post("/admin/reload", headers={"X-Admin-Token": "secret"})
 
         self.assertEqual(response.status_code, 503)
@@ -206,7 +206,7 @@ class ApiContractTests(unittest.TestCase):
             meta={"version": "startup-catalog"},
             duration_ms=5,
         )
-        with patch("main.warmup_knowledge_base", return_value=warmup):
+        with patch("app.main.warmup_knowledge_base", return_value=warmup):
             with TestClient(main.app):
                 runtime_state = main.get_runtime_state()
                 self.assertTrue(runtime_state.is_ready)
@@ -222,7 +222,7 @@ class ApiContractTests(unittest.TestCase):
                 )
             )
             with patch.dict("os.environ", {"REGCHECK_ADMIN_RELOAD_TOKEN": "secret"}):
-                with patch("main.warmup_knowledge_base", side_effect=KnowledgeBaseError("reload failed")):
+                with patch("app.main.warmup_knowledge_base", side_effect=KnowledgeBaseError("reload failed")):
                     response = client.post("/admin/reload", headers={"X-Admin-Token": "secret"})
 
         self.assertEqual(response.status_code, 503)
@@ -328,7 +328,7 @@ class ApiContractTests(unittest.TestCase):
         self.assertIsNot(options_before, options_after)
 
     def test_shadow_diff_present_when_enabled(self) -> None:
-        with patch("rules.ENABLE_ENGINE_V2_SHADOW", True):
+        with patch("app.services.rules.service._shadow_enabled", return_value=True):
             result = analyze("smart speaker with wifi and bluetooth")
 
         self.assertIsInstance(result.analysis_audit.shadow_diff, list)

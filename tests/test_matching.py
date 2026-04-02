@@ -204,7 +204,7 @@ class MatchingTests(unittest.TestCase):
             "diagnostics": [],
         }
 
-        with patch("rules.extract_traits", return_value=fake_traits):
+        with patch("app.services.rules.routing.extract_traits", return_value=fake_traits):
             result = analyze("synthetic")
 
         review_item = next(item for item in result.review_items if item.code == "EN 62368-1")
@@ -248,9 +248,9 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("audio/video, ict", hits)
 
     def test_pick_legislations_uses_current_date_per_call(self) -> None:
-        with patch("rules._current_date", return_value=date(2026, 3, 21)):
+        with patch("app.services.rules.routing._current_date", return_value=date(2026, 3, 21)):
             future_rows = _pick_legislations({"ai_related"}, set(), None)
-        with patch("rules._current_date", return_value=date(2026, 8, 3)):
+        with patch("app.services.rules.routing._current_date", return_value=date(2026, 8, 3)):
             current_rows = _pick_legislations({"ai_related"}, set(), None)
 
         future_ai_act = next(row for row in future_rows if row["directive_key"] == "AI_Act")
@@ -391,15 +391,14 @@ class MatchingTests(unittest.TestCase):
             "reason": "synthetic future-only review item",
         }
 
-        with patch("rules.extract_traits", return_value=fake_traits):
-            with patch("rules._build_legislation_sections", return_value=([future_legislation], [], ["AI_Act"])):
+        with patch("app.services.rules.routing.extract_traits", return_value=fake_traits):
+            with patch("app.services.rules.routing._build_legislation_sections", return_value=([future_legislation], [], ["AI_Act"])):
                 with patch(
-                    "rules.find_applicable_items",
+                    "app.services.rules.service.find_applicable_items",
                     return_value={"standards": [], "review_items": [future_review_row], "rejections": []},
                 ):
-                    with patch("rules._apply_post_selection_gates", side_effect=lambda rows, *_, **__: rows):
-                        with patch("rules._missing_information", return_value=[]):
-                            result = analyze("synthetic", depth="deep")
+                    with patch("app.services.rules.service._missing_information", return_value=[]):
+                        result = analyze("synthetic", depth="deep")
 
         self.assertEqual(result.current_compliance_risk, "LOW")
         self.assertEqual(result.future_watchlist_risk, "MEDIUM")
@@ -634,10 +633,10 @@ class MatchingTests(unittest.TestCase):
             "rejected": [],
         }
 
-        with patch("rules.extract_traits", return_value=fake_traits):
-            with patch("rules._build_legislation_sections", return_value=([legislation], [], ["LVD"])):
+        with patch("app.services.rules.routing.extract_traits", return_value=fake_traits):
+            with patch("app.services.rules.routing._build_legislation_sections", return_value=([legislation], [], ["LVD"])):
                 with patch(
-                    "rules.find_applicable_items",
+                    "app.services.rules.service.find_applicable_items",
                     return_value={"standards": [standard_row], "review_items": [], "audit": audit_payload, "rejections": []},
                 ):
                     result = analyze("synthetic av ict equipment")
@@ -844,7 +843,7 @@ class MatchingTests(unittest.TestCase):
         )
         runtime_state.mark_ready(KnowledgeBaseWarmupSnapshot(counts={}, meta={"version": "test-catalog"}))
         try:
-            with patch("main.analyze", side_effect=RuntimeError("boom")):
+            with patch("app.main.analyze", side_effect=RuntimeError("boom")):
                 with patch.object(main.logger, "exception"):
                     with self.assertRaises(HTTPException) as ctx:
                         main.run_analysis(ProductInput(description="test product"))
