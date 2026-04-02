@@ -5827,6 +5827,7 @@ standards:
   applies_if_products:
   - ev_charger_home
   - portable_ev_charger
+  - ev_connector_accessory
   exclude_if_products: []
   applies_if_all:
   - electrical

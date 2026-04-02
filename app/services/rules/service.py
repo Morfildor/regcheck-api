@@ -19,6 +19,7 @@ from app.domain.models import (
     StandardItem,
     StandardMatchAudit,
     StandardSection,
+    DecisionTraceEntry,
 )
 from app.services.classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, normalize
 from app.services.standards_engine import find_applicable_items
@@ -135,8 +136,16 @@ def _select_standards(
         else:
             standard_items.append(item)
 
-    standard_items = _sort_standard_items(standard_items)
-    review_items = _sort_standard_items(review_items)
+    standard_items = _sort_standard_items(
+        standard_items,
+        primary_standard_code=prepared.route_plan.primary_standard_code,
+        supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
+    )
+    review_items = _sort_standard_items(
+        review_items,
+        primary_standard_code=prepared.route_plan.primary_standard_code,
+        supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
+    )
     current_review_items = [item for item in review_items if item.timing_status == "current"]
     missing_items = _missing_information(
         prepared.route_traits,
@@ -154,7 +163,15 @@ def _select_standards(
         reason="standard_sections_failed",
         warning="Standards sections could not be assembled; standards remain available as a flat list.",
         fallback=[],
-        operation=lambda: _build_standard_sections(_sort_standard_items(standard_items + review_items)),
+        operation=lambda: _build_standard_sections(
+            _sort_standard_items(
+                standard_items + review_items,
+                primary_standard_code=prepared.route_plan.primary_standard_code,
+                supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
+            ),
+            primary_standard_code=prepared.route_plan.primary_standard_code,
+            supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
+        ),
     )
 
     return StandardsSelection(
@@ -261,6 +278,130 @@ def _maybe_attach_shadow_diff(
     result.analysis_audit.shadow_diff = shadow_diff
 
     return result
+
+
+def _trace_items(values: list[str] | set[str], limit: int = 6) -> list[str]:
+    ordered = [item for item in values if isinstance(item, str) and item]
+    return ordered[:limit]
+
+
+def _build_decision_trace(
+    prepared: PreparedAnalysis,
+    routes: LegislationSelection,
+    standards: StandardsSelection,
+    known_facts: list[Any],
+) -> list[DecisionTraceEntry]:
+    product_type = str(prepared.traits_data.get("product_type") or "") or None
+    product_family = str(prepared.traits_data.get("product_family") or "") or None
+    product_stage = str(prepared.traits_data.get("product_match_stage") or "ambiguous")
+    product_confidence = str(prepared.traits_data.get("product_match_confidence") or "low")
+    candidate_ids = [str(item.get("id") or "") for item in (prepared.traits_data.get("product_candidates") or []) if item.get("id")]
+    explicit_traits = [str(item) for item in (prepared.traits_data.get("explicit_traits") or []) if isinstance(item, str)]
+    assumed_traits = sorted(set(prepared.route_traits) - set(prepared.confirmed_traits))
+    suppressed_traits: list[str] = []
+    for diagnostic in prepared.diagnostics:
+        if diagnostic.startswith("route_trait_suppressed="):
+            suppressed_traits.extend([part for part in diagnostic.split("=", 1)[1].split(",") if part])
+
+    route_items = [f"{item.directive_key}:{item.bucket}" for item in routes.items if item.directive_key != "OTHER"]
+    if "radio" in prepared.route_traits and "RED" in routes.detected_directives:
+        route_items.append("LVD/EMC merged into RED Art. 3.1(a)/(b)")
+    if prepared.route_plan.primary_standard_code:
+        route_items.append("primary_standard=" + prepared.route_plan.primary_standard_code)
+
+    selected_standards = [
+        f"{item.code} ({item.directive}, {item.category})"
+        for item in standards.standard_items[:5]
+    ]
+    if standards.review_items:
+        selected_standards.extend(
+            f"review:{item.code} ({item.directive}, {item.category})"
+            for item in standards.review_items[:2]
+        )
+    rejected_rows = [
+        f"{str(row.get('code') or '')}: {str(row.get('reason') or row.get('rejection_reason') or '').strip()}"
+        for row in standards.rejections[:5]
+        if str(row.get("code") or "")
+    ]
+    missing_items = [
+        f"{item.key} ({item.importance})"
+        for item in standards.missing_items
+        if item.importance == "high"
+    ] or [item.key for item in standards.missing_items[:4]]
+
+    classification_summary = (
+        f"Resolved to {product_type} ({product_stage}, {product_confidence} confidence)."
+        if product_type and product_stage == "subtype"
+        else f"Tentative classification remains {product_stage} ({product_confidence} confidence)."
+    )
+    assumption_summary = (
+        "Safe assumptions remain in use for routing."
+        if assumed_traits or suppressed_traits
+        else "No additional routing assumptions were needed."
+    )
+    rejection_summary = (
+        "Some candidate standards or routes were intentionally rejected to keep the output coherent."
+        if rejected_rows or suppressed_traits
+        else "No material route or standard rejections were needed."
+    )
+
+    return [
+        DecisionTraceEntry(
+            step="classification",
+            summary=classification_summary,
+            items=_trace_items(
+                [
+                    *(["product_type=" + product_type] if product_type else []),
+                    *(["product_family=" + product_family] if product_family else []),
+                    "match_stage=" + product_stage,
+                    "match_confidence=" + product_confidence,
+                    *(["candidates=" + ",".join(candidate_ids[:3])] if candidate_ids else []),
+                ]
+            ),
+        ),
+        DecisionTraceEntry(
+            step="traits",
+            summary="Confirmed traits and explicit facts that shaped routing.",
+            items=_trace_items(
+                [
+                    *(["explicit=" + ",".join(explicit_traits[:6])] if explicit_traits else []),
+                    *(["confirmed=" + ",".join(sorted(prepared.confirmed_traits)[:8])] if prepared.confirmed_traits else []),
+                    *(["known_facts=" + ",".join(item.key for item in known_facts[:4])] if known_facts else []),
+                ]
+            ),
+        ),
+        DecisionTraceEntry(
+            step="assumptions",
+            summary=assumption_summary,
+            items=_trace_items(
+                [
+                    *(["assumed=" + ",".join(assumed_traits[:8])] if assumed_traits else []),
+                    *(["suppressed=" + ",".join(sorted(set(suppressed_traits))[:8])] if suppressed_traits else []),
+                ]
+            ),
+        ),
+        DecisionTraceEntry(
+            step="missing_facts",
+            summary="Missing facts are limited to route-changing questions.",
+            items=_trace_items(missing_items),
+        ),
+        DecisionTraceEntry(
+            step="legislation",
+            summary="Selected legislation routes after route separation and overlays.",
+            items=_trace_items(route_items),
+        ),
+        DecisionTraceEntry(
+            step="standards",
+            summary="Primary and supporting standards are ordered ahead of secondary routes.",
+            items=_trace_items(selected_standards),
+        ),
+        DecisionTraceEntry(
+            step="rejections",
+            summary=rejection_summary,
+            items=_trace_items(rejected_rows or [f"suppressed_traits={','.join(sorted(set(suppressed_traits))[:8])}"] if suppressed_traits else []),
+        ),
+    ]
+
 
 def analyze(
     description: str,
@@ -408,6 +549,7 @@ def analyze(
         ),
         handled_exceptions=(ValidationError, TypeError, ValueError, RuntimeError),
     )
+    decision_trace = _build_decision_trace(prepared, routes, standards, known_facts)
 
     result = _build_analysis_result(
         description=description,
@@ -442,6 +584,7 @@ def analyze(
             known_facts,
             [directive for directive in routes.detected_directives if directive in OVERLAY_DIRECTIVE_KEYS],
         ),
+        decision_trace=decision_trace,
         overall_risk=overall_risk,
         current_risk=current_risk,
         future_risk=future_risk,

@@ -300,6 +300,12 @@ class ShadowDiffItem(BaseModel):
     has_evidence: bool = False
 
 
+class DecisionTraceEntry(BaseModel):
+    step: Literal["classification", "traits", "assumptions", "missing_facts", "legislation", "standards", "rejections"]
+    summary: str
+    items: list[str] = Field(default_factory=list)
+
+
 class AnalysisAudit(BaseModel):
     allowed_directives: list[str] = Field(default_factory=list)
     matched_products: list[str] = Field(default_factory=list)
@@ -316,6 +322,7 @@ class AnalysisAudit(BaseModel):
     normalized_description: str = ""
     context_tags: list[str] = Field(default_factory=list)
     shadow_diff: list[ShadowDiffItem] = Field(default_factory=list)
+    decision_trace: list[DecisionTraceEntry] = Field(default_factory=list)
 
 
 class AnalysisStats(BaseModel):

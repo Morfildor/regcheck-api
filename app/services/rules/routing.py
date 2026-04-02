@@ -424,11 +424,13 @@ ROUTE_FAMILY_SCOPE = {
     "hvac_control": "appliance",
     "life_safety_alarm": "appliance",
     "ev_charging": "appliance",
+    "ev_connector_accessory": "appliance",
     "machinery_power_tool": "machinery",
     "toy": "toy",
 }
 
 ROUTE_FAMILY_PRIMARY_DIRECTIVE = {
+    "ev_connector_accessory": "LVD",
     "machinery_power_tool": "MD",
     "toy": "TOY",
 }
@@ -451,6 +453,17 @@ OVERLAY_DIRECTIVE_KEYS = {
     "ESPR",
     "CRA",
 }
+
+ROUTE_STANDARD_FAMILY_RULES: tuple[tuple[str, str, str], ...] = (
+    ("EN IEC 61851-", "ev_charging", "EV charging equipment"),
+    ("IEC 62752", "ev_charging", "portable EV charging equipment"),
+    ("EN 62196-2", "ev_connector_accessory", "EV connector / cable accessory"),
+    ("EN 62841-", "machinery_power_tool", "power-tool / machinery equipment"),
+    ("EN IEC 62560", "lighting_device", "lighting product"),
+    ("EN 60598-", "lighting_device", "lighting product"),
+    ("EN 60335-", "household_appliance", "household appliance"),
+    ("EN 62368-1", "av_ict", "AV/ICT equipment"),
+)
 
 
 @dataclass(slots=True)
@@ -547,6 +560,105 @@ def _route_scope_from_family(route_family: str | None) -> str | None:
     return ROUTE_FAMILY_SCOPE.get(route_family)
 
 
+def _normalized_standard_codes(codes: set[str] | list[str] | None) -> list[str]:
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for raw_code in codes or []:
+        code = str(raw_code or "").upper().replace("IEC", "IEC").replace("  ", " ").strip()
+        if not code or code in seen:
+            continue
+        seen.add(code)
+        normalized.append(code)
+    return normalized
+
+
+def _best_primary_standard_for_family(route_family: str, preferred_codes: list[str]) -> str | None:
+    family_codes: list[str] = []
+    for code in preferred_codes:
+        generic_family = _family_from_standard_code(code, prefer_wearable=False)
+        wearable_family = _family_from_standard_code(code, prefer_wearable=True)
+        if route_family in {generic_family, wearable_family}:
+            family_codes.append(code)
+    if not family_codes:
+        return None
+
+    if route_family == "household_appliance":
+        part2 = [code for code in family_codes if code.startswith("EN 60335-2-")]
+        if part2:
+            return sorted(part2)[0]
+    if route_family == "machinery_power_tool":
+        part2 = [code for code in family_codes if code.startswith("EN 62841-2-")]
+        if part2:
+            return sorted(part2)[0]
+    if route_family == "lighting_device":
+        for preferred in ("EN IEC 62560", "EN 60598-1"):
+            if preferred in family_codes:
+                return preferred
+    if route_family == "ev_charging":
+        for preferred in ("EN IEC 61851-1", "IEC 62752"):
+            if preferred in family_codes:
+                return preferred
+    if route_family == "ev_connector_accessory" and "EN 62196-2" in family_codes:
+        return "EN 62196-2"
+    if route_family in {"av_ict", "av_ict_wearable"} and "EN 62368-1" in family_codes:
+        return "EN 62368-1"
+    return sorted(family_codes)[0]
+
+
+def _family_from_standard_code(code: str, prefer_wearable: bool) -> str | None:
+    for prefix, family, _label in ROUTE_STANDARD_FAMILY_RULES:
+        if code.startswith(prefix):
+            if family == "av_ict" and prefer_wearable:
+                return "av_ict_wearable"
+            return family
+    return None
+
+
+def _fallback_route_plan_from_preferred_standards(
+    preferred_standard_codes: set[str] | list[str] | None,
+    traits: set[str],
+    confidence: ConfidenceLevel,
+) -> RoutePlan | None:
+    normalized_codes = _normalized_standard_codes(preferred_standard_codes)
+    if not normalized_codes:
+        return None
+
+    prefer_wearable = bool({"wearable", "body_worn_or_applied"} & traits)
+    route_family: str | None = None
+    label = "product"
+    for code in normalized_codes:
+        route_family = _family_from_standard_code(code, prefer_wearable)
+        if route_family:
+            for prefix, family, candidate_label in ROUTE_STANDARD_FAMILY_RULES:
+                if family == route_family and code.startswith(prefix):
+                    label = candidate_label
+                    break
+            break
+
+    if not route_family:
+        return None
+
+    primary_standard_code = _best_primary_standard_for_family(route_family, normalized_codes)
+    supporting_standard_codes = [
+        code for code in normalized_codes
+        if code != primary_standard_code and _family_from_standard_code(code, prefer_wearable) == route_family
+    ]
+    if primary_standard_code:
+        reason = f"{label} calibration prefers {primary_standard_code} as the primary product-safety route."
+    else:
+        reason = f"{label} calibration prefers the {route_family.replace('_', ' ')} product-safety route."
+
+    return RoutePlan(
+        primary_route_family=route_family,
+        primary_standard_code=primary_standard_code,
+        supporting_standard_codes=supporting_standard_codes[:4],
+        primary_directive=ROUTE_FAMILY_PRIMARY_DIRECTIVE.get(route_family),
+        reason=reason,
+        confidence=confidence,
+        scope_route=_route_scope_from_family(route_family) or "generic",
+    )
+
+
 def _build_route_plan(
     traits_data: dict[str, Any],
     traits: set[str],
@@ -586,6 +698,15 @@ def _build_route_plan(
             scope_route="toy",
         )
 
+    if product_match_confidence != "low":
+        fallback = _fallback_route_plan_from_preferred_standards(
+            traits_data.get("preferred_standard_codes"),
+            traits,
+            product_match_confidence,
+        )
+        if fallback is not None:
+            return fallback
+
     return RoutePlan(confidence=product_match_confidence)
 
 
@@ -621,6 +742,14 @@ def _scope_route(
     if not av_ict_signals and (AV_ICT_SUPPORTING_TRAITS & confirmed_traits) and not appliance_signals:
         reasons.append("confirmed_av_ict_signals")
         av_ict_signals.add("av_ict")
+
+    confirmed_appliance_signals = appliance_signals & confirmed_traits
+    confirmed_av_ict_signals = av_ict_signals & confirmed_traits
+    has_product_scope_anchor = bool(matched_products & AV_ICT_PRODUCT_HINTS) or bool(product_type and product_type in AV_ICT_PRODUCT_HINTS)
+
+    if (appliance_signals or av_ict_signals) and not confirmed_appliance_signals and not confirmed_av_ict_signals and not has_product_scope_anchor:
+        reasons.append("deferred_inferred_only_scope")
+        return "generic", reasons
 
     if appliance_signals and not av_ict_signals:
         reasons.append("appliance_primary_traits=" + ",".join(sorted(appliance_signals)))
@@ -1991,7 +2120,7 @@ def _prepare_analysis(
     route_plan = _build_route_plan(
         traits_data=traits_data,
         traits=route_traits,
-        matched_products=routing_matched_products or matched_products,
+        matched_products=routing_matched_products or (matched_products if product_match_confidence != "low" else set()),
         product_type=routing_product_type or product_type,
     )
     if route_plan.primary_standard_code:

@@ -13,6 +13,7 @@ from app.domain.models import (
     AnalysisResult,
     AnalysisStats,
     ConfidencePanel,
+    DecisionTraceEntry,
     FactBasis,
     Finding,
     HeroSummary,
@@ -58,18 +59,41 @@ AnalysisDepth = Literal["quick", "standard", "deep"]
 logger = logging.getLogger(__name__)
 
 
-def _sort_standard_items(items: list[StandardItem]) -> list[StandardItem]:
-    def key(item: StandardItem) -> tuple[int, int, str]:
+def _sort_standard_items(
+    items: list[StandardItem],
+    *,
+    primary_standard_code: str | None = None,
+    supporting_standard_codes: list[str] | None = None,
+) -> list[StandardItem]:
+    support_codes = set(supporting_standard_codes or [])
+
+    def route_bucket(item: StandardItem) -> int:
+        if primary_standard_code and item.code == primary_standard_code:
+            return 0
+        if item.code in support_codes:
+            return 1
+        if item.category == "safety":
+            return 2
+        return 3
+
+    def key(item: StandardItem) -> tuple[int, int, int, int, str]:
         code = item.code or ""
         if item.directive == "LVD":
-            if code == "EN 60335-1":
+            if code.startswith("EN 60335-2-"):
                 bucket = 0
-            elif code.startswith("EN 60335-2-"):
+            elif code == "EN 60335-1":
                 bucket = 1
             elif code in {"EN 62233", "EN 62311", "EN 62479"}:
                 bucket = 2
             else:
                 bucket = 3
+        elif item.directive == "MD":
+            if code.startswith("EN 62841-2-"):
+                bucket = 0
+            elif code == "EN 62841-1":
+                bucket = 1
+            else:
+                bucket = 2
         elif item.directive == "EMC":
             if code.startswith("EN 55014-"):
                 bucket = 0
@@ -78,15 +102,21 @@ def _sort_standard_items(items: list[StandardItem]) -> list[StandardItem]:
             else:
                 bucket = 2
         elif item.directive == "RED":
-            if code.startswith("EN 300 ") or code.startswith("EN 301 "):
+            if item.category == "safety":
                 bucket = 0
-            elif code in {"EN 62479", "EN 62311", "EN 50364"} or code.startswith("EN 62209"):
+            elif item.category in {"emc", "radio_emc"}:
                 bucket = 1
-            else:
+            elif item.category == "radio":
                 bucket = 2
+            elif code in {"EN 62479", "EN 62311", "EN 50364"} or code.startswith("EN 62209"):
+                bucket = 3
+            elif item.category == "cybersecurity":
+                bucket = 4
+            else:
+                bucket = 5
         else:
             bucket = 9
-        return (_directive_rank(item.directive), bucket, code)
+        return (route_bucket(item), _directive_rank(item.directive), bucket, -int(item.selection_priority or 0), code)
 
     return sorted(items, key=key)
 
@@ -122,7 +152,12 @@ def _standard_section_category(item: StandardItem, route_key: str) -> str:
     return item.category
 
 
-def _build_standard_sections(items: list[StandardItem]) -> list[StandardSection]:
+def _build_standard_sections(
+    items: list[StandardItem],
+    *,
+    primary_standard_code: str | None = None,
+    supporting_standard_codes: list[str] | None = None,
+) -> list[StandardSection]:
     grouped: dict[str, list[StandardItem]] = defaultdict(list)
     for item in items:
         route_keys = _standard_section_route_keys(item)
@@ -130,7 +165,11 @@ def _build_standard_sections(items: list[StandardItem]) -> list[StandardSection]
             grouped[key].append(item)
     sections: list[StandardSection] = []
     for key in sorted(grouped.keys(), key=_directive_rank):
-        route_items = _sort_standard_items(grouped[key])
+        route_items = _sort_standard_items(
+            grouped[key],
+            primary_standard_code=primary_standard_code,
+            supporting_standard_codes=supporting_standard_codes,
+        )
         directive_label, directive_title = DIRECTIVE_TITLES.get(key, (key, key))
         section_items = [
             StandardSectionItem(
@@ -363,6 +402,7 @@ def _build_analysis_result(
     product_match_audit: ProductMatchAudit,
     standard_match_audit: StandardMatchAudit,
     route_context: RouteContext,
+    decision_trace: list[DecisionTraceEntry] | None = None,
     overall_risk: RiskLevel,
     current_risk: RiskLevel,
     future_risk: RiskLevel,
@@ -413,6 +453,7 @@ def _build_analysis_result(
         engine_version=ENGINE_VERSION,
         normalized_description=normalized_description,
         context_tags=route_context.context_tags,
+        decision_trace=decision_trace or [],
     )
 
     return AnalysisResult(

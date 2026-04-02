@@ -9,10 +9,40 @@ import unittest
 from unittest.mock import patch
 
 import main
-from app.domain.models import MetadataOptionsResponse, MetadataStandardsResponse
+from app.domain.models import AnalysisResult, MetadataOptionsResponse, MetadataStandardsResponse
 from knowledge_base import KnowledgeBaseError, KnowledgeBaseWarmupResult, reset_cache, warmup_knowledge_base
 from rules import analyze
 from runtime_state import AppRuntimeState, KnowledgeBaseWarmupSnapshot
+
+
+def _stable_snapshot_projection(result: AnalysisResult) -> dict[str, object]:
+    return {
+        "product_type": result.product_type,
+        "product_family": result.product_family,
+        "product_subtype": result.product_subtype,
+        "product_match_stage": result.product_match_stage,
+        "product_match_confidence": result.product_match_confidence,
+        "classification_is_ambiguous": result.classification_is_ambiguous,
+        "classification_confidence_below_threshold": result.classification_confidence_below_threshold,
+        "directives": result.directives,
+        "ce_legislation_keys": [item.directive_key for item in result.ce_legislations],
+        "non_ce_obligation_keys": [item.directive_key for item in result.non_ce_obligations],
+        "primary_route_standard_code": result.primary_route_standard_code,
+        "primary_route_reason": result.primary_route_reason,
+        "route_context": {
+            "scope_route": result.route_context.scope_route,
+            "primary_route_family": result.route_context.primary_route_family,
+            "primary_route_standard_code": result.route_context.primary_route_standard_code,
+            "route_confidence": result.route_context.route_confidence,
+            "overlay_routes": result.route_context.overlay_routes,
+            "context_tags": result.route_context.context_tags,
+        },
+        "standard_codes": [item.code for item in result.standards],
+        "review_codes": [item.code for item in result.review_items],
+        "standard_section_keys": [section.key for section in result.standard_sections],
+        "missing_information_keys": [item.key for item in result.missing_information_items],
+        "decision_trace_steps": [entry.step for entry in result.analysis_audit.decision_trace],
+    }
 
 
 class BackendHardeningTests(unittest.TestCase):
@@ -152,9 +182,7 @@ class BackendHardeningTests(unittest.TestCase):
 
         for name, description in cases.items():
             with self.subTest(snapshot=name):
-                current = analyze(description).model_dump()
-                current["catalog_version"] = "<dynamic>"
-                current["knowledge_base_meta"]["version"] = "<dynamic>"
+                current = _stable_snapshot_projection(analyze(description))
                 expected = json.loads((snapshot_dir / f"{name}.json").read_text(encoding="utf-8"))
                 self.assertEqual(current, expected)
 

@@ -28,6 +28,8 @@ NEGATIONS: dict[str, list[str]] = {
         r"\bwithout radio\b",
         r"\bno wireless communication\b",
         r"\bwithout wireless communication\b",
+        r"\bno wireless connectivity\b",
+        r"\bwithout wireless connectivity\b",
         r"\bwired only\b",
     ],
     "wifi": [r"\bno wifi\b", r"\bwithout wifi\b", r"\bnon wifi\b", r"\bwifi not present\b"],
@@ -42,11 +44,20 @@ NEGATIONS: dict[str, list[str]] = {
     ],
     "app_control": [r"\bno app\b", r"\bwithout app\b"],
     "ota": [r"\bno ota\b", r"\bwithout ota\b", r"\bmanual update only\b"],
-    "account": [r"\bno account\b", r"\bwithout account\b", r"\bguest only\b"],
+    "account": [
+        r"\bno account\b",
+        r"\bwithout account\b",
+        r"\bguest only\b",
+        r"\bno cloud account\b",
+        r"\bno app account\b",
+        r"\bno account required\b",
+    ],
     "authentication": [r"\bno password\b", r"\bwithout login\b", r"\bwithout authentication\b"],
     "speaker": [r"\bnot a speaker\b", r"\bno speaker\b", r"\bwithout speaker\b"],
     "toy": [r"\bnot a toy\b", r"\bnot intended for play\b"],
     "child_targeted": [r"\bnot intended for play\b", r"\bnot designed for play\b"],
+    "battery_powered": [r"\bno battery\b", r"\bwithout battery\b", r"\bbattery not included\b"],
+    "electronic": [r"\bno electronics\b", r"\bwithout electronics\b", r"\bnon electronic\b", r"\bpassive accessory\b", r"\bpassive cable\b"],
     "monetary_transaction": [
         r"\bno payment\b",
         r"\bwithout payment\b",
@@ -72,6 +83,8 @@ NEGATED_TRAIT_SUPPRESSIONS: dict[str, set[str]] = {
     "speaker": {"speaker", "multi_room_audio", "spatial_audio"},
     "toy": {"toy", "child_targeted"},
     "child_targeted": {"child_targeted", "toy"},
+    "battery_powered": {"battery_powered", "backup_battery", "portable"},
+    "electronic": {"electronic"},
     "monetary_transaction": {"monetary_transaction", "subscription_dependency"},
 }
 
@@ -935,6 +948,7 @@ def _apply_product_trait_signals(
     Returns (product_core_traits, product_default_traits, product_genres).
     """
     product_match_stage = match["product_match_stage"]
+    product_match_confidence = str(match.get("product_match_confidence") or "low")
     matched_aliases = [
         candidate.get("matched_alias")
         for candidate in match["product_candidates"]
@@ -955,6 +969,11 @@ def _apply_product_trait_signals(
     product_core_traits = _apply_explicit_trait_negations(product_core_traits, negations)
     product_default_traits = _apply_explicit_trait_negations(product_default_traits, negations)
     product_genres = {item for item in (match.get("product_genres") or set()) if isinstance(item, str) and item}
+
+    if product_match_stage == "ambiguous" and product_match_confidence == "low":
+        product_core_traits = set()
+        product_default_traits = set()
+        product_genres = set()
 
     if product_core_traits:
         product_evidence = (
@@ -1046,6 +1065,35 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
     product_family_confidence = match["product_family_confidence"]
     product_subtype_confidence = match["product_subtype_confidence"]
     product_match_stage = match["product_match_stage"]
+    weak_ambiguous_guess = (
+        product_match_stage == "ambiguous"
+        and str(match.get("product_match_confidence") or "low") == "low"
+        and bool(product_candidates)
+        and not bool(
+            product_candidates[0].get("matched_alias")
+            or product_candidates[0].get("family_keyword_hits")
+        )
+    )
+    if weak_ambiguous_guess:
+        product_candidates = []
+        matched_products = []
+        routing_matched_products = []
+        confirmed_products = []
+        preferred_standard_codes = []
+        product_family_confidence = "low"
+        product_subtype_confidence = "low"
+        match["product_type"] = None
+        match["product_family"] = None
+        match["product_subtype"] = None
+        match["product_candidates"] = []
+        match["matched_products"] = []
+        match["routing_matched_products"] = []
+        match["confirmed_products"] = []
+        match["preferred_standard_codes"] = []
+        match["product_core_traits"] = set()
+        match["product_default_traits"] = set()
+        match["product_genres"] = set()
+        diagnostics.append("product_guess_suppressed=weak_ambiguous_match")
 
     # Apply negations to text-level traits before using them in product trait logic.
     explicit_traits = _apply_explicit_trait_negations(explicit_traits, negations)

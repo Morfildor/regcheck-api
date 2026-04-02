@@ -13736,6 +13736,54 @@ products:
   - fixed_installation
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted
     classification.
+- id: ev_connector_accessory
+  label: EV charging connector / tethered cable accessory
+  product_family: ev_charging_equipment
+  product_subfamily: ev_connector_accessory
+  route_family: ev_connector_accessory
+  primary_standard_code: EN 62196-2
+  genres:
+  - ev_charging_equipment
+  aliases:
+  - vehicle connector
+  - type 2 vehicle connector
+  - charging connector cable
+  - ev charging connector
+  - ev charging cable
+  - tethered charging cable
+  - charging coupler
+  - charging inlet
+  family_keywords:
+  - vehicle connector
+  - charging connector
+  - charging cable
+  - tethered cable
+  preferred_clues:
+  - connector
+  - cable
+  - tethered
+  - accessory
+  exclude_clues:
+  - wallbox
+  - charging station
+  - evse
+  - control box
+  - mode 2
+  functional_classes:
+  - power_supply
+  core_traits:
+  - electrical
+  - ev_charging
+  - vehicle_supply
+  implied_traits:
+  - electrical
+  - ev_charging
+  - vehicle_supply
+  likely_standards:
+  - EN 62196-2
+  likely_standard_refs:
+  - ref: EN 62196-2
+    kind: unspecified
 - id: home_battery_system
   label: Home battery energy storage system
   aliases:
@@ -19627,6 +19675,8 @@ products:
   product_family: industrial_power_equipment
   product_subfamily: power_saw
   label: Electric / portable power saw
+  route_family: machinery_power_tool
+  primary_standard_code: Power tool safety review
   aliases:
   - power saw
   - electric saw

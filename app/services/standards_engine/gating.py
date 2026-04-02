@@ -484,6 +484,20 @@ def _finalize_selected_rows_v2(
             _reject_selected_row(row, "EV charging routes take precedence over generic AV/ICT or household-appliance routes", rejected_rows, rejections)
             continue
 
+        if primary_route_family == "ev_connector_accessory" and (
+            code in {"EN IEC 61851-1", "EN IEC 61851-21-2", "IEC 62752", "EN 62368-1"}
+            or code.startswith("EN 60335-")
+            or code.startswith("EN 55014-")
+            or code in {"EN 55032", "EN 55035"}
+        ):
+            _reject_selected_row(
+                row,
+                "connector-accessory routes take precedence over EVSE system, AV/ICT, and household-appliance routes",
+                rejected_rows,
+                rejections,
+            )
+            continue
+
         if primary_route_family == "machinery_power_tool" and (
             code == "EN 62368-1" or code.startswith("EN 60335-") or code.startswith("EN 55014-") or code in {"EN 55032", "EN 55035"}
         ):

@@ -569,9 +569,16 @@ def _power_source_questions(
     traits: set[str],
     product_match_stage: ProductMatchStage,
     tool_signal: bool,
+    text: str,
     add: _AddFn,
 ) -> None:
     """Cross-cutting: missing power source declaration and unresolved tool type."""
+    passive_accessory_signal = bool(
+        re.search(
+            r"\b(?:passive|dongle|adapter cable|cable adapter|connector only|tethered cable|usb ?c to hdmi|no electronics)\b",
+            text,
+        )
+    )
     if product_match_stage != "subtype" and tool_signal:
         add(
             "tool_type",
@@ -582,6 +589,8 @@ def _power_source_questions(
             ["MD", "MACH_REG", "LVD", "BATTERY"],
             ["Confirm the exact equipment family before relying on machinery or tool routes."],
         )
+    if passive_accessory_signal:
+        return
     if "mains_powered" not in traits and "mains_power_likely" not in traits and "battery_powered" not in traits:
         add(
             "power_source",
@@ -741,6 +750,11 @@ def _smart_connectivity_questions(
     add: _AddFn,
 ) -> None:
     """Cross-cutting: cloud dependency, data storage, update route, access model, and medical boundary."""
+    data_handling_signal = bool(
+        smart_signal
+        or health_data_signal
+        or {"personal_data_likely", "location", "camera", "microphone"} & traits
+    )
     if smart_signal and not cloud_detail_known:
         add(
             "cloud_dependency",
@@ -761,7 +775,7 @@ def _smart_connectivity_questions(
             ["MDR", "GDPR", "GPSR"],
             ["Confirm the medical / wellness claim boundary and intended-use statement."],
         )
-    if smart_signal and not _has_data_storage_detail(text):
+    if data_handling_signal and not _has_data_storage_detail(text):
         add(
             "data_storage_scope",
             (
@@ -928,11 +942,27 @@ def _missing_information(
         matched_products
         & {"industrial_power_tool", "corded_power_drill", "cordless_power_drill", "portable_power_saw", "industrial_air_compressor"}
     ) or bool(re.search(r"\b(?:power tool|drill|saw|compressor)\b", text))
-    smart_signal = bool({"cloud", "app_control", "ota", "wifi", "bluetooth", "radio", "internet"} & traits) or bool(
-        re.search(r"\b(?:smart|connected|app|wireless|ota)\b", text)
+    smart_signal = bool({"cloud", "app_control", "ota", "internet", "account", "authentication"} & traits) or bool(
+        {"wifi", "cellular"} & traits
+    ) or bool(
+        re.search(r"\bsmart\b", text)
+        or re.search(r"\bconnected\b", text)
+        or (re.search(r"\bapp(?: control(?:led)?| enabled| connected)?\b", text) and not re.search(r"\b(?:no|without) app\b", text))
+        or (re.search(r"\bcloud\b", text) and not re.search(r"\b(?:no|without) cloud\b", text))
+        or (re.search(r"\bota\b", text) and not re.search(r"\b(?:no|without) ota\b", text))
     )
-    battery_signal = bool({"battery_powered", "backup_battery"} & traits) or bool(
-        re.search(r"\b(?:battery|rechargeable|cordless|cell pack|battery pack)\b", text)
+    if not (
+        {"cloud", "app_control", "ota", "internet", "account", "authentication"} & traits
+        or {"wifi", "cellular"} & traits
+    ):
+        negated_connectivity = bool({"connectivity.no_wifi", "connectivity.no_radio"} & known_fact_keys) or bool(
+            re.search(r"\b(?:no|without) wireless (?:communication|connectivity)\b", text)
+        )
+        if negated_connectivity:
+            smart_signal = False
+    battery_signal = bool({"battery_powered", "backup_battery"} & traits) or (
+        not bool(re.search(r"\b(?:no|without) battery\b", text))
+        and bool(re.search(r"\b(?:battery|rechargeable|cordless|cell pack|battery pack)\b", text))
     )
     compressor_signal = bool(matched_products & {"industrial_air_compressor"}) or bool(
         re.search(r"\b(?:air compressor|compressed air|pneumatic compressor|workshop compressor)\b", text)
@@ -966,7 +996,7 @@ def _missing_information(
 
     # --- Cross-cutting question groups ---
     _toy_questions(traits, text, add)
-    _power_source_questions(traits, product_match_stage, tool_signal, add)
+    _power_source_questions(traits, product_match_stage, tool_signal, text, add)
     _external_psu_question(traits, text, add)
     _radio_questions(traits, matched_products, text, radio_band_known, radio_power_known, add)
     _smart_connectivity_questions(
