@@ -153,7 +153,7 @@ def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBa
             "standards": _build_metadata_standards_payload(standards, meta),
         },
         classifier_runtime=_build_classifier_runtime_snapshot(products, traits, meta.version),
-        classifier_signal_runtime=_build_classifier_signal_snapshot(meta.version),
+        classifier_signal_runtime=_build_classifier_signal_snapshot(meta.version, trait_ids),
         legacy_payloads=legacy_payloads,
         meta_payload=meta_payload,
         load_all_payload=load_all_payload,

@@ -940,12 +940,15 @@ genres:
   - camera_surveillance
   - security_or_barrier
   - electronic
+  - home_security
   default_traits:
   - internet_connected
   - app_control
   - radio
   - wifi
   - cloud
+  - surveillance
+  - personal_data_likely
   functional_classes:
   - security_device
   - connected_device
@@ -1277,8 +1280,11 @@ genres:
   - battery_powered
   - battery_pack
   - portable_energy
+  - power_source
   default_traits:
   - portable
+  - external_psu
+  - charger_role
   functional_classes:
   - power_device
   - charging_device
@@ -1441,7 +1447,11 @@ genres:
   - consumer
   - electronic
   - health_related
-  default_traits: []
+  - wellness
+  - medical_adjacent
+  default_traits:
+  - possible_medical_boundary
+  - body_contact
   functional_classes:
   - health_device
   likely_standards:
@@ -1675,6 +1685,9 @@ genres:
   - electrical
   - electronic
   - lighting
+  - optical_emission
+  default_traits:
+  - photobiological_relevance
   functional_classes:
   - smart_lighting
   - home_device
@@ -1713,6 +1726,9 @@ genres:
   - electronic
   - ev_charging
   - vehicle_supply
+  - charger_role
+  default_traits:
+  - power_source
   functional_classes:
   - power_supply
   likely_standards:

@@ -23,3 +23,9 @@ How to extend it safely:
 3. Keep new patterns normalized to the classifier text format used by `normalize()`.
 4. Prefer adding explicit signal phrases over changing precedence logic in `traits.py`.
 5. Add or update a focused classifier regression in `tests/test_classifier_hardening.py`.
+6. Every signal name must already exist as a trait id in `data/traits.yaml`.
+
+Validation:
+
+- knowledge-base warmup now validates classifier signal trait ids, suppression mappings, and regex compilation
+- `.\venv\Scripts\python.exe .\scripts\catalog_audit.py validate` runs the same validation path locally

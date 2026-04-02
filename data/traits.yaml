@@ -32,6 +32,9 @@ traits:
   description: Uses AI, ML, or algorithmic inference that may need separate review
   aliases:
   - ai related
+  - ai powered
+  - ai integrated
+  - with ai
   examples: []
   regex:
   - \bai[ -]?related\b
@@ -171,25 +174,6 @@ traits:
   - \bcordless\b
   - \brechargeable\b
   normalized_to: battery_powered
-  normalization_priority: 0
-- id: biometric
-  label: Biometric sensing
-  description: Measures or processes biometric or physiological signals from the body
-  aliases:
-  - biometric
-  - physiological
-  - heart rate
-  - pulse
-  examples:
-  - biometric
-  - heart rate
-  - pulse
-  regex:
-  - \bbiometric\b
-  - \bphysiological\b
-  - \bheart[ -]?rate\b
-  - \bpulse\b
-  normalized_to: biometric
   normalization_priority: 0
 - id: beverage_preparation
   label: Beverage preparation
@@ -661,22 +645,6 @@ traits:
   - \blaser\b
   normalized_to: laser
   normalization_priority: 0
-- id: lighting
-  label: Lighting / illumination
-  description: Emits visible light for illumination, growth, curing, or related functions
-  aliases:
-  - lighting
-  - light
-  - grow light
-  examples:
-  - lighting
-  - grow light
-  regex:
-  - \blighting\b
-  - \blight\b
-  - \bgrow[ -]?light\b
-  normalized_to: lighting
-  normalization_priority: 0
 - id: liquid_heating
   label: Liquid heating
   description: Heats liquids such as water, milk, oil, or similar substances
@@ -883,39 +851,6 @@ traits:
   - \buser[ -]?data\b
   - \bdevice[ -]?telemetry\b
   normalized_to: personal_data_likely
-  normalization_priority: 0
-- id: possible_medical_boundary
-  label: Possible medical / wellness boundary
-  description: Text suggests diagnosis, treatment, disease monitoring, clinical use, or physiological monitoring that may require medical-device borderline review
-  aliases:
-  - possible medical boundary
-  - wellness medical boundary
-  - clinical review
-  examples:
-  - patient monitoring
-  - clinical use
-  - treatment claims
-  regex:
-  - \bpossible[ -]?medical[ -]?boundary\b
-  - \bwellness[ -]?medical[ -]?boundary\b
-  - \bclinical[ -]?review\b
-  normalized_to: possible_medical_boundary
-  normalization_priority: 0
-- id: uv_emitting
-  label: UV-emitting source
-  description: Emits ultraviolet radiation or uses UV-C or UV-A illumination as part of the function
-  aliases:
-  - uv
-  - uv-c
-  - ultraviolet
-  examples:
-  - uv-c
-  - ultraviolet
-  regex:
-  - \buv\b
-  - \buv[ -]?[ac]\b
-  - \bultraviolet\b
-  normalized_to: uv_emitting
   normalization_priority: 0
 - id: portable
   label: Portable appliance
@@ -2451,4 +2386,619 @@ traits:
   regex:
   - \bpresentation[ -]?use\b
   normalized_to: presentation_use
+  normalization_priority: 0
+- id: lighting
+  label: Lighting / light source
+  description: Product is primarily a lamp, bulb, luminaire, lighting fixture, or
+    other light-emitting lighting product.
+  aliases:
+  - lighting
+  - light source
+  - lamp
+  - bulb
+  - luminaire
+  examples: []
+  regex:
+  - \blighting\b
+  - \blight[ -]?source\b
+  - \blamp\b
+  - \bbulb\b
+  - \bluminaire\b
+  normalized_to: lighting
+  normalization_priority: 0
+- id: luminaire
+  label: Luminaire / fixture
+  description: Integrated lighting fixture or luminaire rather than only a replaceable
+    lamp.
+  aliases:
+  - luminaire
+  - light fixture
+  - lighting fixture
+  examples: []
+  regex:
+  - \bluminaire\b
+  - \blight[ -]?fixture\b
+  - \blighting[ -]?fixture\b
+  normalized_to: luminaire
+  normalization_priority: 0
+- id: optical_emission
+  label: Optical emission
+  description: Emits visible, ultraviolet, or infrared optical radiation as part
+    of intended use.
+  aliases:
+  - optical emission
+  - light emitting
+  - optical output
+  examples: []
+  regex:
+  - \boptical[ -]?emission\b
+  - \blight[ -]?emitting\b
+  - \boptical[ -]?output\b
+  normalized_to: optical_emission
+  normalization_priority: 0
+- id: photobiological_relevance
+  label: Photobiological relevance
+  description: Optical output is strong enough or intentional enough that photobiological
+    safety review may be relevant.
+  aliases:
+  - photobiological relevance
+  - photobiological safety
+  examples: []
+  regex:
+  - \bphotobiological[ -]?relevance\b
+  - \bphotobiological[ -]?safety\b
+  normalized_to: photobiological_relevance
+  normalization_priority: 0
+- id: uv_emitting
+  label: UV emitting
+  description: Emits ultraviolet radiation such as UVA, UVB, or UVC.
+  aliases:
+  - uv emitting
+  - ultraviolet
+  - uv c
+  - uvc
+  examples: []
+  regex:
+  - \buv[ -]?emitting\b
+  - \bultra[ -]?violet\b
+  - \buv[ -]?c\b
+  - \buvc\b
+  normalized_to: uv_emitting
+  normalization_priority: 0
+- id: infrared_emitting
+  label: Infrared emitting
+  description: Emits infrared optical radiation such as IR heating or sensing output.
+  aliases:
+  - infrared emitting
+  - ir emitter
+  - infrared
+  examples: []
+  regex:
+  - \binfrared[ -]?emitting\b
+  - \bir[ -]?emitter\b
+  - \binfrared\b
+  normalized_to: infrared_emitting
+  normalization_priority: 0
+- id: rechargeable
+  label: Rechargeable
+  description: Uses a rechargeable battery pack or cell as part of normal operation.
+  aliases:
+  - rechargeable
+  - recharge
+  examples: []
+  regex:
+  - \brechargeable\b
+  - \brecharge\b
+  normalized_to: rechargeable
+  normalization_priority: 0
+- id: removable_battery
+  label: Removable battery
+  description: Battery pack or cell is intended to be removed or replaced by the
+    user or service personnel.
+  aliases:
+  - removable battery
+  - replaceable battery
+  examples: []
+  regex:
+  - \bremovable[ -]?battery\b
+  - \breplaceable[ -]?battery\b
+  normalized_to: removable_battery
+  normalization_priority: 0
+- id: energy_storage
+  label: Energy storage
+  description: Stores electrical energy for later discharge, backup, or power delivery.
+  aliases:
+  - energy storage
+  - stored energy
+  examples: []
+  regex:
+  - \benergy[ -]?storage\b
+  - \bstored[ -]?energy\b
+  normalized_to: energy_storage
+  normalization_priority: 0
+- id: charger_role
+  label: Charger role
+  description: Main intended function is charging a battery-powered product or battery
+    pack.
+  aliases:
+  - charger role
+  - charging device
+  - battery charger
+  examples: []
+  regex:
+  - \bcharger[ -]?role\b
+  - \bcharging[ -]?device\b
+  - \bbattery[ -]?charger\b
+  normalized_to: charger_role
+  normalization_priority: 0
+- id: charge_controller
+  label: Charge controller
+  description: Regulates charging current, voltage, or charging state rather than
+    only acting as a passive load.
+  aliases:
+  - charge controller
+  - charging controller
+  examples: []
+  regex:
+  - \bcharge[ -]?controller\b
+  - \bcharging[ -]?controller\b
+  normalized_to: charge_controller
+  normalization_priority: 0
+- id: power_source
+  label: Power source
+  description: Provides electrical output power to another product or circuit.
+  aliases:
+  - power source
+  - power supply source
+  examples: []
+  regex:
+  - \bpower[ -]?source\b
+  - \bpower[ -]?supply[ -]?source\b
+  normalized_to: power_source
+  normalization_priority: 0
+- id: powered_load
+  label: Powered load
+  description: Receives electrical power from an external source, charger, dock, or
+    power supply.
+  aliases:
+  - powered load
+  - powered device
+  examples: []
+  regex:
+  - \bpowered[ -]?load\b
+  - \bpowered[ -]?device\b
+  normalized_to: powered_load
+  normalization_priority: 0
+- id: heating_element
+  label: Heating element
+  description: Uses an intentional electrical heating element, heating plate, coil,
+    or resistive heater.
+  aliases:
+  - heating element
+  - heating coil
+  - heating plate
+  examples: []
+  regex:
+  - \bheating[ -]?element\b
+  - \bheating[ -]?coil\b
+  - \bheating[ -]?plate\b
+  normalized_to: heating_element
+  normalization_priority: 0
+- id: fan_air_mover
+  label: Fan / air mover
+  description: Uses a fan or blower as a primary air-moving mechanism.
+  aliases:
+  - fan air mover
+  - blower
+  - air mover
+  examples: []
+  regex:
+  - \bfan[ -]?air[ -]?mover\b
+  - \bblower\b
+  - \bair[ -]?mover\b
+  normalized_to: fan_air_mover
+  normalization_priority: 0
+- id: pump_system
+  label: Pump system
+  description: Uses a pump as a primary functional element for liquid or air movement.
+  aliases:
+  - pump system
+  - pump
+  examples: []
+  regex:
+  - \bpump[ -]?system\b
+  - \bpump\b
+  normalized_to: pump_system
+  normalization_priority: 0
+- id: compressor_system
+  label: Compressor system
+  description: Uses a compressor for cooling, dehumidification, pressure, or similar
+    function.
+  aliases:
+  - compressor system
+  - compressor
+  examples: []
+  regex:
+  - \bcompressor[ -]?system\b
+  - \bcompressor\b
+  normalized_to: compressor_system
+  normalization_priority: 0
+- id: rotating_part
+  label: Rotating part
+  description: Includes a rotating blade, wheel, agitator, or similar moving part
+    accessible during normal use or servicing.
+  aliases:
+  - rotating part
+  - rotating blade
+  examples: []
+  regex:
+  - \brotating[ -]?part\b
+  - \brotating[ -]?blade\b
+  normalized_to: rotating_part
+  normalization_priority: 0
+- id: wet_use
+  label: Wet use
+  description: Intended to be used in a wet process, with liquid handling, or with
+    direct exposure to water during operation.
+  aliases:
+  - wet use
+  - wet operation
+  examples: []
+  regex:
+  - \bwet[ -]?use\b
+  - \bwet[ -]?operation\b
+  normalized_to: wet_use
+  normalization_priority: 0
+- id: bathroom_use
+  label: Bathroom use
+  description: Intended for bathroom, washroom, or similar personal-hygiene environments.
+  aliases:
+  - bathroom use
+  - bathroom appliance
+  examples: []
+  regex:
+  - \bbathroom[ -]?use\b
+  - \bbathroom[ -]?appliance\b
+  normalized_to: bathroom_use
+  normalization_priority: 0
+- id: immersion_risk
+  label: Immersion risk
+  description: Product can be immersed, submerged, or dropped into water during reasonably
+    foreseeable use.
+  aliases:
+  - immersion risk
+  - submersible
+  examples: []
+  regex:
+  - \bimmersion[ -]?risk\b
+  - \bsubmersible\b
+  normalized_to: immersion_risk
+  normalization_priority: 0
+- id: oral_contact
+  label: Oral contact
+  description: Intended to contact the mouth, teeth, gums, or oral cavity.
+  aliases:
+  - oral contact
+  - mouth contact
+  examples: []
+  regex:
+  - \boral[ -]?contact\b
+  - \bmouth[ -]?contact\b
+  normalized_to: oral_contact
+  normalization_priority: 0
+- id: body_contact
+  label: Body contact
+  description: Intended for direct contact with the body during normal use, including
+    non-wearable contact.
+  aliases:
+  - body contact
+  examples: []
+  regex:
+  - \bbody[ -]?contact\b
+  normalized_to: body_contact
+  normalization_priority: 0
+- id: childcare_device
+  label: Childcare device
+  description: Intended for nursery, infant care, child monitoring, or other childcare
+    use without necessarily being a toy.
+  aliases:
+  - childcare device
+  - nursery device
+  examples: []
+  regex:
+  - \bchildcare[ -]?device\b
+  - \bnursery[ -]?device\b
+  normalized_to: childcare_device
+  normalization_priority: 0
+- id: wellness
+  label: Wellness
+  description: Intended for wellness, fitness, recovery, self-care, or non-medical
+    health support.
+  aliases:
+  - wellness
+  - recovery device
+  examples: []
+  regex:
+  - \bwellness\b
+  - \brecovery[ -]?device\b
+  normalized_to: wellness
+  normalization_priority: 0
+- id: medical_adjacent
+  label: Medical-adjacent
+  description: Sits near the wellness-to-medical boundary and may need intended-purpose
+    review.
+  aliases:
+  - medical adjacent
+  - wellness medical boundary
+  examples: []
+  regex:
+  - \bmedical[ -]?adjacent\b
+  - \bwellness[ -]?medical[ -]?boundary\b
+  normalized_to: medical_adjacent
+  normalization_priority: 0
+- id: possible_medical_boundary
+  label: Possible medical boundary
+  description: Text or product context suggests diagnosis, monitoring, therapy, or
+    patient-use language that may trigger MDR borderline review.
+  aliases:
+  - possible medical boundary
+  - borderline medical
+  examples: []
+  regex:
+  - \bpossible[ -]?medical[ -]?boundary\b
+  - \bborderline[ -]?medical\b
+  normalized_to: possible_medical_boundary
+  normalization_priority: 0
+- id: health_data
+  label: Health data
+  description: Likely handles identifiable wellness, physiological, or health-related
+    personal data.
+  aliases:
+  - health data
+  - wellness data
+  examples: []
+  regex:
+  - \bhealth[ -]?data\b
+  - \bwellness[ -]?data\b
+  normalized_to: health_data
+  normalization_priority: 0
+- id: home_security
+  label: Home security
+  description: Intended for intrusion detection, alarm, property monitoring, or household
+    security use.
+  aliases:
+  - home security
+  - security system
+  examples: []
+  regex:
+  - \bhome[ -]?security\b
+  - \bsecurity[ -]?system\b
+  normalized_to: home_security
+  normalization_priority: 0
+- id: surveillance
+  label: Surveillance / monitoring
+  description: Intended for watch, monitoring, or surveillance rather than casual
+    imaging only.
+  aliases:
+  - surveillance
+  - monitoring camera
+  examples: []
+  regex:
+  - \bsurveillance\b
+  - \bmonitoring[ -]?camera\b
+  normalized_to: surveillance
+  normalization_priority: 0
+- id: access_control
+  label: Access control
+  description: Controls entry, exit, locking, unlocking, or authorisation for a space,
+    gate, or barrier.
+  aliases:
+  - access control
+  - entry control
+  examples: []
+  regex:
+  - \baccess[ -]?control\b
+  - \bentry[ -]?control\b
+  normalized_to: access_control
+  normalization_priority: 0
+- id: locking
+  label: Locking function
+  description: Performs locking or unlocking of a door, cabinet, gate, or similar
+    barrier.
+  aliases:
+  - locking
+  - smart lock
+  examples: []
+  regex:
+  - \blocking\b
+  - \bsmart[ -]?lock\b
+  normalized_to: locking
+  normalization_priority: 0
+- id: offline_capable
+  label: Offline capable
+  description: Can operate locally or continue useful operation without cloud dependency.
+  aliases:
+  - offline capable
+  - works offline
+  examples: []
+  regex:
+  - \boffline[ -]?capable\b
+  - \bworks[ -]?offline\b
+  normalized_to: offline_capable
+  normalization_priority: 0
+- id: cloud_dependent
+  label: Cloud dependent
+  description: Core or marketed functions depend on vendor cloud services or remote
+    backend availability.
+  aliases:
+  - cloud dependent
+  - requires cloud
+  examples: []
+  regex:
+  - \bcloud[ -]?dependent\b
+  - \brequires[ -]?cloud\b
+  normalized_to: cloud_dependent
+  normalization_priority: 0
+- id: account_required
+  label: Account required
+  description: Requires account creation, login, or profile setup for core or marketed
+    functions.
+  aliases:
+  - account required
+  - login required
+  examples: []
+  regex:
+  - \baccount[ -]?required\b
+  - \blogin[ -]?required\b
+  normalized_to: account_required
+  normalization_priority: 0
+- id: weather_exposure
+  label: Weather exposure
+  description: Intended for rain, spray, sun, frost, or other outdoor environmental
+    exposure.
+  aliases:
+  - weather exposure
+  - weatherproof
+  examples: []
+  regex:
+  - \bweather[ -]?exposure\b
+  - \bweatherproof\b
+  normalized_to: weather_exposure
+  normalization_priority: 0
+- id: router_role
+  label: Router role
+  description: Acts as a router or internet-edge routing device.
+  aliases:
+  - router role
+  - wifi router
+  examples: []
+  regex:
+  - \brouter[ -]?role\b
+  - \bwifi[ -]?router\b
+  normalized_to: router_role
+  normalization_priority: 0
+- id: access_point_role
+  label: Access point role
+  description: Acts as a Wi-Fi access point or wireless infrastructure node.
+  aliases:
+  - access point role
+  - wireless access point
+  examples: []
+  regex:
+  - \baccess[ -]?point[ -]?role\b
+  - \bwireless[ -]?access[ -]?point\b
+  normalized_to: access_point_role
+  normalization_priority: 0
+- id: repeater_role
+  label: Repeater / extender role
+  description: Extends or repeats network coverage as a repeater, extender, or mesh
+    satellite.
+  aliases:
+  - repeater role
+  - wifi extender
+  - wifi repeater
+  examples: []
+  regex:
+  - \brepeater[ -]?role\b
+  - \bwifi[ -]?extender\b
+  - \bwifi[ -]?repeater\b
+  normalized_to: repeater_role
+  normalization_priority: 0
+- id: gateway_role
+  label: Gateway / bridge role
+  description: Acts as a gateway, bridge, coordinator, or protocol translator between
+    networks or device ecosystems.
+  aliases:
+  - gateway role
+  - bridge role
+  examples: []
+  regex:
+  - \bgateway[ -]?role\b
+  - \bbridge[ -]?role\b
+  normalized_to: gateway_role
+  normalization_priority: 0
+- id: ev_connector
+  label: EV connector
+  description: EV charging connector, vehicle inlet, socket-outlet, or mating connector
+    is part of intended function.
+  aliases:
+  - ev connector
+  - vehicle connector
+  examples: []
+  regex:
+  - \bev[ -]?connector\b
+  - \bvehicle[ -]?connector\b
+  normalized_to: ev_connector
+  normalization_priority: 0
+- id: ev_cable_accessory
+  label: EV cable accessory
+  description: EV charging cable, tethered cable, or passive conductive charging accessory.
+  aliases:
+  - ev cable accessory
+  - charging cable accessory
+  examples: []
+  regex:
+  - \bev[ -]?cable[ -]?accessory\b
+  - \bcharging[ -]?cable[ -]?accessory\b
+  normalized_to: ev_cable_accessory
+  normalization_priority: 0
+- id: machine_like
+  label: Machine-like equipment
+  description: Product behaves more like machinery or powered work equipment than
+    an ordinary household appliance.
+  aliases:
+  - machine like
+  - machinery type
+  examples: []
+  regex:
+  - \bmachine[ -]?like\b
+  - \bmachinery[ -]?type\b
+  normalized_to: machine_like
+  normalization_priority: 0
+- id: cutting_hazard
+  label: Cutting hazard
+  description: Includes blades, cutting heads, chain, saw action, trimming line, or
+    similar cutting hazard.
+  aliases:
+  - cutting hazard
+  - blade hazard
+  examples: []
+  regex:
+  - \bcutting[ -]?hazard\b
+  - \bblade[ -]?hazard\b
+  normalized_to: cutting_hazard
+  normalization_priority: 0
+- id: lithium_ion_battery
+  label: Lithium-ion battery
+  description: Uses lithium-ion or lithium-polymer rechargeable battery chemistry.
+  aliases:
+  - lithium ion battery
+  - li ion
+  - li-ion
+  - lithium polymer
+  examples: []
+  regex:
+  - \blithium[ -]?ion[ -]?battery\b
+  - \bli[ -]?ion\b
+  - \blithium[ -]?polymer\b
+  normalized_to: lithium_ion_battery
+  normalization_priority: 0
+- id: biometric
+  label: Biometric / physiological sensing
+  description: Measures physiological, biometric, or body-state data such as heart
+    rate, SpO2, ECG, or similar signals.
+  aliases:
+  - biometric
+  - physiological sensing
+  - heart rate
+  - spo2
+  - ecg
+  examples: []
+  regex:
+  - \bbiometric\b
+  - \bphysiological[ -]?sensing\b
+  - \bheart[ -]?rate\b
+  - \bspo2\b
+  - \becg\b
+  normalized_to: biometric
   normalization_priority: 0

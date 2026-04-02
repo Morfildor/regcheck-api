@@ -231,6 +231,24 @@ trait_detection:
     - \bsmart speaker\b
     - \bict equipment\b
     - \baudio video equipment\b
+    router_role:
+    - \brouter\b
+    - \bwi[ -]?fi router\b
+    - \bwireless router\b
+    access_point_role:
+    - \baccess point\b
+    - \bwireless access point\b
+    - \bwifi access point\b
+    repeater_role:
+    - \bwi[ -]?fi extender\b
+    - \brange extender\b
+    - \bwi[ -]?fi repeater\b
+    - \bwireless repeater\b
+    gateway_role:
+    - \bgateway\b
+    - \bhome hub\b
+    - \bbridge\b
+    - \bcontrol bridge\b
     camera:
     - \bcamera\b
     microphone:
@@ -309,6 +327,23 @@ trait_detection:
     - \bbattery cell\b
     - \bbattery powered device\b
     - \bon battery\b
+    rechargeable:
+    - \brechargeable\b
+    - \brecharge via usb\b
+    - \busb rechargeable\b
+    removable_battery:
+    - \bremovable battery\b
+    - \breplaceable battery\b
+    - \bswappable battery\b
+    lithium_ion_battery:
+    - \bli ion\b
+    - \bli-ion\b
+    - \blithium ion\b
+    - \blithium-ion\b
+    energy_storage:
+    - \bbattery pack\b
+    - \benergy storage\b
+    - \bpower station\b
     external_psu:
     - \bexternal psu\b
     - \bexternal power supply\b
@@ -357,6 +392,24 @@ trait_detection:
     - \bsmart grid\b
     - \bdemand response\b
     - \bdynamic load management\b
+    charger_role:
+    - \bcharger\b
+    - \bcharging adapter\b
+    - \bcharging dock\b
+    - \bcharging cradle\b
+    - \bcharging station\b
+    charge_controller:
+    - \bcharge controller\b
+    - \bcharge management\b
+    power_source:
+    - \bpower supply\b
+    - \bpower source\b
+    - \bac dc adapter\b
+    - \bac-dc adapter\b
+    - \bpower adapter\b
+    powered_load:
+    - \bpowered device\b
+    - \bpowered load\b
     mains_powered:
     - \bmains\b
     - \b230v\b
@@ -418,6 +471,20 @@ trait_detection:
     - \bportable\b
     - \btravel\b
     - \bhandheld\b
+    offline_capable:
+    - \blocal only\b
+    - \boffline only\b
+    - \blan only\b
+    - \bworks without cloud\b
+    cloud_dependent:
+    - \bcloud required\b
+    - \brequires cloud\b
+    - \bcloud dependent\b
+    - \bcloud dependency\b
+    account_required:
+    - \baccount required\b
+    - \blogin required\b
+    - \bsign in required\b
     remote_control:
     - \bremote control\b
     - \bremote start\b
@@ -428,7 +495,43 @@ trait_detection:
     - \bremote provisioning\b
     - \bfleet management\b
     - \bremote diagnostics\b
+    weather_exposure:
+    - \bweather resistant\b
+    - \bweatherproof\b
+    - \boutdoor rated\b
+    - \bip65\b
+    - \bip66\b
+    - \bip67\b
   environment_and_safety:
+    lighting:
+    - \blighting\b
+    - \blight source\b
+    - \bled lamp\b
+    - \bled bulb\b
+    - \bdesk lamp\b
+    luminaire:
+    - \bluminaire\b
+    - \blighting fixture\b
+    - \bintegrated lamp\b
+    optical_emission:
+    - \blight output\b
+    - \blight emitting\b
+    - \boptical output\b
+    - \bphotobiological\b
+    uv_emitting:
+    - \buv\b
+    - \bultraviolet\b
+    - \buv c\b
+    - \buv-c\b
+    infrared_emitting:
+    - \binfrared\b
+    - \bir emitter\b
+    - \bir lamp\b
+    - \bir led\b
+    photobiological_relevance:
+    - \bphotobiological\b
+    - \bblue light hazard\b
+    - \brisk group\b
     laser:
     - \blaser\b
     - \blidar\b
@@ -478,6 +581,36 @@ trait_detection:
     - \bsander\b
     - \bimpact driver\b
     - \brotary hammer\b
+    heating_element:
+    - \bheating element\b
+    - \bhot plate\b
+    - \bboiler\b
+    fan_air_mover:
+    - \bfan\b
+    - \bblower\b
+    - \bair mover\b
+    pump_system:
+    - \bpump\b
+    - \bpumping\b
+    compressor_system:
+    - \bcompressor\b
+    - \brefrigeration compressor\b
+    rotating_part:
+    - \brotating blade\b
+    - \bspinning head\b
+    - \brotating part\b
+    - \bcutting head\b
+    wet_use:
+    - \bwet use\b
+    - \bwet room\b
+    - \bwet area\b
+    bathroom_use:
+    - \bbathroom\b
+    - \bshower room\b
+    immersion_risk:
+    - \bimmersion\b
+    - \bsubmerged\b
+    - \bsubmersible\b
     secure_boot:
     - \bsecure boot\b
     hardware_security_element:
@@ -514,6 +647,23 @@ trait_detection:
     - \bbathroom\b
     - \bshower\b
     - \bsplash\b
+    home_security:
+    - \bhome security\b
+    - \bsecurity system\b
+    - \bintrusion alarm\b
+    surveillance:
+    - \bsurveillance\b
+    - \bcctv\b
+    - \bvideo surveillance\b
+    - \bsecurity recording\b
+    access_control:
+    - \baccess control\b
+    - \bentry control\b
+    - \bdoor access\b
+    locking:
+    - \block\b
+    - \bdeadbolt\b
+    - \blocking\b
     child_targeted:
     - \bchild targeted\b
     - \bfor children\b
@@ -645,6 +795,32 @@ trait_detection:
     - \becg monitor\b
     - \bekg monitor\b
     - \bwellness monitor\b
+    wellness:
+    - \bwellness\b
+    - \brecovery\b
+    - \bsleep support\b
+    - \brelaxation device\b
+    medical_adjacent:
+    - \bmedical adjacent\b
+    - \bborderline medical\b
+    health_data:
+    - \bhealth data\b
+    - \bbiometric data\b
+    - \bwellness data\b
+    - \bphysiological data\b
+    body_contact:
+    - \bbody contact\b
+    - \bskin contact\b
+    - \bon skin\b
+    oral_contact:
+    - \boral contact\b
+    - \bin mouth\b
+    - \btoothbrush head\b
+    childcare_device:
+    - \bbaby monitor\b
+    - \bnursery device\b
+    - \bfor infants\b
+    - \bfor babies\b
 negations:
   connectivity:
     radio:
@@ -756,6 +932,7 @@ suppression_mappings:
     - bluetooth
     cloud:
     - cloud
+    - cloud_dependent
     internet:
     - internet
     - internet_connected
@@ -765,6 +942,7 @@ suppression_mappings:
     - ota
     account:
     - account
+    - account_required
     authentication:
     - authentication
   product_shape:

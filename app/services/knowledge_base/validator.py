@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+import re
 from typing import Any
 
 from app.domain.catalog_types import GenreCatalogRow, LikelyStandardRef, ProductCatalogRow
@@ -49,6 +50,58 @@ def _string_list(value: Any) -> list[str]:
     if not isinstance(value, list):
         return []
     return [item for item in value if isinstance(item, str) and item.strip()]
+
+
+def _normalized_duplicates(items: list[str]) -> set[str]:
+    seen: set[str] = set()
+    duplicates: set[str] = set()
+    for item in items:
+        key = item.strip().lower()
+        if key in seen:
+            duplicates.add(item.strip())
+            continue
+        seen.add(key)
+    return duplicates
+
+
+def _validate_string_list_field(
+    owner: str,
+    row: Mapping[str, Any],
+    key: str,
+    *,
+    required: bool = False,
+    allow_empty: bool = True,
+) -> list[str]:
+    value = row.get(key)
+    if value is None:
+        if required:
+            raise KnowledgeBaseError(f"{owner} field '{key}' is required.")
+        return []
+    if not isinstance(value, list):
+        raise KnowledgeBaseError(f"{owner} field '{key}' must be a list.")
+    items: list[str] = []
+    for item in value:
+        if not isinstance(item, str) or not item.strip():
+            raise KnowledgeBaseError(f"{owner} field '{key}' must contain only non-empty strings.")
+        items.append(item.strip())
+    if not allow_empty and not items:
+        raise KnowledgeBaseError(f"{owner} field '{key}' must not be empty.")
+    return items
+
+
+def _validate_alias_fields(owner: str, row: Mapping[str, Any]) -> None:
+    for field, required, allow_empty in (
+        ("aliases", True, False),
+        ("strong_aliases", False, True),
+        ("weak_aliases", False, True),
+        ("marketplace_aliases", False, True),
+        ("not_when_text_contains", False, True),
+        ("negative_examples", False, True),
+    ):
+        values = _validate_string_list_field(owner, row, field, required=required, allow_empty=allow_empty)
+        duplicates = sorted(_normalized_duplicates(values))
+        if duplicates:
+            raise KnowledgeBaseError(f"{owner} field '{field}' contains duplicate entries: {', '.join(duplicates)}.")
 
 
 def _dedupe_keep_order(items: list[Any]) -> list[Any]:
@@ -133,15 +186,14 @@ def _validate_genres(data: dict[str, Any], trait_ids: set[str]) -> list[dict[str
         if genre_id in seen:
             raise KnowledgeBaseError(f"Duplicate genre id in product_genres.yaml: {genre_id}")
         seen.add(genre_id)
+        owner = f"Genre '{genre_id}'"
         for key in ("traits", "default_traits"):
-            for trait in _string_list(row.get(key)):
+            for trait in _validate_string_list_field(owner, row, key):
                 if trait not in trait_ids:
-                    raise KnowledgeBaseError(f"Genre '{genre_id}' references unknown trait '{trait}'.")
-        for key in ("keywords", "functional_classes", "likely_standards"):
-            value = row.get(key, [])
-            if value is not None and not isinstance(value, list):
-                raise KnowledgeBaseError(f"Genre '{genre_id}' field '{key}' must be a list when present.")
-        _normalize_likely_standard_refs(row, f"Genre '{genre_id}'")
+                    raise KnowledgeBaseError(f"{owner} references unknown trait '{trait}'.")
+        for key in ("keywords", "functional_classes", "likely_standards", "strong_keywords", "weak_keywords", "negative_examples"):
+            _validate_string_list_field(owner, row, key)
+        _normalize_likely_standard_refs(row, owner)
     return genres
 
 
@@ -162,47 +214,71 @@ def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set
         if pid in seen:
             raise KnowledgeBaseError(f"Duplicate product id in merged product catalog: {pid}")
         seen.add(pid)
+        owner = f"Product '{pid}'"
 
-        aliases = row.get("aliases", [])
-        if not isinstance(aliases, list) or not aliases or not all(isinstance(item, str) and item.strip() for item in aliases):
-            raise KnowledgeBaseError(f"Product '{pid}' must define a non-empty aliases list.")
+        _validate_alias_fields(owner, row)
 
         for field in ("product_family", "product_subfamily"):
             value = row.get(field)
             if value is not None and (not isinstance(value, str) or not value.strip()):
-                raise KnowledgeBaseError(f"Product '{pid}' field '{field}' must be a non-empty string when provided.")
+                raise KnowledgeBaseError(f"{owner} field '{field}' must be a non-empty string when provided.")
         if row.get("confusable_with") and not row.get("product_family"):
-            raise KnowledgeBaseError(f"Product '{pid}' field 'confusable_with' requires product_family to be set.")
+            raise KnowledgeBaseError(f"{owner} field 'confusable_with' requires product_family to be set.")
 
-        for key in ("implied_traits", "functional_classes", "likely_standards", "family_keywords", "genres"):
-            value = row.get(key, [])
-            if not isinstance(value, list):
-                raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
-            for item in value:
-                if not isinstance(item, str) or not item.strip():
-                    raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only non-empty strings.")
+        for key in (
+            "implied_traits",
+            "functional_classes",
+            "likely_standards",
+            "family_keywords",
+            "genres",
+            "supporting_standard_codes",
+        ):
+            value = _validate_string_list_field(owner, row, key)
             if key == "implied_traits":
                 for trait in value:
                     if trait not in trait_ids:
-                        raise KnowledgeBaseError(f"Product '{pid}' references unknown trait '{trait}'.")
+                        raise KnowledgeBaseError(f"{owner} references unknown trait '{trait}'.")
             if key == "genres":
                 for genre in value:
                     if genre not in genre_ids:
-                        raise KnowledgeBaseError(f"Product '{pid}' references unknown genre '{genre}'.")
+                        raise KnowledgeBaseError(f"{owner} references unknown genre '{genre}'.")
 
-        _normalize_likely_standard_refs(row, f"Product '{pid}'")
+        _normalize_likely_standard_refs(row, owner)
 
-        for key in ("core_traits", "default_traits", "required_clues", "preferred_clues", "exclude_clues", "confusable_with", "family_traits", "subtype_traits"):
-            value = row.get(key, [])
-            if not isinstance(value, list):
-                raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must be a list.")
-            for item in value:
-                if not isinstance(item, str) or not item.strip():
-                    raise KnowledgeBaseError(f"Product '{pid}' field '{key}' must contain only non-empty strings.")
+        for key in (
+            "core_traits",
+            "default_traits",
+            "required_clues",
+            "preferred_clues",
+            "exclude_clues",
+            "confusable_with",
+            "family_traits",
+            "subtype_traits",
+        ):
+            value = _validate_string_list_field(owner, row, key)
             if key in {"core_traits", "default_traits", "family_traits", "subtype_traits"}:
                 for trait in value:
                     if trait not in trait_ids:
-                        raise KnowledgeBaseError(f"Product '{pid}' field '{key}' references unknown trait '{trait}'.")
+                        raise KnowledgeBaseError(f"{owner} field '{key}' references unknown trait '{trait}'.")
+
+        primary_standard_code = row.get("primary_standard_code")
+        if primary_standard_code is not None and (not isinstance(primary_standard_code, str) or not primary_standard_code.strip()):
+            raise KnowledgeBaseError(f"{owner} field 'primary_standard_code' must be a non-empty string when provided.")
+        supporting_standard_codes = _string_list(row.get("supporting_standard_codes"))
+        if primary_standard_code and primary_standard_code in supporting_standard_codes:
+            raise KnowledgeBaseError(f"{owner} repeats primary_standard_code '{primary_standard_code}' in supporting_standard_codes.")
+
+        preferred_clues = {item.strip().lower() for item in _string_list(row.get("preferred_clues"))}
+        exclude_clues = {item.strip().lower() for item in _string_list(row.get("exclude_clues"))}
+        clue_overlap = sorted(preferred_clues & exclude_clues)
+        if clue_overlap:
+            raise KnowledgeBaseError(f"{owner} has clues present in both preferred_clues and exclude_clues: {', '.join(clue_overlap)}.")
+
+        strong_aliases = {item.strip().lower() for item in _string_list(row.get("strong_aliases"))}
+        weak_aliases = {item.strip().lower() for item in _string_list(row.get("weak_aliases"))}
+        alias_overlap = sorted(strong_aliases & weak_aliases)
+        if alias_overlap:
+            raise KnowledgeBaseError(f"{owner} has aliases present in both strong_aliases and weak_aliases: {', '.join(alias_overlap)}.")
 
     for row in products:
         pid = row["id"]
@@ -388,6 +464,107 @@ def _validate_standards(data: dict[str, Any], product_ids: set[str], trait_ids: 
 
     return standards
 
+
+def _validate_classifier_signal_catalog(data: Mapping[str, Any], trait_ids: set[str]) -> None:
+    known_signal_names: set[str] = set()
+
+    def validate_pattern_section(section_name: str) -> None:
+        section = data.get(section_name)
+        if section is None:
+            return
+        if not isinstance(section, Mapping):
+            raise KnowledgeBaseError(f"classifier_signals.yaml field '{section_name}' must be a mapping.")
+        for group_name, group_payload in section.items():
+            if not isinstance(group_name, str) or not isinstance(group_payload, Mapping):
+                raise KnowledgeBaseError(f"classifier_signals.yaml section '{section_name}' must contain named mapping groups.")
+            for signal_name, patterns_payload in group_payload.items():
+                if not isinstance(signal_name, str) or not signal_name.strip():
+                    raise KnowledgeBaseError(f"classifier_signals.yaml section '{section_name}.{group_name}' contains an invalid signal name.")
+                if signal_name not in trait_ids:
+                    raise KnowledgeBaseError(
+                        f"classifier_signals.yaml signal '{signal_name}' in section '{section_name}.{group_name}' is not a known trait id."
+                    )
+                patterns = _validate_string_list_field(
+                    f"classifier_signals.yaml section '{section_name}.{group_name}.{signal_name}'",
+                    {"patterns": patterns_payload},
+                    "patterns",
+                    required=True,
+                    allow_empty=False,
+                )
+                for pattern in patterns:
+                    try:
+                        re.compile(pattern)
+                    except re.error as exc:
+                        raise KnowledgeBaseError(
+                            f"Invalid regex in classifier_signals.yaml at {section_name}.{group_name}.{signal_name}: {pattern}"
+                        ) from exc
+                known_signal_names.add(signal_name)
+
+    validate_pattern_section("trait_detection")
+    validate_pattern_section("negations")
+
+    suppression_mappings = data.get("suppression_mappings")
+    if suppression_mappings is not None:
+        if not isinstance(suppression_mappings, Mapping):
+            raise KnowledgeBaseError("classifier_signals.yaml field 'suppression_mappings' must be a mapping.")
+        for group_name, group_payload in suppression_mappings.items():
+            if not isinstance(group_name, str) or not isinstance(group_payload, Mapping):
+                raise KnowledgeBaseError("classifier_signals.yaml suppression groups must be named mappings.")
+            for signal_name, traits_payload in group_payload.items():
+                if not isinstance(signal_name, str) or not signal_name.strip():
+                    raise KnowledgeBaseError(f"classifier_signals.yaml suppression group '{group_name}' contains an invalid signal name.")
+                if signal_name not in known_signal_names and signal_name not in trait_ids:
+                    raise KnowledgeBaseError(
+                        f"classifier_signals.yaml suppression mapping '{group_name}.{signal_name}' does not match any known signal."
+                    )
+                suppressed_traits = _validate_string_list_field(
+                    f"classifier_signals.yaml suppression mapping '{group_name}.{signal_name}'",
+                    {"traits": traits_payload},
+                    "traits",
+                    required=True,
+                    allow_empty=False,
+                )
+                for trait in suppressed_traits:
+                    if trait not in trait_ids:
+                        raise KnowledgeBaseError(
+                            f"classifier_signals.yaml suppression mapping '{group_name}.{signal_name}' references unknown trait '{trait}'."
+                        )
+
+    wireless_mentions = data.get("wireless_mentions")
+    if wireless_mentions is not None:
+        patterns = _validate_string_list_field(
+            "classifier_signals.yaml field 'wireless_mentions'",
+            {"patterns": wireless_mentions},
+            "patterns",
+            required=True,
+            allow_empty=False,
+        )
+        for pattern in patterns:
+            try:
+                re.compile(pattern)
+            except re.error as exc:
+                raise KnowledgeBaseError(f"Invalid regex in classifier_signals.yaml at wireless_mentions: {pattern}") from exc
+
+    cue_groups = data.get("cue_groups")
+    if cue_groups is not None:
+        if not isinstance(cue_groups, Mapping):
+            raise KnowledgeBaseError("classifier_signals.yaml field 'cue_groups' must be a mapping.")
+        for cue_name, patterns_payload in cue_groups.items():
+            if not isinstance(cue_name, str) or not cue_name.strip():
+                raise KnowledgeBaseError("classifier_signals.yaml cue_groups contains an invalid cue name.")
+            patterns = _validate_string_list_field(
+                f"classifier_signals.yaml cue group '{cue_name}'",
+                {"patterns": patterns_payload},
+                "patterns",
+                required=True,
+                allow_empty=False,
+            )
+            for pattern in patterns:
+                try:
+                    re.compile(pattern)
+                except re.error as exc:
+                    raise KnowledgeBaseError(f"Invalid regex in classifier_signals.yaml at cue_groups.{cue_name}: {pattern}") from exc
+
 def _normalize_likely_standard_refs(
     row: ProductCatalogRow | GenreCatalogRow | Mapping[str, Any],
     owner: str,
@@ -437,6 +614,7 @@ __all__ = [
     "_normalize_likely_standard_refs",
     "_optional_list",
     "_string_list",
+    "_validate_classifier_signal_catalog",
     "_validate_genres",
     "_validate_legislations",
     "_validate_products",

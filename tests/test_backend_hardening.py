@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import patch
 
 import main
+from scripts import catalog_audit
 from app.domain.models import AnalysisResult, MetadataOptionsResponse, MetadataStandardsResponse
 from knowledge_base import KnowledgeBaseError, KnowledgeBaseWarmupResult, reset_cache, warmup_knowledge_base
 from rules import analyze
@@ -170,8 +171,32 @@ class BackendHardeningTests(unittest.TestCase):
 
             with patch.dict("os.environ", {"REGCHECK_DATA_DIR": str(temp_data_dir)}):
                 reset_cache()
-                with self.assertRaisesRegex(KnowledgeBaseError, "Typed product catalog validation failed"):
+                with self.assertRaisesRegex(KnowledgeBaseError, "supporting_standard_codes"):
                     warmup_knowledge_base(refresh_paths=True)
+
+    def test_classifier_signal_validation_surfaces_knowledge_base_error(self) -> None:
+        source_dir = Path(__file__).resolve().parents[1] / "data"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            temp_data_dir = Path(tmpdir) / "data"
+            shutil.copytree(source_dir, temp_data_dir)
+            signals_path = temp_data_dir / "classifier_signals.yaml"
+            original = signals_path.read_text(encoding="utf-8")
+            signals_path.write_text(
+                original.replace(
+                    "    radio:\n    - \\bradio\\b",
+                    "    radio:\n    - \\bradio\\b\n    invented_signal_trait:\n    - \\binvented signal\\b",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+
+            with patch.dict("os.environ", {"REGCHECK_DATA_DIR": str(temp_data_dir)}):
+                reset_cache()
+                with self.assertRaisesRegex(KnowledgeBaseError, "invented_signal_trait"):
+                    warmup_knowledge_base(refresh_paths=True)
+
+    def test_catalog_audit_validate_mode_succeeds(self) -> None:
+        self.assertEqual(catalog_audit.run("validate", minimum_aliases=4, broad_alias_threshold=3), 0)
 
     def test_api_snapshots_remain_stable_for_representative_products(self) -> None:
         snapshot_dir = Path(__file__).resolve().parent / "snapshots"

@@ -302,7 +302,7 @@ def populate_missing_information_questions(
     body_contact_signal = bool({"wearable", "body_worn_or_applied", "personal_care"} & traits) or bool(
         {"contact.wearable", "contact.body_contact"} & known_fact_keys
     )
-    health_data_signal = bool({"health_related", "biometric", "personal_data_likely"} & traits) or "data.health_related" in known_fact_keys
+    health_data_signal = bool({"health_related", "health_data", "biometric"} & traits) or "data.health_related" in known_fact_keys
     medical_boundary_signal = bool({"possible_medical_boundary", "medical_context", "medical_claims"} & traits) or ("boundary.possible_medical" in known_fact_keys)
     cloud_detail_known = _has_cloud_dependency_detail(text) or bool(
         {"service.cloud_dependency", "service.cloud_account_required", "service.local_only"} & known_fact_keys

@@ -39,6 +39,15 @@ class ClassifierHardeningTests(unittest.TestCase):
         self.assertIn("explicit text negation for 'cloud'", negation_reasons)
         self.assertIn("explicit text negation for 'internet'", negation_reasons)
 
+    def test_specific_wireless_protocol_does_not_inherit_other_default_radios(self) -> None:
+        result = extract_traits("smart switch with no cloud local only zigbee")
+
+        self.assertEqual(result["product_type"], "smart_switch")
+        self.assertIn("zigbee", result["all_traits"])
+        self.assertNotIn("wifi", result["all_traits"])
+        self.assertNotIn("bluetooth", result["all_traits"])
+        self.assertNotIn("cloud", result["all_traits"])
+
     def test_wired_only_blocks_radio_defaults(self) -> None:
         result = extract_traits("smart speaker wired only with Ethernet audio input")
 
@@ -76,6 +85,22 @@ class ClassifierHardeningTests(unittest.TestCase):
         self.assertEqual(audit["final_match_stage"], "subtype")
         self.assertIn("decisive", audit["final_match_reason"])
         self.assertEqual(audit["top_subtype_candidates"][0]["id"], "mesh_wifi_system")
+
+    def test_new_office_and_power_products_classify_cleanly(self) -> None:
+        cases = {
+            "65W USB-C wall charger with power delivery": "usb_wall_charger",
+            "24V external power supply adapter for monitor": "external_power_supply",
+            "home office inkjet printer with wifi": "office_printer",
+            "A4 document scanner with USB": "document_scanner",
+            "network video recorder with PoE ports and 2TB storage": "nvr_dvr_recorder",
+            "wifi range extender with dual-band support": "wifi_extender",
+        }
+
+        for description, expected in cases.items():
+            with self.subTest(description=description):
+                result = extract_traits(description)
+                self.assertEqual(result["product_type"], expected)
+                self.assertEqual(result["product_match_stage"], "subtype")
 
     def test_wearable_body_contact_language_stays_explicit(self) -> None:
         result = extract_traits("wearable heart-rate monitor with Bluetooth/app/body-contact")

@@ -14327,6 +14327,8 @@ products:
   aliases:
   - smart smoke alarm
   - smart co alarm
+  - smart smoke and carbon monoxide alarm
+  - smart smoke and carbon monoxide detector
   - wifi smoke detector
   - connected smoke detector
   - smart carbon monoxide alarm
@@ -14415,6 +14417,7 @@ products:
   strong_aliases:
   - smart smoke alarm
   - smart co alarm
+  - smart smoke and carbon monoxide alarm
   - wifi smoke detector
   - connected smoke detector
   - smart carbon monoxide alarm
@@ -24727,3 +24730,878 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Rotary hammer and SDS drilling tool coverage.
+- id: garment_steamer
+  label: Garment steamer / clothes steamer
+  product_family: textile_care_appliance
+  product_subfamily: garment_steamer
+  family_keywords:
+  - garment care
+  - textile care
+  - clothes steaming
+  aliases:
+  - garment steamer
+  - clothes steamer
+  - handheld garment steamer
+  - clothing steamer
+  - travel garment steamer
+  - fabric steamer
+  - steam brush
+  preferred_clues:
+  - garment steamer
+  - clothes steamer
+  - fabric steamer
+  exclude_clues:
+  - wallpaper steamer
+  - steam cleaner
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - heating_element
+  - water_contact
+  - steam
+  - mains_powered
+  - handheld
+  - textile_care
+  functional_classes:
+  - household_appliance
+  - textile_care_appliance
+  likely_standards:
+  - EN 60335-2-3
+  - EN 60335-2-45
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-3
+  supporting_standard_codes:
+  - EN 60335-2-45
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - garment steamer
+  - clothes steamer
+  - handheld garment steamer
+  - clothing steamer
+  - fabric steamer
+  weak_aliases:
+  - travel garment steamer
+  - steam brush
+  marketplace_aliases:
+  - garment steamer
+  - clothes steamer
+  - travel clothes steamer
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - heating
+  - water_contact
+  - steam
+  - textile_care
+  matching_notes: Separate garment-steamer coverage so apparel-steaming products do
+    not collapse into generic irons or steam cleaners.
+- id: portable_air_conditioner
+  label: Portable air conditioner / portable AC
+  product_family: climate_conditioning_appliance
+  product_subfamily: portable_air_conditioner
+  family_keywords:
+  - air conditioner
+  - portable ac
+  - room cooling
+  aliases:
+  - portable air conditioner
+  - portable ac
+  - portable aircon
+  - room air conditioner
+  - mobile air conditioner
+  - portable cooling unit
+  - monoblock air conditioner
+  preferred_clues:
+  - portable air conditioner
+  - portable ac
+  - mobile air conditioner
+  exclude_clues:
+  - air purifier
+  - tower fan
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - motorized
+  - fan_air_mover
+  - compressor_system
+  - cooling
+  - air_treatment
+  - dehumidification
+  - water_contact
+  - mains_powered
+  - indoor_use
+  functional_classes:
+  - comfort_appliance
+  - air_treatment
+  likely_standards:
+  - EN 60335-2-40
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-40
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  strong_aliases:
+  - portable air conditioner
+  - portable ac
+  - portable aircon
+  - room air conditioner
+  - mobile air conditioner
+  weak_aliases:
+  - portable cooling unit
+  - monoblock air conditioner
+  marketplace_aliases:
+  - portable air conditioner
+  - room ac unit
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - cooling
+  - compressor_system
+  - fan_air_mover
+  matching_notes: Dedicated portable-AC coverage distinguishes cooling appliances
+    from air purifiers, fans, and dehumidifiers.
+- id: steam_cleaner
+  label: Steam cleaner / steam mop
+  product_family: surface_cleaning_appliance
+  product_subfamily: steam_cleaner
+  family_keywords:
+  - steam cleaning
+  - surface cleaning
+  aliases:
+  - steam cleaner
+  - steam mop
+  - handheld steam cleaner
+  - floor steam cleaner
+  - garment steam cleaner
+  - steam sanitiser cleaner
+  preferred_clues:
+  - steam cleaner
+  - steam mop
+  - floor steam cleaner
+  exclude_clues:
+  - garment steamer
+  - wallpaper steamer
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - motorized
+  - heating
+  - heating_element
+  - water_contact
+  - steam
+  - cleaning
+  - surface_cleaning
+  - mains_powered
+  functional_classes:
+  - cleaning_appliance
+  likely_standards:
+  - EN 60335-2-79
+  - EN 60335-2-54
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-79
+  supporting_standard_codes:
+  - EN 60335-2-54
+  genres:
+  - household_appliance
+  - cleaning_laundry_appliance
+  strong_aliases:
+  - steam cleaner
+  - steam mop
+  - handheld steam cleaner
+  - floor steam cleaner
+  weak_aliases:
+  - garment steam cleaner
+  - steam sanitiser cleaner
+  marketplace_aliases:
+  - steam mop
+  - canister steam cleaner
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - steam
+  - cleaning
+  - water_contact
+  matching_notes: Adds explicit steam-cleaning coverage so mops and surface steamers
+    route separately from garment steamers and pressure washers.
+- id: smoke_co_alarm
+  label: Smoke / CO alarm
+  product_family: life_safety_alarm
+  product_subfamily: smoke_co_alarm
+  family_keywords:
+  - smoke alarm
+  - carbon monoxide alarm
+  aliases:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  - co alarm
+  - co detector
+  - combination smoke co alarm
+  - dual smoke co detector
+  preferred_clues:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  exclude_clues:
+  - smart smoke alarm
+  - connected smoke detector
+  - wifi
+  - app control
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - battery_powered
+  - backup_battery
+  - smoke_detection
+  - co_detection
+  - siren
+  - safety_function
+  - ceiling_mount
+  functional_classes:
+  - safety_device
+  - security_device
+  likely_standards:
+  - EN 14604
+  - EN 50291-1
+  route_family: life_safety_alarm
+  primary_standard_code: EN 14604
+  supporting_standard_codes:
+  - EN 50291-1
+  genres:
+  - life_safety_alarm
+  strong_aliases:
+  - smoke alarm
+  - smoke detector
+  - carbon monoxide alarm
+  - co alarm
+  - combination smoke co alarm
+  weak_aliases:
+  - co detector
+  - dual smoke co detector
+  marketplace_aliases:
+  - smoke and carbon monoxide alarm
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - smoke_detection
+  - co_detection
+  - safety_function
+  matching_notes: Non-connected life-safety alarm route, kept separate from smart/connected
+    alarm variants.
+- id: smart_switch
+  label: Smart switch / connected wall switch
+  product_family: smart_power_control
+  product_subfamily: smart_switch
+  family_keywords:
+  - smart switch
+  - connected switch
+  - wall switch
+  aliases:
+  - smart switch
+  - wifi switch
+  - connected wall switch
+  - smart wall switch
+  - smart light switch
+  - app controlled switch
+  - touch smart switch
+  preferred_clues:
+  - smart switch
+  - smart wall switch
+  - smart light switch
+  exclude_clues:
+  - network switch
+  - ethernet switch
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - fixed_installation
+  - wall_mount
+  - app_control
+  - wifi
+  - bluetooth
+  - zigbee
+  - matter
+  - ota
+  - cloud
+  - data_storage
+  functional_classes:
+  - home_device
+  - connected_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart switch
+  - connected wall switch
+  - smart wall switch
+  - smart light switch
+  weak_aliases:
+  - wifi switch
+  - app controlled switch
+  - touch smart switch
+  marketplace_aliases:
+  - smart light switch
+  - wifi wall switch
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - app_control
+  - wifi
+  - bluetooth
+  - zigbee
+  - matter
+  matching_notes: Adds explicit wall-switch coverage while suppressing collisions with
+    Ethernet and network switches.
+- id: smart_relay
+  label: Smart relay / connected relay module
+  product_family: smart_power_control
+  product_subfamily: smart_relay
+  family_keywords:
+  - smart relay
+  - relay module
+  - din rail relay
+  aliases:
+  - smart relay
+  - wifi relay
+  - zigbee relay
+  - connected relay module
+  - smart dry contact relay
+  - smart din rail relay
+  - relay controller module
+  preferred_clues:
+  - smart relay
+  - relay module
+  - din rail relay
+  exclude_clues:
+  - protection relay
+  - automotive relay
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - fixed_installation
+  - din_rail_mount
+  - app_control
+  - wifi
+  - bluetooth
+  - zigbee
+  - matter
+  - ota
+  - cloud
+  functional_classes:
+  - home_device
+  - connected_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  strong_aliases:
+  - smart relay
+  - connected relay module
+  - smart dry contact relay
+  - smart din rail relay
+  weak_aliases:
+  - wifi relay
+  - zigbee relay
+  - relay controller module
+  marketplace_aliases:
+  - din rail smart relay
+  - smart relay module
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - din_rail_mount
+  - app_control
+  - zigbee
+  - matter
+  matching_notes: Keeps smart relay modules distinct from network switches, protection
+    relays, and generic smart plugs.
+- id: wifi_extender
+  label: Wi-Fi extender / range extender
+  product_family: wifi_networking
+  product_subfamily: wifi_extender
+  family_keywords:
+  - wifi extender
+  - range extender
+  - wifi repeater
+  aliases:
+  - wifi extender
+  - wi-fi extender
+  - range extender
+  - wifi repeater
+  - wireless repeater
+  - wifi booster
+  - home wifi extender
+  preferred_clues:
+  - wifi extender
+  - range extender
+  - wifi repeater
+  exclude_clues:
+  - mesh router
+  - router
+  - signal booster for cellular
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - radio
+  - wifi
+  - repeater_role
+  functional_classes:
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  - smart_home_iot
+  strong_aliases:
+  - wifi extender
+  - wi-fi extender
+  - range extender
+  - wifi repeater
+  weak_aliases:
+  - wireless repeater
+  - wifi booster
+  - home wifi extender
+  marketplace_aliases:
+  - wifi range extender
+  - dual band wifi extender
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - wifi
+  - repeater_role
+  - av_ict
+  matching_notes: Covers consumer Wi-Fi repeaters and extenders separately from
+    routers, mesh systems, and cellular signal boosters.
+- id: usb_wall_charger
+  label: USB wall charger / USB-C power adapter
+  product_family: portable_power_charger
+  product_subfamily: usb_wall_charger
+  family_keywords:
+  - usb charger
+  - usb wall charger
+  - usb c charger
+  aliases:
+  - usb charger
+  - usb wall charger
+  - usb-c wall charger
+  - usb c wall charger
+  - usb power adapter
+  - phone charger
+  - tablet charger
+  - pd charger
+  - gan charger
+  preferred_clues:
+  - usb wall charger
+  - usb-c wall charger
+  - usb power adapter
+  - pd charger
+  exclude_clues:
+  - battery charger dock
+  - wireless charger
+  - travel adapter
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - external_psu
+  - charger_role
+  - power_source
+  - usb_pd
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - portable_energy
+  - av_ict_device
+  strong_aliases:
+  - usb charger
+  - usb wall charger
+  - usb-c wall charger
+  - usb c wall charger
+  - usb power adapter
+  weak_aliases:
+  - phone charger
+  - tablet charger
+  - pd charger
+  - gan charger
+  marketplace_aliases:
+  - fast charger
+  - usb c charger
+  - usb power adapter
+  minimum_match_score: 32
+  score_boost_if_traits:
+  - external_psu
+  - charger_role
+  - usb_pd
+  matching_notes: Separates consumer USB charging adapters from appliance battery
+    docks and keeps them on the EN 62368-1 AV/ICT safety route.
+- id: travel_adapter_charger
+  label: Travel adapter with USB charging
+  product_family: portable_power_charger
+  product_subfamily: travel_adapter_charger
+  family_keywords:
+  - travel adapter
+  - travel charger
+  - plug adapter
+  aliases:
+  - travel adapter
+  - travel adapter with usb
+  - travel charger
+  - universal travel adapter
+  - world travel adapter
+  - plug adapter with usb charging
+  - international plug adapter charger
+  preferred_clues:
+  - travel adapter with usb
+  - universal travel adapter
+  - plug adapter with usb charging
+  exclude_clues:
+  - passive plug adapter
+  - mechanical plug adapter
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - portable
+  - external_psu
+  - charger_role
+  - power_source
+  - usb_pd
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - portable_energy
+  - av_ict_device
+  strong_aliases:
+  - travel adapter with usb
+  - universal travel adapter
+  - plug adapter with usb charging
+  - international plug adapter charger
+  weak_aliases:
+  - travel adapter
+  - travel charger
+  - world travel adapter
+  marketplace_aliases:
+  - travel adapter usb c
+  - universal adapter charger
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - portable
+  - external_psu
+  - charger_role
+  matching_notes: Covers active travel adapters with integrated USB charging while
+    avoiding collisions with passive country plug adapters.
+- id: external_power_supply
+  label: External power supply / AC-DC adapter
+  product_family: portable_power_charger
+  product_subfamily: external_power_supply
+  family_keywords:
+  - external power supply
+  - power adapter
+  - ac dc adapter
+  aliases:
+  - external power supply
+  - external psu
+  - power adapter
+  - ac adapter
+  - dc adapter
+  - ac dc adapter
+  - power brick
+  - replacement power supply
+  preferred_clues:
+  - external power supply
+  - external psu
+  - ac dc adapter
+  - replacement power supply
+  exclude_clues:
+  - battery charger
+  - usb wall charger
+  - monitor
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - external_psu
+  - power_source
+  - mains_powered
+  functional_classes:
+  - power_supply
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - portable_energy
+  - av_ict_device
+  strong_aliases:
+  - external power supply
+  - external psu
+  - power adapter
+  - ac adapter
+  - dc adapter
+  - ac dc adapter
+  weak_aliases:
+  - power brick
+  - replacement power supply
+  marketplace_aliases:
+  - switching power adapter
+  - desktop power supply adapter
+  minimum_match_score: 32
+  score_boost_if_traits:
+  - external_psu
+  - power_source
+  matching_notes: Keeps stand-alone adapters and power bricks separate from the
+    powered end-product they are sold for.
+- id: office_printer
+  label: Office printer / label printer
+  product_family: office_imaging
+  product_subfamily: office_printer
+  family_keywords:
+  - printer
+  - office printer
+  - label printer
+  aliases:
+  - office printer
+  - inkjet printer
+  - laser printer
+  - multifunction printer
+  - all in one printer
+  - label printer
+  - thermal label printer
+  - receipt printer
+  preferred_clues:
+  - inkjet printer
+  - laser printer
+  - multifunction printer
+  - label printer
+  exclude_clues:
+  - 3d printer
+  - resin printer
+  - filament printer
+  implied_traits:
+  - consumer
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - office printer
+  - inkjet printer
+  - laser printer
+  - multifunction printer
+  - label printer
+  weak_aliases:
+  - all in one printer
+  - thermal label printer
+  - receipt printer
+  marketplace_aliases:
+  - wifi printer
+  - office all in one printer
+  - shipping label printer
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - av_ict
+  - data_storage
+  - mains_powered
+  matching_notes: Adds mainstream office and label-printing coverage while staying
+    distinct from 3D printers and fabrication equipment.
+- id: document_scanner
+  label: Document scanner
+  product_family: office_imaging
+  product_subfamily: document_scanner
+  family_keywords:
+  - document scanner
+  - desktop scanner
+  - sheetfed scanner
+  aliases:
+  - document scanner
+  - desktop scanner
+  - office scanner
+  - sheetfed scanner
+  - flatbed scanner
+  - photo scanner
+  - a4 scanner
+  preferred_clues:
+  - document scanner
+  - desktop scanner
+  - sheetfed scanner
+  - flatbed scanner
+  exclude_clues:
+  - barcode scanner
+  - handheld scanner
+  - industrial scanner
+  implied_traits:
+  - consumer
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - document scanner
+  - desktop scanner
+  - office scanner
+  - sheetfed scanner
+  - flatbed scanner
+  weak_aliases:
+  - photo scanner
+  - a4 scanner
+  marketplace_aliases:
+  - duplex document scanner
+  - desktop document scanner
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - av_ict
+  - data_storage
+  matching_notes: Keeps office document imaging separate from rugged handheld barcode
+    scanners and warehouse equipment.
+- id: nvr_dvr_recorder
+  label: NVR / DVR recorder
+  product_family: security_recording
+  product_subfamily: nvr_dvr_recorder
+  family_keywords:
+  - nvr
+  - dvr
+  - video recorder
+  aliases:
+  - nvr
+  - dvr
+  - network video recorder
+  - digital video recorder
+  - cctv recorder
+  - surveillance recorder
+  - poe nvr
+  - security camera recorder
+  preferred_clues:
+  - network video recorder
+  - digital video recorder
+  - cctv recorder
+  - surveillance recorder
+  exclude_clues:
+  - dash cam
+  - body camera
+  - action camera
+  implied_traits:
+  - consumer
+  - professional
+  - electrical
+  - electronic
+  - av_ict
+  - data_storage
+  - home_security
+  - surveillance
+  - camera_surveillance
+  - mains_powered
+  functional_classes:
+  - security_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - security_access_iot
+  - av_ict_device
+  strong_aliases:
+  - nvr
+  - dvr
+  - network video recorder
+  - digital video recorder
+  - cctv recorder
+  weak_aliases:
+  - surveillance recorder
+  - poe nvr
+  - security camera recorder
+  marketplace_aliases:
+  - 8 channel nvr
+  - 4 channel dvr
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - data_storage
+  - surveillance
+  - camera_surveillance
+  matching_notes: Adds consumer and small-business CCTV recorder coverage so NVR/DVR
+    products stop falling back to generic AV/ICT descriptions.

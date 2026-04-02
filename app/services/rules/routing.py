@@ -272,6 +272,7 @@ WIFI_5GHZ_DEFAULT_PRODUCT_HINTS = {
     "smart_plug",
     "smart_speaker",
     "smart_tv",
+    "wifi_extender",
     "washing_machine",
 }
 
@@ -310,6 +311,8 @@ PERSONAL_CARE_PRODUCT_HINTS = {
 }
 
 AV_ICT_PRODUCT_HINTS = {
+    "document_scanner",
+    "external_power_supply",
     "smart_speaker",
     "smart_display",
     "smart_doorbell",
@@ -321,15 +324,19 @@ AV_ICT_PRODUCT_HINTS = {
     "iot_gateway",
     "network_switch",
     "wireless_access_point",
+    "wifi_extender",
     "laptop",
     "desktop_pc",
     "server",
     "nas",
     "monitor",
+    "nvr_dvr_recorder",
+    "office_printer",
     "smart_tv",
     "streaming_device",
     "set_top_box",
     "projector",
+    "usb_wall_charger",
 }
 
 APPLIANCE_PRIMARY_TRAITS = {
@@ -348,11 +355,17 @@ APPLIANCE_PRIMARY_TRAITS = {
     "garden_use",
     "hair_care",
     "heating",
+    "heating_element",
     "heating_personal_environment",
     "humidification",
+    "lighting",
     "motorized",
     "oral_care",
+    "optical_emission",
     "personal_care",
+    "pump_system",
+    "compressor_system",
+    "fan_air_mover",
     "surface_cleaning",
     "steam",
     "textile_care",
@@ -363,11 +376,17 @@ APPLIANCE_PRIMARY_TRAITS = {
 
 AV_ICT_SUPPORTING_TRAITS = {
     "av_ict",
+    "access_point_role",
     "camera",
     "data_storage",
     "display",
+    "gateway_role",
+    "home_security",
     "microphone",
+    "repeater_role",
+    "router_role",
     "speaker",
+    "surveillance",
 }
 
 TEXT_EVIDENCE_STATES = ("text_explicit", "text_inferred")
@@ -396,11 +415,13 @@ RADIO_ROUTE_TRAITS = {
 
 CONNECTED_ROUTE_TRAITS = {
     "app_control",
+    "cloud_dependent",
     "cloud",
     "internet",
     "internet_connected",
     "ota",
     "account",
+    "account_required",
     "authentication",
     "monetary_transaction",
 }
@@ -411,6 +432,7 @@ RED_ART_33_TRAITS = {
     "account",
     "authentication",
     "personal_data_likely",
+    "health_data",
     "monetary_transaction",
     "internet",
     "cloud",

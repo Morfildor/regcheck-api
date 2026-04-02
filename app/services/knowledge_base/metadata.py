@@ -206,10 +206,11 @@ def _build_classifier_runtime_snapshot(
 
 def _build_classifier_signal_snapshot(
     catalog_version: str | None,
+    trait_ids: set[str],
 ) -> ClassifierSignalSnapshot:
     from app.services.classifier.signal_config import build_classifier_signal_snapshot
 
-    return build_classifier_signal_snapshot(catalog_version=catalog_version)
+    return build_classifier_signal_snapshot(catalog_version=catalog_version, trait_ids=trait_ids)
 
 
 __all__ = [

@@ -7,6 +7,7 @@ from typing import Any
 
 from app.services.knowledge_base.loader import _load_yaml_raw
 from app.services.knowledge_base.paths import KnowledgeBaseError
+from app.services.knowledge_base.validator import _validate_classifier_signal_catalog
 
 
 def _compile_patterns(patterns: tuple[str, ...], *, context: str) -> tuple[re.Pattern[str], ...]:
@@ -115,8 +116,10 @@ class ClassifierSignalSnapshot:
     wireless_mentions: tuple[re.Pattern[str], ...]
 
 
-def build_classifier_signal_snapshot(*, catalog_version: str | None = None) -> ClassifierSignalSnapshot:
+def build_classifier_signal_snapshot(*, catalog_version: str | None = None, trait_ids: set[str] | None = None) -> ClassifierSignalSnapshot:
     payload = _load_yaml_raw("classifier_signals.yaml")
+    if trait_ids is not None:
+        _validate_classifier_signal_catalog(payload, trait_ids)
     trait_detection_groups, trait_patterns = _load_grouped_patterns(payload, section_name="trait_detection")
     negation_groups, negations = _load_grouped_patterns(payload, section_name="negations")
     suppression_groups, negated_trait_suppressions = _load_grouped_suppressions(payload)

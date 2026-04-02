@@ -766,6 +766,7 @@ standards:
   dated_version: EN 60335-2-3:2016 + A1:2020
   applies_if_products:
   - electric_iron
+  - garment_steamer
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -2213,6 +2214,7 @@ standards:
   applies_if_products:
   - heat_pump
   - room_dehumidifier
+  - portable_air_conditioner
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -3730,6 +3732,7 @@ standards:
   harmonization_status: unknown
   applies_if_products:
   - high_pressure_cleaner
+  - steam_cleaner
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -4853,6 +4856,11 @@ standards:
   applies_if_any:
   - laser
   - display
+  - lighting
+  - optical_emission
+  - uv_emitting
+  - infrared_emitting
+  - photobiological_relevance
   exclude_if: []
   test_focus:
   - safety
@@ -5510,6 +5518,7 @@ standards:
   applies_if_products:
   - smart_led_bulb
   - smart_desk_lamp
+  - smart_indoor_garden
   applies_if_all:
   - electrical
   applies_if_any:
@@ -5936,6 +5945,7 @@ standards:
   dated_version: EN 14604
   applies_if_products:
   - smart_smoke_co_alarm
+  - smoke_co_alarm
   exclude_if_products: []
   applies_if_all:
   - electrical
@@ -5988,6 +5998,7 @@ standards:
   dated_version: EN 50291-1
   applies_if_products:
   - smart_smoke_co_alarm
+  - smoke_co_alarm
   exclude_if_products: []
   applies_if_all:
   - electrical

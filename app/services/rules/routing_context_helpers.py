@@ -297,6 +297,10 @@ def _build_context_tags(
         tags.add("data:personal_or_health")
     if {"health_related", "biometric"} & traits:
         tags.add("data:health")
+    if {"home_security", "surveillance", "access_control", "locking", "camera_surveillance"} & traits:
+        tags.add("domain:security")
+    if {"local_only", "offline_capable"} & traits:
+        tags.add("service:local_only")
     if has_connected_radio:
         tags.add("cyber:connected_radio")
     if has_medical_boundary:
@@ -330,21 +334,26 @@ def _standard_context(
         scope_reasons = [route_plan.reason, *scope_reasons]
 
     text = normalize(description)
-    has_external_psu = "external_psu" in traits or bool(matched_products & {"battery_charger", "industrial_charger"})
+    has_external_psu = "external_psu" in traits or bool(
+        matched_products & {"battery_charger", "industrial_charger", "usb_wall_charger", "external_power_supply", "travel_adapter_charger"}
+    )
     has_portable_battery = bool({"battery_powered", "backup_battery"} & traits)
     has_laser_source = "laser" in traits or has_any(text, laser_source_patterns)
     has_photobiological_source = (
         has_laser_source
-        or bool(matched_products & {"projector", "heating_lamp"})
-        or (product_type in {"projector", "heating_lamp"} if product_type else False)
+        or bool(
+            {"lighting", "luminaire", "optical_emission", "uv_emitting", "infrared_emitting", "photobiological_relevance"} & traits
+        )
+        or bool(matched_products & {"projector", "heating_lamp", "smart_led_bulb", "smart_desk_lamp", "smart_indoor_garden"})
+        or (product_type in {"projector", "heating_lamp", "smart_led_bulb", "smart_desk_lamp", "smart_indoor_garden"} if product_type else False)
         or has_any(text, photobiological_source_patterns)
     )
-    has_body_contact = bool({"wearable", "body_worn_or_applied", "personal_care"} & traits) or bool(
+    has_body_contact = bool({"wearable", "body_worn_or_applied", "personal_care", "body_contact", "oral_contact"} & traits) or bool(
         re.search(r"\b(?:body contact|skin contact|body worn|on body|on skin|chest strap|sensor patch|wearable patch|armband)\b", text)
     )
     has_skin_contact = bool(re.search(r"\b(?:skin contact|on skin|chest strap|sensor patch|wearable patch)\b", text))
     has_personal_or_health_data = bool(
-        {"personal_data_likely", "health_related", "biometric", "account", "camera", "microphone", "location"} & traits
+        {"personal_data_likely", "health_related", "health_data", "biometric", "account", "camera", "microphone", "location"} & traits
     )
     has_connected_radio = bool(
         "radio" in traits and ({"wifi", "bluetooth", "cellular", "app_control", "cloud", "ota", "internet", "account", "authentication"} & traits)
