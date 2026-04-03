@@ -19,6 +19,8 @@ from .matching_runtime import (
     reset_matching_cache,
 )
 from .models import ClassifierMatchAudit, ClassifierMatchOutcome, FamilySeedCandidate, SubtypeCandidate
+from .normalization import normalize
+from .relation_parsing import ProductRoleParse, parse_product_roles
 from .scoring import (
     ENGINE_VERSION,
     _context_bonus,
@@ -35,6 +37,7 @@ class MatchingTextContext:
     signal_traits: frozenset[str]
     text_terms: frozenset[str]
     cue_hits: frozenset[str]
+    role_parse: ProductRoleParse
 
     def has(self, *cue_names: str) -> bool:
         return any(cue_name in self.cue_hits for cue_name in cue_names)
@@ -83,21 +86,74 @@ ACCESSORY_TERMS = frozenset(
         "adapter",
         "arm",
         "backup",
+        "bracket",
         "cable",
         "controller",
         "dock",
         "gateway",
         "hub",
         "injector",
+        "keypad",
         "module",
         "mount",
+        "panel",
+        "reader",
         "receiver",
         "stand",
         "station",
         "terminal",
+        "transmitter",
+        "ups",
     }
 )
-HIGH_RISK_GENERIC_TERMS = frozenset({"alarm", "camera", "charger", "controller", "display", "hub", "monitor", "player", "receiver", "switch", "terminal"})
+HIGH_RISK_GENERIC_TERMS = frozenset(
+    {
+        "adapter",
+        "alarm",
+        "camera",
+        "charger",
+        "controller",
+        "display",
+        "gateway",
+        "hub",
+        "module",
+        "monitor",
+        "panel",
+        "player",
+        "receiver",
+        "switch",
+        "terminal",
+    }
+)
+SECONDARY_ROLE_BASE_PENALTIES: dict[str, int] = {
+    "target_device": 18,
+    "controlled_device": 20,
+    "charged_device": 20,
+    "powered_device": 20,
+    "host_device": 16,
+    "mounted_on_or_for": 16,
+    "integrated_feature": 16,
+}
+PRIMARY_ROLE_HEAD_BOOSTS: dict[str, frozenset[str]] = {
+    "target_device": frozenset({"adapter", "module", "panel", "reader", "receiver", "terminal", "transmitter"}),
+    "controlled_device": frozenset({"controller", "keypad", "panel"}),
+    "charged_device": frozenset({"charger", "cradle", "dock"}),
+    "powered_device": frozenset({"backup", "injector", "supply", "ups"}),
+    "host_device": frozenset({"dock", "gateway", "hub"}),
+}
+PRIMARY_ROLE_MISMATCH_PENALTIES: dict[str, int] = {
+    "target_device": 12,
+    "controlled_device": 16,
+    "charged_device": 24,
+    "powered_device": 18,
+    "host_device": 16,
+}
+RELATION_ROLE_REQUIRED_CUES: dict[str, frozenset[str]] = {
+    "charged_device": frozenset({"battery_charger_role"}),
+    "powered_device": frozenset({"backup_unit_role", "external_psu_role", "poe_injector_role"}),
+    "host_device": frozenset({"dock_role", "gateway_module_role", "hub_role"}),
+    "target_device": frozenset({"adapter_cable_role", "receiver_role", "terminal_role"}),
+}
 
 PRODUCT_ROLE_PACKS: dict[str, RolePack] = {
     "monitor": RolePack(("display_surface_role", "monitor_specific_role"), ("dock_role", "hub_role", "mount_attachment_role", "network_port_role"), False, "office_display_and_dock"),
@@ -181,7 +237,7 @@ CONFUSABLE_RERANK_RULES: dict[str, dict[str, dict[str, int]]] = {
 }
 
 
-def _build_matching_context(text: str, signal_traits: set[str]) -> MatchingTextContext:
+def _build_matching_context(text: str, signal_traits: set[str], role_parse: ProductRoleParse) -> MatchingTextContext:
     cue_hits = {
         cue_name
         for cue_name, patterns in get_classifier_signal_snapshot().compiled_cue_groups.items()
@@ -192,6 +248,7 @@ def _build_matching_context(text: str, signal_traits: set[str]) -> MatchingTextC
         signal_traits=frozenset(signal_traits),
         text_terms=frozenset(text.split()),
         cue_hits=frozenset(cue_hits),
+        role_parse=role_parse,
     )
 
 
@@ -392,6 +449,8 @@ def _build_product_candidate_v2(
         route_anchor=compiled.route_anchor,
         max_match_stage=compiled.max_match_stage,
         boundary_tags=compiled.boundary_tags,
+        head_phrases=tuple(phrase.normalized for phrase in compiled.head_phrases),
+        head_terms=tuple(sorted(compiled.head_terms)),
     )
 
 
@@ -402,6 +461,126 @@ def _candidate_role_pack(candidate: SubtypeCandidate | FamilySeedCandidate) -> R
 
 def _group_for_candidate(candidate: SubtypeCandidate) -> str | None:
     return _candidate_role_pack(candidate).group
+
+
+def _candidate_phrase_support(candidate: SubtypeCandidate, phrase: str | None) -> int:
+    if not phrase:
+        return 0
+    normalized_phrase = normalize(phrase)
+    if not normalized_phrase:
+        return 0
+    candidate_phrases = set(candidate.head_phrases)
+    candidate_terms = set(candidate.head_terms)
+    phrase_terms = set(normalized_phrase.split())
+    if normalized_phrase in candidate_phrases:
+        return 3
+    phrase_tail = normalized_phrase.split()[-1]
+    if phrase_tail in candidate_terms:
+        return 2
+    if candidate_terms & phrase_terms:
+        return 1
+    return 0
+
+
+def _candidate_matches_secondary_role(candidate: SubtypeCandidate, context: MatchingTextContext) -> bool:
+    parse = context.role_parse
+    for role_name in SECONDARY_ROLE_BASE_PENALTIES:
+        if any(_candidate_phrase_support(candidate, phrase) >= 2 for phrase in parse.role_values(role_name)):
+            return True
+    return False
+
+
+def _alias_only_matches_secondary_role(candidate: SubtypeCandidate, context: MatchingTextContext) -> bool:
+    matched_alias = normalize(candidate.matched_alias or "")
+    if not matched_alias:
+        return False
+    if _candidate_phrase_support(candidate, context.role_parse.primary_product_phrase) > 0:
+        return False
+    return any(
+        matched_alias in normalize(phrase)
+        for role_name in SECONDARY_ROLE_BASE_PENALTIES
+        for phrase in context.role_parse.role_values(role_name)
+    )
+
+
+def _role_parse_adjustment(candidate: SubtypeCandidate, context: MatchingTextContext) -> tuple[int, list[str]]:
+    parse = context.role_parse
+    if parse.primary_product_phrase is None and parse.primary_product_head is None:
+        return 0, []
+
+    score = 0
+    reasons: list[str] = []
+    pack = _candidate_role_pack(candidate)
+    primary_phrase_support = _candidate_phrase_support(candidate, parse.primary_product_phrase)
+    primary_head_support = _candidate_phrase_support(candidate, parse.primary_product_head)
+    primary_support = max(primary_phrase_support, primary_head_support)
+
+    if primary_support:
+        delta = 8 + primary_support * 6
+        if parse.primary_is_accessory and pack.accessory_role:
+            delta += 6
+            reasons.append(f"{candidate.id}: accessory-dominant wording aligned with the primary head")
+        if parse.primary_head_source == "catalog_head_phrase":
+            delta += 2
+        score += delta
+        reasons.append(f"{candidate.id}: primary head '{parse.primary_product_head}' aligned with the candidate")
+    elif candidate.matched_alias_generic_terms and parse.primary_product_head:
+        score -= 10
+        reasons.append(f"{candidate.id}: generic role alias lacked primary-head alignment")
+
+    if parse.primary_is_accessory and not pack.accessory_role and primary_support == 0:
+        score -= 12
+        reasons.append(f"{candidate.id}: accessory-dominant wording conflicted with a standalone main-device reading")
+
+    for role_name, boosted_heads in PRIMARY_ROLE_HEAD_BOOSTS.items():
+        if not parse.role_values(role_name):
+            continue
+        matching_heads = sorted(set(candidate.head_terms) & set(boosted_heads))
+        if not matching_heads:
+            continue
+        delta = 10 + len(matching_heads) * 3
+        if primary_support:
+            delta += 4
+        score += delta
+        reasons.append(
+            f"{candidate.id}: {role_name.replace('_', ' ')} relation reinforced primary-role wording"
+        )
+
+    for role_name in ("target_device", "controlled_device", "charged_device", "powered_device", "host_device"):
+        if not parse.role_values(role_name) or role_name not in PRIMARY_ROLE_HEAD_BOOSTS:
+            continue
+        if set(candidate.head_terms) & set(PRIMARY_ROLE_HEAD_BOOSTS[role_name]):
+            continue
+        penalty = PRIMARY_ROLE_MISMATCH_PENALTIES.get(role_name, 12)
+        if primary_support >= 2:
+            score -= penalty
+            reasons.append(
+                f"{candidate.id}: {role_name.replace('_', ' ')} wording weakened a mismatched primary-role interpretation"
+            )
+        elif primary_support == 0:
+            score -= max(8, penalty - 8)
+            reasons.append(
+                f"{candidate.id}: {role_name.replace('_', ' ')} mention remained secondary to the detected primary head"
+            )
+
+    for role_name, base_penalty in SECONDARY_ROLE_BASE_PENALTIES.items():
+        for phrase in parse.role_values(role_name):
+            support = _candidate_phrase_support(candidate, phrase)
+            if support <= 0:
+                continue
+            penalty = base_penalty + (support - 1) * 4
+            if pack.accessory_role and primary_support:
+                penalty = max(6, penalty - 6)
+            score -= penalty
+            reasons.append(
+                f"{candidate.id}: {role_name.replace('_', ' ')} mention '{phrase}' stayed secondary"
+            )
+
+    if parse.primary_head_conflict and candidate.matched_alias_generic_terms and primary_support == 0:
+        score -= 8
+        reasons.append(f"{candidate.id}: competing primary-head candidates kept generic role evidence ambiguous")
+
+    return score, reasons
 
 
 def _generic_alias_penalty(candidate: SubtypeCandidate, context: MatchingTextContext) -> tuple[int, list[str]]:
@@ -425,6 +604,8 @@ def _generic_alias_penalty(candidate: SubtypeCandidate, context: MatchingTextCon
             penalty += 8
         if negative_hits:
             penalty += negative_hits * 8
+        if any(context.role_parse.role_values(role_name) for role_name in SECONDARY_ROLE_BASE_PENALTIES):
+            penalty += 10
         if alias_token_count >= 2:
             penalty = max(4, penalty // 2)
         if candidate.matched_alias_field == "strong_aliases":
@@ -482,11 +663,42 @@ def _filter_candidates(candidates: Sequence[SubtypeCandidate], context: Matching
         if candidate.negative_clues and not candidate.positive_clues and candidate.matched_alias is None:
             filtered_out.append(f"{candidate.id}: excluded because only negative clues matched")
             continue
+        if candidate.negative_clues and candidate.matched_alias_generic_terms:
+            pack = _candidate_role_pack(candidate)
+            for role_name, required_cues in RELATION_ROLE_REQUIRED_CUES.items():
+                if context.role_parse.role_values(role_name) and not (required_cues & set(pack.positive_cues)):
+                    filtered_out.append(
+                        f"{candidate.id}: filtered because relation wording conflicted with its generic role alias"
+                    )
+                    break
+            else:
+                primary_support = max(
+                    _candidate_phrase_support(candidate, context.role_parse.primary_product_phrase),
+                    _candidate_phrase_support(candidate, context.role_parse.primary_product_head),
+                )
+                if primary_support:
+                    kept.append(candidate)
+                    continue
+                if context.role_parse.primary_is_accessory and pack.accessory_role:
+                    kept.append(candidate)
+                    continue
+                filtered_out.append(f"{candidate.id}: filtered because negative clues outweighed a generic role alias")
+                continue
+            continue
+        if _alias_only_matches_secondary_role(candidate, context):
+            filtered_out.append(f"{candidate.id}: filtered because its alias appeared only inside a secondary role phrase")
+            continue
         if family_required_traits and not (family_required_traits & context.signal_traits) and generic_only:
             filtered_out.append(f"{candidate.id}: filtered because family-required trait context was absent")
             continue
         if generic_only and negative_hits and not positive_hits:
             filtered_out.append(f"{candidate.id}: filtered because generic alias overlap conflicted with stronger role cues")
+            continue
+        if generic_only and _candidate_matches_secondary_role(candidate, context):
+            if context.role_parse.primary_is_accessory and _candidate_role_pack(candidate).accessory_role:
+                kept.append(candidate)
+                continue
+            filtered_out.append(f"{candidate.id}: filtered because it only lined up with a secondary role phrase")
             continue
         if candidate.max_match_stage == "family" and candidate.score < 55 and candidate.matched_alias is None and not candidate.family_keyword_hits:
             filtered_out.append(f"{candidate.id}: filtered because boundary-only evidence stayed weak")
@@ -546,6 +758,11 @@ def _rerank_candidates(
         rerank_reasons.extend(reasons)
 
     for candidate_id, current in list(updated.items()):
+        role_delta, role_notes = _role_parse_adjustment(current, context)
+        if role_delta:
+            current = replace(current, score=current.score + role_delta, reasons=current.reasons + tuple(role_notes))
+            updated[candidate_id] = current
+            rerank_reasons.extend(role_notes)
         penalty, reasons = _generic_alias_penalty(current, context)
         if penalty:
             current = replace(current, score=current.score + penalty, reasons=current.reasons + tuple(reasons))
@@ -623,7 +840,7 @@ def _normalized_text_summary(text: str, *, limit: int = 160) -> str:
     return text[: limit - 3].rstrip() + "..."
 
 
-def _build_empty_match_outcome(text: str) -> ClassifierMatchOutcome:
+def _build_empty_match_outcome(text: str, role_parse: ProductRoleParse | None = None) -> ClassifierMatchOutcome:
     return ClassifierMatchOutcome(
         product_family=None,
         product_family_confidence="low",
@@ -641,6 +858,7 @@ def _build_empty_match_outcome(text: str) -> ClassifierMatchOutcome:
             engine_version=ENGINE_VERSION,
             normalized_text=text,
             normalized_text_summary=_normalized_text_summary(text),
+            role_parse=role_parse.to_audit() if role_parse is not None else None,
         ),
     )
 
@@ -650,9 +868,25 @@ def _family_level_limiter(
     top_subtype: SubtypeCandidate,
     next_subtype: SubtypeCandidate | None,
 ) -> str | None:
+    role_parse = context.role_parse
     explicit_limit = str(top_subtype.product.get("family_level_reason") or "").strip()
     if explicit_limit and top_subtype.max_match_stage == "family":
         return explicit_limit
+    if role_parse.primary_head_conflict and top_subtype.matched_alias_generic_terms:
+        return "Primary head candidates remained in conflict, so subtype precision stays conservative."
+    if role_parse.primary_is_accessory and (
+        role_parse.target_device
+        or role_parse.controlled_device
+        or role_parse.charged_device
+        or role_parse.powered_device
+        or role_parse.host_device
+        or role_parse.integrated_feature
+        or role_parse.mounted_on_or_for
+    ):
+        if next_subtype and top_subtype.score - next_subtype.score < 14:
+            return "Accessory-dominant wording with secondary device context capped subtype precision."
+        if top_subtype.matched_alias_generic_terms and not top_subtype.positive_clues:
+            return "System or boundary accessory wording capped subtype precision."
     if context.accessory_like and _candidate_role_pack(top_subtype).accessory_role:
         if top_subtype.matched_alias_generic_terms and not top_subtype.positive_clues and not top_subtype.family_keyword_hits:
             return "Accessory-like wording is present, so subtype precision stays conservative."
@@ -672,10 +906,14 @@ def _confidence_limiter(
     top_subtype: SubtypeCandidate,
     next_subtype: SubtypeCandidate | None,
 ) -> str | None:
+    if context.role_parse.primary_head_conflict and top_subtype.matched_alias_generic_terms:
+        return "primary head candidates remained conflicted"
     if top_subtype.matched_alias_generic_terms and not top_subtype.positive_clues:
         return "generic alias evidence lacked decisive supporting clues"
     if next_subtype and top_subtype.score - next_subtype.score < 8:
         return "rerank margin remained narrow"
+    if context.role_parse.primary_is_accessory and not top_subtype.decisive:
+        return "role parsing kept secondary object mentions below the primary product"
     if context.accessory_like and not top_subtype.decisive:
         return "accessory wording reduced subtype certainty"
     return None
@@ -726,7 +964,8 @@ def _shortlist_basis(shortlist_scoring: dict[str, int]) -> list[str]:
 
 
 def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> ClassifierMatchOutcome:
-    context = _build_matching_context(text, signal_traits)
+    role_parse = parse_product_roles(text)
+    context = _build_matching_context(text, signal_traits, role_parse)
     shortlisted_matchers, shortlist_scoring = _shortlist_product_matchers_v2(text, signal_traits)
     generated = [
         candidate
@@ -737,7 +976,7 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
     candidates, rerank_reasons, accessory_reasons, generic_penalties = _rerank_candidates(filtered_candidates, context)
 
     if not candidates:
-        outcome = _build_empty_match_outcome(text)
+        outcome = _build_empty_match_outcome(text, role_parse)
         outcome.audit.shortlist_basis = _shortlist_basis(shortlist_scoring)
         outcome.audit.filtered_out = filtered_out[:8]
         return outcome
@@ -883,6 +1122,7 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
         generic_alias_penalties=_top_unique(generic_penalties, limit=8),
         top_family_candidates=top_family_audit,
         top_subtype_candidates=top_subtype_audit,
+        role_parse=role_parse.to_audit(),
         final_match_stage=family_stage,
         final_match_reason=stage_reason,
         ambiguity_reason=ambiguity_reason,

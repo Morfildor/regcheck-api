@@ -72,6 +72,50 @@ class ProductImpliedTraitDecision:
 
 
 @dataclass(frozen=True, slots=True)
+class RoleParseAudit:
+    primary_product_phrase: str | None = None
+    primary_product_head: str | None = None
+    primary_head_candidates: tuple[str, ...] = ()
+    competing_primary_heads: tuple[str, ...] = ()
+    accessory_or_attachment: tuple[str, ...] = ()
+    target_device: tuple[str, ...] = ()
+    controlled_device: tuple[str, ...] = ()
+    charged_device: tuple[str, ...] = ()
+    powered_device: tuple[str, ...] = ()
+    host_device: tuple[str, ...] = ()
+    mounted_on_or_for: tuple[str, ...] = ()
+    integrated_feature: tuple[str, ...] = ()
+    installation_context: tuple[str, ...] = ()
+    cue_hits: tuple[str, ...] = ()
+    parse_notes: tuple[str, ...] = ()
+    primary_head_source: str | None = None
+    primary_is_accessory: bool = False
+    primary_head_conflict: bool = False
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "primary_product_phrase": self.primary_product_phrase,
+            "primary_product_head": self.primary_product_head,
+            "primary_head_candidates": list(self.primary_head_candidates),
+            "competing_primary_heads": list(self.competing_primary_heads),
+            "accessory_or_attachment": list(self.accessory_or_attachment),
+            "target_device": list(self.target_device),
+            "controlled_device": list(self.controlled_device),
+            "charged_device": list(self.charged_device),
+            "powered_device": list(self.powered_device),
+            "host_device": list(self.host_device),
+            "mounted_on_or_for": list(self.mounted_on_or_for),
+            "integrated_feature": list(self.integrated_feature),
+            "installation_context": list(self.installation_context),
+            "cue_hits": list(self.cue_hits),
+            "parse_notes": list(self.parse_notes),
+            "primary_head_source": self.primary_head_source,
+            "primary_is_accessory": self.primary_is_accessory,
+            "primary_head_conflict": self.primary_head_conflict,
+        }
+
+
+@dataclass(frozen=True, slots=True)
 class PublicProductCandidate:
     id: str
     label: str
@@ -134,6 +178,8 @@ class SubtypeCandidate:
     route_anchor: str | None = None
     max_match_stage: str | None = None
     boundary_tags: tuple[str, ...] = ()
+    head_phrases: tuple[str, ...] = ()
+    head_terms: tuple[str, ...] = ()
 
     def to_audit_candidate(self, *, confidence: ConfidenceLevel) -> AuditCandidate:
         return AuditCandidate(
@@ -227,6 +273,7 @@ class ClassifierMatchAudit:
     product_implied_traits: list[ProductImpliedTraitDecision] = field(default_factory=list)
     top_family_candidates: list[AuditCandidate] = field(default_factory=list)
     top_subtype_candidates: list[AuditCandidate] = field(default_factory=list)
+    role_parse: RoleParseAudit | None = None
     final_match_stage: ProductMatchStage = "ambiguous"
     final_match_reason: str | None = None
     ambiguity_reason: str | None = None
@@ -255,6 +302,7 @@ class ClassifierMatchAudit:
             "product_implied_traits": [item.to_dict() for item in self.product_implied_traits],
             "top_family_candidates": [item.to_dict() for item in self.top_family_candidates],
             "top_subtype_candidates": [item.to_dict() for item in self.top_subtype_candidates],
+            "role_parse": self.role_parse.to_dict() if self.role_parse is not None else {},
             "final_match_stage": self.final_match_stage,
             "final_match_reason": self.final_match_reason,
             "ambiguity_reason": self.ambiguity_reason,

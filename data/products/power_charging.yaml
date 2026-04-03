@@ -673,7 +673,6 @@ products:
   - power bank
   - battery bank
   - usb battery pack
-  - portable charger
   - charging pack
   - usb power bank
   - power-bank
@@ -722,10 +721,10 @@ products:
   - power bank
   - battery bank
   - usb battery pack
-  - portable charger
   - charging pack
   - usb power bank
   weak_aliases:
+  - portable charger
   - power-bank
   - powerbank
   - power banks
@@ -742,7 +741,6 @@ products:
   - chargingpack
   - charging packs
   marketplace_aliases:
-  - portable charger
   - battery bank
   - usb power bank
   - power bank

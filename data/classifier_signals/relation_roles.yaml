@@ -1,0 +1,68 @@
+relation_cue_packs:
+  target_device:
+    for:
+    - '\bfor\b'
+    receiver_for:
+    - '\breceiver\s+for\b'
+    adapter_for:
+    - '\badapter\s+for\b'
+    module_for:
+    - '\bmodule\s+for\b'
+    panel_for:
+    - '\bpanel\s+for\b'
+    - '\bkeypad\s+for\b'
+    monitoring_for:
+    - '\bmonitoring\s+for\b'
+  controlled_device:
+    controller_for:
+    - '\bcontroller\s+for\b'
+    - '\bcontrol(?:ler)?\s+for\b'
+  charged_device:
+    charger_for:
+    - '\bcharger\s+for\b'
+    - '\bcharging dock\s+for\b'
+    - '\bcharging station\s+for\b'
+    - '\bcharging cradle\s+for\b'
+  powered_device:
+    injector_for:
+    - '\bpoe injector\s+for\b'
+    - '\bmidspan(?: poe)? injector\s+for\b'
+    - '\binjector\s+for\b'
+    backup_for:
+    - '\bbattery backup\s+for\b'
+    - '\bups(?: battery backup)?\s+for\b'
+    - '\bbackup unit\s+for\b'
+  host_device:
+    hub_for:
+    - '\bhub\s+for\b'
+    - '\busb hub\s+for\b'
+    gateway_for:
+    - '\bgateway\s+for\b'
+    dock_for:
+    - '\bdock(?:ing station)?\s+for\b'
+  integrated_feature:
+    with_integrated:
+    - '\bwith integrated\b'
+    - '\bwith built in\b'
+    - '\bwith built-in\b'
+    built_in:
+    - '\bbuilt in\b'
+    - '\bbuilt-in\b'
+    - '\bintegrated\b'
+    with:
+    - '\bwith\b'
+  mounted_on_or_for:
+    mounted_on:
+    - '\bmounted on\b'
+    - '\bmount(?:ed)? on\b'
+    mounted_for:
+    - '\bmounted for\b'
+    - '\bmount(?:ed)? for\b'
+  installation_context:
+    wall_mounted:
+    - '\bwall mounted\b'
+    - '\bwall-mounted\b'
+    desktop:
+    - '\bdesktop\b'
+    portable:
+    - '\bportable\b'

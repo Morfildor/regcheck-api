@@ -101,6 +101,37 @@ def _load_cue_groups(payload: Mapping[str, Any]) -> tuple[dict[str, tuple[str, .
     return raw_groups, compiled_groups
 
 
+def _load_relation_cue_packs(
+    payload: Mapping[str, Any],
+) -> tuple[dict[str, dict[str, tuple[str, ...]]], dict[str, dict[str, tuple[re.Pattern[str], ...]]]]:
+    section = payload.get("relation_cue_packs")
+    if not isinstance(section, Mapping):
+        return {}, {}
+
+    raw_packs: dict[str, dict[str, tuple[str, ...]]] = {}
+    compiled_packs: dict[str, dict[str, tuple[re.Pattern[str], ...]]] = {}
+    for role_name, role_payload in section.items():
+        if not isinstance(role_name, str) or not isinstance(role_payload, Mapping):
+            continue
+        raw_role_entries: dict[str, tuple[str, ...]] = {}
+        compiled_role_entries: dict[str, tuple[re.Pattern[str], ...]] = {}
+        for cue_name, patterns_payload in role_payload.items():
+            if not isinstance(cue_name, str):
+                continue
+            patterns = _coerce_string_list(patterns_payload)
+            if not patterns:
+                continue
+            raw_role_entries[cue_name] = patterns
+            compiled_role_entries[cue_name] = _compile_patterns(
+                patterns,
+                context=f"relation_cue_packs.{role_name}.{cue_name}",
+            )
+        if raw_role_entries:
+            raw_packs[role_name] = raw_role_entries
+            compiled_packs[role_name] = compiled_role_entries
+    return raw_packs, compiled_packs
+
+
 @dataclass(frozen=True, slots=True)
 class ClassifierSignalSnapshot:
     catalog_version: str | None
@@ -112,6 +143,8 @@ class ClassifierSignalSnapshot:
     negated_trait_suppressions: dict[str, frozenset[str]]
     cue_groups: dict[str, tuple[str, ...]]
     compiled_cue_groups: dict[str, tuple[re.Pattern[str], ...]]
+    relation_cue_packs: dict[str, dict[str, tuple[str, ...]]]
+    compiled_relation_cue_packs: dict[str, dict[str, tuple[re.Pattern[str], ...]]]
     wireless_mention_patterns: tuple[str, ...]
     wireless_mentions: tuple[re.Pattern[str], ...]
 
@@ -124,6 +157,7 @@ def build_classifier_signal_snapshot(*, catalog_version: str | None = None, trai
     negation_groups, negations = _load_grouped_patterns(payload, section_name="negations")
     suppression_groups, negated_trait_suppressions = _load_grouped_suppressions(payload)
     cue_groups, compiled_cue_groups = _load_cue_groups(payload)
+    relation_cue_packs, compiled_relation_cue_packs = _load_relation_cue_packs(payload)
     wireless_mention_patterns = _coerce_string_list(payload.get("wireless_mentions"))
 
     return ClassifierSignalSnapshot(
@@ -136,6 +170,8 @@ def build_classifier_signal_snapshot(*, catalog_version: str | None = None, trai
         negated_trait_suppressions=negated_trait_suppressions,
         cue_groups=cue_groups,
         compiled_cue_groups=compiled_cue_groups,
+        relation_cue_packs=relation_cue_packs,
+        compiled_relation_cue_packs=compiled_relation_cue_packs,
         wireless_mention_patterns=wireless_mention_patterns,
         wireless_mentions=_compile_patterns(wireless_mention_patterns, context="wireless_mentions"),
     )

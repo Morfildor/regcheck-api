@@ -58,6 +58,8 @@ class CompiledProductMatcher:
     alias_terms: frozenset[str]
     family_keyword_terms: frozenset[str]
     clue_terms: frozenset[str]
+    head_phrases: tuple[CompiledPhrase, ...]
+    head_terms: frozenset[str]
     shortlist_traits: frozenset[str]
     core_traits: frozenset[str]
     default_traits: frozenset[str]
@@ -75,6 +77,8 @@ class ProductMatchingSnapshot:
     catalog_version: str | None
     products: tuple[CompiledProductMatcher, ...]
     by_id: dict[str, CompiledProductMatcher]
+    head_phrases: tuple[CompiledPhrase, ...]
+    head_terms: frozenset[str]
 
 
 def _product_family_keywords(product: ProductRowLike) -> list[str]:
@@ -83,6 +87,114 @@ def _product_family_keywords(product: ProductRowLike) -> list[str]:
     if family_phrase and family_phrase != product["id"] and family_phrase not in keywords:
         keywords.append(family_phrase)
     return keywords
+
+
+PRODUCT_HEAD_TERMS = frozenset(
+    {
+        "adapter",
+        "alarm",
+        "arm",
+        "backup",
+        "bracket",
+        "cable",
+        "camera",
+        "charger",
+        "connector",
+        "controller",
+        "display",
+        "dock",
+        "gateway",
+        "headset",
+        "hub",
+        "injector",
+        "keypad",
+        "lamp",
+        "mirror",
+        "module",
+        "monitor",
+        "mount",
+        "panel",
+        "player",
+        "printer",
+        "reader",
+        "receiver",
+        "scanner",
+        "speaker",
+        "stand",
+        "switch",
+        "terminal",
+        "transmitter",
+        "ups",
+    }
+)
+PRODUCT_MULTIWORD_HEADS = frozenset(
+    {
+        "access point",
+        "alarm keypad",
+        "battery charger",
+        "battery backup",
+        "control panel",
+        "digital signage player",
+        "docking station",
+        "external power supply",
+        "keypad panel",
+        "mini pc",
+        "monitor arm",
+        "monitor stand",
+        "poe injector",
+        "power bank",
+        "smart display",
+        "smart speaker",
+        "thin client",
+        "usb hub",
+        "wireless microphone receiver",
+    }
+)
+
+
+def _is_head_phrase(normalized: str) -> bool:
+    tokens = normalized.split()
+    if not tokens or len(tokens) > 4 or {"for", "with"} & set(tokens):
+        return False
+    if normalized in PRODUCT_MULTIWORD_HEADS:
+        return True
+    if len(tokens) >= 2 and " ".join(tokens[-2:]) in PRODUCT_MULTIWORD_HEADS:
+        return True
+    return tokens[-1] in PRODUCT_HEAD_TERMS
+
+
+def _head_phrase_variants(normalized: str) -> tuple[str, ...]:
+    tokens = normalized.split()
+    if not tokens:
+        return ()
+
+    variants: list[str] = []
+    for size in range(min(len(tokens), 4), 0, -1):
+        phrase = " ".join(tokens[-size:])
+        if _is_head_phrase(phrase):
+            variants.append(phrase)
+    return tuple(variants)
+
+
+def _compile_head_phrases(product: ProductRowLike) -> tuple[CompiledPhrase, ...]:
+    raw_values = (
+        _string_list(product.get("strong_aliases"))
+        + _string_list(product.get("aliases"))
+        + _string_list(product.get("family_keywords"))
+        + [str(product.get("label") or ""), _product_subfamily(product).replace("_", " ")]
+    )
+    phrases: list[CompiledPhrase] = []
+    seen: set[str] = set()
+    for raw in raw_values:
+        normalized = normalize(raw)
+        for variant in _head_phrase_variants(normalized):
+            if variant in seen:
+                continue
+            seen.add(variant)
+            compiled = _compile_phrase(variant)
+            if compiled is not None:
+                phrases.append(compiled)
+    return tuple(phrases)
 
 
 def _compile_phrase(raw: str) -> CompiledPhrase | None:
@@ -140,6 +252,8 @@ def build_product_matching_snapshot(
 ) -> ProductMatchingSnapshot:
     compiled_products: list[CompiledProductMatcher] = []
     compiled_by_id: dict[str, CompiledProductMatcher] = {}
+    global_head_phrases: dict[str, CompiledPhrase] = {}
+    global_head_terms: set[str] = set()
 
     for product in products:
         aliases: list[CompiledAlias] = []
@@ -158,6 +272,7 @@ def build_product_matching_snapshot(
         required_clues = _compile_phrases(_string_list(product.get("required_clues")))
         preferred_clues = _compile_phrases(_string_list(product.get("preferred_clues")))
         exclude_clues = _compile_phrases(_string_list(product.get("exclude_clues")))
+        head_phrases = _compile_head_phrases(product)
 
         family_keyword_terms = {term for phrase in family_keywords for term in phrase.token_terms}
         clue_terms = {
@@ -165,6 +280,7 @@ def build_product_matching_snapshot(
             for phrase in required_clues + preferred_clues + exclude_clues
             for term in phrase.token_terms
         }
+        head_terms = {phrase.normalized.split()[-1] for phrase in head_phrases if phrase.token_terms}
         core_traits, default_traits = _compute_product_trait_buckets(product)
         family_traits = set(_string_list(product.get("family_traits"))) or set(core_traits)
 
@@ -181,6 +297,8 @@ def build_product_matching_snapshot(
             alias_terms=frozenset(alias_terms),
             family_keyword_terms=frozenset(family_keyword_terms),
             clue_terms=frozenset(clue_terms),
+            head_phrases=head_phrases,
+            head_terms=frozenset(head_terms),
             shortlist_traits=frozenset((core_traits | default_traits | family_traits) & trait_ids),
             core_traits=frozenset(core_traits),
             default_traits=frozenset(default_traits),
@@ -194,11 +312,16 @@ def build_product_matching_snapshot(
         )
         compiled_products.append(compiled)
         compiled_by_id[compiled.id] = compiled
+        global_head_terms.update(head_terms)
+        for phrase in head_phrases:
+            global_head_phrases.setdefault(phrase.normalized, phrase)
 
     return ProductMatchingSnapshot(
         catalog_version=catalog_version,
         products=tuple(compiled_products),
         by_id=compiled_by_id,
+        head_phrases=tuple(sorted(global_head_phrases.values(), key=lambda row: (-len(row.token_terms), row.normalized))),
+        head_terms=frozenset(global_head_terms),
     )
 
 

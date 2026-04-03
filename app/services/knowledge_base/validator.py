@@ -581,6 +581,33 @@ def _validate_classifier_signal_catalog(data: Mapping[str, Any], trait_ids: set[
                 except re.error as exc:
                     raise KnowledgeBaseError(f"Invalid regex in classifier_signals.yaml at cue_groups.{cue_name}: {pattern}") from exc
 
+    relation_cue_packs = data.get("relation_cue_packs")
+    if relation_cue_packs is not None:
+        if not isinstance(relation_cue_packs, Mapping):
+            raise KnowledgeBaseError("classifier_signals.yaml field 'relation_cue_packs' must be a mapping.")
+        for role_name, role_payload in relation_cue_packs.items():
+            if not isinstance(role_name, str) or not role_name.strip() or not isinstance(role_payload, Mapping):
+                raise KnowledgeBaseError("classifier_signals.yaml relation cue packs must be named mappings.")
+            for cue_name, patterns_payload in role_payload.items():
+                if not isinstance(cue_name, str) or not cue_name.strip():
+                    raise KnowledgeBaseError(
+                        f"classifier_signals.yaml relation cue pack '{role_name}' contains an invalid cue name."
+                    )
+                patterns = _validate_string_list_field(
+                    f"classifier_signals.yaml relation cue pack '{role_name}.{cue_name}'",
+                    {"patterns": patterns_payload},
+                    "patterns",
+                    required=True,
+                    allow_empty=False,
+                )
+                for pattern in patterns:
+                    try:
+                        re.compile(pattern)
+                    except re.error as exc:
+                        raise KnowledgeBaseError(
+                            f"Invalid regex in classifier_signals.yaml at relation_cue_packs.{role_name}.{cue_name}: {pattern}"
+                        ) from exc
+
 def _normalize_likely_standard_refs(
     row: ProductCatalogRow | GenreCatalogRow | Mapping[str, Any],
     owner: str,
