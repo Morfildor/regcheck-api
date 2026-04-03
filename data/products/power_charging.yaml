@@ -3,6 +3,8 @@ products:
   label: Battery charger
   aliases:
   - battery charger
+  - ebike battery charger
+  - e-bike battery charger
   - appliance charger
   - charging dock
   - charging cradle
@@ -32,11 +34,21 @@ products:
   - portable_energy
   strong_aliases:
   - battery charger
+  - ebike battery charger
+  - e-bike battery charger
   - appliance charger
   - charging dock
   - charging cradle
   - charging station
   - charging base
+  preferred_clues:
+  - battery charger
+  - ebike battery
+  - charging dock
+  exclude_clues:
+  - power bank
+  - usb battery pack
+  - portable charger
   weak_aliases:
   - battery dock
   - wall charger
@@ -332,6 +344,9 @@ products:
   - battery charger
   - usb wall charger
   - monitor
+  confusable_with:
+  - battery_charger
+  - power_bank
   implied_traits:
   - consumer
   - electrical
@@ -677,10 +692,16 @@ products:
   - chargingpack
   - charging packs
   exclude_clues:
+  - battery charger
+  - ebike battery
+  - e-bike battery
   - solar charge controller
   - pv charge controller
   - mppt charge controller
   - pwm solar controller
+  confusable_with:
+  - battery_charger
+  - external_power_supply
   product_family: portable_power_system
   product_subfamily: power_bank
   genres:

@@ -225,12 +225,17 @@ class ProductMatchAudit(BaseModel):
     normalized_text: str
     normalized_text_summary: str | None = None
     retrieval_basis: list[str] = Field(default_factory=list)
+    shortlist_basis: list[str] = Field(default_factory=list)
+    filtered_out: list[str] = Field(default_factory=list)
     alias_hits: list[str] = Field(default_factory=list)
     matched_aliases: list[str] = Field(default_factory=list)
     family_keyword_hits: list[str] = Field(default_factory=list)
     clue_hits: list[str] = Field(default_factory=list)
     strongest_positive_clues: list[str] = Field(default_factory=list)
     strongest_negative_clues: list[str] = Field(default_factory=list)
+    rerank_reasons: list[str] = Field(default_factory=list)
+    accessory_gate_reasons: list[str] = Field(default_factory=list)
+    generic_alias_penalties: list[str] = Field(default_factory=list)
     negations: list[str] = Field(default_factory=list)
     negation_suppressions: list[ProductMatchAuditSuppression] = Field(default_factory=list)
     product_implied_traits: list[ProductMatchAuditTraitDecision] = Field(default_factory=list)
@@ -239,6 +244,8 @@ class ProductMatchAudit(BaseModel):
     final_match_stage: ProductMatchStage = "ambiguous"
     final_match_reason: str | None = None
     ambiguity_reason: str | None = None
+    family_level_limiter: str | None = None
+    confidence_limiter: str | None = None
 
 
 class StandardMatchAudit(BaseModel):

@@ -374,8 +374,6 @@ products:
   - desktop pc
   - desktop computer
   - personal computer
-  - mini pc
-  - thin client
   - desktop-pc
   - desktoppc
   - desktop pcs
@@ -385,12 +383,6 @@ products:
   - personal-computer
   - personalcomputer
   - personal computers
-  - mini-pc
-  - minipc
-  - mini pcs
-  - thin-client
-  - thinclient
-  - thin clients
   implied_traits:
   - consumer
   - electrical
@@ -410,7 +402,6 @@ products:
   - desktop pc
   - desktop computer
   - personal computer
-  - mini pc
   weak_aliases:
   - desktop-pc
   - desktoppc
@@ -421,9 +412,17 @@ products:
   - personal-computer
   - personalcomputer
   - personal computers
-  - mini-pc
-  - minipc
-  - mini pcs
+  preferred_clues:
+  - desktop computer
+  - workstation
+  exclude_clues:
+  - mini pc
+  - thin client
+  - signage player
+  confusable_with:
+  - mini_pc
+  - thin_client
+  - digital_signage_player
   marketplace_aliases: []
   not_when_text_contains: []
   negative_examples: []
@@ -767,6 +766,9 @@ products:
   aliases:
   - docking station
   - laptop dock
+  - usb-c dock
+  - usb c dock
+  - monitor dock
   - usb-c hub
   - usb hub dock
   - thunderbolt dock
@@ -819,11 +821,26 @@ products:
   strong_aliases:
   - docking station
   - laptop dock
+  - usb-c dock
+  - usb c dock
+  - monitor dock
   - usb-c hub
   - usb hub dock
   - thunderbolt dock
   - usb4 hub
   - port replicator
+  preferred_clues:
+  - ethernet
+  - usb ports
+  - hdmi
+  - laptop dock
+  exclude_clues:
+  - monitor arm
+  - monitor stand
+  confusable_with:
+  - monitor
+  - usb_hub
+  - all_in_one_pc
   weak_aliases:
   - docking-station
   - dockingstation
@@ -2211,6 +2228,20 @@ products:
   - monitor
   - computer monitor
   - display monitor
+  preferred_clues:
+  - computer monitor
+  - display monitor
+  - hdmi
+  - displayport
+  exclude_clues:
+  - dock
+  - hub
+  - ethernet
+  - monitor arm
+  confusable_with:
+  - docking_station
+  - usb_hub
+  - all_in_one_pc
   weak_aliases:
   - monitors
   - computer-monitor
@@ -2932,6 +2963,7 @@ products:
   exclude_clues: []
   confusable_with:
   - smart_speaker
+  - smart_home_panel
   family_traits:
   - consumer
   - household
@@ -3792,6 +3824,7 @@ products:
   aliases:
   - usb hub
   - usb splitter
+  - hub with ethernet
   - usb-c hub
   - usb 3 hub
   - powered usb hub
@@ -3833,10 +3866,21 @@ products:
   strong_aliases:
   - usb hub
   - usb splitter
+  - hub with ethernet
   - usb-c hub
   - usb 3 hub
   - powered usb hub
   - travel hub
+  preferred_clues:
+  - ethernet
+  - usb ports
+  - powered usb hub
+  exclude_clues:
+  - monitor arm
+  - monitor stand
+  confusable_with:
+  - docking_station
+  - monitor
   weak_aliases:
   - usb-hub
   - usbhub

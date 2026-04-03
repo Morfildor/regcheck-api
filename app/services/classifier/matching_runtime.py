@@ -41,6 +41,7 @@ class CompiledAlias:
     gap_pattern: re.Pattern | None
     specificity_bonus: int
     token_terms: frozenset[str]
+    generic_terms: frozenset[str]
 
 
 @dataclass(frozen=True, slots=True)
@@ -61,6 +62,12 @@ class CompiledProductMatcher:
     core_traits: frozenset[str]
     default_traits: frozenset[str]
     family_traits: frozenset[str]
+    family_required_traits: frozenset[str]
+    route_anchor: str | None
+    allowed_route_anchors: tuple[str, ...]
+    boundary_tags: tuple[str, ...]
+    boundary_tendencies: tuple[str, ...]
+    max_match_stage: str | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -118,6 +125,7 @@ def _compile_alias(raw: str, field: str, field_bonus: int) -> CompiledAlias | No
         gap_pattern=gap_pattern,
         specificity_bonus=_alias_specificity_bonus(raw),
         token_terms=frozenset(tokens),
+        generic_terms=frozenset(token for token in tokens if token in GENERIC_SHORTLIST_TERMS),
     )
 
 
@@ -177,6 +185,12 @@ def build_product_matching_snapshot(
             core_traits=frozenset(core_traits),
             default_traits=frozenset(default_traits),
             family_traits=frozenset(family_traits),
+            family_required_traits=frozenset(_string_list(product.get("family_required_traits"))),
+            route_anchor=str(product.get("route_anchor") or "").strip() or None,
+            allowed_route_anchors=tuple(_string_list(product.get("family_allowed_route_anchors"))),
+            boundary_tags=tuple(_string_list(product.get("boundary_tags"))),
+            boundary_tendencies=tuple(_string_list(product.get("family_boundary_tendencies"))),
+            max_match_stage=str(product.get("max_match_stage") or "").strip() or None,
         )
         compiled_products.append(compiled)
         compiled_by_id[compiled.id] = compiled
@@ -200,6 +214,127 @@ def _product_matching_snapshot() -> ProductMatchingSnapshot:
     )
 
 
+GENERIC_SHORTLIST_TERMS = frozenset(
+    {
+        "alarm",
+        "camera",
+        "charger",
+        "controller",
+        "display",
+        "hub",
+        "monitor",
+        "player",
+        "receiver",
+        "station",
+        "switch",
+        "terminal",
+    }
+)
+
+
+def _best_shortlist_phrase_score(
+    phrases: tuple[CompiledAlias, ...] | tuple[CompiledPhrase, ...],
+    text_terms: set[str],
+) -> tuple[int, str | None]:
+    best_score = 0
+    best_reason: str | None = None
+
+    for phrase in phrases:
+        if not phrase.token_terms or not phrase.token_terms <= text_terms:
+            continue
+        token_count = len(phrase.token_terms)
+        if isinstance(phrase, CompiledAlias):
+            score = 10 + token_count * 8 + max(phrase.field_bonus, 0) + max(phrase.specificity_bonus, 0)
+            if token_count == 1 and phrase.generic_terms:
+                score -= 14
+            elif token_count == 1:
+                score -= 2
+            best_field = phrase.field.replace("_", " ")
+            reason = f"{best_field} phrase '{phrase.raw}'"
+        else:
+            score = 8 + token_count * 7
+            if token_count == 1:
+                score -= 3
+            reason = f"phrase '{phrase.raw}'"
+        if score > best_score:
+            best_score = score
+            best_reason = reason
+
+    return best_score, best_reason
+
+
+def _route_anchor_shortlist_score(compiled: CompiledProductMatcher, signal_traits: set[str]) -> tuple[int, str | None]:
+    route_anchor = compiled.route_anchor or ""
+    if not route_anchor:
+        return 0, None
+    connected_traits = {"account", "app_control", "authentication", "bluetooth", "cloud", "ota", "radio", "wifi", "zigbee"}
+    wired_traits = {"display", "ethernet", "hdmi_interface", "office_peripheral", "usb_hub_function", "wired_networking"}
+
+    if route_anchor.endswith("_connected") and connected_traits & signal_traits:
+        return 6, f"route anchor {route_anchor} fits connected traits"
+    if route_anchor.endswith("_core") and wired_traits & signal_traits:
+        return 4, f"route anchor {route_anchor} fits local or wired traits"
+    return 0, None
+
+
+def _shortlist_score_details(
+    compiled: CompiledProductMatcher,
+    *,
+    text_terms: set[str],
+    signal_traits: set[str],
+) -> tuple[int, list[str]]:
+    reasons: list[str] = []
+    score = 0
+
+    alias_score, alias_reason = _best_shortlist_phrase_score(compiled.aliases, text_terms)
+    if alias_score:
+        score += alias_score
+        if alias_reason:
+            reasons.append(alias_reason)
+
+    family_score, family_reason = _best_shortlist_phrase_score(compiled.family_keywords, text_terms)
+    if family_score:
+        score += family_score
+        if family_reason:
+            reasons.append("family " + family_reason)
+
+    required_hits = sum(1 for phrase in compiled.required_clues if phrase.token_terms and phrase.token_terms <= text_terms)
+    preferred_hits = sum(1 for phrase in compiled.preferred_clues if phrase.token_terms and phrase.token_terms <= text_terms)
+    exclude_hits = sum(1 for phrase in compiled.exclude_clues if phrase.token_terms and phrase.token_terms <= text_terms)
+    if required_hits:
+        score += required_hits * 14
+        reasons.append(f"required clues x{required_hits}")
+    if preferred_hits:
+        score += preferred_hits * 9
+        reasons.append(f"preferred clues x{preferred_hits}")
+    if exclude_hits:
+        score -= exclude_hits * 12
+        reasons.append(f"exclude clues x{exclude_hits}")
+
+    generic_alias_term_hits = len({term for alias in compiled.aliases if alias.token_terms <= text_terms for term in alias.generic_terms})
+    if generic_alias_term_hits:
+        score -= generic_alias_term_hits * 5
+        reasons.append(f"generic alias terms x{generic_alias_term_hits}")
+
+    trait_hits = len(compiled.shortlist_traits & signal_traits)
+    if trait_hits:
+        score += min(trait_hits, 5) * 3
+        reasons.append(f"trait priors x{min(trait_hits, 5)}")
+
+    required_family_traits = compiled.family_required_traits
+    if required_family_traits and required_family_traits <= signal_traits:
+        score += 8
+        reasons.append("family required traits fit")
+
+    route_score, route_reason = _route_anchor_shortlist_score(compiled, signal_traits)
+    if route_score:
+        score += route_score
+        if route_reason:
+            reasons.append(route_reason)
+
+    return score, reasons
+
+
 def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[tuple[CompiledProductMatcher, ...], dict[str, int]]:
     snapshot = _product_matching_snapshot()
     text_terms = set(text.split())
@@ -207,12 +342,11 @@ def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[
     shortlisted: list[CompiledProductMatcher] = []
 
     for compiled in snapshot.products:
-        alias_term_hits = len(compiled.alias_terms & text_terms)
-        family_term_hits = len(compiled.family_keyword_terms & text_terms)
-        clue_term_hits = len(compiled.clue_terms & text_terms)
-        trait_hits = len(compiled.shortlist_traits & signal_traits)
-
-        cheap_score = alias_term_hits * 5 + family_term_hits * 4 + clue_term_hits * 3 + min(trait_hits, 4)
+        cheap_score, _reasons = _shortlist_score_details(
+            compiled,
+            text_terms=text_terms,
+            signal_traits=signal_traits,
+        )
         if cheap_score <= 0:
             continue
 
@@ -226,8 +360,8 @@ def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[
     shortlisted.sort(
         key=lambda compiled: (
             -shortlist_scoring[compiled.id],
-            -len(compiled.alias_terms & text_terms),
-            -len(compiled.family_keyword_terms & text_terms),
+            -len([alias for alias in compiled.aliases if alias.token_terms and alias.token_terms <= text_terms]),
+            -len([phrase for phrase in compiled.family_keywords if phrase.token_terms and phrase.token_terms <= text_terms]),
             -len(compiled.shortlist_traits & signal_traits),
             compiled.id,
         )

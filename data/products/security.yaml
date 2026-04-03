@@ -1230,6 +1230,17 @@ products:
   - connected alarm
   - intruder alarm hub
   - security system hub
+  preferred_clues:
+  - alarm system
+  - security system
+  - smart alarm panel
+  - app
+  exclude_clues:
+  - keypad only
+  - alarm keypad
+  confusable_with:
+  - smart_home_panel
+  - smart_display
   weak_aliases:
   - security-hub
   - securityhub
@@ -1283,6 +1294,89 @@ products:
   product_subfamily: security_hub
   route_anchor: avict_connected
   route_family: av_ict
+- id: alarm_keypad_panel
+  label: Alarm keypad / security control panel
+  product_family: smart_home_security
+  product_subfamily: alarm_keypad_panel
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - security_access_iot
+  - av_ict_device
+  aliases:
+  - alarm keypad
+  - security keypad
+  - alarm keypad panel
+  - home alarm keypad
+  - alarm control keypad
+  - security control panel
+  family_keywords:
+  - alarm system
+  - security control
+  - keypad panel
+  preferred_clues:
+  - keypad
+  - display
+  - arm disarm
+  - control panel
+  exclude_clues:
+  - intercom
+  - doorbell
+  - access reader
+  confusable_with:
+  - security_hub
+  - smart_home_panel
+  - smart_display
+  family_traits:
+  - electronic
+  - av_ict
+  - security_or_barrier
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - fixed_installation
+  - display
+  - smart_building
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - fixed_installation
+  - display
+  - smart_building
+  likely_standards:
+  - EN 62368-1
+  - GDPR review
+  strong_aliases:
+  - alarm keypad
+  - security keypad
+  - alarm keypad panel
+  - home alarm keypad
+  weak_aliases:
+  - alarm control keypad
+  - security control panel
+  marketplace_aliases:
+  - alarm keypad
+  - security keypad
+  - home alarm keypad
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - display
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Keeps alarm keypads separate from security hubs and smart home wall panels.
+  route_anchor: avict_connected
 - id: smart_baby_monitor_breathing
   label: Baby breathing / movement monitor
   product_family: baby_safety_device

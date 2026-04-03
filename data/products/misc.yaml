@@ -522,6 +522,17 @@ products:
   - home automation panel
   - smart home touchscreen
   - home control panel
+  preferred_clues:
+  - wall panel
+  - home control panel
+  - touchscreen
+  - home automation
+  exclude_clues:
+  - alarm keypad
+  - security keypad
+  confusable_with:
+  - smart_display
+  - security_hub
   weak_aliases:
   - smart-home-panel
   - smarthomepanel

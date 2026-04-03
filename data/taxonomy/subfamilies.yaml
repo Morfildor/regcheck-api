@@ -26,6 +26,9 @@ subfamilies:
 - id: all_in_one_pc
   family: personal_computing_device
   label: All-in-one PC
+- id: alarm_keypad_panel
+  family: smart_home_security
+  label: Alarm keypad / security control panel
 - id: aquarium_appliance
   family: water_handling_appliance
   label: Aquarium appliance
@@ -146,6 +149,9 @@ subfamilies:
 - id: desktop_pc
   family: personal_computing_device
   label: Desktop PC
+- id: digital_signage_player
+  family: personal_computing_device
+  label: Digital signage player
 - id: digital_audio_player
   family: home_entertainment_device
   label: Digital audio player / DAC
@@ -239,6 +245,9 @@ subfamilies:
 - id: external_power_supply
   family: portable_power_charger
   label: External power supply / AC-DC adapter
+- id: mini_pc
+  family: personal_computing_device
+  label: Mini PC
 - id: external_storage
   family: office_avict_peripheral
   label: External storage (SSD / HDD)
@@ -803,6 +812,9 @@ subfamilies:
 - id: tablet
   family: personal_computing_device
   label: Tablet computer
+- id: thin_client
+  family: personal_computing_device
+  label: Thin client / zero client
 - id: toaster
   family: countertop_cooking_appliance
   label: Toaster
@@ -827,6 +839,9 @@ subfamilies:
 - id: usb_hub
   family: office_avict_peripheral
   label: USB hub
+- id: wireless_microphone_receiver
+  family: creator_office_device
+  label: Wireless microphone receiver
 - id: usb_wall_charger
   family: portable_power_charger
   label: USB wall charger / USB-C power adapter

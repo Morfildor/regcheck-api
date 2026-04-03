@@ -725,6 +725,8 @@ products:
   - evse
   - control box
   - mode 2
+  confusable_with:
+  - portable_ev_charger
   functional_classes:
   - power_supply
   core_traits:
@@ -908,6 +910,7 @@ products:
   - portable ev charger
   - portable electric vehicle charger
   - portable evse
+  - ev charger cable with control box
   - mode 2 charger
   - mode 2 ev charger
   - mode 2 evse
@@ -1105,3 +1108,13 @@ products:
   product_subfamily: streaming_device
   route_anchor: avict_connected
   route_family: av_ict
+  preferred_clues:
+  - evse
+  - mode 2
+  - control box
+  - portable ev charger
+  exclude_clues:
+  - tethered cable
+  - vehicle connector
+  confusable_with:
+  - ev_connector_accessory

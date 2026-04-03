@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
-from app.core.settings import get_settings
+from app.core.settings import load_settings
 
 
 class KnowledgeBaseError(RuntimeError):
@@ -39,7 +39,7 @@ class CatalogSourceBundle:
 
 def _data_dir_candidates() -> list[Path]:
     candidates: list[Path] = []
-    settings = get_settings()
+    settings = load_settings()
     if settings.data_dir is not None:
         candidates.append(settings.data_dir)
     candidates.append((settings.project_root / "data").resolve())
@@ -86,10 +86,10 @@ def _bundle_for_candidate(filename: str, data_dir: Path) -> CatalogSourceBundle 
     )
 
 
-@lru_cache(maxsize=1)
-def _resolved_catalog_sources() -> dict[str, CatalogSourceBundle | None]:
+@lru_cache(maxsize=8)
+def _resolved_catalog_sources_cached(candidate_keys: tuple[str, ...]) -> dict[str, CatalogSourceBundle | None]:
     resolved: dict[str, CatalogSourceBundle | None] = {}
-    candidates = _data_dir_candidates()
+    candidates = [Path(item) for item in candidate_keys]
     for filename in ALL_DATA_FILES:
         bundle: CatalogSourceBundle | None = None
         for directory in candidates:
@@ -100,12 +100,20 @@ def _resolved_catalog_sources() -> dict[str, CatalogSourceBundle | None]:
     return resolved
 
 
-@lru_cache(maxsize=1)
-def _resolved_data_paths() -> dict[str, Path | None]:
+def _resolved_catalog_sources() -> dict[str, CatalogSourceBundle | None]:
+    return _resolved_catalog_sources_cached(tuple(str(path) for path in _data_dir_candidates()))
+
+
+@lru_cache(maxsize=8)
+def _resolved_data_paths_cached(candidate_keys: tuple[str, ...]) -> dict[str, Path | None]:
     return {
         filename: (bundle.file_path if bundle is not None else None)
-        for filename, bundle in _resolved_catalog_sources().items()
+        for filename, bundle in _resolved_catalog_sources_cached(candidate_keys).items()
     }
+
+
+def _resolved_data_paths() -> dict[str, Path | None]:
+    return _resolved_data_paths_cached(tuple(str(path) for path in _data_dir_candidates()))
 
 
 def _resolved_data_paths_for_logging() -> dict[str, str]:
@@ -141,8 +149,8 @@ def _resolve_data_path(filename: str, *, required: bool = True) -> Path | None:
 
 
 def clear_resolved_data_paths_cache() -> None:
-    _resolved_catalog_sources.cache_clear()
-    _resolved_data_paths.cache_clear()
+    _resolved_catalog_sources_cached.cache_clear()
+    _resolved_data_paths_cached.cache_clear()
 
 
 __all__ = [

@@ -114,6 +114,8 @@ class SubtypeCandidate:
     product: ProductCatalogRow
     genres: tuple[str, ...] = ()
     matched_alias: str | None = None
+    matched_alias_field: str | None = None
+    matched_alias_generic_terms: tuple[str, ...] = ()
     alias_hits: tuple[str, ...] = ()
     family_keyword_hits: tuple[str, ...] = ()
     positive_clues: tuple[str, ...] = ()
@@ -129,6 +131,9 @@ class SubtypeCandidate:
     functional_classes: tuple[str, ...] = ()
     likely_standards: tuple[str, ...] = ()
     confusable_with: tuple[str, ...] = ()
+    route_anchor: str | None = None
+    max_match_stage: str | None = None
+    boundary_tags: tuple[str, ...] = ()
 
     def to_audit_candidate(self, *, confidence: ConfidenceLevel) -> AuditCandidate:
         return AuditCandidate(
@@ -206,12 +211,17 @@ class ClassifierMatchAudit:
     normalized_text: str
     normalized_text_summary: str = ""
     retrieval_basis: list[str] = field(default_factory=list)
+    shortlist_basis: list[str] = field(default_factory=list)
+    filtered_out: list[str] = field(default_factory=list)
     alias_hits: list[str] = field(default_factory=list)
     matched_aliases: list[str] = field(default_factory=list)
     family_keyword_hits: list[str] = field(default_factory=list)
     clue_hits: list[str] = field(default_factory=list)
     strongest_positive_clues: list[str] = field(default_factory=list)
     strongest_negative_clues: list[str] = field(default_factory=list)
+    rerank_reasons: list[str] = field(default_factory=list)
+    accessory_gate_reasons: list[str] = field(default_factory=list)
+    generic_alias_penalties: list[str] = field(default_factory=list)
     negations: list[str] = field(default_factory=list)
     negation_suppressions: list[SignalSuppression] = field(default_factory=list)
     product_implied_traits: list[ProductImpliedTraitDecision] = field(default_factory=list)
@@ -220,6 +230,8 @@ class ClassifierMatchAudit:
     final_match_stage: ProductMatchStage = "ambiguous"
     final_match_reason: str | None = None
     ambiguity_reason: str | None = None
+    family_level_limiter: str | None = None
+    confidence_limiter: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -227,12 +239,17 @@ class ClassifierMatchAudit:
             "normalized_text": self.normalized_text,
             "normalized_text_summary": self.normalized_text_summary or self.normalized_text,
             "retrieval_basis": list(self.retrieval_basis),
+            "shortlist_basis": list(self.shortlist_basis),
+            "filtered_out": list(self.filtered_out),
             "alias_hits": list(self.alias_hits),
             "matched_aliases": list(self.matched_aliases or self.alias_hits),
             "family_keyword_hits": list(self.family_keyword_hits),
             "clue_hits": list(self.clue_hits),
             "strongest_positive_clues": list(self.strongest_positive_clues),
             "strongest_negative_clues": list(self.strongest_negative_clues),
+            "rerank_reasons": list(self.rerank_reasons),
+            "accessory_gate_reasons": list(self.accessory_gate_reasons),
+            "generic_alias_penalties": list(self.generic_alias_penalties),
             "negations": list(self.negations),
             "negation_suppressions": [item.to_dict() for item in self.negation_suppressions],
             "product_implied_traits": [item.to_dict() for item in self.product_implied_traits],
@@ -241,6 +258,8 @@ class ClassifierMatchAudit:
             "final_match_stage": self.final_match_stage,
             "final_match_reason": self.final_match_reason,
             "ambiguity_reason": self.ambiguity_reason,
+            "family_level_limiter": self.family_level_limiter,
+            "confidence_limiter": self.confidence_limiter,
         }
 
 

@@ -1,0 +1,184 @@
+cue_groups:
+  dock_role:
+  - '\bdock(?:ing)? station\b'
+  - \blaptop dock\b
+  - \busb c dock\b
+  - \busb-c dock\b
+  - \bmonitor dock\b
+  hub_role:
+  - \busb hub\b
+  - \busb c hub\b
+  - \busb-c hub\b
+  - \busb4 hub\b
+  - \bpowered usb hub\b
+  mount_attachment_role:
+  - \bmonitor arm\b
+  - \bmonitor mount\b
+  - \bmonitor stand\b
+  - \bdisplay arm\b
+  - \bvesa mount\b
+  adapter_cable_role:
+  - \badapter\b
+  - \bcable\b
+  - \btethered cable\b
+  - \bconnector cable\b
+  receiver_role:
+  - \breceiver\b
+  - \breceiver pack\b
+  gateway_module_role:
+  - \bgateway\b
+  - \bmodule\b
+  - \bcontrol box\b
+  backup_unit_role:
+  - \bbackup unit\b
+  - \bbattery backup\b
+  - \bups\b
+  terminal_role:
+  - \bterminal\b
+  - \bkiosk\b
+  - \bendpoint\b
+  display_surface_role:
+  - \bdisplay\b
+  - \bscreen\b
+  - \bmonitor\b
+  - \btouchscreen\b
+  monitor_specific_role:
+  - \bcomputer monitor\b
+  - \bdisplay monitor\b
+  - \bmonitor panel\b
+  network_port_role:
+  - \bethernet\b
+  - \brj45\b
+  - '\busb ports?\b'
+  - \bport replicator\b
+  usb_peripheral_role:
+  - \busb hub\b
+  - \busb c hub\b
+  - \busb-c hub\b
+  - '\busb ports?\b'
+  portable_power_role:
+  - \bportable charger\b
+  - \bportable power\b
+  - \bpower bank\b
+  - \bbattery pack\b
+  power_bank_role:
+  - \bpower bank\b
+  - \bbattery bank\b
+  - \busb battery pack\b
+  battery_charger_role:
+  - \bbattery charger\b
+  - \bebike battery charger\b
+  - \be bike battery charger\b
+  - \bcharging dock\b
+  external_psu_role:
+  - \bexternal power supply\b
+  - \bexternal psu\b
+  - \bac adapter\b
+  - \bpower adapter\b
+  - \bpower brick\b
+  ev_charger_role:
+  - \bev charger\b
+  - \bevse\b
+  - \bmode 2\b
+  - \bgranny charger\b
+  - \bportable ev charger\b
+  ev_connector_role:
+  - \bev charging cable\b
+  - \bvehicle connector\b
+  - '\btype 2(?: vehicle)? connector\b'
+  - \btethered charging cable\b
+  ebike_role:
+  - \bebike\b
+  - \be bike\b
+  - \be-bike\b
+  security_alarm_role:
+  - \balarm\b
+  - \bintruder alarm\b
+  - \bsecurity system\b
+  - \bhome alarm\b
+  keypad_panel_role:
+  - \bkeypad\b
+  - \balarm keypad\b
+  - \bcontrol panel\b
+  - \bsecurity keypad\b
+  panel_role:
+  - \bpanel\b
+  - \btouch panel\b
+  smart_display_role:
+  - \bsmart display\b
+  - \bdisplay hub\b
+  - \bassistant display\b
+  - \bsmart home hub display\b
+  smart_speaker_role:
+  - \bsmart speaker\b
+  - \bvoice speaker\b
+  - \bvoice assistant speaker\b
+  smart_home_panel_role:
+  - \bsmart home panel\b
+  - \bsmart wall panel\b
+  - \bhome automation panel\b
+  - \bhome control panel\b
+  microphone_receiver_role:
+  - \bwireless microphone receiver\b
+  - \bwireless mic receiver\b
+  - \blavalier receiver\b
+  - \bmic receiver\b
+  wireless_audio_role:
+  - \bwireless microphone\b
+  - \bwireless audio\b
+  audio_receiver_role:
+  - \bav receiver\b
+  - \bamplifier receiver\b
+  - \bhome theater receiver\b
+  signage_role:
+  - \bdigital signage\b
+  - \bsignage\b
+  - \bmenu board\b
+  retail_role:
+  - \bretail\b
+  - \bstorefront\b
+  player_role:
+  - \bplayer\b
+  - \bmedia player\b
+  - \bsignage player\b
+  thin_client_role:
+  - \bthin client\b
+  - \bzero client\b
+  - \bvdi endpoint\b
+  - \bremote desktop terminal\b
+  mini_pc_role:
+  - \bmini pc\b
+  - \bmicro pc\b
+  - \bsmall form factor pc\b
+  - \bcompact desktop\b
+  all_in_one_role:
+  - \ball in one pc\b
+  - \ball-in-one pc\b
+  - \baio pc\b
+  - \bpc monitor combo\b
+  network_switch_role:
+  - \bnetwork switch\b
+  - \bethernet switch\b
+  - \blan switch\b
+  - \bpoe switch\b
+  poe_injector_role:
+  - \bpoe injector\b
+  - \bpower over ethernet injector\b
+  - \bmidspan\b
+  printer_role:
+  - \bprinter\b
+  - \blaser printer\b
+  - \binkjet\b
+  scanner_role:
+  - \bscanner\b
+  - \bdocument scanner\b
+  - \bflatbed scanner\b
+  multifunction_role:
+  - \bmfp\b
+  - \bmultifunction printer\b
+  - \ball in one printer\b
+  computer_role:
+  - \bcomputer\b
+  - \bpc\b
+  - \bdesktop\b
+  - \bworkstation\b

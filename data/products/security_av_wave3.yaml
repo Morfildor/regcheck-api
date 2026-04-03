@@ -236,6 +236,11 @@ products:
   - all-in-one pc
   - aio pc
   - pc monitor combo
+  confusable_with:
+  - monitor
+  - mini_pc
+  - thin_client
+  - digital_signage_player
   preferred_clues:
   - integrated computer
   - desktop computer with display
@@ -267,6 +272,291 @@ products:
   - mains_powered
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core
+- id: mini_pc
+  label: Mini PC
+  product_family: personal_computing_device
+  product_subfamily: mini_pc
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - mini pc
+  - micro pc
+  - small form factor pc
+  - compact desktop pc
+  preferred_clues:
+  - compact desktop
+  - small form factor
+  - mini pc
+  exclude_clues:
+  - thin client
+  - signage player
+  - kiosk
+  confusable_with:
+  - desktop_pc
+  - thin_client
+  - digital_signage_player
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  - office_peripheral
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  - office_peripheral
+  likely_standards:
+  - EN 62368-1
+  strong_aliases:
+  - mini pc
+  - micro pc
+  - small form factor pc
+  weak_aliases:
+  - compact desktop pc
+  marketplace_aliases:
+  - mini pc
+  - micro pc
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electronic
+  - av_ict
+  - mains_powered
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Keeps compact PCs separate from thin clients and signage players.
+  route_anchor: avict_core
+- id: thin_client
+  label: Thin client / zero client
+  product_family: personal_computing_device
+  product_subfamily: thin_client
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - thin client
+  - zero client
+  - vdi terminal
+  - remote desktop terminal
+  preferred_clues:
+  - thin client
+  - remote desktop
+  - virtual desktop
+  - vdi
+  exclude_clues:
+  - signage player
+  - media player
+  confusable_with:
+  - desktop_pc
+  - mini_pc
+  - digital_signage_player
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  - office_peripheral
+  - wired_networking
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  - office_peripheral
+  - wired_networking
+  likely_standards:
+  - EN 62368-1
+  strong_aliases:
+  - thin client
+  - zero client
+  weak_aliases:
+  - vdi terminal
+  - remote desktop terminal
+  marketplace_aliases:
+  - thin client
+  - zero client
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electronic
+  - av_ict
+  - wired_networking
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Keeps VDI and terminal-style endpoints separate from general desktop PCs.
+  route_anchor: avict_core
+- id: digital_signage_player
+  label: Digital signage player
+  product_family: personal_computing_device
+  product_subfamily: digital_signage_player
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - digital signage player
+  - signage player
+  - retail media player
+  - signage media player
+  - kiosk player
+  family_keywords:
+  - digital signage
+  - retail display
+  - signage player
+  preferred_clues:
+  - retail display
+  - menu board
+  - signage
+  - player
+  exclude_clues:
+  - smart display
+  - streaming device
+  confusable_with:
+  - mini_pc
+  - thin_client
+  - all_in_one_pc
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  - office_peripheral
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - data_storage
+  - office_peripheral
+  likely_standards:
+  - EN 62368-1
+  strong_aliases:
+  - digital signage player
+  - signage player
+  - retail media player
+  weak_aliases:
+  - signage media player
+  - kiosk player
+  marketplace_aliases:
+  - digital signage player
+  - signage player
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electronic
+  - av_ict
+  - display
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Keeps retail signage players separate from smart displays and general-purpose PCs.
+  route_anchor: avict_core
+- id: wireless_microphone_receiver
+  label: Wireless microphone receiver
+  product_family: creator_office_device
+  product_subfamily: wireless_microphone_receiver
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  aliases:
+  - wireless microphone receiver
+  - wireless mic receiver
+  - lavalier receiver
+  - mic receiver
+  - receiver pack
+  preferred_clues:
+  - wireless microphone
+  - receiver
+  - audio
+  - lavalier
+  exclude_clues:
+  - av receiver
+  - amplifier receiver
+  - home theater
+  confusable_with:
+  - home_cinema_system
+  family_traits:
+  - electronic
+  - av_ict
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - radio
+  - microphone
+  - office_peripheral
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - radio
+  - microphone
+  - office_peripheral
+  likely_standards:
+  - EN 62368-1
+  strong_aliases:
+  - wireless microphone receiver
+  - wireless mic receiver
+  - lavalier receiver
+  weak_aliases:
+  - mic receiver
+  - receiver pack
+  marketplace_aliases:
+  - wireless microphone receiver
+  - wireless mic receiver
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electronic
+  - av_ict
+  - radio
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Keeps microphone receivers separate from home cinema AV receivers.
   route_anchor: avict_core
 - id: document_camera
   label: Document camera / visualizer
