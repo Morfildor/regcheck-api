@@ -48,6 +48,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: commercial_hood
+  route_anchor: household_core
+  route_family: household_appliance
 - id: industrial_air_compressor
   product_family: industrial_power_equipment
   product_subfamily: air_compressor
@@ -88,7 +92,9 @@ products:
   - industrial_equipment
   likely_standards:
   - Air compressor safety review
-  genres: []
+  genres:
+  - commercial_appliance
+  - electric_power_tool
   family_keywords:
   - air compressor
   - compressor
@@ -147,6 +153,8 @@ products:
   - pressure
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: pen_3d
   label: 3D printing pen
   aliases:
@@ -178,7 +186,8 @@ products:
   - tool_device
   likely_standards:
   - EN 62368-1
-  genres: []
+  genres:
+  - av_ict_device
   preferred_clues:
   - 3d pen
   - printing pen
@@ -226,6 +235,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: creator_office_device
+  product_subfamily: pen_3d
+  route_anchor: avict_core
+  route_family: av_ict
 - id: rc_boat
   label: RC boat / remote-controlled toy boat
   aliases:
@@ -268,7 +281,9 @@ products:
   - toy_product
   likely_standards:
   - EN 62115
-  genres: []
+  genres:
+  - connected_toy_childcare
+  - smart_home_iot
   preferred_clues:
   - rc boat
   - remote control boat
@@ -325,6 +340,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: connected_child_product
+  product_subfamily: rc_boat
+  route_anchor: toy
+  route_family: toy
 - id: rc_car
   label: RC car / remote-controlled toy vehicle
   aliases:
@@ -371,7 +390,9 @@ products:
   - toy_product
   likely_standards:
   - EN 62115
-  genres: []
+  genres:
+  - connected_toy_childcare
+  - smart_home_iot
   preferred_clues:
   - rc car
   - remote control car
@@ -435,6 +456,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: connected_child_product
+  product_subfamily: rc_car
+  route_anchor: toy
+  route_family: toy
 - id: smart_home_panel
   label: Smart home wall panel / controller
   aliases:
@@ -537,6 +562,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_home_control_device
+  product_subfamily: smart_home_panel
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_irrigation_controller
   label: Smart garden irrigation / sprinkler controller
   product_family: garden_automation
@@ -632,6 +661,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: WiFi-connected irrigation and garden sprinkler controllers. Outdoor-rated electronics covered under EN 62368-1.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_plug
   label: Smart plug / smart outlet
   aliases:
@@ -769,3 +800,7 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_power_control
+  product_subfamily: smart_plug
+  route_anchor: avict_connected
+  route_family: av_ict

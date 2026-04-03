@@ -64,6 +64,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_care_appliance
+  product_subfamily: beauty_treatment_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: electric_blanket
   label: Electric blanket
   aliases:
@@ -120,6 +124,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_heating_appliance
+  product_subfamily: electric_blanket
+  route_anchor: household_core
+  route_family: household_appliance
 - id: foot_warmer
   label: Foot warmer
   aliases:
@@ -175,6 +183,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_heating_appliance
+  product_subfamily: foot_warmer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: hair_clipper
   label: Hair clipper
   aliases:
@@ -239,6 +251,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_care_appliance
+  product_subfamily: hair_clipper
+  route_anchor: household_core
+  route_family: household_appliance
 - id: hair_curler
   label: Hair curler / curling iron
   aliases:
@@ -365,6 +381,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_care_appliance
+  product_subfamily: hair_curler
+  route_anchor: household_core
+  route_family: household_appliance
 - id: heating_pad
   label: Heating pad / heating blanket
   aliases:
@@ -437,6 +457,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_heating_appliance
+  product_subfamily: heating_pad
+  route_anchor: household_core
+  route_family: household_appliance
 - id: oral_hygiene_appliance
   label: Oral hygiene appliance
   aliases:
@@ -510,6 +534,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_care_appliance
+  product_subfamily: oral_hygiene_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: shaver
   label: Electric shaver
   aliases:
@@ -572,6 +600,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_care_appliance
+  product_subfamily: shaver
+  route_anchor: household_core
+  route_family: household_appliance
 - id: skin_hair_care_appliance
   label: Skin or hair care appliance
   aliases:
@@ -694,6 +726,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_care_appliance
+  product_subfamily: skin_hair_care_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: ultraviolet_appliance
   label: Ultraviolet appliance
   aliases:
@@ -763,6 +799,16 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_care_appliance
+  product_subfamily: ultraviolet_appliance
+  route_anchor: household_core
+  route_family: household_appliance
+  boundary_tags:
+  - body_treatment_boundary
+  - uv_irradiation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Body-treatment signals keep subtype confirmation conservative pending therapy-scope review.
 - id: water_bed_heater
   label: Water-bed heater
   aliases:
@@ -824,3 +870,7 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_heating_appliance
+  product_subfamily: water_bed_heater
+  route_anchor: household_core
+  route_family: household_appliance

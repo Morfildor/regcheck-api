@@ -7,6 +7,7 @@ from typing import Any
 from app.domain.catalog_types import GenreCatalogRow, LikelyStandardRef, ProductCatalogRow
 
 from .paths import KnowledgeBaseError
+from .taxonomy import validate_product_taxonomy_row, validate_taxonomy_snapshot
 
 
 def _require_list(parent: dict[str, Any], key: str, filename: str) -> list[Any]:
@@ -200,7 +201,10 @@ def _validate_genres(data: dict[str, Any], trait_ids: set[str]) -> list[dict[str
 def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set[str] | None = None) -> list[dict[str, Any]]:
     products = _require_list(data, "products", "products.yaml")
     seen: set[str] = set()
+    provided_genre_ids = genre_ids
     genre_ids = genre_ids or set()
+    if provided_genre_ids is not None:
+        validate_taxonomy_snapshot(trait_ids=trait_ids, genre_ids=genre_ids)
 
     for idx, row in enumerate(products, start=1):
         if not isinstance(row, dict):
@@ -289,6 +293,8 @@ def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set
         alias_overlap = sorted(strong_aliases & weak_aliases)
         if alias_overlap:
             raise KnowledgeBaseError(f"{owner} has aliases present in both strong_aliases and weak_aliases: {', '.join(alias_overlap)}.")
+
+        validate_product_taxonomy_row(dict(row))
 
     for row in products:
         pid = row["id"]

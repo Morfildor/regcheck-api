@@ -131,11 +131,11 @@ def _string_list(value: Any) -> list[str]:
 
 
 def _product_family(product: ProductRowLike) -> str:
-    return str(product.get("product_family") or product["id"])
+    return str(product.get("product_family") or "")
 
 
 def _product_subfamily(product: ProductRowLike) -> str:
-    return str(product.get("product_subfamily") or product["id"])
+    return str(product.get("product_subfamily") or "")
 
 
 def _phrase_present(text: str, phrase: str) -> bool:

@@ -91,9 +91,25 @@ class ProductCatalogRow(MappingModel):
     genre_likely_standards: list[str] = Field(default_factory=list)
     likely_standard_refs: list[LikelyStandardRef] = Field(default_factory=list)
     boundary_tags: list[str] = Field(default_factory=list)
+    boundary_class: str | None = None
+    boundary_reason: str | None = None
+    boundary_missing_differentiators: list[str] = Field(default_factory=list)
     max_match_stage: ProductMaxMatchStage | None = None
     route_confidence_cap: RouteConfidenceCap | None = None
     family_level_reason: str | None = None
+    family_resolution_source: str | None = None
+    subfamily_resolution_source: str | None = None
+    route_anchor_source: str | None = None
+    route_anchor_confidence: str | None = None
+    route_anchor_score: int | None = None
+    route_anchor_reasons: list[str] = Field(default_factory=list)
+    route_anchor_alternatives: list[str] = Field(default_factory=list)
+    family_allowed_route_anchors: list[str] = Field(default_factory=list)
+    family_required_traits: list[str] = Field(default_factory=list)
+    family_boundary_tendencies: list[str] = Field(default_factory=list)
+    compatibility_fallback_used: bool = False
+    taxonomy_resolution_issues: list[str] = Field(default_factory=list)
+    inference_debt_flags: list[str] = Field(default_factory=list)
 
 
 class LegislationCatalogRow(MappingModel):

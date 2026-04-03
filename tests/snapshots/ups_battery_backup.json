@@ -35,8 +35,8 @@
     "BATTERY",
     "WEEE"
   ],
-  "primary_route_reason": "UPS / battery backup unit maps to EN 62368-1 as the primary product-safety route. The route remains conservative because the product sits near a catalog boundary.",
-  "primary_route_standard_code": "EN 62368-1",
+  "primary_route_reason": "UPS / battery backup unit maps to the power system boundary product-safety route. The route remains conservative because the product sits near a catalog boundary.",
+  "primary_route_standard_code": null,
   "product_family": "energy_power_system",
   "product_match_confidence": "medium",
   "product_match_stage": "family",
@@ -49,11 +49,11 @@
   ],
   "route_context": {
     "context_tags": [
+      "boundary:energy_system",
       "power:external_psu",
       "power:portable_battery",
-      "primary:av_ict",
-      "primary_standard:EN 62368-1",
-      "scope:av_ict"
+      "primary:power_system_boundary",
+      "scope:generic"
     ],
     "overlay_routes": [
       "EMC",
@@ -63,15 +63,15 @@
       "WEEE",
       "ECO"
     ],
-    "primary_route_family": "av_ict",
-    "primary_route_standard_code": "EN 62368-1",
-    "route_confidence": "medium",
-    "scope_route": "av_ict"
+    "primary_route_family": "power_system_boundary",
+    "primary_route_standard_code": null,
+    "route_confidence": "low",
+    "scope_route": "generic"
   },
   "standard_codes": [
-    "EN 62368-1",
     "EN 55032",
     "EN 55035",
+    "EN 62368-1",
     "EN 62311",
     "EN 63000",
     "EN 62133-2",

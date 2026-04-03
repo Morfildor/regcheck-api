@@ -27,12 +27,12 @@ from . import routing_plan_helpers as _plan_helpers
 from . import routing_scalar_helpers as _scalar_helpers
 from .contracts import ClassifierTraitsSnapshot, NormalizedTraitStateMap
 from .route_anchors import (
-    ROUTE_FAMILY_PRIMARY_DIRECTIVE,
-    ROUTE_FAMILY_SCOPE,
-    ROUTE_STANDARD_FAMILY_RULES,
     best_primary_standard_for_family as _best_primary_standard_for_family_shared,
     family_from_standard_code as _family_from_standard_code_shared,
     normalized_standard_codes as _normalized_standard_codes_shared,
+    route_family_primary_directive_map,
+    route_family_scope_map,
+    route_standard_family_rules,
 )
 from .routing_models import AnalysisDepth, AnalysisTrace, LegislationSelection, PreparedAnalysis, RoutePlan, StandardsSelection
 
@@ -510,7 +510,7 @@ def _route_product_row(product_type: str | None, matched_products: set[str] | No
 
 
 def _route_scope_from_family(route_family: str | None) -> str | None:
-    return _plan_helpers._route_scope_from_family(ROUTE_FAMILY_SCOPE, route_family)
+    return _plan_helpers._route_scope_from_family(route_family_scope_map(), route_family)
 
 
 def _normalized_standard_codes(codes: set[str] | list[str] | None) -> list[str]:
@@ -538,9 +538,9 @@ def _build_route_plan(
         matched_products,
         product_type,
         route_product_row=_route_product_row,
-        route_family_scope=ROUTE_FAMILY_SCOPE,
-        route_family_primary_directive=ROUTE_FAMILY_PRIMARY_DIRECTIVE,
-        route_standard_family_rules=ROUTE_STANDARD_FAMILY_RULES,
+        route_family_scope=route_family_scope_map(),
+        route_family_primary_directive=route_family_primary_directive_map(),
+        route_standard_family_rules=route_standard_family_rules(),
     )
 
 
@@ -1319,8 +1319,8 @@ __all__ = [
     "DIRECTIVE_TITLES",
     "LegislationSelection",
     "PreparedAnalysis",
-    "ROUTE_FAMILY_SCOPE",
-    "ROUTE_FAMILY_PRIMARY_DIRECTIVE",
+    "route_family_scope_map",
+    "route_family_primary_directive_map",
     "RoutePlan",
     "StandardsSelection",
     "_analysis_depth",

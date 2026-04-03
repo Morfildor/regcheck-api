@@ -94,6 +94,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: household_connected
+  route_family: household_appliance
 - id: smart_pet_fountain
   label: Smart / automatic pet water fountain
   product_family: pet_care_device
@@ -188,8 +190,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Motorized recirculating water fountains for pets with filter and optional WiFi. Covered by EN 60335-1 as
-    motorized water appliance.
+  matching_notes: Motorized recirculating water fountains for pets with filter and optional WiFi. Covered by EN 60335-1 as motorized water appliance.
+  route_anchor: household_connected
+  route_family: household_appliance
 - id: smart_toy
   label: Smart connected toy
   aliases:
@@ -287,3 +290,4 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: toy

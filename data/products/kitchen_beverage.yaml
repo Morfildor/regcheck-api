@@ -80,6 +80,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: air_fryer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: bain_marie
   label: Bain-marie
   aliases:
@@ -137,6 +141,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: bain_marie
+  route_anchor: household_core
+  route_family: household_appliance
 - id: barbecue_grill
   label: Electric barbecue grill
   aliases:
@@ -218,6 +226,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: barbecue_grill
+  route_anchor: household_core
+  route_family: household_appliance
 - id: blender
   label: Blender
   aliases:
@@ -278,6 +290,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: food_preparation_appliance
+  product_subfamily: blender
+  route_anchor: household_core
+  route_family: household_appliance
 - id: coffee_grinder
   label: Coffee grinder / coffee mill
   aliases:
@@ -383,6 +399,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: beverage_preparation_appliance
+  product_subfamily: coffee_grinder
+  route_anchor: household_core
+  route_family: household_appliance
 - id: coffee_machine
   label: Coffee machine
   aliases:
@@ -631,6 +651,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: beverage_preparation_appliance
+  product_subfamily: coffee_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_cooking_appliance
   label: Commercial cooking appliance
   aliases:
@@ -704,6 +728,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: commercial_cooking_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_dispensing_appliance
   label: Commercial dispensing appliance
   aliases:
@@ -777,6 +805,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: commercial_dispensing_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_fryer
   label: Commercial fryer
   aliases:
@@ -830,6 +862,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: commercial_fryer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_kitchen_machine
   label: Commercial kitchen machine
   aliases:
@@ -917,6 +953,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: commercial_kitchen_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_microwave
   label: Commercial microwave oven
   aliases:
@@ -980,6 +1020,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: commercial_microwave
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_oven
   label: Commercial oven
   aliases:
@@ -1044,6 +1088,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: commercial_oven
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_refrigerator
   label: Commercial refrigerator
   aliases:
@@ -1108,6 +1156,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: cold_storage_appliance
+  product_subfamily: commercial_refrigerator
+  route_anchor: household_core
+  route_family: household_appliance
 - id: cooking_range
   label: Cooking range
   aliases:
@@ -1171,6 +1223,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: cooking_range
+  route_anchor: household_core
+  route_family: household_appliance
 - id: deep_fryer
   label: Deep fryer
   aliases:
@@ -1231,6 +1287,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: deep_fryer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: electric_frying_pan
   label: Electric frying pan
   aliases:
@@ -1287,6 +1347,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: electric_frying_pan
+  route_anchor: household_core
+  route_family: household_appliance
 - id: electric_kettle
   label: Electric kettle
   aliases:
@@ -1379,6 +1443,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: beverage_preparation_appliance
+  product_subfamily: electric_kettle
+  route_anchor: household_core
+  route_family: household_appliance
 - id: food_processor
   label: Food processor
   aliases:
@@ -1426,6 +1494,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: food_preparation_appliance
+  product_subfamily: food_processor
+  route_anchor: household_core
+  route_family: household_appliance
 - id: hob
   label: Hob / cooktop
   aliases:
@@ -1520,6 +1592,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: hob
+  route_anchor: household_core
+  route_family: household_appliance
 - id: hot_cupboard
   label: Hot cupboard
   aliases:
@@ -1572,6 +1648,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: hot_cupboard
+  route_anchor: household_core
+  route_family: household_appliance
 - id: juicer
   label: Juicer
   aliases:
@@ -1690,6 +1770,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: food_preparation_appliance
+  product_subfamily: juicer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: kitchen_extractor_fan
   label: Kitchen extractor fan
   aliases:
@@ -1756,6 +1840,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: ventilation_extraction_appliance
+  product_subfamily: kitchen_extractor_fan
+  route_anchor: household_core
+  route_family: household_appliance
 - id: kitchen_machine
   label: Kitchen machine
   aliases:
@@ -1839,6 +1927,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: food_preparation_appliance
+  product_subfamily: kitchen_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: liquid_heater
   label: Liquid heater
   aliases:
@@ -1905,6 +1997,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: beverage_preparation_appliance
+  product_subfamily: liquid_heater
+  route_anchor: household_core
+  route_family: household_appliance
 - id: microwave_oven
   label: Microwave oven
   aliases:
@@ -1966,6 +2062,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: microwave_oven
+  route_anchor: household_core
+  route_family: household_appliance
 - id: oven
   label: Oven
   aliases:
@@ -2050,6 +2150,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: oven
+  route_anchor: household_core
+  route_family: household_appliance
 - id: portable_grill
   label: Portable grill
   aliases:
@@ -2163,6 +2267,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: portable_grill
+  route_anchor: household_core
+  route_family: household_appliance
 - id: range_hood
   label: Range hood
   aliases:
@@ -2282,6 +2390,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: ventilation_extraction_appliance
+  product_subfamily: range_hood
+  route_anchor: household_core
+  route_family: household_appliance
 - id: refrigerator_freezer
   label: Refrigerator / freezer
   aliases:
@@ -2376,6 +2488,9 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: cold_storage_appliance
+  product_subfamily: refrigerator_freezer
+  route_anchor: household_core
 - id: rice_cooker
   label: Rice cooker
   aliases:
@@ -2456,6 +2571,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: beverage_preparation_appliance
+  product_subfamily: rice_cooker
+  route_anchor: household_core
+  route_family: household_appliance
 - id: smart_food_scale
   label: Smart kitchen food scale
   product_family: smart_kitchen_tool
@@ -2573,6 +2692,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Connected kitchen food/nutrition/baking/coffee scales. Distinct from body weight/composition scales.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_food_thermometer
   label: Smart food / cooking thermometer
   product_family: smart_kitchen_tool
@@ -2695,9 +2816,11 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Connected cooking thermometers for food/BBQ/oven use. Excludes clinical body thermometers.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: sous_vide_cooker
   label: Sous vide cooker / immersion circulator
-  product_family: cooking_appliance
+  product_family: countertop_cooking_appliance
   product_subfamily: sous_vide_cooker
   aliases:
   - sous vide cooker
@@ -2793,8 +2916,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Immersion circulators and sous vide cookers. Classified under EN 60335-2-14 (liquid heating appliances)
-    due to motorized heating in water.
+  matching_notes: Immersion circulators and sous vide cookers. Classified under EN 60335-2-14 (liquid heating appliances) due to motorized heating in water.
+  route_anchor: household_connected
+  route_family: household_appliance
 - id: spin_extractor
   label: Spin extractor
   aliases:
@@ -2856,6 +2980,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: food_preparation_appliance
+  product_subfamily: spin_extractor
+  route_anchor: household_core
+  route_family: household_appliance
 - id: toaster
   label: Toaster
   aliases:
@@ -2939,6 +3067,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: toaster
+  route_anchor: household_core
+  route_family: household_appliance
 - id: vending_machine
   label: Vending machine
   aliases:
@@ -3002,6 +3134,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: commercial_food_service_appliance
+  product_subfamily: vending_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: warming_plate
   label: Warming plate
   aliases:
@@ -3064,3 +3200,7 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: warming_plate
+  route_anchor: household_core
+  route_family: household_appliance

@@ -60,6 +60,7 @@ products:
   likely_standards:
   - EN 60335-2-7
   - EN 60335-2-11
+  route_anchor: household_core
 - id: multicooker
   label: Multicooker / programmable cooker
   product_family: countertop_cooking_appliance
@@ -114,6 +115,7 @@ products:
   likely_standards:
   - EN 60335-1
   - Household cooking appliance part-2 review
+  route_anchor: household_core
 - id: slow_cooker
   label: Slow cooker / crock pot
   product_family: countertop_cooking_appliance
@@ -161,6 +163,7 @@ products:
   likely_standards:
   - EN 60335-1
   - Household cooking appliance part-2 review
+  route_anchor: household_core
 - id: bread_maker
   label: Bread maker / bread machine
   product_family: countertop_cooking_appliance
@@ -210,9 +213,10 @@ products:
   likely_standards:
   - EN 60335-1
   - Household cooking appliance part-2 review
+  route_anchor: household_core
 - id: air_cooler
   label: Air cooler / evaporative cooler
-  product_family: comfort_air_appliance
+  product_family: climate_conditioning_appliance
   product_subfamily: air_cooler
   route_family: household_appliance
   primary_standard_code: EN 60335-2-80
@@ -257,6 +261,7 @@ products:
   - water_contact
   likely_standards:
   - EN 60335-2-80
+  route_anchor: household_core
 - id: water_dispenser
   label: Water dispenser / cooler
   product_family: water_dispensing_appliance
@@ -311,6 +316,7 @@ products:
   likely_standards:
   - EN 60335-1
   - Water dispenser / cooler review
+  route_anchor: household_core
 - id: bottle_sterilizer
   label: Bottle sterilizer
   product_family: childcare_hygiene_appliance
@@ -354,3 +360,4 @@ products:
   likely_standards:
   - EN 60335-1
   - Sterilization / hygiene appliance review
+  route_anchor: household_core

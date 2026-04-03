@@ -1,0 +1,691 @@
+families:
+- id: access_control_device
+  label: Access Control Device
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_core
+- id: agricultural_appliance
+  label: Agricultural Appliance
+  default_genres:
+  - commercial_appliance
+  - household_appliance
+  - hvac_environmental_appliance
+  allowed_route_anchors:
+  - specialty_electrical_boundary
+  boundary_tendencies:
+  - agricultural_special_use_boundary
+  - industrial_installation_boundary
+- id: air_treatment_cleaner
+  label: Air Treatment Cleaner
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  allowed_route_anchors:
+  - household_core
+- id: audio_wearable
+  label: Audio Wearable
+  default_genres:
+  - av_ict_device
+  - wearable_device
+  allowed_route_anchors:
+  - avict_wearable
+- id: av_ict_device
+  label: AV/ICT device
+  default_genres:
+  - av_ict_device
+  - smart_home_iot
+  - wearable_device
+  - xr_immersive
+  allowed_route_anchors:
+  - avict_connected
+  - avict_core
+  - avict_wearable
+  required_traits:
+  - av_ict
+- id: baby_safety_device
+  label: Baby Safety Device
+  default_genres:
+  - security_access_iot
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_wearable
+- id: beverage_preparation_appliance
+  label: Beverage Preparation Appliance
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - kitchen_food_appliance
+  allowed_route_anchors:
+  - household_core
+- id: building_access_device
+  label: Building Access Device
+  default_genres:
+  - building_access_drive
+  allowed_route_anchors:
+  - building_access
+- id: building_hardware_lock
+  label: Building Hardware Lock
+  default_genres:
+  - building_hardware_lock
+  - security_access_iot
+  allowed_route_anchors:
+  - building_access
+- id: building_sensor
+  label: Building Sensor
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_core
+- id: childcare_hygiene_appliance
+  label: Childcare Hygiene Appliance
+  default_genres:
+  - household_appliance
+  allowed_route_anchors:
+  - household_core
+- id: childcare_monitoring
+  label: Childcare Monitoring
+  default_genres:
+  - security_access_iot
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+- id: climate_conditioning_appliance
+  label: Climate Conditioning Appliance
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  allowed_route_anchors:
+  - household_core
+  compatibility_aliases:
+  - comfort_air_appliance
+  - indoor_air_mover
+- id: cold_storage_appliance
+  label: Cold Storage Appliance
+  default_genres:
+  - commercial_appliance
+  - household_appliance
+  - hvac_environmental_appliance
+  - kitchen_food_appliance
+  allowed_route_anchors:
+  - household_core
+- id: commercial_food_service_appliance
+  label: Commercial Food Service Appliance
+  default_genres:
+  - commercial_appliance
+  - household_appliance
+  - hvac_environmental_appliance
+  - kitchen_food_appliance
+  allowed_route_anchors:
+  - household_core
+- id: conferencing_device
+  label: Conferencing Device
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_core
+- id: connected_child_product
+  label: Connected Child Product
+  default_genres:
+  - connected_toy_childcare
+  - smart_home_iot
+  allowed_route_anchors:
+  - toy
+- id: countertop_cooking_appliance
+  label: Countertop Cooking Appliance
+  default_genres:
+  - cooking_food_appliance
+  - garden_outdoor_power
+  - household_appliance
+  - hvac_environmental_appliance
+  - kitchen_food_appliance
+  allowed_route_anchors:
+  - household_connected
+  - household_core
+  - machinery_tool
+  compatibility_aliases:
+  - cooking_appliance
+- id: creator_office_device
+  label: Creator Office Device
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_core
+- id: display_device
+  label: Display Device
+  default_genres:
+  - av_ict_device
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+  - avict_core
+  required_traits:
+  - display
+- id: drone_device
+  label: Drone Device
+  default_genres:
+  - drone_uas
+  allowed_route_anchors:
+  - drone_uas_boundary
+  required_traits:
+  - radio
+- id: energy_power_system
+  label: Energy Power System
+  default_genres:
+  - av_ict_device
+  - energy_power_system
+  - portable_energy
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_core
+  - power_system_boundary
+  boundary_tendencies:
+  - energy_system_boundary
+  - industrial_installation_boundary
+- id: ev_charging_equipment
+  label: EV Charging Equipment
+  default_genres:
+  - ev_charging_equipment
+  allowed_route_anchors:
+  - ev_charging
+  - ev_connector_accessory
+  required_traits:
+  - ev_charging
+- id: fitness_training_equipment
+  label: Fitness Training Equipment
+  default_genres:
+  - household_appliance
+  allowed_route_anchors:
+  - household_connected
+- id: food_preparation_appliance
+  label: Food Preparation Appliance
+  default_genres:
+  - cleaning_laundry_appliance
+  - household_appliance
+  - kitchen_food_appliance
+  allowed_route_anchors:
+  - household_core
+- id: garden_automation
+  label: Garden Automation
+  default_genres:
+  - garden_outdoor_appliance
+  - household_appliance
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+  - lighting_connected
+- id: garden_power_equipment
+  label: Garden Power Equipment
+  default_genres:
+  - garden_outdoor_power
+  - household_appliance
+  - hvac_environmental_appliance
+  allowed_route_anchors:
+  - household_core
+  - machinery_tool
+- id: health_monitor
+  label: Health Monitor
+  default_genres:
+  - av_ict_device
+  - smart_home_iot
+  - wearable_device
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_connected
+  - avict_wearable
+- id: hearing_device
+  label: Hearing Device
+  default_genres:
+  - av_ict_device
+  - wearable_device
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_wearable
+- id: home_entertainment_device
+  label: Home Entertainment Device
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_connected
+  - avict_core
+- id: household_appliance
+  label: Household Appliance
+  default_genres:
+  - household_appliance
+  allowed_route_anchors:
+  - building_access
+  - household_core
+- id: hvac_control
+  label: HVAC Control
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - smart_home_iot
+  allowed_route_anchors:
+  - hvac_control
+  required_traits:
+  - app_control
+- id: immersive_device
+  label: Immersive Device
+  default_genres:
+  - av_ict_device
+  - wearable_device
+  - xr_immersive
+  allowed_route_anchors:
+  - avict_wearable
+- id: industrial_data_capture
+  label: Industrial Data Capture
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_connected
+- id: industrial_power_equipment
+  label: Industrial Power Equipment
+  default_genres:
+  - commercial_appliance
+  - electric_power_tool
+  allowed_route_anchors:
+  - household_core
+  - machinery_tool
+  boundary_tendencies:
+  - industrial_installation_boundary
+  - machinery_boundary
+- id: laundry_combo_appliance
+  label: Laundry Combo Appliance
+  default_genres:
+  - cleaning_laundry_appliance
+  - household_appliance
+  - hvac_environmental_appliance
+  allowed_route_anchors:
+  - household_core
+- id: laundry_textile_appliance
+  label: Laundry Textile Appliance
+  default_genres:
+  - cleaning_laundry_appliance
+  - household_appliance
+  - hvac_environmental_appliance
+  allowed_route_anchors:
+  - household_core
+  compatibility_aliases:
+  - textile_care_appliance
+- id: life_safety_alarm
+  label: Life Safety Alarm
+  default_genres:
+  - life_safety_alarm
+  allowed_route_anchors:
+  - life_safety_alarm
+  required_traits:
+  - safety_function
+- id: lighting_accessory_device
+  label: Lighting Accessory Device
+  default_genres:
+  - av_ict_device
+  - lighting_device
+  allowed_route_anchors:
+  - lighting_core
+  boundary_tendencies:
+  - lighting_boundary
+- id: maternity_care
+  label: Maternity Care
+  default_genres:
+  - personal_care_appliance
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_wearable
+- id: micromobility_device
+  label: Micromobility Device
+  default_genres:
+  - micromobility
+  allowed_route_anchors:
+  - micromobility_boundary
+  compatibility_aliases:
+  - electric_bicycle
+- id: networking_device
+  label: Networking Device
+  default_genres:
+  - av_ict_device
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+  - avict_core
+  required_traits:
+  - av_ict
+  - radio
+  compatibility_aliases:
+  - network_power_device
+  - wifi_networking
+- id: office_avict_peripheral
+  label: Office AV/ICT peripheral
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_core
+- id: office_imaging
+  label: Office Imaging
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_core
+- id: optical_accessory_device
+  label: Optical Accessory Device
+  default_genres:
+  - av_ict_device
+  - lighting_device
+  allowed_route_anchors:
+  - lighting_core
+- id: optical_beauty_device
+  label: Optical Beauty Device
+  default_genres:
+  - lighting_device
+  - personal_care_appliance
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - lighting_core
+  boundary_tendencies:
+  - body_treatment_boundary
+  - uv_irradiation_boundary
+- id: optical_sanitizing_device
+  label: Optical Sanitizing Device
+  default_genres:
+  - lighting_device
+  allowed_route_anchors:
+  - lighting_core
+  boundary_tendencies:
+  - uv_irradiation_boundary
+- id: personal_care_appliance
+  label: Personal Care Appliance
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - household_core
+  - lighting_core
+  boundary_tendencies:
+  - body_treatment_boundary
+  - uv_irradiation_boundary
+  compatibility_aliases:
+  - oral_hygiene_device
+- id: personal_computing_device
+  label: Personal Computing Device
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_connected
+  - avict_core
+  boundary_tendencies:
+  - office_monitor_boundary
+  compatibility_aliases:
+  - workstation_computing_device
+- id: personal_heating_appliance
+  label: Personal Heating Appliance
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - personal_care_appliance
+  allowed_route_anchors:
+  - household_core
+- id: pet_care_device
+  label: Pet Care Device
+  default_genres:
+  - household_appliance
+  - pet_tech
+  allowed_route_anchors:
+  - household_connected
+- id: pet_hygiene_appliance
+  label: Pet Hygiene Appliance
+  default_genres:
+  - household_appliance
+  - pet_tech
+  allowed_route_anchors:
+  - household_connected
+- id: pet_technology
+  label: Pet Technology
+  default_genres:
+  - kitchen_food_appliance
+  - pet_tech
+  - smart_home_iot
+  - wearable_device
+  allowed_route_anchors:
+  - avict_wearable
+  - household_connected
+- id: portable_heating_tool
+  label: Portable Heating Tool
+  default_genres:
+  - electric_power_tool
+  - household_appliance
+  allowed_route_anchors:
+  - household_core
+- id: portable_power_charger
+  label: Portable Power Charger
+  default_genres:
+  - av_ict_device
+  - portable_energy
+  allowed_route_anchors:
+  - avict_core
+  - household_core
+- id: portable_power_system
+  label: Portable Power System
+  default_genres:
+  - portable_energy
+  allowed_route_anchors:
+  - avict_core
+  compatibility_aliases:
+  - portable_energy_family
+- id: projector_device
+  label: Projector Device
+  default_genres:
+  - av_ict_device
+  allowed_route_anchors:
+  - avict_connected
+  - avict_core
+- id: respiratory_therapy
+  label: Respiratory Therapy
+  default_genres:
+  - household_appliance
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_wearable
+  - medical_wellness_boundary
+  boundary_tendencies:
+  - body_treatment_boundary
+  - possible_medical_boundary
+- id: security_recording
+  label: Security Recording
+  default_genres:
+  - av_ict_device
+  - security_access_iot
+  allowed_route_anchors:
+  - avict_core
+- id: smart_assistant_device
+  label: Smart Assistant Device
+  default_genres:
+  - av_ict_device
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+- id: smart_environment_sensor
+  label: Smart Environment Sensor
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - security_access_iot
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+  compatibility_aliases:
+  - environmental_monitor
+- id: smart_furniture
+  label: Smart Furniture
+  default_genres:
+  - household_appliance
+  - smart_home_iot
+  allowed_route_anchors:
+  - household_connected
+- id: smart_home_control_device
+  label: Smart Home Control Device
+  default_genres:
+  - security_access_iot
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+- id: smart_home_security
+  label: Smart home security
+  default_genres:
+  - building_access_drive
+  - pet_tech
+  - security_access_iot
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+  - building_access
+- id: smart_kitchen_tool
+  label: Smart Kitchen Tool
+  default_genres:
+  - cooking_food_appliance
+  - household_appliance
+  - smart_home_iot
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_connected
+- id: smart_lighting
+  label: Smart Lighting
+  default_genres:
+  - lighting_device
+  - smart_home_iot
+  allowed_route_anchors:
+  - lighting_connected
+  required_traits:
+  - lighting
+- id: smart_power_control
+  label: Smart Power Control
+  default_genres:
+  - av_ict_device
+  - smart_home_iot
+  allowed_route_anchors:
+  - avict_connected
+- id: specialty_electrical_device
+  label: Specialty Electrical Device
+  default_genres:
+  - commercial_appliance
+  allowed_route_anchors:
+  - specialty_electrical_boundary
+  boundary_tendencies:
+  - agricultural_special_use_boundary
+  - industrial_installation_boundary
+- id: sports_wearable
+  label: Sports Wearable
+  default_genres:
+  - av_ict_device
+  - wearable_device
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_wearable
+- id: surface_cleaning_appliance
+  label: Surface Cleaning Appliance
+  default_genres:
+  - cleaning_laundry_appliance
+  - commercial_appliance
+  - garden_outdoor_power
+  - household_appliance
+  allowed_route_anchors:
+  - household_core
+  - machinery_tool
+- id: ventilation_extraction_appliance
+  label: Ventilation Extraction Appliance
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - kitchen_food_appliance
+  allowed_route_anchors:
+  - household_core
+- id: washing_hygiene_appliance
+  label: Washing Hygiene Appliance
+  default_genres:
+  - cleaning_laundry_appliance
+  - commercial_appliance
+  - household_appliance
+  - hvac_environmental_appliance
+  - smart_home_iot
+  allowed_route_anchors:
+  - household_connected
+  - household_core
+- id: water_dispensing_appliance
+  label: Water Dispensing Appliance
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  - kitchen_food_appliance
+  allowed_route_anchors:
+  - household_core
+  boundary_tendencies:
+  - hygiene_boundary
+- id: water_handling_appliance
+  label: Water Handling Appliance
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  allowed_route_anchors:
+  - household_core
+- id: water_heating_appliance
+  label: Water Heating Appliance
+  default_genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  allowed_route_anchors:
+  - household_core
+- id: wearable_device_family
+  label: Wearable Device Family
+  default_genres:
+  - av_ict_device
+  - smart_home_iot
+  - wearable_device
+  allowed_route_anchors:
+  - avict_wearable
+  required_traits:
+  - body_worn_or_applied
+- id: wellness_electrostimulation
+  label: Wellness Electrostimulation
+  default_genres:
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - medical_wellness_boundary
+  boundary_tendencies:
+  - body_treatment_boundary
+  - medical_boundary
+  - possible_medical_boundary
+- id: wellness_light_device
+  label: Wellness Light Device
+  default_genres:
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - medical_wellness_boundary
+  boundary_tendencies:
+  - body_treatment_boundary
+  - possible_medical_boundary
+- id: wellness_massage
+  label: Wellness Massage
+  default_genres:
+  - personal_care_appliance
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_wearable
+- id: wellness_sanitizer
+  label: Wellness Sanitizer
+  default_genres:
+  - household_appliance
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - lighting_core
+  boundary_tendencies:
+  - body_treatment_boundary
+  - uv_irradiation_boundary
+- id: wellness_wearable
+  label: Wellness Wearable
+  default_genres:
+  - av_ict_device
+  - wearable_device
+  - wellness_borderline_medical
+  allowed_route_anchors:
+  - avict_wearable

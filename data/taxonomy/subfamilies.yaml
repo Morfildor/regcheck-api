@@ -1,0 +1,898 @@
+subfamilies:
+- id: 5g_home_gateway
+  family: networking_device
+  label: 5G home gateway / CPE
+- id: access_reader
+  family: access_control_device
+  label: Access reader / badge reader
+- id: action_camera
+  family: av_ict_device
+  label: Action camera
+- id: air_cleaner
+  family: air_treatment_cleaner
+  label: Air cleaner / purifier
+- id: air_compressor
+  family: industrial_power_equipment
+  label: Industrial / professional air compressor
+- id: air_cooler
+  family: climate_conditioning_appliance
+  label: Air cooler / evaporative cooler
+- id: air_fryer
+  family: countertop_cooking_appliance
+  label: Air fryer
+- id: air_purifier
+  family: air_treatment_cleaner
+  label: Air purifier
+- id: all_in_one_pc
+  family: personal_computing_device
+  label: All-in-one PC
+- id: aquarium_appliance
+  family: water_handling_appliance
+  label: Aquarium appliance
+- id: audio_glasses
+  family: av_ict_device
+  label: Audio glasses / smart audio eyewear
+- id: baby_monitor
+  family: smart_home_security
+  label: Video baby monitor
+- id: baby_monitor_smart
+  family: childcare_monitoring
+  label: Smart baby monitor
+- id: bain_marie
+  family: commercial_food_service_appliance
+  label: Bain-marie
+- id: barbecue_grill
+  family: countertop_cooking_appliance
+  label: Electric barbecue grill
+- id: battery_charger
+  family: portable_power_charger
+  label: Battery charger
+- id: battery_powered_oral_hygiene
+  family: personal_care_appliance
+  label: Battery-powered oral hygiene appliance
+- id: beauty_treatment_appliance
+  family: personal_care_appliance
+  label: Beauty treatment appliance
+- id: bench_saw
+  family: industrial_power_equipment
+  label: Bench saw / table saw
+- id: blender
+  family: food_preparation_appliance
+  label: Blender
+- id: bluetooth_speaker
+  family: home_entertainment_device
+  label: Portable Bluetooth speaker
+- id: bluetooth_tracker
+  family: av_ict_device
+  label: Bluetooth tracker
+- id: bottle_sterilizer
+  family: childcare_hygiene_appliance
+  label: Bottle sterilizer
+- id: bread_maker
+  family: countertop_cooking_appliance
+  label: Bread maker / bread machine
+- id: circulator
+  family: water_handling_appliance
+  label: Circulator
+- id: clock
+  family: household_appliance
+  label: Clock
+- id: coffee_grinder
+  family: beverage_preparation_appliance
+  label: Coffee grinder / coffee mill
+- id: coffee_machine
+  family: beverage_preparation_appliance
+  label: Coffee machine
+- id: commercial_cooking_appliance
+  family: commercial_food_service_appliance
+  label: Commercial cooking appliance
+- id: commercial_dishwasher
+  family: washing_hygiene_appliance
+  label: Commercial dishwasher
+- id: commercial_dispensing_appliance
+  family: commercial_food_service_appliance
+  label: Commercial dispensing appliance
+- id: commercial_floor_treatment_machine
+  family: surface_cleaning_appliance
+  label: Commercial floor treatment machine
+- id: commercial_fryer
+  family: commercial_food_service_appliance
+  label: Commercial fryer
+- id: commercial_hood
+  family: commercial_food_service_appliance
+  label: Commercial hood
+- id: commercial_kitchen_machine
+  family: commercial_food_service_appliance
+  label: Commercial kitchen machine
+- id: commercial_microwave
+  family: commercial_food_service_appliance
+  label: Commercial microwave oven
+- id: commercial_oven
+  family: commercial_food_service_appliance
+  label: Commercial oven
+- id: commercial_refrigerator
+  family: cold_storage_appliance
+  label: Commercial refrigerator
+- id: commercial_rinsing_sink
+  family: washing_hygiene_appliance
+  label: Commercial rinsing sink
+- id: commercial_spray_extraction_machine
+  family: surface_cleaning_appliance
+  label: Commercial spray extraction machine
+- id: commercial_washing_machine
+  family: washing_hygiene_appliance
+  label: Commercial washing machine
+- id: conference_speakerphone
+  family: conferencing_device
+  label: Conference speakerphone
+- id: connected_breast_pump
+  family: maternity_care
+  label: Connected / smart electric breast pump
+- id: consumer_drone
+  family: drone_device
+  label: Consumer camera drone
+- id: continuous_glucose_monitor
+  family: health_monitor
+  label: Continuous glucose monitor (CGM)
+- id: cooking_range
+  family: countertop_cooking_appliance
+  label: Cooking range
+- id: cpap_device
+  family: respiratory_therapy
+  label: CPAP / sleep apnea therapy device
+- id: deep_fryer
+  family: countertop_cooking_appliance
+  label: Deep fryer
+- id: desktop_pc
+  family: personal_computing_device
+  label: Desktop PC
+- id: digital_audio_player
+  family: home_entertainment_device
+  label: Digital audio player / DAC
+- id: digital_photo_frame
+  family: display_device
+  label: Smart digital photo frame
+- id: digital_piano
+  family: home_entertainment_device
+  label: Digital piano / electronic keyboard
+- id: digital_stethoscope
+  family: health_monitor
+  label: Digital / electronic stethoscope
+- id: dishwasher
+  family: washing_hygiene_appliance
+  label: Dishwasher
+- id: docking_station
+  family: office_avict_peripheral
+  label: Docking station / USB-C hub
+- id: document_camera
+  family: creator_office_device
+  label: Document camera / visualizer
+- id: document_scanner
+  family: office_imaging
+  label: Document scanner
+- id: drone_controller
+  family: drone_device
+  label: Drone remote controller
+- id: e_reader
+  family: personal_computing_device
+  label: E-reader
+- id: electric_bicycle
+  family: micromobility_device
+  label: Electric bicycle / e-bike
+- id: electric_blanket
+  family: personal_heating_appliance
+  label: Electric blanket
+- id: electric_cargo_bike
+  family: micromobility_device
+  label: Electric cargo bike / longtail e-bike
+- id: electric_fish_stunner
+  family: specialty_electrical_device
+  label: Electric fishing machine / fish stunner
+- id: electric_frying_pan
+  family: countertop_cooking_appliance
+  label: Electric frying pan
+- id: electric_garden_tool
+  family: garden_power_equipment
+  label: Electric garden tool
+- id: electric_guitar
+  family: home_entertainment_device
+  label: Electric guitar / instrument amplifier ecosystem
+- id: electric_iron
+  family: laundry_textile_appliance
+  label: Electric iron
+- id: electric_kettle
+  family: beverage_preparation_appliance
+  label: Electric kettle
+- id: electric_pump
+  family: water_handling_appliance
+  label: Electric pump
+- id: electric_scooter
+  family: micromobility_device
+  label: Electric scooter
+- id: electric_skateboard
+  family: micromobility_device
+  label: Electric skateboard
+- id: electric_unicycle
+  family: micromobility_device
+  label: Electric unicycle
+- id: electrolyser_washing_machine
+  family: washing_hygiene_appliance
+  label: Detergent-free electrolyser washing machine
+- id: elliptical_trainer
+  family: fitness_training_equipment
+  label: Elliptical trainer / cross trainer
+- id: emergency_light
+  family: lighting_accessory_device
+  label: Emergency light
+- id: ems_tens_device
+  family: wellness_electrostimulation
+  label: EMS / TENS wellness device
+- id: ev_charger_home
+  family: ev_charging_equipment
+  label: Home EV charger (EVSE)
+- id: ev_connector_accessory
+  family: ev_charging_equipment
+  label: EV charging connector / tethered cable accessory
+- id: exercise_bike
+  family: fitness_training_equipment
+  label: Exercise bike / stationary bike
+- id: external_power_supply
+  family: portable_power_charger
+  label: External power supply / AC-DC adapter
+- id: external_storage
+  family: office_avict_peripheral
+  label: External storage (SSD / HDD)
+- id: fabric_steamer
+  family: laundry_textile_appliance
+  label: Fabric steamer
+- id: fan
+  family: climate_conditioning_appliance
+  label: Fan
+- id: fan_heater
+  family: climate_conditioning_appliance
+  label: Fan heater
+- id: fence_energizer
+  family: specialty_electrical_device
+  label: Electric fence energizer
+- id: floor_treatment_machine
+  family: surface_cleaning_appliance
+  label: Floor treatment machine
+- id: food_processor
+  family: food_preparation_appliance
+  label: Food processor
+- id: food_waste_disposer
+  family: water_handling_appliance
+  label: Food waste disposer
+- id: foot_warmer
+  family: personal_heating_appliance
+  label: Foot warmer
+- id: fuel_burning_electrical_appliance
+  family: household_appliance
+  label: Fuel-burning appliance with electrical connections
+- id: game_console
+  family: home_entertainment_device
+  label: Game console
+- id: garage_door_drive
+  family: building_access_device
+  label: Garage door drive
+- id: garment_steamer
+  family: laundry_textile_appliance
+  label: Garment steamer / clothes steamer
+- id: gate_door_window_drive
+  family: building_access_device
+  label: Drive for gates, doors or windows
+- id: generic_power_tool
+  family: industrial_power_equipment
+  label: Industrial / professional power tool
+- id: germicidal_lamp
+  family: optical_sanitizing_device
+  label: Germicidal lamp
+- id: gps_pet_tracker
+  family: pet_technology
+  label: GPS pet tracker
+- id: grass_shear
+  family: garden_power_equipment
+  label: Grass shear
+- id: grass_trimmer
+  family: garden_power_equipment
+  label: Grass trimmer / lawn edge trimmer
+- id: hair_clipper
+  family: personal_care_appliance
+  label: Hair clipper
+- id: hair_curler
+  family: personal_care_appliance
+  label: Hair curler / curling iron
+- id: heart_rate_monitor
+  family: health_monitor
+  label: Heart rate monitor / ECG device
+- id: heat_gun
+  family: portable_heating_tool
+  label: Heat gun
+- id: heat_pump
+  family: climate_conditioning_appliance
+  label: Heat pump / air conditioner
+- id: heated_carpet
+  family: personal_heating_appliance
+  label: Heated carpet / underfloor heating mat
+- id: heated_gully
+  family: garden_power_equipment
+  label: Heated gully / roof drainage heater
+- id: heating_lamp
+  family: climate_conditioning_appliance
+  label: Heating lamp
+- id: heating_pad
+  family: personal_heating_appliance
+  label: Heating pad / heating blanket
+- id: high_pressure_cleaner
+  family: surface_cleaning_appliance
+  label: High-pressure cleaner
+- id: hob
+  family: countertop_cooking_appliance
+  label: Hob / cooktop
+- id: home_battery_system
+  family: energy_power_system
+  label: Home battery energy storage system
+- id: home_cinema_system
+  family: home_entertainment_device
+  label: Home cinema system
+- id: home_energy_monitor
+  family: energy_power_system
+  label: Home energy monitor
+- id: home_projector
+  family: projector_device
+  label: Home projector / smart projector
+- id: hot_cupboard
+  family: commercial_food_service_appliance
+  label: Hot cupboard
+- id: hoverboard
+  family: micromobility_device
+  label: Hoverboard / self-balancing scooter
+- id: humidifier
+  family: climate_conditioning_appliance
+  label: Humidifier
+- id: hvac_humidifier
+  family: climate_conditioning_appliance
+  label: Humidifier for HVAC systems
+- id: illuminated_mirror
+  family: lighting_accessory_device
+  label: Illuminated mirror
+- id: immersion_heater
+  family: water_heating_appliance
+  label: Immersion heater
+- id: impact_driver
+  family: industrial_power_equipment
+  label: Impact driver
+- id: incubator
+  family: climate_conditioning_appliance
+  label: Incubator
+- id: industrial_charger
+  family: portable_power_charger
+  label: Industrial battery charger
+- id: industrial_handheld_scanner
+  family: industrial_data_capture
+  label: Industrial handheld scanner
+- id: insect_killer
+  family: av_ict_device
+  label: Insect killer
+- id: iot_gateway
+  family: networking_device
+  label: IoT gateway / hub
+- id: ip_camera
+  family: smart_home_security
+  label: IP camera / smart security camera
+- id: ip_intercom
+  family: smart_home_security
+  label: IP video intercom
+- id: ipl_hair_removal_device
+  family: optical_beauty_device
+  label: IPL hair-removal device
+- id: ir_illuminator
+  family: optical_accessory_device
+  label: IR illuminator
+- id: ironer
+  family: laundry_textile_appliance
+  label: Ironer
+- id: juicer
+  family: food_preparation_appliance
+  label: Juicer
+- id: kitchen_extractor_fan
+  family: ventilation_extraction_appliance
+  label: Kitchen extractor fan
+- id: kitchen_machine
+  family: food_preparation_appliance
+  label: Kitchen machine
+- id: kvm_switch
+  family: office_avict_peripheral
+  label: KVM switch
+- id: laptop
+  family: personal_computing_device
+  label: Laptop
+- id: lawn_mower
+  family: garden_power_equipment
+  label: Electric lawn mower
+- id: leak_detector
+  family: building_sensor
+  label: Leak detector / flood sensor
+- id: led_shoes
+  family: wearable_device_family
+  label: LED shoes / light-up footwear
+- id: liquid_heater
+  family: beverage_preparation_appliance
+  label: Liquid heater
+- id: livestock_heater
+  family: agricultural_appliance
+  label: Livestock heating appliance
+- id: lora_gateway
+  family: networking_device
+  label: LoRa / LoRaWAN gateway
+- id: massage_appliance
+  family: personal_care_appliance
+  label: Massage appliance
+- id: massage_gun
+  family: wellness_massage
+  label: Massage gun / percussion massager
+- id: mesh_wifi_system
+  family: networking_device
+  label: Mesh Wi-Fi system (node)
+- id: microwave_oven
+  family: countertop_cooking_appliance
+  label: Microwave oven
+- id: milking_machine
+  family: agricultural_appliance
+  label: Milking machine
+- id: modem
+  family: networking_device
+  label: Modem
+- id: monitor
+  family: display_device
+  label: Monitor
+- id: motor_compressor
+  family: household_appliance
+  label: Motor-compressor
+- id: multicooker
+  family: countertop_cooking_appliance
+  label: Multicooker / programmable cooker
+- id: network_switch
+  family: networking_device
+  label: Network switch
+- id: nvr_dvr_recorder
+  family: security_recording
+  label: NVR / DVR recorder
+- id: occupancy_sensor
+  family: building_sensor
+  label: Occupancy sensor / presence sensor
+- id: office_printer
+  family: office_imaging
+  label: Office printer / label printer
+- id: oral_hygiene_appliance
+  family: personal_care_appliance
+  label: Oral hygiene appliance
+- id: outdoor_barbecue
+  family: countertop_cooking_appliance
+  label: Outdoor electric barbecue
+- id: oven
+  family: countertop_cooking_appliance
+  label: Oven
+- id: patio_heater
+  family: garden_power_equipment
+  label: Patio heater
+- id: pen_3d
+  family: creator_office_device
+  label: 3D printing pen
+- id: pet_camera
+  family: smart_home_security
+  label: Pet camera / pet monitor
+- id: poe_injector
+  family: networking_device
+  label: PoE injector
+- id: portable_air_conditioner
+  family: climate_conditioning_appliance
+  label: Portable air conditioner / portable AC
+- id: portable_ev_charger
+  family: ev_charging_equipment
+  label: Portable EV charger / mode 2 EVSE
+- id: portable_grill
+  family: countertop_cooking_appliance
+  label: Portable grill
+- id: portable_immersion_heater
+  family: water_heating_appliance
+  label: Portable immersion heater
+- id: portable_power_station
+  family: portable_power_system
+  label: Portable power station
+- id: power_bank
+  family: portable_power_system
+  label: Power bank
+- id: power_drill
+  family: industrial_power_equipment
+  label: Cordless power drill / drill driver
+- id: power_grinder
+  family: industrial_power_equipment
+  label: Angle grinder
+- id: power_sander
+  family: industrial_power_equipment
+  label: Orbital sander
+- id: power_saw
+  family: industrial_power_equipment
+  label: Electric / portable power saw
+- id: power_screwdriver
+  family: industrial_power_equipment
+  label: Cordless screwdriver / electric screwdriver
+- id: presentation_clicker
+  family: office_avict_peripheral
+  label: Presentation clicker / presenter remote
+- id: printer_3d
+  family: creator_office_device
+  label: 3D printer
+- id: projector
+  family: projector_device
+  label: Projector
+- id: pulse_oximeter
+  family: health_monitor
+  label: Pulse oximeter / SpO2 monitor
+- id: range_hood
+  family: ventilation_extraction_appliance
+  label: Range hood
+- id: rc_boat
+  family: connected_child_product
+  label: RC boat / remote-controlled toy boat
+- id: rc_car
+  family: connected_child_product
+  label: RC car / remote-controlled toy vehicle
+- id: red_light_therapy_device
+  family: wellness_light_device
+  label: Red light therapy device
+- id: refrigerator_freezer
+  family: cold_storage_appliance
+  label: Refrigerator / freezer
+- id: rice_cooker
+  family: beverage_preparation_appliance
+  label: Rice cooker
+- id: ring_light
+  family: lighting_accessory_device
+  label: Ring light
+- id: robot_mop
+  family: surface_cleaning_appliance
+  label: Robot mop / robotic floor mop
+- id: robot_vacuum
+  family: surface_cleaning_appliance
+  label: Robot vacuum cleaner
+- id: robotic_lawn_mower
+  family: garden_power_equipment
+  label: Robotic lawn mower
+- id: rolling_shutter_drive
+  family: building_access_device
+  label: Drive for rolling shutters, awnings or blinds
+- id: room_dehumidifier
+  family: climate_conditioning_appliance
+  label: Dehumidifier
+- id: room_heater
+  family: climate_conditioning_appliance
+  label: Room heater
+- id: room_heating_appliance
+  family: climate_conditioning_appliance
+  label: Room heating appliance
+- id: rotary_hammer
+  family: industrial_power_equipment
+  label: Rotary hammer / SDS drill
+- id: rotary_tool
+  family: industrial_power_equipment
+  label: Rotary tool
+- id: router
+  family: networking_device
+  label: Router
+- id: satellite_terminal
+  family: networking_device
+  label: Satellite internet terminal
+- id: sauna_heater
+  family: climate_conditioning_appliance
+  label: Sauna heater
+- id: scarifier_aerator
+  family: garden_power_equipment
+  label: Lawn scarifier / aerator
+- id: security_hub
+  family: smart_home_security
+  label: Smart security alarm hub
+- id: server
+  family: av_ict_device
+  label: Server / NAS
+- id: sewing_machine
+  family: laundry_textile_appliance
+  label: Sewing machine
+- id: shaver
+  family: personal_care_appliance
+  label: Electric shaver
+- id: shower_cabinet
+  family: washing_hygiene_appliance
+  label: Multifunctional shower cabinet
+- id: skin_hair_care_appliance
+  family: personal_care_appliance
+  label: Skin or hair care appliance
+- id: sleep_tracker
+  family: wearable_device_family
+  label: Sleep tracker hub / smart sleep device
+- id: slow_cooker
+  family: countertop_cooking_appliance
+  label: Slow cooker / crock pot
+- id: smart_air_quality_monitor
+  family: smart_environment_sensor
+  label: Smart indoor air quality monitor
+- id: smart_baby_monitor_breathing
+  family: baby_safety_device
+  label: Baby breathing / movement monitor
+- id: smart_blood_pressure_monitor
+  family: health_monitor
+  label: Smart blood pressure monitor
+- id: smart_button_remote
+  family: smart_home_control_device
+  label: Smart button / voice remote
+- id: smart_cycling_computer
+  family: sports_wearable
+  label: Smart cycling computer / GPS bike head unit
+- id: smart_desk_lamp
+  family: smart_lighting
+  label: Smart desk lamp / connected task light
+- id: smart_display
+  family: smart_assistant_device
+  label: Smart display
+- id: smart_doorbell
+  family: smart_home_security
+  label: Smart video doorbell
+- id: smart_fertility_tracker
+  family: health_monitor
+  label: Smart fertility tracker / BBT monitor
+- id: smart_food_scale
+  family: smart_kitchen_tool
+  label: Smart kitchen food scale
+- id: smart_food_thermometer
+  family: smart_kitchen_tool
+  label: Smart food / cooking thermometer
+- id: smart_glucose_meter
+  family: health_monitor
+  label: Smart blood glucose meter / connected glucometer
+- id: smart_hearing_aid
+  family: hearing_device
+  label: Smart hearing aid / OTC hearing amplifier
+- id: smart_home_panel
+  family: smart_home_control_device
+  label: Smart home wall panel / controller
+- id: smart_indoor_garden
+  family: garden_automation
+  label: Smart indoor garden / hydroponic grow system
+- id: smart_inhaler
+  family: respiratory_therapy
+  label: Smart inhaler / connected nebulizer
+- id: smart_insole
+  family: sports_wearable
+  label: Smart shoe insole / gait analysis insole
+- id: smart_irrigation_controller
+  family: garden_automation
+  label: Smart garden irrigation / sprinkler controller
+- id: smart_jump_rope
+  family: sports_wearable
+  label: Smart jump rope
+- id: smart_led_bulb
+  family: smart_lighting
+  label: Smart LED bulb / connected light source
+- id: smart_light_controller
+  family: smart_power_control
+  label: Smart lighting controller / bridge
+- id: smart_litter_box
+  family: pet_hygiene_appliance
+  label: Smart litter box
+- id: smart_lock
+  family: building_hardware_lock
+  label: Smart lock
+- id: smart_meter_display
+  family: energy_power_system
+  label: Smart meter in-home display (IHD)
+- id: smart_meter_gateway
+  family: energy_power_system
+  label: Smart meter gateway
+- id: smart_mirror
+  family: av_ict_device
+  label: Smart mirror / interactive mirror
+- id: smart_pet_feeder
+  family: pet_technology
+  label: Smart pet feeder
+- id: smart_pet_fountain
+  family: pet_care_device
+  label: Smart / automatic pet water fountain
+- id: smart_plug
+  family: smart_power_control
+  label: Smart plug / smart outlet
+- id: smart_posture_corrector
+  family: wellness_wearable
+  label: Smart posture corrector / wearable posture trainer
+- id: smart_power_strip
+  family: smart_power_control
+  label: Smart power strip / surge protector
+- id: smart_radiator_valve
+  family: hvac_control
+  label: Smart thermostatic radiator valve (TRV)
+- id: smart_relay
+  family: smart_power_control
+  label: Smart relay / connected relay module
+- id: smart_ring
+  family: wearable_device_family
+  label: Smart ring
+- id: smart_scale
+  family: health_monitor
+  label: Smart body scale / composition monitor
+- id: smart_security_camera
+  family: smart_home_security
+  label: Smart security camera
+- id: smart_sensor_node
+  family: smart_environment_sensor
+  label: Smart home sensor (environmental)
+- id: smart_smoke_co_alarm
+  family: life_safety_alarm
+  label: Smart smoke / CO alarm
+- id: smart_speaker
+  family: smart_assistant_device
+  label: Smart speaker
+- id: smart_standing_desk
+  family: smart_furniture
+  label: Smart motorized standing desk / sit-stand desk
+- id: smart_switch
+  family: smart_power_control
+  label: Smart switch / connected wall switch
+- id: smart_thermometer
+  family: health_monitor
+  label: Smart / connected body thermometer
+- id: smart_thermostat
+  family: hvac_control
+  label: Smart thermostat
+- id: smart_toilet
+  family: washing_hygiene_appliance
+  label: Electric toilet / smart toilet
+- id: smart_toy
+  family: connected_child_product
+  label: Smart connected toy
+- id: smart_treadmill
+  family: fitness_training_equipment
+  label: Treadmill / smart treadmill
+- id: smart_tv
+  family: display_device
+  label: Television / smart TV
+- id: smart_water_bottle
+  family: smart_kitchen_tool
+  label: Smart water bottle / hydration tracker
+- id: smartwatch
+  family: wearable_device_family
+  label: Smartwatch
+- id: smartwatch_fitness_tracker
+  family: av_ict_device
+  label: Smartwatch / fitness tracker
+- id: smoke_co_alarm
+  family: life_safety_alarm
+  label: Smoke / CO alarm
+- id: soil_moisture_sensor
+  family: smart_environment_sensor
+  label: Soil moisture sensor / plant monitor
+- id: solar_charge_controller
+  family: energy_power_system
+  label: Solar charge controller
+- id: solar_inverter_gateway
+  family: energy_power_system
+  label: Home solar inverter / energy gateway
+- id: solar_panel_module
+  family: energy_power_system
+  label: Solar panel / PV module
+- id: soundbar
+  family: home_entertainment_device
+  label: Soundbar
+- id: sous_vide_cooker
+  family: countertop_cooking_appliance
+  label: Sous vide cooker / immersion circulator
+- id: spin_extractor
+  family: food_preparation_appliance
+  label: Spin extractor
+- id: spray_extraction_machine
+  family: surface_cleaning_appliance
+  label: Spray extraction machine
+- id: steam_cleaner
+  family: surface_cleaning_appliance
+  label: Steam cleaner / steam mop
+- id: storage_water_heater
+  family: water_heating_appliance
+  label: Storage water heater
+- id: streaming_device
+  family: home_entertainment_device
+  label: Streaming device / set-top box
+- id: tablet
+  family: personal_computing_device
+  label: Tablet computer
+- id: toaster
+  family: countertop_cooking_appliance
+  label: Toaster
+- id: travel_adapter_charger
+  family: portable_power_charger
+  label: Travel adapter with USB charging
+- id: true_wireless_earbuds
+  family: audio_wearable
+  label: True wireless earbuds (TWS)
+- id: tumble_dryer
+  family: laundry_textile_appliance
+  label: Tumble dryer
+- id: ultraviolet_appliance
+  family: personal_care_appliance
+  label: Ultraviolet appliance
+- id: ups
+  family: energy_power_system
+  label: UPS / battery backup unit
+- id: usb_charging_hub
+  family: portable_power_charger
+  label: USB charging hub / PD charger
+- id: usb_hub
+  family: office_avict_peripheral
+  label: USB hub
+- id: usb_wall_charger
+  family: portable_power_charger
+  label: USB wall charger / USB-C power adapter
+- id: uv_c_sanitizer
+  family: wellness_sanitizer
+  label: UV-C sanitizer / disinfection device
+- id: uv_nail_lamp
+  family: optical_beauty_device
+  label: UV nail lamp
+- id: uv_sanitizing_box
+  family: optical_sanitizing_device
+  label: UV sanitizing box
+- id: vacuum_cleaner
+  family: surface_cleaning_appliance
+  label: Vacuum cleaner
+- id: vaporizer
+  family: climate_conditioning_appliance
+  label: Vaporizer
+- id: vending_machine
+  family: commercial_food_service_appliance
+  label: Vending machine
+- id: video_doorbell
+  family: smart_home_security
+  label: Video doorbell
+- id: voip_dect_phone
+  family: home_entertainment_device
+  label: VoIP / DECT phone
+- id: vr_ar_headset
+  family: av_ict_device
+  label: VR / AR headset
+- id: vr_headset
+  family: immersive_device
+  label: VR / XR headset
+- id: warming_plate
+  family: countertop_cooking_appliance
+  label: Warming plate
+- id: washer_dryer
+  family: laundry_combo_appliance
+  label: Washer-dryer
+- id: washing_machine
+  family: washing_hygiene_appliance
+  label: Washing machine
+- id: water_bed_heater
+  family: personal_heating_appliance
+  label: Water-bed heater
+- id: water_dispenser
+  family: water_dispensing_appliance
+  label: Water dispenser / cooler
+- id: water_suction_cleaner
+  family: surface_cleaning_appliance
+  label: Water-suction cleaning appliance
+- id: webcam
+  family: office_avict_peripheral
+  label: Webcam / smart camera (USB/IP)
+- id: whirlpool_bath
+  family: washing_hygiene_appliance
+  label: Whirlpool bath / spa bath
+- id: wifi_extender
+  family: networking_device
+  label: Wi-Fi extender / range extender
+- id: wireless_access_point
+  family: networking_device
+  label: Wireless access point
+- id: wireless_charger
+  family: portable_power_charger
+  label: Wireless charging pad / stand
+- id: wireless_headphones
+  family: av_ict_device
+  label: Wireless headphones / earbuds

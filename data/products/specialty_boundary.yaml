@@ -86,6 +86,9 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: drone_uas_boundary
+  route_family: drone_uas
+  route_confidence_cap: medium
 - id: drone_controller
   label: Drone remote controller
   aliases:
@@ -159,6 +162,9 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: drone_uas_boundary
+  route_family: drone_uas
+  route_confidence_cap: medium
 - id: electric_fish_stunner
   label: Electric fishing machine / fish stunner
   aliases:
@@ -216,6 +222,18 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: specialty_electrical_device
+  product_subfamily: electric_fish_stunner
+  route_anchor: specialty_electrical_boundary
+  route_family: specialty_electrical_boundary
+  genres:
+  - commercial_appliance
+  boundary_tags:
+  - industrial_installation_boundary
+  - agricultural_special_use_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Specialty agricultural intent keeps routing conservative pending special-use review.
 - id: fence_energizer
   label: Electric fence energizer
   aliases:
@@ -270,6 +288,18 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: specialty_electrical_device
+  product_subfamily: fence_energizer
+  route_anchor: specialty_electrical_boundary
+  route_family: specialty_electrical_boundary
+  genres:
+  - commercial_appliance
+  boundary_tags:
+  - industrial_installation_boundary
+  - agricultural_special_use_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Specialty agricultural intent keeps routing conservative pending special-use review.
 - id: milking_machine
   label: Milking machine
   aliases:
@@ -330,3 +360,13 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: agricultural_appliance
+  product_subfamily: milking_machine
+  route_anchor: specialty_electrical_boundary
+  route_family: specialty_electrical_boundary
+  boundary_tags:
+  - industrial_installation_boundary
+  - agricultural_special_use_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Specialty agricultural intent keeps routing conservative pending special-use review.

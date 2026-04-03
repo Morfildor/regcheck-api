@@ -50,8 +50,6 @@ def _enrich_products(rows: list[dict[str, Any]], genres: Sequence[GenreCatalogRo
     out: list[dict[str, Any]] = []
     for row in rows:
         enriched = normalize_product_row(row)
-        enriched["product_family"] = enriched.get("product_family") or enriched["id"]
-        enriched["product_subfamily"] = enriched.get("product_subfamily") or enriched["id"]
         enriched.setdefault("required_clues", [])
         enriched.setdefault("preferred_clues", [])
         enriched.setdefault("exclude_clues", [])

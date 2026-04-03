@@ -43,6 +43,7 @@ from .metadata import (
     _kb_meta,
 )
 from .paths import _resolved_data_paths_for_logging, clear_resolved_data_paths_cache
+from .taxonomy import reset_taxonomy_cache
 
 if TYPE_CHECKING:
     from app.services.classifier.matching import ProductMatchingSnapshot
@@ -235,6 +236,7 @@ def reset_cache() -> None:
     global _ACTIVE_SNAPSHOT
     _ACTIVE_SNAPSHOT = None
     clear_resolved_data_paths_cache()
+    reset_taxonomy_cache()
     reset_settings_cache()
     from app.services.classifier import reset_classifier_cache
 

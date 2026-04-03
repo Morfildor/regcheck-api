@@ -99,6 +99,16 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: energy_power_system
+  product_subfamily: home_energy_monitor
+  route_anchor: power_system_boundary
+  route_family: power_system_boundary
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Energy-system signals indicate a fixed-installation or inverter/storage boundary case.
 - id: smart_meter_display
   label: Smart meter in-home display (IHD)
   aliases:
@@ -198,6 +208,16 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: energy_power_system
+  product_subfamily: smart_meter_display
+  route_anchor: power_system_boundary
+  route_family: power_system_boundary
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Energy-system signals indicate a fixed-installation or inverter/storage boundary case.
 - id: solar_panel_module
   label: Solar panel / PV module
   aliases:
@@ -234,7 +254,11 @@ products:
   functional_classes:
   - power_device
   likely_standards: []
-  genres: []
+  genres:
+  - av_ict_device
+  - energy_power_system
+  - portable_energy
+  - smart_home_iot
   preferred_clues:
   - solar panel
   - pv module
@@ -290,11 +314,21 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: energy_power_system
+  product_subfamily: solar_panel_module
+  route_anchor: power_system_boundary
+  route_family: power_system_boundary
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Energy-system signals indicate a fixed-installation or inverter/storage boundary case.
 - id: smart_meter_gateway
   label: Smart meter gateway
   product_family: energy_power_system
   product_subfamily: smart_meter_gateway
-  route_family: av_ict
+  route_family: power_system_boundary
   primary_standard_code: EN 62368-1
   supporting_standard_codes:
   - EN 55032
@@ -345,11 +379,12 @@ products:
   - EN 62368-1
   - Energy storage / inverter system review
   - GDPR review
+  route_anchor: power_system_boundary
 - id: solar_charge_controller
   label: Solar charge controller
   product_family: energy_power_system
   product_subfamily: solar_charge_controller
-  route_family: av_ict
+  route_family: power_system_boundary
   primary_standard_code: EN 62368-1
   genres:
   - portable_energy
@@ -398,11 +433,12 @@ products:
   - EN 62368-1
   - Energy storage / inverter system review
   - Charger / external PSU review
+  route_anchor: power_system_boundary
 - id: solar_inverter_gateway
   label: Home solar inverter / energy gateway
   product_family: energy_power_system
   product_subfamily: solar_inverter_gateway
-  route_family: av_ict
+  route_family: power_system_boundary
   primary_standard_code: EN 62368-1
   max_match_stage: family
   route_confidence_cap: low
@@ -528,3 +564,4 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: power_system_boundary

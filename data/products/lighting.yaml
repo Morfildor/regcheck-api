@@ -45,6 +45,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: heating_lamp
+  route_anchor: household_core
+  route_family: household_appliance
 - id: smart_desk_lamp
   label: Smart desk lamp / connected task light
   product_family: smart_lighting
@@ -155,8 +159,8 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Smart desk and task lamps stay on a lighting-device route. Connectivity features add overlays but do not
-    replace the primary light-source safety path.
+  matching_notes: Smart desk and task lamps stay on a lighting-device route. Connectivity features add overlays but do not replace the primary light-source safety path.
+  route_anchor: lighting_connected
 - id: smart_led_bulb
   label: Smart LED bulb / connected light source
   product_family: smart_lighting
@@ -287,8 +291,8 @@ products:
   - electrical
   - lighting
   forbidden_traits: []
-  matching_notes: Smart bulbs and smart lamps stay on the lighting route. App, cloud, and voice-assistant integration are
-    secondary overlays only and must not move the product into AV/ICT or projector families.
+  matching_notes: Smart bulbs and smart lamps stay on the lighting route. App, cloud, and voice-assistant integration are secondary overlays only and must not move the product into AV/ICT or projector families.
+  route_anchor: lighting_connected
 - id: smart_light_controller
   label: Smart lighting controller / bridge
   aliases:
@@ -401,3 +405,7 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_power_control
+  product_subfamily: smart_light_controller
+  route_anchor: avict_connected
+  route_family: av_ict

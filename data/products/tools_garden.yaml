@@ -96,6 +96,8 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Angle grinder and abrasive cutting/grinding tool coverage.
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: corded_power_drill
   product_family: industrial_power_equipment
   product_subfamily: power_drill
@@ -218,6 +220,7 @@ products:
   - mains_power_likely
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: machinery_tool
 - id: cordless_power_drill
   product_family: industrial_power_equipment
   product_subfamily: power_drill
@@ -361,6 +364,7 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: machinery_tool
 - id: cordless_screwdriver
   label: Cordless screwdriver / electric screwdriver
   product_family: industrial_power_equipment
@@ -470,6 +474,8 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Battery-powered screwdrivers and compact assembly drivers.
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: electric_garden_tool
   label: Electric garden tool
   aliases:
@@ -545,6 +551,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: garden_power_equipment
+  product_subfamily: electric_garden_tool
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: grass_shear
   label: Grass shear
   aliases:
@@ -611,6 +621,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: garden_power_equipment
+  product_subfamily: grass_shear
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: grass_trimmer
   label: Grass trimmer / lawn edge trimmer
   aliases:
@@ -697,6 +711,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: garden_power_equipment
+  product_subfamily: grass_trimmer
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: heated_gully
   label: Heated gully / roof drainage heater
   aliases:
@@ -768,6 +786,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: garden_power_equipment
+  product_subfamily: heated_gully
+  route_anchor: household_core
+  route_family: household_appliance
 - id: high_pressure_cleaner
   label: High-pressure cleaner
   aliases:
@@ -840,6 +862,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: surface_cleaning_appliance
+  product_subfamily: high_pressure_cleaner
+  route_anchor: household_core
+  route_family: household_appliance
 - id: impact_driver
   label: Impact driver
   product_family: industrial_power_equipment
@@ -933,8 +959,9 @@ products:
   - electrical
   - motorized
   forbidden_traits: []
-  matching_notes: Impact-driver route for fastening tools that should land in machinery review rather than generic appliance
-    routing.
+  matching_notes: Impact-driver route for fastening tools that should land in machinery review rather than generic appliance routing.
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: industrial_power_tool
   product_family: industrial_power_equipment
   product_subfamily: generic_power_tool
@@ -1042,6 +1069,7 @@ products:
   - motorized
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: machinery_tool
 - id: lawn_mower
   label: Electric lawn mower
   aliases:
@@ -1121,6 +1149,10 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: garden_power_equipment
+  product_subfamily: lawn_mower
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: orbital_sander
   label: Orbital sander
   product_family: industrial_power_equipment
@@ -1215,6 +1247,8 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Electric orbital and finishing sander coverage for workshop tools.
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: outdoor_barbecue
   label: Outdoor electric barbecue
   aliases:
@@ -1280,6 +1314,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: countertop_cooking_appliance
+  product_subfamily: outdoor_barbecue
+  route_anchor: household_core
+  route_family: household_appliance
 - id: patio_heater
   label: Patio heater
   aliases:
@@ -1341,6 +1379,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: garden_power_equipment
+  product_subfamily: patio_heater
+  route_anchor: household_core
+  route_family: household_appliance
 - id: portable_power_saw
   product_family: industrial_power_equipment
   product_subfamily: power_saw
@@ -1455,6 +1497,7 @@ products:
   - motorized
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: machinery_tool
 - id: robotic_lawn_mower
   label: Robotic lawn mower
   aliases:
@@ -1535,6 +1578,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: garden_power_equipment
+  product_subfamily: robotic_lawn_mower
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: rotary_hammer
   label: Rotary hammer / SDS drill
   product_family: industrial_power_equipment
@@ -1631,6 +1678,8 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Rotary hammer and SDS drilling tool coverage.
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool
 - id: scarifier_aerator
   label: Lawn scarifier / aerator
   aliases:
@@ -1700,3 +1749,7 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: garden_power_equipment
+  product_subfamily: scarifier_aerator
+  route_anchor: machinery_tool
+  route_family: machinery_power_tool

@@ -128,6 +128,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: networking_device
+  product_subfamily: 5g_home_gateway
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: bluetooth_speaker
   label: Portable Bluetooth speaker
   aliases:
@@ -254,6 +258,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: bluetooth_speaker
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: bluetooth_tracker
   label: Bluetooth tracker
   aliases:
@@ -356,6 +364,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: bluetooth_tracker
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: desktop_pc
   label: Desktop PC
   aliases:
@@ -430,6 +442,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_computing_device
+  product_subfamily: desktop_pc
+  route_anchor: avict_core
+  route_family: av_ict
 - id: digital_audio_player
   label: Digital audio player / DAC
   aliases:
@@ -534,6 +550,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: digital_audio_player
+  route_anchor: avict_core
+  route_family: av_ict
 - id: digital_photo_frame
   label: Smart digital photo frame
   aliases:
@@ -631,6 +651,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: display_device
+  product_subfamily: digital_photo_frame
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: digital_piano
   label: Digital piano / electronic keyboard
   aliases:
@@ -734,6 +758,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: digital_piano
+  route_anchor: avict_core
+  route_family: av_ict
 - id: docking_station
   label: Docking station / USB-C hub
   aliases:
@@ -842,6 +870,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: office_avict_peripheral
+  product_subfamily: docking_station
+  route_anchor: avict_core
+  route_family: av_ict
 - id: document_scanner
   label: Document scanner
   product_family: office_imaging
@@ -904,6 +936,7 @@ products:
   - av_ict
   - data_storage
   matching_notes: Keeps office document imaging separate from rugged handheld barcode scanners and warehouse equipment.
+  route_anchor: avict_core
 - id: electric_guitar
   label: Electric guitar / instrument amplifier ecosystem
   aliases:
@@ -999,6 +1032,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: electric_guitar
+  route_anchor: avict_core
+  route_family: av_ict
 - id: external_storage
   label: External storage (SSD / HDD)
   aliases:
@@ -1102,6 +1139,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: office_avict_peripheral
+  product_subfamily: external_storage
+  route_anchor: avict_core
+  route_family: av_ict
 - id: game_console
   label: Game console
   aliases:
@@ -1199,6 +1240,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: game_console
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: home_cinema_system
   label: Home cinema system
   aliases:
@@ -1294,6 +1339,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: home_cinema_system
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: home_projector
   label: Home projector / smart projector
   product_family: projector_device
@@ -1461,6 +1510,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: industrial_handheld_scanner
   label: Industrial handheld scanner
   product_family: industrial_data_capture
@@ -1542,8 +1593,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Industrial handheld barcode and inventory scanners. Keeps professional AV/ICT routing without collapsing
-    into consumer projector matches.
+  matching_notes: Industrial handheld barcode and inventory scanners. Keeps professional AV/ICT routing without collapsing into consumer projector matches.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: insect_killer
   label: Insect killer
   aliases:
@@ -1604,6 +1656,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: insect_killer
+  route_anchor: avict_core
+  route_family: av_ict
 - id: iot_gateway
   label: IoT gateway / hub
   aliases:
@@ -1690,6 +1746,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: networking_device
+  product_subfamily: iot_gateway
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: laptop
   label: Laptop
   aliases:
@@ -1760,6 +1820,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_computing_device
+  product_subfamily: laptop
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: lora_gateway
   label: LoRa / LoRaWAN gateway
   aliases:
@@ -1853,9 +1917,13 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: networking_device
+  product_subfamily: lora_gateway
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: mesh_wifi_system
   label: Mesh Wi-Fi system (node)
-  product_family: wifi_networking
+  product_family: networking_device
   product_subfamily: mesh_wifi_system
   family_keywords:
   - wifi networking
@@ -2040,6 +2108,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: modem
   label: Modem
   aliases:
@@ -2106,6 +2176,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: networking_device
+  product_subfamily: modem
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: monitor
   label: Monitor
   aliases:
@@ -2164,6 +2238,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: display_device
+  product_subfamily: monitor
+  route_anchor: avict_core
+  route_family: av_ict
 - id: network_switch
   label: Network switch
   aliases:
@@ -2236,6 +2314,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: networking_device
+  product_subfamily: network_switch
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: office_printer
   label: Office printer / label printer
   product_family: office_imaging
@@ -2301,8 +2383,8 @@ products:
   - av_ict
   - data_storage
   - mains_powered
-  matching_notes: Adds mainstream office and label-printing coverage while staying distinct from 3D printers and fabrication
-    equipment.
+  matching_notes: Adds mainstream office and label-printing coverage while staying distinct from 3D printers and fabrication equipment.
+  route_anchor: avict_core
 - id: printer_3d
   label: 3D printer
   aliases:
@@ -2405,6 +2487,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: creator_office_device
+  product_subfamily: printer_3d
+  route_anchor: avict_core
+  route_family: av_ict
 - id: projector
   label: Projector
   product_family: projector_device
@@ -2507,9 +2593,11 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_core
+  route_family: av_ict
 - id: router
   label: Router
-  product_family: wifi_networking
+  product_family: networking_device
   product_subfamily: router
   family_keywords:
   - wifi networking
@@ -2641,6 +2729,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: satellite_terminal
   label: Satellite internet terminal
   aliases:
@@ -2725,6 +2815,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: networking_device
+  product_subfamily: satellite_terminal
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: server
   label: Server / NAS
   aliases:
@@ -2798,6 +2892,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: server
+  route_anchor: avict_core
+  route_family: av_ict
 - id: smart_display
   label: Smart display
   product_family: smart_assistant_device
@@ -2934,6 +3032,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_mirror
   label: Smart mirror / interactive mirror
   aliases:
@@ -3037,6 +3137,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: smart_mirror
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_relay
   label: Smart relay / connected relay module
   product_family: smart_power_control
@@ -3107,6 +3211,7 @@ products:
   - zigbee
   - matter
   matching_notes: Keeps smart relay modules distinct from network switches, protection relays, and generic smart plugs.
+  route_anchor: avict_connected
 - id: smart_speaker
   label: Smart speaker
   product_family: smart_assistant_device
@@ -3316,6 +3421,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_switch
   label: Smart switch / connected wall switch
   product_family: smart_power_control
@@ -3388,6 +3495,7 @@ products:
   - zigbee
   - matter
   matching_notes: Adds explicit wall-switch coverage while suppressing collisions with Ethernet and network switches.
+  route_anchor: avict_connected
 - id: smart_tv
   label: Television / smart TV
   aliases:
@@ -3473,6 +3581,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: display_device
+  product_subfamily: smart_tv
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: soundbar
   label: Soundbar
   aliases:
@@ -3570,6 +3682,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: soundbar
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: tablet
   label: Tablet computer
   aliases:
@@ -3667,6 +3783,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_computing_device
+  product_subfamily: tablet
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: usb_hub
   label: USB hub
   aliases:
@@ -3755,6 +3875,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: office_avict_peripheral
+  product_subfamily: usb_hub
+  route_anchor: avict_core
+  route_family: av_ict
 - id: voip_dect_phone
   label: VoIP / DECT phone
   aliases:
@@ -3865,6 +3989,10 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: voip_dect_phone
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: webcam
   label: Webcam / smart camera (USB/IP)
   aliases:
@@ -3959,9 +4087,13 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: office_avict_peripheral
+  product_subfamily: webcam
+  route_anchor: avict_core
+  route_family: av_ict
 - id: wifi_extender
   label: Wi-Fi extender / range extender
-  product_family: wifi_networking
+  product_family: networking_device
   product_subfamily: wifi_extender
   family_keywords:
   - wifi extender
@@ -4023,11 +4155,11 @@ products:
   - wifi
   - repeater_role
   - av_ict
-  matching_notes: Covers consumer Wi-Fi repeaters and extenders separately from routers, mesh systems, and cellular signal
-    boosters.
+  matching_notes: Covers consumer Wi-Fi repeaters and extenders separately from routers, mesh systems, and cellular signal boosters.
+  route_anchor: avict_connected
 - id: wireless_access_point
   label: Wireless access point
-  product_family: wifi_networking
+  product_family: networking_device
   product_subfamily: wireless_access_point
   family_keywords:
   - wifi networking
@@ -4130,6 +4262,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: wireless_headphones
   label: Wireless headphones / earbuds
   aliases:
@@ -4252,3 +4386,7 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: wireless_headphones
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable

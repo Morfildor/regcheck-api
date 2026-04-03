@@ -67,6 +67,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: water_handling_appliance
+  product_subfamily: aquarium_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_dishwasher
   label: Commercial dishwasher
   aliases:
@@ -138,6 +142,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: commercial_dishwasher
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_floor_treatment_machine
   label: Commercial floor treatment machine
   aliases:
@@ -221,6 +229,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: surface_cleaning_appliance
+  product_subfamily: commercial_floor_treatment_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_spray_extraction_machine
   label: Commercial spray extraction machine
   aliases:
@@ -286,6 +298,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: surface_cleaning_appliance
+  product_subfamily: commercial_spray_extraction_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: dishwasher
   label: Dishwasher
   aliases:
@@ -364,6 +380,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: dishwasher
+  route_anchor: household_core
+  route_family: household_appliance
 - id: electric_iron
   label: Electric iron
   aliases:
@@ -444,6 +464,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: laundry_textile_appliance
+  product_subfamily: electric_iron
+  route_anchor: household_core
+  route_family: household_appliance
 - id: electric_pump
   label: Electric pump
   aliases:
@@ -514,6 +538,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: water_handling_appliance
+  product_subfamily: electric_pump
+  route_anchor: household_core
+  route_family: household_appliance
 - id: elliptical_trainer
   label: Elliptical trainer / cross trainer
   aliases:
@@ -609,6 +637,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: fitness_training_equipment
+  product_subfamily: elliptical_trainer
+  route_anchor: household_connected
+  route_family: household_appliance
 - id: exercise_bike
   label: Exercise bike / stationary bike
   aliases:
@@ -722,6 +754,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: fitness_training_equipment
+  product_subfamily: exercise_bike
+  route_anchor: household_connected
+  route_family: household_appliance
 - id: fabric_steamer
   label: Fabric steamer
   aliases:
@@ -796,6 +832,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: laundry_textile_appliance
+  product_subfamily: fabric_steamer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: floor_treatment_machine
   label: Floor treatment machine
   aliases:
@@ -860,6 +900,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: surface_cleaning_appliance
+  product_subfamily: floor_treatment_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: food_waste_disposer
   label: Food waste disposer
   aliases:
@@ -920,6 +964,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: water_handling_appliance
+  product_subfamily: food_waste_disposer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: fuel_burning_electrical_appliance
   label: Fuel-burning appliance with electrical connections
   aliases:
@@ -988,9 +1036,13 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: household_appliance
+  product_subfamily: fuel_burning_electrical_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: garment_steamer
   label: Garment steamer / clothes steamer
-  product_family: textile_care_appliance
+  product_family: laundry_textile_appliance
   product_subfamily: garment_steamer
   family_keywords:
   - garment care
@@ -1054,8 +1106,8 @@ products:
   - water_contact
   - steam
   - textile_care
-  matching_notes: Separate garment-steamer coverage so apparel-steaming products do not collapse into generic irons or steam
-    cleaners.
+  matching_notes: Separate garment-steamer coverage so apparel-steaming products do not collapse into generic irons or steam cleaners.
+  route_anchor: household_core
 - id: ironer
   label: Ironer
   aliases:
@@ -1115,6 +1167,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: laundry_textile_appliance
+  product_subfamily: ironer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: motor_compressor
   label: Motor-compressor
   aliases:
@@ -1163,6 +1219,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: household_appliance
+  product_subfamily: motor_compressor
+  route_anchor: household_core
+  route_family: household_appliance
 - id: robot_mop
   label: Robot mop / robotic floor mop
   aliases:
@@ -1262,6 +1322,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: surface_cleaning_appliance
+  product_subfamily: robot_mop
+  route_anchor: household_core
+  route_family: household_appliance
 - id: robot_vacuum
   label: Robot vacuum cleaner
   aliases:
@@ -1423,6 +1487,9 @@ products:
   - self empty
   - lidar
   - mapping
+  product_family: surface_cleaning_appliance
+  product_subfamily: robot_vacuum
+  route_anchor: household_core
 - id: sewing_machine
   label: Sewing machine
   aliases:
@@ -1473,6 +1540,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: laundry_textile_appliance
+  product_subfamily: sewing_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: shower_cabinet
   label: Multifunctional shower cabinet
   aliases:
@@ -1536,6 +1607,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: shower_cabinet
+  route_anchor: household_core
+  route_family: household_appliance
 - id: smart_indoor_garden
   label: Smart indoor garden / hydroponic grow system
   product_family: garden_automation
@@ -1650,8 +1725,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Smart countertop hydro/aeroponic grow systems with integrated LED lighting and pumps. Mixed EN 60335-1 (appliance
-    with motor/pump) and EN 62368-1 (electronic control/connectivity) scope.
+  matching_notes: Smart countertop hydro/aeroponic grow systems with integrated LED lighting and pumps. Mixed EN 60335-1 (appliance with motor/pump) and EN 62368-1 (electronic control/connectivity) scope.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_standing_desk
   label: Smart motorized standing desk / sit-stand desk
   product_family: smart_furniture
@@ -1750,8 +1826,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Motorized height-adjustable desks with electric actuators and smart controls. Covered under EN 60335-1 as
-    motorized household equipment.
+  matching_notes: Motorized height-adjustable desks with electric actuators and smart controls. Covered under EN 60335-1 as motorized household equipment.
+  route_anchor: household_connected
+  route_family: household_appliance
 - id: smart_treadmill
   label: Treadmill / smart treadmill
   aliases:
@@ -1859,6 +1936,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: fitness_training_equipment
+  product_subfamily: smart_treadmill
+  route_anchor: household_connected
+  route_family: household_appliance
 - id: spray_extraction_machine
   label: Spray extraction machine
   aliases:
@@ -1929,6 +2010,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: surface_cleaning_appliance
+  product_subfamily: spray_extraction_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: steam_cleaner
   label: Steam cleaner / steam mop
   product_family: surface_cleaning_appliance
@@ -1990,8 +2075,8 @@ products:
   - steam
   - cleaning
   - water_contact
-  matching_notes: Adds explicit steam-cleaning coverage so mops and surface steamers route separately from garment steamers
-    and pressure washers.
+  matching_notes: Adds explicit steam-cleaning coverage so mops and surface steamers route separately from garment steamers and pressure washers.
+  route_anchor: household_core
 - id: tumble_dryer
   label: Tumble dryer
   aliases:
@@ -2057,6 +2142,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: laundry_textile_appliance
+  product_subfamily: tumble_dryer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: vacuum_cleaner
   label: Vacuum cleaner
   aliases:
@@ -2183,6 +2272,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: surface_cleaning_appliance
+  product_subfamily: vacuum_cleaner
+  route_anchor: household_core
+  route_family: household_appliance
 - id: washing_machine
   label: Washing machine
   aliases:
@@ -2271,6 +2364,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: washing_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: water_suction_cleaner
   label: Water-suction cleaning appliance
   aliases:
@@ -2386,3 +2483,7 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: surface_cleaning_appliance
+  product_subfamily: water_suction_cleaner
+  route_anchor: household_core
+  route_family: household_appliance

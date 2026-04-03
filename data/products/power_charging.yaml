@@ -90,6 +90,10 @@ products:
   - dental
   - gum care
   - water flosser
+  product_family: portable_power_charger
+  product_subfamily: battery_charger
+  route_anchor: household_core
+  route_family: household_appliance
 - id: battery_powered_oral_hygiene
   label: Battery-powered oral hygiene appliance
   aliases:
@@ -207,7 +211,7 @@ products:
   confusable_with:
   - projector
   - home_projector
-  product_family: oral_hygiene_device
+  product_family: personal_care_appliance
   product_subfamily: battery_powered_oral_hygiene
   family_keywords:
   - oral hygiene
@@ -300,6 +304,8 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: household_core
+  route_family: household_appliance
 - id: external_power_supply
   label: External power supply / AC-DC adapter
   product_family: portable_power_charger
@@ -363,6 +369,7 @@ products:
   - external_psu
   - power_source
   matching_notes: Keeps stand-alone adapters and power bricks separate from the powered end-product they are sold for.
+  route_anchor: avict_core
 - id: home_battery_system
   label: Home battery energy storage system
   aliases:
@@ -463,6 +470,16 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: energy_power_system
+  product_subfamily: home_battery_system
+  route_anchor: power_system_boundary
+  route_family: power_system_boundary
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Energy-system signals indicate a fixed-installation or inverter/storage boundary case.
 - id: industrial_charger
   label: Industrial battery charger
   aliases:
@@ -523,6 +540,10 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: portable_power_charger
+  product_subfamily: industrial_charger
+  route_anchor: avict_core
+  route_family: av_ict
 - id: portable_power_station
   label: Portable power station
   aliases:
@@ -548,7 +569,7 @@ products:
   - backup-power-station
   - backuppowerstation
   - backup power stations
-  product_family: portable_energy_family
+  product_family: portable_power_system
   product_subfamily: portable_power_station
   genres:
   - portable_energy
@@ -629,6 +650,8 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_core
+  route_family: av_ict
 - id: power_bank
   label: Power bank
   aliases:
@@ -658,7 +681,7 @@ products:
   - pv charge controller
   - mppt charge controller
   - pwm solar controller
-  product_family: portable_energy_family
+  product_family: portable_power_system
   product_subfamily: power_bank
   genres:
   - portable_energy
@@ -738,6 +761,8 @@ products:
   - battery_powered
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_core
+  route_family: av_ict
 - id: smart_power_strip
   label: Smart power strip / surge protector
   aliases:
@@ -836,6 +861,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_power_control
+  product_subfamily: smart_power_strip
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: travel_adapter_charger
   label: Travel adapter with USB charging
   product_family: portable_power_charger
@@ -899,8 +928,8 @@ products:
   - portable
   - external_psu
   - charger_role
-  matching_notes: Covers active travel adapters with integrated USB charging while avoiding collisions with passive country
-    plug adapters.
+  matching_notes: Covers active travel adapters with integrated USB charging while avoiding collisions with passive country plug adapters.
+  route_anchor: avict_core
 - id: usb_charging_hub
   label: USB charging hub / PD charger
   aliases:
@@ -1019,6 +1048,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: portable_power_charger
+  product_subfamily: usb_charging_hub
+  route_anchor: avict_core
+  route_family: av_ict
 - id: usb_wall_charger
   label: USB wall charger / USB-C power adapter
   product_family: portable_power_charger
@@ -1088,8 +1121,8 @@ products:
   - external_psu
   - charger_role
   - usb_pd
-  matching_notes: Separates consumer USB charging adapters from appliance battery docks and keeps them on the EN 62368-1 AV/ICT
-    safety route.
+  matching_notes: Separates consumer USB charging adapters from appliance battery docks and keeps them on the EN 62368-1 AV/ICT safety route.
+  route_anchor: avict_core
 - id: wireless_charger
   label: Wireless charging pad / stand
   aliases:
@@ -1200,3 +1233,7 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: portable_power_charger
+  product_subfamily: wireless_charger
+  route_anchor: avict_core
+  route_family: av_ict

@@ -2,6 +2,8 @@
 
 RuleGrid now operates on a normalized modular catalog. The public API is unchanged, but product maintenance should happen through the fragment catalogs and should follow the route-anchor and family-governance rules below.
 
+For the authoritative governance model, see [docs/taxonomy_governance.md](/c:/Users/tuncb/Desktop/regcheck/docs/taxonomy_governance.md).
+
 ## Catalog Layout
 
 Runtime loading merges the root anchors with fragment directories:
@@ -11,6 +13,7 @@ Runtime loading merges the root anchors with fragment directories:
 - `data/standards.yaml` + `data/standards/*.yaml`
 - `data/classifier_signals.yaml` + `data/classifier_signals/*.yaml`
 - `data/product_genres.yaml`
+- `data/taxonomy/*.yaml`
 
 The root files remain lightweight anchors. Most maintenance work should happen in the fragment directories.
 
@@ -209,6 +212,9 @@ Or use the local quality gate:
 - `validate`: lightweight schema and linkage validation
 - `summary`: normalized structural summary and route-family overview
 - `summary --json`: machine-readable summary for CI or reporting
+- `taxonomy`: taxonomy inference, singleton, and family-cluster reporting
+- `route-governance`: route-anchor inference and by-family anchor distribution reporting
+- `inference-debt`: normalization fallback, family-level-only, and debt reporting
 - `report --strict-structure`: fail when normalized products still miss required structure
 - `report --by-file`: hotspot counts for raw unknown-family and unanchored-route concentration by file
 

@@ -442,6 +442,146 @@ def _boundary_heavy_report(products: list[Mapping[str, Any]]) -> list[str]:
     return findings
 
 
+def _products_with_non_declared_source(products: list[Mapping[str, Any]], field_name: str) -> list[str]:
+    findings: list[str] = []
+    for product in products:
+        source = str(product.get(field_name) or "").strip()
+        if not source or source == "declared":
+            continue
+        findings.append(f"{product['id']}: {field_name}={source}")
+    return findings
+
+
+def _products_with_inference_flags(products: list[Mapping[str, Any]], *, exclude: set[str] | None = None) -> list[str]:
+    exclude = exclude or set()
+    findings: list[str] = []
+    for product in products:
+        flags = [flag for flag in _string_list(product.get("inference_debt_flags")) if flag not in exclude]
+        if not flags:
+            continue
+        findings.append(f"{product['id']}: {', '.join(flags)}")
+    return findings
+
+
+def _products_with_flag(products: list[Mapping[str, Any]], flag: str) -> list[str]:
+    findings: list[str] = []
+    for product in products:
+        flags = set(_string_list(product.get("inference_debt_flags")))
+        if flag not in flags:
+            continue
+        findings.append(f"{product['id']}: {flag}")
+    return findings
+
+
+def _products_with_low_confidence_routes(products: list[Mapping[str, Any]]) -> list[str]:
+    findings: list[str] = []
+    for product in products:
+        confidence = str(product.get("route_anchor_confidence") or "").strip()
+        if confidence != "low":
+            continue
+        reasons = _string_list(product.get("route_anchor_reasons"))
+        findings.append(
+            f"{product['id']}: route_anchor={product.get('route_anchor')}; reasons={', '.join(reasons[:3]) or 'none'}"
+        )
+    return findings
+
+
+def _products_with_ambiguous_routes(products: list[Mapping[str, Any]]) -> list[str]:
+    findings: list[str] = []
+    for product in products:
+        confidence = str(product.get("route_anchor_confidence") or "").strip()
+        alternatives = _string_list(product.get("route_anchor_alternatives"))
+        if confidence != "low" or not alternatives:
+            continue
+        findings.append(
+            f"{product['id']}: route_anchor={product.get('route_anchor')}; alternatives={', '.join(alternatives[:3])}"
+        )
+    return findings
+
+
+def _singleton_family_rows(products: list[Mapping[str, Any]]) -> list[str]:
+    counts = Counter(str(product.get("product_family") or "unknown") for product in products)
+    findings: list[str] = []
+    for product in products:
+        family = str(product.get("product_family") or "unknown")
+        if counts[family] != 1:
+            continue
+        findings.append(f"{family}: {product['id']}")
+    return sorted(findings)
+
+
+def _singleton_subfamily_rows(products: list[Mapping[str, Any]]) -> list[str]:
+    counts = Counter(str(product.get("product_subfamily") or "unknown") for product in products)
+    findings: list[str] = []
+    for product in products:
+        subfamily = str(product.get("product_subfamily") or "unknown")
+        if counts[subfamily] != 1:
+            continue
+        findings.append(f"{subfamily}: family={product.get('product_family')}")
+    return sorted(findings)
+
+
+def _route_anchor_distribution_by_family(products: list[Mapping[str, Any]]) -> list[str]:
+    by_family: dict[str, Counter[str]] = defaultdict(Counter)
+    for product in products:
+        family = str(product.get("product_family") or "unknown")
+        anchor = str(product.get("route_anchor") or "missing")
+        by_family[family][anchor] += 1
+
+    rows: list[str] = []
+    for family in sorted(by_family):
+        parts = [f"{anchor}={count}" for anchor, count in by_family[family].most_common()]
+        rows.append(f"{family}: {', '.join(parts)}")
+    return rows
+
+
+def _file_family_cluster_mismatches(products: list[Mapping[str, Any]], product_sources: Mapping[str, str]) -> list[str]:
+    families_by_source: dict[str, Counter[str]] = defaultdict(Counter)
+    rows_by_source: dict[str, list[Mapping[str, Any]]] = defaultdict(list)
+    for product in products:
+        source = product_sources.get(str(product["id"]), "<unknown source>")
+        family = str(product.get("product_family") or "unknown")
+        families_by_source[source][family] += 1
+        rows_by_source[source].append(product)
+
+    findings: list[str] = []
+    for source, family_counts in families_by_source.items():
+        if len(rows_by_source[source]) < 4:
+            continue
+        dominant_family, dominant_count = family_counts.most_common(1)[0]
+        if dominant_count / len(rows_by_source[source]) < 0.35:
+            continue
+        for product in rows_by_source[source]:
+            family = str(product.get("product_family") or "unknown")
+            if family == dominant_family:
+                continue
+            if family_counts[family] > 1:
+                continue
+            findings.append(
+                f"{source}: {product['id']} is a singleton family outlier against dominant family {dominant_family}"
+            )
+    return findings
+
+
+def _weak_family_support_rows(products: list[Mapping[str, Any]]) -> list[str]:
+    findings: list[str] = []
+    for product in products:
+        required_traits = set(_string_list(product.get("family_required_traits")))
+        if not required_traits:
+            continue
+        product_traits = {
+            trait
+            for field in ("implied_traits", "core_traits", "default_traits", "family_traits", "subtype_traits")
+            for trait in _string_list(product.get(field))
+        }
+        if required_traits & product_traits:
+            continue
+        findings.append(
+            f"{product['id']}: family={product.get('product_family')} lacks required family traits {', '.join(sorted(required_traits))}"
+        )
+    return findings
+
+
 def _family_summary(products: list[Mapping[str, Any]]) -> list[str]:
     family_counts = Counter(str(product.get("product_family") or "unknown") for product in products)
     return [f"{family}: {count}" for family, count in family_counts.most_common()]
@@ -556,6 +696,21 @@ def _report_payload(
     unused_traits = sorted(trait_ids - referenced_traits)
     raw_products = catalogs["products_raw"]
     normalized_products = catalogs["products"]
+    singleton_families = _singleton_family_rows(normalized_products)
+    singleton_subfamilies = _singleton_subfamily_rows(normalized_products)
+    family_cluster_mismatches = _file_family_cluster_mismatches(normalized_products, catalogs["product_sources"])
+    family_cluster_mismatch_ids = {
+        row.split(": ", 1)[1].split(" ", 1)[0]
+        for row in family_cluster_mismatches
+        if ": " in row
+    }
+    family_inference = _products_with_non_declared_source(normalized_products, "family_resolution_source")
+    subfamily_inference = _products_with_non_declared_source(normalized_products, "subfamily_resolution_source")
+    route_inference = _products_with_non_declared_source(normalized_products, "route_anchor_source")
+    low_confidence_routes = _products_with_low_confidence_routes(normalized_products)
+    ambiguous_routes = _products_with_ambiguous_routes(normalized_products)
+    weak_family_support = _weak_family_support_rows(normalized_products)
+    inference_debt_rows = _products_with_inference_flags(normalized_products, exclude={"family_level_only"})
 
     return {
         "counts": {key: len(value) for key, value in catalogs.items() if isinstance(value, list)},
@@ -572,6 +727,29 @@ def _report_payload(
         "products_lacking_decisive_clues": _products_lacking_decisive_clues(normalized_products),
         "products_likely_to_overmatch": _products_likely_to_overmatch(normalized_products),
         "boundary_product_report": _boundary_product_report(normalized_products),
+        "taxonomy": {
+            "inferred_families": family_inference,
+            "inferred_subfamilies": subfamily_inference,
+            "singleton_families": singleton_families,
+            "singleton_subfamilies": singleton_subfamilies,
+            "family_cluster_mismatches": family_cluster_mismatches,
+            "weak_family_support": weak_family_support,
+        },
+        "route_governance": {
+            "inferred_route_anchors": route_inference,
+            "low_confidence_routes": low_confidence_routes,
+            "ambiguous_routes": ambiguous_routes,
+            "by_family": _route_anchor_distribution_by_family(normalized_products),
+        },
+        "inference_debt": {
+            "products": inference_debt_rows,
+            "compatibility_fallbacks": [
+                f"{product['id']}: compatibility fallback"
+                for product in normalized_products
+                if bool(product.get("compatibility_fallback_used"))
+            ],
+            "family_level_only": _products_with_flag(normalized_products, "family_level_only"),
+        },
         "summaries": {
             "families": _family_summary(normalized_products),
             "genres": _genre_summary(normalized_products),
@@ -604,6 +782,26 @@ def _report_payload(
                 issue_key="boundary-heavy rows",
                 predicate=lambda product: bool(_string_list(product.get("boundary_tags"))),
             ),
+            "taxonomy_cluster_mismatches": _counts_by_file(
+                normalized_products,
+                catalogs["product_sources"],
+                issue_key="taxonomy family outliers",
+                predicate=lambda product: str(product["id"]) in family_cluster_mismatch_ids,
+            ),
+            "route_low_confidence": _counts_by_file(
+                normalized_products,
+                catalogs["product_sources"],
+                issue_key="low-confidence route rows",
+                predicate=lambda product: str(product.get("route_anchor_confidence") or "").strip() == "low",
+            ),
+            "inference_debt_rows": _counts_by_file(
+                normalized_products,
+                catalogs["product_sources"],
+                issue_key="inference-debt rows",
+                predicate=lambda product: bool(
+                    [flag for flag in _string_list(product.get("inference_debt_flags")) if flag != "family_level_only"]
+                ),
+            ),
         },
         "diff": _diff_summary(catalogs, compare) if compare is not None else None,
     }
@@ -618,6 +816,7 @@ def run(
     data_dir: str | None = None,
     strict_structure: bool = False,
     by_file: bool = False,
+    by_family: bool = False,
     json_output: bool = False,
 ) -> int:
     try:
@@ -695,16 +894,43 @@ def run(
             _print_section("Products Likely To Overmatch", payload["products_likely_to_overmatch"])
             _print_section("Boundary Product Report", payload["boundary_product_report"])
 
-        if by_file and command in {"summary", "report", "all"}:
+        if command in {"taxonomy", "all"}:
+            _print_section("Inferred Families", payload["taxonomy"]["inferred_families"])
+            _print_section("Inferred Subfamilies", payload["taxonomy"]["inferred_subfamilies"])
+            _print_section("Singleton Families", payload["taxonomy"]["singleton_families"])
+            _print_section("Singleton Subfamilies", payload["taxonomy"]["singleton_subfamilies"])
+            _print_section("Family Cluster Mismatches", payload["taxonomy"]["family_cluster_mismatches"])
+            _print_section("Weak Family Support", payload["taxonomy"]["weak_family_support"])
+
+        if command in {"route-governance", "all"}:
+            _print_section("Inferred Route Anchors", payload["route_governance"]["inferred_route_anchors"])
+            _print_section("Low-Confidence Routes", payload["route_governance"]["low_confidence_routes"])
+            _print_section("Ambiguous Routes", payload["route_governance"]["ambiguous_routes"])
+            if by_family:
+                _print_section("Route Anchors By Family", payload["route_governance"]["by_family"])
+
+        if command in {"inference-debt", "all"}:
+            _print_section("Inference Debt", payload["inference_debt"]["products"])
+            _print_section("Compatibility Fallbacks", payload["inference_debt"]["compatibility_fallbacks"])
+            _print_section("Family-Level Only", payload["inference_debt"]["family_level_only"])
+            _print_section(
+                f"Products With Fewer Than {minimum_aliases} Aliases",
+                payload["thin_alias_products"],
+            )
+
+        if by_file and command in {"summary", "report", "taxonomy", "route-governance", "inference-debt", "all"}:
             _print_section("By-File Raw Unknown Family", payload["by_file"]["raw_unknown_family"])
             _print_section("By-File Raw Unanchored Route", payload["by_file"]["raw_unanchored_route"])
             _print_section("By-File Raw Missing Structure", payload["by_file"]["raw_missing_structure"])
             _print_section("By-File Normalized Boundary Load", payload["by_file"]["normalized_boundary_heavy"])
+            _print_section("By-File Taxonomy Cluster Mismatches", payload["by_file"]["taxonomy_cluster_mismatches"])
+            _print_section("By-File Route Low Confidence", payload["by_file"]["route_low_confidence"])
+            _print_section("By-File Inference Debt", payload["by_file"]["inference_debt_rows"])
 
-        if payload["diff"] is not None and command in {"summary", "report", "all"}:
+        if payload["diff"] is not None and command in {"summary", "report", "taxonomy", "route-governance", "inference-debt", "all"}:
             _print_section("Catalog Diff Summary", payload["diff"])
 
-    if command in {"report", "all"} and strict_structure:
+    if command in {"report", "taxonomy", "route-governance", "inference-debt", "all"} and strict_structure:
         if payload["structure"]["normalized"]["missing_structure_products"] > 0:
             return 1
     return 0
@@ -712,13 +938,19 @@ def run(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate and audit RuleGrid catalog integrity.")
-    parser.add_argument("command", nargs="?", choices=("validate", "summary", "report", "all"), default="all")
+    parser.add_argument(
+        "command",
+        nargs="?",
+        choices=("validate", "summary", "report", "taxonomy", "route-governance", "inference-debt", "all"),
+        default="all",
+    )
     parser.add_argument("--minimum-aliases", type=int, default=4)
     parser.add_argument("--broad-alias-threshold", type=int, default=3)
     parser.add_argument("--compare-dir", type=str, default=None, help="Optional alternate data directory for an added/removed catalog diff summary.")
     parser.add_argument("--data-dir", type=str, default=None, help="Explicit data directory to validate instead of the default repo catalog.")
     parser.add_argument("--strict-structure", action="store_true", help="Fail report/all mode when normalized products still miss required structure.")
     parser.add_argument("--by-file", action="store_true", help="Show file-level hotspot summaries for raw catalog structure issues.")
+    parser.add_argument("--by-family", action="store_true", help="Show family-level route-governance summaries.")
     parser.add_argument("--json", action="store_true", help="Emit machine-readable JSON instead of human-readable sections.")
     args = parser.parse_args()
     return run(
@@ -729,6 +961,7 @@ def main() -> int:
         data_dir=args.data_dir,
         strict_structure=args.strict_structure,
         by_file=args.by_file,
+        by_family=args.by_family,
         json_output=args.json,
     )
 

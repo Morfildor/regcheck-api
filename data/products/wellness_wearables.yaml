@@ -153,6 +153,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: audio_glasses
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: connected_breast_pump
   label: Connected / smart electric breast pump
   product_family: maternity_care
@@ -250,6 +254,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Smart electric breast pumps with Bluetooth app connectivity. Covered under EN 60335-2-32.
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: continuous_glucose_monitor
   label: Continuous glucose monitor (CGM)
   product_family: health_monitor
@@ -356,8 +362,7 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer and OTC CGM devices and glucose sensor patches. MDR borderline review required for medical-grade
-    claims.
+  matching_notes: Consumer and OTC CGM devices and glucose sensor patches. MDR borderline review required for medical-grade claims.
   core_traits:
   - consumer
   - electrical
@@ -375,6 +380,8 @@ products:
   - account
   - data_storage
   - ota
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: digital_stethoscope
   label: Digital / electronic stethoscope
   product_family: health_monitor
@@ -472,8 +479,7 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer and professional-grade digital/amplified stethoscopes. MDR borderline review where diagnostic claims
-    are made.
+  matching_notes: Consumer and professional-grade digital/amplified stethoscopes. MDR borderline review where diagnostic claims are made.
   core_traits:
   - consumer
   - electrical
@@ -489,6 +495,8 @@ products:
   - app_control
   - personal_data_likely
   - data_storage
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: gps_pet_tracker
   label: GPS pet tracker
   aliases:
@@ -570,6 +578,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: heart_rate_monitor
   label: Heart rate monitor / ECG device
   product_family: health_monitor
@@ -720,8 +730,7 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Covers consumer-grade ECG monitors, Holter-style patches, chest straps, and portable ECG devices. Distinct
-    from smartwatch and blood pressure monitor.
+  matching_notes: Covers consumer-grade ECG monitors, Holter-style patches, chest straps, and portable ECG devices. Distinct from smartwatch and blood pressure monitor.
   core_traits:
   - consumer
   - electrical
@@ -738,6 +747,8 @@ products:
   - personal_data_likely
   - account
   - ota
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: led_shoes
   label: LED shoes / light-up footwear
   aliases:
@@ -853,6 +864,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: wearable_device_family
+  product_subfamily: led_shoes
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: massage_appliance
   label: Massage appliance
   aliases:
@@ -929,6 +944,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_care_appliance
+  product_subfamily: massage_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: massage_gun
   label: Massage gun / percussion massager
   product_family: wellness_massage
@@ -1028,8 +1047,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Handheld battery-powered percussion/vibration massage guns. Distinct from stationary massage appliances
-    (EN 60335-2-32).
+  matching_notes: Handheld battery-powered percussion/vibration massage guns. Distinct from stationary massage appliances (EN 60335-2-32).
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: pulse_oximeter
   label: Pulse oximeter / SpO2 monitor
   product_family: health_monitor
@@ -1132,8 +1152,7 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer-grade pulse oximeters and SpO2 monitors. Borderline medical; EN 62368-1 for electronics, MDR review
-    for medical claims.
+  matching_notes: Consumer-grade pulse oximeters and SpO2 monitors. Borderline medical; EN 62368-1 for electronics, MDR review for medical claims.
   core_traits:
   - consumer
   - electrical
@@ -1148,6 +1167,8 @@ products:
   - bluetooth
   - app_control
   - personal_data_likely
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: sleep_tracker
   label: Sleep tracker hub / smart sleep device
   aliases:
@@ -1246,6 +1267,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: wearable_device_family
+  product_subfamily: sleep_tracker
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_blood_pressure_monitor
   label: Smart blood pressure monitor
   aliases:
@@ -1332,6 +1357,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: health_monitor
+  product_subfamily: smart_blood_pressure_monitor
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_cycling_computer
   label: Smart cycling computer / GPS bike head unit
   product_family: sports_wearable
@@ -1435,8 +1464,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: GPS head units and cycling computers mounted on bikes. Bluetooth/ANT+ connectivity to sensors. Covered by
-    EN 62368-1 as portable AV/ICT device.
+  matching_notes: GPS head units and cycling computers mounted on bikes. Bluetooth/ANT+ connectivity to sensors. Covered by EN 62368-1 as portable AV/ICT device.
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_fertility_tracker
   label: Smart fertility tracker / BBT monitor
   product_family: health_monitor
@@ -1544,8 +1574,7 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: BBT and fertility tracking devices. Borderline medical; EN 62368-1 for electronics, MDR review if ovulation
-    prediction medical claims are made.
+  matching_notes: BBT and fertility tracking devices. Borderline medical; EN 62368-1 for electronics, MDR review if ovulation prediction medical claims are made.
   core_traits:
   - consumer
   - electrical
@@ -1561,6 +1590,8 @@ products:
   - personal_data_likely
   - account
   - data_storage
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_glucose_meter
   label: Smart blood glucose meter / connected glucometer
   product_family: health_monitor
@@ -1666,8 +1697,7 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Connected blood glucose meters (fingerstick type). Distinct from continuous glucose monitors (CGM patches).
-    MDR borderline review for diagnostic claims.
+  matching_notes: Connected blood glucose meters (fingerstick type). Distinct from continuous glucose monitors (CGM patches). MDR borderline review for diagnostic claims.
   core_traits:
   - consumer
   - electrical
@@ -1683,6 +1713,8 @@ products:
   - personal_data_likely
   - account
   - data_storage
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_hearing_aid
   label: Smart hearing aid / OTC hearing amplifier
   product_family: hearing_device
@@ -1795,8 +1827,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: OTC and consumer smart hearing aids and personal sound amplifiers. MDR borderline review if therapeutic
-    hearing restoration claims made. RED applies for Bluetooth.
+  matching_notes: OTC and consumer smart hearing aids and personal sound amplifiers. MDR borderline review if therapeutic hearing restoration claims made. RED applies for Bluetooth.
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_inhaler
   label: Smart inhaler / connected nebulizer
   product_family: respiratory_therapy
@@ -1888,8 +1921,14 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Bluetooth-enabled inhalers and smart nebulizers that track usage and connect to apps. MDR borderline review
-    where therapeutic claims are made.
+  matching_notes: Bluetooth-enabled inhalers and smart nebulizers that track usage and connect to apps. MDR borderline review where therapeutic claims are made.
+  route_anchor: medical_wellness_boundary
+  route_family: medical_wellness_boundary
+  boundary_tags:
+  - possible_medical_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Medical or therapy-adjacent signals require a wellness versus medical boundary review.
 - id: smart_insole
   label: Smart shoe insole / gait analysis insole
   product_family: sports_wearable
@@ -1995,8 +2034,7 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Bluetooth-enabled shoe insoles for gait, pressure, and activity tracking. EN 62479 for RF/SAR as body-worn
-    device.
+  matching_notes: Bluetooth-enabled shoe insoles for gait, pressure, and activity tracking. EN 62479 for RF/SAR as body-worn device.
   core_traits:
   - consumer
   - electrical
@@ -2012,6 +2050,8 @@ products:
   - app_control
   - motion_detection
   - personal_data_likely
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_jump_rope
   label: Smart jump rope
   aliases:
@@ -2097,6 +2137,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: sports_wearable
+  product_subfamily: smart_jump_rope
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_posture_corrector
   label: Smart posture corrector / wearable posture trainer
   product_family: wellness_wearable
@@ -2201,8 +2245,7 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Wearable posture monitoring sensors that alert users to slouching via vibration. EN 62479 applies due to
-    body-worn RF device proximity.
+  matching_notes: Wearable posture monitoring sensors that alert users to slouching via vibration. EN 62479 applies due to body-worn RF device proximity.
   core_traits:
   - consumer
   - electrical
@@ -2218,6 +2261,8 @@ products:
   - app_control
   - motion_detection
   - personal_data_likely
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_ring
   label: Smart ring
   aliases:
@@ -2305,6 +2350,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_scale
   label: Smart body scale / composition monitor
   aliases:
@@ -2422,6 +2469,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: health_monitor
+  product_subfamily: smart_scale
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_thermometer
   label: Smart / connected body thermometer
   product_family: health_monitor
@@ -2542,6 +2593,8 @@ products:
   - bluetooth
   - app_control
   - personal_data_likely
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_water_bottle
   label: Smart water bottle / hydration tracker
   product_family: smart_kitchen_tool
@@ -2636,6 +2689,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Bluetooth-connected water bottles with hydration tracking, LED indicators or displays, and app integration.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smartwatch
   label: Smartwatch
   aliases:
@@ -2735,6 +2790,7 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_wearable
 - id: smartwatch_fitness_tracker
   label: Smartwatch / fitness tracker
   aliases:
@@ -2879,6 +2935,9 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: smartwatch_fitness_tracker
+  route_anchor: avict_wearable
 - id: true_wireless_earbuds
   label: True wireless earbuds (TWS)
   product_family: audio_wearable
@@ -3006,8 +3065,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: True wireless stereo (TWS) earbuds and in-ear Bluetooth headphones. Distinct from over-ear/on-ear wireless
-    headphones. EN 62479 applies for SAR/RF exposure.
+  matching_notes: True wireless stereo (TWS) earbuds and in-ear Bluetooth headphones. Distinct from over-ear/on-ear wireless headphones. EN 62479 applies for SAR/RF exposure.
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: uv_c_sanitizer
   label: UV-C sanitizer / disinfection device
   product_family: wellness_sanitizer
@@ -3118,8 +3178,14 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Consumer UV-C germicidal sanitizers and disinfection wands. EN 62471 photobiological safety applies for
-    UV emission risk assessment.
+  matching_notes: Consumer UV-C germicidal sanitizers and disinfection wands. EN 62471 photobiological safety applies for UV emission risk assessment.
+  route_anchor: lighting_core
+  route_family: lighting_device
+  boundary_tags:
+  - uv_irradiation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: UV or irradiation intent needs boundary review before committing to a narrow product route.
 - id: vr_ar_headset
   label: VR / AR headset
   aliases:
@@ -3290,6 +3356,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: vr_ar_headset
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: vr_headset
   label: VR / XR headset
   aliases:
@@ -3410,3 +3480,5 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable

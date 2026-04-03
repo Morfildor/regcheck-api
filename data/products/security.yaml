@@ -96,6 +96,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: action_camera
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: baby_monitor
   label: Video baby monitor
   aliases:
@@ -205,6 +209,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_home_security
+  product_subfamily: baby_monitor
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: baby_monitor_smart
   label: Smart baby monitor
   aliases:
@@ -311,6 +319,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: clock
   label: Clock
   aliases:
@@ -365,6 +375,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: household_appliance
+  product_subfamily: clock
+  route_anchor: household_core
+  route_family: household_appliance
 - id: e_reader
   label: E-reader
   aliases:
@@ -457,6 +471,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_computing_device
+  product_subfamily: e_reader
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: garage_door_drive
   label: Garage door drive
   aliases:
@@ -512,6 +530,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: building_access_device
+  product_subfamily: garage_door_drive
+  route_anchor: building_access
+  route_family: building_hardware
 - id: gate_door_window_drive
   label: Drive for gates, doors or windows
   aliases:
@@ -586,6 +608,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: building_access_device
+  product_subfamily: gate_door_window_drive
+  route_anchor: building_access
+  route_family: building_hardware
 - id: ip_camera
   label: IP camera / smart security camera
   family_keywords:
@@ -743,6 +769,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_home_security
+  product_subfamily: ip_camera
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: ip_intercom
   label: IP video intercom
   aliases:
@@ -846,6 +876,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_home_security
+  product_subfamily: ip_intercom
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: nvr_dvr_recorder
   label: NVR / DVR recorder
   product_family: security_recording
@@ -914,8 +948,8 @@ products:
   - data_storage
   - surveillance
   - camera_surveillance
-  matching_notes: Adds consumer and small-business CCTV recorder coverage so NVR/DVR products stop falling back to generic
-    AV/ICT descriptions.
+  matching_notes: Adds consumer and small-business CCTV recorder coverage so NVR/DVR products stop falling back to generic AV/ICT descriptions.
+  route_anchor: avict_core
 - id: pet_camera
   label: Pet camera / pet monitor
   aliases:
@@ -1036,6 +1070,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_home_security
+  product_subfamily: pet_camera
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: rolling_shutter_drive
   label: Drive for rolling shutters, awnings or blinds
   aliases:
@@ -1107,6 +1145,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: building_access_device
+  product_subfamily: rolling_shutter_drive
+  route_anchor: building_access
+  route_family: building_hardware
 - id: security_hub
   label: Smart security alarm hub
   aliases:
@@ -1237,6 +1279,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_home_security
+  product_subfamily: security_hub
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_baby_monitor_breathing
   label: Baby breathing / movement monitor
   product_family: baby_safety_device
@@ -1348,8 +1394,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Wearable infant breathing and movement monitors (socks, clips, pads). Distinct from AV baby monitors with
-    cameras. EN 62479 for body-worn RF proximity.
+  matching_notes: Wearable infant breathing and movement monitors (socks, clips, pads). Distinct from AV baby monitors with cameras. EN 62479 for body-worn RF proximity.
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
 - id: smart_button_remote
   label: Smart button / voice remote
   aliases:
@@ -1462,6 +1509,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_home_control_device
+  product_subfamily: smart_button_remote
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_doorbell
   label: Smart video doorbell
   product_family: smart_home_security
@@ -1607,6 +1658,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_lock
   label: Smart lock
   product_family: building_hardware_lock
@@ -1839,6 +1892,7 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: building_access
 - id: smart_security_camera
   label: Smart security camera
   aliases:
@@ -1999,6 +2053,8 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_sensor_node
   label: Smart home sensor (environmental)
   aliases:
@@ -2127,6 +2183,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_environment_sensor
+  product_subfamily: smart_sensor_node
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_smoke_co_alarm
   label: Smart smoke / CO alarm
   product_family: life_safety_alarm
@@ -2282,6 +2342,7 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: life_safety_alarm
 - id: smoke_co_alarm
   label: Smoke / CO alarm
   product_family: life_safety_alarm
@@ -2347,6 +2408,7 @@ products:
   - co_detection
   - safety_function
   matching_notes: Non-connected life-safety alarm route, kept separate from smart/connected alarm variants.
+  route_anchor: life_safety_alarm
 - id: soil_moisture_sensor
   label: Soil moisture sensor / plant monitor
   aliases:
@@ -2453,6 +2515,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: smart_environment_sensor
+  product_subfamily: soil_moisture_sensor
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: video_doorbell
   label: Video doorbell
   aliases:
@@ -2584,3 +2650,5 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: avict_connected
+  route_family: av_ict

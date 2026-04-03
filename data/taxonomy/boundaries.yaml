@@ -1,0 +1,204 @@
+boundaries:
+  - id: power_system_installation
+    boundary_class: power_system
+    label: Power-system / inverter / storage boundary
+    priority: 100
+    preferred_route_anchor: power_system_boundary
+    families_any:
+      - energy_power_system
+    genres_any:
+      - energy_power_system
+    traits_any:
+      - energy_system_boundary
+    boundary_tags_any:
+      - energy_system_boundary
+    add_boundary_tags:
+      - energy_system_boundary
+      - industrial_installation_boundary
+    max_match_stage: family
+    confidence_cap: low
+    key_missing_differentiators:
+      - system architecture
+      - inverter or storage role
+      - utility or fixed-installation context
+    concise_reason: Energy-system signals indicate a fixed-installation or inverter/storage boundary case.
+
+  - id: specialty_agricultural
+    boundary_class: specialty_agricultural
+    label: Specialty agricultural boundary
+    priority: 95
+    preferred_route_anchor: specialty_electrical_boundary
+    families_any:
+      - specialty_electrical_device
+      - agricultural_appliance
+    traits_any:
+      - agricultural_special_use_boundary
+    boundary_tags_any:
+      - agricultural_special_use_boundary
+    add_boundary_tags:
+      - agricultural_special_use_boundary
+      - industrial_installation_boundary
+    max_match_stage: family
+    confidence_cap: low
+    key_missing_differentiators:
+      - agricultural special-use context
+      - animal-contact application
+      - fixed-installation scope
+    concise_reason: Specialty agricultural intent keeps routing conservative pending special-use review.
+
+  - id: medical_wellness
+    boundary_class: medical_wellness
+    label: Medical / wellness boundary
+    priority: 90
+    preferred_route_anchor: medical_wellness_boundary
+    families_any:
+      - respiratory_therapy
+      - wellness_electrostimulation
+      - wellness_light_device
+    traits_any:
+      - possible_medical_boundary
+      - medical_adjacent
+      - medical_claims
+    boundary_tags_any:
+      - possible_medical_boundary
+    add_boundary_tags:
+      - possible_medical_boundary
+    max_match_stage: family
+    confidence_cap: low
+    key_missing_differentiators:
+      - intended medical purpose
+      - therapy or diagnosis claim
+      - patient or clinical context
+    concise_reason: Medical or therapy-adjacent signals require a wellness versus medical boundary review.
+
+  - id: body_treatment_therapy
+    boundary_class: body_treatment
+    label: Body-treatment / therapy boundary
+    priority: 88
+    families_any:
+      - optical_beauty_device
+      - wellness_light_device
+    subfamilies_any:
+      - ipl_hair_removal_device
+      - uv_nail_lamp
+      - ultraviolet_appliance
+      - red_light_therapy_device
+    traits_any:
+      - body_treatment_boundary
+    boundary_tags_any:
+      - body_treatment_boundary
+    add_boundary_tags:
+      - body_treatment_boundary
+    max_match_stage: family
+    confidence_cap: low
+    key_missing_differentiators:
+      - cosmetic versus therapy intent
+      - body-contact treatment area
+      - treatment claims and duration
+    concise_reason: Body-treatment signals keep subtype confirmation conservative pending therapy-scope review.
+
+  - id: uv_irradiation
+    boundary_class: uv_irradiation
+    label: UV / irradiation boundary
+    priority: 86
+    preferred_route_anchor: lighting_core
+    families_any:
+      - optical_beauty_device
+      - optical_sanitizing_device
+      - wellness_sanitizer
+    subfamilies_any:
+      - uv_c_sanitizer
+      - ultraviolet_appliance
+    traits_any:
+      - uv_irradiation_boundary
+    boundary_tags_any:
+      - uv_irradiation_boundary
+    add_boundary_tags:
+      - uv_irradiation_boundary
+    max_match_stage: family
+    confidence_cap: low
+    key_missing_differentiators:
+      - irradiation intent
+      - sanitizing or beauty claim
+      - optical exposure context
+    concise_reason: UV or irradiation intent needs boundary review before committing to a narrow product route.
+
+  - id: machinery_system
+    boundary_class: machinery_system
+    label: Machinery / system boundary
+    priority: 84
+    preferred_route_anchor: machinery_tool
+    subfamilies_any:
+      - bench_saw
+      - rotary_tool
+    traits_any:
+      - machinery_boundary
+    boundary_tags_any:
+      - machinery_boundary
+    add_boundary_tags:
+      - machinery_boundary
+    max_match_stage: family
+    confidence_cap: medium
+    key_missing_differentiators:
+      - transportable tool versus stationary machinery scope
+      - exact tooling head
+      - operator and installation context
+    concise_reason: Machinery signals indicate a conservative tool versus machinery boundary decision.
+
+  - id: industrial_installation
+    boundary_class: industrial_installation
+    label: Industrial-installation boundary
+    priority: 82
+    traits_any:
+      - industrial_installation_boundary
+    boundary_tags_any:
+      - industrial_installation_boundary
+    add_boundary_tags:
+      - industrial_installation_boundary
+    max_match_stage: family
+    confidence_cap: low
+    key_missing_differentiators:
+      - fixed-installation context
+      - industrial environment
+      - integrator or system role
+    concise_reason: Fixed-installation signals require an installation boundary review.
+
+  - id: office_monitor_aio
+    boundary_class: office_monitor
+    label: Office monitor / all-in-one / kiosk ambiguity
+    priority: 78
+    preferred_route_anchor: avict_core
+    subfamilies_any:
+      - all_in_one_pc
+    boundary_tags_any:
+      - office_monitor_boundary
+    add_boundary_tags:
+      - office_monitor_boundary
+    max_match_stage: family
+    confidence_cap: medium
+    key_missing_differentiators:
+      - monitor versus PC role
+      - kiosk or terminal use
+      - integrated-computing scope
+    concise_reason: All-in-one desktop products stay conservative until monitor versus computing intent is clear.
+
+  - id: water_hygiene
+    boundary_class: water_hygiene
+    label: Water-dispensing / hygiene boundary
+    priority: 76
+    preferred_route_anchor: household_core
+    families_any:
+      - water_dispensing_appliance
+    subfamilies_any:
+      - water_dispenser
+    boundary_tags_any:
+      - hygiene_boundary
+    add_boundary_tags:
+      - hygiene_boundary
+    max_match_stage: family
+    confidence_cap: medium
+    key_missing_differentiators:
+      - plumbed versus bottled configuration
+      - chilled or heated dispensing path
+      - hygiene and water-contact architecture
+    concise_reason: Water-dispensing products need a hygiene boundary review before subtype commitment.

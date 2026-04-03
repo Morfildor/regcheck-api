@@ -3,7 +3,7 @@ products:
   label: UPS / battery backup unit
   product_family: energy_power_system
   product_subfamily: ups
-  route_family: av_ict
+  route_family: power_system_boundary
   primary_standard_code: EN 62368-1
   supporting_standard_codes:
   - EN 55032
@@ -54,9 +54,10 @@ products:
   - Battery safety review
   - UN 38.3 review
   - Energy storage / inverter system review
+  route_anchor: power_system_boundary
 - id: poe_injector
   label: PoE injector
-  product_family: network_power_device
+  product_family: networking_device
   product_subfamily: poe_injector
   route_family: av_ict
   primary_standard_code: EN 62368-1
@@ -98,6 +99,7 @@ products:
   - mains_powered
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core
 - id: heat_gun
   label: Heat gun
   product_family: portable_heating_tool
@@ -132,6 +134,7 @@ products:
   - mains_powered
   likely_standards:
   - EN 60335-2-45
+  route_anchor: household_core
 - id: rotary_tool
   label: Rotary tool
   product_family: industrial_power_equipment
@@ -173,6 +176,7 @@ products:
   likely_standards:
   - Power tool safety review
   - EN 62841-1
+  route_anchor: machinery_tool
 - id: bench_saw
   label: Bench saw / table saw
   product_family: industrial_power_equipment
@@ -212,3 +216,4 @@ products:
   likely_standards:
   - Power tool safety review
   - EN 62841-1
+  route_anchor: machinery_tool

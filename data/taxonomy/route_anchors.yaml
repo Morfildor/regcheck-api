@@ -1,0 +1,456 @@
+route_anchors:
+  - id: household_core
+    label: Household appliance
+    route_family: household_appliance
+    scope: appliance
+    exact_primary_candidates:
+      - EN 60335-1
+    prefix_primary_candidates:
+      - EN 60335-2-
+    signal_genres:
+      - household_appliance
+      - commercial_appliance
+      - hvac_environmental_appliance
+      - kitchen_food_appliance
+      - cooking_food_appliance
+      - cleaning_laundry_appliance
+      - personal_care_appliance
+      - garden_outdoor_appliance
+    signal_traits:
+      - heating
+      - cooking
+      - cleaning
+      - washing
+      - food_preparation
+      - beverage_preparation
+      - water_contact
+      - air_treatment
+      - fan_air_mover
+      - pump_system
+      - personal_care
+    connected_mode: avoid
+    wearable_mode: avoid
+
+  - id: household_connected
+    label: Connected household appliance
+    route_family: household_appliance
+    scope: appliance
+    exact_primary_candidates:
+      - EN 60335-1
+    prefix_primary_candidates:
+      - EN 60335-2-
+    signal_genres:
+      - household_appliance
+      - commercial_appliance
+      - hvac_environmental_appliance
+      - kitchen_food_appliance
+      - cooking_food_appliance
+      - cleaning_laundry_appliance
+      - personal_care_appliance
+      - garden_outdoor_appliance
+      - pet_tech
+    signal_traits:
+      - heating
+      - cooking
+      - cleaning
+      - washing
+      - food_preparation
+      - beverage_preparation
+      - water_contact
+      - air_treatment
+      - fan_air_mover
+      - pump_system
+      - personal_care
+    connected_mode: require
+    wearable_mode: avoid
+
+  - id: hvac_control
+    label: HVAC / building control
+    route_family: hvac_control
+    scope: appliance
+    exact_primary_candidates:
+      - EN 60730-2-9
+      - EN 60730-1
+    prefix_primary_candidates:
+      - EN 60730-
+    signal_families:
+      - hvac_control
+    signal_genres:
+      - hvac_environmental_appliance
+      - smart_home_iot
+    signal_traits:
+      - thermostat_control
+      - temperature_control
+      - radiator_control
+      - humidity_control
+      - building_control
+    connected_mode: ignore
+    wearable_mode: avoid
+
+  - id: lighting_core
+    label: Lighting / optical product
+    route_family: lighting_device
+    scope: appliance
+    exact_primary_candidates:
+      - EN IEC 62560
+      - EN 60598-1
+    prefix_primary_candidates:
+      - EN 60598-
+    signal_genres:
+      - lighting_device
+    signal_traits:
+      - lighting
+      - optical_emission
+      - photobiological_relevance
+      - lamp
+      - luminaire
+      - uv_emission
+      - infrared_emission
+    connected_mode: avoid
+    wearable_mode: avoid
+
+  - id: lighting_connected
+    label: Connected lighting / optical product
+    route_family: lighting_device
+    scope: appliance
+    exact_primary_candidates:
+      - EN IEC 62560
+      - EN 60598-1
+    prefix_primary_candidates:
+      - EN 60598-
+    signal_genres:
+      - lighting_device
+      - smart_home_iot
+    signal_traits:
+      - lighting
+      - optical_emission
+      - photobiological_relevance
+      - lamp
+      - luminaire
+      - uv_emission
+      - infrared_emission
+    connected_mode: require
+    wearable_mode: avoid
+
+  - id: avict_core
+    label: AV / ICT device
+    route_family: av_ict
+    scope: av_ict
+    exact_primary_candidates:
+      - EN 62368-1
+    signal_genres:
+      - av_ict_device
+      - security_access_iot
+      - smart_home_iot
+      - pet_tech
+    signal_traits:
+      - av_ict
+      - display
+      - data_storage
+      - camera
+      - speaker
+      - microphone
+      - network_gateway
+      - router_role
+      - access_point_role
+      - usb_hub_function
+    connected_mode: avoid
+    wearable_mode: avoid
+
+  - id: avict_connected
+    label: Connected AV / ICT device
+    route_family: av_ict
+    scope: av_ict
+    exact_primary_candidates:
+      - EN 62368-1
+    signal_genres:
+      - av_ict_device
+      - security_access_iot
+      - smart_home_iot
+      - pet_tech
+    signal_traits:
+      - av_ict
+      - display
+      - data_storage
+      - camera
+      - speaker
+      - microphone
+      - network_gateway
+      - router_role
+      - access_point_role
+      - usb_hub_function
+    connected_mode: require
+    wearable_mode: avoid
+
+  - id: avict_wearable
+    label: Wearable AV / ICT device
+    route_family: av_ict_wearable
+    scope: av_ict
+    exact_primary_candidates:
+      - EN 62368-1
+    signal_genres:
+      - av_ict_device
+      - wearable_device
+      - xr_immersive
+      - wellness_borderline_medical
+    signal_traits:
+      - av_ict
+      - wearable
+      - body_worn_or_applied
+      - close_proximity_emf
+      - biometric
+      - health_related
+      - speaker
+      - microphone
+      - display
+    connected_mode: ignore
+    wearable_mode: require
+
+  - id: building_access
+    label: Building access / security hardware
+    route_family: building_hardware
+    scope: appliance
+    exact_primary_candidates:
+      - EN 14846
+      - EN 12209
+      - EN 60335-2-95
+      - EN 60335-2-97
+      - EN 60335-2-103
+    signal_genres:
+      - building_access_drive
+      - building_hardware_lock
+      - security_access_iot
+    signal_families:
+      - building_access_device
+      - building_hardware_lock
+    signal_traits:
+      - access_control
+      - lock_function
+      - door_drive
+      - shutter_drive
+      - barrier_control
+      - security_or_barrier
+    connected_mode: ignore
+    wearable_mode: avoid
+
+  - id: life_safety_alarm
+    label: Life-safety alarm
+    route_family: life_safety_alarm
+    scope: appliance
+    exact_primary_candidates:
+      - EN 14604
+      - EN 50291-1
+    prefix_primary_candidates:
+      - EN 50291-
+    signal_genres:
+      - life_safety_alarm
+    signal_families:
+      - life_safety_alarm
+    signal_traits:
+      - smoke_alarm
+      - co_alarm
+      - life_safety
+      - fire_detection
+    connected_mode: ignore
+    wearable_mode: avoid
+
+  - id: ev_charging
+    label: EV charging equipment
+    route_family: ev_charging
+    scope: appliance
+    exact_primary_candidates:
+      - EN IEC 61851-1
+      - IEC 62752
+      - EN IEC 61851-21-2
+    prefix_primary_candidates:
+      - EN IEC 61851-
+    signal_genres:
+      - ev_charging_equipment
+    signal_families:
+      - ev_charging_equipment
+    signal_traits:
+      - ev_charging
+      - vehicle_supply
+      - charging_station
+      - charging_control
+    connected_mode: ignore
+    wearable_mode: avoid
+
+  - id: ev_connector_accessory
+    label: EV connector / cable accessory
+    route_family: ev_connector_accessory
+    primary_directive: LVD
+    scope: appliance
+    exact_primary_candidates:
+      - EN 62196-2
+    signal_genres:
+      - ev_charging_equipment
+    signal_families:
+      - ev_charging_equipment
+    signal_traits:
+      - ev_connector
+      - ev_cable_accessory
+      - connector_accessory
+    connected_mode: avoid
+    wearable_mode: avoid
+
+  - id: machinery_tool
+    label: Machinery / tool / outdoor powered equipment
+    route_family: machinery_power_tool
+    primary_directive: MD
+    scope: machinery
+    primary_directive: MD
+    exact_primary_candidates:
+      - EN 62841-1
+      - EN 50636-2-107
+    prefix_primary_candidates:
+      - EN 62841-
+      - EN 50636-
+      - EN 60335-2-77
+      - EN 60335-2-91
+      - EN 60335-2-92
+      - EN 60335-2-94
+      - EN 60335-2-107
+    signal_genres:
+      - electric_power_tool
+      - garden_outdoor_power
+    signal_traits:
+      - machine_like
+      - machinery_boundary
+      - cutting_tool
+      - rotating_tool
+      - traction_motor
+      - robotic_motion
+    connected_mode: ignore
+    wearable_mode: avoid
+
+  - id: toy
+    label: Toy / child-directed product
+    route_family: toy
+    primary_directive: TOY
+    scope: toy
+    primary_directive: TOY
+    exact_primary_candidates:
+      - EN 62115
+    signal_genres:
+      - connected_toy_childcare
+    signal_families:
+      - connected_child_product
+    signal_traits:
+      - toy
+      - child_directed
+    connected_mode: ignore
+    wearable_mode: avoid
+
+  - id: power_system_boundary
+    label: Energy system / inverter / storage boundary
+    route_family: power_system_boundary
+    scope: generic
+    signal_genres:
+      - energy_power_system
+    signal_families:
+      - energy_power_system
+    signal_traits:
+      - energy_system_boundary
+      - inverter_role
+      - fixed_installation
+      - storage_system
+      - metering_system
+    signal_boundary_tags:
+      - energy_system_boundary
+      - industrial_installation_boundary
+    connected_mode: ignore
+    wearable_mode: avoid
+    boundary_tags:
+      - energy_system_boundary
+      - industrial_installation_boundary
+    max_match_stage: family
+    route_confidence_cap: low
+    family_level_reason: Energy-system and fixed-installation products stay at family level pending boundary review.
+
+  - id: medical_wellness_boundary
+    label: Wellness / medical boundary
+    route_family: medical_wellness_boundary
+    scope: generic
+    signal_genres:
+      - wellness_borderline_medical
+    signal_families:
+      - respiratory_therapy
+      - wellness_electrostimulation
+      - wellness_light_device
+    signal_traits:
+      - possible_medical_boundary
+      - medical_adjacent
+      - medical_claims
+      - body_treatment_boundary
+      - therapy_use
+    signal_boundary_tags:
+      - possible_medical_boundary
+      - body_treatment_boundary
+    connected_mode: ignore
+    wearable_mode: ignore
+    boundary_tags:
+      - possible_medical_boundary
+    max_match_stage: family
+    route_confidence_cap: low
+    family_level_reason: Wellness and therapy-adjacent products stay at family level pending medical-boundary review.
+
+  - id: micromobility_boundary
+    label: Micromobility boundary
+    route_family: micromobility_device
+    scope: generic
+    primary_directive: MD
+    exact_primary_candidates:
+      - EN 15194
+      - EN 17128
+    signal_genres:
+      - micromobility
+    signal_families:
+      - micromobility_device
+    signal_traits:
+      - traction_motor
+      - light_means_of_transport
+    connected_mode: ignore
+    wearable_mode: avoid
+    route_confidence_cap: medium
+
+  - id: drone_uas_boundary
+    label: Drone / UAS boundary
+    route_family: drone_uas
+    scope: generic
+    exact_primary_candidates:
+      - UAS OPEN-CATEGORY REVIEW
+    signal_genres:
+      - drone_uas
+    signal_families:
+      - drone_device
+    signal_traits:
+      - drone
+      - flight_control
+      - uas
+    connected_mode: ignore
+    wearable_mode: avoid
+    route_confidence_cap: medium
+
+  - id: specialty_electrical_boundary
+    label: Specialty / agricultural electrical boundary
+    route_family: specialty_electrical_boundary
+    scope: generic
+    signal_genres:
+      - commercial_appliance
+    signal_families:
+      - specialty_electrical_device
+      - agricultural_appliance
+    signal_traits:
+      - agricultural_special_use_boundary
+      - industrial_installation_boundary
+    signal_boundary_tags:
+      - agricultural_special_use_boundary
+      - industrial_installation_boundary
+    connected_mode: ignore
+    wearable_mode: avoid
+    boundary_tags:
+      - industrial_installation_boundary
+    max_match_stage: family
+    route_confidence_cap: low
+    family_level_reason: Special-use electrical products stay at family level pending specialty-use review.

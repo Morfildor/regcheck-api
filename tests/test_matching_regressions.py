@@ -427,7 +427,9 @@ class MatchingRegressionTests(unittest.TestCase):
 
         self.assertEqual(result.product_type, "ups")
         self.assertEqual(result.product_match_stage, "family")
-        self.assertEqual(result.route_context.route_confidence, "medium")
+        self.assertEqual(result.route_context.primary_route_family, "power_system_boundary")
+        self.assertIsNone(result.primary_route_standard_code)
+        self.assertEqual(result.route_context.route_confidence, "low")
         self.assertIn("Energy storage / inverter system review", review_codes)
         self.assertIn(
             "Confirm whether the product is a standalone consumer device or part of a wider inverter, storage, metering, or fixed-installation energy system.",

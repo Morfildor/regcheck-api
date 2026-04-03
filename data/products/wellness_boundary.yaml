@@ -101,8 +101,14 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: CPAP, APAP, BiPAP devices for consumer sleep apnea therapy. Mains-powered with motor/blower. MDR borderline
-    review for medical-grade devices.
+  matching_notes: CPAP, APAP, BiPAP devices for consumer sleep apnea therapy. Mains-powered with motor/blower. MDR borderline review for medical-grade devices.
+  route_anchor: medical_wellness_boundary
+  route_family: medical_wellness_boundary
+  boundary_tags:
+  - possible_medical_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Medical or therapy-adjacent signals require a wellness versus medical boundary review.
 - id: ems_tens_device
   label: EMS / TENS wellness device
   aliases:
@@ -195,6 +201,8 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: medical_wellness_boundary
+  route_family: medical_wellness_boundary
 - id: red_light_therapy_device
   label: Red light therapy device
   aliases:
@@ -262,3 +270,11 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: medical_wellness_boundary
+  route_family: medical_wellness_boundary
+  boundary_tags:
+  - possible_medical_boundary
+  - body_treatment_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Body-treatment signals keep subtype confirmation conservative pending therapy-scope review.

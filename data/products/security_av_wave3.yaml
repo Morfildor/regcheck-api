@@ -51,6 +51,7 @@ products:
   likely_standards:
   - EN 62368-1
   - GDPR review
+  route_anchor: avict_core
 - id: occupancy_sensor
   label: Occupancy sensor / presence sensor
   product_family: building_sensor
@@ -92,6 +93,7 @@ products:
   - fixed_installation
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core
 - id: leak_detector
   label: Leak detector / flood sensor
   product_family: building_sensor
@@ -136,6 +138,7 @@ products:
   - fixed_installation
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core
 - id: conference_speakerphone
   label: Conference speakerphone
   product_family: conferencing_device
@@ -178,6 +181,7 @@ products:
   - microphone
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core
 - id: kvm_switch
   label: KVM switch
   product_family: office_avict_peripheral
@@ -215,9 +219,10 @@ products:
   - wired_networking
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core
 - id: all_in_one_pc
   label: All-in-one PC
-  product_family: workstation_computing_device
+  product_family: personal_computing_device
   product_subfamily: all_in_one_pc
   route_family: av_ict
   primary_standard_code: EN 62368-1
@@ -262,6 +267,7 @@ products:
   - mains_powered
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core
 - id: document_camera
   label: Document camera / visualizer
   product_family: creator_office_device
@@ -302,6 +308,7 @@ products:
   - camera
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core
 - id: presentation_clicker
   label: Presentation clicker / presenter remote
   product_family: office_avict_peripheral
@@ -341,3 +348,4 @@ products:
   - battery_powered
   likely_standards:
   - EN 62368-1
+  route_anchor: avict_core

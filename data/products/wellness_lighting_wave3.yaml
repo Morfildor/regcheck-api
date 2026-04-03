@@ -48,6 +48,7 @@ products:
   likely_standards:
   - EN 62471
   - UV / irradiation application review
+  route_anchor: lighting_core
 - id: ipl_hair_removal_device
   label: IPL hair-removal device
   product_family: optical_beauty_device
@@ -96,6 +97,7 @@ products:
   - EN 62471
   - UV / irradiation application review
   - MDR borderline review
+  route_anchor: lighting_core
 - id: ring_light
   label: Ring light
   product_family: lighting_accessory_device
@@ -131,6 +133,7 @@ products:
   - creator_equipment
   likely_standards:
   - EN 62471
+  route_anchor: lighting_core
 - id: emergency_light
   label: Emergency light
   product_family: lighting_accessory_device
@@ -165,6 +168,7 @@ products:
   - battery_powered
   likely_standards:
   - EN 62471
+  route_anchor: lighting_core
 - id: illuminated_mirror
   label: Illuminated mirror
   product_family: lighting_accessory_device
@@ -205,6 +209,7 @@ products:
   - bathroom_use
   likely_standards:
   - EN 62471
+  route_anchor: lighting_core
 - id: uv_sanitizing_box
   label: UV sanitizing box
   product_family: optical_sanitizing_device
@@ -251,6 +256,7 @@ products:
   likely_standards:
   - EN 62471
   - UV / irradiation application review
+  route_anchor: lighting_core
 - id: germicidal_lamp
   label: Germicidal lamp
   product_family: optical_sanitizing_device
@@ -298,6 +304,7 @@ products:
   likely_standards:
   - EN 62471
   - UV / irradiation application review
+  route_anchor: lighting_core
 - id: ir_illuminator
   label: IR illuminator
   product_family: optical_accessory_device
@@ -336,6 +343,7 @@ products:
   - infrared_emitting
   likely_standards:
   - EN 62471
+  route_anchor: lighting_core
 - id: smart_litter_box
   label: Smart litter box
   product_family: pet_hygiene_appliance
@@ -375,3 +383,4 @@ products:
   likely_standards:
   - EN 60335-1
   - Sterilization / hygiene appliance review
+  route_anchor: household_connected

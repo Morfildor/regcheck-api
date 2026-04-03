@@ -104,6 +104,7 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: household_core
 - id: air_purifier
   label: Air purifier
   product_family: air_treatment_cleaner
@@ -304,6 +305,7 @@ products:
   forbidden_traits:
   - water_contact
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: household_core
 - id: circulator
   label: Circulator
   aliases:
@@ -362,6 +364,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: water_handling_appliance
+  product_subfamily: circulator
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_rinsing_sink
   label: Commercial rinsing sink
   aliases:
@@ -416,6 +422,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: commercial_rinsing_sink
+  route_anchor: household_core
+  route_family: household_appliance
 - id: commercial_washing_machine
   label: Commercial washing machine
   aliases:
@@ -476,6 +486,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: commercial_washing_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: electrolyser_washing_machine
   label: Detergent-free electrolyser washing machine
   aliases:
@@ -541,9 +555,13 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: electrolyser_washing_machine
+  route_anchor: household_core
+  route_family: household_appliance
 - id: fan
   label: Fan
-  product_family: indoor_air_mover
+  product_family: climate_conditioning_appliance
   product_subfamily: fan
   family_keywords:
   - indoor air
@@ -678,9 +696,11 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: household_core
+  route_family: household_appliance
 - id: fan_heater
   label: Fan heater
-  product_family: indoor_air_mover
+  product_family: climate_conditioning_appliance
   product_subfamily: fan_heater
   family_keywords:
   - indoor air
@@ -759,6 +779,8 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: household_core
+  route_family: household_appliance
 - id: heat_pump
   label: Heat pump / air conditioner
   aliases:
@@ -865,6 +887,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: heat_pump
+  route_anchor: household_core
+  route_family: household_appliance
 - id: heated_carpet
   label: Heated carpet / underfloor heating mat
   aliases:
@@ -938,6 +964,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_heating_appliance
+  product_subfamily: heated_carpet
+  route_anchor: household_core
+  route_family: household_appliance
 - id: humidifier
   label: Humidifier
   aliases:
@@ -1041,6 +1071,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: humidifier
+  route_anchor: household_core
+  route_family: household_appliance
 - id: hvac_humidifier
   label: Humidifier for HVAC systems
   aliases:
@@ -1120,6 +1154,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: hvac_humidifier
+  route_anchor: household_core
+  route_family: household_appliance
 - id: immersion_heater
   label: Immersion heater
   aliases:
@@ -1178,6 +1216,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: water_heating_appliance
+  product_subfamily: immersion_heater
+  route_anchor: household_core
+  route_family: household_appliance
 - id: incubator
   label: Incubator
   aliases:
@@ -1220,6 +1262,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: incubator
+  route_anchor: household_core
+  route_family: household_appliance
 - id: livestock_heater
   label: Livestock heating appliance
   aliases:
@@ -1287,6 +1333,16 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: agricultural_appliance
+  product_subfamily: livestock_heater
+  route_anchor: specialty_electrical_boundary
+  route_family: specialty_electrical_boundary
+  boundary_tags:
+  - industrial_installation_boundary
+  - agricultural_special_use_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Specialty agricultural intent keeps routing conservative pending special-use review.
 - id: portable_air_conditioner
   label: Portable air conditioner / portable AC
   product_family: climate_conditioning_appliance
@@ -1354,6 +1410,7 @@ products:
   - compressor_system
   - fan_air_mover
   matching_notes: Dedicated portable-AC coverage distinguishes cooling appliances from air purifiers, fans, and dehumidifiers.
+  route_anchor: household_core
 - id: portable_immersion_heater
   label: Portable immersion heater
   aliases:
@@ -1412,6 +1469,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: water_heating_appliance
+  product_subfamily: portable_immersion_heater
+  route_anchor: household_core
+  route_family: household_appliance
 - id: room_dehumidifier
   label: Dehumidifier
   aliases:
@@ -1479,6 +1540,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: room_dehumidifier
+  route_anchor: household_core
+  route_family: household_appliance
 - id: room_heater
   label: Room heater
   aliases:
@@ -1595,6 +1660,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: room_heater
+  route_anchor: household_core
+  route_family: household_appliance
 - id: room_heating_appliance
   label: Room heating appliance
   aliases:
@@ -1676,6 +1745,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: room_heating_appliance
+  route_anchor: household_core
+  route_family: household_appliance
 - id: sauna_heater
   label: Sauna heater
   aliases:
@@ -1727,9 +1800,13 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: sauna_heater
+  route_anchor: household_core
+  route_family: household_appliance
 - id: smart_air_quality_monitor
   label: Smart indoor air quality monitor
-  product_family: environmental_monitor
+  product_family: smart_environment_sensor
   product_subfamily: smart_air_quality_monitor
   aliases:
   - air quality monitor
@@ -1864,8 +1941,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Indoor air quality monitors measuring CO2, VOC, PM2.5, temperature, humidity. Distinct from smoke/CO alarms
-    and air purifiers.
+  matching_notes: Indoor air quality monitors measuring CO2, VOC, PM2.5, temperature, humidity. Distinct from smoke/CO alarms and air purifiers.
+  route_anchor: avict_connected
+  route_family: av_ict
 - id: smart_radiator_valve
   label: Smart thermostatic radiator valve (TRV)
   product_family: hvac_control
@@ -1970,8 +2048,9 @@ products:
   - electrical
   - electronic
   forbidden_traits: []
-  matching_notes: Battery-powered motorized TRVs for smart radiator control. Distinct from smart thermostats which control
-    the boiler.
+  matching_notes: Battery-powered motorized TRVs for smart radiator control. Distinct from smart thermostats which control the boiler.
+  route_anchor: hvac_control
+  route_family: hvac_control
 - id: smart_thermostat
   label: Smart thermostat
   product_family: hvac_control
@@ -2193,6 +2272,7 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  route_anchor: hvac_control
 - id: smart_toilet
   label: Electric toilet / smart toilet
   aliases:
@@ -2280,6 +2360,10 @@ products:
   - electronic
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: smart_toilet
+  route_anchor: household_connected
+  route_family: household_appliance
 - id: storage_water_heater
   label: Storage water heater
   aliases:
@@ -2339,6 +2423,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: water_heating_appliance
+  product_subfamily: storage_water_heater
+  route_anchor: household_core
+  route_family: household_appliance
 - id: vaporizer
   label: Vaporizer
   aliases:
@@ -2388,6 +2476,10 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: climate_conditioning_appliance
+  product_subfamily: vaporizer
+  route_anchor: household_core
+  route_family: household_appliance
 - id: whirlpool_bath
   label: Whirlpool bath / spa bath
   aliases:
@@ -2465,3 +2557,7 @@ products:
   required_any_traits: []
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: washing_hygiene_appliance
+  product_subfamily: whirlpool_bath
+  route_anchor: household_core
+  route_family: household_appliance

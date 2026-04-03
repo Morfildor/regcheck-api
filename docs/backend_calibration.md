@@ -2,6 +2,8 @@
 
 Calibration and hardening now live in a small set of explicit backend touchpoints:
 
+- `data/taxonomy/*.yaml`
+  Governs product families, subfamilies, route anchors, and structured boundary decisions.
 - `app/services/classifier/traits.py`
   Keeps explicit-vs-inferred trait extraction disciplined, handles negations, and suppresses weak ambiguous product guesses before they leak into routing.
 - `app/services/rules/routing.py`
