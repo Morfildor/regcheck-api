@@ -1,0 +1,154 @@
+products:
+- id: garage_door_controller
+  label: Garage door controller / opener control module
+  product_family: building_access_device
+  product_subfamily: garage_door_controller
+  route_family: building_hardware
+  primary_standard_code: EN 60335-2-95
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - building_access_drive
+  aliases:
+  - garage door controller
+  - garage opener control module
+  - garage door wifi controller
+  - garage opener controller
+  - garage door opener controller
+  - controller for garage door opener
+  - smart gate opener controller
+  - gate opener controller
+  - opener control module
+  - garage control module
+  family_keywords:
+  - garage controller
+  - gate opener controller
+  - opener control module
+  preferred_clues:
+  - garage door
+  - garage opener
+  - gate opener
+  - door opener
+  - opener
+  - control module
+  exclude_clues:
+  - projector
+  - av receiver
+  family_traits:
+  - electrical
+  - electronic
+  - fixed_installation
+  - security_or_barrier
+  - smart_building
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - fixed_installation
+  - security_or_barrier
+  - smart_building
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - fixed_installation
+  - security_or_barrier
+  - smart_building
+  - wifi
+  - app_control
+  likely_standards:
+  - EN 60335-2-95
+  - EN 60335-1
+  strong_aliases:
+  - garage door controller
+  - garage opener control module
+  - garage opener controller
+  - controller for garage door opener
+  - gate opener controller
+  weak_aliases:
+  - garage door wifi controller
+  - garage door opener controller
+  - smart gate opener controller
+  - opener control module
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - fixed_installation
+  - smart_building
+  required_any_traits:
+  - electrical
+  - electronic
+  route_anchor: building_access
+- id: heated_wellness_mask
+  label: Heated wellness eye mask
+  product_family: personal_heating_appliance
+  product_subfamily: heated_wellness_mask
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-17
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - personal_care_appliance
+  aliases:
+  - heated eye mask
+  - usb heated eye mask
+  - rechargeable eye mask
+  - warming eye mask
+  - warm compress eye mask
+  family_keywords:
+  - eye mask
+  - heated mask
+  preferred_clues:
+  - heated
+  - eye mask
+  - rechargeable
+  - usb
+  family_traits:
+  - consumer
+  - electrical
+  - heating
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - heating
+  - battery_powered
+  - rechargeable
+  - portable
+  - body_worn_or_applied
+  - health_related
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - heating
+  - battery_powered
+  - rechargeable
+  - portable
+  - body_worn_or_applied
+  - health_related
+  likely_standards:
+  - EN 60335-2-17
+  - EN 60335-1
+  strong_aliases:
+  - heated eye mask
+  - usb heated eye mask
+  - rechargeable eye mask
+  weak_aliases:
+  - warming eye mask
+  - warm compress eye mask
+  minimum_match_score: 28
+  max_match_stage: family
+  family_level_reason: Heated wearable masks stay at family level until the catalog separates eye masks, wraps, and other wellness heating accessories.
+  boundary_tags:
+  - body_treatment_boundary
+  score_boost_if_traits:
+  - electrical
+  - heating
+  - battery_powered
+  - body_worn_or_applied
+  route_anchor: household_core

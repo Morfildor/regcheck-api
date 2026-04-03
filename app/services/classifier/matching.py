@@ -6,6 +6,7 @@ from dataclasses import dataclass, replace
 
 from app.domain.models import ConfidenceLevel, ProductMatchStage
 
+from .confusable_domains import DomainDisambiguationContext, apply_domain_role_matrices
 from .matching_legacy import _select_matched_products
 from .matching_runtime import (
     CompiledAlias,
@@ -359,6 +360,7 @@ def _build_product_candidate_v2(
     context: MatchingTextContext,
     compiled: CompiledProductMatcher,
     shortlist_score: int,
+    shortlist_reasons: tuple[str, ...],
 ) -> SubtypeCandidate | None:
     product = compiled.product
     blocked_phrases = _matching_clues(context.text, _string_list(product.get("not_when_text_contains")))
@@ -451,6 +453,7 @@ def _build_product_candidate_v2(
         boundary_tags=compiled.boundary_tags,
         head_phrases=tuple(phrase.normalized for phrase in compiled.head_phrases),
         head_terms=tuple(sorted(compiled.head_terms)),
+        shortlist_reasons=shortlist_reasons,
     )
 
 
@@ -513,7 +516,8 @@ def _role_parse_adjustment(candidate: SubtypeCandidate, context: MatchingTextCon
     pack = _candidate_role_pack(candidate)
     primary_phrase_support = _candidate_phrase_support(candidate, parse.primary_product_phrase)
     primary_head_support = _candidate_phrase_support(candidate, parse.primary_product_head)
-    primary_support = max(primary_phrase_support, primary_head_support)
+    primary_head_term_support = _candidate_phrase_support(candidate, parse.primary_product_head_term)
+    primary_support = max(primary_phrase_support, primary_head_support, primary_head_term_support)
 
     if primary_support:
         delta = 8 + primary_support * 6
@@ -675,6 +679,7 @@ def _filter_candidates(candidates: Sequence[SubtypeCandidate], context: Matching
                 primary_support = max(
                     _candidate_phrase_support(candidate, context.role_parse.primary_product_phrase),
                     _candidate_phrase_support(candidate, context.role_parse.primary_product_head),
+                    _candidate_phrase_support(candidate, context.role_parse.primary_product_head_term),
                 )
                 if primary_support:
                     kept.append(candidate)
@@ -688,7 +693,12 @@ def _filter_candidates(candidates: Sequence[SubtypeCandidate], context: Matching
         if _alias_only_matches_secondary_role(candidate, context):
             filtered_out.append(f"{candidate.id}: filtered because its alias appeared only inside a secondary role phrase")
             continue
-        if family_required_traits and not (family_required_traits & context.signal_traits) and generic_only:
+        if (
+            family_required_traits
+            and not (family_required_traits & context.signal_traits)
+            and generic_only
+            and not (candidate.matched_alias_field == "strong_aliases" and len((candidate.matched_alias or "").split()) >= 2)
+        ):
             filtered_out.append(f"{candidate.id}: filtered because family-required trait context was absent")
             continue
         if generic_only and negative_hits and not positive_hits:
@@ -731,14 +741,65 @@ def _apply_group_adjustments(group: str, group_candidates: Sequence[SubtypeCandi
     return dict(deltas), reasons
 
 
+def _domain_disambiguation_context(context: MatchingTextContext) -> DomainDisambiguationContext:
+    parse = context.role_parse
+    return DomainDisambiguationContext(
+        cue_hits=context.cue_hits,
+        signal_traits=context.signal_traits,
+        primary_head=parse.primary_product_head,
+        primary_head_term=parse.primary_product_head_term,
+        primary_head_quality=parse.primary_head_quality,
+        primary_head_conflict=parse.primary_head_conflict,
+        primary_is_accessory=parse.primary_is_accessory,
+        target_device=parse.target_device,
+        controlled_device=parse.controlled_device,
+        charged_device=parse.charged_device,
+        powered_device=parse.powered_device,
+        host_device=parse.host_device,
+        integrated_feature=parse.integrated_feature,
+        installation_context=parse.installation_context,
+    )
+
+
+def _apply_domain_disambiguation(
+    candidates: Sequence[SubtypeCandidate],
+    context: MatchingTextContext,
+) -> tuple[list[SubtypeCandidate], list[str], list[str]]:
+    adjustments = apply_domain_role_matrices(candidates, _domain_disambiguation_context(context))
+    if not adjustments:
+        return list(candidates), [], []
+
+    updated: list[SubtypeCandidate] = []
+    domain_reasons: list[str] = []
+    confusable_reasons: list[str] = []
+    for candidate in candidates:
+        adjustment = adjustments.get(candidate.id)
+        if adjustment is None:
+            updated.append(candidate)
+            continue
+        updated_candidate = replace(
+            candidate,
+            score=candidate.score + adjustment.delta,
+            reasons=candidate.reasons + adjustment.domain_role_reasons,
+            rerank_reasons=candidate.rerank_reasons + adjustment.domain_role_reasons,
+            domain_role_reasons=candidate.domain_role_reasons + adjustment.domain_role_reasons,
+            confusable_adjustments=candidate.confusable_adjustments + adjustment.confusable_adjustments,
+        )
+        updated.append(updated_candidate)
+        domain_reasons.extend(adjustment.domain_role_reasons)
+        confusable_reasons.extend(adjustment.confusable_adjustments)
+    return updated, domain_reasons, confusable_reasons
+
+
 def _rerank_candidates(
     candidates: Sequence[SubtypeCandidate],
     context: MatchingTextContext,
-) -> tuple[list[SubtypeCandidate], list[str], list[str], list[str]]:
+) -> tuple[list[SubtypeCandidate], list[str], list[str], list[str], list[str]]:
     updated: dict[str, SubtypeCandidate] = {candidate.id: candidate for candidate in candidates}
     rerank_reasons: list[str] = []
     accessory_reasons: list[str] = []
     generic_penalties: list[str] = []
+    confusable_domain_reasons: list[str] = []
 
     grouped: dict[str, list[SubtypeCandidate]] = defaultdict(list)
     for candidate in candidates:
@@ -754,18 +815,35 @@ def _rerank_candidates(
                 current,
                 score=current.score + delta,
                 reasons=current.reasons + tuple(reason for reason in reasons if reason.startswith(f"{candidate_id}:")),
+                rerank_reasons=current.rerank_reasons + tuple(reason for reason in reasons if reason.startswith(f"{candidate_id}:")),
+                confusable_adjustments=current.confusable_adjustments + tuple(
+                    reason for reason in reasons if reason.startswith(f"{candidate_id}:")
+                ),
             )
         rerank_reasons.extend(reasons)
+        confusable_domain_reasons.extend(reasons)
 
     for candidate_id, current in list(updated.items()):
         role_delta, role_notes = _role_parse_adjustment(current, context)
         if role_delta:
-            current = replace(current, score=current.score + role_delta, reasons=current.reasons + tuple(role_notes))
+            current = replace(
+                current,
+                score=current.score + role_delta,
+                reasons=current.reasons + tuple(role_notes),
+                rerank_reasons=current.rerank_reasons + tuple(role_notes),
+                domain_role_reasons=current.domain_role_reasons + tuple(role_notes),
+            )
             updated[candidate_id] = current
             rerank_reasons.extend(role_notes)
         penalty, reasons = _generic_alias_penalty(current, context)
         if penalty:
-            current = replace(current, score=current.score + penalty, reasons=current.reasons + tuple(reasons))
+            current = replace(
+                current,
+                score=current.score + penalty,
+                reasons=current.reasons + tuple(reasons),
+                rerank_reasons=current.rerank_reasons + tuple(reasons),
+                domain_role_reasons=current.domain_role_reasons + tuple(reasons),
+            )
             updated[candidate_id] = current
             generic_penalties.extend(reasons)
         accessory_delta, accessory_notes = _accessory_gate_adjustment(current, context)
@@ -774,11 +852,13 @@ def _rerank_candidates(
                 updated[candidate_id],
                 score=updated[candidate_id].score + accessory_delta,
                 reasons=updated[candidate_id].reasons + tuple(accessory_notes),
+                rerank_reasons=updated[candidate_id].rerank_reasons + tuple(accessory_notes),
+                domain_role_reasons=updated[candidate_id].domain_role_reasons + tuple(accessory_notes),
             )
             accessory_reasons.extend(accessory_notes)
 
     reranked = sorted(updated.values(), key=lambda row: (-row.score, row.id))
-    return reranked, rerank_reasons, accessory_reasons, generic_penalties
+    return reranked, rerank_reasons, accessory_reasons, generic_penalties, confusable_domain_reasons
 
 
 def _candidate_confidence_v2(
@@ -872,7 +952,8 @@ def _family_level_limiter(
     explicit_limit = str(top_subtype.product.get("family_level_reason") or "").strip()
     if explicit_limit and top_subtype.max_match_stage == "family":
         return explicit_limit
-    if role_parse.primary_head_conflict and top_subtype.matched_alias_generic_terms:
+    alias_token_count = len((top_subtype.matched_alias or "").split())
+    if role_parse.primary_head_conflict and top_subtype.matched_alias_generic_terms and alias_token_count <= 1:
         return "Primary head candidates remained in conflict, so subtype precision stays conservative."
     if role_parse.primary_is_accessory and (
         role_parse.target_device
@@ -894,7 +975,12 @@ def _family_level_limiter(
             return "Accessory or attachment wording conflicted with subtype-only cues, so the result stays at family level."
         if next_subtype and top_subtype.score - next_subtype.score < 12:
             return "Accessory or attachment wording keeps the family stable but leaves subtype competition unresolved."
-    if top_subtype.matched_alias_generic_terms and not top_subtype.positive_clues and len(top_subtype.family_keyword_hits) < 2:
+    if (
+        top_subtype.matched_alias_generic_terms
+        and alias_token_count <= 1
+        and not top_subtype.positive_clues
+        and len(top_subtype.family_keyword_hits) < 2
+    ):
         return "Subtype evidence is driven mainly by a generic alias without decisive supporting clues."
     if next_subtype and _group_for_candidate(top_subtype) and _group_for_candidate(top_subtype) == _group_for_candidate(next_subtype) and top_subtype.score - next_subtype.score < 12:
         return "Confusable subtype candidates remained close after reranking."
@@ -906,9 +992,12 @@ def _confidence_limiter(
     top_subtype: SubtypeCandidate,
     next_subtype: SubtypeCandidate | None,
 ) -> str | None:
-    if context.role_parse.primary_head_conflict and top_subtype.matched_alias_generic_terms:
+    alias_token_count = len((top_subtype.matched_alias or "").split())
+    if context.role_parse.primary_head_quality == "low" and not top_subtype.decisive:
+        return "head resolution stayed weak or overly modifier-driven"
+    if context.role_parse.primary_head_conflict and top_subtype.matched_alias_generic_terms and alias_token_count <= 1:
         return "primary head candidates remained conflicted"
-    if top_subtype.matched_alias_generic_terms and not top_subtype.positive_clues:
+    if top_subtype.matched_alias_generic_terms and alias_token_count <= 1 and not top_subtype.positive_clues:
         return "generic alias evidence lacked decisive supporting clues"
     if next_subtype and top_subtype.score - next_subtype.score < 8:
         return "rerank margin remained narrow"
@@ -959,25 +1048,68 @@ def _resolve_stage(
     return "ambiguous", "family evidence remained below the subtype confirmation threshold", contradictions, ambiguity_reason
 
 
-def _shortlist_basis(shortlist_scoring: dict[str, int]) -> list[str]:
-    return [f"{product_id}:{score}" for product_id, score in sorted(shortlist_scoring.items(), key=lambda item: (-item[1], item[0]))[:5]]
+def _shortlist_basis(shortlist_scoring: dict[str, int], shortlist_reasons: dict[str, tuple[str, ...]]) -> list[str]:
+    basis: list[str] = []
+    for product_id, score in sorted(shortlist_scoring.items(), key=lambda item: (-item[1], item[0]))[:5]:
+        reason = shortlist_reasons.get(product_id, ())
+        if reason:
+            basis.append(f"{product_id}:{score}:{reason[0]}")
+        else:
+            basis.append(f"{product_id}:{score}")
+    return basis
+
+
+def _why_not_reasons(
+    candidate: SubtypeCandidate,
+    winner: SubtypeCandidate,
+    *,
+    family_level_limiter: str | None,
+) -> tuple[str, ...]:
+    reasons = [f"score finished {winner.score - candidate.score} behind {winner.id}"]
+    if candidate.confusable_adjustments:
+        reasons.append(candidate.confusable_adjustments[0])
+    elif candidate.domain_role_reasons:
+        reasons.append(candidate.domain_role_reasons[0])
+    elif candidate.rerank_reasons:
+        reasons.append(candidate.rerank_reasons[0])
+    if family_level_limiter and candidate.family == winner.family:
+        reasons.append(f"winner stopped at family because: {family_level_limiter}")
+    return tuple(reasons[:3])
 
 
 def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> ClassifierMatchOutcome:
     role_parse = parse_product_roles(text)
     context = _build_matching_context(text, signal_traits, role_parse)
-    shortlisted_matchers, shortlist_scoring = _shortlist_product_matchers_v2(text, signal_traits)
+    shortlisted_matchers, shortlist_scoring, shortlist_reasons = _shortlist_product_matchers_v2(
+        text,
+        signal_traits,
+        include_reasons=True,
+    )
     generated = [
         candidate
         for matcher in shortlisted_matchers
-        if (candidate := _build_product_candidate_v2(context, matcher, shortlist_scoring.get(matcher.id, 0))) is not None
+        if (
+            candidate := _build_product_candidate_v2(
+                context,
+                matcher,
+                shortlist_scoring.get(matcher.id, 0),
+                shortlist_reasons.get(matcher.id, ()),
+            )
+        )
+        is not None
     ]
     filtered_candidates, filtered_out = _filter_candidates(generated, context)
-    candidates, rerank_reasons, accessory_reasons, generic_penalties = _rerank_candidates(filtered_candidates, context)
+    disambiguated_candidates, domain_role_reasons, confusable_domain_reasons = _apply_domain_disambiguation(
+        filtered_candidates, context
+    )
+    candidates, rerank_reasons, accessory_reasons, generic_penalties, group_confusable_reasons = _rerank_candidates(
+        disambiguated_candidates, context
+    )
+    confusable_domain_reasons = confusable_domain_reasons + group_confusable_reasons
 
     if not candidates:
         outcome = _build_empty_match_outcome(text, role_parse)
-        outcome.audit.shortlist_basis = _shortlist_basis(shortlist_scoring)
+        outcome.audit.shortlist_basis = _shortlist_basis(shortlist_scoring, shortlist_reasons)
         outcome.audit.filtered_out = filtered_out[:8]
         return outcome
 
@@ -1083,7 +1215,11 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
     strongest_negative_clues = _top_unique([hit for row in audit_rows for hit in row.negative_clues], limit=5)
     top_family_audit = [row.to_audit_candidate() for row in family_candidates[:3]]
     top_subtype_audit = [
-        row.to_audit_candidate(confidence=_candidate_confidence_v2(row, candidates[idx + 1] if idx + 1 < len(candidates) else None))
+        row.to_audit_candidate(
+            confidence=_candidate_confidence_v2(row, candidates[idx + 1] if idx + 1 < len(candidates) else None),
+            why_not_reasons=() if row.id == top_subtype.id else _why_not_reasons(row, top_subtype, family_level_limiter=family_level_limiter),
+            final_stop_reason=family_level_limiter if row.id == top_subtype.id else None,
+        )
         for idx, row in enumerate(candidates[:5])
     ]
 
@@ -1109,7 +1245,7 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
         normalized_text=text,
         normalized_text_summary=_normalized_text_summary(text),
         retrieval_basis=top_row_reasons,
-        shortlist_basis=_shortlist_basis(shortlist_scoring),
+        shortlist_basis=_shortlist_basis(shortlist_scoring, shortlist_reasons),
         filtered_out=filtered_out[:8],
         alias_hits=alias_hits,
         matched_aliases=alias_hits,
@@ -1118,6 +1254,8 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
         strongest_positive_clues=clue_hits,
         strongest_negative_clues=strongest_negative_clues,
         rerank_reasons=_top_unique(rerank_reasons, limit=8),
+        domain_role_disambiguation_reasons=_top_unique(domain_role_reasons, limit=8),
+        confusable_domain_reasons=_top_unique(confusable_domain_reasons, limit=8),
         accessory_gate_reasons=_top_unique(accessory_reasons, limit=8),
         generic_alias_penalties=_top_unique(generic_penalties, limit=8),
         top_family_candidates=top_family_audit,

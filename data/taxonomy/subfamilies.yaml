@@ -284,6 +284,9 @@ subfamilies:
 - id: garage_door_drive
   family: building_access_device
   label: Garage door drive
+- id: garage_door_controller
+  family: building_access_device
+  label: Garage door controller / opener control module
 - id: garment_steamer
   family: laundry_textile_appliance
   label: Garment steamer / clothes steamer
@@ -332,6 +335,9 @@ subfamilies:
 - id: heating_pad
   family: personal_heating_appliance
   label: Heating pad / heating blanket
+- id: heated_wellness_mask
+  family: personal_heating_appliance
+  label: Heated wellness eye mask
 - id: high_pressure_cleaner
   family: surface_cleaning_appliance
   label: High-pressure cleaner

@@ -317,6 +317,9 @@ products:
   - glucose sensor patch
   - flash glucose monitor
   - cgm patch
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: CGM wearables stay at family level until the wellness-versus-medical monitoring boundary is reviewed.
   weak_aliases:
   - continuous-glucose-monitor
   - continuousglucosemonitor
@@ -671,6 +674,9 @@ products:
   - wearable ecg
   - heart rhythm monitor
   - hrm sensor
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Heart-monitor and ECG wearables stay at family level pending wellness-versus-medical boundary review.
   weak_aliases:
   - heart-rate-monitor
   - heartratemonitor

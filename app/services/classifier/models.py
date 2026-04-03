@@ -25,10 +25,18 @@ class AuditCandidate:
     positive_clues: tuple[str, ...] = ()
     negative_clues: tuple[str, ...] = ()
     family_keyword_hits: tuple[str, ...] = ()
+    product_id: str | None = None
+    shortlist_reason: str | None = None
+    rerank_reason: str | None = None
+    confusable_adjustments: tuple[str, ...] = ()
+    domain_role_reasons: tuple[str, ...] = ()
+    why_not_reasons: tuple[str, ...] = ()
+    final_stop_reason: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.id,
+            "product_id": self.product_id or self.id,
             "label": self.label,
             "family": self.family,
             "subtype": self.subtype,
@@ -38,6 +46,12 @@ class AuditCandidate:
             "positive_clues": list(self.positive_clues),
             "negative_clues": list(self.negative_clues),
             "family_keyword_hits": list(self.family_keyword_hits),
+            "shortlist_reason": self.shortlist_reason,
+            "rerank_reason": self.rerank_reason,
+            "confusable_adjustments": list(self.confusable_adjustments),
+            "domain_role_reasons": list(self.domain_role_reasons),
+            "why_not_reasons": list(self.why_not_reasons),
+            "final_stop_reason": self.final_stop_reason,
         }
 
 
@@ -72,11 +86,34 @@ class ProductImpliedTraitDecision:
 
 
 @dataclass(frozen=True, slots=True)
+class HeadCandidateAudit:
+    phrase: str
+    head_term: str
+    score: int
+    source: str
+    quality: str = "low"
+    reasons: tuple[str, ...] = ()
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "phrase": self.phrase,
+            "head_term": self.head_term,
+            "score": self.score,
+            "source": self.source,
+            "quality": self.quality,
+            "reasons": list(self.reasons),
+        }
+
+
+@dataclass(frozen=True, slots=True)
 class RoleParseAudit:
     primary_product_phrase: str | None = None
     primary_product_head: str | None = None
+    primary_product_head_term: str | None = None
+    primary_head_quality: str | None = None
     primary_head_candidates: tuple[str, ...] = ()
     competing_primary_heads: tuple[str, ...] = ()
+    head_candidate_details: tuple[HeadCandidateAudit, ...] = ()
     accessory_or_attachment: tuple[str, ...] = ()
     target_device: tuple[str, ...] = ()
     controlled_device: tuple[str, ...] = ()
@@ -91,13 +128,17 @@ class RoleParseAudit:
     primary_head_source: str | None = None
     primary_is_accessory: bool = False
     primary_head_conflict: bool = False
+    head_conflict_reason: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "primary_product_phrase": self.primary_product_phrase,
             "primary_product_head": self.primary_product_head,
+            "primary_product_head_term": self.primary_product_head_term,
+            "primary_head_quality": self.primary_head_quality,
             "primary_head_candidates": list(self.primary_head_candidates),
             "competing_primary_heads": list(self.competing_primary_heads),
+            "head_candidate_details": [item.to_dict() for item in self.head_candidate_details],
             "accessory_or_attachment": list(self.accessory_or_attachment),
             "target_device": list(self.target_device),
             "controlled_device": list(self.controlled_device),
@@ -112,6 +153,7 @@ class RoleParseAudit:
             "primary_head_source": self.primary_head_source,
             "primary_is_accessory": self.primary_is_accessory,
             "primary_head_conflict": self.primary_head_conflict,
+            "head_conflict_reason": self.head_conflict_reason,
         }
 
 
@@ -180,8 +222,18 @@ class SubtypeCandidate:
     boundary_tags: tuple[str, ...] = ()
     head_phrases: tuple[str, ...] = ()
     head_terms: tuple[str, ...] = ()
+    shortlist_reasons: tuple[str, ...] = ()
+    rerank_reasons: tuple[str, ...] = ()
+    confusable_adjustments: tuple[str, ...] = ()
+    domain_role_reasons: tuple[str, ...] = ()
 
-    def to_audit_candidate(self, *, confidence: ConfidenceLevel) -> AuditCandidate:
+    def to_audit_candidate(
+        self,
+        *,
+        confidence: ConfidenceLevel,
+        why_not_reasons: tuple[str, ...] = (),
+        final_stop_reason: str | None = None,
+    ) -> AuditCandidate:
         return AuditCandidate(
             id=self.id,
             label=self.label,
@@ -193,6 +245,13 @@ class SubtypeCandidate:
             positive_clues=self.positive_clues,
             negative_clues=self.negative_clues,
             family_keyword_hits=self.family_keyword_hits,
+            product_id=self.id,
+            shortlist_reason=self.shortlist_reasons[0] if self.shortlist_reasons else None,
+            rerank_reason=self.rerank_reasons[0] if self.rerank_reasons else None,
+            confusable_adjustments=self.confusable_adjustments,
+            domain_role_reasons=self.domain_role_reasons,
+            why_not_reasons=why_not_reasons,
+            final_stop_reason=final_stop_reason,
         )
 
     def to_public_candidate(self, *, confidence: ConfidenceLevel, family_score: int) -> PublicProductCandidate:
@@ -248,6 +307,11 @@ class FamilySeedCandidate:
             positive_clues=self.representative.positive_clues,
             negative_clues=self.representative.negative_clues,
             family_keyword_hits=self.representative.family_keyword_hits,
+            product_id=self.representative.id,
+            shortlist_reason=self.representative.shortlist_reasons[0] if self.representative.shortlist_reasons else None,
+            rerank_reason=self.representative.rerank_reasons[0] if self.representative.rerank_reasons else None,
+            confusable_adjustments=self.representative.confusable_adjustments,
+            domain_role_reasons=self.representative.domain_role_reasons,
         )
 
 
@@ -266,6 +330,8 @@ class ClassifierMatchAudit:
     strongest_positive_clues: list[str] = field(default_factory=list)
     strongest_negative_clues: list[str] = field(default_factory=list)
     rerank_reasons: list[str] = field(default_factory=list)
+    domain_role_disambiguation_reasons: list[str] = field(default_factory=list)
+    confusable_domain_reasons: list[str] = field(default_factory=list)
     accessory_gate_reasons: list[str] = field(default_factory=list)
     generic_alias_penalties: list[str] = field(default_factory=list)
     negations: list[str] = field(default_factory=list)
@@ -295,6 +361,8 @@ class ClassifierMatchAudit:
             "strongest_positive_clues": list(self.strongest_positive_clues),
             "strongest_negative_clues": list(self.strongest_negative_clues),
             "rerank_reasons": list(self.rerank_reasons),
+            "domain_role_disambiguation_reasons": list(self.domain_role_disambiguation_reasons),
+            "confusable_domain_reasons": list(self.confusable_domain_reasons),
             "accessory_gate_reasons": list(self.accessory_gate_reasons),
             "generic_alias_penalties": list(self.generic_alias_penalties),
             "negations": list(self.negations),

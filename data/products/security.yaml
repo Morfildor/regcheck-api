@@ -775,13 +775,21 @@ products:
   route_family: av_ict
 - id: ip_intercom
   label: IP video intercom
+  family_keywords:
+  - intercom
+  - smart intercom
+  - video intercom
+  - access panel
   aliases:
   - ip intercom
+  - smart intercom
   - video intercom
   - door station ip
   - video door station
   - apartment intercom ip
   - access control intercom
+  - intercom access panel
+  - video intercom access panel
   - ip-intercom
   - ipintercom
   - ip intercoms
@@ -830,11 +838,17 @@ products:
   - security_access_iot
   strong_aliases:
   - ip intercom
+  - smart intercom
   - video intercom
   - door station ip
   - video door station
   - apartment intercom ip
   - access control intercom
+  preferred_clues:
+  - intercom
+  - access panel
+  - keypad
+  - camera
   weak_aliases:
   - ip-intercom
   - ipintercom
@@ -888,6 +902,7 @@ products:
   - nvr
   - dvr
   - video recorder
+  - poe recorder
   aliases:
   - nvr
   - dvr
@@ -896,12 +911,17 @@ products:
   - cctv recorder
   - surveillance recorder
   - poe nvr
+  - poe recorder
   - security camera recorder
+  - camera system recorder
+  - camera system with poe recorder
   preferred_clues:
   - network video recorder
   - digital video recorder
   - cctv recorder
   - surveillance recorder
+  - poe recorder
+  - camera system
   exclude_clues:
   - dash cam
   - body camera
@@ -939,7 +959,9 @@ products:
   weak_aliases:
   - surveillance recorder
   - poe nvr
+  - poe recorder
   - security camera recorder
+  - camera system recorder
   marketplace_aliases:
   - 8 channel nvr
   - 4 channel dvr
@@ -2293,6 +2315,7 @@ products:
   aliases:
   - smart smoke alarm
   - smart co alarm
+  - smart smoke alarm with carbon monoxide sensor
   - smart smoke and carbon monoxide alarm
   - smart smoke and carbon monoxide detector
   - wifi smoke detector
@@ -2383,11 +2406,17 @@ products:
   strong_aliases:
   - smart smoke alarm
   - smart co alarm
+  - smart smoke alarm with carbon monoxide sensor
   - smart smoke and carbon monoxide alarm
   - wifi smoke detector
   - connected smoke detector
   - smart carbon monoxide alarm
   - combination smoke co alarm smart
+  preferred_clues:
+  - carbon monoxide sensor
+  - carbon monoxide
+  - smoke alarm
+  - connected alarm
   weak_aliases:
   - smart-smoke-alarm
   - smartsmokealarm

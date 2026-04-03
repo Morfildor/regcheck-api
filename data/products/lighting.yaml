@@ -296,10 +296,14 @@ products:
 - id: smart_light_controller
   label: Smart lighting controller / bridge
   aliases:
+  - smart lighting controller
   - smart lighting bridge
+  - lighting controller
   - hue bridge
   - zigbee lighting controller
+  - zigbee light bridge controller
   - smart light hub
+  - lighting gateway
   - dali gateway
   - dmx controller smart
   - smart lighting gateway
@@ -352,10 +356,14 @@ products:
   genres:
   - smart_home_iot
   strong_aliases:
+  - smart lighting controller
   - smart lighting bridge
+  - lighting controller
   - hue bridge
   - zigbee lighting controller
+  - zigbee light bridge controller
   - smart light hub
+  - lighting gateway
   - dali gateway
   - dmx controller smart
   - smart lighting gateway

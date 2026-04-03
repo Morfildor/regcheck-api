@@ -1,0 +1,165 @@
+trait_detection:
+  connectivity:
+    microphone:
+    - \bmicrophones?\b
+    - \bstage microphones?\b
+  safety_wave4:
+    smoke_detection:
+    - \bsmoke alarm\b
+    - \bsmoke detector\b
+    co_detection:
+    - \bcarbon monoxide\b
+    - \bcarbon monoxide sensor\b
+    - \bco sensor\b
+  building_wave4:
+    access_control:
+    - \bdoor access\b
+    - \baccess keypad\b
+    - \bentry keypad\b
+    smart_building:
+    - \bdoor station\b
+    - \bgarage opener\b
+    - \bgarage door controller\b
+  power_wave4:
+    ups_function:
+    - \bups backup unit\b
+    - \bbattery backup unit\b
+    - \buninterruptible power supply\b
+cue_groups:
+  intercom_role:
+  - \bsmart intercom\b
+  - \bvideo intercom\b
+  - \bip intercom\b
+  - \bdoor station\b
+  - \bapartment intercom\b
+  intercom_access_context:
+  - \bintercom with keypad\b
+  - \bintercom with camera\b
+  - \bvideo intercom access panel\b
+  access_control_context:
+  - \baccess control\b
+  - \bdoor access\b
+  - \bbuilding entry\b
+  - \bentry keypad\b
+  - \baccess panel\b
+  garage_control_context:
+  - \bgarage door controller\b
+  - \bgarage opener control module\b
+  - \bgarage door wifi controller\b
+  - \bgarage opener controller\b
+  - \bopener control module\b
+  building_access_controller_context:
+  - \bgate controller\b
+  - \bdoor controller\b
+  - \baccess control module\b
+  - \bgarage control module\b
+  wireless_mic_context:
+  - \bstage microphones?\b
+  - \bwireless microphones?\b
+  - \blavalier\b
+  - \bmic pack\b
+  home_theater_context:
+  - \bhome theater\b
+  - \bhome cinema\b
+  - \bav receiver\b
+  - \bamplifier receiver\b
+  security_camera_poe_context:
+  - \bsecurity cameras?\b
+  - \bip cameras?\b
+  - \bsurveillance cameras?\b
+  - \bcctv cameras?\b
+  - \bpoe cameras?\b
+  recorder_system_role:
+  - \bnvr\b
+  - \bdvr\b
+  - \bnetwork video recorder\b
+  - \bpoe recorder\b
+  - \bcamera system\b
+  ups_backup_role:
+  - \bups backup unit\b
+  - \bbattery backup unit\b
+  - \buninterruptible power supply\b
+  - \bups for\b
+  nas_router_backup_context:
+  - \bnas\b
+  - \bnetwork attached storage\b
+  - \brouter\b
+  - \bmodem\b
+  - \boffice server\b
+  portable_power_station_context:
+  - \bportable power station\b
+  - \bpower station\b
+  - \bsolar generator\b
+  - \bbackup power station\b
+  document_camera_context:
+  - \bdocument camera\b
+  - \bvisualizer\b
+  - \bclassroom visualizer\b
+  - \bpresenter camera\b
+  - \blecture capture\b
+  kvm_context:
+  - \bkvm switch\b
+  - \bkeyboard video mouse switch\b
+  - \bdual monitors?\b
+  - \bmultiple computers\b
+  presentation_clicker_context:
+  - \bpresentation clicker\b
+  - \bremote clicker\b
+  - \bslide clicker\b
+  - \bpresenter remote\b
+  smoke_co_alarm_context:
+  - \bsmoke alarm\b
+  - \bsmoke detector\b
+  - \bcarbon monoxide alarm\b
+  - \bcarbon monoxide sensor\b
+  - \bsmart smoke\b
+  smart_lighting_controller_context:
+  - \bsmart lighting controller\b
+  - \bsmart lighting gateway\b
+  - \bsmart lighting bridge\b
+  - \bhue bridge\b
+  - \bdali gateway\b
+  - \bdmx controller\b
+  heated_wearable_context:
+  - \bheated eye mask\b
+  - \bwarming eye mask\b
+  - \busb rechargeable eye mask\b
+  - \brechargeable eye mask\b
+  vanity_mirror_context:
+  - \bvanity mirror\b
+  - \bmakeup mirror\b
+  - \billuminated mirror\b
+  - \blighted mirror\b
+relation_cue_packs:
+  target_device:
+    module_for:
+    - '\bcontrol module\s+for\b'
+    - '\bmodule\s+for\b'
+    panel_for:
+    - '\baccess panel\s+for\b'
+    receiver_for:
+    - '\bwireless receiver\s+for\b'
+    - '\breceiver\s+for\b'
+    unit_for:
+    - '\bbackup unit\s+for\b'
+    box_for:
+    - '\bcontrol box\s+for\b'
+    station_for:
+    - '\bstation\s+for\b'
+    visualizer_for:
+    - '\bvisualizer\s+for\b'
+  controlled_device:
+    controller_for:
+    - '\bgarage door controller\s+for\b'
+    - '\bgarage opener controller\s+for\b'
+    - '\bcontroller\s+for\b'
+    - '\bcontrol(?:ler)?\s+for\b'
+  powered_device:
+    backup_for:
+    - '\bups backup unit\s+for\b'
+    - '\bbattery backup unit\s+for\b'
+    - '\bbattery backup\s+for\b'
+  integrated_feature:
+    built_into:
+    - '\bbuilt into\b'
+    - '\bintegrated into\b'

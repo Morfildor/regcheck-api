@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .base import ambiguous_case, family_case, subtype_case
+from .base import family_case, subtype_case
 
 GROUP = "security_access"
 
@@ -19,14 +19,15 @@ CASES = (
     family_case(GROUP, "smart_doorbell_wifi", "smart doorbell with wifi and camera", "smart_home_security", tags=("boundary",)),
     subtype_case(GROUP, "smart_lock_wifi_keypad", "smart door lock with wifi bluetooth keypad and app control", "smart_lock"),
     subtype_case(GROUP, "smart_security_camera", "smart security camera with battery and wifi", "smart_security_camera"),
-    family_case(GROUP, "smart_smoke_co_alarm", "smart smoke co alarm with wifi and app", "life_safety_alarm", tags=("boundary",)),
+    subtype_case(GROUP, "smart_smoke_co_alarm", "smart smoke co alarm with wifi and app", "smart_smoke_co_alarm", tags=("boundary",)),
     subtype_case(GROUP, "smart_sensor_node", "smart sensor node with humidity and motion sensing", "smart_sensor_node"),
-    family_case(GROUP, "smoke_co_alarm", "smoke co alarm with battery backup", "life_safety_alarm", tags=("boundary",)),
+    subtype_case(GROUP, "smoke_co_alarm", "smoke co alarm with battery backup", "smoke_co_alarm", tags=("boundary",)),
     family_case(GROUP, "video_doorbell", "video doorbell with wifi and camera", "smart_home_security", tags=("boundary",)),
-    ambiguous_case(
+    subtype_case(
         GROUP,
         "controller_for_garage_door",
         "controller for garage door opener",
+        "garage_door_controller",
         forbidden_subtypes=("garage_door_drive",),
         tags=("relation", "contrastive"),
     ),

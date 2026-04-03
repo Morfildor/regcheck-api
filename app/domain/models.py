@@ -196,6 +196,7 @@ class StandardAuditItem(BaseModel):
 
 class ProductMatchAuditCandidate(BaseModel):
     id: str
+    product_id: str | None = None
     label: str
     family: str | None = None
     subtype: str | None = None
@@ -205,6 +206,46 @@ class ProductMatchAuditCandidate(BaseModel):
     positive_clues: list[str] = Field(default_factory=list)
     negative_clues: list[str] = Field(default_factory=list)
     family_keyword_hits: list[str] = Field(default_factory=list)
+    shortlist_reason: str | None = None
+    rerank_reason: str | None = None
+    confusable_adjustments: list[str] = Field(default_factory=list)
+    domain_role_reasons: list[str] = Field(default_factory=list)
+    why_not_reasons: list[str] = Field(default_factory=list)
+    final_stop_reason: str | None = None
+
+
+class ProductMatchAuditHeadCandidate(BaseModel):
+    phrase: str
+    head_term: str
+    score: int = 0
+    source: str
+    quality: str = "low"
+    reasons: list[str] = Field(default_factory=list)
+
+
+class ProductMatchAuditRoleParse(BaseModel):
+    primary_product_phrase: str | None = None
+    primary_product_head: str | None = None
+    primary_product_head_term: str | None = None
+    primary_head_quality: str | None = None
+    primary_head_candidates: list[str] = Field(default_factory=list)
+    competing_primary_heads: list[str] = Field(default_factory=list)
+    head_candidate_details: list[ProductMatchAuditHeadCandidate] = Field(default_factory=list)
+    accessory_or_attachment: list[str] = Field(default_factory=list)
+    target_device: list[str] = Field(default_factory=list)
+    controlled_device: list[str] = Field(default_factory=list)
+    charged_device: list[str] = Field(default_factory=list)
+    powered_device: list[str] = Field(default_factory=list)
+    host_device: list[str] = Field(default_factory=list)
+    mounted_on_or_for: list[str] = Field(default_factory=list)
+    integrated_feature: list[str] = Field(default_factory=list)
+    installation_context: list[str] = Field(default_factory=list)
+    cue_hits: list[str] = Field(default_factory=list)
+    parse_notes: list[str] = Field(default_factory=list)
+    primary_head_source: str | None = None
+    primary_is_accessory: bool = False
+    primary_head_conflict: bool = False
+    head_conflict_reason: str | None = None
 
 
 class ProductMatchAuditSuppression(BaseModel):
@@ -234,6 +275,8 @@ class ProductMatchAudit(BaseModel):
     strongest_positive_clues: list[str] = Field(default_factory=list)
     strongest_negative_clues: list[str] = Field(default_factory=list)
     rerank_reasons: list[str] = Field(default_factory=list)
+    domain_role_disambiguation_reasons: list[str] = Field(default_factory=list)
+    confusable_domain_reasons: list[str] = Field(default_factory=list)
     accessory_gate_reasons: list[str] = Field(default_factory=list)
     generic_alias_penalties: list[str] = Field(default_factory=list)
     negations: list[str] = Field(default_factory=list)
@@ -241,6 +284,7 @@ class ProductMatchAudit(BaseModel):
     product_implied_traits: list[ProductMatchAuditTraitDecision] = Field(default_factory=list)
     top_family_candidates: list[ProductMatchAuditCandidate] = Field(default_factory=list)
     top_subtype_candidates: list[ProductMatchAuditCandidate] = Field(default_factory=list)
+    role_parse: ProductMatchAuditRoleParse = Field(default_factory=ProductMatchAuditRoleParse)
     final_match_stage: ProductMatchStage = "ambiguous"
     final_match_reason: str | None = None
     ambiguity_reason: str | None = None

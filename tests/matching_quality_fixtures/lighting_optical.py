@@ -11,7 +11,7 @@ CASES = (
     family_case(GROUP, "projector_office", "office projector with hdmi input", "projector_device", tags=("boundary",)),
     subtype_case(GROUP, "smart_desk_lamp", "smart desk lamp with app dimming", "smart_desk_lamp"),
     subtype_case(GROUP, "smart_led_bulb", "smart led bulb with wifi and voice control", "smart_led_bulb"),
-    family_case(GROUP, "smart_light_controller", "smart lighting controller with zigbee", "smart_lighting", tags=("boundary",)),
+    family_case(GROUP, "smart_light_controller", "smart lighting controller with zigbee", "smart_power_control", tags=("boundary",)),
     subtype_case(GROUP, "smart_mirror", "smart mirror with display and speaker", "smart_mirror"),
     subtype_case(GROUP, "smart_tv", "smart tv with wifi and streaming apps", "smart_tv"),
     subtype_case(GROUP, "soundbar_tv", "soundbar with hdmi earc and bluetooth", "soundbar"),

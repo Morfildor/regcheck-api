@@ -267,6 +267,8 @@ def _contradiction_severity(contradictions: list[str]) -> str:
         return "none"
     if any("ambiguous" in item.lower() for item in contradictions):
         return "high"
+    if any("battery-powered and mains-powered" in item.lower() for item in contradictions):
+        return "high"
     if len(contradictions) >= 2:
         return "high"
     return "medium"

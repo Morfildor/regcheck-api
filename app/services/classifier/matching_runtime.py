@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 import re
-from typing import Any
+from typing import Any, Literal, overload
 
 from app.domain.catalog_types import ProductCatalogRow
 from app.services.knowledge_base import get_knowledge_base_snapshot
@@ -95,6 +95,7 @@ PRODUCT_HEAD_TERMS = frozenset(
         "alarm",
         "arm",
         "backup",
+        "box",
         "bracket",
         "cable",
         "camera",
@@ -107,12 +108,15 @@ PRODUCT_HEAD_TERMS = frozenset(
         "headset",
         "hub",
         "injector",
+        "intercom",
         "keypad",
         "lamp",
         "mirror",
+        "mask",
         "module",
         "monitor",
         "mount",
+        "operator",
         "panel",
         "player",
         "printer",
@@ -121,32 +125,55 @@ PRODUCT_HEAD_TERMS = frozenset(
         "scanner",
         "speaker",
         "stand",
+        "station",
         "switch",
         "terminal",
         "transmitter",
         "ups",
+        "unit",
+        "visualizer",
     }
 )
 PRODUCT_MULTIWORD_HEADS = frozenset(
     {
         "access point",
+        "access panel",
         "alarm keypad",
+        "alarm keypad panel",
+        "backup unit",
         "battery charger",
         "battery backup",
+        "carbon monoxide alarm",
+        "control module",
         "control panel",
+        "document camera",
+        "document camera visualizer",
         "digital signage player",
         "docking station",
+        "door controller",
+        "eye mask",
         "external power supply",
+        "garage door controller",
+        "garage opener controller",
         "keypad panel",
+        "kvm switch",
         "mini pc",
+        "microphone receiver",
         "monitor arm",
         "monitor stand",
         "poe injector",
         "power bank",
+        "power station",
+        "portable power station",
+        "smart intercom",
+        "smart smoke alarm",
         "smart display",
         "smart speaker",
+        "smoke co alarm",
         "thin client",
+        "ups backup unit",
         "usb hub",
+        "video intercom",
         "wireless microphone receiver",
     }
 )
@@ -458,14 +485,41 @@ def _shortlist_score_details(
     return score, reasons
 
 
-def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[tuple[CompiledProductMatcher, ...], dict[str, int]]:
+@overload
+def _shortlist_product_matchers_v2(
+    text: str,
+    signal_traits: set[str],
+    *,
+    include_reasons: Literal[False] = False,
+) -> tuple[tuple[CompiledProductMatcher, ...], dict[str, int]]: ...
+
+
+@overload
+def _shortlist_product_matchers_v2(
+    text: str,
+    signal_traits: set[str],
+    *,
+    include_reasons: Literal[True],
+) -> tuple[tuple[CompiledProductMatcher, ...], dict[str, int], dict[str, tuple[str, ...]]]: ...
+
+
+def _shortlist_product_matchers_v2(
+    text: str,
+    signal_traits: set[str],
+    *,
+    include_reasons: bool = False,
+) -> (
+    tuple[tuple[CompiledProductMatcher, ...], dict[str, int]]
+    | tuple[tuple[CompiledProductMatcher, ...], dict[str, int], dict[str, tuple[str, ...]]]
+):
     snapshot = _product_matching_snapshot()
     text_terms = set(text.split())
     shortlist_scoring: dict[str, int] = {}
+    shortlist_reasons: dict[str, tuple[str, ...]] = {}
     shortlisted: list[CompiledProductMatcher] = []
 
     for compiled in snapshot.products:
-        cheap_score, _reasons = _shortlist_score_details(
+        cheap_score, reasons = _shortlist_score_details(
             compiled,
             text_terms=text_terms,
             signal_traits=signal_traits,
@@ -474,11 +528,16 @@ def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[
             continue
 
         shortlist_scoring[compiled.id] = cheap_score
+        shortlist_reasons[compiled.id] = tuple(reasons)
         shortlisted.append(compiled)
 
     if not shortlisted:
         fallback = tuple(snapshot.products)
-        return fallback, {compiled.id: 0 for compiled in fallback}
+        fallback_scores = {compiled.id: 0 for compiled in fallback}
+        fallback_reasons: dict[str, tuple[str, ...]] = {compiled.id: () for compiled in fallback}
+        if include_reasons:
+            return fallback, fallback_scores, fallback_reasons
+        return fallback, fallback_scores
 
     shortlisted.sort(
         key=lambda compiled: (
@@ -494,7 +553,10 @@ def _shortlist_product_matchers_v2(text: str, signal_traits: set[str]) -> tuple[
     if len(shortlisted) > max_candidates:
         shortlisted = shortlisted[:max_candidates]
         shortlist_scoring = {compiled.id: shortlist_scoring[compiled.id] for compiled in shortlisted}
+        shortlist_reasons = {compiled.id: shortlist_reasons[compiled.id] for compiled in shortlisted}
 
+    if include_reasons:
+        return tuple(shortlisted), shortlist_scoring, shortlist_reasons
     return tuple(shortlisted), shortlist_scoring
 
 

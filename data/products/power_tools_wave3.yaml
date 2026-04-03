@@ -11,19 +11,30 @@ products:
   genres:
   - portable_energy
   - av_ict_device
+  family_keywords:
+  - ups
+  - battery backup
+  - backup unit
   aliases:
+  - ups
   - uninterruptible power supply
   - ups battery backup
+  - ups backup unit
   - line interactive ups
   - backup power unit
   preferred_clues:
   - battery backup
+  - backup unit
+  - nas
+  - router
+  - modem
   - power outage
   - runtime
   family_traits:
   - electrical
   - electronic
   - power_source
+  - ups_function
   subtype_traits:
   - electrical
   - electronic
@@ -54,6 +65,14 @@ products:
   - Battery safety review
   - UN 38.3 review
   - Energy storage / inverter system review
+  strong_aliases:
+  - ups
+  - uninterruptible power supply
+  - ups backup unit
+  - ups battery backup
+  weak_aliases:
+  - battery backup unit
+  - backup power unit
   route_anchor: power_system_boundary
 - id: poe_injector
   label: PoE injector

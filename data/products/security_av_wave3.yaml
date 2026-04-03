@@ -197,8 +197,12 @@ products:
   - kvm switch
   - keyboard video mouse switch
   - usb hdmi kvm
+  - kvm switch for dual monitors
   preferred_clues:
+  - dual monitor
+  - dual monitors
   - multiple computers
+  - keyboard mouse
   - workstation switching
   family_traits:
   - electronic
@@ -499,14 +503,21 @@ products:
   - EN 55035
   genres:
   - av_ict_device
+  family_keywords:
+  - microphone receiver
+  - stage microphones
+  - stage receiver
   aliases:
   - wireless microphone receiver
   - wireless mic receiver
   - lavalier receiver
   - mic receiver
   - receiver pack
+  - stage microphone receiver
   preferred_clues:
   - wireless microphone
+  - stage microphones
+  - stage microphone
   - receiver
   - audio
   - lavalier
@@ -541,9 +552,11 @@ products:
   - wireless microphone receiver
   - wireless mic receiver
   - lavalier receiver
+  - stage microphone receiver
   weak_aliases:
   - mic receiver
   - receiver pack
+  - wireless receiver
   marketplace_aliases:
   - wireless microphone receiver
   - wireless mic receiver
@@ -553,8 +566,8 @@ products:
   - av_ict
   - radio
   required_any_traits:
-  - electrical
-  - electronic
+  - microphone
+  - radio
   forbidden_traits: []
   matching_notes: Keeps microphone receivers separate from home cinema AV receivers.
   route_anchor: avict_core
@@ -571,12 +584,15 @@ products:
   - av_ict_device
   aliases:
   - document camera
+  - document camera visualizer
   - visualizer
   - presenter camera
   - classroom visualizer
   preferred_clues:
+  - classroom
   - lecture capture
   - overhead document viewing
+  - visualizer
   family_traits:
   - electronic
   - av_ict
@@ -612,10 +628,13 @@ products:
   - av_ict_device
   aliases:
   - presentation clicker
+  - remote clicker
   - presenter remote
   - slideshow remote
+  - slide clicker
   preferred_clues:
   - presentation
+  - clicker
   - slide advance
   family_traits:
   - electronic

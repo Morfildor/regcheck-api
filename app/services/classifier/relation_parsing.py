@@ -3,12 +3,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 
-from .matching_runtime import _product_matching_snapshot
-from .models import RoleParseAudit
+from .head_resolution import HeadCandidate, resolve_primary_head
+from .models import HeadCandidateAudit, RoleParseAudit
 from .normalization import normalize
 from .signal_config import get_classifier_signal_snapshot
 
 _ROLE_PARSE_PRIORITY = {
+    "built_into": 0,
     "with_integrated": 0,
     "built_in": 1,
     "charger_for": 2,
@@ -22,7 +23,11 @@ _ROLE_PARSE_PRIORITY = {
     "adapter_for": 10,
     "module_for": 11,
     "panel_for": 12,
-    "monitoring_for": 13,
+    "unit_for": 13,
+    "box_for": 14,
+    "station_for": 15,
+    "visualizer_for": 16,
+    "monitoring_for": 17,
     "for": 20,
     "with": 30,
     "mounted_on": 40,
@@ -42,8 +47,10 @@ _BINARY_ROLES = frozenset(
 _PREFIX_ROLE_BY_HEAD = {
     "adapter": "target_device",
     "backup": "powered_device",
+    "backup unit": "powered_device",
     "bracket": "mounted_on_or_for",
     "charger": "charged_device",
+    "control module": "controlled_device",
     "controller": "controlled_device",
     "dock": "host_device",
     "gateway": "host_device",
@@ -83,6 +90,18 @@ _ACCESSORY_HEAD_TERMS = frozenset(
         "ups",
     }
 )
+_ACCESSORY_HEAD_PHRASES = frozenset(
+    {
+        "backup unit",
+        "control module",
+        "docking station",
+        "gateway",
+        "monitor stand",
+        "receiver",
+        "terminal",
+        "ups backup unit",
+    }
+)
 _PREFIX_FILLER_TERMS = frozenset(
     {
         "all",
@@ -107,25 +126,44 @@ _SECONDARY_STOP_PATTERNS = tuple(
         r"\bwith\b",
         r"\bbuilt in\b",
         r"\bbuilt-in\b",
+        r"\bbuilt into\b",
         r"\bmounted on\b",
         r"\bmounted for\b",
     )
 )
-
-
-@dataclass(frozen=True, slots=True)
-class _HeadCandidate:
-    phrase: str
-    score: int
-    source: str
+_REVERSE_INTEGRATED_PATTERNS = tuple(
+    re.compile(pattern)
+    for pattern in (
+        r"\bbuilt into\b",
+        r"\bintegrated into\b",
+        r"\bbuilt in to\b",
+    )
+)
+_DECISIVE_FULL_HEAD_FRAGMENTS = frozenset(
+    {
+        "controller",
+        "control module",
+        "gateway",
+        "kvm switch",
+        "panel",
+        "poe recorder",
+        "receiver",
+        "video recorder",
+        "visualizer",
+    }
+)
+_GENERIC_PRIMARY_HEAD_TAILS = frozenset({"box", "camera", "display", "monitor", "station", "system", "unit"})
 
 
 @dataclass(frozen=True, slots=True)
 class ProductRoleParse:
     primary_product_phrase: str | None = None
     primary_product_head: str | None = None
+    primary_product_head_term: str | None = None
+    primary_head_quality: str | None = None
     primary_head_candidates: tuple[str, ...] = ()
     competing_primary_heads: tuple[str, ...] = ()
+    head_candidate_details: tuple[HeadCandidate, ...] = ()
     accessory_or_attachment: tuple[str, ...] = ()
     target_device: tuple[str, ...] = ()
     controlled_device: tuple[str, ...] = ()
@@ -140,6 +178,7 @@ class ProductRoleParse:
     primary_head_source: str | None = None
     primary_is_accessory: bool = False
     primary_head_conflict: bool = False
+    head_conflict_reason: str | None = None
 
     def role_values(self, role_name: str) -> tuple[str, ...]:
         return tuple(getattr(self, role_name, ()) or ())
@@ -148,8 +187,21 @@ class ProductRoleParse:
         return RoleParseAudit(
             primary_product_phrase=self.primary_product_phrase,
             primary_product_head=self.primary_product_head,
+            primary_product_head_term=self.primary_product_head_term,
+            primary_head_quality=self.primary_head_quality,
             primary_head_candidates=self.primary_head_candidates,
             competing_primary_heads=self.competing_primary_heads,
+            head_candidate_details=tuple(
+                HeadCandidateAudit(
+                    phrase=item.phrase,
+                    head_term=item.head_term,
+                    score=item.score,
+                    source=item.source,
+                    quality=item.quality,
+                    reasons=item.reasons,
+                )
+                for item in self.head_candidate_details
+            ),
             accessory_or_attachment=self.accessory_or_attachment,
             target_device=self.target_device,
             controlled_device=self.controlled_device,
@@ -164,6 +216,7 @@ class ProductRoleParse:
             primary_head_source=self.primary_head_source,
             primary_is_accessory=self.primary_is_accessory,
             primary_head_conflict=self.primary_head_conflict,
+            head_conflict_reason=self.head_conflict_reason,
         )
 
 
@@ -180,6 +233,23 @@ def _truncate_secondary_fragment(text: str) -> str:
     if cut_points:
         fragment = fragment[: min(cut_points)].strip()
     return fragment
+
+
+def _prefer_full_phrase_head(primary: HeadCandidate | None, full: HeadCandidate | None) -> bool:
+    if full is None:
+        return False
+    if primary is None:
+        return True
+    full_term = (full.head_term or full.phrase).strip()
+    primary_term = (primary.head_term or primary.phrase).strip()
+    if not full_term or full_term == primary_term:
+        return False
+    if not any(fragment in full_term for fragment in _DECISIVE_FULL_HEAD_FRAGMENTS):
+        return False
+    primary_tail = primary_term.split()[-1] if primary_term else ""
+    if primary_tail in _GENERIC_PRIMARY_HEAD_TAILS:
+        return True
+    return full.score >= primary.score + 14
 
 
 def _clean_prefix_phrase(text: str) -> str:
@@ -258,51 +328,7 @@ def _strip_installation_prefix(text: str) -> str:
     return result
 
 
-def _detect_primary_heads(segment: str) -> tuple[_HeadCandidate | None, tuple[str, ...], tuple[str, ...]]:
-    segment = _clean_fragment(segment)
-    if not segment:
-        return None, (), ()
-
-    snapshot = _product_matching_snapshot()
-    known_phrases = {phrase.normalized for phrase in snapshot.head_phrases}
-    known_terms = set(snapshot.head_terms) | set(_ACCESSORY_HEAD_TERMS)
-    tokens = segment.split()
-    start_index = max(0, len(tokens) - 6)
-    candidates: dict[str, _HeadCandidate] = {}
-
-    for left in range(start_index, len(tokens)):
-        for right in range(left + 1, min(len(tokens), left + 4) + 1):
-            phrase = " ".join(tokens[left:right])
-            tail = phrase.split()[-1]
-            if phrase not in known_phrases and tail not in known_terms:
-                continue
-            score = len(phrase.split()) * 12
-            if phrase in known_phrases:
-                score += 10
-            if tail in known_terms:
-                score += 8
-            end_distance = len(tokens) - right
-            score += max(0, 12 - end_distance * 4)
-            source = "catalog_head_phrase" if phrase in known_phrases else "generic_head_term"
-            existing = candidates.get(phrase)
-            if existing is None or score > existing.score:
-                candidates[phrase] = _HeadCandidate(phrase=phrase, score=score, source=source)
-
-    if not candidates:
-        tail = tokens[-1]
-        return _HeadCandidate(phrase=tail, score=8, source="tail_fallback"), (tail,), ()
-
-    ordered = sorted(candidates.values(), key=lambda row: (-row.score, -len(row.phrase.split()), row.phrase))
-    primary = ordered[0]
-    competing = tuple(
-        candidate.phrase
-        for candidate in ordered[1:]
-        if candidate.score >= primary.score - 4 and candidate.phrase != primary.phrase
-    )
-    return primary, tuple(candidate.phrase for candidate in ordered[:4]), competing[:3]
-
-
-def _infer_prefixed_role(primary_phrase: str, primary_head: str) -> tuple[str | None, str | None]:
+def _infer_prefixed_role(primary_phrase: str, primary_head: str, primary_head_term: str | None) -> tuple[str | None, str | None]:
     if not primary_phrase or not primary_head:
         return None, None
     if not primary_phrase.endswith(primary_head):
@@ -310,8 +336,21 @@ def _infer_prefixed_role(primary_phrase: str, primary_head: str) -> tuple[str | 
     prefix = _clean_prefix_phrase(primary_phrase[: -len(primary_head)])
     if not prefix:
         return None, None
-    head_tail = primary_head.split()[-1]
-    return _PREFIX_ROLE_BY_HEAD.get(head_tail), prefix
+    head_key = (primary_head_term or primary_head).strip()
+    head_tail = head_key.split()[-1]
+    return _PREFIX_ROLE_BY_HEAD.get(head_key) or _PREFIX_ROLE_BY_HEAD.get(head_tail), prefix
+
+
+def _reverse_integrated_relation(text: str) -> tuple[str, str] | None:
+    for pattern in _REVERSE_INTEGRATED_PATTERNS:
+        match = pattern.search(text)
+        if match is None:
+            continue
+        left_fragment = _truncate_secondary_fragment(text[: match.start()])
+        right_fragment = _truncate_secondary_fragment(text[match.end() :])
+        if left_fragment and right_fragment:
+            return right_fragment, left_fragment
+    return None
 
 
 def parse_product_roles(text: str) -> ProductRoleParse:
@@ -338,6 +377,12 @@ def parse_product_roles(text: str) -> ProductRoleParse:
         "mounted_on_or_for": [],
         "integrated_feature": [],
     }
+    reverse_integrated = _reverse_integrated_relation(primary_phrase)
+    if reverse_integrated is not None:
+        primary_phrase, integrated_feature = reverse_integrated
+        role_values["integrated_feature"].append(integrated_feature)
+        cue_hits.append("built_into")
+        notes.append(f"integrated feature: {integrated_feature}")
 
     if relation_match is not None:
         role_name, cue_name, match = relation_match
@@ -351,27 +396,49 @@ def parse_product_roles(text: str) -> ProductRoleParse:
                     role_values[role_name].append(secondary_fragment)
                     notes.append(f"{role_name.replace('_', ' ')}: {secondary_fragment}")
         elif role_name in {"integrated_feature", "mounted_on_or_for"}:
-            primary_phrase = normalized[: match.start()].strip() or primary_phrase
+            if cue_name != "built_into":
+                primary_phrase = normalized[: match.start()].strip() or primary_phrase
             secondary_fragment = _truncate_secondary_fragment(normalized[match.end() :])
             if secondary_fragment:
                 role_values[role_name].append(secondary_fragment)
                 notes.append(f"{role_name.replace('_', ' ')}: {secondary_fragment}")
 
     primary_phrase = _clean_fragment(primary_phrase or normalized)
-    head_candidate, head_candidates, competing_heads = _detect_primary_heads(primary_phrase)
+    head_resolution = resolve_primary_head(primary_phrase)
+    head_candidate = head_resolution.primary
+    if relation_match is not None and relation_match[0] in {"integrated_feature", "mounted_on_or_for"}:
+        full_head_resolution = resolve_primary_head(normalized)
+        full_head_candidate = full_head_resolution.primary
+        if full_head_candidate is not None and _prefer_full_phrase_head(head_candidate, full_head_candidate):
+            head_resolution = full_head_resolution
+            head_candidate = full_head_candidate
+            notes.append(
+                f"primary head kept full-phrase span '{full_head_candidate.phrase}' because it was more decisive than the relation-truncated span"
+            )
     primary_head = head_candidate.phrase if head_candidate is not None else None
+    primary_head_term = head_candidate.head_term if head_candidate is not None else None
     primary_head_source = head_candidate.source if head_candidate is not None else None
+    primary_head_quality = head_candidate.quality if head_candidate is not None else None
+    head_candidates = tuple(candidate.phrase for candidate in head_resolution.ordered[:5])
+    competing_heads = tuple(candidate.phrase for candidate in head_resolution.competing[:3])
     if primary_head:
-        notes.append(f"primary head '{primary_head}' from {primary_head_source or 'direct phrase'}")
+        notes.append(
+            f"primary head '{primary_head}' ({primary_head_term or primary_head}) from {primary_head_source or 'direct phrase'}"
+        )
+    if head_resolution.conflict_reason:
+        notes.append(head_resolution.conflict_reason)
 
-    prefixed_role, prefixed_value = _infer_prefixed_role(primary_phrase, primary_head or "")
+    prefixed_role, prefixed_value = _infer_prefixed_role(primary_phrase, primary_head or "", primary_head_term)
     if prefixed_role and prefixed_value:
         role_values[prefixed_role].append(prefixed_value)
-        primary_head_tail = (primary_head or "").split()[-1] if primary_head else "primary"
+        primary_head_tail = (primary_head_term or primary_head or "").split()[-1] if primary_head or primary_head_term else "primary"
         cue_hits.append(f"{primary_head_tail}_prefix")
         notes.append(f"{prefixed_role.replace('_', ' ')} inferred from primary phrase: {prefixed_value}")
 
-    primary_is_accessory = bool(primary_head and primary_head.split()[-1] in _ACCESSORY_HEAD_TERMS)
+    accessory_key = (primary_head_term or primary_head or "").strip()
+    primary_is_accessory = bool(
+        accessory_key in _ACCESSORY_HEAD_PHRASES or accessory_key.split()[-1] in _ACCESSORY_HEAD_TERMS
+    )
     if primary_is_accessory and primary_phrase:
         role_values["accessory_or_attachment"].append(primary_phrase)
         notes.append(f"accessory attachment primary phrase: {primary_phrase}")
@@ -379,8 +446,11 @@ def parse_product_roles(text: str) -> ProductRoleParse:
     return ProductRoleParse(
         primary_product_phrase=primary_phrase or None,
         primary_product_head=primary_head,
+        primary_product_head_term=primary_head_term,
+        primary_head_quality=primary_head_quality,
         primary_head_candidates=head_candidates,
         competing_primary_heads=competing_heads,
+        head_candidate_details=head_resolution.ordered,
         accessory_or_attachment=_dedupe(role_values["accessory_or_attachment"]),
         target_device=_dedupe(role_values["target_device"]),
         controlled_device=_dedupe(role_values["controlled_device"]),
@@ -395,6 +465,7 @@ def parse_product_roles(text: str) -> ProductRoleParse:
         primary_head_source=primary_head_source,
         primary_is_accessory=primary_is_accessory,
         primary_head_conflict=bool(competing_heads),
+        head_conflict_reason=head_resolution.conflict_reason,
     )
 
 

@@ -15,6 +15,7 @@ class MatchingQualityCase:
     expected_stage: str | None = None
     forbidden_subtypes: tuple[str, ...] = ()
     tags: tuple[str, ...] = ()
+    modes: tuple[str, ...] = ("curated",)
 
 
 def subtype_case(
@@ -25,6 +26,7 @@ def subtype_case(
     *,
     forbidden_subtypes: tuple[str, ...] = (),
     tags: tuple[str, ...] = (),
+    modes: tuple[str, ...] = ("curated",),
 ) -> MatchingQualityCase:
     return MatchingQualityCase(
         group=group,
@@ -34,6 +36,7 @@ def subtype_case(
         expected_stage="subtype",
         forbidden_subtypes=forbidden_subtypes,
         tags=("positive",) + tags,
+        modes=modes,
     )
 
 
@@ -45,6 +48,7 @@ def family_case(
     *,
     forbidden_subtypes: tuple[str, ...] = (),
     tags: tuple[str, ...] = (),
+    modes: tuple[str, ...] = ("curated",),
 ) -> MatchingQualityCase:
     return MatchingQualityCase(
         group=group,
@@ -54,6 +58,7 @@ def family_case(
         expected_stage="family",
         forbidden_subtypes=forbidden_subtypes,
         tags=("family_only",) + tags,
+        modes=modes,
     )
 
 
@@ -64,6 +69,7 @@ def ambiguous_case(
     *,
     forbidden_subtypes: tuple[str, ...] = (),
     tags: tuple[str, ...] = (),
+    modes: tuple[str, ...] = ("curated",),
 ) -> MatchingQualityCase:
     return MatchingQualityCase(
         group=group,
@@ -72,6 +78,7 @@ def ambiguous_case(
         expected_stage="ambiguous",
         forbidden_subtypes=forbidden_subtypes,
         tags=("ambiguous",) + tags,
+        modes=modes,
     )
 
 

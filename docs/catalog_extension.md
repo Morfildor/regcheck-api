@@ -129,6 +129,8 @@ Use family-level only handling for products such as:
 - industrial or fixed-installation boundary products
 - machinery/system boundary products
 - specialty agricultural electrical products
+- wellness-monitoring and therapy-adjacent wearables
+- drone controllers and other specialty control terminals
 
 Use a boundary anchor when the primary route itself should remain broad:
 
@@ -237,6 +239,8 @@ Prefer a mix of:
 - classifier regressions in `tests/test_classifier_hardening.py`
 - matching regressions in `tests/test_matching_regressions.py`
 - payload stability snapshots in `tests/snapshots/*.json`
+- grouped matching fixtures in `tests/matching_quality_fixtures/*.py`
+- adversarial and paraphrase matcher fixtures in `tests/matching_quality_fixtures/*_wave4.py`
 
 For new boundary products, include assertions for:
 
@@ -245,6 +249,37 @@ For new boundary products, include assertions for:
 - family-level-only behavior
 - route confidence
 - expected review items or missing-fact prompts
+
+Adversarial fixture conventions:
+
+- Use `modes=("adversarial",)`, `("paraphrase",)`, or `("organic",)` on matching fixtures so `scripts/eval_matching.py --mode ...` can slice them cleanly.
+- Prefer prompts with real collision pressure: accessory wording, `controller for`, `receiver for`, mixed camera or display cues, or messy host-device phrasing.
+- Include under-specified prompts that should stay at family level and boundary prompts that should remain ambiguous.
+- Keep case names stable and descriptive. The name becomes the durable failure key in eval summaries.
+
+Targeted cue-pack and alias guidance:
+
+1. Prefer `preferred_clues`, `family_keywords`, or a signal cue pack before adding a broad alias.
+2. Add generic-looking aliases only when the product row already has route-safe traits, contrastive clues, or explicit excludes.
+3. When extending controller, module, gateway, panel, receiver, backup, or station products, add a contrastive fixture in the same change.
+4. If a product should stay broad, use `max_match_stage: family` with a clear `family_level_reason` instead of weakening subtype thresholds globally.
+
+Matching evaluation workflow:
+
+```powershell
+.\venv\Scripts\python.exe .\scripts\eval_matching.py
+.\venv\Scripts\python.exe .\scripts\eval_matching.py --mode adversarial
+.\venv\Scripts\python.exe .\scripts\eval_matching.py --group security_access --mode paraphrase,organic
+.\venv\Scripts\python.exe .\scripts\eval_matching.py --json-out .\tmp\matching_eval.json
+```
+
+How to read the output:
+
+- `family_only_success_rate`: the matcher stayed disciplined on prompts that should not commit to subtype.
+- `low_margin_family_wins`: family-level wins with narrow margins that may still deserve more decisive clues.
+- `domain_confusion_summaries`: the main cross-domain leak pairs.
+- `unresolved_valid_products`: cases where the family was correct but subtype evidence still needs work.
+- `failures_by_reason`: JSON-only grouped failure buckets for targeted tuning.
 
 ## Safe Extension Checklist
 

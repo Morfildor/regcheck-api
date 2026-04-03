@@ -129,6 +129,9 @@ products:
   - drone remote
   - fpv controller
   - radio controller for drone
+  max_match_stage: family
+  route_confidence_cap: medium
+  family_level_reason: Drone remote controllers stay at family level until flight-control versus generic radio-controller scope is confirmed.
   weak_aliases:
   - drone-controller
   - dronecontroller
