@@ -477,16 +477,6 @@ traits:
   - \bextraction\b
   normalized_to: extraction
   normalization_priority: 0
-- id: fanless
-  label: Fanless / passive cooling
-  description: Uses passive cooling only; no active fans, relevant to noise, ingress protection, and reliability ratings
-  aliases:
-  - fanless
-  examples: []
-  regex:
-  - \bfanless\b
-  normalized_to: fanless
-  normalization_priority: 0
 - id: fixed_installation
   label: Fixed installation
   description: Intended to be fixed, wall mounted, ceiling mounted, built in, or otherwise permanently installed
@@ -661,16 +651,6 @@ traits:
   regex:
   - \bhumidification\b
   normalized_to: humidification
-  normalization_priority: 0
-- id: ice_making
-  label: Ice making
-  description: Produces ice as a primary function
-  aliases:
-  - ice making
-  examples: []
-  regex:
-  - \bice[ -]?making\b
-  normalized_to: ice_making
   normalization_priority: 0
 - id: immersion_risk
   label: Immersion risk

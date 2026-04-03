@@ -1,0 +1,332 @@
+products:
+- id: consumer_drone
+  label: Consumer camera drone
+  aliases:
+  - drone
+  - camera drone
+  - consumer drone
+  - quadcopter
+  - fpv drone
+  - aerial drone
+  - drones
+  - camera-drone
+  - cameradrone
+  - camera drones
+  - consumer-drone
+  - consumerdrone
+  - consumer drones
+  - quadcopters
+  - fpv-drone
+  - fpvdrone
+  - fpv drones
+  - aerial-drone
+  - aerialdrone
+  - aerial drones
+  - consumer camera drone
+  - consumer-camera-drone
+  - consumercameradrone
+  - consumer camera drones
+  product_family: drone_device
+  product_subfamily: consumer_drone
+  genres:
+  - drone_uas
+  implied_traits:
+  - wifi
+  - bluetooth
+  - camera
+  - gnss
+  functional_classes:
+  - aerial_device
+  - imaging_device
+  likely_standards:
+  - UAS open-category review
+  - EN 62368-1
+  strong_aliases:
+  - drone
+  - camera drone
+  - consumer drone
+  - quadcopter
+  - fpv drone
+  - aerial drone
+  weak_aliases:
+  - drones
+  - camera-drone
+  - cameradrone
+  - camera drones
+  - consumer-drone
+  - consumerdrone
+  - consumer drones
+  - quadcopters
+  - fpv-drone
+  - fpvdrone
+  - fpv drones
+  - aerial-drone
+  - aerialdrone
+  - aerial drones
+  - consumer camera drone
+  - consumer-camera-drone
+  - consumercameradrone
+  - consumer camera drones
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: UAS open-category review
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - wifi
+  - bluetooth
+  - camera
+  - gnss
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: drone_controller
+  label: Drone remote controller
+  aliases:
+  - drone controller
+  - drone remote
+  - fpv controller
+  - radio controller for drone
+  - drone-controller
+  - dronecontroller
+  - drone controllers
+  - drone-remote
+  - droneremote
+  - drone remotes
+  - fpv-controller
+  - fpvcontroller
+  - fpv controllers
+  - radio-controller-for-drone
+  - radiocontrollerfordrone
+  - radio controller for drones
+  - drone remote controller
+  - drone-remote-controller
+  - droneremotecontroller
+  - drone remote controllers
+  product_family: drone_device
+  product_subfamily: drone_controller
+  genres:
+  - drone_uas
+  implied_traits:
+  - display
+  - handheld
+  functional_classes:
+  - aerial_device
+  likely_standards:
+  - UAS open-category review
+  - EN 62368-1
+  strong_aliases:
+  - drone controller
+  - drone remote
+  - fpv controller
+  - radio controller for drone
+  weak_aliases:
+  - drone-controller
+  - dronecontroller
+  - drone controllers
+  - drone-remote
+  - droneremote
+  - drone remotes
+  - fpv-controller
+  - fpvcontroller
+  - fpv controllers
+  - radio-controller-for-drone
+  - radiocontrollerfordrone
+  - radio controller for drones
+  - drone remote controller
+  - drone-remote-controller
+  - droneremotecontroller
+  - drone remote controllers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: UAS open-category review
+    kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - display
+  - handheld
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: electric_fish_stunner
+  label: Electric fishing machine / fish stunner
+  aliases:
+  - electric fish stunner
+  - electric fishing machine
+  - electric-fish-stunner
+  - electricfishstunner
+  - electric fish stunners
+  - electric-fishing-machine
+  - electricfishingmachine
+  - electric fishing machines
+  - electric fishing machine fish stunner
+  - electric-fishing-machine-fish-stunner
+  - electricfishingmachinefishstunner
+  - electric fishing machine fish stunners
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_powered
+  functional_classes:
+  - specialty_appliance
+  likely_standards:
+  - EN 60335-2-86
+  - EN 60335-2-87
+  strong_aliases:
+  - electric fish stunner
+  - electric fishing machine
+  weak_aliases:
+  - electric-fish-stunner
+  - electricfishstunner
+  - electric fish stunners
+  - electric-fishing-machine
+  - electricfishingmachine
+  - electric fishing machines
+  - electric fishing machine fish stunner
+  - electric-fishing-machine-fish-stunner
+  - electricfishingmachinefishstunner
+  - electric fishing machine fish stunners
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-86
+    kind: unspecified
+  - ref: EN 60335-2-87
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: fence_energizer
+  label: Electric fence energizer
+  aliases:
+  - fence energizer
+  - electric fence controller
+  - fence-energizer
+  - fenceenergizer
+  - fence energizers
+  - electric-fence-controller
+  - electricfencecontroller
+  - electric fence controllers
+  - electric fence energizer
+  - electric-fence-energizer
+  - electricfenceenergizer
+  - electric fence energizers
+  implied_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_power_likely
+  functional_classes:
+  - agricultural_appliance
+  likely_standards:
+  - EN 60335-2-76
+  strong_aliases:
+  - fence energizer
+  - electric fence controller
+  weak_aliases:
+  - fence-energizer
+  - fenceenergizer
+  - fence energizers
+  - electric-fence-controller
+  - electricfencecontroller
+  - electric fence controllers
+  - electric fence energizer
+  - electric-fence-energizer
+  - electricfenceenergizer
+  - electric fence energizers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-76
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: milking_machine
+  label: Milking machine
+  aliases:
+  - milking machine
+  - electric milking machine
+  - vacuum milker
+  - milking-machine
+  - milkingmachine
+  - milking machines
+  - electric-milking-machine
+  - electricmilkingmachine
+  - electric milking machines
+  - vacuum-milker
+  - vacuummilker
+  - vacuum milkers
+  implied_traits:
+  - professional
+  - electrical
+  - motorized
+  - pumping
+  - mains_powered
+  - animal_use
+  functional_classes:
+  - agricultural_appliance
+  likely_standards:
+  - EN 60335-2-70
+  genres:
+  - commercial_appliance
+  strong_aliases:
+  - milking machine
+  - electric milking machine
+  - vacuum milker
+  weak_aliases:
+  - milking-machine
+  - milkingmachine
+  - milking machines
+  - electric-milking-machine
+  - electricmilkingmachine
+  - electric milking machines
+  - vacuum-milker
+  - vacuummilker
+  - vacuum milkers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-70
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - professional
+  - electrical
+  - motorized
+  - pumping
+  - mains_powered
+  - animal_use
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

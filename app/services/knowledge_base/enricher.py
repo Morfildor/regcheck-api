@@ -7,6 +7,7 @@ from typing import Any
 from app.domain.catalog_types import GenreCatalogRow, ProductCatalogRow, StandardCatalogRow
 
 from .paths import KnowledgeBaseError
+from .product_normalization import normalize_product_row
 from .validator import (
     ALLOWED_HARMONIZATION_STATUSES,
     _dedupe_keep_order,
@@ -48,7 +49,7 @@ def _enrich_products(rows: list[dict[str, Any]], genres: Sequence[GenreCatalogRo
     genre_index = _genre_map(genres)
     out: list[dict[str, Any]] = []
     for row in rows:
-        enriched = dict(row)
+        enriched = normalize_product_row(row)
         enriched["product_family"] = enriched.get("product_family") or enriched["id"]
         enriched["product_subfamily"] = enriched.get("product_subfamily") or enriched["id"]
         enriched.setdefault("required_clues", [])

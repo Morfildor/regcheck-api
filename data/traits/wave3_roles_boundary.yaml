@@ -56,6 +56,20 @@ traits:
   - \btherapy[ -]?boundary\b
   normalized_to: body_treatment_boundary
   normalization_priority: 0
+- id: agricultural_special_use_boundary
+  label: Agricultural / special-use boundary
+  description: Sits in agricultural, livestock, fencing, or other special-use electrical scope where ordinary consumer routes may overcommit.
+  aliases:
+  - agricultural special use boundary
+  - livestock equipment boundary
+  - fencing equipment boundary
+  examples: []
+  regex:
+  - \bagricultural[ -]?special[ -]?use[ -]?boundary\b
+  - \blivestock[ -]?equipment[ -]?boundary\b
+  - \bfencing[ -]?equipment[ -]?boundary\b
+  normalized_to: agricultural_special_use_boundary
+  normalization_priority: 0
 - id: conference_audio
   label: Conference audio
   description: Captures or reproduces meeting-room voice audio for conferencing, speakerphone, or collaboration use.

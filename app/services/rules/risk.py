@@ -110,7 +110,7 @@ def _risk_reasons(
         add("possible_medical_boundary", "overall", level, "Possible medical / wellness boundary", detail)
         add("possible_medical_boundary", "current", level, "Possible medical / wellness boundary", detail)
 
-    if "energy_system_boundary" in traits:
+    if {"energy_system_boundary", "battery_storage_system", "inverter_system", "ups_function"} & traits:
         detail = "The product appears to sit inside a wider inverter, storage, backup-power, or metering system, so standalone consumer assumptions may be unreliable."
         add("energy_system_boundary", "overall", "HIGH", "Energy-system boundary", detail)
         add("energy_system_boundary", "current", "HIGH", "Energy-system boundary", detail)
@@ -134,6 +134,11 @@ def _risk_reasons(
         detail = "The product looks tool-like or machine-like, but the exact handheld-versus-stationary machinery scope is still unresolved."
         add("machinery_boundary", "overall", "HIGH", "Machinery boundary", detail)
         add("machinery_boundary", "current", "HIGH", "Machinery boundary", detail)
+
+    if "agricultural_special_use_boundary" in traits:
+        detail = "The product looks agricultural or otherwise special-use, so ordinary household or AV/ICT assumptions may be unreliable."
+        add("agricultural_special_use_boundary", "overall", "MEDIUM", "Agricultural / special-use boundary", detail)
+        add("agricultural_special_use_boundary", "current", "MEDIUM", "Agricultural / special-use boundary", detail)
 
     if "MACH_REG" in directives:
         add(

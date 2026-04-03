@@ -1,0 +1,530 @@
+products:
+- id: home_energy_monitor
+  label: Home energy monitor
+  aliases:
+  - home energy monitor
+  - smart home energy monitor
+  - clamp meter wifi
+  - ct sensor energy monitor
+  - whole home energy monitor
+  - energy dashboard device
+  - home-energy-monitor
+  - homeenergymonitor
+  - home energy monitors
+  - smart-home-energy-monitor
+  - smarthomeenergymonitor
+  - smart home energy monitors
+  - clamp meter wi-fi
+  - clamp meter wi fi
+  - clamp-meter-wifi
+  - clampmeterwifi
+  - clamp meter wifis
+  - ct-sensor-energy-monitor
+  - ctsensorenergymonitor
+  - ct sensor energy monitors
+  - whole-home-energy-monitor
+  - wholehomeenergymonitor
+  - whole home energy monitors
+  - energy-dashboard-device
+  - energydashboarddevice
+  - energy dashboard devices
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - wifi
+  - bluetooth
+  - energy_monitoring
+  - smart_grid_ready
+  - app_control
+  - cloud
+  - data_storage
+  - display
+  - fixed_installation
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  strong_aliases:
+  - home energy monitor
+  - smart home energy monitor
+  - clamp meter wifi
+  - ct sensor energy monitor
+  - whole home energy monitor
+  - energy dashboard device
+  weak_aliases:
+  - home-energy-monitor
+  - homeenergymonitor
+  - home energy monitors
+  - smart-home-energy-monitor
+  - smarthomeenergymonitor
+  - smart home energy monitors
+  - clamp meter wi-fi
+  - clamp meter wi fi
+  - clamp-meter-wifi
+  - clampmeterwifi
+  - clamp meter wifis
+  - ct-sensor-energy-monitor
+  - ctsensorenergymonitor
+  - ct sensor energy monitors
+  - whole-home-energy-monitor
+  - wholehomeenergymonitor
+  - whole home energy monitors
+  - energy-dashboard-device
+  - energydashboarddevice
+  - energy dashboard devices
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_meter_display
+  label: Smart meter in-home display (IHD)
+  aliases:
+  - in-home display
+  - ihd
+  - smart meter display
+  - energy display unit
+  - smart meter consumer unit
+  - home area network display
+  - in home display
+  - in-home-display
+  - in-homedisplay
+  - in-home displays
+  - ihds
+  - smart-meter-display
+  - smartmeterdisplay
+  - smart meter displays
+  - energy-display-unit
+  - energydisplayunit
+  - energy display units
+  - smart-meter-consumer-unit
+  - smartmeterconsumerunit
+  - smart meter consumer units
+  - home-area-network-display
+  - homeareanetworkdisplay
+  - home area network displays
+  - smart meter in-home display (ihd)
+  - smart meter in home display (ihd)
+  - smart-meter-in-home-display-(ihd)
+  - smartmeterin-homedisplay(ihd)
+  - smart meter in-home display (ihd)s
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - display
+  - zigbee
+  - data_storage
+  - energy_monitoring
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - smart_home_iot
+  strong_aliases:
+  - in-home display
+  - ihd
+  - smart meter display
+  - energy display unit
+  - smart meter consumer unit
+  - home area network display
+  weak_aliases:
+  - in home display
+  - in-home-display
+  - in-homedisplay
+  - in-home displays
+  - ihds
+  - smart-meter-display
+  - smartmeterdisplay
+  - smart meter displays
+  - energy-display-unit
+  - energydisplayunit
+  - energy display units
+  - smart-meter-consumer-unit
+  - smartmeterconsumerunit
+  - smart meter consumer units
+  - home-area-network-display
+  - homeareanetworkdisplay
+  - home area network displays
+  - smart meter in-home display (ihd)
+  - smart meter in home display (ihd)
+  - smart-meter-in-home-display-(ihd)
+  - smartmeterin-homedisplay(ihd)
+  - smart meter in-home display (ihd)s
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electrical
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: solar_panel_module
+  label: Solar panel / PV module
+  aliases:
+  - solar panel
+  - pv panel
+  - photovoltaic panel
+  - solar module
+  - pv module
+  - solar-panel
+  - solarpanel
+  - solar panels
+  - pv-panel
+  - pvpanel
+  - pv panels
+  - photovoltaic-panel
+  - photovoltaicpanel
+  - photovoltaic panels
+  - solar-module
+  - solarmodule
+  - solar modules
+  - pv-module
+  - pvmodule
+  - pv modules
+  - solar panel pv module
+  - solar-panel-pv-module
+  - solarpanelpvmodule
+  - solar panel pv modules
+  implied_traits:
+  - consumer
+  - electrical
+  - fixed_installation
+  - outdoor_use
+  - solar_powered
+  functional_classes:
+  - power_device
+  likely_standards: []
+  genres: []
+  preferred_clues:
+  - solar panel
+  - pv module
+  - photovoltaic
+  exclude_clues:
+  - inverter
+  - gateway
+  - energy monitor
+  strong_aliases:
+  - solar panel
+  - pv panel
+  - photovoltaic panel
+  - solar module
+  - pv module
+  weak_aliases:
+  - solar-panel
+  - solarpanel
+  - solar panels
+  - pv-panel
+  - pvpanel
+  - pv panels
+  - photovoltaic-panel
+  - photovoltaicpanel
+  - photovoltaic panels
+  - solar-module
+  - solarmodule
+  - solar modules
+  - pv-module
+  - pvmodule
+  - pv modules
+  - solar panel pv module
+  - solar-panel-pv-module
+  - solarpanelpvmodule
+  - solar panel pv modules
+  marketplace_aliases: []
+  not_when_text_contains:
+  - inverter
+  - gateway
+  - energy monitor
+  negative_examples: []
+  likely_standard_refs: []
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - fixed_installation
+  - outdoor_use
+  - solar_powered
+  score_penalty_if_traits:
+  - inverter
+  - gateway
+  - energy monitor
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+- id: smart_meter_gateway
+  label: Smart meter gateway
+  product_family: energy_power_system
+  product_subfamily: smart_meter_gateway
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 55032
+  - EN 55035
+  genres:
+  - av_ict_device
+  - smart_home_iot
+  aliases:
+  - smart meter gateway
+  - energy gateway
+  - utility meter gateway
+  - din rail energy gateway
+  preferred_clues:
+  - utility meter
+  - din rail
+  - distribution board
+  family_traits:
+  - electrical
+  - electronic
+  - av_ict
+  subtype_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - metering
+  - smart_building
+  - wired_networking
+  - fixed_installation
+  - industrial_installation_boundary
+  - energy_system_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Smart meter gateways stay at family level pending installation, metering, and utility-system boundary review.
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  implied_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - metering
+  - smart_building
+  - wired_networking
+  - fixed_installation
+  - industrial_installation_boundary
+  - energy_system_boundary
+  likely_standards:
+  - EN 62368-1
+  - Energy storage / inverter system review
+  - GDPR review
+- id: solar_charge_controller
+  label: Solar charge controller
+  product_family: energy_power_system
+  product_subfamily: solar_charge_controller
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  genres:
+  - portable_energy
+  - av_ict_device
+  aliases:
+  - solar charge controller
+  - pv charge controller
+  - mppt charge controller
+  - pwm solar controller
+  - off grid solar controller
+  required_clues:
+  - solar charge controller
+  - mppt charge controller
+  preferred_clues:
+  - photovoltaic
+  - battery bank
+  - off grid
+  - solar regulator
+  family_traits:
+  - electrical
+  - electronic
+  - power_source
+  subtype_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - charger_role
+  - fixed_installation
+  - energy_system_boundary
+  - industrial_installation_boundary
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Solar charge controllers stay at family level pending energy-storage architecture and installation-boundary review.
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  implied_traits:
+  - electrical
+  - electronic
+  - av_ict
+  - charger_role
+  - fixed_installation
+  - energy_system_boundary
+  - industrial_installation_boundary
+  likely_standards:
+  - EN 62368-1
+  - Energy storage / inverter system review
+  - Charger / external PSU review
+- id: solar_inverter_gateway
+  label: Home solar inverter / energy gateway
+  product_family: energy_power_system
+  product_subfamily: solar_inverter_gateway
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  max_match_stage: family
+  route_confidence_cap: low
+  family_level_reason: Home solar inverter and storage-gateway products stay at family level pending system-architecture and installation-boundary review.
+  boundary_tags:
+  - energy_system_boundary
+  - industrial_installation_boundary
+  aliases:
+  - solar inverter
+  - pv inverter
+  - home solar gateway
+  - solar energy monitor
+  - solar management gateway
+  - micro-inverter
+  - hybrid solar inverter
+  - solar-inverter
+  - solarinverter
+  - solar inverters
+  - pv-inverter
+  - pvinverter
+  - pv inverters
+  - home-solar-gateway
+  - homesolargateway
+  - home solar gateways
+  - solar-energy-monitor
+  - solarenergymonitor
+  - solar energy monitors
+  - solar-management-gateway
+  - solarmanagementgateway
+  - solar management gateways
+  - micro inverter
+  - micro-inverters
+  - hybrid-solar-inverter
+  - hybridsolarinverter
+  - hybrid solar inverters
+  - balcony power storage
+  - balcony battery storage
+  - residential battery storage
+  - home battery storage
+  - home solar inverter energy gateway
+  - home-solar-inverter-energy-gateway
+  - homesolarinverterenergygateway
+  - home solar inverter energy gateways
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  - fixed_installation
+  - wifi
+  - bluetooth
+  - app_control
+  - ota
+  - cloud
+  - energy_monitoring
+  - energy_system_boundary
+  - inverter_system
+  - industrial_installation_boundary
+  - smart_grid_ready
+  - data_storage
+  - display
+  functional_classes:
+  - power_supply
+  - av_ict_device
+  - home_device
+  likely_standards:
+  - EN 62368-1
+  - Energy storage / inverter system review
+  genres:
+  - portable_energy
+  - av_ict_device
+  strong_aliases:
+  - solar inverter
+  - pv inverter
+  - home solar gateway
+  - solar energy monitor
+  - solar management gateway
+  - micro-inverter
+  - hybrid solar inverter
+  weak_aliases:
+  - solar-inverter
+  - solarinverter
+  - solar inverters
+  - pv-inverter
+  - pvinverter
+  - pv inverters
+  - home-solar-gateway
+  - homesolargateway
+  - home solar gateways
+  - solar-energy-monitor
+  - solarenergymonitor
+  - solar energy monitors
+  - solar-management-gateway
+  - solarmanagementgateway
+  - solar management gateways
+  - micro inverter
+  - micro-inverters
+  - hybrid-solar-inverter
+  - hybridsolarinverter
+  - hybrid solar inverters
+  - home solar inverter energy gateway
+  - home-solar-inverter-energy-gateway
+  - homesolarinverterenergygateway
+  - home solar inverter energy gateways
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - mains_powered
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.

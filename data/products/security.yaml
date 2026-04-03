@@ -125,6 +125,10 @@ products:
   - infant-monitor
   - infantmonitor
   - infant monitors
+  preferred_clues:
+  - baby
+  - infant
+  - nursery
   implied_traits:
   - consumer
   - household
@@ -1867,6 +1871,10 @@ products:
   - outdoor-camera
   - outdoorcamera
   - outdoor cameras
+  exclude_clues:
+  - baby
+  - infant
+  - nursery
   product_family: smart_home_security
   product_subfamily: smart_security_camera
   genres:

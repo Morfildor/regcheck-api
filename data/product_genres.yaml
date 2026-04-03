@@ -1758,3 +1758,45 @@ genres:
   - vehicle_supply
   score_penalty_if_traits: []
   negative_examples: []
+- id: energy_power_system
+  label: Energy / power system
+  keywords:
+  - home battery
+  - battery storage
+  - energy storage
+  - smart meter
+  - home energy monitor
+  - solar panel
+  - inverter system
+  traits:
+  - electrical
+  - power_source
+  - energy_system_boundary
+  default_traits:
+  - fixed_installation
+  - industrial_installation_boundary
+  functional_classes:
+  - power_device
+  - energy_device
+  likely_standards:
+  - Energy storage / inverter system review
+  strong_keywords:
+  - home battery
+  - battery storage
+  - energy storage
+  - smart meter
+  - home energy monitor
+  - solar panel
+  - inverter system
+  weak_keywords: []
+  likely_standard_refs:
+  - ref: Energy storage / inverter system review
+    kind: unspecified
+  minimum_match_score: 20
+  score_boost_if_traits:
+  - electrical
+  - power_source
+  - energy_system_boundary
+  - fixed_installation
+  score_penalty_if_traits: []
+  negative_examples: []

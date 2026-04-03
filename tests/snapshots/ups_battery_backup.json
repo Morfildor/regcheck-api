@@ -49,7 +49,6 @@
   ],
   "route_context": {
     "context_tags": [
-      "boundary:energy_system",
       "power:external_psu",
       "power:portable_battery",
       "primary:av_ict",

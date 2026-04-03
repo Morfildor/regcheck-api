@@ -2289,6 +2289,10 @@ products:
   - fridge
   - freezer
   - fridge freezer
+  - smart refrigerator
+  - smart fridge
+  - connected refrigerator
+  - connected fridge
   - wine cooler
   - refrigerators
   - fridges
@@ -2303,6 +2307,11 @@ products:
   - refrigerator-freezer
   - refrigeratorfreezer
   - refrigerator freezers
+  preferred_clues:
+  - touchscreen
+  - internal camera
+  - app control
+  - ota
   implied_traits:
   - consumer
   - household
@@ -2330,6 +2339,10 @@ products:
   - fridge
   - freezer
   - fridge freezer
+  - smart refrigerator
+  - smart fridge
+  - connected refrigerator
+  - connected fridge
   - wine cooler
   weak_aliases:
   - refrigerators

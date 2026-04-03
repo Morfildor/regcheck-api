@@ -26,6 +26,14 @@ from . import routing_legislation_helpers as _legislation_helpers
 from . import routing_plan_helpers as _plan_helpers
 from . import routing_scalar_helpers as _scalar_helpers
 from .contracts import ClassifierTraitsSnapshot, NormalizedTraitStateMap
+from .route_anchors import (
+    ROUTE_FAMILY_PRIMARY_DIRECTIVE,
+    ROUTE_FAMILY_SCOPE,
+    ROUTE_STANDARD_FAMILY_RULES,
+    best_primary_standard_for_family as _best_primary_standard_for_family_shared,
+    family_from_standard_code as _family_from_standard_code_shared,
+    normalized_standard_codes as _normalized_standard_codes_shared,
+)
 from .routing_models import AnalysisDepth, AnalysisTrace, LegislationSelection, PreparedAnalysis, RoutePlan, StandardsSelection
 
 
@@ -456,26 +464,6 @@ SMALL_SMART_62368_GENRES = {
     "pet_tech",
 }
 
-ROUTE_FAMILY_SCOPE = {
-    "household_appliance": "appliance",
-    "av_ict": "av_ict",
-    "av_ict_wearable": "av_ict",
-    "lighting_device": "appliance",
-    "building_hardware": "appliance",
-    "hvac_control": "appliance",
-    "life_safety_alarm": "appliance",
-    "ev_charging": "appliance",
-    "ev_connector_accessory": "appliance",
-    "machinery_power_tool": "machinery",
-    "toy": "toy",
-}
-
-ROUTE_FAMILY_PRIMARY_DIRECTIVE = {
-    "ev_connector_accessory": "LVD",
-    "machinery_power_tool": "MD",
-    "toy": "TOY",
-}
-
 PRIMARY_DIRECTIVE_EXCLUSIONS = {
     "MD": {"LVD"},
     "TOY": {"LVD"},
@@ -494,18 +482,6 @@ OVERLAY_DIRECTIVE_KEYS = {
     "ESPR",
     "CRA",
 }
-
-ROUTE_STANDARD_FAMILY_RULES: tuple[tuple[str, str, str], ...] = (
-    ("EN IEC 61851-", "ev_charging", "EV charging equipment"),
-    ("IEC 62752", "ev_charging", "portable EV charging equipment"),
-    ("EN 62196-2", "ev_connector_accessory", "EV connector / cable accessory"),
-    ("EN 62841-", "machinery_power_tool", "power-tool / machinery equipment"),
-    ("EN IEC 62560", "lighting_device", "lighting product"),
-    ("EN 60598-", "lighting_device", "lighting product"),
-    ("EN 60335-", "household_appliance", "household appliance"),
-    ("EN 62368-1", "av_ict", "AV/ICT equipment"),
-)
-
 
 def _classifier_snapshot(traits_data: ClassifierTraitsSnapshot | Mapping[str, Any]) -> ClassifierTraitsSnapshot:
     if isinstance(traits_data, ClassifierTraitsSnapshot):
@@ -538,15 +514,15 @@ def _route_scope_from_family(route_family: str | None) -> str | None:
 
 
 def _normalized_standard_codes(codes: set[str] | list[str] | None) -> list[str]:
-    return _plan_helpers._normalized_standard_codes(codes)
+    return _normalized_standard_codes_shared(codes)
 
 
 def _family_from_standard_code(code: str, prefer_wearable: bool) -> str | None:
-    return _plan_helpers._family_from_standard_code(ROUTE_STANDARD_FAMILY_RULES, code, prefer_wearable)
+    return _family_from_standard_code_shared(code, prefer_wearable)
 
 
 def _best_primary_standard_for_family(route_family: str, preferred_codes: list[str]) -> str | None:
-    return _plan_helpers._best_primary_standard_for_family(ROUTE_STANDARD_FAMILY_RULES, route_family, preferred_codes)
+    return _best_primary_standard_for_family_shared(route_family, preferred_codes)
 
 
 def _build_route_plan(

@@ -49,7 +49,7 @@ class MatchingRegressionTests(unittest.TestCase):
         self.assertEqual(robotic.product_type, "robotic_lawn_mower")
         self.assertIn("EN 50636-2-107", {item.code for item in robot.standards})
         self.assertIn("EN 50636-2-107", {item.code for item in robotic.standards})
-        self.assertIn("EN 60335-2-107", {item.code for item in robot.review_items})
+        self.assertIn("EN 50636 review", {item.code for item in robot.review_items})
 
     def test_battery_av_ict_product_keeps_62368_as_review_when_lvd_is_absent(self) -> None:
         result = analyze("Digital audio player / DAC")
@@ -274,7 +274,6 @@ class MatchingRegressionTests(unittest.TestCase):
     def test_small_smart_products_keep_62368_review_even_with_appliance_adjacent_traits(self) -> None:
         for description in [
             "smart air sensor",
-            "smart radiator valve",
             "smart irrigation controller",
             "smart water bottle",
         ]:
@@ -282,6 +281,14 @@ class MatchingRegressionTests(unittest.TestCase):
                 result = analyze(description)
                 review_codes = {item.code for item in result.review_items}
                 self.assertIn("EN 62368-1", review_codes)
+
+    def test_smart_radiator_valve_prefers_hvac_control_route_over_small_avict_review(self) -> None:
+        result = analyze("smart radiator valve")
+
+        self.assertEqual(result.product_type, "smart_radiator_valve")
+        self.assertEqual(result.route_context.primary_route_family, "hvac_control")
+        self.assertNotIn("EN 62368-1", {item.code for item in result.review_items})
+        self.assertIn("CRA review", {item.code for item in result.review_items})
 
     def test_small_smart_products_do_not_assume_radio_without_wireless_text(self) -> None:
         for description in [

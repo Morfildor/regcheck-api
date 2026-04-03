@@ -218,7 +218,7 @@ def _validate_products(data: dict[str, Any], trait_ids: set[str], genre_ids: set
 
         _validate_alias_fields(owner, row)
 
-        for field in ("product_family", "product_subfamily"):
+        for field in ("product_family", "product_subfamily", "route_anchor", "route_family"):
             value = row.get(field)
             if value is not None and (not isinstance(value, str) or not value.strip()):
                 raise KnowledgeBaseError(f"{owner} field '{field}' must be a non-empty string when provided.")

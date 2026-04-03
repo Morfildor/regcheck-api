@@ -5,7 +5,6 @@ from typing import Any
 from app.services.knowledge_base import get_knowledge_base_snapshot
 
 from .matching import _hierarchical_product_match_v2
-from .matching_legacy import _hierarchical_product_match
 from .trait_inference_helpers import _expand_related_traits, _infer_baseline_traits, _infer_connected_traits
 from .trait_negation_helpers import (
     _apply_explicit_trait_negations,
@@ -147,6 +146,8 @@ def extract_traits_v2(description: str, category: str = "") -> dict:
 
 def extract_traits_v1(description: str, category: str = "") -> dict:
     """Legacy compatibility path kept for older tests and payload comparisons."""
+    from .matching_legacy import _hierarchical_product_match
+
     text = normalize(f"{category} {description}")
     explicit_traits: set[str] = set()
     inferred_traits: set[str] = set()

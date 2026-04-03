@@ -1,11 +1,20 @@
 {
-  "product_type": "smart_speaker",
-  "product_family": "smart_assistant_device",
-  "product_subtype": "smart_speaker",
-  "product_match_stage": "subtype",
-  "product_match_confidence": "high",
-  "classification_is_ambiguous": false,
+  "ce_legislation_keys": [
+    "RED",
+    "RED_CYBER",
+    "ROHS"
+  ],
   "classification_confidence_below_threshold": false,
+  "classification_is_ambiguous": false,
+  "decision_trace_steps": [
+    "classification",
+    "traits",
+    "assumptions",
+    "missing_facts",
+    "legislation",
+    "standards",
+    "rejections"
+  ],
   "directives": [
     "RED",
     "RED_CYBER",
@@ -17,10 +26,12 @@
     "CRA",
     "GDPR"
   ],
-  "ce_legislation_keys": [
-    "RED",
-    "RED_CYBER",
-    "ROHS"
+  "missing_information_keys": [
+    "radio_rf_detail",
+    "cloud_dependency",
+    "data_storage_scope",
+    "software_update_route",
+    "smart_access_model"
   ],
   "non_ce_obligation_keys": [
     "REACH",
@@ -28,13 +39,27 @@
     "WEEE",
     "GDPR"
   ],
+  "primary_route_reason": "Smart speaker maps to EN 62368-1 as the primary product-safety route.",
   "primary_route_standard_code": "EN 62368-1",
-  "primary_route_reason": "AV/ICT equipment calibration prefers EN 62368-1 as the primary product-safety route.",
+  "product_family": "smart_assistant_device",
+  "product_match_confidence": "high",
+  "product_match_stage": "subtype",
+  "product_subtype": "smart_speaker",
+  "product_type": "smart_speaker",
+  "review_codes": [
+    "EN 18031-2",
+    "CRA review",
+    "EN 303 645 review",
+    "GDPR review"
+  ],
   "route_context": {
-    "scope_route": "av_ict",
-    "primary_route_family": "av_ict",
-    "primary_route_standard_code": "EN 62368-1",
-    "route_confidence": "high",
+    "context_tags": [
+      "cyber:connected_radio",
+      "data:personal_or_health",
+      "primary:av_ict",
+      "primary_standard:EN 62368-1",
+      "scope:av_ict"
+    ],
     "overlay_routes": [
       "RED",
       "RED_CYBER",
@@ -45,13 +70,10 @@
       "CRA",
       "GDPR"
     ],
-    "context_tags": [
-      "cyber:connected_radio",
-      "data:personal_or_health",
-      "primary:av_ict",
-      "primary_standard:EN 62368-1",
-      "scope:av_ict"
-    ]
+    "primary_route_family": "av_ict",
+    "primary_route_standard_code": "EN 62368-1",
+    "route_confidence": "high",
+    "scope_route": "av_ict"
   },
   "standard_codes": [
     "EN 62368-1",
@@ -69,12 +91,6 @@
     "EN 63000",
     "EN 50564"
   ],
-  "review_codes": [
-    "EN 18031-2",
-    "CRA review",
-    "EN 303 645 review",
-    "GDPR review"
-  ],
   "standard_section_keys": [
     "RED",
     "RED_CYBER",
@@ -82,21 +98,5 @@
     "ECO",
     "CRA",
     "GDPR"
-  ],
-  "missing_information_keys": [
-    "radio_rf_detail",
-    "cloud_dependency",
-    "data_storage_scope",
-    "software_update_route",
-    "smart_access_model"
-  ],
-  "decision_trace_steps": [
-    "classification",
-    "traits",
-    "assumptions",
-    "missing_facts",
-    "legislation",
-    "standards",
-    "rejections"
   ]
 }

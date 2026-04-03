@@ -315,6 +315,8 @@ def _build_context_tags(
         tags.add("boundary:industrial_installation")
     if "machinery_boundary" in traits:
         tags.add("boundary:machinery")
+    if "agricultural_special_use_boundary" in traits:
+        tags.add("boundary:agricultural_special_use")
     return tags
 
 

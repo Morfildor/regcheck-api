@@ -266,7 +266,7 @@ def _equipment_questions(tool_signal: bool, compressor_signal: bool, traits: set
 
 
 def _boundary_review_questions(traits: set[str], add: MissingInformationAdd) -> None:
-    if "energy_system_boundary" in traits:
+    if {"energy_system_boundary", "battery_storage_system", "inverter_system", "ups_function"} & traits:
         add(
             "energy_system_scope",
             "Confirm whether the product is a standalone consumer device or part of a wider inverter, storage, metering, or fixed-installation energy system.",
@@ -315,6 +315,16 @@ def _boundary_review_questions(traits: set[str], add: MissingInformationAdd) -> 
             ["machinery_boundary", "motorized", "cutting_hazard"],
             ["MD", "MACH_REG"],
             ["Confirm the exact form factor, moving-part architecture, and whether the product is handheld, transportable, or stationary machinery."],
+        )
+    if "agricultural_special_use_boundary" in traits:
+        add(
+            "agricultural_special_use_scope",
+            "Confirm whether the product is an ordinary consumer end product or a livestock, fencing, agricultural, or other special-use electrical product.",
+            "high",
+            ["ordinary consumer product", "livestock appliance", "electric fence energizer", "aquaculture or agricultural equipment"],
+            ["agricultural_special_use_boundary", "animal_use", "professional"],
+            ["GPSR", "LVD"],
+            ["Confirm whether the intended use is consumer, agricultural, livestock, fencing, or another special-use environment."],
         )
 
 

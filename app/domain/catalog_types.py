@@ -66,6 +66,7 @@ class ProductCatalogRow(MappingModel):
     label: str
     product_family: str
     product_subfamily: str
+    route_anchor: str | None = None
     route_family: str | None = None
     primary_standard_code: str | None = None
     supporting_standard_codes: list[str] = Field(default_factory=list)

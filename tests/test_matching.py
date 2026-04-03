@@ -99,14 +99,14 @@ class MatchingTests(unittest.TestCase):
     def test_mesh_router_beats_plain_router(self) -> None:
         result = extract_traits("mesh router with tri-band Wi-Fi 6 and mobile app")
 
-        self.assertEqual(result["product_family"], "wifi_networking")
+        self.assertEqual(result["product_family"], "networking_device")
         self.assertEqual(result["product_subtype"], "mesh_wifi_system")
         self.assertEqual(result["product_match_stage"], "subtype")
 
     def test_wireless_access_point_beats_router_when_ap_clues_are_present(self) -> None:
         result = extract_traits("wireless access point with PoE and dual-band wifi")
 
-        self.assertEqual(result["product_family"], "wifi_networking")
+        self.assertEqual(result["product_family"], "networking_device")
         self.assertEqual(result["product_subtype"], "wireless_access_point")
         self.assertEqual(result["product_match_stage"], "subtype")
 
@@ -142,7 +142,7 @@ class MatchingTests(unittest.TestCase):
     def test_fan_heater_beats_fan_with_heater_clue(self) -> None:
         result = extract_traits("fan heater for indoor room heating")
 
-        self.assertEqual(result["product_family"], "indoor_air_mover")
+        self.assertEqual(result["product_family"], "climate_conditioning_appliance")
         self.assertEqual(result["product_subtype"], "fan_heater")
         self.assertEqual(result["product_match_stage"], "subtype")
 
