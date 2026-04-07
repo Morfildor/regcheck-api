@@ -3,8 +3,10 @@ from __future__ import annotations
 from .base import MatchingQualityCase, expected_case_family
 from .building_access_controls import CASES as BUILDING_ACCESS_CONTROLS_CASES
 from .climate_water import CASES as CLIMATE_WATER_CASES
+from .companion_module_wave5 import CASES as COMPANION_MODULE_WAVE5_CASES
 from .contrastive import CASES as CONTRASTIVE_CASES
 from .contrastive_wave4 import CASES as CONTRASTIVE_WAVE4_CASES
+from .contrastive_wave5 import CASES as CONTRASTIVE_WAVE5_CASES
 from .ev_micromobility import CASES as EV_MICROMOBILITY_CASES
 from .household import CASES as HOUSEHOLD_CASES
 from .kitchen_beverage import CASES as KITCHEN_BEVERAGE_CASES
@@ -40,7 +42,8 @@ MATCHING_QUALITY_GROUPS: dict[str, tuple[MatchingQualityCase, ...]] = {
     "wellness_boundary": WELLNESS_BOUNDARY_CASES + WELLNESS_BOUNDARY_WAVE4_CASES,
     "specialty_boundary": SPECIALTY_BOUNDARY_CASES + SPECIALTY_BOUNDARY_WAVE4_CASES,
     "building_access_controls": BUILDING_ACCESS_CONTROLS_CASES,
-    "contrastive_relations": CONTRASTIVE_CASES + CONTRASTIVE_WAVE4_CASES,
+    "contrastive_relations": CONTRASTIVE_CASES + CONTRASTIVE_WAVE4_CASES + CONTRASTIVE_WAVE5_CASES,
+    "companion_module": COMPANION_MODULE_WAVE5_CASES,
 }
 MATCHING_QUALITY_CASES: tuple[MatchingQualityCase, ...] = tuple(
     case

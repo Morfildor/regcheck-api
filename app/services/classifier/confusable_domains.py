@@ -550,6 +550,301 @@ def _wellness_boundary_matrix(
             )
 
 
+def _companion_lock_bridge_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    bridge_like = _head_contains(context, "bridge", "lock bridge") or _has_cue(context, "bridge_companion_context")
+    lock_context = (
+        _contains_fragment(context.host_device, "lock", "door lock", "smart lock")
+        or _contains_fragment(context.controlled_device, "lock", "door lock")
+        or _contains_fragment(context.target_device, "lock", "door lock")
+        or _has_cue(context, "bridge_companion_context")
+    )
+    if not (bridge_like and lock_context):
+        return
+
+    for candidate in candidates:
+        if candidate.id == "iot_gateway":
+            _apply_delta(
+                bucket,
+                candidate,
+                38,
+                reason="companion_lock_bridge: bridge/gateway wording for a lock device matched the IoT gateway companion family",
+                confusable=True,
+            )
+        elif candidate.family == "networking_device":
+            _apply_delta(
+                bucket,
+                candidate,
+                20,
+                reason="companion_lock_bridge: bridge or gateway companion context supported the networking family",
+                confusable=True,
+            )
+        elif candidate.id == "smart_lock":
+            _apply_delta(
+                bucket,
+                candidate,
+                -30,
+                reason="companion_lock_bridge: companion-bridge wording down-ranked the main smart-lock reading",
+                confusable=True,
+            )
+        elif candidate.family == "building_hardware_lock":
+            _apply_delta(
+                bucket,
+                candidate,
+                -18,
+                reason="companion_lock_bridge: bridge/gateway companion wording outweighed the main lock family",
+                confusable=True,
+            )
+
+
+def _doorbell_chime_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    chime_like = _head_contains(context, "chime receiver", "chime") or _has_cue(context, "chime_receiver_context")
+    main_doorbell_camera = _head_contains(context, "video doorbell", "doorbell camera", "chime camera")
+    doorbell_context = (
+        _contains_fragment(context.target_device, "doorbell", "door bell")
+        or _has_cue(context, "chime_receiver_context")
+        or _head_contains(context, "chime")
+    )
+    if not (chime_like or doorbell_context):
+        return
+
+    for candidate in candidates:
+        if candidate.id == "doorbell_chime_receiver":
+            if main_doorbell_camera and not _head_contains(context, "chime receiver", "chime box", "chime unit"):
+                _apply_delta(
+                    bucket,
+                    candidate,
+                    -80,
+                    reason="doorbell_chime_matrix: video-doorbell camera wording outweighed the companion chime receiver reading",
+                    confusable=True,
+                )
+                continue
+            _apply_delta(
+                bucket,
+                candidate,
+                40,
+                reason="doorbell_chime_matrix: chime or receiver wording matched the companion doorbell chime product",
+                confusable=True,
+            )
+        elif candidate.family == "smart_home_security" and candidate.id != "smart_doorbell":
+            _apply_delta(
+                bucket,
+                candidate,
+                14,
+                reason="doorbell_chime_matrix: chime receiver context supported the smart-home security family",
+                confusable=True,
+            )
+        elif candidate.id == "smart_doorbell":
+            _apply_delta(
+                bucket,
+                candidate,
+                -28,
+                reason="doorbell_chime_matrix: chime or receiver wording down-ranked the main video-doorbell subtype",
+                confusable=True,
+            )
+
+
+def _ev_companion_module_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    module_like = context.primary_is_accessory or _head_contains(context, "meter module", "relay module", "module")
+    ev_load_context = _has_cue(context, "ev_load_module_context")
+    if not (module_like and ev_load_context):
+        return
+
+    for candidate in candidates:
+        if candidate.id == "ev_energy_module":
+            _apply_delta(
+                bucket,
+                candidate,
+                40,
+                reason="ev_companion_module: load-balancing or metering module wording matched the EV companion module family",
+                confusable=True,
+            )
+        elif candidate.family == "energy_power_system":
+            _apply_delta(
+                bucket,
+                candidate,
+                18,
+                reason="ev_companion_module: EV module context supported the energy power system family",
+                confusable=True,
+            )
+        elif candidate.id == "ev_charger_home":
+            _apply_delta(
+                bucket,
+                candidate,
+                -30,
+                reason="ev_companion_module: EV companion module capped main-charger subtype precision",
+                confusable=True,
+            )
+        elif candidate.family == "ev_charging_equipment":
+            _apply_delta(
+                bucket,
+                candidate,
+                -14,
+                reason="ev_companion_module: load-balancing module wording weakened the EV charger family reading",
+                confusable=True,
+            )
+
+
+def _water_heating_vs_room_heating_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    shower_context = _has_cue(context, "shower_water_heater_context") or _head_contains(
+        context, "shower heater", "shower water heater"
+    )
+    if not shower_context:
+        return
+
+    for candidate in candidates:
+        if candidate.id == "electric_shower_heater":
+            _apply_delta(
+                bucket,
+                candidate,
+                42,
+                reason="water_heating_vs_room_heating: shower or instant water-heater wording matched the electric shower heater family",
+                confusable=True,
+            )
+        elif candidate.family == "water_heating_appliance":
+            _apply_delta(
+                bucket,
+                candidate,
+                22,
+                reason="water_heating_vs_room_heating: shower context supported the water-heating appliance family",
+                confusable=True,
+            )
+        elif candidate.id == "room_heater":
+            _apply_delta(
+                bucket,
+                candidate,
+                -36,
+                reason="water_heating_vs_room_heating: shower and instant water-heater context outranked the room-heater reading",
+                confusable=True,
+            )
+        elif candidate.id == "fan_heater":
+            _apply_delta(
+                bucket,
+                candidate,
+                -28,
+                reason="water_heating_vs_room_heating: shower context ruled out fan-heater interpretation",
+                confusable=True,
+            )
+        elif candidate.family == "climate_conditioning_appliance":
+            _apply_delta(
+                bucket,
+                candidate,
+                -16,
+                reason="water_heating_vs_room_heating: water-heating cues outweighed climate-conditioning family",
+                confusable=True,
+            )
+
+
+def _heating_accessory_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    heating_accessory = _has_cue(context, "heating_accessory_controller_context") or _head_contains(
+        context, "heating controller"
+    )
+    if not heating_accessory:
+        return
+
+    for candidate in candidates:
+        if candidate.family == "personal_heating_appliance":
+            _apply_delta(
+                bucket,
+                candidate,
+                24,
+                reason="heating_accessory: underblanket or blanket-controller wording supported the personal-heating appliance family",
+                confusable=True,
+            )
+        elif candidate.id == "room_heater":
+            _apply_delta(
+                bucket,
+                candidate,
+                -34,
+                reason="heating_accessory: underblanket or blanket-controller wording outweighed the room-heater main product reading",
+                confusable=True,
+            )
+        elif candidate.id == "fan_heater":
+            _apply_delta(
+                bucket,
+                candidate,
+                -22,
+                reason="heating_accessory: heating-accessory wording outweighed fan-heater interpretation",
+                confusable=True,
+            )
+        elif candidate.family == "climate_conditioning_appliance":
+            _apply_delta(
+                bucket,
+                candidate,
+                -14,
+                reason="heating_accessory: heating-accessory context ruled out generic climate-conditioning family",
+                confusable=True,
+            )
+
+
+def _display_pc_hybrid_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    display_head = _head_contains(context, "display", "monitor", "screen")
+    pc_integrated = (
+        _contains_fragment(context.integrated_feature, "pc", "computer")
+        or _has_cue(context, "display_pc_hybrid_context")
+        or _head_contains(context, "all in one pc")
+    )
+    if not (display_head and pc_integrated) and not _has_cue(context, "display_pc_hybrid_context"):
+        return
+
+    for candidate in candidates:
+        if candidate.id == "all_in_one_pc":
+            _apply_delta(
+                bucket,
+                candidate,
+                38,
+                reason="display_pc_hybrid: display with built-in PC or all-in-one wording matched the computing-display hybrid family",
+                confusable=True,
+            )
+        elif candidate.family == "personal_computing_device":
+            _apply_delta(
+                bucket,
+                candidate,
+                18,
+                reason="display_pc_hybrid: display-computing hybrid context supported the personal computing family",
+                confusable=True,
+            )
+        elif candidate.id == "monitor":
+            _apply_delta(
+                bucket,
+                candidate,
+                -22,
+                reason="display_pc_hybrid: integrated-PC cues outweighed a plain-monitor reading",
+                confusable=True,
+            )
+        elif candidate.family == "display_device":
+            _apply_delta(
+                bucket,
+                candidate,
+                -12,
+                reason="display_pc_hybrid: display-computing hybrid context weakened standalone display family",
+                confusable=True,
+            )
+
+
 def apply_domain_role_matrices(
     candidates: Sequence[SubtypeCandidate],
     context: DomainDisambiguationContext,
@@ -564,6 +859,13 @@ def apply_domain_role_matrices(
     _smoke_alarm_vs_monitor_matrix(candidates, context, bucket)
     _lighting_vs_wellness_vs_mirror_matrix(candidates, context, bucket)
     _wellness_boundary_matrix(candidates, context, bucket)
+    # Wave 5 — companion / hybrid disambiguation
+    _companion_lock_bridge_matrix(candidates, context, bucket)
+    _doorbell_chime_matrix(candidates, context, bucket)
+    _ev_companion_module_matrix(candidates, context, bucket)
+    _water_heating_vs_room_heating_matrix(candidates, context, bucket)
+    _heating_accessory_matrix(candidates, context, bucket)
+    _display_pc_hybrid_matrix(candidates, context, bucket)
 
     adjustments: dict[str, CandidateDomainAdjustment] = {}
     for candidate in candidates:

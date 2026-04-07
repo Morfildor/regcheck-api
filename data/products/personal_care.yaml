@@ -73,6 +73,13 @@ products:
   aliases:
   - electric blanket
   - underblanket
+  - heated blanket
+  - warm blanket
+  - underblanket controller
+  - electric blanket controller
+  - heated blanket controller
+  - blanket temperature controller
+  - warm blanket controller
   - heated mattress pad
   - electric-blanket
   - electricblanket
@@ -98,12 +105,19 @@ products:
   strong_aliases:
   - electric blanket
   - underblanket
+  - heated blanket
+  - warm blanket
   - heated mattress pad
   weak_aliases:
   - electric-blanket
   - electricblanket
   - electric blankets
   - underblankets
+  - underblanket controller
+  - electric blanket controller
+  - heated blanket controller
+  - blanket temperature controller
+  - warm blanket controller
   - heated-mattress-pad
   - heatedmattresspad
   - heated mattress pads

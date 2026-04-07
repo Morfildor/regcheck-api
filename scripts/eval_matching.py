@@ -226,6 +226,22 @@ def _group_summary(results: list[CaseResult]) -> dict[str, Any]:
             include=lambda result: result.product_match_stage == "family",
             success=lambda result: result.case_passed and result.low_margin_family,
         ),
+        # Wave 5 companion / hybrid quality metrics
+        "companion_device_accuracy": _rate(
+            results,
+            include=lambda result: "companion" in result.tags,
+            success=lambda result: result.case_passed,
+        ),
+        "hybrid_product_accuracy": _rate(
+            results,
+            include=lambda result: "hybrid" in result.tags,
+            success=lambda result: result.case_passed,
+        ),
+        "main_device_false_positive_rate": _rate(
+            results,
+            include=lambda result: "companion" in result.tags or "contrastive" in result.tags,
+            success=lambda result: result.forbidden_subtype_hit is not None,
+        ),
     }
 
 
@@ -316,6 +332,31 @@ def build_summary(cases: list[MatchingQualityCase]) -> dict[str, Any]:
             "failed_cases": [result.name for result in group_results if not result.case_passed],
         }
 
+    # Companion vs main-device confusion analysis
+    companion_results = [result for result in results if "companion" in result.tags]
+    hybrid_results = [result for result in results if "hybrid" in result.tags]
+    companion_confusions = Counter(
+        f"{result.expected_family or result.expected_subtype} -> {result.product_family or 'none'}"
+        for result in companion_results
+        if not result.case_passed
+    )
+    heater_confusions = Counter(
+        f"{result.expected_subtype or result.expected_family} -> {result.product_subtype or result.product_family or 'none'}"
+        for result in results
+        if (result.expected_subtype or result.expected_family or "").startswith(("water_heating", "electric_shower", "personal_heating"))
+        and not result.case_passed
+    )
+    ev_confusions = Counter(
+        f"{result.expected_subtype or result.expected_family} -> {result.product_subtype or result.product_family or 'none'}"
+        for result in results
+        if (
+            "ev" in result.description.lower()
+            or (result.expected_subtype or result.expected_family or "").startswith("ev_")
+            or result.expected_family in {"ev_charging_equipment", "energy_power_system"}
+        )
+        and not result.case_passed
+    )
+
     summary = {
         "total_cases": len(results),
         "available_groups": sorted(MATCHING_QUALITY_GROUPS),
@@ -342,6 +383,14 @@ def build_summary(cases: list[MatchingQualityCase]) -> dict[str, Any]:
         },
         "domain_role_reason_summaries": dict(domain_role_reasons.most_common(20)),
         "confusable_domain_reason_summaries": dict(confusable_domain_reasons.most_common(20)),
+        # Wave 5 companion / hybrid quality summaries
+        "companion_device_total": len(companion_results),
+        "companion_device_passed": sum(1 for result in companion_results if result.case_passed),
+        "hybrid_device_total": len(hybrid_results),
+        "hybrid_device_passed": sum(1 for result in hybrid_results if result.case_passed),
+        "companion_vs_main_confusions": dict(companion_confusions.most_common(15)),
+        "heater_type_confusions": dict(heater_confusions.most_common(10)),
+        "ev_module_vs_charger_confusions": dict(ev_confusions.most_common(10)),
         "groups": groups,
         "results": [asdict(result) for result in results],
     }
@@ -403,6 +452,36 @@ def main() -> int:
             "Domain confusions: "
             + ", ".join(
                 f"{pair}={count}" for pair, count in list(summary["domain_confusion_summaries"].items())[:8]
+            )
+        )
+    companion_total = summary.get("companion_device_total", 0)
+    if companion_total:
+        companion_passed = summary.get("companion_device_passed", 0)
+        companion_acc = round(companion_passed / companion_total, 4) if companion_total else 0.0
+        print(
+            f"Companion-device accuracy: {companion_acc:.4f} "
+            f"({companion_passed}/{companion_total})"
+        )
+    hybrid_total = summary.get("hybrid_device_total", 0)
+    if hybrid_total:
+        hybrid_passed = summary.get("hybrid_device_passed", 0)
+        hybrid_acc = round(hybrid_passed / hybrid_total, 4) if hybrid_total else 0.0
+        print(
+            f"Hybrid-product accuracy: {hybrid_acc:.4f} "
+            f"({hybrid_passed}/{hybrid_total})"
+        )
+    if summary.get("companion_vs_main_confusions"):
+        print(
+            "Companion vs main-device confusions: "
+            + ", ".join(
+                f"{pair}={count}" for pair, count in list(summary["companion_vs_main_confusions"].items())[:6]
+            )
+        )
+    if summary.get("heater_type_confusions"):
+        print(
+            "Heater-type confusions: "
+            + ", ".join(
+                f"{pair}={count}" for pair, count in list(summary["heater_type_confusions"].items())[:6]
             )
         )
     print("Group breakdown:")

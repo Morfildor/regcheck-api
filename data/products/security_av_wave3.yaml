@@ -238,6 +238,10 @@ products:
   aliases:
   - all in one pc
   - all-in-one pc
+  - all in one desktop computer
+  - touchscreen all in one desktop computer
+  - all in one pc with large display
+  - all in one desktop display computer
   - aio pc
   - pc monitor combo
   confusable_with:
@@ -248,6 +252,8 @@ products:
   preferred_clues:
   - integrated computer
   - desktop computer with display
+  - all in one desktop
+  - touch display
   family_traits:
   - electronic
   - av_ict

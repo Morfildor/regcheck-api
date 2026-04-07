@@ -43,16 +43,23 @@ _GOVERNED_HEAD_TERMS = frozenset(
     {
         "access panel",
         "backup unit",
+        "chime receiver",
         "control module",
         "document camera",
+        "entry panel",
         "eye mask",
         "garage door controller",
+        "heating controller",
         "intercom",
         "kvm switch",
+        "lock bridge",
+        "meter module",
         "microphone receiver",
         "monitor stand",
         "portable power station",
         "power station",
+        "relay module",
+        "shower heater",
         "smoke co alarm",
         "thin client",
         "ups backup unit",
@@ -190,6 +197,49 @@ def _governed_head_bonus(
         bonus += 24
         head_term = "monitor stand"
         reasons.append("monitor-stand host head")
+
+    # Companion / hybrid governed heads — wave 5
+    if "chime" in phrase_terms and {"receiver", "box", "unit"} & (phrase_terms | segment_terms):
+        bonus += 30
+        head_term = "chime receiver"
+        reasons.append("doorbell chime receiver head")
+    if "entry" in phrase_terms and "panel" in phrase_terms:
+        bonus += 26
+        head_term = "entry panel"
+        reasons.append("access entry panel compound head")
+    if "bridge" in phrase_terms and {"lock", "gateway"} & (phrase_terms | segment_terms):
+        bonus += 26
+        head_term = "lock bridge"
+        reasons.append("companion lock-bridge or gateway head")
+    if "relay" in phrase_terms and "module" in phrase_terms:
+        bonus += 24
+        head_term = "relay module"
+        reasons.append("relay control module head")
+    if "meter" in phrase_terms and "module" in phrase_terms and {"ev", "load", "balancing", "energy"} & segment_terms:
+        bonus += 26
+        head_term = "meter module"
+        reasons.append("EV energy meter module head")
+    if "shower" in phrase_terms and "heater" in phrase_terms:
+        bonus += 28
+        head_term = "shower heater"
+        reasons.append("electric shower water-heater head")
+    if (
+        "controller" in phrase_terms
+        and {"underblanket", "blanket"} & segment_terms
+        and "heating" not in phrase_terms
+    ):
+        bonus += 24
+        head_term = "heating controller"
+        reasons.append("heating-accessory controller head (underblanket / blanket)")
+    # Display + built-in PC hybrid: detect "pc" or "computer" in the phrase while "display" is nearby
+    if "pc" in phrase_terms and {"display", "monitor", "screen"} & (phrase_terms | segment_terms):
+        bonus += 26
+        head_term = "all in one pc"
+        reasons.append("display-computing hybrid head (built-in PC)")
+    if "computer" in phrase_terms and {"display", "monitor", "screen"} & (phrase_terms | segment_terms):
+        bonus += 22
+        head_term = "all in one pc"
+        reasons.append("display-computing hybrid head (integrated computer)")
 
     return bonus, head_term, reasons
 

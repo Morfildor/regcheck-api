@@ -1686,6 +1686,12 @@ products:
   - smart home gateway
   - smart home hub
   - hub gateway
+  - smart lock bridge gateway
+  - lock bridge gateway
+  - bluetooth lock bridge
+  - lock gateway bridge
+  - smart lock wifi bridge
+  - smart lock wifi bridge adapter
   - iot-gateway
   - iotgateway
   - iot gateways
@@ -1728,6 +1734,11 @@ products:
   - smart home gateway
   - smart home hub
   - hub gateway
+  - smart lock bridge gateway
+  - lock bridge gateway
+  - bluetooth lock bridge
+  - lock gateway bridge
+  - smart lock wifi bridge
   weak_aliases:
   - iot-gateway
   - iotgateway
@@ -1745,6 +1756,7 @@ products:
   - iot-gateway-hub
   - iotgatewayhub
   - iot gateway hubs
+  - smart lock wifi bridge adapter
   marketplace_aliases: []
   not_when_text_contains: []
   negative_examples: []

@@ -192,13 +192,13 @@ def _context_bonus(text: str, product: ProductRowLike, explicit_traits: set[str]
             score -= 12
             reasons.append("professional product conflicts with household wording")
 
-    if "battery" in text and "battery_powered" in traits:
+    if {"backup_battery", "battery_powered"} & explicit_traits and {"backup_battery", "battery_powered"} & traits:
         score += 8
         reasons.append("battery wording fits")
-    if "wifi" in text and "wifi" in traits:
+    if "wifi" in explicit_traits and "wifi" in traits:
         score += 8
         reasons.append("wifi wording fits")
-    if "bluetooth" in text and "bluetooth" in traits:
+    if "bluetooth" in explicit_traits and "bluetooth" in traits:
         score += 8
         reasons.append("bluetooth wording fits")
     if "built in" in text and ({"fixed_installation", "built_in"} & traits):

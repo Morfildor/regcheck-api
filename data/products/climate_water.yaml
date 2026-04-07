@@ -2074,6 +2074,10 @@ products:
   - ecobee
   - hive thermostat
   - heating controller
+  - underfloor heating controller
+  - zone valve controller
+  - heating manifold controller
+  - manifold controller
   - heating thermostat smart
   - smart-thermostat
   - smartthermostat
@@ -2174,6 +2178,10 @@ products:
   - internet thermostat
   - learning thermostat
   - heating thermostat smart
+  - underfloor heating controller
+  - zone valve controller
+  - heating manifold controller
+  - manifold controller
   weak_aliases:
   - nest thermostat
   - ecobee

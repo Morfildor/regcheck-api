@@ -1,0 +1,337 @@
+products:
+- id: electric_shower_heater
+  label: Electric shower / instantaneous water heater
+  product_family: water_heating_appliance
+  product_subfamily: electric_shower_heater
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-35
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - hvac_environmental_appliance
+  aliases:
+  - electric shower heater
+  - electric shower
+  - instant shower heater
+  - instant water heater
+  - instantaneous water heater
+  - shower water heater
+  - wall mounted water heater
+  - electric shower water heater
+  - instantaneous shower heater
+  - instant electric shower
+  - electric power shower
+  strong_aliases:
+  - electric shower heater
+  - electric shower water heater
+  - instant shower heater
+  - instantaneous water heater
+  - shower water heater
+  weak_aliases:
+  - electric shower
+  - instant water heater
+  - wall mounted water heater
+  - electric power shower
+  family_keywords:
+  - shower heater
+  - instant water heater
+  - instantaneous water heater
+  preferred_clues:
+  - shower
+  - instant
+  - instantaneous
+  - wall mounted
+  - electric shower
+  exclude_clues:
+  - room heater
+  - space heater
+  - fan heater
+  - panel heater
+  - electric heater
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - mains_powered
+  - water_heating
+  - fixed_installation
+  - indoor_use
+  functional_classes:
+  - water_heating_appliance
+  - heating_appliance
+  likely_standards:
+  - EN 60335-2-35
+  - EN 60335-1
+  minimum_match_score: 30
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - heating
+  - water_heating
+  not_when_text_contains:
+  - room heater
+  - space heater
+  - fan heater
+  route_anchor: household_core
+
+- id: doorbell_chime_receiver
+  label: Doorbell chime / wireless chime receiver
+  product_family: smart_home_security
+  product_subfamily: doorbell_chime_receiver
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes: []
+  genres:
+  - security_access_iot
+  - smart_home_iot
+  aliases:
+  - doorbell chime receiver
+  - wireless chime receiver
+  - doorbell chime
+  - chime receiver
+  - chime box
+  - wireless chime box
+  - chime unit
+  - door chime receiver
+  - smart chime receiver
+  - plug in chime
+  - doorbell receiver
+  strong_aliases:
+  - doorbell chime receiver
+  - wireless chime receiver
+  - chime receiver
+  - chime box
+  weak_aliases:
+  - doorbell chime
+  - chime unit
+  - door chime receiver
+  - plug in chime
+  - doorbell receiver
+  family_keywords:
+  - doorbell chime
+  - chime receiver
+  preferred_clues:
+  - chime
+  - receiver
+  - doorbell system
+  - doorbell chime
+  exclude_clues:
+  - doorbell camera
+  - video doorbell
+  not_when_text_contains:
+  - video doorbell chime camera
+  - doorbell chime camera
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - av_ict
+  - radio
+  - wifi
+  - battery_powered
+  functional_classes:
+  - security_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electronic
+  - radio
+  confusable_with:
+  - smart_doorbell
+  route_anchor: avict_connected
+
+- id: ev_energy_module
+  label: EV load-balancing / energy metering companion module
+  product_family: energy_power_system
+  product_subfamily: ev_energy_module
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes: []
+  genres:
+  - energy_power_system
+  - smart_home_iot
+  aliases:
+  - ev load balancing module
+  - load balancing module
+  - ev energy meter module
+  - wallbox load balancing
+  - ev meter module
+  - din rail energy meter
+  - ev load management module
+  - energy metering module
+  - smart ev load balancer
+  - ev power meter module
+  strong_aliases:
+  - ev load balancing module
+  - ev energy meter module
+  - ev load management module
+  - ev meter module
+  weak_aliases:
+  - load balancing module
+  - din rail energy meter
+  - energy metering module
+  - wallbox load balancing
+  - ev power meter module
+  family_keywords:
+  - ev load balancing
+  - ev metering
+  - ev meter module
+  preferred_clues:
+  - load balancing
+  - load management
+  - din rail
+  - energy meter
+  - ev meter
+  - wallbox meter
+  exclude_clues:
+  - ev charger home
+  - wallbox charger
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - metering
+  - fixed_installation
+  functional_classes:
+  - ev_energy_module
+  - metering_device
+  likely_standards:
+  - EN 62368-1
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - metering
+  confusable_with:
+  - ev_charger_home
+  max_match_stage: family
+  family_level_reason: EV energy modules stay at family level as a companion metering unit — the main charger is a separate product.
+  route_anchor: avict_core
+
+- id: smart_relay_module
+  label: Smart relay / remote control module
+  product_family: networking_device
+  product_subfamily: smart_relay_module
+  route_family: av_ict
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes: []
+  genres:
+  - smart_home_iot
+  - av_ict_device
+  aliases:
+  - smart relay module
+  - relay control module
+  - wifi relay module
+  - smart relay switch
+  - remote relay module
+  - control relay module
+  - iot relay
+  - smart switch relay
+  - wifi relay
+  strong_aliases:
+  - smart relay module
+  - relay control module
+  - wifi relay module
+  weak_aliases:
+  - smart relay switch
+  - remote relay module
+  - iot relay
+  - smart switch relay
+  - wifi relay
+  family_keywords:
+  - relay module
+  - relay control
+  preferred_clues:
+  - relay
+  - control module
+  - remote control
+  exclude_clues:
+  - lighting
+  - dimmer
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - wifi
+  - radio
+  - app_control
+  functional_classes:
+  - network_device
+  - smart_home_iot
+  likely_standards:
+  - EN 62368-1
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electronic
+  - wifi
+  confusable_with:
+  - iot_gateway
+  route_anchor: avict_core
+
+- id: irrigation_controller
+  label: Smart irrigation / garden watering controller
+  product_family: agricultural_appliance
+  product_subfamily: irrigation_controller
+  route_family: specialty_electrical_boundary
+  primary_standard_code: EN 60335-2-67
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - smart_home_iot
+  aliases:
+  - irrigation controller
+  - smart irrigation controller
+  - irrigation pump controller
+  - garden watering controller
+  - sprinkler controller
+  - wifi irrigation controller
+  - smart watering controller
+  - water timer controller
+  - garden irrigation controller
+  strong_aliases:
+  - irrigation controller
+  - smart irrigation controller
+  - irrigation pump controller
+  - garden watering controller
+  - wifi sprinkler controller
+  weak_aliases:
+  - sprinkler controller
+  - wifi irrigation controller
+  - smart watering controller
+  - water timer controller
+  - garden irrigation controller
+  family_keywords:
+  - irrigation controller
+  - garden watering
+  preferred_clues:
+  - irrigation
+  - sprinkler
+  - garden watering
+  - pump controller
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - wifi
+  - app_control
+  - outdoor_environment
+  functional_classes:
+  - water_handling_appliance
+  likely_standards:
+  - EN 60335-2-67
+  - EN 60335-1
+  - EN 62368-1
+  route_anchor: specialty_electrical_boundary
+  minimum_match_score: 28
+  score_boost_if_traits:
+  - electrical
+  - wifi

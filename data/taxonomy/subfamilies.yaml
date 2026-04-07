@@ -179,6 +179,9 @@ subfamilies:
 - id: drone_controller
   family: drone_device
   label: Drone remote controller
+- id: doorbell_chime_receiver
+  family: smart_home_security
+  label: Doorbell chime / wireless chime receiver
 - id: e_reader
   family: personal_computing_device
   label: E-reader
@@ -188,6 +191,9 @@ subfamilies:
 - id: electric_blanket
   family: personal_heating_appliance
   label: Electric blanket
+- id: electric_shower_heater
+  family: water_heating_appliance
+  label: Electric shower / instantaneous water heater
 - id: electric_cargo_bike
   family: micromobility_device
   label: Electric cargo bike / longtail e-bike
@@ -236,6 +242,9 @@ subfamilies:
 - id: ev_charger_home
   family: ev_charging_equipment
   label: Home EV charger (EVSE)
+- id: ev_energy_module
+  family: energy_power_system
+  label: EV load-balancing / energy metering companion module
 - id: ev_connector_accessory
   family: ev_charging_equipment
   label: EV charging connector / tethered cable accessory
@@ -392,6 +401,9 @@ subfamilies:
 - id: iot_gateway
   family: networking_device
   label: IoT gateway / hub
+- id: irrigation_controller
+  family: agricultural_appliance
+  label: Smart irrigation / garden watering controller
 - id: ip_camera
   family: smart_home_security
   label: IP camera / smart security camera
@@ -728,6 +740,9 @@ subfamilies:
 - id: smart_relay
   family: smart_power_control
   label: Smart relay / connected relay module
+- id: smart_relay_module
+  family: networking_device
+  label: Smart relay / remote control module
 - id: smart_ring
   family: wearable_device_family
   label: Smart ring

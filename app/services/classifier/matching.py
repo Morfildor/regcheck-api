@@ -88,7 +88,9 @@ ACCESSORY_TERMS = frozenset(
         "arm",
         "backup",
         "bracket",
+        "bridge",
         "cable",
+        "chime",
         "controller",
         "dock",
         "gateway",
@@ -181,11 +183,18 @@ PRODUCT_ROLE_PACKS: dict[str, RolePack] = {
     "office_printer": RolePack(("printer_role",), ("scanner_role",), False, "office_imaging"),
     "document_scanner": RolePack(("scanner_role",), ("printer_role",), False, "office_imaging"),
     "multifunction_printer": RolePack(("multifunction_role", "printer_role", "scanner_role"), (), False, "office_imaging"),
+    # Wave 5 — companion / hybrid products
+    "doorbell_chime_receiver": RolePack(("chime_receiver_context", "receiver_role"), ("smart_doorbell", "camera_role"), True, "companion_security"),
+    "ev_energy_module": RolePack(("ev_load_module_context", "ev_charger_role"), ("ev_connector_role",), True, "ev_companion"),
+    "electric_shower_heater": RolePack(("shower_water_heater_context",), ("heating_personal_environment",), False, "water_heating_roles"),
+    "smart_relay_module": RolePack(("smart_relay_module_context", "gateway_module_role"), (), True, "companion_smart_home"),
+    "irrigation_controller": RolePack(("irrigation_controller_context",), (), True, "companion_smart_home"),
 }
 FAMILY_ROLE_PACKS: dict[str, RolePack] = {
     "office_avict_peripheral": RolePack(("dock_role", "hub_role", "mount_attachment_role", "usb_peripheral_role"), (), True),
     "portable_power_charger": RolePack(("battery_charger_role", "external_psu_role", "portable_power_role"), (), True),
-    "networking_device": RolePack(("gateway_module_role", "network_switch_role", "receiver_role"), (), True),
+    "networking_device": RolePack(("gateway_module_role", "network_switch_role", "receiver_role", "bridge_companion_context"), (), True),
+    "personal_heating_appliance": RolePack(("heating_accessory_controller_context",), (), True),
 }
 CONFUSABLE_RERANK_RULES: dict[str, dict[str, dict[str, int]]] = {
     "office_display_and_dock": {
@@ -234,6 +243,22 @@ CONFUSABLE_RERANK_RULES: dict[str, dict[str, dict[str, int]]] = {
         "multifunction_role": {"document_scanner": 6, "multifunction_printer": 18, "office_printer": 6},
         "printer_role": {"document_scanner": -14, "multifunction_printer": 10, "office_printer": 18},
         "scanner_role": {"document_scanner": 18, "multifunction_printer": 10, "office_printer": -14},
+    },
+    # Wave 5 — companion / hybrid rerank groups
+    "companion_security": {
+        "chime_receiver_context": {"doorbell_chime_receiver": 20, "smart_doorbell": -18},
+        "receiver_role": {"doorbell_chime_receiver": 10, "smart_doorbell": -8},
+    },
+    "ev_companion": {
+        "ev_load_module_context": {"ev_energy_module": 22, "ev_charger_home": -20},
+    },
+    "water_heating_roles": {
+        "shower_water_heater_context": {"electric_shower_heater": 24, "room_heater": -30, "fan_heater": -18},
+    },
+    "companion_smart_home": {
+        "smart_relay_module_context": {"smart_relay_module": 18, "iot_gateway": 6},
+        "irrigation_controller_context": {"irrigation_controller": 20},
+        "bridge_companion_context": {"smart_lock": -30, "iot_gateway": 18, "wifi_extender": -12},
     },
 }
 
@@ -691,6 +716,9 @@ def _filter_candidates(candidates: Sequence[SubtypeCandidate], context: Matching
                 continue
             continue
         if _alias_only_matches_secondary_role(candidate, context):
+            if candidate.family == "personal_heating_appliance" and context.has("heating_accessory_controller_context"):
+                kept.append(candidate)
+                continue
             filtered_out.append(f"{candidate.id}: filtered because its alias appeared only inside a secondary role phrase")
             continue
         if (
@@ -706,6 +734,9 @@ def _filter_candidates(candidates: Sequence[SubtypeCandidate], context: Matching
             continue
         if generic_only and _candidate_matches_secondary_role(candidate, context):
             if context.role_parse.primary_is_accessory and _candidate_role_pack(candidate).accessory_role:
+                kept.append(candidate)
+                continue
+            if candidate.id == "all_in_one_pc" and context.role_parse.primary_product_head_term == "all in one pc":
                 kept.append(candidate)
                 continue
             filtered_out.append(f"{candidate.id}: filtered because it only lined up with a secondary role phrase")
@@ -953,6 +984,25 @@ def _family_level_limiter(
     if explicit_limit and top_subtype.max_match_stage == "family":
         return explicit_limit
     alias_token_count = len((top_subtype.matched_alias or "").split())
+    matched_alias = normalize(top_subtype.matched_alias or "")
+    if (
+        top_subtype.id == "iot_gateway"
+        and (context.has("bridge_companion_context") or context.role_parse.primary_product_head_term == "lock bridge")
+        and "lock" in context.text_terms
+        and "iot gateway" not in matched_alias
+        and "iot gateway" not in context.text
+    ):
+        return "Lock-bridge companion wording keeps the match at networking-device family level."
+    if (
+        top_subtype.family == "smart_home_security"
+        and top_subtype.id in {"doorbell_chime_receiver", "smart_doorbell", "video_doorbell"}
+        and "doorbell chime camera" in context.text
+    ):
+        return "Video-doorbell chime/camera wording keeps the match at smart-home security family level."
+    if top_subtype.family == "personal_heating_appliance" and context.has("heating_accessory_controller_context"):
+        return "Heating accessory controller wording keeps the match at personal-heating family level."
+    if top_subtype.id == "smart_thermostat" and context.has("thermostat_manifold_context"):
+        return "Heating manifold or zone-controller wording keeps the match at HVAC-control family level."
     if role_parse.primary_head_conflict and top_subtype.matched_alias_generic_terms and alias_token_count <= 1:
         return "Primary head candidates remained in conflict, so subtype precision stays conservative."
     if role_parse.primary_is_accessory and (

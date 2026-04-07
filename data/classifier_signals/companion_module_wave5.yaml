@@ -1,0 +1,94 @@
+cue_groups:
+  bridge_companion_context:
+  - \bsmart lock bridge\b
+  - \block bridge gateway\b
+  - \bbluetooth lock bridge\b
+  - \block gateway bridge\b
+  - \bdoor lock bridge\b
+  - \bsmart lock gateway bridge\b
+  - \bbt lock bridge\b
+  chime_receiver_context:
+  - \bdoorbell chime\b
+  - \bchime receiver\b
+  - \bwireless chime\b
+  - \bchime box\b
+  - \bchime unit\b
+  - \bdoor chime receiver\b
+  - \bchime for doorbell\b
+  ev_load_module_context:
+  - \bload balanc\w* (?:meter|module)\b
+  - \bdin rail (?:energy|power) meter\b
+  - \bev load management module\b
+  - \benergy meter (?:module|for)\b
+  - \bev (?:meter|metering) module\b
+  - \bwallbox load balanc\w*\b
+  - \bload management module\b
+  smart_relay_module_context:
+  - \bsmart relay\b
+  - \brelay module\b
+  - \brelay control module\b
+  - \bcontrol relay\b
+  - \bwifi relay\b
+  - \bremote relay\b
+  shower_water_heater_context:
+  - \belectric shower\b
+  - \bshower water heater\b
+  - \binstant shower heater\b
+  - \binstant water heater\b
+  - \binstantaneous heater\b
+  - \bwall mounted water heater\b
+  - \belectric shower heater\b
+  heating_accessory_controller_context:
+  - \bunderblanket controller\b
+  - \belectric underblanket\b
+  - \bheated blanket (?:controller|control)\b
+  - \bblanket temperature controller\b
+  - \belectric blanket controller\b
+  - \bwarm blanket controller\b
+  display_pc_hybrid_context:
+  - \bdesktop display (?:with|and) (?:built.?in )?(?:pc|computer)\b
+  - \ball in one desktop display\b
+  - \ball.in.one desktop computer\b
+  - \bbuilt.?in pc\b
+  - \bintegrated pc\b
+  - \bdesktop (?:computer|pc) with display\b
+  ups_companion_module_context:
+  - \bups network management\b
+  - \bups management card\b
+  - \bups monitoring card\b
+  - \bups (?:network|remote) module\b
+  - \bnetwork management card ups\b
+  access_entry_panel_context:
+  - \bentry panel\b
+  - \bdoor entry panel\b
+  - \bsmartentry panel\b
+  - \bapartment entry panel\b
+  - \bbuilding entry panel\b
+  thermostat_manifold_context:
+  - \bmanifold controller\b
+  - \bunderfloor heating controller\b
+  - \bzone valve controller\b
+  - \bheating manifold\b
+  - \bheating zone controller\b
+  irrigation_controller_context:
+  - \birrigation controller\b
+  - \birrigation pump controller\b
+  - \bwater (?:timer|valve) controller\b
+  - \bsprinkler controller\b
+  - \bsmart irrigation\b
+  - \bgarden watering controller\b
+
+relation_cue_packs:
+  integrated_feature:
+    with_built_in:
+    - '\bwith built.?in\b'
+    - '\bwith integrated\b'
+    - '\bwith (?:an? )?built.?in\b'
+  target_device:
+    chime_for:
+    - '\bchime (?:receiver )?for\b'
+    - '\bchime receiver for\b'
+  controlled_device:
+    bridge_for:
+    - '\bbridge (?:gateway )?for\b'
+    - '\bgateway bridge for\b'
