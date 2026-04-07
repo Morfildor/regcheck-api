@@ -1,124 +1,4 @@
 products:
-- id: ups
-  label: UPS / battery backup unit
-  product_family: energy_power_system
-  product_subfamily: ups
-  route_family: power_system_boundary
-  primary_standard_code: EN 62368-1
-  supporting_standard_codes:
-  - EN 55032
-  - EN 55035
-  genres:
-  - portable_energy
-  - av_ict_device
-  family_keywords:
-  - ups
-  - battery backup
-  - backup unit
-  aliases:
-  - ups
-  - uninterruptible power supply
-  - ups battery backup
-  - ups backup unit
-  - line interactive ups
-  - backup power unit
-  preferred_clues:
-  - battery backup
-  - backup unit
-  - nas
-  - router
-  - modem
-  - power outage
-  - runtime
-  family_traits:
-  - electrical
-  - electronic
-  - power_source
-  - ups_function
-  subtype_traits:
-  - electrical
-  - electronic
-  - av_ict
-  - battery_powered
-  - battery_storage_system
-  - inverter_system
-  - ups_function
-  - energy_system_boundary
-  - mains_powered
-  max_match_stage: family
-  route_confidence_cap: medium
-  family_level_reason: UPS products stay at family level until battery architecture, inverter role, and installation context are confirmed.
-  boundary_tags:
-  - energy_system_boundary
-  implied_traits:
-  - electrical
-  - electronic
-  - av_ict
-  - battery_powered
-  - battery_storage_system
-  - inverter_system
-  - ups_function
-  - energy_system_boundary
-  - mains_powered
-  likely_standards:
-  - EN 62368-1
-  - Battery safety review
-  - UN 38.3 review
-  - Energy storage / inverter system review
-  strong_aliases:
-  - ups
-  - uninterruptible power supply
-  - ups backup unit
-  - ups battery backup
-  weak_aliases:
-  - battery backup unit
-  - backup power unit
-  route_anchor: power_system_boundary
-- id: poe_injector
-  label: PoE injector
-  product_family: networking_device
-  product_subfamily: poe_injector
-  route_family: av_ict
-  primary_standard_code: EN 62368-1
-  supporting_standard_codes:
-  - EN 55032
-  - EN 55035
-  genres:
-  - av_ict_device
-  aliases:
-  - poe injector
-  - power over ethernet injector
-  - midspan poe injector
-  required_clues:
-  - poe injector
-  - power over ethernet injector
-  preferred_clues:
-  - 802.3af
-  - 802.3at
-  - ethernet power
-  family_traits:
-  - electrical
-  - electronic
-  - av_ict
-  subtype_traits:
-  - electrical
-  - electronic
-  - av_ict
-  - poe_supply
-  - wired_networking
-  - office_peripheral
-  - mains_powered
-  implied_traits:
-  - electrical
-  - electronic
-  - av_ict
-  - poe_supply
-  - wired_networking
-  - office_peripheral
-  - mains_powered
-  likely_standards:
-  - EN 62368-1
-  route_anchor: avict_core
 - id: heat_gun
   label: Heat gun
   product_family: portable_heating_tool
@@ -133,6 +13,12 @@ products:
   aliases:
   - heat gun
   - hot air gun
+  - electric heat gun
+  - hot air tool
+  - paint stripper heat gun
+  - shrink wrap heat gun
+  - heat shrink gun
+  - craft heat gun
   preferred_clues:
   - hot air
   - shrink wrap
@@ -166,6 +52,7 @@ products:
   - rotary tool
   - multi tool rotary
   - hobby rotary tool
+  - mini rotary tool
   preferred_clues:
   - cutting wheel
   - grinding bit
@@ -208,6 +95,7 @@ products:
   - bench saw
   - table saw
   - jobsite table saw
+  - portable table saw
   preferred_clues:
   - saw blade
   - rip fence

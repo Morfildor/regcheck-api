@@ -599,6 +599,10 @@ products:
   - EN 62133-2
   - EN 62368-1
   - UN 38.3 review
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 62133-2
+  - UN 38.3 review
   strong_aliases:
   - portable power station
   - power station
@@ -716,6 +720,10 @@ products:
   likely_standards:
   - EN 62133-2
   - EN 62368-1
+  - UN 38.3 review
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 62133-2
   - UN 38.3 review
   strong_aliases:
   - power bank

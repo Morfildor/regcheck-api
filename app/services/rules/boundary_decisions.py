@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from app.services.knowledge_base.taxonomy import BoundaryRuleDefinition, get_taxonomy_snapshot
+from app.services.standard_codes import normalized_standard_codes
 
 
 _CONFIDENCE_RANK = {"low": 0, "medium": 1, "high": 2}
@@ -50,15 +51,7 @@ def _normalized_standard_codes(row: dict[str, Any]) -> list[str]:
         + _string_list(row.get("supporting_standard_codes"))
         + ([str(row.get("primary_standard_code")).strip()] if str(row.get("primary_standard_code") or "").strip() else [])
     )
-    normalized: list[str] = []
-    seen: set[str] = set()
-    for raw_code in codes:
-        code = str(raw_code).upper().replace("  ", " ").strip()
-        if not code or code in seen:
-            continue
-        seen.add(code)
-        normalized.append(code)
-    return normalized
+    return normalized_standard_codes(codes)
 
 
 def _cap_confidence(current: str | None, requested: str | None) -> str | None:

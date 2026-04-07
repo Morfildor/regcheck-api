@@ -54,10 +54,12 @@ standards:
   item_type: standard
   standard_family: EN 62841-1
   confidence: high
-  harmonization_status: unknown
-  is_harmonized: false
-  version: EN 62841-1
-  dated_version: EN 62841-1
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: MD
+  harmonized_reference: 2006/42/EC
+  version: EN 62841-1:2015 + AC:2015 + A11:2022
+  dated_version: EN 62841-1:2015 + AC:2015 + A11:2022
   applies_if_products:
   - industrial_power_tool
   - corded_power_drill
@@ -86,7 +88,7 @@ standards:
   - hand-held tool
   - transportable tool
   - drill driver
-  notes: Primary machinery-family anchor for hand-held and transportable electric power tools.
+  notes: Primary machinery-family anchor for hand-held and transportable electric power tools. Published with an MD restriction on unintentional-starting coverage.
   standard_ref: EN 62841-1
   selection_group: EN 62841-1
   selection_priority: 35
@@ -111,10 +113,12 @@ standards:
   item_type: standard
   standard_family: EN 62841-2-1
   confidence: high
-  harmonization_status: unknown
-  is_harmonized: false
-  version: EN 62841-2-1
-  dated_version: EN 62841-2-1
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: MD
+  harmonized_reference: 2006/42/EC
+  version: EN 62841-2-1:2018 + A11:2019 + A12:2022 + A1:2022
+  dated_version: EN 62841-2-1:2018 + A11:2019 + A12:2022 + A1:2022
   applies_if_products:
   - corded_power_drill
   - cordless_power_drill
@@ -176,6 +180,7 @@ standards:
   - rotary_hammer
   - rotary_tool
   - bench_saw
+  - electric_garden_tool
   test_focus:
   - safety
   - mechanical

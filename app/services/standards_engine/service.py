@@ -5,6 +5,7 @@ from typing import Any, cast
 
 from app.domain.catalog_types import StandardCatalogRow
 from app.services.knowledge_base import get_knowledge_base_snapshot
+from app.services.standard_codes import canonical_standard_code_set
 
 from .audit import _audit_item_from_row
 from .contracts import ApplicableItems, ItemsAudit, RejectionEntry, SelectionContext
@@ -74,7 +75,7 @@ def find_applicable_items_v1(
     standards = list(get_knowledge_base_snapshot().standards)
     matched_products = matched_products or []
     product_genres = product_genres or []
-    preferred_codes = set(preferred_standard_codes or [])
+    preferred_codes = canonical_standard_code_set(preferred_standard_codes)
     confirmed_traits = confirmed_traits or set(traits)
     explicit_traits = explicit_traits or set(confirmed_traits)
 
@@ -182,7 +183,7 @@ def find_applicable_items_v2(
     standards = list(get_knowledge_base_snapshot().standards)
     matched_products = matched_products or []
     product_genres = product_genres or []
-    preferred_codes = set(preferred_standard_codes or [])
+    preferred_codes = canonical_standard_code_set(preferred_standard_codes)
     confirmed_traits = confirmed_traits or set(traits)
     explicit_traits = explicit_traits or set(confirmed_traits)
     effective_confirmed_traits = confirmed_traits | _baseline_confirmed_traits(explicit_traits)

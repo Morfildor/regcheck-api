@@ -8,6 +8,8 @@ import unittest
 from knowledge_base import get_knowledge_base_snapshot, reset_cache
 from rules import analyze
 from scripts import catalog_audit
+from app.services.rules.route_anchors import family_from_standard_code, normalized_standard_codes
+from standards_engine import find_applicable_items
 
 
 class CatalogNormalizationSnapshotTests(unittest.TestCase):
@@ -241,6 +243,30 @@ class RouteNormalizationRegressionTests(unittest.TestCase):
                 self.assertEqual(result.product_family, "ev_charging_equipment")
                 self.assertEqual(result.route_context.primary_route_family, route_family)
                 self.assertEqual(result.primary_route_standard_code, standard_code)
+
+    def test_ev_standard_code_variants_normalize_for_routing_and_selection(self) -> None:
+        self.assertEqual(
+            normalized_standard_codes(["EN 61851-1", "EN IEC 61851-21-2", "EN IEC 62196-2"]),
+            ["EN IEC 61851-1", "EN IEC 61851-21-2", "EN 62196-2"],
+        )
+        self.assertEqual(family_from_standard_code("EN 61851-1", prefer_wearable=False), "ev_charging")
+        self.assertEqual(family_from_standard_code("EN IEC 62196-2", prefer_wearable=False), "ev_connector_accessory")
+
+        items = find_applicable_items(
+            traits={"electrical", "electronic", "ev_charging", "vehicle_supply"},
+            directives=["LVD", "EMC", "OTHER"],
+            product_type="portable_ev_charger",
+            matched_products=["portable_ev_charger"],
+            product_genres=["ev_charging_equipment"],
+            preferred_standard_codes=["EN 61851-1", "EN 61851-21-2", "EN IEC 62196-2"],
+            explicit_traits={"electrical", "electronic", "ev_charging", "vehicle_supply"},
+            confirmed_traits={"electrical", "electronic", "ev_charging", "vehicle_supply"},
+            normalized_text="portable ev charger mode 2 type 2 connector",
+        )
+        selected_codes = {row["code"] for row in items["standards"]} | {row["code"] for row in items["review_items"]}
+        self.assertIn("EN IEC 61851-1", selected_codes)
+        self.assertIn("EN IEC 61851-21-2", selected_codes)
+        self.assertIn("EN 62196-2", selected_codes)
 
     def test_alarm_and_building_access_routes_are_governed(self) -> None:
         alarm = analyze("smart smoke and carbon monoxide alarm with wifi")

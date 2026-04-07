@@ -110,6 +110,12 @@ products:
   - ring light
   - selfie ring light
   - usb ring light
+  - led ring light
+  - desktop ring light
+  - camera ring light
+  - phone ring light
+  - makeup ring light
+  - streaming ring light
   preferred_clues:
   - creator light
   - studio light
@@ -145,6 +151,12 @@ products:
   - emergency light
   - emergency lamp
   - battery backup light
+  - emergency lighting unit
+  - led emergency light
+  - exit emergency light
+  - rechargeable emergency light
+  - backup emergency lamp
+  - emergency bulkhead light
   preferred_clues:
   - emergency lighting
   - backup illumination
@@ -221,6 +233,12 @@ products:
   - uv sanitizing box
   - uv sterilizer box
   - uvc sanitizing case
+  - uv phone sanitizer box
+  - uvc sterilizer box
+  - uv disinfection box
+  - phone sanitizer box
+  - uv sanitizing case
+  - uvc disinfection case
   preferred_clues:
   - sanitizing box
   - phone sterilizer
@@ -317,6 +335,12 @@ products:
   - ir illuminator
   - infrared illuminator
   - ir lamp for camera
+  - infrared night vision illuminator
+  - cctv ir illuminator
+  - security camera ir illuminator
+  - ir flood light
+  - infrared floodlight
+  - night vision ir lamp
   preferred_clues:
   - night vision
   - camera illumination
@@ -344,43 +368,3 @@ products:
   likely_standards:
   - EN 62471
   route_anchor: lighting_core
-- id: smart_litter_box
-  label: Smart litter box
-  product_family: pet_hygiene_appliance
-  product_subfamily: smart_litter_box
-  route_family: household_appliance
-  primary_standard_code: EN 60335-1
-  genres:
-  - pet_tech
-  - household_appliance
-  aliases:
-  - smart litter box
-  - self cleaning litter box
-  - automatic litter box
-  preferred_clues:
-  - cat litter
-  - self cleaning
-  family_traits:
-  - consumer
-  - electrical
-  - pet_use
-  subtype_traits:
-  - consumer
-  - electrical
-  - electronic
-  - pet_use
-  - motorized
-  - app_control
-  - sanitization
-  implied_traits:
-  - consumer
-  - electrical
-  - electronic
-  - pet_use
-  - motorized
-  - app_control
-  - sanitization
-  likely_standards:
-  - EN 60335-1
-  - Sterilization / hygiene appliance review
-  route_anchor: household_connected

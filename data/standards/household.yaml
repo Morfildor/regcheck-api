@@ -301,8 +301,9 @@ standards:
   legislation_key: LVD
   item_type: review
   standard_family: EN 60335-2-107
-  confidence: high
+  confidence: medium
   harmonization_status: review
+  is_harmonized: false
   applies_if_products:
   - robotic_lawn_mower
   exclude_if_products: []
@@ -1784,6 +1785,7 @@ standards:
   harmonization_status: unknown
   applies_if_products:
   - electric_iron
+  - heat_gun
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -1796,7 +1798,8 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - electric iron
-  notes: Applies to the specific Part 2 appliance family, including electric iron.
+  - heat gun
+  notes: Applies to portable heating tools and similar appliances, including heat guns.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
@@ -1808,6 +1811,7 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   - electric iron
+  - heat gun
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
 - code: EN 60335-2-46
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for commercial electric steam
@@ -2263,6 +2267,7 @@ standards:
   harmonization_status: unknown
   applies_if_products:
   - projector
+  - heating_lamp
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -2873,6 +2878,7 @@ standards:
   harmonization_status: unknown
   applies_if_products:
   - livestock_heater
+  - incubator
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -2885,6 +2891,7 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - livestock heater
+  - egg incubator
   notes: Electrical heating appliance route for breeding and rearing animals.
   state_of_the_art_scope: EU
   applies_if_genres:
@@ -2897,6 +2904,7 @@ standards:
   - safety test report
   - CB report or equivalent technical evidence
   - livestock heater
+  - egg incubator
   matching_notes: Reference-oriented metadata normalized for frontend/backend consistency.
 - code: EN 60335-2-72
   title: 'Household and similar electrical appliances - Safety - Part 2: Particular requirements for automatic machines for

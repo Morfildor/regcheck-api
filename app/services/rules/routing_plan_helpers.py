@@ -5,6 +5,7 @@ from typing import cast
 
 from app.domain.catalog_types import ProductCatalogRow
 from app.domain.models import ConfidenceLevel
+from app.services.standard_codes import canonicalize_standard_code, normalized_standard_codes
 
 from .contracts import ClassifierTraitsSnapshot
 from .routing_models import RoutePlan
@@ -47,15 +48,7 @@ def _route_scope_from_family(route_family_scope: dict[str, str], route_family: s
 
 
 def _normalized_standard_codes(codes: set[str] | list[str] | None) -> list[str]:
-    normalized: list[str] = []
-    seen: set[str] = set()
-    for raw_code in codes or []:
-        code = str(raw_code or "").upper().replace("IEC", "IEC").replace("  ", " ").strip()
-        if not code or code in seen:
-            continue
-        seen.add(code)
-        normalized.append(code)
-    return normalized
+    return normalized_standard_codes(codes)
 
 
 def _family_from_standard_code(
@@ -63,6 +56,7 @@ def _family_from_standard_code(
     code: str,
     prefer_wearable: bool,
 ) -> str | None:
+    code = canonicalize_standard_code(code)
     for prefix, family, _label in route_standard_family_rules:
         if code.startswith(prefix):
             if family == "av_ict" and prefer_wearable:

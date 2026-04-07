@@ -5,6 +5,7 @@ import re
 from typing import Any
 
 from app.domain.catalog_types import GenreCatalogRow, ProductCatalogRow, StandardCatalogRow
+from app.services.standard_codes import canonicalize_standard_code
 
 from .paths import KnowledgeBaseError
 from .product_normalization import normalize_product_row
@@ -109,9 +110,10 @@ def _enrich_standards(rows: list[dict[str, Any]], products: Sequence[ProductCata
     for row in rows:
         enriched = dict(row)
         enriched["code"] = _normalize_standard_code(enriched.get("code", ""))
-        if enriched["code"] in seen_normalized_codes:
+        normalized_code_key = canonicalize_standard_code(enriched["code"])
+        if normalized_code_key in seen_normalized_codes:
             raise KnowledgeBaseError(f"Duplicate normalized standard code in merged standards catalog: {enriched['code']}")
-        seen_normalized_codes.add(enriched["code"])
+        seen_normalized_codes.add(normalized_code_key)
         enriched["standard_family"] = enriched.get("standard_family") or enriched["code"].split(":", 1)[0].strip()
         enriched["harmonization_status"] = _derive_harmonization_status(enriched)
         enriched.setdefault("test_focus", [])
@@ -130,12 +132,13 @@ def _post_validate_product_standard_links(
     standards: Sequence[StandardCatalogRow],
 ) -> None:
     known_references = {row.code for row in standards} | {row.standard_family for row in standards if row.standard_family}
+    known_reference_keys = {canonicalize_standard_code(ref) for ref in known_references}
 
     for product in products:
         pid = product.id
         for ref_item in product.get("likely_standard_refs") or _normalize_likely_standard_refs(product, f"Product '{pid}'"):
             reference = ref_item["ref"]
-            if reference not in known_references:
+            if reference not in known_references and canonicalize_standard_code(reference) not in known_reference_keys:
                 raise KnowledgeBaseError(
                     f"Product '{pid}' references likely_standard '{reference}' that does not match any standard code or family."
                 )
@@ -144,7 +147,7 @@ def _post_validate_product_standard_links(
         gid = genre.id
         for ref_item in genre.get("likely_standard_refs") or _normalize_likely_standard_refs(genre, f"Genre '{gid}'"):
             reference = ref_item["ref"]
-            if reference not in known_references:
+            if reference not in known_references and canonicalize_standard_code(reference) not in known_reference_keys:
                 raise KnowledgeBaseError(
                     f"Genre '{gid}' references likely_standard '{reference}' that does not match any standard code or family."
                 )

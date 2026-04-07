@@ -133,6 +133,12 @@ products:
   - slow cooker
   - crock pot
   - crockpot
+  - crock-pot slow cooker
+  - programmable slow cooker
+  - digital slow cooker
+  - ceramic slow cooker
+  - low temperature cooker
+  - electric slow cooker
   preferred_clues:
   - low and slow cooking
   - ceramic pot
@@ -181,6 +187,12 @@ products:
   - bread maker
   - bread machine
   - automatic bread maker
+  - breadmaking machine
+  - automatic bread machine
+  - home bread maker
+  - electric bread maker
+  - dough bread maker
+  - loaf bread machine
   preferred_clues:
   - kneads dough
   - loaf pan
@@ -329,6 +341,12 @@ products:
   - bottle sterilizer
   - baby bottle sterilizer
   - steam bottle sterilizer
+  - baby bottle steam sterilizer
+  - electric bottle sterilizer
+  - feeding bottle sterilizer
+  - bottle steriliser
+  - baby bottle steriliser
+  - sterilizer for baby bottles
   preferred_clues:
   - baby bottles
   - sterilizing cycle

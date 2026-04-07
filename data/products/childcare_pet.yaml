@@ -193,6 +193,47 @@ products:
   matching_notes: Motorized recirculating water fountains for pets with filter and optional WiFi. Covered by EN 60335-1 as motorized water appliance.
   route_anchor: household_connected
   route_family: household_appliance
+- id: smart_litter_box
+  label: Smart litter box
+  product_family: pet_hygiene_appliance
+  product_subfamily: smart_litter_box
+  route_family: household_appliance
+  primary_standard_code: EN 60335-1
+  genres:
+  - pet_tech
+  - household_appliance
+  aliases:
+  - smart litter box
+  - self cleaning litter box
+  - automatic litter box
+  - self-cleaning cat litter box
+  preferred_clues:
+  - cat litter
+  - self cleaning
+  family_traits:
+  - consumer
+  - electrical
+  - pet_use
+  subtype_traits:
+  - consumer
+  - electrical
+  - electronic
+  - pet_use
+  - motorized
+  - app_control
+  - sanitization
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - pet_use
+  - motorized
+  - app_control
+  - sanitization
+  likely_standards:
+  - EN 60335-1
+  - Sterilization / hygiene appliance review
+  route_anchor: household_connected
 - id: smart_toy
   label: Smart connected toy
   aliases:

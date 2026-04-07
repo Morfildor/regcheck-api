@@ -7,6 +7,7 @@ from typing import Any, TypedDict
 from app.domain.catalog_types import StandardCatalogRow
 from app.domain.models import KnownFactItem, RouteContext
 from app.services.classifier import normalize
+from app.services.standard_codes import canonical_standard_code_set, canonicalize_standard_code
 from app.services.standards_engine.contracts import SelectionContext
 
 from .routing_models import RoutePlan
@@ -30,9 +31,8 @@ def _keep_preferred_62368_review_in_appliance_scope(
         return False
     if str(item.get("item_type") or "standard") != "review":
         return False
-    preferred_standard_codes = preferred_standard_codes or set()
     product_genres = product_genres or set()
-    return "EN 62368-1" in preferred_standard_codes and bool(product_genres & small_smart_62368_genres)
+    return "EN 62368-1" in canonical_standard_code_set(preferred_standard_codes) and bool(product_genres & small_smart_62368_genres)
 
 
 def _has_small_avict_lvd_power_signal(
@@ -67,12 +67,7 @@ def _infer_forced_directives(
     if "radio" in traits:
         return set()
 
-    preferred_standard_codes = preferred_standard_codes or set()
-    normalized_codes = {
-        str(code or "").upper().replace("IEC", "EN").replace("  ", " ").strip()
-        for code in preferred_standard_codes
-        if str(code or "").strip()
-    }
+    normalized_codes = canonical_standard_code_set(preferred_standard_codes)
 
     inferred: set[str] = set()
     scoped_route, _ = scope_route(traits, matched_products, product_type, confirmed_traits)
@@ -540,7 +535,8 @@ def _match_standard(
         score += 42
     score += len(requires_all & traits) * 8
     score += len(requires_any & traits) * 5
-    if row.code in likely_standards or row.standard_family in likely_standards:
+    likely_standard_keys = canonical_standard_code_set(likely_standards)
+    if canonicalize_standard_code(row.code) in likely_standard_keys or canonicalize_standard_code(row.standard_family) in likely_standard_keys:
         score += 28
         meta["product_match_type"] = meta["product_match_type"] or "preferred_product"
     if row.item_type == "review":

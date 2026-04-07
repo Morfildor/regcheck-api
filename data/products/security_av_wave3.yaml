@@ -664,3 +664,298 @@ products:
   likely_standards:
   - EN 62368-1
   route_anchor: avict_core
+- id: action_camera
+  label: Action camera
+  aliases:
+  - action camera
+  - action cam
+  - gopro
+  - sports camera
+  - wearable camera
+  - body camera
+  - 360 camera
+  - action-camera
+  - actioncamera
+  - action cameras
+  - action-cam
+  - actioncam
+  - action cams
+  - gopros
+  - sports-camera
+  - sportscamera
+  - sports cameras
+  - wearable-camera
+  - wearablecamera
+  - wearable cameras
+  - body-camera
+  - bodycamera
+  - body cameras
+  - 360-camera
+  - 360camera
+  - 360 cameras
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - camera
+  - microphone
+  - wifi
+  - bluetooth
+  - sdcard_slot
+  - outdoor_rated
+  - body_worn_or_applied
+  - data_storage
+  functional_classes:
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - action camera
+  - action cam
+  - gopro
+  - sports camera
+  - wearable camera
+  - body camera
+  - 360 camera
+  weak_aliases:
+  - action-camera
+  - actioncamera
+  - action cameras
+  - action-cam
+  - actioncam
+  - action cams
+  - gopros
+  - sports-camera
+  - sportscamera
+  - sports cameras
+  - wearable-camera
+  - wearablecamera
+  - wearable cameras
+  - body-camera
+  - bodycamera
+  - body cameras
+  - 360-camera
+  - 360camera
+  - 360 cameras
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits:
+  - electronic
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: av_ict_device
+  product_subfamily: action_camera
+  route_anchor: avict_wearable
+  route_family: av_ict_wearable
+- id: e_reader
+  label: E-reader
+  aliases:
+  - e-reader
+  - ebook reader
+  - kindle
+  - kobo
+  - e-ink reader
+  - electronic book reader
+  - digital book reader
+  - e reader
+  - e-readers
+  - ebook-reader
+  - ebookreader
+  - ebook readers
+  - kindles
+  - kobos
+  - e ink reader
+  - e-ink-reader
+  - e-inkreader
+  - e-ink readers
+  - electronic-book-reader
+  - electronicbookreader
+  - electronic book readers
+  - digital-book-reader
+  - digitalbookreader
+  - digital book readers
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  - display
+  - e_ink_display
+  - wifi
+  - bluetooth
+  - data_storage
+  - account
+  - wireless_charging_rx
+  functional_classes:
+  - office_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - e-reader
+  - ebook reader
+  - kindle
+  - kobo
+  - e-ink reader
+  - electronic book reader
+  - digital book reader
+  weak_aliases:
+  - e reader
+  - e-readers
+  - ebook-reader
+  - ebookreader
+  - ebook readers
+  - kindles
+  - kobos
+  - e ink reader
+  - e-ink-reader
+  - e-inkreader
+  - e-ink readers
+  - electronic-book-reader
+  - electronicbookreader
+  - electronic book readers
+  - digital-book-reader
+  - digitalbookreader
+  - digital book readers
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - battery_powered
+  - portable
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: personal_computing_device
+  product_subfamily: e_reader
+  route_anchor: avict_connected
+  route_family: av_ict
+- id: streaming_device
+  label: Streaming device / set-top box
+  aliases:
+  - streaming device
+  - streaming stick
+  - set-top box
+  - media player
+  - tv box
+  - streaming-device
+  - streamingdevice
+  - streaming devices
+  - streaming-stick
+  - streamingstick
+  - streaming sticks
+  - set top box
+  - set-top-box
+  - set-topbox
+  - set-top boxs
+  - media-player
+  - mediaplayer
+  - media players
+  - television box
+  - tv-box
+  - tvbox
+  - tv boxs
+  - streaming device set-top box
+  - streaming device set top box
+  - streaming-device-set-top-box
+  - streamingdeviceset-topbox
+  - streaming device set-top boxs
+  implied_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  - wifi
+  - bluetooth
+  - data_storage
+  functional_classes:
+  - home_device
+  - av_ict_device
+  likely_standards:
+  - EN 62368-1
+  genres:
+  - av_ict_device
+  strong_aliases:
+  - streaming device
+  - streaming stick
+  - set-top box
+  - media player
+  - tv box
+  weak_aliases:
+  - streaming-device
+  - streamingdevice
+  - streaming devices
+  - streaming-stick
+  - streamingstick
+  - streaming sticks
+  - set top box
+  - set-top-box
+  - set-topbox
+  - set-top boxs
+  - media-player
+  - mediaplayer
+  - media players
+  - television box
+  - tv-box
+  - tvbox
+  - tv boxs
+  - streaming device set-top box
+  - streaming device set top box
+  - streaming-device-set-top-box
+  - streamingdeviceset-topbox
+  - streaming device set-top boxs
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - electrical
+  - electronic
+  - av_ict
+  - mains_power_likely
+  - radio
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: home_entertainment_device
+  product_subfamily: streaming_device
+  route_anchor: avict_connected
+  route_family: av_ict

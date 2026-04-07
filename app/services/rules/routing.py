@@ -704,6 +704,12 @@ def _confidence_from_score(score: int) -> ConfidenceLevel:
 def _collect_preferred_standard_codes(traits_data: ClassifierTraitsSnapshot | Mapping[str, Any]) -> set[str]:
     snapshot = _classifier_snapshot(traits_data)
     preferred = set(snapshot.preferred_standard_codes)
+    if snapshot.product_match_stage == "family" and snapshot.product_type:
+        for candidate in snapshot.product_candidates:
+            if candidate.id == snapshot.product_type:
+                preferred.update(code for code in candidate.likely_standards if "review" in str(code).lower())
+                break
+        return preferred
     if snapshot.product_match_stage != "subtype":
         return preferred
 

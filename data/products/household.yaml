@@ -184,6 +184,9 @@ products:
   likely_standards:
   - EN 60335-2-67
   - EN 60335-2-72
+  primary_standard_code: EN 60335-2-67
+  supporting_standard_codes:
+  - EN 60335-2-72
   genres:
   - commercial_appliance
   - cleaning_laundry_appliance
@@ -2485,5 +2488,63 @@ products:
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
   product_family: surface_cleaning_appliance
   product_subfamily: water_suction_cleaner
+  route_anchor: household_core
+  route_family: household_appliance
+- id: clock
+  label: Clock
+  aliases:
+  - clock
+  - alarm clock
+  - electric clock
+  - clocks
+  - alarm-clock
+  - alarmclock
+  - alarm clocks
+  - electric-clock
+  - electricclock
+  - electric clocks
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  functional_classes:
+  - home_device
+  likely_standards:
+  - EN 60335-2-26
+  genres:
+  - household_appliance
+  strong_aliases:
+  - clock
+  - alarm clock
+  - electric clock
+  weak_aliases:
+  - clocks
+  - alarm-clock
+  - alarmclock
+  - alarm clocks
+  - electric-clock
+  - electricclock
+  - electric clocks
+  marketplace_aliases: []
+  not_when_text_contains: []
+  negative_examples: []
+  likely_standard_refs:
+  - ref: EN 60335-2-26
+    kind: unspecified
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_power_likely
+  score_penalty_if_traits: []
+  required_any_traits: []
+  forbidden_traits: []
+  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
+  product_family: household_appliance
+  product_subfamily: clock
   route_anchor: household_core
   route_family: household_appliance

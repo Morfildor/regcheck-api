@@ -15,9 +15,16 @@ products:
   - electrical
   - heating
   - mains_powered
+  - optical_emission
+  - infrared_emitting
   functional_classes:
   - heating_appliance
-  likely_standards: []
+  likely_standards:
+  - EN 60335-2-56
+  - EN 62471
+  primary_standard_code: EN 60335-2-56
+  supporting_standard_codes:
+  - EN 62471
   genres:
   - household_appliance
   - hvac_environmental_appliance
@@ -34,13 +41,19 @@ products:
   marketplace_aliases: []
   not_when_text_contains: []
   negative_examples: []
-  likely_standard_refs: []
+  likely_standard_refs:
+  - ref: EN 60335-2-56
+    kind: unspecified
+  - ref: EN 62471
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
   - electrical
   - heating
   - mains_powered
+  - optical_emission
+  - infrared_emitting
   score_penalty_if_traits: []
   required_any_traits: []
   forbidden_traits: []

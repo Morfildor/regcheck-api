@@ -4,6 +4,7 @@ from collections.abc import Mapping
 from typing import Any, TypedDict, cast
 
 from app.domain.catalog_types import StandardCatalogRow
+from app.services.standard_codes import canonical_standard_code_set, canonicalize_standard_code
 
 from .contracts import ApplicableItems, FactBasis, MatchBasis, ProductHitType, StandardAuditOutcome, StandardItemType
 from .gating_finalize import _finalize_selected_rows_v2
@@ -141,14 +142,14 @@ def _is_exact_preferred_standard(standard: StandardRowLike, preferred_standard_c
     if not preferred_standard_codes:
         return False
     code = standard.get("code")
-    return isinstance(code, str) and code in preferred_standard_codes
+    return isinstance(code, str) and canonicalize_standard_code(code) in canonical_standard_code_set(preferred_standard_codes)
 
 
 def _is_family_preferred_standard(standard: StandardRowLike, preferred_standard_codes: set[str]) -> bool:
     if not preferred_standard_codes:
         return False
     family = standard.get("standard_family")
-    return isinstance(family, str) and family in preferred_standard_codes
+    return isinstance(family, str) and canonicalize_standard_code(family) in canonical_standard_code_set(preferred_standard_codes)
 
 
 def _is_preferred_standard(standard: StandardRowLike, preferred_standard_codes: set[str]) -> bool:
@@ -158,7 +159,7 @@ def _is_preferred_standard(standard: StandardRowLike, preferred_standard_codes: 
 
 
 def _has_household_part2_preference(preferred_standard_codes: set[str]) -> bool:
-    return any(str(code).upper().startswith("EN 60335-2-") for code in preferred_standard_codes)
+    return any(code.startswith("EN 60335-2-") for code in canonical_standard_code_set(preferred_standard_codes))
 
 
 def _directive_review_fallback_allowed(
@@ -367,7 +368,7 @@ def _baseline_confirmed_traits(explicit_traits: set[str]) -> set[str]:
 
 
 def _has_small_smart_62368_preference(preferred_standard_codes: set[str], product_genres: list[str]) -> bool:
-    if "EN 62368-1" not in preferred_standard_codes:
+    if "EN 62368-1" not in canonical_standard_code_set(preferred_standard_codes):
         return False
     return bool(set(product_genres) & SMALL_SMART_DEVICE_GENRES)
 

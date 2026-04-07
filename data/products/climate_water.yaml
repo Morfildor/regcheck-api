@@ -452,7 +452,8 @@ products:
   functional_classes:
   - commercial_appliance
   - laundry_appliance
-  likely_standards: []
+  likely_standards:
+  - Commercial laundry appliance review
   genres:
   - commercial_appliance
   - hvac_environmental_appliance
@@ -473,7 +474,9 @@ products:
   marketplace_aliases: []
   not_when_text_contains: []
   negative_examples: []
-  likely_standard_refs: []
+  likely_standard_refs:
+  - ref: Commercial laundry appliance review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - professional
@@ -922,6 +925,10 @@ products:
   - EN 60335-2-81
   - EN 60335-2-96
   - EN 60335-2-106
+  primary_standard_code: EN 60335-2-106
+  supporting_standard_codes:
+  - EN 60335-2-81
+  - EN 60335-2-96
   genres:
   - household_appliance
   - hvac_environmental_appliance
@@ -1183,6 +1190,9 @@ products:
   likely_standards:
   - EN 60335-2-35
   - EN 60335-2-73
+  primary_standard_code: EN 60335-2-73
+  supporting_standard_codes:
+  - EN 60335-2-35
   genres:
   - household_appliance
   - hvac_environmental_appliance
@@ -1236,7 +1246,8 @@ products:
   - mains_powered
   functional_classes:
   - specialty_appliance
-  likely_standards: []
+  likely_standards:
+  - EN 60335-2-71
   genres:
   - household_appliance
   - hvac_environmental_appliance
@@ -1251,7 +1262,9 @@ products:
   marketplace_aliases: []
   not_when_text_contains: []
   negative_examples: []
-  likely_standard_refs: []
+  likely_standard_refs:
+  - ref: EN 60335-2-71
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -1436,6 +1449,9 @@ products:
   likely_standards:
   - EN 60335-2-15
   - EN 60335-2-74
+  primary_standard_code: EN 60335-2-74
+  supporting_standard_codes:
+  - EN 60335-2-15
   genres:
   - household_appliance
   - hvac_environmental_appliance

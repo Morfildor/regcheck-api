@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from app.services.knowledge_base.taxonomy import RouteAnchorDefinition, get_taxonomy_snapshot
+from app.services.standard_codes import canonicalize_standard_code, normalized_standard_codes as _normalize_standard_codes
 
 from .boundary_decisions import BoundaryDecision, decide_boundary
 
@@ -66,15 +67,7 @@ def _string_list(value: Any) -> list[str]:
 
 
 def normalized_standard_codes(codes: set[str] | list[str] | None) -> list[str]:
-    normalized: list[str] = []
-    seen: set[str] = set()
-    for raw_code in codes or []:
-        code = str(raw_code or "").upper().replace("  ", " ").strip()
-        if not code or code in seen:
-            continue
-        seen.add(code)
-        normalized.append(code)
-    return normalized
+    return _normalize_standard_codes(codes)
 
 
 def route_anchor_rules() -> dict[str, RouteAnchorDefinition]:
@@ -97,9 +90,9 @@ def route_standard_family_rules() -> tuple[tuple[str, str, str], ...]:
     rules: list[tuple[str, str, str]] = []
     for definition in route_anchor_rules().values():
         for candidate in definition.exact_primary_candidates:
-            rules.append((candidate.upper(), definition.route_family, definition.label))
+            rules.append((canonicalize_standard_code(candidate), definition.route_family, definition.label))
         for prefix in definition.prefix_primary_candidates:
-            rules.append((prefix.upper(), definition.route_family, definition.label))
+            rules.append((canonicalize_standard_code(prefix), definition.route_family, definition.label))
     ordered: list[tuple[str, str, str]] = []
     seen: set[tuple[str, str, str]] = set()
     for rule in sorted(rules, key=lambda item: (-len(item[0]), item[1], item[0])):
@@ -111,7 +104,7 @@ def route_standard_family_rules() -> tuple[tuple[str, str, str], ...]:
 
 
 def family_from_standard_code(code: str, prefer_wearable: bool) -> str | None:
-    normalized = str(code or "").upper().replace("  ", " ").strip()
+    normalized = canonicalize_standard_code(code)
     for prefix, family, _label in route_standard_family_rules():
         if normalized.startswith(prefix):
             if family == "av_ict" and prefer_wearable:
@@ -305,11 +298,11 @@ def _evaluate_candidate(
         reasons.append(RouteAnchorReason("boundary_tag", f"boundary_tag={tag}", 12))
 
     for code in codes:
-        if code in {candidate.upper() for candidate in definition.exact_primary_candidates}:
+        if code in {canonicalize_standard_code(candidate) for candidate in definition.exact_primary_candidates}:
             score += 24
             reasons.append(RouteAnchorReason("standard", f"standard={code}", 24))
             break
-        if any(code.startswith(prefix.upper()) for prefix in definition.prefix_primary_candidates):
+        if any(code.startswith(canonicalize_standard_code(prefix)) for prefix in definition.prefix_primary_candidates):
             score += 18
             reasons.append(RouteAnchorReason("standard", f"standard_prefix={code}", 18))
             break
@@ -428,12 +421,12 @@ def infer_route_anchor(row: dict[str, Any]) -> str | None:
 
 
 def _preferred_primary_from_anchor(definition: RouteAnchorDefinition, codes: list[str]) -> str | None:
-    exact_candidates = {candidate.upper() for candidate in definition.exact_primary_candidates}
+    exact_candidates = {canonicalize_standard_code(candidate) for candidate in definition.exact_primary_candidates}
     for code in codes:
         if code in exact_candidates:
             return code
     for prefix in definition.prefix_primary_candidates:
-        normalized_prefix = prefix.upper()
+        normalized_prefix = canonicalize_standard_code(prefix)
         candidates = [code for code in codes if code.startswith(normalized_prefix)]
         if candidates:
             return sorted(candidates)[0]

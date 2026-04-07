@@ -510,7 +510,8 @@ products:
   functional_classes:
   - outdoor_appliance
   - garden_tool
-  likely_standards: []
+  likely_standards:
+  - Power tool safety review
   genres:
   - garden_outdoor_power
   strong_aliases:
@@ -538,7 +539,9 @@ products:
   marketplace_aliases: []
   not_when_text_contains: []
   negative_examples: []
-  likely_standard_refs: []
+  likely_standard_refs:
+  - ref: Power tool safety review
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -553,6 +556,7 @@ products:
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
   product_family: garden_power_equipment
   product_subfamily: electric_garden_tool
+  primary_standard_code: Power tool safety review
   route_anchor: machinery_tool
   route_family: machinery_power_tool
 - id: grass_shear

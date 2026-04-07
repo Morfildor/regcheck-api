@@ -803,7 +803,9 @@ products:
   - app_control
   functional_classes:
   - wearable_device
-  likely_standards: []
+  likely_standards:
+  - EN 62368-1
+  - EN 62479
   genres:
   - wearable_device
   preferred_clues:
@@ -853,7 +855,11 @@ products:
   - speaker
   - projector
   negative_examples: []
-  likely_standard_refs: []
+  likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
+  - ref: EN 62479
+    kind: unspecified
   minimum_match_score: 25
   score_boost_if_traits:
   - consumer
@@ -872,6 +878,9 @@ products:
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
   product_family: wearable_device_family
   product_subfamily: led_shoes
+  primary_standard_code: EN 62368-1
+  supporting_standard_codes:
+  - EN 62479
   route_anchor: avict_wearable
   route_family: av_ict_wearable
 - id: massage_appliance

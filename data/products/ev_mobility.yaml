@@ -56,6 +56,9 @@ products:
   likely_standards:
   - EN 15194
   - EN 50604-1
+  primary_standard_code: EN 15194
+  supporting_standard_codes:
+  - EN 50604-1
   genres:
   - micromobility
   preferred_clues:
@@ -321,6 +324,9 @@ products:
   likely_standards:
   - EN 17128
   - EN 50604-1
+  primary_standard_code: EN 17128
+  supporting_standard_codes:
+  - EN 50604-1
   family_traits:
   - consumer
   - electrical
@@ -427,6 +433,9 @@ products:
   - mobility_device
   likely_standards:
   - EN 17128
+  - EN 50604-1
+  primary_standard_code: EN 17128
+  supporting_standard_codes:
   - EN 50604-1
   strong_aliases:
   - electric skateboard
@@ -788,6 +797,9 @@ products:
   likely_standards:
   - EN 17128
   - EN 50604-1
+  primary_standard_code: EN 17128
+  supporting_standard_codes:
+  - EN 50604-1
   preferred_clues:
   - hoverboard
   - self balancing
@@ -1010,111 +1022,3 @@ products:
   - fixed_installation
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
   route_anchor: ev_charging
-- id: streaming_device
-  label: Streaming device / set-top box
-  aliases:
-  - streaming device
-  - streaming stick
-  - set-top box
-  - media player
-  - tv box
-  - streaming-device
-  - streamingdevice
-  - streaming devices
-  - streaming-stick
-  - streamingstick
-  - streaming sticks
-  - set top box
-  - set-top-box
-  - set-topbox
-  - set-top boxs
-  - media-player
-  - mediaplayer
-  - media players
-  - television box
-  - tv-box
-  - tvbox
-  - tv boxs
-  - streaming device set-top box
-  - streaming device set top box
-  - streaming-device-set-top-box
-  - streamingdeviceset-topbox
-  - streaming device set-top boxs
-  implied_traits:
-  - consumer
-  - electrical
-  - electronic
-  - av_ict
-  - mains_power_likely
-  - radio
-  - wifi
-  - bluetooth
-  - data_storage
-  functional_classes:
-  - home_device
-  - av_ict_device
-  likely_standards:
-  - EN 62368-1
-  genres:
-  - av_ict_device
-  strong_aliases:
-  - streaming device
-  - streaming stick
-  - set-top box
-  - media player
-  - tv box
-  weak_aliases:
-  - streaming-device
-  - streamingdevice
-  - streaming devices
-  - streaming-stick
-  - streamingstick
-  - streaming sticks
-  - set top box
-  - set-top-box
-  - set-topbox
-  - set-top boxs
-  - media-player
-  - mediaplayer
-  - media players
-  - television box
-  - tv-box
-  - tvbox
-  - tv boxs
-  - streaming device set-top box
-  - streaming device set top box
-  - streaming-device-set-top-box
-  - streamingdeviceset-topbox
-  - streaming device set-top boxs
-  marketplace_aliases: []
-  not_when_text_contains: []
-  negative_examples: []
-  likely_standard_refs:
-  - ref: EN 62368-1
-    kind: unspecified
-  minimum_match_score: 25
-  score_boost_if_traits:
-  - consumer
-  - electrical
-  - electronic
-  - av_ict
-  - mains_power_likely
-  - radio
-  score_penalty_if_traits: []
-  required_any_traits: []
-  forbidden_traits: []
-  matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
-  product_family: home_entertainment_device
-  product_subfamily: streaming_device
-  route_anchor: avict_connected
-  route_family: av_ict
-  preferred_clues:
-  - evse
-  - mode 2
-  - control box
-  - portable ev charger
-  exclude_clues:
-  - tethered cable
-  - vehicle connector
-  confusable_with:
-  - ev_connector_accessory

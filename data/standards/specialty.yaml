@@ -139,7 +139,7 @@ standards:
   item_type: standard
   standard_family: EN 14604
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: state_of_the_art
   is_harmonized: false
   version: EN 14604
   dated_version: EN 14604
@@ -528,7 +528,7 @@ standards:
   item_type: standard
   standard_family: EN 50291-1
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: state_of_the_art
   is_harmonized: false
   version: EN 50291-1
   dated_version: EN 50291-1
@@ -1015,7 +1015,7 @@ standards:
   item_type: standard
   standard_family: EN 60730-1
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: state_of_the_art
   is_harmonized: false
   version: EN 60730-1
   dated_version: EN 60730-1
@@ -1061,7 +1061,7 @@ standards:
   item_type: standard
   standard_family: EN 60730-2-9
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: state_of_the_art
   is_harmonized: false
   version: EN 60730-2-9
   dated_version: EN 60730-2-9
@@ -1820,10 +1820,12 @@ standards:
   item_type: standard
   standard_family: EN IEC 61851-1
   confidence: high
-  harmonization_status: unknown
-  is_harmonized: false
-  version: EN IEC 61851-1
-  dated_version: EN IEC 61851-1
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN IEC 61851-1:2019
+  dated_version: EN IEC 61851-1:2019
   applies_if_products:
   - ev_charger_home
   - portable_ev_charger
@@ -1881,7 +1883,7 @@ standards:
   standard_family: EN IEC 61851-21-2
   confidence: high
   required_fact_basis: confirmed
-  harmonization_status: unknown
+  harmonization_status: state_of_the_art
   is_harmonized: false
   version: EN IEC 61851-21-2
   dated_version: EN IEC 61851-21-2

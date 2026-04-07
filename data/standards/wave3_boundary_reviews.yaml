@@ -167,6 +167,89 @@ standards:
   evidence_keywords:
   - single-line architecture or system diagram
   - battery, inverter, and installation role details
+- code: Commercial laundry appliance review
+  title: Commercial laundry appliance standards-route review
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  - MD
+  legislation_key: LVD
+  item_type: review
+  standard_family: Commercial laundry appliance review
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products:
+  - commercial_washing_machine
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  - motorized
+  applies_if_any:
+  - water_contact
+  - professional
+  exclude_if: []
+  test_focus:
+  - safety
+  - electrical
+  evidence_hint:
+  - intended commercial laundry use
+  - exact machine category and loading configuration
+  - applicable machinery versus appliance route
+  keywords:
+  - commercial washing machine
+  - industrial washer
+  - commercial laundry appliance
+  notes: Conservative review item for commercial washing machines where the route can cross appliance and machinery standard families.
+  standard_ref: Commercial laundry appliance review
+  selection_group: commercial_laundry_review
+  selection_priority: 15
+  evidence_keywords:
+  - intended commercial laundry use
+  - exact machine category and loading configuration
+  - applicable machinery versus appliance route
+- code: PV module standards review
+  title: Photovoltaic module standards-route review
+  region: EU
+  category: safety
+  directives:
+  - LVD
+  - GPSR
+  legislation_key: LVD
+  item_type: review
+  standard_family: PV module standards review
+  confidence: medium
+  required_fact_basis: inferred
+  harmonization_status: review
+  is_harmonized: false
+  applies_if_products:
+  - solar_panel_module
+  exclude_if_products: []
+  applies_if_all:
+  - electrical
+  applies_if_any: []
+  exclude_if: []
+  test_focus:
+  - safety
+  - energy
+  evidence_hint:
+  - module construction and ratings
+  - installation and system-role description
+  - PV module safety and performance evidence
+  keywords:
+  - solar panel
+  - pv module
+  - photovoltaic module
+  notes: Conservative review item for standalone PV modules that sit at a fixed-installation and power-system boundary.
+  standard_ref: PV module standards review
+  selection_group: pv_module_review
+  selection_priority: 15
+  evidence_keywords:
+  - module construction and ratings
+  - installation and system-role description
+  - PV module safety and performance evidence
 - code: UV / irradiation application review
   title: UV, germicidal, and irradiation application review
   region: EU
