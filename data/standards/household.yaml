@@ -380,7 +380,12 @@ standards:
   item_type: standard
   standard_family: EN 60335-2-11
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN IEC 60335-2-11:2022 + A11:2022
+  dated_version: EN IEC 60335-2-11:2022 + A11:2022
   applies_if_products:
   - tumble_dryer
   - washer_dryer
@@ -396,7 +401,8 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - tumble dryer
-  notes: Applies to the specific Part 2 appliance family, including tumble dryer.
+  notes: Applies to the specific Part 2 appliance family, including tumble dryer. The current LVD harmonized
+    listing uses EN IEC 60335-2-11:2022 + A11:2022.
   state_of_the_art_scope: EU
   applies_if_genres:
   - cleaning_laundry_appliance
@@ -644,7 +650,12 @@ standards:
   item_type: standard
   standard_family: EN 60335-2-17
   confidence: medium
-  harmonization_status: unknown
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN 60335-2-17:2013 + A11:2019 + A1:2020 + A2:2021
+  dated_version: EN 60335-2-17:2013 + A11:2019 + A1:2020 + A2:2021
   applies_if_products:
   - electric_blanket
   - heating_pad
@@ -666,6 +677,8 @@ standards:
   - foot warmer
   - particular requirements for blankets
   notes: Applies to the specific Part 2 appliance family, including electric blanket, heating pad, foot warmer.
+    The current LVD harmonized listing keeps the EN 60335-2-17:2013 series with A11:2019, A1:2020,
+    and A2:2021.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
@@ -780,7 +793,12 @@ standards:
   item_type: standard
   standard_family: EN 60335-2-23
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN 60335-2-23:2003 + A11:2010 + A1:2008 + A2:2015
+  dated_version: EN 60335-2-23:2003 + A11:2010/AC:2012 + A1:2008 + A2:2015
   applies_if_products:
   - skin_hair_care_appliance
   - beauty_treatment_appliance
@@ -800,7 +818,8 @@ standards:
   - beauty treatment appliance
   - hair curler
   notes: Applies to the specific Part 2 appliance family, including skin hair care appliance, beauty treatment appliance,
-    hair curler.
+    hair curler. The current LVD harmonized listing keeps the EN 60335-2-23:2003 series with A11:2010,
+    AC:2012, A1:2008, and A2:2015.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
@@ -1204,7 +1223,12 @@ standards:
   item_type: standard
   standard_family: EN 60335-2-32
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN 60335-2-32:2003 + A1:2008 + A2:2015
+  dated_version: EN 60335-2-32:2003 + A1:2008 + A2:2015
   applies_if_products:
   - massage_appliance
   exclude_if_products: []
@@ -1219,7 +1243,8 @@ standards:
   - CB report or equivalent technical evidence
   keywords:
   - massage appliance
-  notes: Applies to the specific Part 2 appliance family, including massage appliance.
+  notes: Applies to the specific Part 2 appliance family, including massage appliance. The current LVD harmonized
+    listing keeps EN 60335-2-32:2003 with A1:2008 and A2:2015.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
@@ -1782,7 +1807,12 @@ standards:
   item_type: standard
   standard_family: EN 60335-2-45
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN 60335-2-45:2002 + A1:2008 + A2:2012
+  dated_version: EN 60335-2-45:2002 + A1:2008 + A2:2012
   applies_if_products:
   - electric_iron
   - heat_gun
@@ -1799,7 +1829,8 @@ standards:
   keywords:
   - electric iron
   - heat gun
-  notes: Applies to portable heating tools and similar appliances, including heat guns.
+  notes: Applies to portable heating tools and similar appliances, including heat guns. The current LVD harmonized
+    listing keeps EN 60335-2-45:2002 with A1:2008 and A2:2012.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
@@ -2875,7 +2906,12 @@ standards:
   item_type: standard
   standard_family: EN 60335-2-71
   confidence: high
-  harmonization_status: unknown
+  harmonization_status: harmonized
+  is_harmonized: true
+  harmonized_under: LVD
+  harmonized_reference: 2014/35/EU
+  version: EN 60335-2-71:2003 + A1:2007
+  dated_version: EN 60335-2-71:2003 + A1:2007
   applies_if_products:
   - livestock_heater
   - incubator
@@ -2892,7 +2928,8 @@ standards:
   keywords:
   - livestock heater
   - egg incubator
-  notes: Electrical heating appliance route for breeding and rearing animals.
+  notes: Electrical heating appliance route for breeding and rearing animals. The current LVD harmonized
+    listing keeps EN 60335-2-71:2003 with A1:2007.
   state_of_the_art_scope: EU
   applies_if_genres:
   - household_appliance
