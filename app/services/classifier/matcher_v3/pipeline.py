@@ -27,8 +27,7 @@ def _common_sets(rows: list, field: str) -> set[str]:
 
 
 def run_matcher_v3(text: str, signal_traits: set[str]) -> ClassifierMatchOutcome:
-    # Imported locally so matching.py can delegate here.
-    from app.services.classifier.matching import (
+    from .ownership import (
         ENGINE_VERSION,
         _apply_domain_disambiguation,
         _build_empty_match_outcome,
@@ -50,8 +49,8 @@ def run_matcher_v3(text: str, signal_traits: set[str]) -> ClassifierMatchOutcome
         _shortlist_product_matchers_v2,
         _top_unique,
         _why_not_reasons,
-        parse_product_roles,
     )
+    from ..relation_parsing import parse_product_roles
 
     phase_snapshot = MatcherPhaseSnapshot()
     role_parse = parse_product_roles(text)

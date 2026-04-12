@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 
 from app.domain.catalog_types import StandardCatalogRow
 from app.domain.engine_models import MissingInformationItem, StandardAuditItem, StandardItem, StandardSection
 from app.services.classifier import normalize
-from app.services.standards_engine import find_applicable_items
 from app.services.standards_engine.contracts import ItemsAudit, RejectionEntry, SelectionContext
 
 from .contracts import StandardsPolicyDecision, StandardsSelectionResult
+from .pipeline import select_applicable_items_v3
 
 
 def _selection_row(row: StandardCatalogRow | Mapping[str, object]) -> StandardCatalogRow:
@@ -56,8 +56,8 @@ def _rejection_entries_from_payload(payload: list[dict[str, object]] | None) -> 
 
 
 def _policy_from_items(
-    selected_rows: list[StandardCatalogRow | Mapping[str, object]],
-    review_rows: list[StandardCatalogRow | Mapping[str, object]],
+    selected_rows: Sequence[StandardCatalogRow | Mapping[str, object]],
+    review_rows: Sequence[StandardCatalogRow | Mapping[str, object]],
     rejections: list[RejectionEntry],
 ) -> StandardsPolicyDecision:
     normalized_selected = [_selection_row(row) for row in selected_rows]
@@ -81,9 +81,10 @@ def run_standards_policy(
     standard_sections: list[StandardSection],
     standard_item_from_row,
     sort_standard_items,
-    standards_selector=find_applicable_items,
+    standards_selector=None,
 ) -> StandardsSelectionResult:
-    items = standards_selector(
+    selector = standards_selector or select_applicable_items_v3
+    items = selector(
         traits=prepared.route_traits,
         directives=list(routes.allowed_directives),
         product_type=prepared.routing_product_type,

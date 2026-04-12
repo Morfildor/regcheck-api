@@ -30,3 +30,15 @@ jobs:
 
       - name: Run pytest
         run: pytest
+
+      - name: Benchmark Regression Gate
+        run: pytest tests/test_benchmark_suite.py
+
+      - name: Snapshot Drift Gate
+        run: pytest tests/test_backend_hardening.py -k api_snapshots_remain_stable_for_representative_products
+
+      - name: Route Drift Gate
+        run: pytest tests/test_routing_regression.py tests/test_matching_regressions.py
+
+      - name: Standards Drift Gate
+        run: pytest tests/test_rulegrid_pass2_regression.py tests/test_red_routing.py

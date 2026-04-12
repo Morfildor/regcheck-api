@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
+
+from app.domain.engine_models import KnownFactItem, RouteContext
+from app.services.standards_engine.contracts import SelectionContext
+
 from .contracts import NormalizedClassifierEvidence, RoutePolicyDecision
 
 
@@ -35,4 +40,26 @@ def decide_route_policy(prepared, detected_directives: list[str] | None = None) 
         primary_standard_code=route_plan.primary_standard_code,
         primary_directive=route_plan.primary_directive,
         rationale=rationale,
+    )
+
+
+def build_route_context(
+    selection_context: SelectionContext | Mapping[str, object],
+    known_facts: list[KnownFactItem],
+    policy: RoutePolicyDecision,
+    overlay_routes: list[str] | None = None,
+) -> RouteContext:
+    context = SelectionContext.from_mapping(selection_context)
+    return RouteContext(
+        scope_route=context.scope_route,
+        scope_reasons=list(context.scope_reasons),
+        context_tags=sorted(context.context_tags),
+        known_fact_keys=[item.key for item in known_facts],
+        jurisdiction="EU",
+        route_trigger_reasons=list(context.scope_reasons),
+        primary_route_family=policy.primary_route_family,
+        primary_route_standard_code=policy.primary_standard_code,
+        primary_route_reason=context.primary_route_reason or (policy.rationale[0] if policy.rationale else ""),
+        overlay_routes=list(overlay_routes or []),
+        route_confidence=policy.route_confidence,
     )

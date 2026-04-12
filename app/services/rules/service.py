@@ -15,12 +15,13 @@ from app.domain.models import (
     RiskReason,
     RiskSummary,
     ShadowDiffItem,
+    StandardItem,
     StandardMatchAudit,
     StandardSection,
     DecisionTraceEntry,
 )
 from app.services.classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION
-from app.services.standards_engine import find_applicable_items
+from app.services.routing_v3 import build_route_context, decide_route_policy
 from app.services.standards_engine.contracts import ItemsAudit
 from app.services.standards_v3 import StandardsSelectionResult, run_standards_policy
 
@@ -48,7 +49,6 @@ from .routing import (
     _confidence_level,
     _contradiction_severity,
     _prepare_analysis,
-    _route_context_summary,
     _select_legislation_routes,
     _standard_context,
 )
@@ -83,7 +83,7 @@ def _select_standards(
         prepared.diagnostics.append("scope_route_reasons=" + ";".join(context.scope_reasons))
     prepared.diagnostics.append("standard_context_tags=" + ",".join(sorted(context.context_tags)))
 
-    current_review_items = []
+    current_review_items: list[StandardItem] = []
     missing_items = _missing_information(
         prepared.route_traits,
         prepared.routing_matched_products,
@@ -131,7 +131,6 @@ def _select_standards(
             standard_sections=standard_sections,
             standard_item_from_row=_standard_item_from_row,
             sort_standard_items=_sort_standard_items,
-            standards_selector=find_applicable_items,
         ),
     )
     if not standards.standard_sections and (standards.standard_items or standards.review_items):
@@ -441,6 +440,7 @@ def analyze(
 
     trait_evidence = _trait_evidence_from_state_map(prepared.raw_state_map, prepared.confirmed_traits)
     product_match_audit = _safe_product_match_audit(prepared.traits_data, prepared.normalized_description)
+    route_policy = decide_route_policy(prepared, routes.detected_directives)
     rejected_audit_rows = [item.model_dump() for item in standards.items_audit.rejected]
     selected_audit_rows = [item.model_dump() for item in standards.items_audit.selected]
     review_audit_rows = [item.model_dump() for item in standards.items_audit.review]
@@ -541,9 +541,10 @@ def analyze(
         trait_evidence=trait_evidence,
         product_match_audit=product_match_audit,
         standard_match_audit=standard_match_audit,
-        route_context=_route_context_summary(
+        route_context=build_route_context(
             standards.context,
             known_facts,
+            route_policy,
             [directive for directive in routes.detected_directives if directive in OVERLAY_DIRECTIVE_KEYS],
         ),
         decision_trace=decision_trace,
