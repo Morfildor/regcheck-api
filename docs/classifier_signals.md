@@ -11,6 +11,7 @@ What moved there:
 - `cue_groups`: reusable text cues for baseline inference and context scoring
 - `relation_cues`: governed controller, module, receiver, gateway, panel, backup, and host-device relation patterns
 - `domain_roles_wave4.yaml`: explicit role and confusable-domain cue packs used by head resolution v2 and domain-role disambiguation
+- `domain_roles_wave6.yaml`: targeted building-access, EV companion, lighting/grow-light, display-PC hybrid, countertop-induction, and wellness-heating packs used by the wave-six disambiguation rules
 
 How it is loaded:
 
@@ -34,6 +35,9 @@ Role-cue conventions:
 - Use cue packs to reinforce governed heads and confusable-family guards. Do not use them as a substitute for product-specific aliases when the product name itself is decisive.
 - When a phrase is broad and reusable, put it in `cue_groups`. When it expresses relationship structure, keep it in `relation_cues`.
 - Prefer negative guards and contrastive cues over expanding broad aliases like `controller`, `module`, or `gateway` across many products.
+- For companion-device domains, pair the role cue with a contrastive guard in the same pack so `bridge`, `gateway`, `module`, `meter`, `panel`, or `controller` wording does not collapse into the supported main device.
+- For hybrid domains, keep the cue pack outcome explicit: either a clear governed hybrid subtype/family or a family-level boundary with an auditable stop reason.
+- Multi-word heads such as `lock bridge`, `load balancing meter`, `kiosk display`, `grow light strip`, and `heated shoulder wrap` should be reinforced with both a head cue and a confusable-domain guard instead of a single broad alias.
 
 Avoiding generic-alias regressions:
 
@@ -41,6 +45,7 @@ Avoiding generic-alias regressions:
 2. Only add a generic-looking alias when the surrounding product already has strong family keywords, required traits, or explicit negative clues.
 3. If a new cue or alias is meant to separate two domains, add both the positive clue and the negative/confusable guard in the same change.
 4. Add at least one adversarial or paraphrase fixture in `tests/matching_quality_fixtures/*_wave4.py` for the exact wording that motivated the change.
+5. For wave-six domain fixes, prefer adding the exact prompt family to the relevant `*_wave6.py` fixture file and let `scripts/eval_matching.py` generate the mutation variants on top.
 
 Validation:
 

@@ -11,6 +11,7 @@ from .signal_config import get_classifier_signal_snapshot
 _ROLE_PARSE_PRIORITY = {
     "built_into": 0,
     "with_integrated": 0,
+    "with_built_in_pc": 0,
     "built_in": 1,
     "charger_for": 2,
     "controller_for": 3,
@@ -22,6 +23,7 @@ _ROLE_PARSE_PRIORITY = {
     "receiver_for": 9,
     "adapter_for": 10,
     "module_for": 11,
+    "meter_for": 11,
     "panel_for": 12,
     "unit_for": 13,
     "box_for": 14,
@@ -46,6 +48,7 @@ _BINARY_ROLES = frozenset(
 )
 _PREFIX_ROLE_BY_HEAD = {
     "adapter": "target_device",
+    "access keypad": "target_device",
     "backup": "powered_device",
     "backup unit": "powered_device",
     "bracket": "mounted_on_or_for",
@@ -56,11 +59,13 @@ _PREFIX_ROLE_BY_HEAD = {
     "control module": "controlled_device",
     "controller": "controlled_device",
     "dock": "host_device",
+    "entry panel": "target_device",
     "gateway": "host_device",
     "hub": "host_device",
     "injector": "powered_device",
     "keypad": "target_device",
     "lock bridge": "host_device",
+    "load balancing meter": "target_device",
     "meter module": "target_device",
     "module": "target_device",
     "mount": "mounted_on_or_for",
@@ -68,9 +73,12 @@ _PREFIX_ROLE_BY_HEAD = {
     "reader": "target_device",
     "receiver": "target_device",
     "relay module": "target_device",
+    "smart meter display": "target_device",
+    "smart meter gateway": "target_device",
     "stand": "mounted_on_or_for",
     "terminal": "target_device",
     "transmitter": "target_device",
+    "underblanket controller": "target_device",
 }
 _ACCESSORY_HEAD_TERMS = frozenset(
     {
@@ -107,11 +115,15 @@ _ACCESSORY_HEAD_PHRASES = frozenset(
         "entry panel",
         "gateway",
         "lock bridge",
+        "load balancing meter",
         "meter module",
         "monitor stand",
         "receiver",
         "relay module",
+        "smart meter display",
+        "smart meter gateway",
         "terminal",
+        "underblanket controller",
         "ups backup unit",
     }
 )
@@ -154,19 +166,28 @@ _REVERSE_INTEGRATED_PATTERNS = tuple(
 )
 _DECISIVE_FULL_HEAD_FRAGMENTS = frozenset(
     {
+        "access keypad",
         "bridge",
         "chime receiver",
         "controller",
         "control module",
         "entry panel",
         "gateway",
+        "grow light strip",
+        "induction hot plate",
+        "kiosk display",
         "kvm switch",
+        "load balancing meter",
         "meter module",
         "panel",
         "poe recorder",
         "receiver",
         "relay module",
         "shower heater",
+        "smart meter display",
+        "smart meter gateway",
+        "terminal display",
+        "underblanket controller",
         "video recorder",
         "visualizer",
     }
@@ -458,6 +479,13 @@ def parse_product_roles(text: str) -> ProductRoleParse:
     primary_is_accessory = bool(
         accessory_key in _ACCESSORY_HEAD_PHRASES or accessory_key.split()[-1] in _ACCESSORY_HEAD_TERMS
     )
+    integrated_text = " ".join(role_values["integrated_feature"])
+    if primary_is_accessory and accessory_key in {"access keypad", "entry panel"}:
+        if any(fragment in integrated_text for fragment in ("intercom", "camera")) or any(
+            fragment in primary_phrase for fragment in ("gate", "entry", "door access", "access keypad")
+        ):
+            primary_is_accessory = False
+            notes.append("building-access keypad or entry-panel wording stayed as the main entry device")
     if primary_is_accessory and primary_phrase:
         role_values["accessory_or_attachment"].append(primary_phrase)
         notes.append(f"accessory attachment primary phrase: {primary_phrase}")

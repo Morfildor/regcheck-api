@@ -116,9 +116,15 @@ products:
   - phone ring light
   - makeup ring light
   - streaming ring light
+  - studio light
+  - studio light for video calls
+  - video call light
+  - video conference light
   preferred_clues:
   - creator light
   - studio light
+  - video calls
+  - streaming
   family_traits:
   - consumer
   - electrical
@@ -193,9 +199,15 @@ products:
   - led mirror
   - lighted mirror
   - vanity mirror with light
+  - vanity mirror with lights
+  - vanity mirror with lights and speaker
+  - mirror with lights and speaker
+  - lighted vanity mirror
   preferred_clues:
   - mirror light
   - vanity mirror
+  - lights
+  - speaker
   family_traits:
   - consumer
   - electrical

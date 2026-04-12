@@ -7,6 +7,11 @@ products:
   - wifi baby monitor
   - smart baby monitor
   - baby camera
+  - baby camera monitor
+  - baby monitor with screen
+  - baby camera monitor with screen
+  - camera monitor for baby room
+  - nursery camera monitor
   - infant monitor
   - baby-monitor
   - babymonitor
@@ -32,6 +37,9 @@ products:
   - baby
   - infant
   - nursery
+  - baby room
+  - screen
+  - camera monitor
   implied_traits:
   - consumer
   - household
@@ -66,6 +74,8 @@ products:
   - wifi baby monitor
   - smart baby monitor
   - baby camera
+  - baby camera monitor
+  - baby monitor with screen
   - infant monitor
   weak_aliases:
   - baby-monitor
@@ -539,6 +549,11 @@ products:
   - access control intercom
   - intercom access panel
   - video intercom access panel
+  - door entry panel
+  - access keypad intercom panel
+  - intercom panel with camera and keypad
+  - door entry panel with camera and keypad
+  - gate access keypad with camera intercom
   - ip-intercom
   - ipintercom
   - ip intercoms
@@ -593,11 +608,17 @@ products:
   - video door station
   - apartment intercom ip
   - access control intercom
+  - door entry panel
+  - access keypad intercom panel
+  - intercom panel with camera and keypad
   preferred_clues:
   - intercom
   - access panel
   - keypad
   - camera
+  - entry panel
+  - camera intercom
+  - access keypad
   weak_aliases:
   - ip-intercom
   - ipintercom
@@ -661,6 +682,8 @@ products:
   - surveillance recorder
   - poe nvr
   - poe recorder
+  - security recorder
+  - security recorder with poe ports and storage
   - security camera recorder
   - camera system recorder
   - camera system with poe recorder
@@ -709,6 +732,8 @@ products:
   - surveillance recorder
   - poe nvr
   - poe recorder
+  - security recorder
+  - security recorder with poe ports and storage
   - security camera recorder
   - camera system recorder
   marketplace_aliases:
@@ -1546,6 +1571,11 @@ products:
   - entry lock
   - electromechanical lock
   - building hardware
+  exclude_clues:
+  - smart lock bridge
+  - lock bridge
+  - lock gateway bridge
+  - smart lock wifi bridge
   aliases:
   - smart lock
   - smart door lock
@@ -2040,7 +2070,13 @@ products:
   - smarthomesensor(environmental)
   - smart home sensor (environmental)s
   marketplace_aliases: []
-  not_when_text_contains: []
+  not_when_text_contains:
+  - smart lock bridge
+  - lock bridge gateway
+  - bluetooth lock bridge
+  - lock gateway bridge
+  - smart lock wifi bridge
+  - bridge for bluetooth door lock
   negative_examples: []
   likely_standard_refs:
   - ref: EN 62368-1

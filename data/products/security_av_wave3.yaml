@@ -242,7 +242,26 @@ products:
   - touchscreen all in one desktop computer
   - all in one pc with large display
   - all in one desktop display computer
+  - display with built in pc
+  - display monitor with pc built in
+  - kiosk display with integrated windows pc
+  - touch display terminal with built in pc
+  - terminal display with built in pc
+  - integrated windows pc display
   - aio pc
+  - pc monitor combo
+  strong_aliases:
+  - all in one pc
+  - all-in-one pc
+  - all in one desktop display computer
+  - display with built in pc
+  - kiosk display with integrated windows pc
+  - touch display terminal with built in pc
+  - aio pc
+  weak_aliases:
+  - display monitor with pc built in
+  - terminal display with built in pc
+  - integrated windows pc display
   - pc monitor combo
   confusable_with:
   - monitor
@@ -254,6 +273,11 @@ products:
   - desktop computer with display
   - all in one desktop
   - touch display
+  - built in pc
+  - integrated pc
+  - windows pc
+  - kiosk display
+  - terminal display
   family_traits:
   - electronic
   - av_ict

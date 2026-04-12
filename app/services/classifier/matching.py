@@ -19,7 +19,13 @@ from .matching_runtime import (
     build_product_matching_snapshot,
     reset_matching_cache,
 )
-from .models import ClassifierMatchAudit, ClassifierMatchOutcome, FamilySeedCandidate, SubtypeCandidate
+from .models import (
+    ClassifierMatchAudit,
+    ClassifierMatchOutcome,
+    FamilySeedCandidate,
+    RejectedCandidateAudit,
+    SubtypeCandidate,
+)
 from .normalization import normalize
 from .relation_parsing import ProductRoleParse, parse_product_roles
 from .scoring import (
@@ -157,12 +163,24 @@ RELATION_ROLE_REQUIRED_CUES: dict[str, frozenset[str]] = {
     "host_device": frozenset({"dock_role", "gateway_module_role", "hub_role"}),
     "target_device": frozenset({"adapter_cable_role", "receiver_role", "terminal_role"}),
 }
+COMPANION_HEAD_TERMS = frozenset(
+    {
+        "chime receiver",
+        "load balancing meter",
+        "lock bridge",
+        "meter module",
+        "relay module",
+        "smart meter display",
+        "smart meter gateway",
+        "underblanket controller",
+    }
+)
 
 PRODUCT_ROLE_PACKS: dict[str, RolePack] = {
-    "monitor": RolePack(("display_surface_role", "monitor_specific_role"), ("dock_role", "hub_role", "mount_attachment_role", "network_port_role"), False, "office_display_and_dock"),
+    "monitor": RolePack(("display_surface_role", "monitor_specific_role"), ("display_pc_hybrid_context", "dock_role", "hub_role", "mount_attachment_role", "network_port_role"), False, "office_display_and_dock"),
     "docking_station": RolePack(("computer_role", "dock_role", "network_port_role", "usb_peripheral_role"), ("display_surface_role", "mount_attachment_role"), True, "office_display_and_dock"),
     "usb_hub": RolePack(("hub_role", "usb_peripheral_role"), ("display_surface_role", "mount_attachment_role"), True, "office_display_and_dock"),
-    "all_in_one_pc": RolePack(("all_in_one_role", "computer_role", "display_surface_role"), ("dock_role", "hub_role", "mount_attachment_role"), False, "office_display_and_dock"),
+    "all_in_one_pc": RolePack(("all_in_one_role", "computer_role", "display_pc_hybrid_context", "display_surface_role"), ("dock_role", "hub_role", "mount_attachment_role"), False, "office_display_and_dock"),
     "power_bank": RolePack(("portable_power_role", "power_bank_role"), ("battery_charger_role", "ebike_role", "ev_charger_role", "external_psu_role"), False, "power_roles"),
     "battery_charger": RolePack(("battery_charger_role",), ("ev_connector_role", "external_psu_role", "power_bank_role"), False, "power_roles"),
     "external_power_supply": RolePack(("external_psu_role",), ("battery_charger_role", "portable_power_role"), True, "power_roles"),
@@ -189,6 +207,17 @@ PRODUCT_ROLE_PACKS: dict[str, RolePack] = {
     "electric_shower_heater": RolePack(("shower_water_heater_context",), ("heating_personal_environment",), False, "water_heating_roles"),
     "smart_relay_module": RolePack(("smart_relay_module_context", "gateway_module_role"), (), True, "companion_smart_home"),
     "irrigation_controller": RolePack(("irrigation_controller_context",), (), True, "companion_smart_home"),
+    "baby_monitor": RolePack(("baby_monitor_context", "display_surface_role"), (), False, "baby_monitor_display"),
+    "grow_light": RolePack(("grow_light_context",), (), False, "lighting_hybrids"),
+    "heated_wellness_wrap": RolePack(("wellness_heating_wrap_context",), (), False, "wellness_heating"),
+    "home_energy_monitor": RolePack(("energy_companion_context",), (), True, "energy_companion"),
+    "illuminated_mirror": RolePack(("illuminated_mirror_context", "vanity_mirror_context"), ("lighting_display_hybrid_context",), False, "lighting_hybrids"),
+    "induction_hot_plate": RolePack(("countertop_induction_context",), (), False, "countertop_induction"),
+    "ip_intercom": RolePack(("intercom_entry_hybrid_context", "intercom_role", "intercom_access_context"), ("smart_display_role",), False, "building_access_entry"),
+    "ring_light": RolePack(("studio_light_context",), (), False, "lighting_hybrids"),
+    "smart_meter_display": RolePack(("energy_companion_context", "display_surface_role"), (), True, "energy_companion"),
+    "smart_meter_gateway": RolePack(("energy_companion_context", "gateway_module_role"), (), True, "energy_companion"),
+    "smart_mirror": RolePack(("lighting_display_hybrid_context", "vanity_mirror_context"), (), False, "lighting_hybrids"),
 }
 FAMILY_ROLE_PACKS: dict[str, RolePack] = {
     "office_avict_peripheral": RolePack(("dock_role", "hub_role", "mount_attachment_role", "usb_peripheral_role"), (), True),
@@ -199,6 +228,7 @@ FAMILY_ROLE_PACKS: dict[str, RolePack] = {
 CONFUSABLE_RERANK_RULES: dict[str, dict[str, dict[str, int]]] = {
     "office_display_and_dock": {
         "computer_role": {"all_in_one_pc": 12, "docking_station": 8, "monitor": -6},
+        "display_pc_hybrid_context": {"all_in_one_pc": 24, "docking_station": -12, "monitor": -22, "usb_hub": -12},
         "display_surface_role": {"all_in_one_pc": 10, "monitor": 16, "docking_station": -10, "usb_hub": -8},
         "dock_role": {"docking_station": 18, "monitor": -18, "usb_hub": 8},
         "hub_role": {"docking_station": 8, "monitor": -16, "usb_hub": 16},
@@ -245,6 +275,31 @@ CONFUSABLE_RERANK_RULES: dict[str, dict[str, dict[str, int]]] = {
         "scanner_role": {"document_scanner": 18, "multifunction_printer": 10, "office_printer": -14},
     },
     # Wave 5 — companion / hybrid rerank groups
+    "building_access_entry": {
+        "intercom_entry_hybrid_context": {"ip_intercom": 22},
+        "access_keypad_context": {"ip_intercom": 8},
+    },
+    "energy_companion": {
+        "energy_companion_context": {"home_energy_monitor": 12, "smart_meter_display": 18, "smart_meter_gateway": 18},
+        "display_surface_role": {"home_energy_monitor": 8, "smart_meter_display": 14},
+        "gateway_module_role": {"smart_meter_gateway": 16},
+    },
+    "lighting_hybrids": {
+        "grow_light_context": {"grow_light": 22},
+        "illuminated_mirror_context": {"illuminated_mirror": 20},
+        "lighting_display_hybrid_context": {"smart_mirror": 22},
+        "studio_light_context": {"ring_light": 18},
+    },
+    "countertop_induction": {
+        "countertop_induction_context": {"induction_hot_plate": 24},
+    },
+    "wellness_heating": {
+        "wellness_heating_wrap_context": {"heated_wellness_wrap": 22},
+    },
+    "baby_monitor_display": {
+        "baby_monitor_context": {"baby_monitor": 24},
+        "display_surface_role": {"baby_monitor": 8},
+    },
     "companion_security": {
         "chime_receiver_context": {"doorbell_chime_receiver": 20, "smart_doorbell": -18},
         "receiver_role": {"doorbell_chime_receiver": 10, "smart_doorbell": -8},
@@ -447,6 +502,9 @@ def _build_product_candidate_v2(
     reasons.extend(route_reasons)
     reasons.extend(family_prior_reasons)
     reasons.extend(bonus_reasons)
+    decisive_match = decisive or bool(matched_alias and alias_score >= 115 and not matched_alias.generic_terms) or bool(family_keyword_hits)
+    if compiled.id == "all_in_one_pc" and context.has("display_pc_hybrid_context"):
+        decisive_match = True
 
     return SubtypeCandidate(
         id=product["id"],
@@ -462,7 +520,7 @@ def _build_product_candidate_v2(
         family_keyword_hits=tuple(family_keyword_hits),
         positive_clues=tuple(positive_clues),
         negative_clues=tuple(negative_clues),
-        decisive=decisive or bool(matched_alias and alias_score >= 115 and not matched_alias.generic_terms) or bool(family_keyword_hits),
+        decisive=decisive_match,
         score=score,
         direct_signal_count=direct_signal_count,
         reasons=tuple(reasons),
@@ -539,6 +597,7 @@ def _role_parse_adjustment(candidate: SubtypeCandidate, context: MatchingTextCon
     score = 0
     reasons: list[str] = []
     pack = _candidate_role_pack(candidate)
+    companion_head = (parse.primary_product_head_term or parse.primary_product_head or "") in COMPANION_HEAD_TERMS
     primary_phrase_support = _candidate_phrase_support(candidate, parse.primary_product_phrase)
     primary_head_support = _candidate_phrase_support(candidate, parse.primary_product_head)
     primary_head_term_support = _candidate_phrase_support(candidate, parse.primary_product_head_term)
@@ -548,18 +607,26 @@ def _role_parse_adjustment(candidate: SubtypeCandidate, context: MatchingTextCon
         delta = 8 + primary_support * 6
         if parse.primary_is_accessory and pack.accessory_role:
             delta += 6
-            reasons.append(f"{candidate.id}: accessory-dominant wording aligned with the primary head")
+            reasons.append(f"{candidate.id}: companion-device dominant wording aligned with the primary head")
         if parse.primary_head_source == "catalog_head_phrase":
             delta += 2
         score += delta
         reasons.append(f"{candidate.id}: primary head '{parse.primary_product_head}' aligned with the candidate")
+        if companion_head and pack.accessory_role:
+            score += 6
+            reasons.append(f"{candidate.id}: supported-device mention remained secondary to the companion-device role")
     elif candidate.matched_alias_generic_terms and parse.primary_product_head:
         score -= 10
         reasons.append(f"{candidate.id}: generic role alias lacked primary-head alignment")
 
     if parse.primary_is_accessory and not pack.accessory_role and primary_support == 0:
         score -= 12
-        reasons.append(f"{candidate.id}: accessory-dominant wording conflicted with a standalone main-device reading")
+        reasons.append(f"{candidate.id}: companion-device dominant wording conflicted with a standalone main-device reading")
+    if companion_head and not pack.accessory_role and primary_support == 0 and (
+        parse.target_device or parse.controlled_device or parse.charged_device or parse.host_device
+    ):
+        score -= 16
+        reasons.append(f"{candidate.id}: supported-device mention remained secondary to the detected companion head")
 
     for role_name, boosted_heads in PRIMARY_ROLE_HEAD_BOOSTS.items():
         if not parse.role_values(role_name):
@@ -945,6 +1012,115 @@ def _top_unique(items: list[str], *, limit: int = 5) -> list[str]:
     return ordered
 
 
+def _first_reason_with_markers(reasons: Sequence[str], markers: Sequence[str]) -> str | None:
+    for reason in reasons:
+        lowered = normalize(reason)
+        if any(marker in lowered for marker in markers):
+            return reason
+    return None
+
+
+def _companion_device_decision(
+    context: MatchingTextContext,
+    top_subtype: SubtypeCandidate,
+    domain_role_reasons: Sequence[str],
+) -> str | None:
+    if context.role_parse.primary_is_accessory:
+        return _first_reason_with_markers(
+            domain_role_reasons,
+            (
+                "companion-device dominant wording",
+                "supported-device mention remained secondary",
+                "metering/control role outranked",
+                "bridge/gateway wording",
+                "bridge gateway wording",
+                "receiver wording",
+                "controller wording",
+                "companion family",
+            ),
+        ) or "Companion/support-device wording dominated the primary product reading."
+    if context.role_parse.integrated_feature or context.role_parse.target_device:
+        return _first_reason_with_markers(
+            top_subtype.domain_role_reasons,
+            (
+                "integrated feature mention",
+                "target device wording weakened",
+                "target device relation reinforced primary-role wording",
+            ),
+        ) or "Main-device wording stayed primary while secondary features remained descriptive."
+    return None
+
+
+def _hybrid_detection_reason(
+    context: MatchingTextContext,
+    reasons: Sequence[str],
+) -> str | None:
+    if not (context.role_parse.integrated_feature or context.has("display_pc_hybrid_context", "intercom_entry_hybrid_context", "lighting_display_hybrid_context", "baby_monitor_context")):
+        return None
+    return _first_reason_with_markers(reasons, ("hybrid", "integrated", "outweighed plain display", "formed a main-device hybrid"))
+
+
+def _negative_guard_activations(
+    top_subtype: SubtypeCandidate,
+    reasons: Sequence[str],
+    accessory_reasons: Sequence[str],
+    generic_penalties: Sequence[str],
+    strongest_negative_clues: Sequence[str],
+) -> list[str]:
+    guard_markers = (
+        "down-ranked",
+        "down ranked",
+        "downranked",
+        "ruled out",
+        "outweighed",
+        "weakened",
+        "lacked decisive",
+        "capped subtype precision",
+        "keeps the match at",
+        "stays conservative",
+    )
+    guard_reasons = _top_unique(
+        [
+            *[reason for reason in reasons if _first_reason_with_markers((reason,), guard_markers)],
+            *[reason for reason in accessory_reasons if _first_reason_with_markers((reason,), guard_markers)],
+            *[f"generic alias guard: {reason}" for reason in generic_penalties],
+            *[f"negative clue guard: {clue}" for clue in strongest_negative_clues],
+            *[f"candidate negative clue: {clue}" for clue in top_subtype.negative_clues],
+        ],
+        limit=8,
+    )
+    return guard_reasons
+
+
+def _rejected_confusable_candidates(
+    candidates: Sequence[SubtypeCandidate],
+    winner: SubtypeCandidate,
+    *,
+    family_level_limiter: str | None,
+) -> list[RejectedCandidateAudit]:
+    rejected: list[RejectedCandidateAudit] = []
+    for candidate in candidates:
+        if candidate.id == winner.id:
+            continue
+        reasons = _why_not_reasons(candidate, winner, family_level_limiter=family_level_limiter)
+        reason = reasons[0] if reasons else candidate.rerank_reasons[0] if candidate.rerank_reasons else None
+        if reason is None:
+            reason = candidate.confusable_adjustments[0] if candidate.confusable_adjustments else None
+        rejected.append(
+            RejectedCandidateAudit(
+                id=candidate.id,
+                label=candidate.label,
+                family=candidate.family,
+                subtype=candidate.subtype,
+                score=candidate.score,
+                rejection_reason=reason,
+            )
+        )
+        if len(rejected) >= 3:
+            break
+    return rejected
+
+
 def _normalized_text_summary(text: str, *, limit: int = 160) -> str:
     if len(text) <= limit:
         return text
@@ -980,9 +1156,65 @@ def _family_level_limiter(
     next_subtype: SubtypeCandidate | None,
 ) -> str | None:
     role_parse = context.role_parse
+    integrated_text = normalize(" ".join(role_parse.integrated_feature))
     explicit_limit = str(top_subtype.product.get("family_level_reason") or "").strip()
+    clear_display_pc_hybrid = (
+        top_subtype.id == "all_in_one_pc"
+        and (context.has("display_pc_hybrid_context") or role_parse.primary_product_head_term in {"all in one pc", "kiosk display", "terminal display"})
+    )
+    clear_entry_intercom = (
+        top_subtype.id == "ip_intercom"
+        and (context.has("intercom_entry_hybrid_context") or "intercom" in integrated_text)
+        and (context.has("access_keypad_context", "access_entry_panel_context", "access_control_context") or "entry panel" in normalize(role_parse.primary_product_phrase or ""))
+    )
+    clear_lock_bridge = (
+        top_subtype.id == "iot_gateway"
+        and (context.has("bridge_companion_context") or role_parse.primary_product_head_term == "lock bridge")
+        and (
+            any("lock" in normalize(value) for value in role_parse.target_device)
+            or ("lock" in context.text_terms and any(term in context.text for term in ("bridge", "gateway")))
+        )
+    )
+    clear_ev_companion = (
+        top_subtype.id == "ev_energy_module"
+        and any(
+            fragment in normalize(
+                " ".join(
+                    part
+                    for part in (
+                        role_parse.primary_product_head_term,
+                        role_parse.primary_product_head,
+                        top_subtype.matched_alias or "",
+                    )
+                    if part
+                )
+            )
+            for fragment in (
+                "load balancing meter",
+                "load balancing module",
+                "meter module",
+                "wallbox meter",
+                "charger companion module",
+                "ev power meter module",
+                "load balancer",
+                "load management module",
+            )
+        )
+    )
+    clear_heated_mask = (
+        top_subtype.id == "heated_wellness_mask"
+        and "eye mask" in normalize(role_parse.primary_product_head_term or role_parse.primary_product_phrase or "")
+    )
+    clear_specific_subtype = clear_display_pc_hybrid or clear_entry_intercom or (
+        top_subtype.id == "induction_hot_plate" and context.has("countertop_induction_context")
+    ) or (
+        top_subtype.id == "heated_wellness_wrap" and context.has("wellness_heating_wrap_context")
+    ) or (
+        top_subtype.id == "baby_monitor" and context.has("baby_monitor_context")
+    ) or clear_lock_bridge or clear_ev_companion or clear_heated_mask
     if explicit_limit and top_subtype.max_match_stage == "family":
-        return explicit_limit
+        if not clear_specific_subtype:
+            return explicit_limit
     alias_token_count = len((top_subtype.matched_alias or "").split())
     matched_alias = normalize(top_subtype.matched_alias or "")
     if (
@@ -991,6 +1223,7 @@ def _family_level_limiter(
         and "lock" in context.text_terms
         and "iot gateway" not in matched_alias
         and "iot gateway" not in context.text
+        and not clear_lock_bridge
     ):
         return "Lock-bridge companion wording keeps the match at networking-device family level."
     if (
@@ -1005,7 +1238,7 @@ def _family_level_limiter(
         return "Heating manifold or zone-controller wording keeps the match at HVAC-control family level."
     if role_parse.primary_head_conflict and top_subtype.matched_alias_generic_terms and alias_token_count <= 1:
         return "Primary head candidates remained in conflict, so subtype precision stays conservative."
-    if role_parse.primary_is_accessory and (
+    if not clear_specific_subtype and role_parse.primary_is_accessory and (
         role_parse.target_device
         or role_parse.controlled_device
         or role_parse.charged_device
@@ -1018,7 +1251,7 @@ def _family_level_limiter(
             return "Accessory-dominant wording with secondary device context capped subtype precision."
         if top_subtype.matched_alias_generic_terms and not top_subtype.positive_clues:
             return "System or boundary accessory wording capped subtype precision."
-    if context.accessory_like and _candidate_role_pack(top_subtype).accessory_role:
+    if not clear_specific_subtype and context.accessory_like and _candidate_role_pack(top_subtype).accessory_role:
         if top_subtype.matched_alias_generic_terms and not top_subtype.positive_clues and not top_subtype.family_keyword_hits:
             return "Accessory-like wording is present, so subtype precision stays conservative."
         if top_subtype.negative_clues and not top_subtype.positive_clues and not top_subtype.family_keyword_hits:
@@ -1042,6 +1275,53 @@ def _confidence_limiter(
     top_subtype: SubtypeCandidate,
     next_subtype: SubtypeCandidate | None,
 ) -> str | None:
+    integrated_text = normalize(" ".join(context.role_parse.integrated_feature))
+    if (
+        top_subtype.id == "all_in_one_pc"
+        and context.has("display_pc_hybrid_context")
+        and any(term in integrated_text for term in ("pc", "computer", "windows pc"))
+    ):
+        return None
+    if top_subtype.id == "ip_intercom" and context.has("intercom_entry_hybrid_context"):
+        return None
+    if top_subtype.id in {"baby_monitor", "heated_wellness_wrap", "induction_hot_plate"} and (
+        context.has("baby_monitor_context", "wellness_heating_wrap_context", "countertop_induction_context")
+    ):
+        return None
+    if top_subtype.id == "iot_gateway" and (
+        context.has("bridge_companion_context") or context.role_parse.primary_product_head_term == "lock bridge"
+    ):
+        return None
+    if top_subtype.id == "ev_energy_module" and (
+        any(
+            fragment in normalize(
+                " ".join(
+                    part
+                    for part in (
+                        context.role_parse.primary_product_head_term,
+                        context.role_parse.primary_product_head,
+                        top_subtype.matched_alias or "",
+                    )
+                    if part
+                )
+            )
+            for fragment in (
+                "load balancing meter",
+                "load balancing module",
+                "meter module",
+                "wallbox meter",
+                "charger companion module",
+                "ev power meter module",
+                "load balancer",
+                "load management module",
+            )
+        )
+    ):
+        return None
+    if top_subtype.id == "heated_wellness_mask" and "eye mask" in normalize(
+        context.role_parse.primary_product_head_term or context.role_parse.primary_product_phrase or ""
+    ):
+        return None
     alias_token_count = len((top_subtype.matched_alias or "").split())
     if context.role_parse.primary_head_quality == "low" and not top_subtype.decisive:
         return "head resolution stayed weak or overly modifier-driven"
@@ -1272,6 +1552,23 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
         )
         for idx, row in enumerate(candidates[:5])
     ]
+    resolved_head_candidate = role_parse.primary_product_head or role_parse.primary_product_phrase
+    all_domain_reasons = [*domain_role_reasons, *confusable_domain_reasons]
+    subtype_stop_reason = family_level_limiter or confidence_limiter or ambiguity_reason
+    companion_device_decision = _companion_device_decision(context, top_subtype, all_domain_reasons)
+    hybrid_detection_reason = _hybrid_detection_reason(context, all_domain_reasons)
+    negative_guard_activations = _negative_guard_activations(
+        top_subtype,
+        all_domain_reasons,
+        accessory_reasons,
+        generic_penalties,
+        strongest_negative_clues,
+    )
+    rejected_confusable_candidates = _rejected_confusable_candidates(
+        candidates[1:],
+        top_subtype,
+        family_level_limiter=family_level_limiter,
+    )
 
     diagnostics = [
         f"product_shortlist_candidates={len(shortlisted_matchers)}",
@@ -1294,6 +1591,10 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
         engine_version=ENGINE_VERSION,
         normalized_text=text,
         normalized_text_summary=_normalized_text_summary(text),
+        resolved_head_candidate=resolved_head_candidate,
+        companion_device_decision=companion_device_decision,
+        hybrid_detection_reason=hybrid_detection_reason,
+        domain_disambiguation_reason=domain_role_reasons[0] if domain_role_reasons else None,
         retrieval_basis=top_row_reasons,
         shortlist_basis=_shortlist_basis(shortlist_scoring, shortlist_reasons),
         filtered_out=filtered_out[:8],
@@ -1306,6 +1607,7 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
         rerank_reasons=_top_unique(rerank_reasons, limit=8),
         domain_role_disambiguation_reasons=_top_unique(domain_role_reasons, limit=8),
         confusable_domain_reasons=_top_unique(confusable_domain_reasons, limit=8),
+        negative_guard_activations=negative_guard_activations,
         accessory_gate_reasons=_top_unique(accessory_reasons, limit=8),
         generic_alias_penalties=_top_unique(generic_penalties, limit=8),
         top_family_candidates=top_family_audit,
@@ -1316,6 +1618,8 @@ def _hierarchical_product_match_v2(text: str, signal_traits: set[str]) -> Classi
         ambiguity_reason=ambiguity_reason,
         family_level_limiter=family_level_limiter,
         confidence_limiter=confidence_limiter,
+        subtype_stop_reason=subtype_stop_reason,
+        rejected_confusable_candidates=rejected_confusable_candidates,
     )
 
     return ClassifierMatchOutcome(

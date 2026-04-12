@@ -13,11 +13,11 @@ _SUBTYPE_CASES = (
     ("pulse_oximeter_finger_clip", "pulse oximeter finger clip display", "pulse_oximeter", ("boundary",), ("organic",)),
     ("oxygen_fingertip_pulse_oximeter", "oxygen fingertip pulse oximeter", "pulse_oximeter", ("boundary",), ("paraphrase",)),
     ("digital_stethoscope_app_recording", "digital stethoscope with app recording", "digital_stethoscope", ("boundary",), ("organic",)),
+    ("heated_eye_mask_usb_rechargeable", "heated eye mask usb rechargeable", "heated_wellness_mask", ("contrastive", "wearable"), ("adversarial",)),
+    ("heated_eye_mask_rechargeable", "heated eye mask rechargeable", "heated_wellness_mask", ("contrastive", "wearable"), ("paraphrase",)),
 )
 
 _FAMILY_CASES = (
-    ("heated_eye_mask_usb_rechargeable", "heated eye mask usb rechargeable", "personal_heating_appliance", ("contrastive", "family_only"), ("adversarial",)),
-    ("heated_eye_mask_rechargeable", "heated eye mask rechargeable", "personal_heating_appliance", ("contrastive", "family_only"), ("paraphrase",)),
     ("continuous_glucose_monitor_sensor_patch", "continuous glucose monitor sensor patch", "health_monitor", ("boundary", "family_only"), ("adversarial",)),
     ("continuous_glucose_monitor_phone_app", "continuous glucose monitor with phone app", "health_monitor", ("boundary", "family_only"), ("organic",)),
     ("wearable_ecg_heart_rhythm_monitor", "wearable ecg heart rhythm monitor", "health_monitor", ("boundary", "family_only"), ("adversarial",)),

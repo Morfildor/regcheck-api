@@ -5,7 +5,7 @@ from .base import family_case, subtype_case
 GROUP = "office_peripherals"
 
 CASES = (
-    family_case(GROUP, "all_in_one_pc_touch", "all in one pc with touchscreen display", "personal_computing_device", tags=("boundary",)),
+    subtype_case(GROUP, "all_in_one_pc_touch", "all in one pc with touchscreen display", "all_in_one_pc", tags=("boundary", "hybrid")),
     subtype_case(GROUP, "conference_speakerphone", "conference speakerphone with local usb and bluetooth", "conference_speakerphone"),
     subtype_case(GROUP, "desktop_pc_tower", "desktop pc tower with ethernet and hdmi", "desktop_pc"),
     subtype_case(GROUP, "digital_signage_player_retail", "digital signage player for retail display", "digital_signage_player", forbidden_subtypes=("smart_display",)),

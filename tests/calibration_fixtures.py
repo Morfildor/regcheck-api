@@ -674,7 +674,7 @@ CALIBRATION_CASES: tuple[CalibrationCase, ...] = (
         expected_primary_route_family="lighting_device",
         expected_product_type="ring_light",
         expected_product_match_stage="subtype",
-        expected_route_confidence="medium",
+        expected_route_confidence="high",
         assert_product_type=True,
     ),
 )

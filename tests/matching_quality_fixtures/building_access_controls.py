@@ -18,12 +18,12 @@ _SUBTYPE_CASES = (
     ("lighting_gateway_for_smart_bulbs", "lighting gateway for smart bulbs", "smart_light_controller", ("contrastive",), ("adversarial",)),
     ("wall_smart_switch_matter_thread", "wall smart switch matter thread", "smart_switch", ("boundary",), ("organic",)),
     ("din_rail_smart_relay_gate_lights", "din rail smart relay for gate lights", "smart_relay", ("boundary",), ("paraphrase",)),
+    ("door_entry_panel_keypad_camera", "door entry panel with keypad and camera", "ip_intercom", ("contrastive", "boundary", "hybrid"), ("adversarial",)),
+    ("gate_keypad_panel_camera_intercom", "gate keypad panel with camera intercom", "ip_intercom", ("contrastive", "boundary", "hybrid"), ("paraphrase",)),
 )
 
 _FAMILY_CASES = (
-    ("door_entry_panel_keypad_camera", "door entry panel with keypad and camera", "smart_home_security", ("contrastive", "boundary"), ("adversarial",)),
     ("home_alarm_hub_keypad_siren", "home alarm hub with keypad and siren", "smart_home_security", ("boundary",), ("organic",)),
-    ("gate_keypad_panel_camera_intercom", "gate keypad panel with camera intercom", "smart_home_security", ("contrastive", "boundary"), ("paraphrase",)),
     ("access_panel_camera_keypad", "door access panel with camera and keypad", "smart_home_security", ("contrastive", "boundary"), ("organic",)),
     ("zigbee_light_bridge_controller", "zigbee light bridge controller", "smart_power_control", ("contrastive", "boundary"), ("adversarial",)),
     ("smart_lighting_controller_zigbee", "smart lighting controller with zigbee", "smart_power_control", ("contrastive", "boundary"), ("paraphrase",)),

@@ -33,6 +33,8 @@ class MatchingQualityWaveTests(unittest.TestCase):
         dock = extract_traits("USB-C monitor dock with ethernet and USB ports")["product_match_audit"]
         family_only = extract_traits("monitor arm with integrated usb hub")["product_match_audit"]
         ambiguous = extract_traits("portable charger for ebike battery")["product_match_audit"]
+        companion = extract_traits("smart lock bridge for bluetooth door lock")["product_match_audit"]
+        hybrid = extract_traits("door entry panel with camera and keypad")["product_match_audit"]
 
         self.assertTrue(dock["shortlist_basis"])
         self.assertTrue(dock["rerank_reasons"])
@@ -46,6 +48,15 @@ class MatchingQualityWaveTests(unittest.TestCase):
         self.assertEqual(ambiguous["final_match_stage"], "family")
         self.assertIn("portable_power_charger", ambiguous["top_family_candidates"][0]["family"])
         self.assertTrue(ambiguous["role_parse"]["charged_device"])
+
+        self.assertEqual(companion["resolved_head_candidate"], "smart lock bridge")
+        self.assertTrue(companion["companion_device_decision"])
+        self.assertTrue(companion["negative_guard_activations"])
+        self.assertTrue(companion["rejected_confusable_candidates"])
+
+        self.assertEqual(hybrid["resolved_head_candidate"], "entry panel with camera and keypad")
+        self.assertTrue(hybrid["hybrid_detection_reason"])
+        self.assertTrue(hybrid["domain_disambiguation_reason"])
 
 
 if __name__ == "__main__":

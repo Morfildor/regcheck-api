@@ -1,0 +1,95 @@
+cue_groups:
+  intercom_entry_hybrid_context:
+  - \bdoor entry panel\b
+  - \bentry panel with camera\b
+  - \bdoor entry panel with camera and keypad\b
+  - \baccess keypad intercom panel\b
+  - \bintercom panel with camera and keypad\b
+  - \bgate access keypad with camera intercom\b
+  - \baccess keypad intercom\b
+  - \bcamera intercom\b
+  access_keypad_context:
+  - \baccess keypad\b
+  - \bgate access keypad\b
+  - \bentry keypad\b
+  - \bdoor keypad\b
+  energy_companion_context:
+  - \bload balanc\w* meter\b
+  - \bload balanc\w* meter for wallbox charger\b
+  - \bdin rail wallbox meter module\b
+  - \bwallbox meter module\b
+  - \bcharger companion module\b
+  - \bsmart meter display\b
+  - \bsmart meter display for home battery system\b
+  - \bsmart meter gateway\b
+  - \benergy monitor gateway\b
+  - \binverter storage gateway\b
+  - \benergy monitor gateway for inverter storage\b
+  - \bhome battery gateway\b
+  grow_light_context:
+  - \bgrow light\b
+  - \bplant grow light\b
+  - \bgrow light strip\b
+  - \bled grow strip\b
+  - \bplant light strip\b
+  - \bhorticulture light\b
+  - \bseedling grow light\b
+  illuminated_mirror_context:
+  - \billuminated mirror\b
+  - \bvanity mirror with lights?\b
+  - \bled mirror\b
+  - \blighted mirror\b
+  - \bmirror with lights?\b
+  lighting_display_hybrid_context:
+  - \bmirror with display and speaker\b
+  - \bsmart mirror with display\b
+  - \blight(?:ing)? product with speaker\b
+  - \blamp with speaker\b
+  - \blight with display\b
+  display_pc_hybrid_context:
+  - \bkiosk display\b
+  - \bterminal display\b
+  - \btouch display terminal\b
+  - \bdisplay with built.?in (?:windows )?(?:pc|computer)\b
+  - \bdisplay monitor with (?:pc|computer) built.?in\b
+  - \bkiosk display with integrated (?:windows )?(?:pc|computer)\b
+  - \bintegrated windows pc display\b
+  monitor_dock_hybrid_context:
+  - \bmonitor dock\b
+  - \bmonitor with dock\b
+  - \bmonitor with ethernet and usb hub\b
+  - \bdisplay with dock and hub\b
+  countertop_induction_context:
+  - \bportable induction hot plate\b
+  - \bportable induction cooker\b
+  - \bcountertop induction cooker\b
+  - \bcountertop induction hob\b
+  - \bsingle zone induction cooker\b
+  - \bsingle plate induction cooker\b
+  - \bcompact induction cooker\b
+  - \binduction cooktop portable\b
+  wellness_heating_wrap_context:
+  - \bheated neck wrap\b
+  - \bheated shoulder wrap\b
+  - \bheated belt\b
+  - \bwearable heating wrap\b
+  - \brechargeable heated wrap\b
+  - \bheated lumbar wrap\b
+  - \bshoulder heating wrap\b
+  - \bneck heating wrap\b
+  baby_monitor_context:
+  - \bbaby camera monitor\b
+  - \bbaby monitor with screen\b
+  - \bbaby camera monitor with screen\b
+  - \bcamera monitor for baby room\b
+  - \bnursery camera monitor\b
+  - \bbaby room camera monitor\b
+
+relation_cue_packs:
+  target_device:
+    meter_for:
+    - '\bload balancing meter\s+for\b'
+    - '\b(?:smart meter |energy )?(?:display|gateway|meter)\s+for\b'
+  integrated_feature:
+    with_built_in_pc:
+    - '\bwith (?:built.?in|integrated) (?:windows )?(?:pc|computer)\b'

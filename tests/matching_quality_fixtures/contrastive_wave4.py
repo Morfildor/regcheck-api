@@ -16,8 +16,11 @@ _FAMILY_CASES = (
     ("home_theater_receiver_wireless_mics", "home theater receiver with wireless microphones", "home_entertainment_device", ("contrastive", "family_only"), ("adversarial",)),
     ("poe_switch_for_cameras", "poe switch for cameras", "networking_device", ("contrastive", "family_only"), ("adversarial",)),
     ("home_projector_streaming", "home projector streaming 4k", "projector_device", ("contrastive", "family_only"), ("paraphrase",)),
-    ("heated_eye_mask", "heated eye mask rechargeable", "personal_heating_appliance", ("contrastive", "family_only"), ("paraphrase",)),
     ("vanity_mirror_speaker_light", "vanity mirror with speakers and light", "lighting_accessory_device", ("contrastive", "family_only"), ("organic",)),
+)
+
+_SUBTYPE_CASES = _SUBTYPE_CASES + (
+    ("heated_eye_mask", "heated eye mask rechargeable", "heated_wellness_mask", ("contrastive", "wearable"), ("paraphrase",)),
 )
 
 _AMBIGUOUS_CASES = (

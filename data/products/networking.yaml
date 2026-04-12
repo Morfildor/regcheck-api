@@ -1695,10 +1695,15 @@ products:
   - smart home gateway
   - smart home hub
   - hub gateway
+  - smart lock bridge
   - smart lock bridge gateway
+  - bluetooth lock gateway bridge
   - lock bridge gateway
+  - lock bridge for bluetooth door lock
+  - bluetooth door lock bridge
   - bluetooth lock bridge
   - lock gateway bridge
+  - lock gateway for door lock
   - smart lock wifi bridge
   - smart lock wifi bridge adapter
   - iot-gateway
@@ -1743,8 +1748,11 @@ products:
   - smart home gateway
   - smart home hub
   - hub gateway
+  - smart lock bridge
   - smart lock bridge gateway
+  - bluetooth lock gateway bridge
   - lock bridge gateway
+  - lock bridge for bluetooth door lock
   - bluetooth lock bridge
   - lock gateway bridge
   - smart lock wifi bridge
@@ -1767,6 +1775,12 @@ products:
   - iot gateway hubs
   - smart lock wifi bridge adapter
   marketplace_aliases: []
+  preferred_clues:
+  - bridge
+  - gateway
+  - smart home hub
+  - matter
+  - zigbee
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
@@ -3096,6 +3110,10 @@ products:
   - magic mirror
   - interactive mirror
   - connected mirror
+  - smart mirror with display
+  - mirror with display and speaker
+  - mirror display
+  - display mirror
   - beauty mirror
   - connected beauty mirror
   - bathroom smart mirror
@@ -3151,6 +3169,8 @@ products:
   - magic mirror
   - interactive mirror
   - connected mirror
+  - smart mirror with display
+  - mirror with display and speaker
   - bathroom smart mirror
   weak_aliases:
   - smart-mirror
@@ -3190,6 +3210,11 @@ products:
   required_any_traits:
   - electrical
   - electronic
+  preferred_clues:
+  - display
+  - mirror display
+  - speaker
+  - touchscreen
   forbidden_traits: []
   matching_notes: Scoring metadata added for weighted alias, clue, and trait-assisted classification.
   product_family: av_ict_device

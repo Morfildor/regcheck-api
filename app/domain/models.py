@@ -214,6 +214,15 @@ class ProductMatchAuditCandidate(BaseModel):
     final_stop_reason: str | None = None
 
 
+class ProductMatchAuditRejectedCandidate(BaseModel):
+    id: str
+    label: str
+    family: str | None = None
+    subtype: str | None = None
+    score: int = 0
+    rejection_reason: str | None = None
+
+
 class ProductMatchAuditHeadCandidate(BaseModel):
     phrase: str
     head_term: str
@@ -265,6 +274,10 @@ class ProductMatchAudit(BaseModel):
     engine_version: str
     normalized_text: str
     normalized_text_summary: str | None = None
+    resolved_head_candidate: str | None = None
+    companion_device_decision: str | None = None
+    hybrid_detection_reason: str | None = None
+    domain_disambiguation_reason: str | None = None
     retrieval_basis: list[str] = Field(default_factory=list)
     shortlist_basis: list[str] = Field(default_factory=list)
     filtered_out: list[str] = Field(default_factory=list)
@@ -277,6 +290,7 @@ class ProductMatchAudit(BaseModel):
     rerank_reasons: list[str] = Field(default_factory=list)
     domain_role_disambiguation_reasons: list[str] = Field(default_factory=list)
     confusable_domain_reasons: list[str] = Field(default_factory=list)
+    negative_guard_activations: list[str] = Field(default_factory=list)
     accessory_gate_reasons: list[str] = Field(default_factory=list)
     generic_alias_penalties: list[str] = Field(default_factory=list)
     negations: list[str] = Field(default_factory=list)
@@ -290,6 +304,8 @@ class ProductMatchAudit(BaseModel):
     ambiguity_reason: str | None = None
     family_level_limiter: str | None = None
     confidence_limiter: str | None = None
+    subtype_stop_reason: str | None = None
+    rejected_confusable_candidates: list[ProductMatchAuditRejectedCandidate] = Field(default_factory=list)
 
 
 class StandardMatchAudit(BaseModel):

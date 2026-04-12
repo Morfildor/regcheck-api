@@ -801,9 +801,9 @@ def _display_pc_hybrid_matrix(
     context: DomainDisambiguationContext,
     bucket: dict[str, list[tuple[int, str, str]]],
 ) -> None:
-    display_head = _head_contains(context, "display", "monitor", "screen")
+    display_head = _head_contains(context, "display", "monitor", "screen", "kiosk display", "terminal display")
     pc_integrated = (
-        _contains_fragment(context.integrated_feature, "pc", "computer")
+        _contains_fragment(context.integrated_feature, "pc", "computer", "windows pc")
         or _has_cue(context, "display_pc_hybrid_context")
         or _head_contains(context, "all in one pc")
     )
@@ -823,7 +823,7 @@ def _display_pc_hybrid_matrix(
             _apply_delta(
                 bucket,
                 candidate,
-                18,
+                24,
                 reason="display_pc_hybrid: display-computing hybrid context supported the personal computing family",
                 confusable=True,
             )
@@ -839,8 +839,436 @@ def _display_pc_hybrid_matrix(
             _apply_delta(
                 bucket,
                 candidate,
-                -12,
+                -18,
                 reason="display_pc_hybrid: display-computing hybrid context weakened standalone display family",
+                confusable=True,
+            )
+        elif candidate.id == "smart_display" or candidate.family == "smart_assistant_device":
+            _apply_delta(
+                bucket,
+                candidate,
+                -28,
+                reason="display_pc_hybrid: built-in PC wording ruled out smart-assistant display interpretations",
+                confusable=True,
+            )
+
+
+def _building_access_entry_hybrid_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    entry_like = _has_cue(
+        context,
+        "intercom_entry_hybrid_context",
+        "access_entry_panel_context",
+        "access_keypad_context",
+        "access_control_context",
+    ) or _head_contains(context, "entry panel", "access keypad")
+    intercom_like = (
+        _has_cue(context, "intercom_role", "intercom_access_context", "intercom_entry_hybrid_context")
+        or _contains_fragment(context.integrated_feature, "intercom", "camera intercom", "video intercom")
+        or _head_contains(context, "intercom")
+    )
+    camera_like = _contains_fragment(context.integrated_feature, "camera", "video") or "camera" in context.signal_traits
+    if not (entry_like and intercom_like):
+        return
+
+    for candidate in candidates:
+        if candidate.id == "ip_intercom":
+            _apply_delta(
+                bucket,
+                candidate,
+                46 if camera_like else 38,
+                reason="building_access_entry_hybrid: entry and intercom wording formed a main-device hybrid, so the intercom subtype won",
+                confusable=True,
+            )
+        elif candidate.family == "smart_home_security":
+            _apply_delta(
+                bucket,
+                candidate,
+                18,
+                reason="building_access_entry_hybrid: entry and access role cues supported the smart-home security family",
+                confusable=True,
+            )
+        elif candidate.id == "alarm_keypad_panel":
+            _apply_delta(
+                bucket,
+                candidate,
+                -24,
+                reason="building_access_entry_hybrid: entry-access role outranked a plain keypad-panel reading",
+                confusable=True,
+            )
+        elif candidate.id == "smart_display" or candidate.family in {"display_device", "smart_assistant_device"}:
+            _apply_delta(
+                bucket,
+                candidate,
+                -28,
+                reason="building_access_entry_hybrid: entry/access role outranked camera/display leakage",
+                confusable=True,
+            )
+
+
+def _energy_companion_metering_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    energy_like = _has_cue(context, "energy_companion_context", "ev_load_module_context") or _head_contains(
+        context,
+        "load balancing meter",
+        "meter module",
+        "smart meter display",
+        "smart meter gateway",
+    )
+    charger_context = _contains_fragment(context.target_device, "wallbox", "charger", "home charger", "ev charger")
+    storage_context = _contains_fragment(context.target_device, "battery", "storage", "inverter", "home battery")
+    display_like = _head_contains(context, "smart meter display") or (
+        _has_cue(context, "energy_companion_context") and _head_contains(context, "display")
+    )
+    gateway_like = _head_contains(context, "smart meter gateway") or (
+        _has_cue(context, "energy_companion_context") and _contains_fragment(context.target_device, "inverter", "storage", "battery")
+    )
+    if not (energy_like or charger_context or storage_context or display_like or gateway_like):
+        return
+
+    for candidate in candidates:
+        if charger_context and candidate.id == "ev_energy_module":
+            _apply_delta(
+                bucket,
+                candidate,
+                48,
+                reason="energy_companion_metering: metering/control role outranked charger/main-device role",
+                confusable=True,
+            )
+        elif display_like and candidate.id == "smart_meter_display":
+            _apply_delta(
+                bucket,
+                candidate,
+                42,
+                reason="energy_companion_metering: smart-meter display wording kept the display in the metering domain",
+                confusable=True,
+            )
+        elif gateway_like and candidate.id == "smart_meter_gateway":
+            _apply_delta(
+                bucket,
+                candidate,
+                42,
+                reason="energy_companion_metering: gateway wording with inverter or storage context matched the metering-control gateway family",
+                confusable=True,
+            )
+        elif (display_like or gateway_like) and candidate.id == "home_energy_monitor":
+            _apply_delta(
+                bucket,
+                candidate,
+                18,
+                reason="energy_companion_metering: energy-monitor wording kept the home-energy monitor family viable",
+                confusable=True,
+            )
+        elif candidate.family == "energy_power_system":
+            _apply_delta(
+                bucket,
+                candidate,
+                18,
+                reason="energy_companion_metering: metering and gateway cues supported the energy-power family",
+                confusable=True,
+            )
+        elif candidate.id == "ev_charger_home" or candidate.family == "portable_power_charger":
+            _apply_delta(
+                bucket,
+                candidate,
+                -34,
+                reason="energy_companion_metering: supported-device mention remained secondary to the metering or control role",
+                confusable=True,
+            )
+        elif candidate.id in {"monitor", "smart_display", "iot_gateway"} or candidate.family in {"display_device", "smart_assistant_device"}:
+            _apply_delta(
+                bucket,
+                candidate,
+                -24,
+                reason="energy_companion_metering: metering-domain wording ruled out generic display or gateway families",
+                confusable=True,
+            )
+
+
+def _lighting_grow_hybrid_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    grow_like = _has_cue(context, "grow_light_context") or _head_contains(context, "grow light", "grow light strip")
+    garden_system_like = _contains_fragment(
+        context.target_device + context.integrated_feature,
+        "hydroponic",
+        "planter",
+        "garden",
+        "countertop garden",
+    )
+    if grow_like and not garden_system_like:
+        for candidate in candidates:
+            if candidate.id == "grow_light":
+                _apply_delta(
+                    bucket,
+                    candidate,
+                    46,
+                    reason="lighting_grow_hybrid: grow-light and strip wording stayed in the lighting domain instead of an indoor-garden system",
+                    confusable=True,
+                )
+            elif candidate.family == "lighting_accessory_device":
+                _apply_delta(
+                    bucket,
+                    candidate,
+                    18,
+                    reason="lighting_grow_hybrid: horticulture-light wording supported the lighting-accessory family",
+                    confusable=True,
+                )
+            elif candidate.id == "smart_indoor_garden" or candidate.family == "garden_automation":
+                _apply_delta(
+                    bucket,
+                    candidate,
+                    -30,
+                    reason="lighting_grow_hybrid: plain grow-light wording lacked garden-system cues",
+                    confusable=True,
+                )
+
+    mirror_like = _has_cue(context, "illuminated_mirror_context", "vanity_mirror_context") or _head_contains(
+        context, "illuminated mirror"
+    )
+    smart_mirror_like = _has_cue(context, "lighting_display_hybrid_context") or _contains_fragment(
+        context.integrated_feature,
+        "display",
+        "speaker",
+        "touchscreen",
+    ) or _head_contains(context, "smart mirror")
+    if mirror_like:
+        for candidate in candidates:
+            if smart_mirror_like and candidate.id == "smart_mirror":
+                _apply_delta(
+                    bucket,
+                    candidate,
+                    34,
+                    reason="lighting_grow_hybrid: mirror plus display or speaker cues confirmed the smart-mirror hybrid",
+                    confusable=True,
+                )
+            elif not smart_mirror_like and candidate.id == "illuminated_mirror":
+                _apply_delta(
+                    bucket,
+                    candidate,
+                    34,
+                    reason="lighting_grow_hybrid: vanity-mirror lighting cues favored the illuminated-mirror boundary product",
+                    confusable=True,
+                )
+
+    studio_light_like = _has_cue(context, "studio_light_context") or _head_contains(context, "ring light", "studio light")
+    if studio_light_like:
+        for candidate in candidates:
+            if candidate.id == "ring_light":
+                _apply_delta(
+                    bucket,
+                    candidate,
+                    38,
+                    reason="lighting_grow_hybrid: creator-light and ring-light wording matched the lighting accessory family",
+                    confusable=True,
+                )
+            elif candidate.family in {"smart_assistant_device", "display_device", "projector_device"}:
+                _apply_delta(
+                    bucket,
+                    candidate,
+                    -20,
+                    reason="lighting_grow_hybrid: studio-light wording ruled out display and projector leakage",
+                    confusable=True,
+                )
+
+
+def _smart_relay_module_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    module_like = _has_cue(context, "smart_relay_module_context") or _head_contains(context, "relay module")
+    switch_load_like = _contains_fragment(context.target_device, "light", "lights", "switch", "outlet", "dimmer")
+    if not module_like:
+        return
+
+    for candidate in candidates:
+        if candidate.id == "smart_relay_module":
+            _apply_delta(
+                bucket,
+                candidate,
+                34,
+                reason="smart_relay_module_matrix: companion-device dominant wording kept the relay module distinct from a main smart switch",
+                confusable=True,
+            )
+        elif not switch_load_like and candidate.id == "smart_relay":
+            _apply_delta(
+                bucket,
+                candidate,
+                -26,
+                reason="smart_relay_module_matrix: module and controller wording outweighed a load-switch relay reading",
+                confusable=True,
+            )
+        elif candidate.id == "smart_switch":
+            _apply_delta(
+                bucket,
+                candidate,
+                -22,
+                reason="smart_relay_module_matrix: relay-module wording ruled out smart-switch leakage",
+                confusable=True,
+            )
+        elif candidate.id == "iot_gateway":
+            _apply_delta(
+                bucket,
+                candidate,
+                -14,
+                reason="smart_relay_module_matrix: relay-module wording beat a generic IoT-gateway interpretation",
+                confusable=True,
+            )
+
+
+def _countertop_induction_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    induction_like = _has_cue(context, "countertop_induction_context") or _head_contains(context, "induction hot plate")
+    if not induction_like:
+        return
+
+    for candidate in candidates:
+        if candidate.id == "induction_hot_plate":
+            _apply_delta(
+                bucket,
+                candidate,
+                44,
+                reason="countertop_induction_matrix: portable induction and hot-plate wording matched the countertop-cooking subtype",
+                confusable=True,
+            )
+        elif candidate.family == "countertop_cooking_appliance":
+            _apply_delta(
+                bucket,
+                candidate,
+                18,
+                reason="countertop_induction_matrix: induction-cooker wording supported the countertop-cooking family",
+                confusable=True,
+            )
+        elif candidate.id == "hob":
+            _apply_delta(
+                bucket,
+                candidate,
+                -14,
+                reason="countertop_induction_matrix: portable hot-plate cues weakened the built-in hob reading",
+                confusable=True,
+            )
+        elif candidate.family == "portable_power_charger":
+            _apply_delta(
+                bucket,
+                candidate,
+                -28,
+                reason="countertop_induction_matrix: cooking role outranked portable-charger leakage",
+                confusable=True,
+            )
+
+
+def _wellness_heating_wrap_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    wrap_like = _has_cue(context, "wellness_heating_wrap_context") or _head_contains(
+        context,
+        "heated neck wrap",
+        "heated shoulder wrap",
+        "heated belt",
+    )
+    if not wrap_like:
+        return
+
+    for candidate in candidates:
+        if candidate.id == "heated_wellness_wrap":
+            _apply_delta(
+                bucket,
+                candidate,
+                40,
+                reason="wellness_heating_wrap: wrap and belt wording confirmed the wearable-heating accessory subtype",
+                confusable=True,
+            )
+        elif candidate.family == "personal_heating_appliance":
+            _apply_delta(
+                bucket,
+                candidate,
+                16,
+                reason="wellness_heating_wrap: wearable heating cues supported the personal-heating family",
+                confusable=True,
+            )
+        elif candidate.id == "heated_wellness_mask":
+            _apply_delta(
+                bucket,
+                candidate,
+                -24,
+                reason="wellness_heating_wrap: neck, shoulder, and belt cues outranked the eye-mask reading",
+                confusable=True,
+            )
+        elif candidate.id == "room_heater" or candidate.family == "climate_conditioning_appliance":
+            _apply_delta(
+                bucket,
+                candidate,
+                -24,
+                reason="wellness_heating_wrap: wearable heating accessory wording ruled out room-heater leakage",
+                confusable=True,
+            )
+
+
+def _baby_monitor_display_matrix(
+    candidates: Sequence[SubtypeCandidate],
+    context: DomainDisambiguationContext,
+    bucket: dict[str, list[tuple[int, str, str]]],
+) -> None:
+    baby_like = _has_cue(context, "baby_monitor_context") or _contains_fragment(
+        context.target_device,
+        "baby room",
+        "nursery",
+        "baby",
+        "infant",
+    )
+    camera_monitor_like = _head_contains(context, "camera", "monitor") or _contains_fragment(
+        context.integrated_feature,
+        "screen",
+        "camera",
+    )
+    if not (baby_like and camera_monitor_like):
+        return
+
+    for candidate in candidates:
+        if candidate.id == "baby_monitor":
+            _apply_delta(
+                bucket,
+                candidate,
+                46,
+                reason="baby_monitor_display: baby-room monitor wording matched the baby-monitor hybrid",
+                confusable=True,
+            )
+        elif candidate.id == "baby_monitor_smart" and {"wifi", "app_control", "cloud"} & set(context.signal_traits):
+            _apply_delta(
+                bucket,
+                candidate,
+                26,
+                reason="baby_monitor_display: connected nursery-monitor wording kept the smart baby-monitor family viable",
+                confusable=True,
+            )
+        elif candidate.family in {"smart_home_security", "childcare_monitoring"}:
+            _apply_delta(
+                bucket,
+                candidate,
+                16,
+                reason="baby_monitor_display: nursery-monitor context supported the childcare-monitoring family",
+                confusable=True,
+            )
+        elif candidate.id == "monitor" or candidate.family in {"display_device", "smart_assistant_device"}:
+            _apply_delta(
+                bucket,
+                candidate,
+                -30,
+                reason="baby_monitor_display: baby-monitor wording outweighed plain display interpretations",
                 confusable=True,
             )
 
@@ -866,6 +1294,14 @@ def apply_domain_role_matrices(
     _water_heating_vs_room_heating_matrix(candidates, context, bucket)
     _heating_accessory_matrix(candidates, context, bucket)
     _display_pc_hybrid_matrix(candidates, context, bucket)
+    # Wave 6 - targeted domain packs
+    _building_access_entry_hybrid_matrix(candidates, context, bucket)
+    _energy_companion_metering_matrix(candidates, context, bucket)
+    _lighting_grow_hybrid_matrix(candidates, context, bucket)
+    _smart_relay_module_matrix(candidates, context, bucket)
+    _countertop_induction_matrix(candidates, context, bucket)
+    _wellness_heating_wrap_matrix(candidates, context, bucket)
+    _baby_monitor_display_matrix(candidates, context, bucket)
 
     adjustments: dict[str, CandidateDomainAdjustment] = {}
     for candidate in candidates:

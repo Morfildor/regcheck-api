@@ -332,6 +332,9 @@ subfamilies:
 - id: heat_pump
   family: climate_conditioning_appliance
   label: Heat pump / air conditioner
+- id: grow_light
+  family: lighting_accessory_device
+  label: Grow light / horticulture light
 - id: heated_carpet
   family: personal_heating_appliance
   label: Heated carpet / underfloor heating mat
@@ -347,6 +350,9 @@ subfamilies:
 - id: heated_wellness_mask
   family: personal_heating_appliance
   label: Heated wellness eye mask
+- id: heated_wellness_wrap
+  family: personal_heating_appliance
+  label: Heated wellness wrap / belt
 - id: high_pressure_cleaner
   family: surface_cleaning_appliance
   label: High-pressure cleaner
@@ -383,6 +389,9 @@ subfamilies:
 - id: immersion_heater
   family: water_heating_appliance
   label: Immersion heater
+- id: induction_hot_plate
+  family: countertop_cooking_appliance
+  label: Induction hot plate / portable induction cooker
 - id: impact_driver
   family: industrial_power_equipment
   label: Impact driver

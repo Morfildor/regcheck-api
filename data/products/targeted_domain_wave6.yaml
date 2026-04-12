@@ -1,0 +1,225 @@
+products:
+- id: grow_light
+  label: Grow light / horticulture light
+  product_family: lighting_accessory_device
+  product_subfamily: grow_light
+  route_family: lighting_device
+  primary_standard_code: EN 62471
+  supporting_standard_codes:
+  - EN 62031
+  genres:
+  - lighting_device
+  aliases:
+  - grow light
+  - plant grow light
+  - led grow light
+  - grow light strip
+  - led grow strip
+  - grow lamp strip
+  - plant light strip
+  - horticulture light
+  - indoor plant light
+  - seedling grow light
+  - full spectrum grow light
+  - full spectrum grow strip
+  strong_aliases:
+  - grow light
+  - plant grow light
+  - grow light strip
+  - led grow strip
+  - grow lamp strip
+  - horticulture light
+  weak_aliases:
+  - led grow light
+  - plant light strip
+  - indoor plant light
+  - seedling grow light
+  - full spectrum grow light
+  - full spectrum grow strip
+  family_keywords:
+  - grow light
+  - horticulture light
+  - plant light
+  preferred_clues:
+  - plant
+  - grow
+  - full spectrum
+  - strip
+  - seedlings
+  exclude_clues:
+  - hydroponic garden
+  - countertop garden
+  - smart planter
+  - indoor garden
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - lighting
+  - optical_emission
+  - mains_powered
+  - indoor_use
+  functional_classes:
+  - lighting_device
+  likely_standards:
+  - EN 62471
+  - EN 62031
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - lighting
+  confusable_with:
+  - smart_indoor_garden
+  route_anchor: lighting_core
+
+- id: heated_wellness_wrap
+  label: Heated wellness wrap / belt
+  product_family: personal_heating_appliance
+  product_subfamily: heated_wellness_wrap
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-17
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - personal_care_appliance
+  aliases:
+  - heated neck wrap
+  - heated shoulder wrap
+  - heated back wrap
+  - heated belt
+  - heating wrap
+  - rechargeable heated wrap
+  - heated lumbar wrap
+  - wearable heating wrap
+  - neck heating wrap
+  - shoulder heating wrap
+  - therapy heating belt
+  strong_aliases:
+  - heated neck wrap
+  - heated shoulder wrap
+  - heated back wrap
+  - heated belt
+  - wearable heating wrap
+  weak_aliases:
+  - heating wrap
+  - rechargeable heated wrap
+  - heated lumbar wrap
+  - neck heating wrap
+  - shoulder heating wrap
+  - therapy heating belt
+  family_keywords:
+  - heating wrap
+  - neck wrap
+  - shoulder wrap
+  - back wrap
+  - heated belt
+  preferred_clues:
+  - rechargeable
+  - wearable heating
+  - wrap
+  - belt
+  exclude_clues:
+  - eye mask
+  - blanket
+  - underblanket
+  - heating pad
+  - controller
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - battery_powered
+  - portable
+  - body_worn_or_applied
+  functional_classes:
+  - comfort_appliance
+  - heating_appliance
+  likely_standards:
+  - EN 60335-2-17
+  - EN 60335-1
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - heating
+  confusable_with:
+  - heated_wellness_mask
+  - heating_pad
+  - electric_blanket
+  route_anchor: household_core
+
+- id: induction_hot_plate
+  label: Induction hot plate / portable induction cooker
+  product_family: countertop_cooking_appliance
+  product_subfamily: induction_hot_plate
+  route_family: household_appliance
+  primary_standard_code: EN 60335-2-6
+  supporting_standard_codes:
+  - EN 60335-1
+  genres:
+  - household_appliance
+  - kitchen_food_appliance
+  aliases:
+  - induction hot plate
+  - portable induction hot plate
+  - portable induction cooker
+  - countertop induction cooker
+  - countertop induction hob
+  - single zone induction cooker
+  - single plate induction cooker
+  - induction cooktop portable
+  - compact induction cooker
+  strong_aliases:
+  - induction hot plate
+  - portable induction hot plate
+  - portable induction cooker
+  - countertop induction cooker
+  weak_aliases:
+  - countertop induction hob
+  - single zone induction cooker
+  - single plate induction cooker
+  - induction cooktop portable
+  - compact induction cooker
+  family_keywords:
+  - hot plate
+  - induction cooker
+  - portable cooktop
+  preferred_clues:
+  - portable
+  - countertop
+  - single zone
+  - hot plate
+  - induction
+  exclude_clues:
+  - built in hob
+  - built-in hob
+  - ceramic hob
+  - fixed installation
+  implied_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  - mains_powered
+  - portable
+  functional_classes:
+  - cooking_appliance
+  likely_standards:
+  - EN 60335-2-6
+  - EN 60335-1
+  minimum_match_score: 25
+  score_boost_if_traits:
+  - electrical
+  - electronic
+  - heating
+  - food_contact
+  confusable_with:
+  - hob
+  route_anchor: household_core

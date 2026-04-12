@@ -315,6 +315,8 @@ products:
   - hue bridge
   - zigbee lighting controller
   - zigbee light bridge controller
+  - matter lighting bridge controller
+  - matter light bridge
   - smart light hub
   - lighting gateway
   - dali gateway
@@ -375,6 +377,8 @@ products:
   - hue bridge
   - zigbee lighting controller
   - zigbee light bridge controller
+  - matter lighting bridge controller
+  - matter light bridge
   - smart light hub
   - lighting gateway
   - dali gateway

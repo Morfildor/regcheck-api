@@ -22,13 +22,13 @@ _SUBTYPE_CASES = (
     ("office_printer_wifi_copy", "office laser printer wifi copy", "office_printer", ("boundary",), ("organic",)),
     ("desktop_pc_multiple_hdmi", "desktop pc tower with multiple hdmi ports", "desktop_pc", ("boundary",), ("paraphrase",)),
     ("usb_c_monitor_dock_ethernet_charging", "usb c monitor dock with ethernet and charging", "docking_station", ("relation",), ("paraphrase",)),
+    ("all_in_one_desktop_display_pc", "all in one desktop display pc", "all_in_one_pc", ("boundary", "hybrid"), ("adversarial",)),
 )
 
 _FAMILY_CASES = (
     ("keyboard_video_mouse_switch_two_pcs", "keyboard video mouse switch for two pcs", "office_avict_peripheral", ("contrastive", "boundary"), ("adversarial",)),
     ("monitor_arm_built_in_usb_hub", "monitor arm with built in usb hub", "office_avict_peripheral", ("accessory", "boundary"), ("organic",)),
     ("usb_hub_built_into_monitor_stand", "usb hub built into monitor stand", "office_avict_peripheral", ("accessory", "boundary"), ("adversarial",)),
-    ("all_in_one_desktop_display_pc", "all in one desktop display pc", "personal_computing_device", ("boundary",), ("adversarial",)),
 )
 
 CASES = tuple(

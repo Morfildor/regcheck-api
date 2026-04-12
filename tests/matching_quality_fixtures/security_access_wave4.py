@@ -19,18 +19,18 @@ _SUBTYPE_CASES = (
     ("baby_monitor_two_way_audio", "baby monitor camera with two way audio", "baby_monitor", ("boundary",), ("paraphrase",)),
     ("panic_scene_button_remote", "panic scene smart button remote", "smart_button_remote", ("boundary",), ("paraphrase",)),
     ("smart_sensor_node_motion_humidity", "smart sensor node with humidity and motion sensing", "smart_sensor_node", ("boundary",), ("organic",)),
+    ("door_entry_panel_keypad_camera", "door entry panel with keypad and camera", "ip_intercom", ("boundary", "hybrid"), ("adversarial",)),
+    ("gate_keypad_panel_camera_intercom", "gate keypad panel with camera intercom", "ip_intercom", ("boundary", "hybrid"), ("organic",)),
+    ("security_recorder_with_storage", "security recorder with poe ports and storage", "nvr_dvr_recorder", ("contrastive", "boundary"), ("organic",)),
 )
 
 _FAMILY_CASES = (
     ("video_doorbell_chime_camera", "video doorbell chime camera wifi", "smart_home_security", ("boundary",), ("organic",)),
     ("home_alarm_hub_keypad_siren", "home alarm hub with keypad and siren", "smart_home_security", ("boundary",), ("adversarial",)),
-    ("door_entry_panel_keypad_camera", "door entry panel with keypad and camera", "smart_home_security", ("boundary",), ("adversarial",)),
-    ("gate_keypad_panel_camera_intercom", "gate keypad panel with camera intercom", "smart_home_security", ("boundary",), ("organic",)),
 )
 
 _AMBIGUOUS_CASES = (
     ("carbon_monoxide_monitor_display", "carbon monoxide monitor with display", ("contrastive", "boundary"), ("adversarial",)),
-    ("security_recorder_with_storage", "security recorder with poe ports and storage", ("contrastive", "boundary"), ("organic",)),
 )
 
 CASES = (

@@ -160,39 +160,60 @@ products:
   aliases:
   - ev load balancing module
   - load balancing module
+  - load balancing meter
+  - load balancing meter for wallbox charger
+  - wallbox load balancing module
   - ev energy meter module
   - wallbox load balancing
+  - wallbox meter module
+  - din rail wallbox meter module
   - ev meter module
   - din rail energy meter
   - ev load management module
+  - load management module for home ev charger
   - energy metering module
+  - charger companion module
+  - charger companion module for wallbox
   - smart ev load balancer
+  - smart ev load balancer din rail
   - ev power meter module
   strong_aliases:
   - ev load balancing module
+  - load balancing meter
+  - load balancing meter for wallbox charger
+  - wallbox load balancing module
   - ev energy meter module
   - ev load management module
+  - load management module for home ev charger
   - ev meter module
+  - charger companion module for wallbox
+  - smart ev load balancer din rail
   weak_aliases:
   - load balancing module
   - din rail energy meter
+  - wallbox meter module
+  - din rail wallbox meter module
   - energy metering module
   - wallbox load balancing
+  - charger companion module
   - ev power meter module
   family_keywords:
   - ev load balancing
   - ev metering
   - ev meter module
+  - load balancing meter
+  - wallbox meter
   preferred_clues:
   - load balancing
   - load management
   - din rail
   - energy meter
+  - meter
   - ev meter
   - wallbox meter
   exclude_clues:
-  - ev charger home
-  - wallbox charger
+  - home ev charger
+  - charging station
   implied_traits:
   - consumer
   - electrical
@@ -226,7 +247,10 @@ products:
   - av_ict_device
   aliases:
   - smart relay module
+  - smart relay module zigbee
   - relay control module
+  - zigbee relay controller module
+  - zigbee relay module
   - wifi relay module
   - smart relay switch
   - remote relay module
@@ -236,9 +260,12 @@ products:
   - wifi relay
   strong_aliases:
   - smart relay module
+  - smart relay module zigbee
   - relay control module
+  - zigbee relay controller module
   - wifi relay module
   weak_aliases:
+  - zigbee relay module
   - smart relay switch
   - remote relay module
   - iot relay
@@ -251,6 +278,8 @@ products:
   - relay
   - control module
   - remote control
+  - zigbee
+  - controller module
   exclude_clues:
   - lighting
   - dimmer
@@ -274,6 +303,8 @@ products:
   - wifi
   confusable_with:
   - iot_gateway
+  - smart_relay
+  - smart_switch
   route_anchor: avict_core
 
 - id: irrigation_controller

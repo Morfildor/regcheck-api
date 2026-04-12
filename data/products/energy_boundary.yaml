@@ -116,6 +116,9 @@ products:
   - ihd
   - smart meter display
   - energy display unit
+  - smart meter display for home battery system
+  - home battery energy display
+  - inverter storage display
   - smart meter consumer unit
   - home area network display
   - in home display
@@ -162,6 +165,7 @@ products:
   - in-home display
   - ihd
   - smart meter display
+  - smart meter display for home battery system
   - energy display unit
   - smart meter consumer unit
   - home area network display
@@ -188,6 +192,8 @@ products:
   - smart-meter-in-home-display-(ihd)
   - smartmeterin-homedisplay(ihd)
   - smart meter in-home display (ihd)s
+  - home battery energy display
+  - inverter storage display
   marketplace_aliases: []
   not_when_text_contains: []
   negative_examples: []
@@ -339,12 +345,19 @@ products:
   aliases:
   - smart meter gateway
   - energy gateway
+  - energy monitor gateway
+  - inverter storage gateway
+  - energy monitor gateway for inverter storage
+  - home battery gateway
   - utility meter gateway
   - din rail energy gateway
   preferred_clues:
   - utility meter
   - din rail
   - distribution board
+  - inverter
+  - storage
+  - battery system
   family_traits:
   - electrical
   - electronic

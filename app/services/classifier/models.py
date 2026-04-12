@@ -56,6 +56,26 @@ class AuditCandidate:
 
 
 @dataclass(frozen=True, slots=True)
+class RejectedCandidateAudit:
+    id: str
+    label: str
+    family: str | None = None
+    subtype: str | None = None
+    score: int = 0
+    rejection_reason: str | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "label": self.label,
+            "family": self.family,
+            "subtype": self.subtype,
+            "score": self.score,
+            "rejection_reason": self.rejection_reason,
+        }
+
+
+@dataclass(frozen=True, slots=True)
 class SignalSuppression:
     source: str
     reason: str
@@ -320,6 +340,10 @@ class ClassifierMatchAudit:
     engine_version: str
     normalized_text: str
     normalized_text_summary: str = ""
+    resolved_head_candidate: str | None = None
+    companion_device_decision: str | None = None
+    hybrid_detection_reason: str | None = None
+    domain_disambiguation_reason: str | None = None
     retrieval_basis: list[str] = field(default_factory=list)
     shortlist_basis: list[str] = field(default_factory=list)
     filtered_out: list[str] = field(default_factory=list)
@@ -332,6 +356,7 @@ class ClassifierMatchAudit:
     rerank_reasons: list[str] = field(default_factory=list)
     domain_role_disambiguation_reasons: list[str] = field(default_factory=list)
     confusable_domain_reasons: list[str] = field(default_factory=list)
+    negative_guard_activations: list[str] = field(default_factory=list)
     accessory_gate_reasons: list[str] = field(default_factory=list)
     generic_alias_penalties: list[str] = field(default_factory=list)
     negations: list[str] = field(default_factory=list)
@@ -345,12 +370,18 @@ class ClassifierMatchAudit:
     ambiguity_reason: str | None = None
     family_level_limiter: str | None = None
     confidence_limiter: str | None = None
+    subtype_stop_reason: str | None = None
+    rejected_confusable_candidates: list[RejectedCandidateAudit] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "engine_version": self.engine_version,
             "normalized_text": self.normalized_text,
             "normalized_text_summary": self.normalized_text_summary or self.normalized_text,
+            "resolved_head_candidate": self.resolved_head_candidate,
+            "companion_device_decision": self.companion_device_decision,
+            "hybrid_detection_reason": self.hybrid_detection_reason,
+            "domain_disambiguation_reason": self.domain_disambiguation_reason,
             "retrieval_basis": list(self.retrieval_basis),
             "shortlist_basis": list(self.shortlist_basis),
             "filtered_out": list(self.filtered_out),
@@ -363,6 +394,7 @@ class ClassifierMatchAudit:
             "rerank_reasons": list(self.rerank_reasons),
             "domain_role_disambiguation_reasons": list(self.domain_role_disambiguation_reasons),
             "confusable_domain_reasons": list(self.confusable_domain_reasons),
+            "negative_guard_activations": list(self.negative_guard_activations),
             "accessory_gate_reasons": list(self.accessory_gate_reasons),
             "generic_alias_penalties": list(self.generic_alias_penalties),
             "negations": list(self.negations),
@@ -376,6 +408,8 @@ class ClassifierMatchAudit:
             "ambiguity_reason": self.ambiguity_reason,
             "family_level_limiter": self.family_level_limiter,
             "confidence_limiter": self.confidence_limiter,
+            "subtype_stop_reason": self.subtype_stop_reason,
+            "rejected_confusable_candidates": [item.to_dict() for item in self.rejected_confusable_candidates],
         }
 
 
@@ -455,6 +489,7 @@ __all__ = [
     "FamilySeedCandidate",
     "ProductImpliedTraitDecision",
     "PublicProductCandidate",
+    "RejectedCandidateAudit",
     "SignalSuppression",
     "SubtypeCandidate",
 ]

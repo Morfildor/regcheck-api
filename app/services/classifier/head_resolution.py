@@ -41,6 +41,7 @@ _NON_HEAD_TAIL_TERMS = frozenset(
 )
 _GOVERNED_HEAD_TERMS = frozenset(
     {
+        "access keypad",
         "access panel",
         "backup unit",
         "chime receiver",
@@ -49,19 +50,33 @@ _GOVERNED_HEAD_TERMS = frozenset(
         "entry panel",
         "eye mask",
         "garage door controller",
+        "grow light",
+        "grow light strip",
         "heating controller",
+        "heated belt",
+        "heated neck wrap",
+        "heated shoulder wrap",
+        "induction hot plate",
         "intercom",
+        "kiosk display",
         "kvm switch",
         "lock bridge",
+        "load balancing meter",
         "meter module",
         "microphone receiver",
         "monitor stand",
         "portable power station",
         "power station",
+        "ring light",
         "relay module",
         "shower heater",
+        "smart meter display",
+        "smart meter gateway",
         "smoke co alarm",
+        "studio light",
+        "terminal display",
         "thin client",
+        "underblanket controller",
         "ups backup unit",
         "video intercom",
         "visualizer",
@@ -203,10 +218,14 @@ def _governed_head_bonus(
         bonus += 30
         head_term = "chime receiver"
         reasons.append("doorbell chime receiver head")
-    if "entry" in phrase_terms and "panel" in phrase_terms:
+    if "panel" in phrase_terms and {"entry", "door", "access"} & (phrase_terms | segment_terms):
         bonus += 26
         head_term = "entry panel"
         reasons.append("access entry panel compound head")
+    if "keypad" in phrase_terms and {"access", "entry", "door", "gate"} & (phrase_terms | segment_terms):
+        bonus += 28
+        head_term = "access keypad"
+        reasons.append("building-access keypad head")
     if "bridge" in phrase_terms and {"lock", "gateway"} & (phrase_terms | segment_terms):
         bonus += 26
         head_term = "lock bridge"
@@ -215,22 +234,72 @@ def _governed_head_bonus(
         bonus += 24
         head_term = "relay module"
         reasons.append("relay control module head")
+    if {"load", "balancing", "meter"} <= phrase_terms or (
+        "meter" in phrase_terms and {"load", "balancing"} & segment_terms
+    ):
+        bonus += 30
+        head_term = "load balancing meter"
+        reasons.append("EV load-balancing meter head")
     if "meter" in phrase_terms and "module" in phrase_terms and {"ev", "load", "balancing", "energy"} & segment_terms:
         bonus += 26
         head_term = "meter module"
         reasons.append("EV energy meter module head")
+    if "display" in phrase_terms and "meter" in phrase_terms and {"smart", "energy"} & (phrase_terms | segment_terms):
+        bonus += 28
+        head_term = "smart meter display"
+        reasons.append("smart-meter display head")
+    if "gateway" in phrase_terms and "meter" in phrase_terms:
+        bonus += 28
+        head_term = "smart meter gateway"
+        reasons.append("smart-meter gateway head")
+    if {"grow", "light"} <= phrase_terms:
+        bonus += 30
+        head_term = "grow light strip" if "strip" in phrase_terms or "strip" in segment_terms else "grow light"
+        reasons.append("grow-light compound head")
+    if {"ring", "light"} <= phrase_terms:
+        bonus += 24
+        head_term = "ring light"
+        reasons.append("ring-light head")
+    if {"studio", "light"} <= phrase_terms:
+        bonus += 22
+        head_term = "studio light"
+        reasons.append("studio-light head")
     if "shower" in phrase_terms and "heater" in phrase_terms:
         bonus += 28
         head_term = "shower heater"
         reasons.append("electric shower water-heater head")
+    if {"induction", "hot", "plate"} <= phrase_terms or {"induction", "cooker"} <= phrase_terms:
+        bonus += 30
+        head_term = "induction hot plate"
+        reasons.append("portable induction hot-plate head")
+    if {"kiosk", "display"} <= phrase_terms:
+        bonus += 30
+        head_term = "kiosk display"
+        reasons.append("kiosk-display hybrid head")
+    if {"terminal", "display"} <= phrase_terms or ({"touch", "display"} <= phrase_terms and "terminal" in segment_terms):
+        bonus += 28
+        head_term = "terminal display"
+        reasons.append("terminal-display hybrid head")
     if (
         "controller" in phrase_terms
         and {"underblanket", "blanket"} & segment_terms
         and "heating" not in phrase_terms
     ):
         bonus += 24
-        head_term = "heating controller"
-        reasons.append("heating-accessory controller head (underblanket / blanket)")
+        head_term = "underblanket controller"
+        reasons.append("underblanket controller head")
+    if {"heated", "neck", "wrap"} <= phrase_terms:
+        bonus += 28
+        head_term = "heated neck wrap"
+        reasons.append("heated wellness-wrap head")
+    if {"heated", "shoulder", "wrap"} <= phrase_terms:
+        bonus += 28
+        head_term = "heated shoulder wrap"
+        reasons.append("heated wellness-wrap head")
+    if {"heated", "belt"} <= phrase_terms:
+        bonus += 26
+        head_term = "heated belt"
+        reasons.append("heated wellness-belt head")
     # Display + built-in PC hybrid: detect "pc" or "computer" in the phrase while "display" is nearby
     if "pc" in phrase_terms and {"display", "monitor", "screen"} & (phrase_terms | segment_terms):
         bonus += 26

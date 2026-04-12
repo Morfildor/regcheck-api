@@ -1709,7 +1709,11 @@ products:
   - hydroponic garden
   - grow light
   - countertop herb garden
-  not_when_text_contains: []
+  not_when_text_contains:
+  - grow light strip
+  - led grow strip
+  - plant light strip
+  - horticulture light strip
   negative_examples: []
   likely_standard_refs:
   - ref: EN 60335-1
@@ -1723,7 +1727,8 @@ products:
   - mains_powered
   - lighting
   - water_contact
-  score_penalty_if_traits: []
+  score_penalty_if_traits:
+  - creator_equipment
   required_any_traits:
   - electrical
   - electronic
