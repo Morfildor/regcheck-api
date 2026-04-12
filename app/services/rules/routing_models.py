@@ -4,10 +4,10 @@ from dataclasses import dataclass, field
 from time import perf_counter
 from typing import Literal
 
-from app.domain.models import ConfidenceLevel, LegislationItem, LegislationSection, MissingInformationItem, ProductMatchStage, StandardItem, StandardSection
+from app.domain.models import ConfidenceLevel, LegislationItem, LegislationSection, ProductMatchStage
 
 from .contracts import ClassifierTraitsSnapshot, NormalizedTraitStateMap
-from app.services.standards_engine.contracts import ItemsAudit, RejectionEntry, SelectionContext
+from app.services.standards_v3.contracts import StandardsSelectionResult as StandardsSelection
 
 AnalysisDepth = Literal["quick", "standard", "deep"]
 
@@ -54,19 +54,6 @@ class LegislationSelection:
     forced_directives: list[str]
     allowed_directives: set[str]
     legislation_by_directive: dict[str, LegislationItem]
-
-
-@dataclass(slots=True)
-class StandardsSelection:
-    context: SelectionContext
-    standard_items: list[StandardItem]
-    review_items: list[StandardItem]
-    current_review_items: list[StandardItem]
-    missing_items: list[MissingInformationItem]
-    standard_sections: list[StandardSection]
-    items_audit: ItemsAudit
-    rejections: list[RejectionEntry]
-
 
 @dataclass(slots=True)
 class AnalysisTrace:

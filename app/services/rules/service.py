@@ -1,33 +1,28 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
 import logging
-from dataclasses import dataclass
 from time import perf_counter
 
 from pydantic import ValidationError
 
 from app.core.degradation import DegradationCollector, guarded_step
 from app.core.settings import get_settings
-from app.domain.catalog_types import StandardCatalogRow
 from app.domain.models import (
     AnalysisResult,
     Finding,
     KnownFactItem,
-    MissingInformationItem,
     RiskLevel,
     RiskReason,
     RiskSummary,
     ShadowDiffItem,
-    StandardAuditItem,
-    StandardItem,
     StandardMatchAudit,
     StandardSection,
     DecisionTraceEntry,
 )
-from app.services.classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION, normalize
+from app.services.classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION
 from app.services.standards_engine import find_applicable_items
-from app.services.standards_engine.contracts import ApplicableItems, ItemsAudit, RejectionEntry, SelectionContext
+from app.services.standards_engine.contracts import ItemsAudit
+from app.services.standards_v3 import StandardsSelectionResult, run_standards_policy
 
 from .contracts import ClassifierTraitsSnapshot
 from .facts import _build_known_facts, _missing_information
@@ -65,65 +60,15 @@ ENGINE_VERSION = CLASSIFIER_ENGINE_VERSION
 logger = logging.getLogger(__name__)
 
 
-@dataclass(slots=True)
-class StandardsSelection:
-    context: SelectionContext
-    standard_items: list[StandardItem]
-    review_items: list[StandardItem]
-    current_review_items: list[StandardItem]
-    missing_items: list[MissingInformationItem]
-    standard_sections: list[StandardSection]
-    items_audit: ItemsAudit
-    rejections: list[RejectionEntry]
-
-
 def _shadow_enabled() -> bool:
     return get_settings().enable_engine_v2_shadow
-
-
-def _items_audit_from_payload(payload: Mapping[str, object] | None) -> ItemsAudit:
-    if payload is None:
-        return ItemsAudit()
-
-    def _rows(key: str) -> list[StandardAuditItem]:
-        raw_rows = payload.get(key, [])
-        if not isinstance(raw_rows, list):
-            return []
-        rows: list[StandardAuditItem] = []
-        for raw_row in raw_rows:
-            if not isinstance(raw_row, Mapping):
-                continue
-            rows.append(StandardAuditItem.model_validate(dict(raw_row)))
-        return rows
-
-    return ItemsAudit(
-        selected=_rows("selected"),
-        review=_rows("review"),
-        rejected=_rows("rejected"),
-    )
-
-
-def _rejection_entries_from_payload(payload: list[dict[str, object]] | None) -> list[RejectionEntry]:
-    entries: list[RejectionEntry] = []
-    for raw_row in payload or []:
-        code = raw_row.get("code")
-        title = raw_row.get("title")
-        reason = raw_row.get("reason") or raw_row.get("rejection_reason") or ""
-        entries.append(
-            RejectionEntry(
-                code=str(code) if isinstance(code, str) and code else None,
-                title=str(title) if isinstance(title, str) and title else None,
-                reason=str(reason),
-            )
-        )
-    return entries
 
 
 def _select_standards(
     prepared: PreparedAnalysis,
     routes: LegislationSelection,
     description: str,
-) -> StandardsSelection:
+) -> StandardsSelectionResult:
     collector = DegradationCollector(prepared.degraded_reasons, prepared.warnings)
     context = _standard_context(
         prepared.route_traits,
@@ -138,65 +83,7 @@ def _select_standards(
         prepared.diagnostics.append("scope_route_reasons=" + ";".join(context.scope_reasons))
     prepared.diagnostics.append("standard_context_tags=" + ",".join(sorted(context.context_tags)))
 
-    empty_items: ApplicableItems = {
-        "standards": [],
-        "review_items": [],
-        "audit": {},
-        "rejections": [],
-    }
-    items: ApplicableItems = guarded_step(
-        logger=logger,
-        collector=collector,
-        step="standards_enrichment",
-        reason="standards_enrichment_failed",
-        warning="Standards enrichment failed; returning classification and legislation without standards.",
-        fallback=empty_items,
-        operation=lambda: find_applicable_items(
-            traits=prepared.route_traits,
-            # Use the full standards-engine directive set (includes LVD/EMC for radio
-            # products so safety and EMC standards are not treated as review fallbacks).
-            directives=list(routes.allowed_directives),
-            product_type=prepared.routing_product_type,
-            matched_products=sorted(prepared.routing_matched_products),
-            product_genres=sorted(prepared.product_genres),
-            preferred_standard_codes=sorted(prepared.likely_standards),
-            explicit_traits=set(prepared.traits_data.explicit_traits),
-            confirmed_traits=prepared.confirmed_traits,
-            normalized_text=normalize(description),
-            context_tags=context.context_tags,
-            allowed_directives=routes.allowed_directives,
-            selection_context=context,
-        ),
-    )
-
-    selected_rows: list[StandardCatalogRow] = list(items["standards"]) + list(items["review_items"])
-
-    dedup: dict[str, StandardCatalogRow] = {}
-    for row in selected_rows:
-        key = str(row.get("code") or "")
-        if key not in dedup or int(row.get("score", 0)) > int(dedup[key].get("score", 0)):
-            dedup[key] = row
-
-    standard_items: list[StandardItem] = []
-    review_items: list[StandardItem] = []
-    for row in dedup.values():
-        item = _standard_item_from_row(row, routes.legislation_by_directive, prepared.route_traits)
-        if item.item_type == "review":
-            review_items.append(item)
-        else:
-            standard_items.append(item)
-
-    standard_items = _sort_standard_items(
-        standard_items,
-        primary_standard_code=prepared.route_plan.primary_standard_code,
-        supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
-    )
-    review_items = _sort_standard_items(
-        review_items,
-        primary_standard_code=prepared.route_plan.primary_standard_code,
-        supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
-    )
-    current_review_items = [item for item in review_items if item.timing_status == "current"]
+    current_review_items = []
     missing_items = _missing_information(
         prepared.route_traits,
         prepared.routing_matched_products,
@@ -214,32 +101,56 @@ def _select_standards(
         warning="Standards sections could not be assembled; standards remain available as a flat list.",
         fallback=[],
         operation=lambda: _build_standard_sections(
+            [],
+            primary_standard_code=prepared.route_plan.primary_standard_code,
+            supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
+        ),
+    )
+    standards = guarded_step(
+        logger=logger,
+        collector=collector,
+        step="standards_enrichment",
+        reason="standards_enrichment_failed",
+        warning="Standards enrichment failed; returning classification and legislation without standards.",
+        fallback=StandardsSelectionResult(
+            context=context,
+            standard_items=[],
+            review_items=[],
+            current_review_items=current_review_items,
+            missing_items=missing_items,
+            standard_sections=standard_sections,
+            items_audit=ItemsAudit(),
+            rejections=[],
+        ),
+        operation=lambda: run_standards_policy(
+            prepared=prepared,
+            routes=routes,
+            description=description,
+            context=context,
+            missing_items=missing_items,
+            standard_sections=standard_sections,
+            standard_item_from_row=_standard_item_from_row,
+            sort_standard_items=_sort_standard_items,
+            standards_selector=find_applicable_items,
+        ),
+    )
+    if not standards.standard_sections and (standards.standard_items or standards.review_items):
+        standards.standard_sections = _build_standard_sections(
             _sort_standard_items(
-                standard_items + review_items,
+                standards.standard_items + standards.review_items,
                 primary_standard_code=prepared.route_plan.primary_standard_code,
                 supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
             ),
             primary_standard_code=prepared.route_plan.primary_standard_code,
             supporting_standard_codes=prepared.route_plan.supporting_standard_codes,
-        ),
-    )
-
-    return StandardsSelection(
-        context=context,
-        standard_items=standard_items,
-        review_items=review_items,
-        current_review_items=current_review_items,
-        missing_items=missing_items,
-        standard_sections=standard_sections,
-        items_audit=_items_audit_from_payload(items["audit"] if "audit" in items else None),
-        rejections=_rejection_entries_from_payload(items["rejections"] if "rejections" in items else None),
-    )
+        )
+    return standards
 
 
 def _compute_risk_profile(
     prepared: PreparedAnalysis,
     routes: LegislationSelection,
-    standards: StandardsSelection,
+    standards: StandardsSelectionResult,
 ) -> tuple[RiskLevel, RiskLevel, RiskLevel, list[RiskReason], RiskSummary]:
     current_risk = _current_risk(
         product_confidence=_confidence_level(prepared.traits_data.product_match_confidence, default="low"),
@@ -338,7 +249,7 @@ def _trace_items(values: list[str] | set[str], limit: int = 6) -> list[str]:
 def _build_decision_trace(
     prepared: PreparedAnalysis,
     routes: LegislationSelection,
-    standards: StandardsSelection,
+    standards: StandardsSelectionResult,
     known_facts: list[KnownFactItem],
 ) -> list[DecisionTraceEntry]:
     traits_data: ClassifierTraitsSnapshot = prepared.traits_data
@@ -658,6 +569,6 @@ def analyze(
 __all__ = [
     "AnalysisTrace",
     "ENGINE_VERSION",
-    "StandardsSelection",
+    "StandardsSelectionResult",
     "analyze",
 ]
