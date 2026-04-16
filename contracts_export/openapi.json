@@ -1,0 +1,4458 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "RegCheck API",
+    "version": "6.1.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RootResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/live": {
+      "get": {
+        "summary": "Health Live",
+        "operationId": "health_live_health_live_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "summary": "Health Ready",
+        "operationId": "health_ready_health_ready_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/options": {
+      "get": {
+        "summary": "Metadata Options",
+        "operationId": "metadata_options_metadata_options_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetadataOptionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metadata/standards": {
+      "get": {
+        "summary": "Metadata Standards",
+        "operationId": "metadata_standards_metadata_standards_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetadataStandardsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/reload": {
+      "post": {
+        "summary": "Admin Reload",
+        "operationId": "admin_reload_admin_reload_post",
+        "parameters": [
+          {
+            "name": "X-Admin-Token",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Admin-Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReloadResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analyze": {
+      "post": {
+        "summary": "Analyze Route",
+        "operationId": "analyze_route_analyze_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisAudit": {
+        "properties": {
+          "allowed_directives": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allowed Directives"
+          },
+          "matched_products": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matched Products"
+          },
+          "routing_matched_products": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Routing Matched Products"
+          },
+          "preferred_standards": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Preferred Standards"
+          },
+          "product_genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Product Genres"
+          },
+          "product_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Family"
+          },
+          "product_subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Subtype"
+          },
+          "product_match_stage": {
+            "type": "string",
+            "enum": [
+              "family",
+              "subtype",
+              "ambiguous"
+            ],
+            "title": "Product Match Stage",
+            "default": "ambiguous"
+          },
+          "classification_is_ambiguous": {
+            "type": "boolean",
+            "title": "Classification Is Ambiguous",
+            "default": true
+          },
+          "classification_confidence_below_threshold": {
+            "type": "boolean",
+            "title": "Classification Confidence Below Threshold",
+            "default": true
+          },
+          "depth": {
+            "type": "string",
+            "enum": [
+              "quick",
+              "standard",
+              "deep"
+            ],
+            "title": "Depth",
+            "default": "standard"
+          },
+          "engine_version": {
+            "type": "string",
+            "title": "Engine Version",
+            "default": "2.0"
+          },
+          "normalized_description": {
+            "type": "string",
+            "title": "Normalized Description",
+            "default": ""
+          },
+          "context_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Context Tags"
+          },
+          "shadow_diff": {
+            "items": {
+              "$ref": "#/components/schemas/ShadowDiffItem"
+            },
+            "type": "array",
+            "title": "Shadow Diff"
+          },
+          "decision_trace": {
+            "items": {
+              "$ref": "#/components/schemas/DecisionTraceEntry"
+            },
+            "type": "array",
+            "title": "Decision Trace"
+          }
+        },
+        "type": "object",
+        "title": "AnalysisAudit"
+      },
+      "AnalysisResult": {
+        "properties": {
+          "product_summary": {
+            "type": "string",
+            "title": "Product Summary"
+          },
+          "overall_risk": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ],
+            "title": "Overall Risk"
+          },
+          "current_compliance_risk": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ],
+            "title": "Current Compliance Risk",
+            "default": "LOW"
+          },
+          "future_watchlist_risk": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ],
+            "title": "Future Watchlist Risk",
+            "default": "LOW"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "analyzed_description": {
+            "type": "string",
+            "title": "Analyzed Description",
+            "default": ""
+          },
+          "normalized_description": {
+            "type": "string",
+            "title": "Normalized Description",
+            "default": ""
+          },
+          "product_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Type"
+          },
+          "product_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Family"
+          },
+          "product_family_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Product Family Confidence",
+            "default": "low"
+          },
+          "product_subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Subtype"
+          },
+          "product_subtype_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Product Subtype Confidence",
+            "default": "low"
+          },
+          "product_match_stage": {
+            "type": "string",
+            "enum": [
+              "family",
+              "subtype",
+              "ambiguous"
+            ],
+            "title": "Product Match Stage",
+            "default": "ambiguous"
+          },
+          "product_match_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Product Match Confidence",
+            "default": "low"
+          },
+          "classification_is_ambiguous": {
+            "type": "boolean",
+            "title": "Classification Is Ambiguous",
+            "default": true
+          },
+          "classification_confidence_below_threshold": {
+            "type": "boolean",
+            "title": "Classification Confidence Below Threshold",
+            "default": true
+          },
+          "classification_summary": {
+            "type": "string",
+            "title": "Classification Summary",
+            "default": ""
+          },
+          "primary_uncertainties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Primary Uncertainties"
+          },
+          "route_trigger_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Route Trigger Reasons"
+          },
+          "triggered_routes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Triggered Routes"
+          },
+          "primary_route_standard_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Route Standard Code"
+          },
+          "primary_route_reason": {
+            "type": "string",
+            "title": "Primary Route Reason",
+            "default": ""
+          },
+          "overlay_routes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Overlay Routes"
+          },
+          "route_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Route Confidence",
+            "default": "low"
+          },
+          "product_candidates": {
+            "items": {
+              "$ref": "#/components/schemas/ProductCandidate"
+            },
+            "type": "array",
+            "title": "Product Candidates"
+          },
+          "functional_classes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Functional Classes"
+          },
+          "confirmed_functional_classes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Confirmed Functional Classes"
+          },
+          "explicit_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Explicit Traits"
+          },
+          "confirmed_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Confirmed Traits"
+          },
+          "inferred_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Inferred Traits"
+          },
+          "assumptions_or_inferred_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Assumptions Or Inferred Traits"
+          },
+          "all_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "All Traits"
+          },
+          "directives": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Directives"
+          },
+          "forced_directives": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Forced Directives"
+          },
+          "legislations": {
+            "items": {
+              "$ref": "#/components/schemas/LegislationItem"
+            },
+            "type": "array",
+            "title": "Legislations"
+          },
+          "ce_legislations": {
+            "items": {
+              "$ref": "#/components/schemas/LegislationItem"
+            },
+            "type": "array",
+            "title": "Ce Legislations"
+          },
+          "non_ce_obligations": {
+            "items": {
+              "$ref": "#/components/schemas/LegislationItem"
+            },
+            "type": "array",
+            "title": "Non Ce Obligations"
+          },
+          "framework_regimes": {
+            "items": {
+              "$ref": "#/components/schemas/LegislationItem"
+            },
+            "type": "array",
+            "title": "Framework Regimes"
+          },
+          "future_regimes": {
+            "items": {
+              "$ref": "#/components/schemas/LegislationItem"
+            },
+            "type": "array",
+            "title": "Future Regimes"
+          },
+          "informational_items": {
+            "items": {
+              "$ref": "#/components/schemas/LegislationItem"
+            },
+            "type": "array",
+            "title": "Informational Items"
+          },
+          "standards": {
+            "items": {
+              "$ref": "#/components/schemas/StandardItem"
+            },
+            "type": "array",
+            "title": "Standards"
+          },
+          "review_items": {
+            "items": {
+              "$ref": "#/components/schemas/StandardItem"
+            },
+            "type": "array",
+            "title": "Review Items"
+          },
+          "missing_information": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Information"
+          },
+          "missing_information_items": {
+            "items": {
+              "$ref": "#/components/schemas/MissingInformationItem"
+            },
+            "type": "array",
+            "title": "Missing Information Items"
+          },
+          "contradictions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Contradictions"
+          },
+          "contradiction_severity": {
+            "type": "string",
+            "enum": [
+              "none",
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Contradiction Severity",
+            "default": "none"
+          },
+          "diagnostics": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Diagnostics"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "degraded_mode": {
+            "type": "boolean",
+            "title": "Degraded Mode",
+            "default": false
+          },
+          "degraded_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Degraded Reasons"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/AnalysisStats"
+          },
+          "knowledge_base_meta": {
+            "$ref": "#/components/schemas/KnowledgeBaseMeta"
+          },
+          "analysis_audit": {
+            "$ref": "#/components/schemas/AnalysisAudit"
+          },
+          "api_version": {
+            "type": "string",
+            "title": "Api Version",
+            "default": "1.0"
+          },
+          "engine_version": {
+            "type": "string",
+            "title": "Engine Version",
+            "default": "2.0"
+          },
+          "catalog_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Version"
+          },
+          "trait_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/TraitEvidenceItem"
+            },
+            "type": "array",
+            "title": "Trait Evidence"
+          },
+          "product_match_audit": {
+            "$ref": "#/components/schemas/ProductMatchAudit"
+          },
+          "standard_match_audit": {
+            "$ref": "#/components/schemas/StandardMatchAudit"
+          },
+          "standard_sections": {
+            "items": {
+              "$ref": "#/components/schemas/StandardSection"
+            },
+            "type": "array",
+            "title": "Standard Sections"
+          },
+          "standards_by_directive": {
+            "items": {
+              "$ref": "#/components/schemas/StandardSection"
+            },
+            "type": "array",
+            "title": "Standards By Directive"
+          },
+          "legislation_sections": {
+            "items": {
+              "$ref": "#/components/schemas/LegislationSection"
+            },
+            "type": "array",
+            "title": "Legislation Sections"
+          },
+          "risk_reasons": {
+            "items": {
+              "$ref": "#/components/schemas/RiskReason"
+            },
+            "type": "array",
+            "title": "Risk Reasons"
+          },
+          "risk_summary": {
+            "$ref": "#/components/schemas/RiskSummary"
+          },
+          "hero_summary": {
+            "$ref": "#/components/schemas/HeroSummary"
+          },
+          "confidence_panel": {
+            "$ref": "#/components/schemas/ConfidencePanel"
+          },
+          "input_gaps_panel": {
+            "$ref": "#/components/schemas/InputGapsPanel"
+          },
+          "top_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Top Actions"
+          },
+          "next_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Next Actions"
+          },
+          "current_path": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Current Path"
+          },
+          "future_watchlist": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Future Watchlist"
+          },
+          "suggested_questions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suggested Questions"
+          },
+          "suggested_quick_adds": {
+            "items": {
+              "$ref": "#/components/schemas/QuickAddItem"
+            },
+            "type": "array",
+            "title": "Suggested Quick Adds"
+          },
+          "known_facts": {
+            "items": {
+              "$ref": "#/components/schemas/KnownFactItem"
+            },
+            "type": "array",
+            "title": "Known Facts"
+          },
+          "known_fact_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Known Fact Keys"
+          },
+          "route_context": {
+            "$ref": "#/components/schemas/RouteContext"
+          },
+          "primary_jurisdiction": {
+            "type": "string",
+            "title": "Primary Jurisdiction",
+            "default": "EU"
+          },
+          "supported_jurisdictions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Supported Jurisdictions"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/Finding"
+            },
+            "type": "array",
+            "title": "Findings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "product_summary",
+          "overall_risk",
+          "summary"
+        ],
+        "title": "AnalysisResult"
+      },
+      "AnalysisStats": {
+        "properties": {
+          "legislation_count": {
+            "type": "integer",
+            "title": "Legislation Count",
+            "default": 0
+          },
+          "current_legislation_count": {
+            "type": "integer",
+            "title": "Current Legislation Count",
+            "default": 0
+          },
+          "future_legislation_count": {
+            "type": "integer",
+            "title": "Future Legislation Count",
+            "default": 0
+          },
+          "standards_count": {
+            "type": "integer",
+            "title": "Standards Count",
+            "default": 0
+          },
+          "review_items_count": {
+            "type": "integer",
+            "title": "Review Items Count",
+            "default": 0
+          },
+          "current_review_items_count": {
+            "type": "integer",
+            "title": "Current Review Items Count",
+            "default": 0
+          },
+          "future_review_items_count": {
+            "type": "integer",
+            "title": "Future Review Items Count",
+            "default": 0
+          },
+          "harmonized_standards_count": {
+            "type": "integer",
+            "title": "Harmonized Standards Count",
+            "default": 0
+          },
+          "state_of_the_art_standards_count": {
+            "type": "integer",
+            "title": "State Of The Art Standards Count",
+            "default": 0
+          },
+          "product_gated_standards_count": {
+            "type": "integer",
+            "title": "Product Gated Standards Count",
+            "default": 0
+          },
+          "ambiguity_flag_count": {
+            "type": "integer",
+            "title": "Ambiguity Flag Count",
+            "default": 0
+          },
+          "missing_information_count": {
+            "type": "integer",
+            "title": "Missing Information Count",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "AnalysisStats"
+      },
+      "ConfidencePanel": {
+        "properties": {
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "default": "low"
+          },
+          "classification_is_ambiguous": {
+            "type": "boolean",
+            "title": "Classification Is Ambiguous",
+            "default": true
+          },
+          "classification_confidence_below_threshold": {
+            "type": "boolean",
+            "title": "Classification Confidence Below Threshold",
+            "default": true
+          },
+          "matched_products": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matched Products"
+          },
+          "product_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Family"
+          },
+          "product_genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Product Genres"
+          },
+          "product_subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Subtype"
+          },
+          "product_match_stage": {
+            "type": "string",
+            "enum": [
+              "family",
+              "subtype",
+              "ambiguous"
+            ],
+            "title": "Product Match Stage",
+            "default": "ambiguous"
+          }
+        },
+        "type": "object",
+        "title": "ConfidencePanel"
+      },
+      "DecisionTraceEntry": {
+        "properties": {
+          "step": {
+            "type": "string",
+            "enum": [
+              "classification",
+              "traits",
+              "assumptions",
+              "missing_facts",
+              "legislation",
+              "standards",
+              "rejections"
+            ],
+            "title": "Step"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "step",
+          "summary"
+        ],
+        "title": "DecisionTraceEntry"
+      },
+      "Finding": {
+        "properties": {
+          "directive": {
+            "type": "string",
+            "title": "Directive"
+          },
+          "article": {
+            "type": "string",
+            "title": "Article"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "WARN",
+              "FAIL",
+              "INFO"
+            ],
+            "title": "Status"
+          },
+          "finding": {
+            "type": "string",
+            "title": "Finding"
+          },
+          "action": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Action"
+          }
+        },
+        "type": "object",
+        "required": [
+          "directive",
+          "article",
+          "status",
+          "finding"
+        ],
+        "title": "Finding"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "engine_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Engine Version"
+          },
+          "catalog_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Version"
+          },
+          "knowledge_base_loaded": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Knowledge Base Loaded"
+          },
+          "startup_state": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Startup State"
+          },
+          "warmup_duration_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warmup Duration Ms"
+          },
+          "ready_timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ready Timestamp"
+          },
+          "last_reload_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Reload Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ok",
+          "version"
+        ],
+        "title": "HealthResponse"
+      },
+      "HeroSummary": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "subtitle": {
+            "type": "string",
+            "title": "Subtitle",
+            "default": ""
+          },
+          "primary_regimes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Primary Regimes"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "default": "low"
+          },
+          "depth": {
+            "type": "string",
+            "enum": [
+              "quick",
+              "standard",
+              "deep"
+            ],
+            "title": "Depth",
+            "default": "standard"
+          }
+        },
+        "type": "object",
+        "title": "HeroSummary"
+      },
+      "InputGapsPanel": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/MissingInformationItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Next Actions"
+          },
+          "high_importance_count": {
+            "type": "integer",
+            "title": "High Importance Count",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "InputGapsPanel"
+      },
+      "KnowledgeBaseMeta": {
+        "properties": {
+          "traits": {
+            "type": "integer",
+            "title": "Traits",
+            "default": 0
+          },
+          "genres": {
+            "type": "integer",
+            "title": "Genres",
+            "default": 0
+          },
+          "products": {
+            "type": "integer",
+            "title": "Products",
+            "default": 0
+          },
+          "legislations": {
+            "type": "integer",
+            "title": "Legislations",
+            "default": 0
+          },
+          "standards": {
+            "type": "integer",
+            "title": "Standards",
+            "default": 0
+          },
+          "harmonized_standards": {
+            "type": "integer",
+            "title": "Harmonized Standards",
+            "default": 0
+          },
+          "state_of_the_art_standards": {
+            "type": "integer",
+            "title": "State Of The Art Standards",
+            "default": 0
+          },
+          "review_items": {
+            "type": "integer",
+            "title": "Review Items",
+            "default": 0
+          },
+          "product_gated_standards": {
+            "type": "integer",
+            "title": "Product Gated Standards",
+            "default": 0
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "title": "KnowledgeBaseMeta"
+      },
+      "KnownFactItem": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "parsed",
+              "derived"
+            ],
+            "title": "Source",
+            "default": "parsed"
+          },
+          "related_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Related Traits"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "value"
+        ],
+        "title": "KnownFactItem"
+      },
+      "LegislationItem": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "family": {
+            "type": "string",
+            "title": "Family"
+          },
+          "legal_form": {
+            "type": "string",
+            "title": "Legal Form",
+            "default": "Other"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "core",
+              "product_specific",
+              "conditional",
+              "informational"
+            ],
+            "title": "Priority",
+            "default": "conditional"
+          },
+          "applicability": {
+            "type": "string",
+            "enum": [
+              "applicable",
+              "conditional",
+              "not_applicable"
+            ],
+            "title": "Applicability",
+            "default": "conditional"
+          },
+          "directive_key": {
+            "type": "string",
+            "title": "Directive Key",
+            "default": "OTHER"
+          },
+          "bucket": {
+            "type": "string",
+            "enum": [
+              "ce",
+              "non_ce",
+              "framework",
+              "future",
+              "informational"
+            ],
+            "title": "Bucket",
+            "default": "non_ce"
+          },
+          "timing_status": {
+            "type": "string",
+            "enum": [
+              "current",
+              "future",
+              "legacy",
+              "informational"
+            ],
+            "title": "Timing Status",
+            "default": "current"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "triggers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Triggers"
+          },
+          "doc_impacts": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Doc Impacts"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "applicable_from": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicable From"
+          },
+          "applicable_until": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicable Until"
+          },
+          "replaced_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Replaced By"
+          },
+          "evidence_strength": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "mixed",
+              "inferred"
+            ],
+            "title": "Evidence Strength",
+            "default": "confirmed"
+          },
+          "is_forced": {
+            "type": "boolean",
+            "title": "Is Forced",
+            "default": false
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction",
+            "default": "EU"
+          },
+          "applicability_state": {
+            "type": "string",
+            "title": "Applicability State",
+            "default": "current"
+          },
+          "applicability_hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Hint"
+          },
+          "sub_articles": {
+            "items": {
+              "$ref": "#/components/schemas/RedArticleRoute"
+            },
+            "type": "array",
+            "title": "Sub Articles"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title",
+          "family"
+        ],
+        "title": "LegislationItem"
+      },
+      "LegislationSection": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count",
+            "default": 0
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/LegislationItem"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "title"
+        ],
+        "title": "LegislationSection"
+      },
+      "MetadataGenreOption": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keywords"
+          },
+          "traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Traits"
+          },
+          "default_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Default Traits"
+          },
+          "functional_classes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Functional Classes"
+          },
+          "likely_standards": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Likely Standards"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "MetadataGenreOption"
+      },
+      "MetadataLegislationOption": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "directive_key": {
+            "type": "string",
+            "title": "Directive Key"
+          },
+          "family": {
+            "type": "string",
+            "title": "Family"
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority"
+          },
+          "bucket": {
+            "type": "string",
+            "title": "Bucket"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title",
+          "directive_key",
+          "family",
+          "priority",
+          "bucket"
+        ],
+        "title": "MetadataLegislationOption"
+      },
+      "MetadataOptionsResponse": {
+        "properties": {
+          "traits": {
+            "items": {
+              "$ref": "#/components/schemas/MetadataTraitOption"
+            },
+            "type": "array",
+            "title": "Traits"
+          },
+          "genres": {
+            "items": {
+              "$ref": "#/components/schemas/MetadataGenreOption"
+            },
+            "type": "array",
+            "title": "Genres"
+          },
+          "products": {
+            "items": {
+              "$ref": "#/components/schemas/MetadataProductOption"
+            },
+            "type": "array",
+            "title": "Products"
+          },
+          "legislations": {
+            "items": {
+              "$ref": "#/components/schemas/MetadataLegislationOption"
+            },
+            "type": "array",
+            "title": "Legislations"
+          },
+          "knowledge_base_meta": {
+            "$ref": "#/components/schemas/KnowledgeBaseMeta"
+          }
+        },
+        "type": "object",
+        "title": "MetadataOptionsResponse"
+      },
+      "MetadataProductOption": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "product_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Family"
+          },
+          "product_subfamily": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Subfamily"
+          },
+          "genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Genres"
+          },
+          "aliases": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Aliases"
+          },
+          "family_keywords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Family Keywords"
+          },
+          "genre_keywords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Genre Keywords"
+          },
+          "required_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Clues"
+          },
+          "preferred_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Preferred Clues"
+          },
+          "exclude_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exclude Clues"
+          },
+          "confusable_with": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Confusable With"
+          },
+          "functional_classes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Functional Classes"
+          },
+          "genre_functional_classes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Genre Functional Classes"
+          },
+          "family_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Family Traits"
+          },
+          "genre_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Genre Traits"
+          },
+          "genre_default_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Genre Default Traits"
+          },
+          "subtype_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Subtype Traits"
+          },
+          "core_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Core Traits"
+          },
+          "default_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Default Traits"
+          },
+          "implied_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Implied Traits"
+          },
+          "likely_standards": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Likely Standards"
+          },
+          "genre_likely_standards": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Genre Likely Standards"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "MetadataProductOption"
+      },
+      "MetadataStandardOption": {
+        "properties": {
+          "directive": {
+            "type": "string",
+            "title": "Directive"
+          },
+          "directives": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Directives"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "legislation_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Legislation Key"
+          },
+          "item_type": {
+            "type": "string",
+            "title": "Item Type",
+            "default": "standard"
+          },
+          "standard_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Standard Family"
+          },
+          "harmonization_status": {
+            "type": "string",
+            "title": "Harmonization Status",
+            "default": "unknown"
+          },
+          "is_harmonized": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Harmonized"
+          },
+          "harmonized_under": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Harmonized Under"
+          },
+          "harmonized_reference": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Harmonized Reference"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "dated_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dated Version"
+          },
+          "supersedes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supersedes"
+          },
+          "test_focus": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Test Focus"
+          },
+          "evidence_hint": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Hint"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keywords"
+          },
+          "selection_group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selection Group"
+          },
+          "selection_priority": {
+            "type": "integer",
+            "title": "Selection Priority",
+            "default": 0
+          },
+          "required_fact_basis": {
+            "type": "string",
+            "title": "Required Fact Basis",
+            "default": "inferred"
+          },
+          "applies_if_products": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies If Products"
+          },
+          "applies_if_genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies If Genres"
+          },
+          "applies_if_all": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies If All"
+          },
+          "applies_if_any": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies If Any"
+          },
+          "exclude_if_genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exclude If Genres"
+          }
+        },
+        "type": "object",
+        "required": [
+          "directive",
+          "code",
+          "title",
+          "category"
+        ],
+        "title": "MetadataStandardOption"
+      },
+      "MetadataStandardsResponse": {
+        "properties": {
+          "knowledge_base_meta": {
+            "$ref": "#/components/schemas/KnowledgeBaseMeta"
+          },
+          "standards": {
+            "items": {
+              "$ref": "#/components/schemas/MetadataStandardOption"
+            },
+            "type": "array",
+            "title": "Standards"
+          }
+        },
+        "type": "object",
+        "title": "MetadataStandardsResponse"
+      },
+      "MetadataTraitOption": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "description"
+        ],
+        "title": "MetadataTraitOption"
+      },
+      "MissingInformationItem": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "importance": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ],
+            "title": "Importance",
+            "default": "medium"
+          },
+          "examples": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Examples"
+          },
+          "related_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Related Traits"
+          },
+          "route_impact": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Route Impact"
+          },
+          "next_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Next Actions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "message"
+        ],
+        "title": "MissingInformationItem"
+      },
+      "ProductCandidate": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "matched_alias": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched Alias"
+          },
+          "family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family"
+          },
+          "subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtype"
+          },
+          "family_score": {
+            "type": "integer",
+            "title": "Family Score",
+            "default": 0
+          },
+          "subtype_score": {
+            "type": "integer",
+            "title": "Subtype Score",
+            "default": 0
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score",
+            "default": 0
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "default": "medium"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          },
+          "positive_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Positive Clues"
+          },
+          "negative_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Negative Clues"
+          },
+          "likely_standards": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Likely Standards"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "ProductCandidate"
+      },
+      "ProductInput": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Description"
+          },
+          "category": {
+            "type": "string",
+            "maxLength": 250,
+            "title": "Category",
+            "default": ""
+          },
+          "directives": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 25,
+            "title": "Directives"
+          },
+          "depth": {
+            "type": "string",
+            "enum": [
+              "quick",
+              "standard",
+              "deep"
+            ],
+            "title": "Depth",
+            "default": "standard"
+          }
+        },
+        "type": "object",
+        "required": [
+          "description"
+        ],
+        "title": "ProductInput"
+      },
+      "ProductMatchAudit": {
+        "properties": {
+          "engine_version": {
+            "type": "string",
+            "title": "Engine Version"
+          },
+          "normalized_text": {
+            "type": "string",
+            "title": "Normalized Text"
+          },
+          "normalized_text_summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Normalized Text Summary"
+          },
+          "resolved_head_candidate": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved Head Candidate"
+          },
+          "companion_device_decision": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Companion Device Decision"
+          },
+          "hybrid_detection_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hybrid Detection Reason"
+          },
+          "domain_disambiguation_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Domain Disambiguation Reason"
+          },
+          "retrieval_basis": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Retrieval Basis"
+          },
+          "shortlist_basis": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Shortlist Basis"
+          },
+          "filtered_out": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Filtered Out"
+          },
+          "alias_hits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Alias Hits"
+          },
+          "matched_aliases": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matched Aliases"
+          },
+          "family_keyword_hits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Family Keyword Hits"
+          },
+          "clue_hits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Clue Hits"
+          },
+          "strongest_positive_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Strongest Positive Clues"
+          },
+          "strongest_negative_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Strongest Negative Clues"
+          },
+          "rerank_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Rerank Reasons"
+          },
+          "domain_role_disambiguation_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Domain Role Disambiguation Reasons"
+          },
+          "confusable_domain_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Confusable Domain Reasons"
+          },
+          "negative_guard_activations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Negative Guard Activations"
+          },
+          "accessory_gate_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Accessory Gate Reasons"
+          },
+          "generic_alias_penalties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Generic Alias Penalties"
+          },
+          "negations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Negations"
+          },
+          "negation_suppressions": {
+            "items": {
+              "$ref": "#/components/schemas/ProductMatchAuditSuppression"
+            },
+            "type": "array",
+            "title": "Negation Suppressions"
+          },
+          "product_implied_traits": {
+            "items": {
+              "$ref": "#/components/schemas/ProductMatchAuditTraitDecision"
+            },
+            "type": "array",
+            "title": "Product Implied Traits"
+          },
+          "top_family_candidates": {
+            "items": {
+              "$ref": "#/components/schemas/ProductMatchAuditCandidate"
+            },
+            "type": "array",
+            "title": "Top Family Candidates"
+          },
+          "top_subtype_candidates": {
+            "items": {
+              "$ref": "#/components/schemas/ProductMatchAuditCandidate"
+            },
+            "type": "array",
+            "title": "Top Subtype Candidates"
+          },
+          "role_parse": {
+            "$ref": "#/components/schemas/ProductMatchAuditRoleParse"
+          },
+          "final_match_stage": {
+            "type": "string",
+            "enum": [
+              "family",
+              "subtype",
+              "ambiguous"
+            ],
+            "title": "Final Match Stage",
+            "default": "ambiguous"
+          },
+          "final_match_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Match Reason"
+          },
+          "ambiguity_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ambiguity Reason"
+          },
+          "family_level_limiter": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Level Limiter"
+          },
+          "confidence_limiter": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence Limiter"
+          },
+          "subtype_stop_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtype Stop Reason"
+          },
+          "rejected_confusable_candidates": {
+            "items": {
+              "$ref": "#/components/schemas/ProductMatchAuditRejectedCandidate"
+            },
+            "type": "array",
+            "title": "Rejected Confusable Candidates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "engine_version",
+          "normalized_text"
+        ],
+        "title": "ProductMatchAudit"
+      },
+      "ProductMatchAuditCandidate": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "product_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family"
+          },
+          "subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtype"
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score",
+            "default": 0
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "default": "low"
+          },
+          "matched_alias": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched Alias"
+          },
+          "positive_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Positive Clues"
+          },
+          "negative_clues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Negative Clues"
+          },
+          "family_keyword_hits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Family Keyword Hits"
+          },
+          "shortlist_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shortlist Reason"
+          },
+          "rerank_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rerank Reason"
+          },
+          "confusable_adjustments": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Confusable Adjustments"
+          },
+          "domain_role_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Domain Role Reasons"
+          },
+          "why_not_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Why Not Reasons"
+          },
+          "final_stop_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Stop Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "ProductMatchAuditCandidate"
+      },
+      "ProductMatchAuditHeadCandidate": {
+        "properties": {
+          "phrase": {
+            "type": "string",
+            "title": "Phrase"
+          },
+          "head_term": {
+            "type": "string",
+            "title": "Head Term"
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score",
+            "default": 0
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "quality": {
+            "type": "string",
+            "title": "Quality",
+            "default": "low"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons"
+          }
+        },
+        "type": "object",
+        "required": [
+          "phrase",
+          "head_term",
+          "source"
+        ],
+        "title": "ProductMatchAuditHeadCandidate"
+      },
+      "ProductMatchAuditRejectedCandidate": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family"
+          },
+          "subtype": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtype"
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score",
+            "default": 0
+          },
+          "rejection_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rejection Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label"
+        ],
+        "title": "ProductMatchAuditRejectedCandidate"
+      },
+      "ProductMatchAuditRoleParse": {
+        "properties": {
+          "primary_product_phrase": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Product Phrase"
+          },
+          "primary_product_head": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Product Head"
+          },
+          "primary_product_head_term": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Product Head Term"
+          },
+          "primary_head_quality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Head Quality"
+          },
+          "primary_head_candidates": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Primary Head Candidates"
+          },
+          "competing_primary_heads": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Competing Primary Heads"
+          },
+          "head_candidate_details": {
+            "items": {
+              "$ref": "#/components/schemas/ProductMatchAuditHeadCandidate"
+            },
+            "type": "array",
+            "title": "Head Candidate Details"
+          },
+          "accessory_or_attachment": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Accessory Or Attachment"
+          },
+          "target_device": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Target Device"
+          },
+          "controlled_device": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Controlled Device"
+          },
+          "charged_device": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Charged Device"
+          },
+          "powered_device": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Powered Device"
+          },
+          "host_device": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Host Device"
+          },
+          "mounted_on_or_for": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Mounted On Or For"
+          },
+          "integrated_feature": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Integrated Feature"
+          },
+          "installation_context": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Installation Context"
+          },
+          "cue_hits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Cue Hits"
+          },
+          "parse_notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Parse Notes"
+          },
+          "primary_head_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Head Source"
+          },
+          "primary_is_accessory": {
+            "type": "boolean",
+            "title": "Primary Is Accessory",
+            "default": false
+          },
+          "primary_head_conflict": {
+            "type": "boolean",
+            "title": "Primary Head Conflict",
+            "default": false
+          },
+          "head_conflict_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Head Conflict Reason"
+          }
+        },
+        "type": "object",
+        "title": "ProductMatchAuditRoleParse"
+      },
+      "ProductMatchAuditSuppression": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Traits"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "reason"
+        ],
+        "title": "ProductMatchAuditSuppression"
+      },
+      "ProductMatchAuditTraitDecision": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "accepted_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Accepted Traits"
+          },
+          "suppressed_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suppressed Traits"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source"
+        ],
+        "title": "ProductMatchAuditTraitDecision"
+      },
+      "QuickAddItem": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "label",
+          "text"
+        ],
+        "title": "QuickAddItem"
+      },
+      "RedArticleRoute": {
+        "properties": {
+          "article": {
+            "type": "string",
+            "title": "Article"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "applicable": {
+            "type": "boolean",
+            "title": "Applicable",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "article",
+          "label"
+        ],
+        "title": "RedArticleRoute",
+        "description": "A RED sub-article route (Art. 3.1(a), 3.1(b), 3.2, 3.3)."
+      },
+      "ReloadResponse": {
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "engine_version": {
+            "type": "string",
+            "title": "Engine Version"
+          },
+          "catalog_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Version"
+          },
+          "knowledge_base_loaded": {
+            "type": "boolean",
+            "title": "Knowledge Base Loaded"
+          },
+          "startup_state": {
+            "type": "string",
+            "title": "Startup State"
+          },
+          "knowledge_base": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Knowledge Base"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ok",
+          "version",
+          "engine_version",
+          "knowledge_base_loaded",
+          "startup_state"
+        ],
+        "title": "ReloadResponse"
+      },
+      "RiskBucketSummary": {
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ],
+            "title": "Level",
+            "default": "LOW"
+          },
+          "reasons": {
+            "items": {
+              "$ref": "#/components/schemas/RiskReason"
+            },
+            "type": "array",
+            "title": "Reasons"
+          }
+        },
+        "type": "object",
+        "title": "RiskBucketSummary"
+      },
+      "RiskReason": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "overall",
+              "current",
+              "future"
+            ],
+            "title": "Scope",
+            "default": "overall"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ],
+            "title": "Level",
+            "default": "MEDIUM"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "title",
+          "detail"
+        ],
+        "title": "RiskReason"
+      },
+      "RiskSummary": {
+        "properties": {
+          "overall": {
+            "$ref": "#/components/schemas/RiskBucketSummary"
+          },
+          "current": {
+            "$ref": "#/components/schemas/RiskBucketSummary"
+          },
+          "future": {
+            "$ref": "#/components/schemas/RiskBucketSummary"
+          }
+        },
+        "type": "object",
+        "title": "RiskSummary"
+      },
+      "RootResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "engine_version": {
+            "type": "string",
+            "title": "Engine Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "version",
+          "engine_version"
+        ],
+        "title": "RootResponse"
+      },
+      "RouteContext": {
+        "properties": {
+          "scope_route": {
+            "type": "string",
+            "title": "Scope Route",
+            "default": "generic"
+          },
+          "scope_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Scope Reasons"
+          },
+          "context_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Context Tags"
+          },
+          "known_fact_keys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Known Fact Keys"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction",
+            "default": "EU"
+          },
+          "route_trigger_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Route Trigger Reasons"
+          },
+          "primary_route_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Route Family"
+          },
+          "primary_route_standard_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Route Standard Code"
+          },
+          "primary_route_reason": {
+            "type": "string",
+            "title": "Primary Route Reason",
+            "default": ""
+          },
+          "overlay_routes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Overlay Routes"
+          },
+          "route_confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Route Confidence",
+            "default": "low"
+          }
+        },
+        "type": "object",
+        "title": "RouteContext"
+      },
+      "ShadowDiffItem": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "trait",
+              "standard"
+            ],
+            "title": "Kind"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "has_evidence": {
+            "type": "boolean",
+            "title": "Has Evidence",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "key"
+        ],
+        "title": "ShadowDiffItem"
+      },
+      "StandardAuditItem": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "selected",
+              "review",
+              "rejected"
+            ],
+            "title": "Outcome"
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score",
+            "default": 0
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "default": "medium"
+          },
+          "fact_basis": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "mixed",
+              "inferred"
+            ],
+            "title": "Fact Basis",
+            "default": "confirmed"
+          },
+          "selection_group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selection Group"
+          },
+          "selection_priority": {
+            "type": "integer",
+            "title": "Selection Priority",
+            "default": 0
+          },
+          "keyword_hits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keyword Hits"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title",
+          "outcome"
+        ],
+        "title": "StandardAuditItem"
+      },
+      "StandardItem": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "directive": {
+            "type": "string",
+            "title": "Directive"
+          },
+          "directives": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Directives"
+          },
+          "legislation_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Legislation Key"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "default": "medium"
+          },
+          "item_type": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "review"
+            ],
+            "title": "Item Type",
+            "default": "standard"
+          },
+          "match_basis": {
+            "type": "string",
+            "enum": [
+              "product",
+              "alternate_product",
+              "preferred_product",
+              "genre",
+              "traits"
+            ],
+            "title": "Match Basis",
+            "default": "traits"
+          },
+          "fact_basis": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "mixed",
+              "inferred"
+            ],
+            "title": "Fact Basis",
+            "default": "confirmed"
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score",
+            "default": 0
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "regime_bucket": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ce",
+                  "non_ce",
+                  "framework",
+                  "future",
+                  "informational"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Regime Bucket"
+          },
+          "timing_status": {
+            "type": "string",
+            "enum": [
+              "current",
+              "future",
+              "legacy",
+              "informational"
+            ],
+            "title": "Timing Status",
+            "default": "current"
+          },
+          "matched_traits_all": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matched Traits All"
+          },
+          "matched_traits_any": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matched Traits Any"
+          },
+          "missing_required_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Required Traits"
+          },
+          "excluded_by_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Excluded By Traits"
+          },
+          "applies_if_products": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies If Products"
+          },
+          "exclude_if_products": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exclude If Products"
+          },
+          "applies_if_genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies If Genres"
+          },
+          "exclude_if_genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exclude If Genres"
+          },
+          "product_match_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Match Type"
+          },
+          "standard_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Standard Family"
+          },
+          "is_harmonized": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Harmonized"
+          },
+          "harmonized_under": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Harmonized Under"
+          },
+          "harmonization_status": {
+            "type": "string",
+            "enum": [
+              "harmonized",
+              "state_of_the_art",
+              "review",
+              "unknown"
+            ],
+            "title": "Harmonization Status",
+            "default": "unknown"
+          },
+          "harmonized_reference": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Harmonized Reference"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "dated_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dated Version"
+          },
+          "supersedes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supersedes"
+          },
+          "test_focus": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Test Focus"
+          },
+          "evidence_hint": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Hint"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keywords"
+          },
+          "keyword_hits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keyword Hits"
+          },
+          "selection_group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selection Group"
+          },
+          "selection_priority": {
+            "type": "integer",
+            "title": "Selection Priority",
+            "default": 0
+          },
+          "required_fact_basis": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "mixed",
+              "inferred"
+            ],
+            "title": "Required Fact Basis",
+            "default": "inferred"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction",
+            "default": "EU"
+          },
+          "applicability_state": {
+            "type": "string",
+            "title": "Applicability State",
+            "default": "current"
+          },
+          "applicability_hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Hint"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title",
+          "directive",
+          "category"
+        ],
+        "title": "StandardItem"
+      },
+      "StandardMatchAudit": {
+        "properties": {
+          "engine_version": {
+            "type": "string",
+            "title": "Engine Version"
+          },
+          "context_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Context Tags"
+          },
+          "selected": {
+            "items": {
+              "$ref": "#/components/schemas/StandardAuditItem"
+            },
+            "type": "array",
+            "title": "Selected"
+          },
+          "review": {
+            "items": {
+              "$ref": "#/components/schemas/StandardAuditItem"
+            },
+            "type": "array",
+            "title": "Review"
+          },
+          "rejected": {
+            "items": {
+              "$ref": "#/components/schemas/StandardAuditItem"
+            },
+            "type": "array",
+            "title": "Rejected"
+          }
+        },
+        "type": "object",
+        "required": [
+          "engine_version"
+        ],
+        "title": "StandardMatchAudit"
+      },
+      "StandardSection": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "directive_key": {
+            "type": "string",
+            "title": "Directive Key"
+          },
+          "directive_label": {
+            "type": "string",
+            "title": "Directive Label"
+          },
+          "directive_title": {
+            "type": "string",
+            "title": "Directive Title"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count",
+            "default": 0
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StandardSectionItem"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "directive_key",
+          "directive_label",
+          "directive_title",
+          "title"
+        ],
+        "title": "StandardSection"
+      },
+      "StandardSectionItem": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "directive": {
+            "type": "string",
+            "title": "Directive"
+          },
+          "directives": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Directives"
+          },
+          "legislation_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Legislation Key"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Confidence",
+            "default": "medium"
+          },
+          "item_type": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "review"
+            ],
+            "title": "Item Type",
+            "default": "standard"
+          },
+          "match_basis": {
+            "type": "string",
+            "enum": [
+              "product",
+              "alternate_product",
+              "preferred_product",
+              "genre",
+              "traits"
+            ],
+            "title": "Match Basis",
+            "default": "traits"
+          },
+          "fact_basis": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "mixed",
+              "inferred"
+            ],
+            "title": "Fact Basis",
+            "default": "confirmed"
+          },
+          "score": {
+            "type": "integer",
+            "title": "Score",
+            "default": 0
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "regime_bucket": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ce",
+                  "non_ce",
+                  "framework",
+                  "future",
+                  "informational"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Regime Bucket"
+          },
+          "timing_status": {
+            "type": "string",
+            "enum": [
+              "current",
+              "future",
+              "legacy",
+              "informational"
+            ],
+            "title": "Timing Status",
+            "default": "current"
+          },
+          "matched_traits_all": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matched Traits All"
+          },
+          "matched_traits_any": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Matched Traits Any"
+          },
+          "missing_required_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Required Traits"
+          },
+          "excluded_by_traits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Excluded By Traits"
+          },
+          "applies_if_products": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies If Products"
+          },
+          "exclude_if_products": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exclude If Products"
+          },
+          "applies_if_genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Applies If Genres"
+          },
+          "exclude_if_genres": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exclude If Genres"
+          },
+          "product_match_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Match Type"
+          },
+          "standard_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Standard Family"
+          },
+          "is_harmonized": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Harmonized"
+          },
+          "harmonized_under": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Harmonized Under"
+          },
+          "harmonization_status": {
+            "type": "string",
+            "enum": [
+              "harmonized",
+              "state_of_the_art",
+              "review",
+              "unknown"
+            ],
+            "title": "Harmonization Status",
+            "default": "unknown"
+          },
+          "harmonized_reference": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Harmonized Reference"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "dated_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dated Version"
+          },
+          "supersedes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supersedes"
+          },
+          "test_focus": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Test Focus"
+          },
+          "evidence_hint": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Hint"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keywords"
+          },
+          "keyword_hits": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keyword Hits"
+          },
+          "selection_group": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selection Group"
+          },
+          "selection_priority": {
+            "type": "integer",
+            "title": "Selection Priority",
+            "default": 0
+          },
+          "required_fact_basis": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "mixed",
+              "inferred"
+            ],
+            "title": "Required Fact Basis",
+            "default": "inferred"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction",
+            "default": "EU"
+          },
+          "applicability_state": {
+            "type": "string",
+            "title": "Applicability State",
+            "default": "current"
+          },
+          "applicability_hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Hint"
+          },
+          "triggered_by_directive": {
+            "type": "string",
+            "title": "Triggered By Directive"
+          },
+          "triggered_by_label": {
+            "type": "string",
+            "title": "Triggered By Label"
+          },
+          "triggered_by_title": {
+            "type": "string",
+            "title": "Triggered By Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title",
+          "directive",
+          "category",
+          "triggered_by_directive",
+          "triggered_by_label",
+          "triggered_by_title"
+        ],
+        "title": "StandardSectionItem"
+      },
+      "TraitEvidenceItem": {
+        "properties": {
+          "trait": {
+            "type": "string",
+            "title": "Trait"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "text_explicit",
+              "text_inferred",
+              "product_core",
+              "product_default",
+              "engine_derived"
+            ],
+            "title": "State"
+          },
+          "fact_basis": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "mixed",
+              "inferred"
+            ],
+            "title": "Fact Basis",
+            "default": "confirmed"
+          },
+          "confirmed": {
+            "type": "boolean",
+            "title": "Confirmed",
+            "default": false
+          },
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "trait",
+          "state"
+        ],
+        "title": "TraitEvidenceItem"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
