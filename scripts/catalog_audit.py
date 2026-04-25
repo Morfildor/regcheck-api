@@ -30,6 +30,7 @@ from app.services.knowledge_base.validator import (
     _validate_products,
     _validate_standards,
     _validate_traits,
+    collect_product_standard_integrity_issues,
 )
 from app.services.rules.route_anchors import family_from_standard_code, route_anchor_definition
 
@@ -757,6 +758,10 @@ def _report_payload(
             "trait_density": _trait_density_summary(normalized_products),
             "traits_per_product": _traits_per_product_distribution(normalized_products),
         },
+        "product_standard_integrity": collect_product_standard_integrity_issues(
+            list(catalogs["products_raw"]),
+            list(catalogs["standards"]),
+        ),
         "by_file": {
             "raw_unknown_family": _counts_by_file(
                 raw_products,
@@ -878,6 +883,7 @@ def run(
                     f"normalized weak route-governance rows: {normalized_metrics['weak_route_governance_products']}",
                 ],
             )
+            _print_section("Product/Standard Integrity Issues", payload["product_standard_integrity"])
             _print_section("Unused Traits", payload["unused_traits"])
             _print_section(
                 f"Products With Fewer Than {minimum_aliases} Aliases",
@@ -932,6 +938,8 @@ def run(
 
     if command in {"report", "taxonomy", "route-governance", "inference-debt", "all"} and strict_structure:
         if payload["structure"]["normalized"]["missing_structure_products"] > 0:
+            return 1
+        if payload["product_standard_integrity"]:
             return 1
     return 0
 

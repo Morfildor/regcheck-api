@@ -29,7 +29,6 @@ from .contracts import ClassifierTraitsSnapshot, NormalizedTraitStateMap
 from .route_anchors import (
     best_primary_standard_for_family as _best_primary_standard_for_family_shared,
     family_from_standard_code as _family_from_standard_code_shared,
-    normalized_standard_codes as _normalized_standard_codes_shared,
     route_family_primary_directive_map,
     route_family_scope_map,
     route_standard_family_rules,
@@ -513,10 +512,6 @@ def _route_scope_from_family(route_family: str | None) -> str | None:
     return _plan_helpers._route_scope_from_family(route_family_scope_map(), route_family)
 
 
-def _normalized_standard_codes(codes: set[str] | list[str] | None) -> list[str]:
-    return _normalized_standard_codes_shared(codes)
-
-
 def _family_from_standard_code(code: str, prefer_wearable: bool) -> str | None:
     return _family_from_standard_code_shared(code, prefer_wearable)
 
@@ -570,7 +565,7 @@ def _has_any(text: str, patterns: list[str]) -> bool:
 
 
 def _has_wireless_fact_signal(text: str) -> bool:
-    return _scalar_helpers._has_wireless_fact_signal(text, WIRELESS_FACT_PATTERNS)
+    return _scalar_helpers._has_any(text, WIRELESS_FACT_PATTERNS)
 
 
 def _directive_rank(key: str) -> int:
@@ -1195,6 +1190,7 @@ def _prepare_analysis(
     from .result_builder import _normalize_trait_state_map
 
     normalized_description = normalize(f"{category} {description}")
+    # extract_traits (not extract_traits_v2_typed) is called here because tests patch it directly.
     traits_snapshot = _classifier_snapshot(extract_traits(description=description, category=category))
     diagnostics = list(traits_snapshot.diagnostics)
     matched_products = set(traits_snapshot.matched_products)
@@ -1352,7 +1348,6 @@ __all__ = [
     "_legislation_applicability_state",
     "_legislation_sections_from_items",
     "_match_standard",
-    "_normalized_standard_codes",
     "_parse_date",
     "_pick_legislations",
     "_prepare_analysis",

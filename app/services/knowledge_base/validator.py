@@ -369,7 +369,7 @@ def _validate_legislations(data: dict[str, Any], product_ids: set[str], trait_id
 
 
 def _validate_standard_metadata(code: str, row: dict[str, Any]) -> None:
-    bool_fields = ("is_harmonized",)
+    bool_fields = ("is_harmonized", "allow_preferred_product_fallback")
     list_fields = ("test_focus", "evidence_hint", "keywords", "applies_if_genres", "exclude_if_genres")
     str_fields = (
         "standard_family",
@@ -608,6 +608,55 @@ def _validate_classifier_signal_catalog(data: Mapping[str, Any], trait_ids: set[
                             f"Invalid regex in classifier_signals.yaml at relation_cue_packs.{role_name}.{cue_name}: {pattern}"
                         ) from exc
 
+def collect_product_standard_integrity_issues(
+    products: list[Mapping[str, Any]],
+    standards: list[Mapping[str, Any]],
+) -> list[str]:
+    """Return human-readable mismatches between product likely_standards and standards catalog.
+
+    For every product likely_standard:
+    - the standard must exist (by code or standard_family)
+    - if the standard declares applies_if_products, the product id must be listed there
+      OR the standard must opt in via allow_preferred_product_fallback: true
+    """
+
+    standards_by_code: dict[str, Mapping[str, Any]] = {}
+    standards_by_family: dict[str, Mapping[str, Any]] = {}
+    for std in standards:
+        code = std.get("code")
+        if isinstance(code, str) and code.strip():
+            standards_by_code[code.strip()] = std
+        family = std.get("standard_family")
+        if isinstance(family, str) and family.strip():
+            standards_by_family.setdefault(family.strip(), std)
+
+    issues: list[str] = []
+    for product in products:
+        pid = product.get("id")
+        if not isinstance(pid, str) or not pid.strip():
+            continue
+        likely = _string_list(product.get("likely_standards"))
+        for ref in likely:
+            ref_clean = ref.strip()
+            std = standards_by_code.get(ref_clean) or standards_by_family.get(ref_clean)
+            if std is None:
+                issues.append(
+                    f"Product '{pid}' likely_standard '{ref_clean}' does not match any standard code or family."
+                )
+                continue
+            applies_products = _string_list(std.get("applies_if_products"))
+            if not applies_products:
+                continue
+            allow_fallback = bool(std.get("allow_preferred_product_fallback"))
+            if pid in applies_products or allow_fallback:
+                continue
+            issues.append(
+                f"Product '{pid}' declares preferred standard '{std.get('code') or ref_clean}' but is not in its "
+                f"applies_if_products and the standard does not set allow_preferred_product_fallback: true."
+            )
+    return issues
+
+
 def _normalize_likely_standard_refs(
     row: ProductCatalogRow | GenreCatalogRow | Mapping[str, Any],
     owner: str,
@@ -664,4 +713,5 @@ __all__ = [
     "_validate_standard_metadata",
     "_validate_standards",
     "_validate_traits",
+    "collect_product_standard_integrity_issues",
 ]

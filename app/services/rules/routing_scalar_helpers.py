@@ -13,10 +13,6 @@ def _has_any(text: str, patterns: list[str]) -> bool:
     return any(re.search(pattern, text) for pattern in patterns)
 
 
-def _has_wireless_fact_signal(text: str, wireless_fact_patterns: list[str]) -> bool:
-    return _has_any(text, wireless_fact_patterns)
-
-
 def _directive_rank(directive_order: list[str], key: str) -> int:
     try:
         return directive_order.index(key)
@@ -40,39 +36,19 @@ def _route_title(key: str) -> str:
 
 
 def _analysis_depth(depth: str) -> AnalysisDepth:
-    if depth == "quick":
-        return "quick"
-    if depth == "deep":
-        return "deep"
-    return "standard"
+    return depth if depth in {"quick", "deep", "standard"} else "standard"  # type: ignore[return-value]
 
 
 def _confidence_level(value: Any, default: ConfidenceLevel = "medium") -> ConfidenceLevel:
-    if value == "low":
-        return "low"
-    if value == "high":
-        return "high"
-    if value == "medium":
-        return "medium"
-    return default
+    return value if value in {"low", "medium", "high"} else default  # type: ignore[return-value]
 
 
 def _contradiction_severity(value: Any) -> ContradictionSeverity:
-    if value == "low":
-        return "low"
-    if value == "medium":
-        return "medium"
-    if value == "high":
-        return "high"
-    return "none"
+    return value if value in {"low", "medium", "high"} else "none"  # type: ignore[return-value]
 
 
 def _product_match_stage(value: Any) -> ProductMatchStage:
-    if value == "family":
-        return "family"
-    if value == "subtype":
-        return "subtype"
-    return "ambiguous"
+    return value if value in {"family", "subtype"} else "ambiguous"  # type: ignore[return-value]
 
 
 def _string_list(value: Any) -> list[str]:
@@ -105,7 +81,6 @@ __all__ = [
     "_contradiction_severity",
     "_directive_rank",
     "_has_any",
-    "_has_wireless_fact_signal",
     "_parse_date",
     "_product_match_stage",
     "_route_title",

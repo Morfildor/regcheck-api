@@ -5,26 +5,8 @@ from typing import Any
 from app.services.rules.route_anchors import apply_route_anchor_defaults
 
 from .product_inference_debt import apply_inference_debt_metadata
-from .product_normalization_compat import apply_compatibility_enrichments
+from .product_normalization_compat import apply_compatibility_enrichments, _merge_unique, _string_list
 from .taxonomy import get_taxonomy_snapshot, resolve_product_taxonomy
-
-
-def _string_list(value: Any) -> list[str]:
-    if not isinstance(value, list):
-        return []
-    return [str(item).strip() for item in value if isinstance(item, str) and str(item).strip()]
-
-
-def _merge_unique(*values: Any) -> list[str]:
-    merged: list[str] = []
-    seen: set[str] = set()
-    for value in values:
-        for item in _string_list(value):
-            if item in seen:
-                continue
-            seen.add(item)
-            merged.append(item)
-    return merged
 
 
 def _apply_taxonomy_governance(row: dict[str, Any], *, allow_legacy_fallback: bool) -> tuple[dict[str, Any], Any]:

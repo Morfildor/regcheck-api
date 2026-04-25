@@ -4,7 +4,7 @@ from . import traits as _traits
 from .matching import ProductMatchingSnapshot, _select_matched_products, _shortlist_product_matchers_v2, build_product_matching_snapshot
 from .normalization import normalize
 from .service import ENGINE_VERSION
-from .traits import _known_trait_ids, extract_traits, extract_traits_v1, extract_traits_v2, reset_classifier_cache
+from .traits import _known_trait_ids, extract_traits, extract_traits_v1, extract_traits_v2, extract_traits_v2_typed, reset_classifier_cache
 
 
 def __getattr__(name: str):
@@ -23,6 +23,7 @@ __all__ = [
     "extract_traits",
     "extract_traits_v1",
     "extract_traits_v2",
+    "extract_traits_v2_typed",
     "normalize",
     "reset_classifier_cache",
 ]

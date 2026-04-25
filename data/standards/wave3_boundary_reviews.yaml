@@ -140,6 +140,7 @@ standards:
   - ups
   - smart_meter_gateway
   - solar_inverter_gateway
+  - solar_charge_controller
   exclude_if_products: []
   applies_if_all:
   - electrical

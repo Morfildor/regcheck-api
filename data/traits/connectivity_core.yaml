@@ -359,3 +359,93 @@ traits:
   - \b802\.11be\b
   normalized_to: wifi_7
   normalization_priority: 0
+- id: wireless_power_transfer
+  label: Wireless power transfer
+  description: Transfers electrical energy wirelessly (Qi, MagSafe, induction charging) without using a radio communications interface.
+  aliases:
+  - wireless power transfer
+  - wpt
+  - qi power transfer
+  - inductive power transfer
+  examples:
+  - wireless charging
+  - qi charging
+  - inductive charging
+  regex:
+  - \bwireless[ -]?power[ -]?transfer\b
+  - \bwpt\b
+  - \bqi[ -]?power[ -]?transfer\b
+  - \binductive[ -]?power[ -]?transfer\b
+  normalized_to: wireless_power_transfer
+  normalization_priority: 0
+- id: wireless_communication
+  label: Wireless communication
+  description: Uses a wireless data/radio interface (Wi-Fi, Bluetooth, Zigbee, Thread, NFC, cellular, etc.) for control or data transfer, distinct from wireless power transfer.
+  aliases:
+  - wireless communication
+  - wireless data
+  - wireless connectivity
+  - wireless interface
+  examples:
+  - wireless data link
+  - wireless protocol
+  regex:
+  - \bwireless[ -]?communication\b
+  - \bwireless[ -]?data\b
+  - \bwireless[ -]?connectivity\b
+  - \bwireless[ -]?interface\b
+  normalized_to: wireless_communication
+  normalization_priority: 0
+- id: radio_interface
+  label: Radio interface
+  description: Has at least one radio transceiver intended for data communications, control, or signaling rather than wireless power.
+  aliases:
+  - radio interface
+  - radio transceiver
+  - radio module
+  examples: []
+  regex:
+  - \bradio[ -]?interface\b
+  - \bradio[ -]?transceiver\b
+  - \bradio[ -]?module\b
+  normalized_to: radio_interface
+  normalization_priority: 0
+- id: wired_only
+  label: Wired-only
+  description: Operates over wired interfaces only (Ethernet, USB, mains, audio cables). No radio or wireless data interface present.
+  aliases:
+  - wired only
+  - wired-only
+  - ethernet only
+  - lan only
+  - cable only
+  examples:
+  - wired only network device
+  - ethernet only nas
+  regex:
+  - \bwired[ -]?only\b
+  - \bethernet[ -]?only\b
+  - \blan[ -]?only\b
+  - \bcable[ -]?only\b
+  normalized_to: wired_only
+  normalization_priority: 0
+- id: wifi_radio
+  label: Wi-Fi radio
+  description: Internal alias for the Wi-Fi radio interface; kept distinct from wireless power transfer.
+  aliases:
+  - wifi radio
+  examples: []
+  regex:
+  - \bwifi[ -]?radio\b
+  normalized_to: wifi_radio
+  normalization_priority: 0
+- id: bluetooth_radio
+  label: Bluetooth radio
+  description: Internal alias for the Bluetooth radio interface; kept distinct from wireless power transfer.
+  aliases:
+  - bluetooth radio
+  examples: []
+  regex:
+  - \bbluetooth[ -]?radio\b
+  normalized_to: bluetooth_radio
+  normalization_priority: 0

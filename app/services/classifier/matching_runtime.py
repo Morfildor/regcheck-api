@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+import functools
 import re
 from typing import Any, Literal, overload
 
@@ -243,6 +244,7 @@ def _compile_head_phrases(product: ProductRowLike) -> tuple[CompiledPhrase, ...]
     return tuple(phrases)
 
 
+@functools.lru_cache(maxsize=4096)
 def _compile_phrase(raw: str) -> CompiledPhrase | None:
     normalized = normalize(raw)
     if not normalized:
@@ -264,6 +266,7 @@ def _compile_phrases(raw_values: list[str]) -> tuple[CompiledPhrase, ...]:
     return tuple(phrases)
 
 
+@functools.lru_cache(maxsize=4096)
 def _compile_alias(raw: str, field: str, field_bonus: int) -> CompiledAlias | None:
     normalized = normalize(raw)
     if not normalized:
@@ -615,6 +618,8 @@ def _product_trait_buckets(product: ProductRowLike) -> tuple[set[str], set[str]]
 
 def reset_matching_cache() -> None:
     _PRODUCT_TRAIT_BUCKET_CACHE.clear()
+    _compile_phrase.cache_clear()
+    _compile_alias.cache_clear()
 
 
 __all__ = [

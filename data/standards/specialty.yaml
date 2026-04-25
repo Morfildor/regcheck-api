@@ -1362,6 +1362,7 @@ standards:
   applies_if_products:
   - smart_led_bulb
   - smart_desk_lamp
+  - grow_light
   applies_if_all:
   - electrical
   applies_if_any:

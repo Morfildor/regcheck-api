@@ -22,13 +22,13 @@ from app.domain.models import (
 )
 from app.services.classifier import ENGINE_VERSION as CLASSIFIER_ENGINE_VERSION
 from app.services.routing_v3 import build_route_context, decide_route_policy
+from app.services.standards_engine import find_applicable_items
 from app.services.standards_engine.contracts import ItemsAudit
 from app.services.standards_v3 import StandardsSelectionResult, run_standards_policy
 
 from .contracts import ClassifierTraitsSnapshot
 from .facts import _build_known_facts, _missing_information
 from .findings import _build_findings
-from .legacy import analyze_v1
 from .result_builder import (
     _build_analysis_result,
     _build_standard_match_audit,
@@ -131,6 +131,7 @@ def _select_standards(
             standard_sections=standard_sections,
             standard_item_from_row=_standard_item_from_row,
             sort_standard_items=_sort_standard_items,
+            standards_selector=find_applicable_items,
         ),
     )
     if not standards.standard_sections and (standards.standard_items or standards.review_items):
@@ -213,30 +214,7 @@ def _maybe_attach_shadow_diff(
     depth: AnalysisDepth,
     prepared: PreparedAnalysis,
 ) -> AnalysisResult:
-    if not _shadow_enabled():
-        return result
-
-    collector = DegradationCollector(prepared.degraded_reasons, prepared.warnings)
-    shadow_diff = guarded_step(
-        logger=logger,
-        collector=collector,
-        step="shadow_diff",
-        reason="shadow_diff_failed",
-        warning="Shadow comparison could not be computed; the primary analysis remains available.",
-        fallback=None,
-        operation=lambda: _shadow_diff(
-            analyze_v1(description=description, category=category, directives=directives, depth=depth),
-            result,
-        ),
-        handled_exceptions=(TypeError, ValueError, RuntimeError, ValidationError),
-    )
-    if shadow_diff is None:
-        result.degraded_mode = True
-        result.degraded_reasons = prepared.degraded_reasons
-        result.warnings = prepared.warnings
-        return result
-    result.analysis_audit.shadow_diff = shadow_diff
-
+    # Shadow comparison runs offline via scripts/shadow_compare.py, not per request.
     return result
 
 

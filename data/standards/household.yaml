@@ -481,6 +481,7 @@ standards:
   applies_if_products:
   - electric_frying_pan
   - deep_fryer
+  - air_fryer
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -529,6 +530,8 @@ standards:
   - kitchen_machine
   - blender
   - food_processor
+  - juicer
+  - sous_vide_cooker
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -577,6 +580,7 @@ standards:
   - coffee_machine
   - liquid_heater
   - portable_immersion_heater
+  - rice_cooker
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -661,6 +665,8 @@ standards:
   - heating_pad
   - foot_warmer
   - water_bed_heater
+  - heated_wellness_mask
+  - heated_wellness_wrap
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -717,6 +723,7 @@ standards:
   - vacuum_cleaner
   - water_suction_cleaner
   - robot_vacuum
+  - robot_mop
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -1231,6 +1238,8 @@ standards:
   dated_version: EN 60335-2-32:2003 + A1:2008 + A2:2015
   applies_if_products:
   - massage_appliance
+  - massage_gun
+  - connected_breast_pump
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -1347,6 +1356,7 @@ standards:
   harmonization_status: unknown
   applies_if_products:
   - immersion_heater
+  - electric_shower_heater
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -1816,6 +1826,8 @@ standards:
   applies_if_products:
   - electric_iron
   - heat_gun
+  - garment_steamer
+  - skin_hair_care_appliance
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -2222,6 +2234,7 @@ standards:
   applies_if_products:
   - floor_treatment_machine
   - spray_extraction_machine
+  - steam_cleaner
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -2421,6 +2434,7 @@ standards:
   - cooking_range
   - hob
   - oven
+  - induction_hot_plate
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -2465,6 +2479,7 @@ standards:
   harmonization_status: unknown
   applies_if_products:
   - shower_cabinet
+  - whirlpool_bath
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -2708,6 +2723,7 @@ standards:
   harmonization_status: unknown
   applies_if_products:
   - commercial_floor_treatment_machine
+  - irrigation_controller
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []
@@ -3940,6 +3956,7 @@ standards:
   applies_if_products:
   - gate_door_window_drive
   - garage_door_drive
+  - garage_door_controller
   exclude_if_products: []
   applies_if_all: []
   applies_if_any: []

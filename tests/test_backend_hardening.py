@@ -6,12 +6,15 @@ import tempfile
 import threading
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import main
 from scripts import catalog_audit
 from app.domain.models import AnalysisResult, MetadataOptionsResponse, MetadataStandardsResponse
-from knowledge_base import KnowledgeBaseError, KnowledgeBaseWarmupResult, reset_cache, warmup_knowledge_base
+from app.services.classifier.matching_runtime import _compile_alias, _compile_phrase
+from app.services.classifier.traits import extract_traits_v2_typed
+from app.services.rules.contracts import ClassifierTraitsSnapshot
+from knowledge_base import KnowledgeBaseError, KnowledgeBaseWarmupResult, load_genres, load_legislations, load_products, load_standards, load_traits, reset_cache, warmup_knowledge_base
 from rules import analyze
 from runtime_state import AppRuntimeState, KnowledgeBaseWarmupSnapshot
 
@@ -212,6 +215,133 @@ class BackendHardeningTests(unittest.TestCase):
                 current = _stable_snapshot_projection(analyze(description))
                 expected = json.loads((snapshot_dir / f"{name}.json").read_text(encoding="utf-8"))
                 self.assertEqual(current, expected)
+
+
+class BackendHardeningNewGuaranteesTests(unittest.TestCase):
+    """Tests for guarantees introduced in the performance + architecture hardening pass."""
+
+    def setUp(self) -> None:
+        reset_cache()
+
+    # ------------------------------------------------------------------ #
+    # A: Shadow diff — normal analyze() must NOT invoke v1 engine inline  #
+    # ------------------------------------------------------------------ #
+
+    def test_analyze_does_not_invoke_v1_shadow_inline_when_shadow_enabled(self) -> None:
+        """Even when _shadow_enabled() returns True, analyze_v1 must not be called inline."""
+        with patch("app.services.rules.service._shadow_enabled", return_value=True):
+            with patch("app.services.rules.legacy.analyze_v1", wraps=None) as mock_v1:
+                # wraps=None means the mock returns a MagicMock; we just want call tracking
+                mock_v1.side_effect = AssertionError("analyze_v1 must not be called inline")
+                result = analyze("smart speaker with wifi and bluetooth")
+
+        # Should succeed — no AssertionError
+        self.assertIsNotNone(result)
+        self.assertEqual(result.product_type, "smart_speaker")
+
+    def test_shadow_diff_field_is_always_a_list(self) -> None:
+        """analysis_audit.shadow_diff must always be a list (empty is acceptable)."""
+        for shadow_on in (False, True):
+            with self.subTest(shadow_enabled=shadow_on):
+                with patch("app.services.rules.service._shadow_enabled", return_value=shadow_on):
+                    result = analyze("smart speaker with wifi and bluetooth")
+                self.assertIsInstance(result.analysis_audit.shadow_diff, list)
+
+    # ------------------------------------------------------------------  #
+    # B: Lazy payload generation — shapes must match typed catalog rows    #
+    # ------------------------------------------------------------------  #
+
+    def test_lazy_load_traits_returns_list_of_dicts(self) -> None:
+        rows = load_traits()
+        self.assertIsInstance(rows, list)
+        self.assertTrue(rows)
+        self.assertIn("id", rows[0])
+
+    def test_lazy_load_products_returns_list_of_dicts(self) -> None:
+        rows = load_products()
+        self.assertIsInstance(rows, list)
+        self.assertTrue(rows)
+        self.assertIn("id", rows[0])
+
+    def test_lazy_load_standards_returns_list_of_dicts(self) -> None:
+        rows = load_standards()
+        self.assertIsInstance(rows, list)
+        self.assertTrue(rows)
+        self.assertIn("code", rows[0])
+
+    def test_lazy_load_genres_returns_list_of_dicts(self) -> None:
+        rows = load_genres()
+        self.assertIsInstance(rows, list)
+        self.assertTrue(rows)
+
+    def test_lazy_load_legislations_returns_list_of_dicts(self) -> None:
+        rows = load_legislations()
+        self.assertIsInstance(rows, list)
+        self.assertTrue(rows)
+
+    def test_lazy_payloads_are_stable_across_repeated_calls(self) -> None:
+        traits_first = load_traits()
+        traits_second = load_traits()
+        # Same list object (cached) or equal contents
+        self.assertEqual(traits_first, traits_second)
+
+    # ------------------------------------------------------------------ #
+    # C: Compile cache — caching must not alter matcher results            #
+    # ------------------------------------------------------------------ #
+
+    def test_compile_phrase_returns_same_object_on_repeated_call(self) -> None:
+        phrase_a = _compile_phrase("smart speaker")
+        phrase_b = _compile_phrase("smart speaker")
+        self.assertIs(phrase_a, phrase_b)  # LRU cache hit → identical object
+
+    def test_compile_alias_returns_same_object_on_repeated_call(self) -> None:
+        alias_a = _compile_alias("smart lock", "aliases", 5)
+        alias_b = _compile_alias("smart lock", "aliases", 5)
+        self.assertIs(alias_a, alias_b)
+
+    def test_compile_phrase_cache_hit_does_not_change_pattern_behaviour(self) -> None:
+        phrase = _compile_phrase("wifi router")
+        self.assertIsNotNone(phrase)
+        assert phrase is not None
+        self.assertIsNotNone(phrase.pattern.search("dual-band wifi router for home"))
+        self.assertIsNone(phrase.pattern.search("bluetooth speaker"))
+
+    def test_compile_alias_none_for_empty_string(self) -> None:
+        # Empty strings should still return None (normalise produces empty)
+        result = _compile_alias("", "aliases", 0)
+        self.assertIsNone(result)
+
+    # ------------------------------------------------------------------ #
+    # D: Typed classifier output — extract_traits_v2_typed contract        #
+    # ------------------------------------------------------------------ #
+
+    def test_extract_traits_v2_typed_returns_classifier_traits_snapshot(self) -> None:
+        snapshot = extract_traits_v2_typed("smart speaker with wifi and bluetooth")
+        self.assertIsInstance(snapshot, ClassifierTraitsSnapshot)
+
+    def test_extract_traits_v2_typed_product_type_matches_dict_path(self) -> None:
+        from classifier import extract_traits
+        typed = extract_traits_v2_typed("smart speaker with wifi and bluetooth")
+        legacy = extract_traits("smart speaker with wifi and bluetooth")
+
+        self.assertEqual(typed.product_type, legacy.get("product_type"))
+        self.assertEqual(typed.product_match_stage, legacy.get("product_match_stage"))
+
+    def test_extract_traits_v2_typed_confirmed_traits_populated(self) -> None:
+        snapshot = extract_traits_v2_typed("smart lock with wifi and bluetooth")
+        self.assertIsInstance(snapshot.confirmed_traits, list)
+        self.assertIsInstance(snapshot.explicit_traits, list)
+        self.assertIsInstance(snapshot.product_candidates, list)
+
+    def test_extract_traits_v2_typed_flows_through_pipeline_without_error(self) -> None:
+        """Typed snapshot from extract_traits_v2_typed must produce a valid analysis result."""
+        from app.services.rules.routing import _prepare_analysis, _select_legislation_routes
+
+        prepared = _prepare_analysis("smart speaker with wifi and bluetooth", "", "standard")
+        routes = _select_legislation_routes(prepared, None)
+
+        self.assertIsInstance(prepared.traits_data, ClassifierTraitsSnapshot)
+        self.assertIn("RED", routes.detected_directives)
 
 
 if __name__ == "__main__":

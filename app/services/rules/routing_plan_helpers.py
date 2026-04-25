@@ -47,10 +47,6 @@ def _route_scope_from_family(route_family_scope: dict[str, str], route_family: s
     return route_family_scope.get(route_family)
 
 
-def _normalized_standard_codes(codes: set[str] | list[str] | None) -> list[str]:
-    return normalized_standard_codes(codes)
-
-
 def _family_from_standard_code(
     route_standard_family_rules: tuple[tuple[str, str, str], ...],
     code: str,
@@ -111,7 +107,7 @@ def _fallback_route_plan_from_preferred_standards(
     route_family_scope: dict[str, str],
     route_family_primary_directive: dict[str, str],
 ) -> RoutePlan | None:
-    normalized_codes = _normalized_standard_codes(preferred_standard_codes)
+    normalized_codes = normalized_standard_codes(preferred_standard_codes)
     if not normalized_codes:
         return None
 

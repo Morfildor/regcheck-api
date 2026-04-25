@@ -59,6 +59,8 @@ class KnowledgeBaseWarmupResult:
 
 @dataclass(frozen=True, slots=True)
 class KnowledgeBaseSnapshot:
+    # Legacy dict payloads for the load_* helpers are derived on first access,
+    # not stored here — see _get_derived_payloads().
     traits: tuple[TraitCatalogRow, ...]
     genres: tuple[GenreCatalogRow, ...]
     products: tuple[ProductCatalogRow, ...]
@@ -69,15 +71,13 @@ class KnowledgeBaseSnapshot:
     metadata_payloads: dict[str, MetadataOptionsResponse | MetadataStandardsResponse] = field(default_factory=dict)
     classifier_runtime: ProductMatchingSnapshot | None = None
     classifier_signal_runtime: ClassifierSignalSnapshot | None = None
-    legacy_payloads: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
-    meta_payload: dict[str, Any] = field(default_factory=dict)
-    load_all_payload: dict[str, Any] = field(default_factory=dict)
 
 
 logger = logging.getLogger(__name__)
 
 _SNAPSHOT_LOCK = RLock()
 _ACTIVE_SNAPSHOT: KnowledgeBaseSnapshot | None = None
+_DERIVED_PAYLOADS: tuple[KnowledgeBaseSnapshot, dict[str, Any]] | None = None
 
 
 def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBaseSnapshot:
@@ -127,19 +127,6 @@ def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBa
     }
 
     meta = _kb_meta(counts, standards)
-    legacy_payloads = {
-        "traits": _legacy_rows(traits),
-        "genres": _legacy_rows(genres),
-        "products": _legacy_rows(products),
-        "legislations": _legacy_rows(legislations),
-        "standards": _legacy_rows(standards),
-    }
-    meta_payload = meta.model_dump()
-    load_all_payload = {
-        **legacy_payloads,
-        "counts": counts,
-        "meta": meta_payload,
-    }
 
     return KnowledgeBaseSnapshot(
         traits=traits,
@@ -155,9 +142,6 @@ def build_knowledge_base_snapshot(*, refresh_paths: bool = False) -> KnowledgeBa
         },
         classifier_runtime=_build_classifier_runtime_snapshot(products, traits, meta.version),
         classifier_signal_runtime=_build_classifier_signal_snapshot(meta.version, trait_ids),
-        legacy_payloads=legacy_payloads,
-        meta_payload=meta_payload,
-        load_all_payload=load_all_payload,
     )
 
 
@@ -181,32 +165,67 @@ def get_knowledge_base_snapshot() -> KnowledgeBaseSnapshot:
         return snapshot
 
 
+def _get_derived_payloads(snapshot: KnowledgeBaseSnapshot) -> dict[str, Any]:
+    global _DERIVED_PAYLOADS
+    cached = _DERIVED_PAYLOADS
+    if cached is not None and cached[0] is snapshot:
+        return cached[1]
+
+    with _SNAPSHOT_LOCK:
+        cached = _DERIVED_PAYLOADS
+        if cached is not None and cached[0] is snapshot:
+            return cached[1]
+
+        legacy: dict[str, list[dict[str, Any]]] = {
+            "traits": _legacy_rows(snapshot.traits),
+            "genres": _legacy_rows(snapshot.genres),
+            "products": _legacy_rows(snapshot.products),
+            "legislations": _legacy_rows(snapshot.legislations),
+            "standards": _legacy_rows(snapshot.standards),
+        }
+        meta_payload = snapshot.meta.model_dump()
+        entry: dict[str, Any] = {
+            "legacy": legacy,
+            "meta_payload": meta_payload,
+            "load_all_payload": {**legacy, "counts": snapshot.counts, "meta": meta_payload},
+        }
+        _DERIVED_PAYLOADS = (snapshot, entry)
+        return entry
+
+
 def load_all() -> dict[str, Any]:
-    return get_knowledge_base_snapshot().load_all_payload
+    snapshot = get_knowledge_base_snapshot()
+    return _get_derived_payloads(snapshot)["load_all_payload"]
 
 
 def load_traits() -> list[dict[str, Any]]:
-    return get_knowledge_base_snapshot().legacy_payloads["traits"]
+    snapshot = get_knowledge_base_snapshot()
+    return _get_derived_payloads(snapshot)["legacy"]["traits"]
 
 
 def load_genres() -> list[dict[str, Any]]:
-    return get_knowledge_base_snapshot().legacy_payloads["genres"]
+    snapshot = get_knowledge_base_snapshot()
+    return _get_derived_payloads(snapshot)["legacy"]["genres"]
 
 
 def load_products() -> list[dict[str, Any]]:
-    return get_knowledge_base_snapshot().legacy_payloads["products"]
+    snapshot = get_knowledge_base_snapshot()
+    return _get_derived_payloads(snapshot)["legacy"]["products"]
 
 
 def load_legislations() -> list[dict[str, Any]]:
-    return get_knowledge_base_snapshot().legacy_payloads["legislations"]
+    snapshot = get_knowledge_base_snapshot()
+    return _get_derived_payloads(snapshot)["legacy"]["legislations"]
 
 
 def load_standards() -> list[dict[str, Any]]:
-    return get_knowledge_base_snapshot().legacy_payloads["standards"]
+    snapshot = get_knowledge_base_snapshot()
+    return _get_derived_payloads(snapshot)["legacy"]["standards"]
 
 
 def load_meta() -> dict[str, Any]:
-    return get_knowledge_base_snapshot().meta_payload
+    snapshot = get_knowledge_base_snapshot()
+    return _get_derived_payloads(snapshot)["meta_payload"]
 
 
 def load_metadata_payload(name: str) -> dict[str, Any]:
@@ -227,14 +246,15 @@ def warmup_knowledge_base(*, refresh_paths: bool = False) -> KnowledgeBaseWarmup
     )
     return KnowledgeBaseWarmupResult(
         counts=dict(snapshot.counts),
-        meta=snapshot.meta_payload,
+        meta=snapshot.meta.model_dump(),
         duration_ms=duration_ms,
     )
 
 
 def reset_cache() -> None:
-    global _ACTIVE_SNAPSHOT
+    global _ACTIVE_SNAPSHOT, _DERIVED_PAYLOADS
     _ACTIVE_SNAPSHOT = None
+    _DERIVED_PAYLOADS = None
     clear_resolved_data_paths_cache()
     reset_taxonomy_cache()
     reset_settings_cache()
