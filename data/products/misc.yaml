@@ -283,7 +283,6 @@ products:
   - EN 62115
   genres:
   - connected_toy_childcare
-  - smart_home_iot
   preferred_clues:
   - rc boat
   - remote control boat
@@ -392,7 +391,6 @@ products:
   - EN 62115
   genres:
   - connected_toy_childcare
-  - smart_home_iot
   preferred_clues:
   - rc car
   - remote control car

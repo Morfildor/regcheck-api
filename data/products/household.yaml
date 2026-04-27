@@ -1718,6 +1718,8 @@ products:
   likely_standard_refs:
   - ref: EN 60335-1
     kind: unspecified
+  - ref: EN 62368-1
+    kind: unspecified
   minimum_match_score: 30
   score_boost_if_traits:
   - consumer

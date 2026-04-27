@@ -1100,7 +1100,6 @@ products:
   - EN 55032
   - EN 55035
   genres:
-  - security_access_iot
   - av_ict_device
   aliases:
   - alarm keypad
@@ -1940,6 +1939,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
   - ref: EN 18031-1
     kind: unspecified
   - ref: EN 18031-2
@@ -2550,6 +2551,8 @@ products:
   not_when_text_contains: []
   negative_examples: []
   likely_standard_refs:
+  - ref: EN 62368-1
+    kind: unspecified
   - ref: EN 18031-1
     kind: unspecified
   - ref: EN 18031-2

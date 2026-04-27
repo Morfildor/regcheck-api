@@ -561,6 +561,23 @@ def _validate_classifier_signal_catalog(data: Mapping[str, Any], trait_ids: set[
             except re.error as exc:
                 raise KnowledgeBaseError(f"Invalid regex in classifier_signals.yaml at wireless_mentions: {pattern}") from exc
 
+    wireless_protected_phrases = data.get("wireless_protected_phrases")
+    if wireless_protected_phrases is not None:
+        patterns = _validate_string_list_field(
+            "classifier_signals.yaml field 'wireless_protected_phrases'",
+            {"patterns": wireless_protected_phrases},
+            "patterns",
+            required=True,
+            allow_empty=False,
+        )
+        for pattern in patterns:
+            try:
+                re.compile(pattern)
+            except re.error as exc:
+                raise KnowledgeBaseError(
+                    f"Invalid regex in classifier_signals.yaml at wireless_protected_phrases: {pattern}"
+                ) from exc
+
     cue_groups = data.get("cue_groups")
     if cue_groups is not None:
         if not isinstance(cue_groups, Mapping):
@@ -612,12 +629,17 @@ def collect_product_standard_integrity_issues(
     products: list[Mapping[str, Any]],
     standards: list[Mapping[str, Any]],
 ) -> list[str]:
-    """Return human-readable mismatches between product likely_standards and standards catalog.
+    """Return human-readable mismatches between products and the standards catalog.
 
     For every product likely_standard:
     - the standard must exist (by code or standard_family)
     - if the standard declares applies_if_products, the product id must be listed there
       OR the standard must opt in via allow_preferred_product_fallback: true
+
+    For every product primary_standard_code:
+    - the referenced standard must exist
+    - it must appear in the product's likely_standards list, unless the product
+      sets primary_standard_omission_reason as a documented opt-out.
     """
 
     standards_by_code: dict[str, Mapping[str, Any]] = {}
@@ -636,6 +658,7 @@ def collect_product_standard_integrity_issues(
         if not isinstance(pid, str) or not pid.strip():
             continue
         likely = _string_list(product.get("likely_standards"))
+        likely_set = {ref.strip() for ref in likely}
         for ref in likely:
             ref_clean = ref.strip()
             std = standards_by_code.get(ref_clean) or standards_by_family.get(ref_clean)
@@ -653,6 +676,25 @@ def collect_product_standard_integrity_issues(
             issues.append(
                 f"Product '{pid}' declares preferred standard '{std.get('code') or ref_clean}' but is not in its "
                 f"applies_if_products and the standard does not set allow_preferred_product_fallback: true."
+            )
+
+        primary = product.get("primary_standard_code")
+        if isinstance(primary, str) and primary.strip():
+            primary_clean = primary.strip()
+            primary_std = standards_by_code.get(primary_clean) or standards_by_family.get(primary_clean)
+            if primary_std is None:
+                issues.append(
+                    f"Product '{pid}' primary_standard_code '{primary_clean}' does not match any standard code or family."
+                )
+                continue
+            if primary_clean in likely_set:
+                continue
+            omission_reason = product.get("primary_standard_omission_reason")
+            if isinstance(omission_reason, str) and omission_reason.strip():
+                continue
+            issues.append(
+                f"Product '{pid}' primary_standard_code '{primary_clean}' is not present in likely_standards "
+                f"and no primary_standard_omission_reason is documented."
             )
     return issues
 

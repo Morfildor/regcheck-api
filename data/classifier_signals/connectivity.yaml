@@ -90,6 +90,27 @@ trait_detection:
     tri_band_wifi:
     - \btri band\b
     - \btri band wifi\b
+    wireless_power_transfer:
+    - \bwireless[ -]?charging\b
+    - \bwireless[ -]?charger\b
+    - \bwireless[ -]?charge[ -]?pad\b
+    - \binductive[ -]?charging\b
+    - \binductive[ -]?charger\b
+    - \bqi[ -]?charging\b
+    - \bqi[ -]?charger\b
+    - \bqi[ -]?compatible\b
+    - \bmagsafe\b
+    - \bmagsafe[ -]?charger\b
+    - \bcharge[ -]?pad\b
+    - \bcharging[ -]?pad\b
+    - \binductive[ -]?power[ -]?transfer\b
+    - \bwireless[ -]?power[ -]?transfer\b
+    - \bwpt\b
+    wired_only:
+    - \bwired[ -]?only\b
+    - \bethernet[ -]?only\b
+    - \blan[ -]?only\b
+    - \bcable[ -]?only\b
   service:
     app_control:
     - \bmobile app\b
@@ -320,7 +341,10 @@ negations:
     - \bwithout wireless communication\b
     - \bno wireless connectivity\b
     - \bwithout wireless connectivity\b
-    - \bwired only\b
+    - \bwired[ -]?only\b
+    - \bethernet[ -]?only\b
+    - \blan[ -]?only\b
+    - \bcable[ -]?only\b
     wifi:
     - \bno wifi\b
     - \bwithout wifi\b
@@ -457,7 +481,27 @@ wireless_mentions:
 - \bsatellite connectivity\b
 - \bradio\b
 - \brf\b
-- \bwireless\b
+- \bwireless[ -]?communication\b
+- \bwireless[ -]?data\b
+- \bwireless[ -]?connectivity\b
+- \bwireless[ -]?network\b
+- \bwireless[ -]?protocol\b
+- \bwireless[ -]?interface\b
+- \bwireless[ -]?lan\b
+- \bwireless[ -]?access point\b
+wireless_protected_phrases:
+- \bwireless[ -]?charging\b
+- \bwireless[ -]?charger\b
+- \bwireless[ -]?charge[ -]?pad\b
+- \bwireless[ -]?power[ -]?transfer\b
+- \binductive[ -]?charging\b
+- \binductive[ -]?charger\b
+- \binductive[ -]?power[ -]?transfer\b
+- \bqi[ -]?charging\b
+- \bqi[ -]?charger\b
+- \bqi[ -]?compatible\b
+- \bmagsafe[ -]?charger\b
+- \bmagsafe\b
 cue_groups:
   smart_connected:
   - \bsmart\b

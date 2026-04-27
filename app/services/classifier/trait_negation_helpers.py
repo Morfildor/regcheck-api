@@ -19,10 +19,25 @@ def _trait_is_negated(text: str, trait: str) -> bool:
     return _has_any_compiled(text, _signal_snapshot().negations.get(trait, ()))
 
 
+def _strip_wireless_protected_phrases(text: str) -> str:
+    protected = _signal_snapshot().wireless_protected_phrases
+    if not protected:
+        return text
+    cleaned = text
+    for pattern in protected:
+        cleaned = pattern.sub(" ", cleaned)
+    return cleaned
+
+
 def _has_wireless_mention(text: str, matched_aliases: list[str] | None = None) -> bool:
-    candidates = [text]
-    candidates.extend(alias for alias in (matched_aliases or []) if isinstance(alias, str) and alias)
-    patterns = _signal_snapshot().wireless_mentions
+    snapshot = _signal_snapshot()
+    candidates = [_strip_wireless_protected_phrases(text)]
+    candidates.extend(
+        _strip_wireless_protected_phrases(alias)
+        for alias in (matched_aliases or [])
+        if isinstance(alias, str) and alias
+    )
+    patterns = snapshot.wireless_mentions
     return any(_has_any_compiled(candidate, patterns) for candidate in candidates)
 
 

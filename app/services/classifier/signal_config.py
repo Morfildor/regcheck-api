@@ -147,6 +147,8 @@ class ClassifierSignalSnapshot:
     compiled_relation_cue_packs: dict[str, dict[str, tuple[re.Pattern[str], ...]]]
     wireless_mention_patterns: tuple[str, ...]
     wireless_mentions: tuple[re.Pattern[str], ...]
+    wireless_protected_phrase_patterns: tuple[str, ...]
+    wireless_protected_phrases: tuple[re.Pattern[str], ...]
 
 
 def build_classifier_signal_snapshot(*, catalog_version: str | None = None, trait_ids: set[str] | None = None) -> ClassifierSignalSnapshot:
@@ -159,6 +161,7 @@ def build_classifier_signal_snapshot(*, catalog_version: str | None = None, trai
     cue_groups, compiled_cue_groups = _load_cue_groups(payload)
     relation_cue_packs, compiled_relation_cue_packs = _load_relation_cue_packs(payload)
     wireless_mention_patterns = _coerce_string_list(payload.get("wireless_mentions"))
+    wireless_protected_phrase_patterns = _coerce_string_list(payload.get("wireless_protected_phrases"))
 
     return ClassifierSignalSnapshot(
         catalog_version=catalog_version,
@@ -174,6 +177,10 @@ def build_classifier_signal_snapshot(*, catalog_version: str | None = None, trai
         compiled_relation_cue_packs=compiled_relation_cue_packs,
         wireless_mention_patterns=wireless_mention_patterns,
         wireless_mentions=_compile_patterns(wireless_mention_patterns, context="wireless_mentions"),
+        wireless_protected_phrase_patterns=wireless_protected_phrase_patterns,
+        wireless_protected_phrases=_compile_patterns(
+            wireless_protected_phrase_patterns, context="wireless_protected_phrases"
+        ),
     )
 
 
