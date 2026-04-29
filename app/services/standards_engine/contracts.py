@@ -8,7 +8,13 @@ from app.domain.catalog_types import StandardCatalogRow
 from app.domain.models import ConfidenceLevel, FactBasis, StandardAuditItem
 
 StandardItemType = Literal["standard", "review"]
-ProductHitType = Literal["not_product_gated", "primary_product", "alternate_product", "primary_genre"]
+ProductHitType = Literal[
+    "not_product_gated",
+    "primary_product",
+    "alternate_product",
+    "primary_genre",
+    "preferred_product",
+]
 StandardAuditOutcome = Literal["selected", "review", "rejected"]
 MatchBasis = Literal["product", "alternate_product", "preferred_product", "genre", "traits"]
 

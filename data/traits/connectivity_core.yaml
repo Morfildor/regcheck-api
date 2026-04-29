@@ -367,6 +367,14 @@ traits:
   - wpt
   - qi power transfer
   - inductive power transfer
+  - wireless charging
+  - wireless charger
+  - qi charging
+  - qi charger
+  - inductive charging
+  - inductive charger
+  - charging pad
+  - magsafe charger
   examples:
   - wireless charging
   - qi charging
@@ -376,6 +384,17 @@ traits:
   - \bwpt\b
   - \bqi[ -]?power[ -]?transfer\b
   - \binductive[ -]?power[ -]?transfer\b
+  - \bwireless[ -]?charging\b
+  - \bwireless[ -]?charger\b
+  - \bwireless[ -]?charge[ -]?pad\b
+  - \bqi[ -]?charging\b
+  - \bqi[ -]?charger\b
+  - \bqi[ -]?compatible\b
+  - \binductive[ -]?charging\b
+  - \binductive[ -]?charger\b
+  - \bcharging[ -]?pad\b
+  - \bmagsafe[ -]?charger\b
+  - \bmagsafe\b
   normalized_to: wireless_power_transfer
   normalization_priority: 0
 - id: wireless_communication

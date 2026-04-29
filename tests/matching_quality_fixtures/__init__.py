@@ -11,6 +11,7 @@ from .contrastive_wave5 import CASES as CONTRASTIVE_WAVE5_CASES
 from .ev_micromobility import CASES as EV_MICROMOBILITY_CASES
 from .household import CASES as HOUSEHOLD_CASES
 from .household_wave6 import CASES as HOUSEHOLD_WAVE6_CASES
+from .household_wave7 import CASES as HOUSEHOLD_WAVE7_CASES
 from .kitchen_beverage import CASES as KITCHEN_BEVERAGE_CASES
 from .lighting_optical import CASES as LIGHTING_OPTICAL_CASES
 from .lighting_optical_wave4 import CASES as LIGHTING_OPTICAL_WAVE4_CASES
@@ -34,7 +35,7 @@ from .wellness_boundary_wave4 import CASES as WELLNESS_BOUNDARY_WAVE4_CASES
 from .wellness_boundary_wave6 import CASES as WELLNESS_BOUNDARY_WAVE6_CASES
 
 MATCHING_QUALITY_GROUPS: dict[str, tuple[MatchingQualityCase, ...]] = {
-    "household_core": HOUSEHOLD_CASES + HOUSEHOLD_WAVE6_CASES,
+    "household_core": HOUSEHOLD_CASES + HOUSEHOLD_WAVE6_CASES + HOUSEHOLD_WAVE7_CASES,
     "kitchen_beverage": KITCHEN_BEVERAGE_CASES,
     "climate_water": CLIMATE_WATER_CASES,
     "personal_care": PERSONAL_CARE_CASES,

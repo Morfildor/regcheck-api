@@ -162,6 +162,25 @@ def _has_household_part2_preference(preferred_standard_codes: set[str]) -> bool:
     return any(code.startswith("EN 60335-2-") for code in canonical_standard_code_set(preferred_standard_codes))
 
 
+def _is_excluded_by_product_gating(
+    standard: StandardRowLike,
+    product_type: str | None,
+    matched_products: list[str] | None,
+    product_genres: list[str] | None,
+) -> bool:
+    exclude_if_products = set(_string_list(standard.get("exclude_if_products")))
+    exclude_if_genres = set(_string_list(standard.get("exclude_if_genres")))
+    matched_products = matched_products or []
+    product_genres = product_genres or []
+    if product_type and product_type in exclude_if_products:
+        return True
+    if any(pid in exclude_if_products for pid in matched_products):
+        return True
+    if exclude_if_genres & set(product_genres):
+        return True
+    return False
+
+
 def _directive_review_fallback_allowed(
     standard: StandardRowLike,
     preferred_standard_codes: set[str],
@@ -434,6 +453,7 @@ __all__ = [
     "_fact_basis_satisfies",
     "_finalize_selected_rows_v2",
     "_has_household_part2_preference",
+    "_is_excluded_by_product_gating",
     "_normalize_selection_group",
     "_product_hit_type",
     "_primary_directive",

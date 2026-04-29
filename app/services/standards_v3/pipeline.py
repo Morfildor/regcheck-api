@@ -18,6 +18,7 @@ from app.services.standards_engine.gating import (
     _directive_sort_key,
     _fact_basis_satisfies,
     _finalize_selected_rows_v2,
+    _is_excluded_by_product_gating,
     _is_preferred_standard,
     _normalize_selection_group,
     _product_hit_type,
@@ -29,7 +30,7 @@ from app.services.standards_engine.gating import (
 )
 from app.services.standards_engine.scoring import _keyword_hits, _score_standard_v2
 from app.services.standards_engine.selection_groups import _selection_group_winners, _selection_sort_key
-from app.services.standard_codes import canonical_standard_code_set
+from app.services.standard_codes import canonical_standard_code_set, canonicalize_standard_code
 
 
 @dataclass(frozen=True, slots=True)
@@ -41,6 +42,7 @@ class EligibilityDecision:
     directive_review_fallback: bool
     preferred_62368_fallback_reason: str | None
     keyword_hits: list[str]
+    preferred_product_rescue: bool = False
 
 
 def _selection_row(row: StandardCatalogRow | Mapping[str, Any]) -> StandardCatalogRow:
@@ -105,11 +107,31 @@ def _run_eligibility_stage(
                 rejections.append(_rejection_entry(standard, reason))
                 continue
             directive_review_fallback = True
+        preferred_product_rescue = False
         if product_hit_type is None or not gate["passes"]:
-            reason = _rejection_reason(product_hit_type, gate)
-            rejected_rows.append(standard.model_copy(update={"rejection_reason": reason}))
-            rejections.append(_rejection_entry(standard, reason))
-            continue
+            rescue_eligible = (
+                preferred_hit
+                and product_hit_type is None
+                and not gate["excluded_by_traits"]
+                and not gate["missing_required_traits"]
+                and not _is_excluded_by_product_gating(
+                    standard, product_type, matched_products, product_genres
+                )
+            )
+            if rescue_eligible:
+                product_hit_type = "preferred_product"
+                rescued_gate = dict(gate)
+                rescued_gate["passes"] = True
+                rescued_gate["soft_inferred_match"] = True
+                if rescued_gate["fact_basis"] == "confirmed":
+                    rescued_gate["fact_basis"] = "mixed"
+                gate = cast(TraitGate, rescued_gate)
+                preferred_product_rescue = True
+            else:
+                reason = _rejection_reason(product_hit_type, gate)
+                rejected_rows.append(standard.model_copy(update={"rejection_reason": reason}))
+                rejections.append(_rejection_entry(standard, reason))
+                continue
 
         decisions.append(
             EligibilityDecision(
@@ -120,6 +142,7 @@ def _run_eligibility_stage(
                 directive_review_fallback=directive_review_fallback,
                 preferred_62368_fallback_reason=preferred_62368_fallback_reason,
                 keyword_hits=_keyword_hits(standard, normalized_text),
+                preferred_product_rescue=preferred_product_rescue,
             )
         )
 
@@ -160,6 +183,8 @@ def _apply_fact_basis_stage(
             reason += f". requires {required_fact_basis} evidence before the route can be treated as fully selected"
         if decision.directive_review_fallback:
             reason += ". retained as a review route because the primary directive path is not currently selected"
+        if decision.preferred_product_rescue:
+            reason += ". retained because matched product declares this preferred standard"
 
         needs_review = (
             decision.gate["soft_missing_any"]
@@ -167,6 +192,7 @@ def _apply_fact_basis_stage(
             or not sufficient_fact_basis
             or decision.directive_review_fallback
             or decision.preferred_62368_fallback_reason is not None
+            or decision.preferred_product_rescue
         )
         updates: dict[str, object] = {
             "reason": reason,
@@ -251,6 +277,56 @@ def _apply_selection_group_stage(
     return list(deduped.values()), selection_group_review_codes
 
 
+def _enforce_primary_standard_invariant(
+    *,
+    final_rows: list[StandardCatalogRow],
+    rejected_rows: list[StandardCatalogRow],
+    rejections: list[RejectionEntry],
+    selection_context: SelectionContext | Mapping[str, Any] | None,
+) -> tuple[list[StandardCatalogRow], list[StandardCatalogRow], list[RejectionEntry]]:
+    if selection_context is None:
+        return final_rows, rejected_rows, rejections
+    ctx = SelectionContext.from_mapping(selection_context)
+    primary_code = ctx.primary_standard_code
+    if not primary_code:
+        return final_rows, rejected_rows, rejections
+    primary_canonical = canonicalize_standard_code(primary_code)
+    selected_codes = {
+        canonicalize_standard_code(str(row.get("code", "")))
+        for row in final_rows
+        if row.get("item_type") in {"standard", "review"}
+    }
+    if primary_canonical in selected_codes:
+        return final_rows, rejected_rows, rejections
+    restored: StandardCatalogRow | None = None
+    remaining_rejected: list[StandardCatalogRow] = []
+    for row in rejected_rows:
+        code = str(row.get("code", ""))
+        if restored is None and canonicalize_standard_code(code) == primary_canonical:
+            existing_reason = str(row.get("reason") or "")
+            prefix = existing_reason + ". " if existing_reason else ""
+            restored = row.model_copy(
+                update={
+                    "item_type": "review",
+                    "match_basis": "preferred_product",
+                    "rejection_reason": None,
+                    "reason": prefix
+                    + "retained because the routing pipeline marked this as the primary standard for the matched route",
+                }
+            )
+        else:
+            remaining_rejected.append(row)
+    if restored is None:
+        return final_rows, rejected_rows, rejections
+    final_rows = list(final_rows) + [restored]
+    rejections = [
+        entry
+        for entry in rejections
+        if not (entry.code and canonicalize_standard_code(entry.code) == primary_canonical)
+    ]
+    return final_rows, remaining_rejected, rejections
+
+
 def _apply_route_family_stage(
     *,
     rows: list[StandardCatalogRow],
@@ -333,6 +409,13 @@ def select_applicable_items_v3(
         rejected_rows=rejected_rows,
     )
     route_family_review_codes = sorted({*route_family_review_codes, *post_route_family_review_codes})
+
+    final_rows, rejected_rows, rejections = _enforce_primary_standard_invariant(
+        final_rows=final_rows,
+        rejected_rows=rejected_rows,
+        rejections=rejections,
+        selection_context=selection_context,
+    )
 
     final_rows.sort(key=lambda row: (-cast(int, row.get("score", 0)), -int(row.get("selection_priority", 0)), *_directive_sort_key(row)))
 

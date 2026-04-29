@@ -350,9 +350,13 @@ negations:
     - \bwithout wifi\b
     - \bnon wifi\b
     - \bwifi not present\b
+    - \bno (?:bluetooth|wifi)(?:\s+(?:or|nor))?\s+(?:bluetooth|wifi)\b
+    - \bwithout (?:bluetooth|wifi)(?:\s+(?:or|nor))?\s+(?:bluetooth|wifi)\b
     bluetooth:
     - \bno bluetooth\b
     - \bwithout bluetooth\b
+    - \bno (?:bluetooth|wifi)(?:\s+(?:or|nor))?\s+(?:bluetooth|wifi)\b
+    - \bwithout (?:bluetooth|wifi)(?:\s+(?:or|nor))?\s+(?:bluetooth|wifi)\b
     cloud:
     - \bno cloud\b
     - \bwithout cloud\b

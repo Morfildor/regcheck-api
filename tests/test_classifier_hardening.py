@@ -160,5 +160,103 @@ class ClassifierHardeningTests(unittest.TestCase):
                 self.assertTrue(result["product_match_audit"]["top_subtype_candidates"])
 
 
+class ConnectivityNegationGoldenTests(unittest.TestCase):
+    def setUp(self) -> None:
+        reset_cache()
+
+    def _negation_reasons(self, audit: dict) -> set[str]:
+        return {row["reason"] for row in audit["negation_suppressions"]}
+
+    def test_without_app_suppresses_app_control(self) -> None:
+        result = extract_traits("smart speaker without app and no cloud")
+
+        self.assertEqual(result["product_type"], "smart_speaker")
+        self.assertNotIn("app_control", result["all_traits"])
+        self.assertIn(
+            "explicit text negation for 'app_control'",
+            self._negation_reasons(result["product_match_audit"]),
+        )
+
+    def test_manual_update_only_suppresses_ota(self) -> None:
+        result = extract_traits("mesh router with manual update only and no cloud")
+
+        self.assertEqual(result["product_type"], "mesh_wifi_system")
+        self.assertNotIn("ota", result["all_traits"])
+        self.assertIn(
+            "explicit text negation for 'ota'",
+            self._negation_reasons(result["product_match_audit"]),
+        )
+
+    def test_no_account_required_suppresses_account(self) -> None:
+        result = extract_traits("mesh router no account required offline only")
+
+        self.assertEqual(result["product_type"], "mesh_wifi_system")
+        self.assertNotIn("account", result["all_traits"])
+        self.assertIn(
+            "explicit text negation for 'account'",
+            self._negation_reasons(result["product_match_audit"]),
+        )
+
+    def test_without_subscription_suppresses_subscription_dependency(self) -> None:
+        result = extract_traits("mesh router without subscription required")
+
+        self.assertEqual(result["product_type"], "mesh_wifi_system")
+        self.assertNotIn("subscription_dependency", result["all_traits"])
+        self.assertIn(
+            "explicit text negation for 'monetary_transaction'",
+            self._negation_reasons(result["product_match_audit"]),
+        )
+
+    def test_no_wifi_keeps_other_radios_when_text_supports_them(self) -> None:
+        result = extract_traits("smart switch zigbee only no wifi")
+
+        self.assertEqual(result["product_type"], "smart_switch")
+        self.assertNotIn("wifi", result["all_traits"])
+        self.assertIn("zigbee", result["all_traits"])
+        self.assertIn("radio", result["all_traits"])
+
+    def test_without_bluetooth_keeps_wifi_when_text_supports_it(self) -> None:
+        result = extract_traits("smart switch wifi only without bluetooth")
+
+        self.assertEqual(result["product_type"], "smart_switch")
+        self.assertNotIn("bluetooth", result["all_traits"])
+        self.assertIn("wifi", result["all_traits"])
+        self.assertIn("radio", result["all_traits"])
+
+    def test_cable_only_blocks_radio_defaults(self) -> None:
+        result = extract_traits("smart speaker cable only with ethernet input")
+
+        self.assertEqual(result["product_type"], "smart_speaker")
+        self.assertIn("wired_only", result["all_traits"])
+        self.assertNotIn("radio", result["all_traits"])
+        self.assertNotIn("wifi", result["all_traits"])
+        self.assertNotIn("bluetooth", result["all_traits"])
+
+    def test_lan_only_blocks_radio_defaults(self) -> None:
+        result = extract_traits("smart speaker lan only with ethernet input")
+
+        self.assertEqual(result["product_type"], "smart_speaker")
+        self.assertIn("wired_only", result["all_traits"])
+        self.assertNotIn("radio", result["all_traits"])
+        self.assertNotIn("wifi", result["all_traits"])
+        self.assertNotIn("bluetooth", result["all_traits"])
+
+    def test_qi_wireless_charging_does_not_imply_radio_defaults(self) -> None:
+        result = extract_traits("Qi wireless charging pad for phones")
+
+        self.assertIn("wireless_power_transfer", result["all_traits"])
+        self.assertNotIn("radio", result["all_traits"])
+        self.assertNotIn("wifi", result["all_traits"])
+        self.assertNotIn("bluetooth", result["all_traits"])
+
+    def test_magsafe_charger_does_not_imply_radio_defaults(self) -> None:
+        result = extract_traits("MagSafe charger for iPhone")
+
+        self.assertIn("wireless_power_transfer", result["all_traits"])
+        self.assertNotIn("radio", result["all_traits"])
+        self.assertNotIn("wifi", result["all_traits"])
+        self.assertNotIn("bluetooth", result["all_traits"])
+
+
 if __name__ == "__main__":
     unittest.main()
