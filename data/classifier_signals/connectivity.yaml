@@ -493,6 +493,15 @@ wireless_mentions:
 - \bwireless[ -]?interface\b
 - \bwireless[ -]?lan\b
 - \bwireless[ -]?access point\b
+- \bwireless[ -]?microphone\b
+- \bwireless[ -]?mic\b
+- \bradio[ -]?microphone\b
+- \brf[ -]?microphone\b
+- \bradio[ -]?receiver\b
+- \bradio[ -]?transmitter\b
+- \btransceiver\b
+- \bwalkie[ -]?talkie\b
+- \bhandheld[ -]?radio\b
 wireless_protected_phrases:
 - \bwireless[ -]?charging\b
 - \bwireless[ -]?charger\b

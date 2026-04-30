@@ -66,15 +66,20 @@ products:
   label: Smart desk lamp / connected task light
   product_family: smart_lighting
   product_subfamily: smart_desk_lamp
+  family_keywords:
+  - smart desk lamp
+  - connected desk lamp
+  - wifi desk lamp
   aliases:
   - smart desk lamp
   - connected desk lamp
   - wifi desk lamp
   - smart task light
-  - led desk lamp smart
   - app controlled lamp
   - smart study lamp
   - bluetooth desk lamp
+  - matter desk lamp
+  - zigbee desk lamp
   - smart-desk-lamp
   - smartdesklamp
   - smart desk lamps
@@ -84,14 +89,38 @@ products:
   - wifidesklamp
   - smart-task-light
   - smarttasklight
-  - led-desk-lamp-smart
-  - leddesklamp
   - app-controlled-lamp
   - appcontrolledlamp
   - smart-study-lamp
   - smartstudylamp
   - bluetooth-desk-lamp
   - bluetoothdesklamp
+  preferred_clues:
+  - smart
+  - connected
+  - app control
+  - app controlled
+  - app enabled
+  - wifi
+  - bluetooth
+  - zigbee
+  - matter
+  - thread
+  - voice assistant
+  - alexa
+  - google home
+  exclude_clues:
+  - no wifi
+  - no bluetooth
+  - no app
+  - no smart
+  - no connectivity
+  - non smart
+  - non connected
+  - wired only
+  - no wireless
+  confusable_with:
+  - smart_led_bulb
   implied_traits:
   - consumer
   - household
@@ -99,10 +128,25 @@ products:
   - electronic
   - mains_powered
   - lighting
-  - wifi
-  - bluetooth
-  - app_control
   - indoor_use
+  family_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  subtype_traits:
+  - consumer
+  - household
+  - electrical
+  - electronic
+  - mains_powered
+  - lighting
+  - indoor_use
+  - app_control
+  default_traits:
+  - app_control
   functional_classes:
   - home_device
   - smart_lighting
@@ -121,10 +165,11 @@ products:
   - connected desk lamp
   - wifi desk lamp
   - smart task light
-  - led desk lamp smart
   - app controlled lamp
   - smart study lamp
   - bluetooth desk lamp
+  - matter desk lamp
+  - zigbee desk lamp
   weak_aliases:
   - smart-desk-lamp
   - smartdesklamp
@@ -135,7 +180,6 @@ products:
   - wifidesklamp
   - smart-task-light
   - smarttasklight
-  - led-desk-lamp-smart
   - app-controlled-lamp
   - appcontrolledlamp
   - smart-study-lamp
@@ -144,10 +188,16 @@ products:
   - bluetoothdesklamp
   marketplace_aliases:
   - smart desk lamp
-  - led desk lamp
   - connected task light
   - wifi desk lamp
-  not_when_text_contains: []
+  not_when_text_contains:
+  - no bluetooth
+  - no wifi
+  - no wireless
+  - no app
+  - non smart
+  - non connected
+  - wired only
   negative_examples:
   - smart_light_controller
   likely_standard_refs:
@@ -155,24 +205,28 @@ products:
     kind: unspecified
   - ref: EN 62031
     kind: unspecified
-  minimum_match_score: 25
+  minimum_match_score: 35
   score_boost_if_traits:
-  - consumer
-  - household
-  - electrical
-  - electronic
-  - mains_powered
-  - lighting
   - wifi
   - bluetooth
+  - zigbee
+  - matter
+  - thread
+  - app_control
   score_penalty_if_traits:
   - speaker
   - projector
   required_any_traits:
-  - electrical
-  - electronic
+  - app_control
+  - bluetooth
+  - cloud
+  - matter
+  - radio
+  - thread
+  - wifi
+  - zigbee
   forbidden_traits: []
-  matching_notes: Smart desk and task lamps stay on a lighting-device route. Connectivity features add overlays but do not replace the primary light-source safety path.
+  matching_notes: Smart desk and task lamps stay on a lighting-device route but only when explicit smart, connected, or radio wording is present. Plain LED desk lamps without connectivity wording should not match this subtype; the required_any_traits gate enforces that.
   route_anchor: lighting_connected
 - id: smart_led_bulb
   label: Smart LED bulb / connected light source
